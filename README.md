@@ -25,7 +25,7 @@ and never renumbered**, precisely so that a drawing, a spec or a line of firmwar
 name one and have it resolve to exactly one place:
 
 ```c
-/* CAN bitrate and the reasoning behind it: SW-04, HW-18. */
+/* DE-9 pinout, and why the PC joins the bus unterminated: HW-18. */
 ```
 
 A code repository cites `HW-nn` / `SW-nn` back to [`decisions/README.md`](decisions/README.md).
