@@ -2,9 +2,9 @@
 
 Packaging, the deck stack, printed parts and how things are fixed to the vehicle. Each entry is settled - revisit one only if something concrete contradicts it.
 
-Numbering is `MEC-nn`, unique across the project and never reused. Format, and how to add one: [README](README.md). Parts, prices and status: [`../../RnD-Docs/BOM.md`](../bom/BOM.md).
+Numbering is `MEC-nn`, unique across the project and never reused. Format, and how to add one: [README](README.md). Parts, prices and status: [`../bom/BOM.md`](../bom/BOM.md).
 
-Drawings: [chassis layout](../hardware/chassis-layout.svg). Geometry and build commands: [`../../RnD-Docs/3D-Drawings/`](../mechanical/README.md).
+Drawings: [chassis layout](../hardware/chassis-layout.svg). Geometry and build commands: [`../mechanical/README.md`](../mechanical/README.md).
 
 | # | Decision |
 |---|---|
@@ -50,7 +50,7 @@ face is z 123.12, not 133.12.
 
 **Status.** Unfrozen 2026-09-17 - the CAN connector is chosen (HW-18) and the reserved
 upper-gap cut-out is now defined. Source of truth:
-[`../../RnD-Docs/3D-Drawings/fascia.scad`](../mechanical/fascia.scad); visual check:
+[`../mechanical/fascia.scad`](../mechanical/fascia.scad); visual check:
 `chassis-3deck-fascia.obj` in the same folder.
 
 **Decision.** Printed panels close the rear of the vehicle between deck 1 and deck 3

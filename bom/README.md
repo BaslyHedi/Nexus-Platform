@@ -1,29 +1,37 @@
-# Datasheets
+# Part documents
 
-One folder per BOM line item, named `<BOM item>-<part>`. The BOM
-([`../BOM.md`](BOM.md)) owns status, price and sourcing; this tree owns the documents.
+One folder per BOM line item under [`parts/`](parts/), named `<BOM item>-<part>`. The BOM
+([`BOM.md`](BOM.md)) owns status, price and sourcing; this tree owns **the record of the
+documents, not the documents themselves**.
+
+**No vendor document is in this repository.** They are copyrighted and not ours to
+redistribute - see the root [README](../README.md). The table below carries the vendor and
+the exact title of each one, which is what you search for; on a fresh clone the file itself
+has to be fetched by hand.
 
 Where a vendor publishes nothing - which is true of every Amazon power component - the
 folder carries a `SPECS.md` recording what the listing claimed, with the date it was
-captured and what still has to be measured on arrival.
+captured and what still has to be measured on arrival. Six of the eleven parts are in that
+position, which is why `SPECS.md` is often the only thing there.
 
-| Folder | Documents | Notes |
-|---|---|---|
-| `1.1-FRDM-IMX91S` | QSG (our board) + UM12262 board UM | UM12262 covers the **non-S** variant - see `NOTES.md` |
-| `1.2-STM32F407-Discovery` | DS8626 MCU datasheet, UM1472 board UM, data brief | RM0090 reference manual still missing |
-| `2.1-Hiwonder-Ackermann-Chassis` | Assembly/intro docs, docs index + `SPECS.md` | Docs from docs.hiwonder.com; rear geometry measured in Hiwonder's CAD |
-| `2.3-Servo-LD-1501MG` | Chassis/motor/servo spec capture + `SPECS.md` | Servo is **6–8.4 V**, not 5 V |
-| `2.4-Encoder-Motor-Module` | `SPECS.md` + 1:1 hole template | Vendor publishes no drawing - geometry **measured off a photo on 5 mm graph paper**, 2026-09-21 |
-| `3.1-Battery-3S-LiPo` | `SPECS.md` | Almost everything TBC until it arrives |
-| `3.4a-Bauer-50W` | `SPECS.md` | Compute rail |
-| `3.4b-Bauer-15W` | `SPECS.md` | MCU rail |
-| `3.8-Geloo-Fuse-Block` | `SPECS.md` | Includes why FULARR was rejected |
-| `3.9-INA226` | TI SBOS547 datasheet + `SPECS.md` | Verify the module's shunt is 2 mΩ |
-| `3.10-LiPo-Alarm` | `SPECS.md` | Set to 3.3–3.5 V/cell |
+| Folder | Vendor documents it draws on - **not held here** | Written here | Notes |
+|---|---|---|---|
+| `1.1-FRDM-IMX91S` | **NXP** · *FRDM-IMX91S Quick Start Guide* · *UM12262, FRDM-IMX91 Board User Manual*, Rev 3.0, 22 Apr 2025 · *FRDM-IMX91 Design Files*, Rev A1 | `NOTES.md` | UM12262 covers the **non-S** variant - see `NOTES.md` |
+| `1.2-STM32F407-Discovery` | **STMicroelectronics** · *DS8626, STM32F405/407 datasheet* · *UM1472, Discovery kit for STM32F407/417* · *STM32F4DISCOVERY data brief* | - | RM0090 reference manual still missing |
+| `2.1-Hiwonder-Ackermann-Chassis` | **Hiwonder** · *Ackermann chassis introduction and installation* · *docs index* (both printed from docs.hiwonder.com) · *Ackermann Chassis (Single Layer)* `.3dm` CAD | `SPECS.md` | Rear geometry measured in Hiwonder's CAD |
+| `2.3-Servo-LD-1501MG` | **ThinkRobotics** · *Ackerman metal chassis listing, motor and servo specs* · **Power HD** · *HD-1501MG datasheet* | `SPECS.md` | Servo is **6–8.4 V**, not 5 V |
+| `2.4-Encoder-Motor-Module` | none published | `SPECS.md` + 1:1 hole template | Vendor publishes no drawing - geometry **measured off a photo on 5 mm graph paper**, 2026-09-21 |
+| `3.1-Battery-3S-LiPo` | none published | `SPECS.md` | Almost everything TBC until it arrives |
+| `3.4a-Bauer-50W` | none published | `SPECS.md` | Compute rail |
+| `3.4b-Bauer-15W` | none published | `SPECS.md` | MCU rail |
+| `3.8-Geloo-Fuse-Block` | none published | `SPECS.md` | Includes why FULARR was rejected |
+| `3.9-INA226` | **Texas Instruments** · *INA226*, SBOS547C, Aug 2026 | `SPECS.md` | Verify the module's shunt is 2 mΩ |
+| `3.10-LiPo-Alarm` | none published | `SPECS.md` | Set to 3.3–3.5 V/cell |
 
 ## Audit - 2026-09-13
 
-Every PDF opened, page-counted, text-extracted and date-checked. Honest grading:
+Every document was opened, page-counted, text-extracted and date-checked before being set
+aside. The grades are why the files are worth hunting down again - or not:
 
 | Document | Grade | Why |
 |---|---|---|

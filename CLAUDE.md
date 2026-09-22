@@ -94,7 +94,7 @@ of which the FRDM's 2×5 mating connector is the only real blocker, and it is fr
 
 Component status and quantities live in [`bom/BOM.md`](bom/BOM.md); the electrical
 and mechanical rationale, and the list of what is still open, lives in
-[`decisions/`](decisions/README.md).
+[`decisions/README.md`](decisions/README.md).
 Those two files own them; do not restate them here.
 
 ## The video series
@@ -126,23 +126,22 @@ Two consequences worth knowing while working here:
 
 ## Repository conventions
 
-- **Not under source control yet.** Source code goes under git later; these folders stay
-  untracked for now. Do not run `git init` here without asking.
+- **This repository holds the definition, never code.** Firmware, the Linux image and each
+  application get their own repository and cite decision IDs back to here. Facts travel one
+  way, out of this repo.
+- **Branch before the first edit**, and leave the merge to Hedi at the end of a session.
 - **No em-dashes anywhere.** Not in drawings, not in decision records, not in prose. Use a
   spaced hyphen, a colon or a comma instead. This applies to every file in the project, not
   only the drawing sheets.
-- Folder names are **capitalised, no spaces, no `&`** - paths get referenced by build
-  scripts and Yocto layers, and shell metacharacters are not worth the friction.
+- Top-level folders are **lowercase, no spaces, no `&`** - paths get referenced by build
+  scripts and Yocto layers, and shell metacharacters are not worth the friction. Part folders
+  under `bom/parts/` keep their `<BOM item>-<Part-Name>` form.
+- **No vendor document is committed.** They are copyrighted and not ours to redistribute, so
+  the repository records the vendor and the exact title and nothing else. See
+  [`README.md`](README.md).
 
-| Folder | Holds |
-|---|---|
-| `System-Definition/` | Functional decomposition - system layout, sub-systems, their functions and requirements |
-| `Architecture/` | E/E decisions, CAN matrix, board-level architecture |
-| `Architecture/Design-Decisions/` | **Every settled decision and its reasoning**, split by discipline - HW / MEC / SYS / SW |
-| `Architecture/Hardware/` | Physical and electrical build drawings - chassis layout, wiring schematic |
-| `Platform/` | the code - Yocto layers, STM32 firmware, Linux services |
-| `RnD-Docs/` | part evaluations, datasheets, experiment notes |
-| `Roadmap-Milestones/` | phase plan and what "done" means for each phase |
+The layout is owned by [`README.md`](README.md) - `system/`, `decisions/`, `hardware/`,
+`mechanical/`, `bom/`. Do not restate it here.
 
 This file owns the platform baseline. Detail belongs in the folder that owns it - link
 here rather than restating it.

@@ -2,13 +2,13 @@
 
 What NEXUS must **do**, decomposed top-down. This is the logical view - it names functions and
 the sub-systems that own them, not the boards that run them. Hardware allocation comes later
-and lives in [`../hardware/`](../hardware/README.md), with the reasoning in
-[`../decisions/`](../decisions/README.md).
+and lives in [`../hardware/README.md`](../hardware/README.md), with the reasoning in
+[`../decisions/README.md`](../decisions/README.md).
 
 Each drawing is an `.svg` - the editable source and the only copy. **No PDFs.** They are
 generated once, when the design is frozen; until then the SVG is the truth and a stale PDF
 beside it is just a second thing to get wrong. To read one, open the SVG in a browser; to
-render, point headless Chrome at it. Same rule as [`../hardware/`](../hardware/README.md).
+render, point headless Chrome at it. Same rule as [`../hardware/README.md`](../hardware/README.md).
 
 | Drawing | Owns |
 |---|---|

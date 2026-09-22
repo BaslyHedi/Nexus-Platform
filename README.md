@@ -12,11 +12,11 @@ get their own repository as they are written; they consume this one.
 
 | Folder | Owns |
 |---|---|
-| [`system/`](system/README.md) | What NEXUS must **do** - the top-down functional decomposition and the `Nexus-SubSys-DNN` IDs |
-| [`decisions/`](decisions/README.md) | Every settled decision and the reasoning behind it, split **HW / MEC / SYS / SW**. Its README owns the numbering rules |
-| [`hardware/`](hardware/README.md) | Build drawings, to scale - chassis layout, wiring schematic, STM32 carrier |
-| [`mechanical/`](mechanical/README.md) | The parts we make - `fascia.scad` is the source of truth, plus the print files and the assembly script |
-| [`bom/`](bom/README.md) | What it is made of - [`BOM.md`](bom/BOM.md) for status, price and sourcing; `parts/<item>/SPECS.md` for measured numbers |
+| [`system/README.md`](system/README.md) | What NEXUS must **do** - the top-down functional decomposition and the `Nexus-SubSys-DNN` IDs |
+| [`decisions/README.md`](decisions/README.md) | Every settled decision and the reasoning behind it, split **HW / MEC / SYS / SW**. Its README owns the numbering rules |
+| [`hardware/README.md`](hardware/README.md) | Build drawings, to scale - chassis layout, wiring schematic, STM32 carrier |
+| [`mechanical/README.md`](mechanical/README.md) | The parts we make - `fascia.scad` is the source of truth, plus the print files and the assembly script |
+| [`bom/README.md`](bom/README.md) | What it is made of - [`bom/BOM.md`](bom/BOM.md) for status, price and sourcing; `parts/<item>/SPECS.md` for measured numbers |
 
 ## How the code repositories will use this
 
@@ -28,21 +28,31 @@ name one and have it resolve to exactly one place:
 /* CAN bitrate and the reasoning behind it: SW-04, HW-18. */
 ```
 
-A code repository cites `HW-nn` / `SW-nn` back to [`decisions/`](decisions/README.md).
+A code repository cites `HW-nn` / `SW-nn` back to [`decisions/README.md`](decisions/README.md).
 It never restates them. The direction the facts travel is one way, out of here.
 
-## The vendor library
+## Vendor documents are not in this repository
 
-`vendor/` sits beside these folders on disk and is **not** tracked: the datasheets,
-NXP's FRDM design-file package and Hiwonder's 186 MB chassis CAD. None of it was
-written here, and [`bom/README.md`](bom/README.md) names, dates and grades every
-document - so the repository records what each file is and how good it is, while the
-file itself stays local. Six of the eleven BOM parts have no vendor document at all,
-which is why their `SPECS.md` exists.
+One rule, no exceptions: **no vendor document is committed.** Datasheets, user manuals,
+board design packages and the chassis CAD are all copyrighted and not ours to
+redistribute, so none of them is here - not the 28 MB of PDFs, not NXP's design package,
+not Hiwonder's 186 MB `.3dm`.
 
-Two generated meshes are ignored in `mechanical/` for the same reason. One of them,
-`chassis-3deck-fascia.obj`, is a **seed the script rewrites in place** rather than pure
-output - it cannot be rebuilt from the repository alone. Keep a local backup.
+What is here is **the record of them**, which is the part that was written here: the
+vendor, the exact title and document number, the revision and date, and an honest grade
+of how much each one is worth. [`bom/README.md`](bom/README.md) owns that record and
+[`bom/parts/<item>/`](bom/) carries the measurements taken from each document. Nothing a
+decision rests on is lost by the file being absent.
+
+**On a fresh clone the documents are not there and have to be fetched by hand.** The
+vendor and title are enough to search for; `bom/README.md` also lists which ones are
+already known to be stale and which have never been found at all. On this machine they
+live in an untracked `vendor/` beside these folders.
+
+Two generated meshes are ignored in `mechanical/` for a different reason - size and
+churn. One of them, `chassis-3deck-fascia.obj`, is a **seed the script rewrites in place**
+rather than pure output, so it cannot be rebuilt from the repository alone. Keep a local
+backup.
 
 ## Checking the links
 

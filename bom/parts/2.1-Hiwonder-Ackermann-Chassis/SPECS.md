@@ -1,9 +1,10 @@
 # 2.1 - Hiwonder Ackermann chassis · rear geometry
 
 Hiwonder's online docs publish only the plate size (270 × 120.5 × 2 mm, anodised aluminium,
-126 g). Everything else below was **measured in Hiwonder's own CAD** -
-`../../3D-Drawings/Ackermann Chassis (Single Layer).3dm`, read part by part through its export
-`chassis-3deck-fascia.obj` - on 2026-09-17. Photos of the real kit agree within what a tape
+126 g). Everything else below was **measured in Hiwonder's own CAD** - **Hiwonder** ·
+*Ackermann Chassis (Single Layer)* `.3dm`, read part by part through its export
+`chassis-3deck-fascia.obj` - on 2026-09-17. That CAD is Hiwonder's and **not in the
+repository**; the measurements below are what it was read for. Photos of the real kit agree within what a tape
 measure on a photo can show.
 
 **Frame** (same as `fascia.scad`): x across the vehicle, **y positive towards the rear**, z up.

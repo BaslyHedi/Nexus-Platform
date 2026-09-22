@@ -1,12 +1,13 @@
-# The vendor reference library: datasheets, NXP's FRDM design-file package and
-# Hiwonder's 186 MB chassis CAD. Every one of them was downloaded, not written
-# here, and bom/README.md names, dates and grades each document - which is what
-# makes it findable again. The .3dm is also past GitHub's 100 MB per-file limit.
-# Present on disk, never pushed.
+# No vendor document is committed. Datasheets, user manuals, board design
+# packages and the chassis CAD are copyrighted and not ours to redistribute,
+# so the repository records the vendor and the exact title of each one and
+# nothing else - bom/README.md owns that record. On a fresh clone these files
+# are absent and have to be fetched by hand.
 /vendor/
 
 # Written by mechanical/make-assembly.py, which chdir's to its own directory,
-# so both files have to sit beside it rather than under vendor/.
+# so both files have to sit beside it rather than under vendor/. Ignored for
+# size and churn, not for copyright.
 #   assembly.stl              pure output - delete it and re-run
 #   chassis-3deck-fascia.obj  a SEED the script rewrites in place. It is not
 #                             reproducible from the script alone; it started as
