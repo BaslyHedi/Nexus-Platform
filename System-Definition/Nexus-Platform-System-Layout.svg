@@ -1,0 +1,388 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1640" height="1115" viewBox="0 0 1640 1115" font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif">
+<defs>
+<marker id="mi" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L8,4 L0,8 z" fill="#374151"/></marker>
+<marker id="mis" markerWidth="8" markerHeight="8" refX="1" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M8,0 L0,4 L8,8 z" fill="#374151"/></marker>
+<marker id="mc" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L8,4 L0,8 z" fill="#1d4ed8"/></marker>
+<marker id="mcs" markerWidth="8" markerHeight="8" refX="1" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M8,0 L0,4 L8,8 z" fill="#1d4ed8"/></marker>
+<marker id="me" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L8,4 L0,8 z" fill="#d92b2b"/></marker>
+<marker id="mes" markerWidth="8" markerHeight="8" refX="1" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M8,0 L0,4 L8,8 z" fill="#d92b2b"/></marker>
+<marker id="mp" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L8,4 L0,8 z" fill="#c2410c"/></marker>
+<marker id="mps" markerWidth="8" markerHeight="8" refX="1" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M8,0 L0,4 L8,8 z" fill="#c2410c"/></marker>
+</defs>
+<rect width="1640" height="1115" fill="#fbfaf8"/>
+<text x="30" y="40" font-size="22" font-weight="700" fill="#1a1a1a">Nexus Platform System Layout</text>
+<text x="30" y="62" font-size="11.5" fill="#555">Functional decomposition into sub-systems · logical view - says <tspan font-style="italic">what</tspan> the vehicle must do, not which board does it (hardware allocation is a later view)</text>
+<text x="30" y="80" font-size="11.5" fill="#555">ID scheme <tspan font-family="ui-monospace, Menlo, Consolas, monospace" font-weight="700">Nexus-SubSys-DNN</tspan> - D = functional domain (1–5), NN = sub-system within it. Functions inside a sub-system will be numbered <tspan font-family="ui-monospace, Menlo, Consolas, monospace" font-weight="700">Nexus-SubSys-DNN-Fnn</tspan>.</text>
+<text x="1610" y="40" font-size="11" font-weight="700" fill="#b45309" text-anchor="end">DRAFT A · for review</text>
+<text x="1610" y="58" font-size="10" fill="#777" text-anchor="end">2026-09-17</text>
+<g transform="translate(0,14)">
+<rect x="30" y="140" width="170" height="100" rx="4" fill="#f3f4f6" stroke="#6b7280" stroke-width="1.2" stroke-dasharray="5 3"/>
+<text x="115.0" y="186.0" font-size="12" font-weight="700" fill="#374151" text-anchor="middle">Operator</text>
+<text x="115.0" y="202.0" font-size="9.5" fill="#6b7280" text-anchor="middle">on the vehicle or remote</text>
+<rect x="30" y="420" width="170" height="100" rx="4" fill="#f3f4f6" stroke="#6b7280" stroke-width="1.2" stroke-dasharray="5 3"/>
+<text x="115.0" y="466.0" font-size="12" font-weight="700" fill="#374151" text-anchor="middle">Remote station</text>
+<text x="115.0" y="482.0" font-size="9.5" fill="#6b7280" text-anchor="middle">PC · laptop · later cloud</text>
+<rect x="1440" y="118" width="170" height="507" rx="4" fill="#f3f4f6" stroke="#6b7280" stroke-width="1.2" stroke-dasharray="5 3"/>
+<text x="1525.0" y="367.5" font-size="12" font-weight="700" fill="#374151" text-anchor="middle">Environment</text>
+<text x="1525.0" y="383.5" font-size="9.5" fill="#6b7280" text-anchor="middle">road · obstacles · landmarks</text>
+<rect x="1440" y="685" width="170" height="100" rx="4" fill="#f3f4f6" stroke="#6b7280" stroke-width="1.2" stroke-dasharray="5 3"/>
+<text x="1525.0" y="731.0" font-size="12" font-weight="700" fill="#374151" text-anchor="middle">Charger</text>
+<text x="1525.0" y="747.0" font-size="9.5" fill="#6b7280" text-anchor="middle">mains-powered, off-board</text>
+<rect x="232" y="84" width="1146" height="930" rx="8" fill="none" stroke="#9ca3af" stroke-width="1" stroke-dasharray="2 3"/>
+<text x="240" y="98" font-size="9" font-weight="700" fill="#9ca3af" letter-spacing="1">NEXUS VEHICLE - SYSTEM BOUNDARY</text>
+<g id="Nexus-SubSys-402">
+<rect x="250" y="118" width="240" height="145" rx="4" fill="#ffffff" stroke="#0f766e" stroke-width="1.6"/>
+<path d="M250,122 a4,4 0 0 1 4,-4 h232 a4,4 0 0 1 4,4 v38 h-240 z" fill="#ccfbf1"/>
+<line x1="250" y1="160" x2="490" y2="160" stroke="#0f766e" stroke-width="0.8"/>
+<text x="262" y="134" font-size="9.5" font-weight="700" fill="#0f766e" font-family="ui-monospace, Menlo, Consolas, monospace">Nexus-SubSys-402</text>
+<text x="262" y="152" font-size="13" font-weight="700" fill="#111827">Operator Interface</text>
+<rect x="438" y="125" width="42" height="14" rx="7" fill="#dcfce7" stroke="#15803d" stroke-width="0.8"/>
+<text x="459.0" y="135.5" font-size="8.5" font-weight="700" text-anchor="middle" fill="#15803d">PHASE 1</text>
+<circle cx="266.0" cy="176.5" r="1.8" fill="#0f766e"/>
+<text x="273.0" y="180" font-size="10.5" fill="#374151" xml:space="preserve">Accept local controls (buttons)</text>
+<circle cx="266.0" cy="192.5" r="1.8" fill="#0f766e"/>
+<text x="273.0" y="196" font-size="10.5" fill="#374151" xml:space="preserve">Show vehicle status (LEDs, display)</text>
+<circle cx="266.0" cy="208.5" r="1.8" fill="#0f766e"/>
+<text x="273.0" y="212" font-size="10.5" fill="#374151" xml:space="preserve">Take manual / teleop drive input</text>
+<circle cx="266.0" cy="224.5" r="1.8" fill="#0f766e"/>
+<text x="273.0" y="228" font-size="10.5" fill="#374151" xml:space="preserve">Take mode &amp; mission requests</text>
+<circle cx="266.0" cy="240.5" r="1.8" fill="#0f766e"/>
+<text x="273.0" y="244" font-size="10.5" fill="#374151" xml:space="preserve">Present telemetry to the operator</text>
+</g>
+<g id="Nexus-SubSys-303">
+<rect x="540" y="118" width="240" height="145" rx="4" fill="#ffffff" stroke="#6d28d9" stroke-width="1.6"/>
+<path d="M540,122 a4,4 0 0 1 4,-4 h232 a4,4 0 0 1 4,4 v38 h-240 z" fill="#ede9fe"/>
+<line x1="540" y1="160" x2="780" y2="160" stroke="#6d28d9" stroke-width="0.8"/>
+<text x="552" y="134" font-size="9.5" font-weight="700" fill="#6d28d9" font-family="ui-monospace, Menlo, Consolas, monospace">Nexus-SubSys-303</text>
+<text x="552" y="152" font-size="13" font-weight="700" fill="#111827">Planning &amp; Decision</text>
+<rect x="720" y="125" width="50" height="14" rx="7" fill="#f1f5f9" stroke="#64748b" stroke-width="0.8"/>
+<text x="745.0" y="135.5" font-size="8.5" font-weight="700" text-anchor="middle" fill="#475569">LATER</text>
+<circle cx="556.0" cy="176.5" r="1.8" fill="#6d28d9"/>
+<text x="563.0" y="180" font-size="10.5" fill="#374151" xml:space="preserve">Manage mission &amp; route</text>
+<circle cx="556.0" cy="192.5" r="1.8" fill="#6d28d9"/>
+<text x="563.0" y="196" font-size="10.5" fill="#374151" xml:space="preserve">Decide driving behaviour</text>
+<circle cx="556.0" cy="208.5" r="1.8" fill="#6d28d9"/>
+<text x="563.0" y="212" font-size="10.5" fill="#374151" xml:space="preserve">Plan a collision-free trajectory</text>
+<circle cx="556.0" cy="224.5" r="1.8" fill="#6d28d9"/>
+<text x="563.0" y="228" font-size="10.5" fill="#374151" xml:space="preserve">Issue motion requests</text>
+<text x="563.0" y="244" font-size="10.5" fill="#374151" xml:space="preserve">  (target speed + curvature)</text>
+</g>
+<g id="Nexus-SubSys-302">
+<rect x="830" y="118" width="240" height="145" rx="4" fill="#ffffff" stroke="#6d28d9" stroke-width="1.6"/>
+<path d="M830,122 a4,4 0 0 1 4,-4 h232 a4,4 0 0 1 4,4 v38 h-240 z" fill="#ede9fe"/>
+<line x1="830" y1="160" x2="1070" y2="160" stroke="#6d28d9" stroke-width="0.8"/>
+<text x="842" y="134" font-size="9.5" font-weight="700" fill="#6d28d9" font-family="ui-monospace, Menlo, Consolas, monospace">Nexus-SubSys-302</text>
+<text x="842" y="152" font-size="13" font-weight="700" fill="#111827">Localization &amp; Mapping</text>
+<rect x="1010" y="125" width="50" height="14" rx="7" fill="#f1f5f9" stroke="#64748b" stroke-width="0.8"/>
+<text x="1035.0" y="135.5" font-size="8.5" font-weight="700" text-anchor="middle" fill="#475569">LATER</text>
+<circle cx="846.0" cy="176.5" r="1.8" fill="#6d28d9"/>
+<text x="853.0" y="180" font-size="10.5" fill="#374151" xml:space="preserve">Estimate vehicle pose</text>
+<circle cx="846.0" cy="192.5" r="1.8" fill="#6d28d9"/>
+<text x="853.0" y="196" font-size="10.5" fill="#374151" xml:space="preserve">Fuse odometry, IMU &amp; perception</text>
+<circle cx="846.0" cy="208.5" r="1.8" fill="#6d28d9"/>
+<text x="853.0" y="212" font-size="10.5" fill="#374151" xml:space="preserve">Build &amp; maintain the map</text>
+<circle cx="846.0" cy="224.5" r="1.8" fill="#6d28d9"/>
+<text x="853.0" y="228" font-size="10.5" fill="#374151" xml:space="preserve">Report localization confidence</text>
+</g>
+<g id="Nexus-SubSys-301">
+<rect x="1120" y="118" width="240" height="145" rx="4" fill="#ffffff" stroke="#6d28d9" stroke-width="1.6"/>
+<path d="M1120,122 a4,4 0 0 1 4,-4 h232 a4,4 0 0 1 4,4 v38 h-240 z" fill="#ede9fe"/>
+<line x1="1120" y1="160" x2="1360" y2="160" stroke="#6d28d9" stroke-width="0.8"/>
+<text x="1132" y="134" font-size="9.5" font-weight="700" fill="#6d28d9" font-family="ui-monospace, Menlo, Consolas, monospace">Nexus-SubSys-301</text>
+<text x="1132" y="152" font-size="13" font-weight="700" fill="#111827">Environment Perception</text>
+<rect x="1300" y="125" width="50" height="14" rx="7" fill="#f1f5f9" stroke="#64748b" stroke-width="0.8"/>
+<text x="1325.0" y="135.5" font-size="8.5" font-weight="700" text-anchor="middle" fill="#475569">LATER</text>
+<circle cx="1136.0" cy="176.5" r="1.8" fill="#6d28d9"/>
+<text x="1143.0" y="180" font-size="10.5" fill="#374151" xml:space="preserve">Sense surroundings</text>
+<text x="1143.0" y="196" font-size="10.5" fill="#374151" xml:space="preserve">  (camera, LiDAR, range sensors)</text>
+<circle cx="1136.0" cy="208.5" r="1.8" fill="#6d28d9"/>
+<text x="1143.0" y="212" font-size="10.5" fill="#374151" xml:space="preserve">Detect &amp; track obstacles</text>
+<circle cx="1136.0" cy="224.5" r="1.8" fill="#6d28d9"/>
+<text x="1143.0" y="228" font-size="10.5" fill="#374151" xml:space="preserve">Detect drivable space &amp; markers</text>
+<circle cx="1136.0" cy="240.5" r="1.8" fill="#6d28d9"/>
+<text x="1143.0" y="244" font-size="10.5" fill="#374151" xml:space="preserve">Report perception confidence</text>
+</g>
+<g id="Nexus-SubSys-401">
+<rect x="250" y="300" width="1110" height="60" rx="4" fill="#ccfbf1" stroke="#0f766e" stroke-width="1.6"/>
+<text x="262" y="318" font-size="9.5" font-weight="700" fill="#0f766e" font-family="ui-monospace, Menlo, Consolas, monospace">Nexus-SubSys-401</text>
+<text x="262" y="338" font-size="13" font-weight="700" fill="#111827">In-Vehicle Communication</text>
+<text x="262" y="352" font-size="9" fill="#0f766e">backbone - every electronic sub-system attaches here</text>
+<circle cx="522" cy="321.5" r="1.8" fill="#0f766e"/>
+<text x="529" y="325" font-size="10.5" fill="#374151">Exchange signals between nodes (CAN)</text>
+<circle cx="822" cy="321.5" r="1.8" fill="#0f766e"/>
+<text x="829" y="325" font-size="10.5" fill="#374151">Time-synchronise nodes</text>
+<circle cx="522" cy="338.5" r="1.8" fill="#0f766e"/>
+<text x="529" y="342" font-size="10.5" fill="#374151">Route between CAN and service middleware</text>
+<circle cx="822" cy="338.5" r="1.8" fill="#0f766e"/>
+<text x="829" y="342" font-size="10.5" fill="#374151">Publish services / topics (ROS 2 · SOME/IP)</text>
+<rect x="1300" y="307" width="50" height="14" rx="7" fill="#dcfce7" stroke="#15803d" stroke-width="0.8"/>
+<text x="1325" y="317.5" font-size="8.5" font-weight="700" text-anchor="middle" fill="#15803d">PHASE 1</text>
+</g>
+<g id="Nexus-SubSys-403">
+<rect x="250" y="400" width="240" height="145" rx="4" fill="#ffffff" stroke="#0f766e" stroke-width="1.6"/>
+<path d="M250,404 a4,4 0 0 1 4,-4 h232 a4,4 0 0 1 4,4 v38 h-240 z" fill="#ccfbf1"/>
+<line x1="250" y1="442" x2="490" y2="442" stroke="#0f766e" stroke-width="0.8"/>
+<text x="262" y="416" font-size="9.5" font-weight="700" fill="#0f766e" font-family="ui-monospace, Menlo, Consolas, monospace">Nexus-SubSys-403</text>
+<text x="262" y="434" font-size="13" font-weight="700" fill="#111827">External Connectivity</text>
+<rect x="438" y="407" width="42" height="14" rx="7" fill="#dcfce7" stroke="#15803d" stroke-width="0.8"/>
+<text x="459.0" y="417.5" font-size="8.5" font-weight="700" text-anchor="middle" fill="#15803d">PHASE 1</text>
+<circle cx="266.0" cy="458.5" r="1.8" fill="#0f766e"/>
+<text x="273.0" y="462" font-size="10.5" fill="#374151" xml:space="preserve">Link to remote station</text>
+<text x="273.0" y="478" font-size="10.5" fill="#374151" xml:space="preserve">  (Wi-Fi, Ethernet)</text>
+<circle cx="266.0" cy="490.5" r="1.8" fill="#0f766e"/>
+<text x="273.0" y="494" font-size="10.5" fill="#374151" xml:space="preserve">Carry remote sessions &amp; teleop</text>
+<circle cx="266.0" cy="506.5" r="1.8" fill="#0f766e"/>
+<text x="273.0" y="510" font-size="10.5" fill="#374151" xml:space="preserve">Stream telemetry off-board</text>
+<circle cx="266.0" cy="522.5" r="1.8" fill="#0f766e"/>
+<text x="273.0" y="526" font-size="10.5" fill="#374151" xml:space="preserve">Carry update &amp; diagnostic data</text>
+</g>
+<g id="Nexus-SubSys-203">
+<rect x="540" y="400" width="530" height="225" rx="4" fill="#ffffff" stroke="#1d4ed8" stroke-width="1.6"/>
+<path d="M540,404 a4,4 0 0 1 4,-4 h522 a4,4 0 0 1 4,4 v38 h-530 z" fill="#dbeafe"/>
+<line x1="540" y1="442" x2="1070" y2="442" stroke="#1d4ed8" stroke-width="0.8"/>
+<text x="552" y="416" font-size="9.5" font-weight="700" fill="#1d4ed8" font-family="ui-monospace, Menlo, Consolas, monospace">Nexus-SubSys-203</text>
+<text x="552" y="434" font-size="13" font-weight="700" fill="#111827">Vehicle Motion Control</text>
+<rect x="1018" y="407" width="42" height="14" rx="7" fill="#dcfce7" stroke="#15803d" stroke-width="0.8"/>
+<text x="1039.0" y="417.5" font-size="8.5" font-weight="700" text-anchor="middle" fill="#15803d">PHASE 1</text>
+<circle cx="556.0" cy="458.5" r="1.8" fill="#1d4ed8"/>
+<text x="563.0" y="462" font-size="10.5" fill="#374151" xml:space="preserve">Arbitrate motion requests</text>
+<text x="563.0" y="478" font-size="10.5" fill="#374151" xml:space="preserve">  (manual · teleop · autonomous)</text>
+<circle cx="556.0" cy="490.5" r="1.8" fill="#1d4ed8"/>
+<text x="563.0" y="494" font-size="10.5" fill="#374151" xml:space="preserve">Translate speed + curvature into</text>
+<text x="563.0" y="510" font-size="10.5" fill="#374151" xml:space="preserve">  wheel-speed &amp; steer-angle setpoints</text>
+<circle cx="556.0" cy="522.5" r="1.8" fill="#1d4ed8"/>
+<text x="563.0" y="526" font-size="10.5" fill="#374151" xml:space="preserve">Close speed &amp; steering control loops</text>
+<circle cx="815.0" cy="458.5" r="1.8" fill="#1d4ed8"/>
+<text x="822.0" y="462" font-size="10.5" fill="#374151" xml:space="preserve">Enforce speed, accel. &amp; jerk limits</text>
+<circle cx="815.0" cy="474.5" r="1.8" fill="#1d4ed8"/>
+<text x="822.0" y="478" font-size="10.5" fill="#374151" xml:space="preserve">Estimate vehicle motion state</text>
+<text x="822.0" y="494" font-size="10.5" fill="#374151" xml:space="preserve">  (odometry from wheel speed, IMU)</text>
+<circle cx="815.0" cy="506.5" r="1.8" fill="#1d4ed8"/>
+<text x="822.0" y="510" font-size="10.5" fill="#374151" xml:space="preserve">Execute safe-stop requests</text>
+<circle cx="815.0" cy="522.5" r="1.8" fill="#1d4ed8"/>
+<text x="822.0" y="526" font-size="10.5" fill="#374151" xml:space="preserve">Report motion state</text>
+</g>
+<rect x="1110" y="390" width="260" height="245" rx="6" fill="none" stroke="#1d4ed8" stroke-width="1" stroke-dasharray="3 3"/>
+<text x="1370" y="385" font-size="8.5" font-weight="700" fill="#1d4ed8" text-anchor="end" letter-spacing="1">ACTUATION</text>
+<g id="Nexus-SubSys-201">
+<rect x="1120" y="400" width="240" height="105" rx="4" fill="#ffffff" stroke="#1d4ed8" stroke-width="1.6"/>
+<path d="M1120,404 a4,4 0 0 1 4,-4 h232 a4,4 0 0 1 4,4 v38 h-240 z" fill="#dbeafe"/>
+<line x1="1120" y1="442" x2="1360" y2="442" stroke="#1d4ed8" stroke-width="0.8"/>
+<text x="1132" y="416" font-size="9.5" font-weight="700" fill="#1d4ed8" font-family="ui-monospace, Menlo, Consolas, monospace">Nexus-SubSys-201</text>
+<text x="1132" y="434" font-size="13" font-weight="700" fill="#111827">Propulsion</text>
+<rect x="1308" y="407" width="42" height="14" rx="7" fill="#dcfce7" stroke="#15803d" stroke-width="0.8"/>
+<text x="1329.0" y="417.5" font-size="8.5" font-weight="700" text-anchor="middle" fill="#15803d">PHASE 1</text>
+<circle cx="1136.0" cy="458.5" r="1.8" fill="#1d4ed8"/>
+<text x="1143.0" y="462" font-size="10.5" fill="#374151" xml:space="preserve">Produce drive torque, rear wheels</text>
+<circle cx="1136.0" cy="474.5" r="1.8" fill="#1d4ed8"/>
+<text x="1143.0" y="478" font-size="10.5" fill="#374151" xml:space="preserve">Track wheel-speed setpoints</text>
+<circle cx="1136.0" cy="490.5" r="1.8" fill="#1d4ed8"/>
+<text x="1143.0" y="494" font-size="10.5" fill="#374151" xml:space="preserve">Measure wheel speed (encoders)</text>
+</g>
+<g id="Nexus-SubSys-202">
+<rect x="1120" y="520" width="240" height="105" rx="4" fill="#ffffff" stroke="#1d4ed8" stroke-width="1.6"/>
+<path d="M1120,524 a4,4 0 0 1 4,-4 h232 a4,4 0 0 1 4,4 v38 h-240 z" fill="#dbeafe"/>
+<line x1="1120" y1="562" x2="1360" y2="562" stroke="#1d4ed8" stroke-width="0.8"/>
+<text x="1132" y="536" font-size="9.5" font-weight="700" fill="#1d4ed8" font-family="ui-monospace, Menlo, Consolas, monospace">Nexus-SubSys-202</text>
+<text x="1132" y="554" font-size="13" font-weight="700" fill="#111827">Steering</text>
+<rect x="1308" y="527" width="42" height="14" rx="7" fill="#dcfce7" stroke="#15803d" stroke-width="0.8"/>
+<text x="1329.0" y="537.5" font-size="8.5" font-weight="700" text-anchor="middle" fill="#15803d">PHASE 1</text>
+<circle cx="1136.0" cy="578.5" r="1.8" fill="#1d4ed8"/>
+<text x="1143.0" y="582" font-size="10.5" fill="#374151" xml:space="preserve">Set front wheel angle (Ackermann)</text>
+<circle cx="1136.0" cy="594.5" r="1.8" fill="#1d4ed8"/>
+<text x="1143.0" y="598" font-size="10.5" fill="#374151" xml:space="preserve">Enforce steer angle &amp; rate limits</text>
+<circle cx="1136.0" cy="610.5" r="1.8" fill="#1d4ed8"/>
+<text x="1143.0" y="614" font-size="10.5" fill="#374151" xml:space="preserve">Report steering state</text>
+</g>
+<g id="Nexus-SubSys-102">
+<rect x="250" y="675" width="530" height="120" rx="4" fill="#ffffff" stroke="#92400e" stroke-width="1.6"/>
+<path d="M250,679 a4,4 0 0 1 4,-4 h522 a4,4 0 0 1 4,4 v38 h-530 z" fill="#fef3c7"/>
+<line x1="250" y1="717" x2="780" y2="717" stroke="#92400e" stroke-width="0.8"/>
+<text x="262" y="691" font-size="9.5" font-weight="700" fill="#92400e" font-family="ui-monospace, Menlo, Consolas, monospace">Nexus-SubSys-102</text>
+<text x="262" y="709" font-size="13" font-weight="700" fill="#111827">Structure &amp; Enclosure</text>
+<rect x="728" y="682" width="42" height="14" rx="7" fill="#dcfce7" stroke="#15803d" stroke-width="0.8"/>
+<text x="749.0" y="692.5" font-size="8.5" font-weight="700" text-anchor="middle" fill="#15803d">PHASE 1</text>
+<circle cx="266.0" cy="733.5" r="1.8" fill="#92400e"/>
+<text x="273.0" y="737" font-size="10.5" fill="#374151" xml:space="preserve">Carry &amp; locate every component</text>
+<text x="273.0" y="753" font-size="10.5" fill="#374151" xml:space="preserve">  (3-deck chassis)</text>
+<circle cx="266.0" cy="765.5" r="1.8" fill="#92400e"/>
+<text x="273.0" y="769" font-size="10.5" fill="#374151" xml:space="preserve">Protect harness &amp; electronics</text>
+<circle cx="525.0" cy="733.5" r="1.8" fill="#92400e"/>
+<text x="532.0" y="737" font-size="10.5" fill="#374151" xml:space="preserve">Expose controls &amp; service ports</text>
+<text x="532.0" y="753" font-size="10.5" fill="#374151" xml:space="preserve">  (rear fascia)</text>
+<circle cx="525.0" cy="765.5" r="1.8" fill="#92400e"/>
+<text x="532.0" y="769" font-size="10.5" fill="#374151" xml:space="preserve">Manage heat &amp; vibration</text>
+</g>
+<g id="Nexus-SubSys-101">
+<rect x="830" y="675" width="530" height="120" rx="4" fill="#ffffff" stroke="#92400e" stroke-width="1.6"/>
+<path d="M830,679 a4,4 0 0 1 4,-4 h522 a4,4 0 0 1 4,4 v38 h-530 z" fill="#fef3c7"/>
+<line x1="830" y1="717" x2="1360" y2="717" stroke="#92400e" stroke-width="0.8"/>
+<text x="842" y="691" font-size="9.5" font-weight="700" fill="#92400e" font-family="ui-monospace, Menlo, Consolas, monospace">Nexus-SubSys-101</text>
+<text x="842" y="709" font-size="13" font-weight="700" fill="#111827">Energy Storage &amp; Distribution</text>
+<rect x="1308" y="682" width="42" height="14" rx="7" fill="#dcfce7" stroke="#15803d" stroke-width="0.8"/>
+<text x="1329.0" y="692.5" font-size="8.5" font-weight="700" text-anchor="middle" fill="#15803d">PHASE 1</text>
+<circle cx="846.0" cy="733.5" r="1.8" fill="#92400e"/>
+<text x="853.0" y="737" font-size="10.5" fill="#374151" xml:space="preserve">Store energy (3S LiPo)</text>
+<circle cx="846.0" cy="749.5" r="1.8" fill="#92400e"/>
+<text x="853.0" y="753" font-size="10.5" fill="#374151" xml:space="preserve">Protect circuits (fuses)</text>
+<circle cx="846.0" cy="765.5" r="1.8" fill="#92400e"/>
+<text x="853.0" y="769" font-size="10.5" fill="#374151" xml:space="preserve">Switch drive &amp; logic branches</text>
+<circle cx="846.0" cy="781.5" r="1.8" fill="#92400e"/>
+<text x="853.0" y="785" font-size="10.5" fill="#374151" xml:space="preserve">Accept charge from the charger</text>
+<circle cx="1105.0" cy="733.5" r="1.8" fill="#92400e"/>
+<text x="1112.0" y="737" font-size="10.5" fill="#374151" xml:space="preserve">Convert supply rails (5 V, 6 V)</text>
+<circle cx="1105.0" cy="749.5" r="1.8" fill="#92400e"/>
+<text x="1112.0" y="753" font-size="10.5" fill="#374151" xml:space="preserve">Measure pack voltage &amp; current</text>
+<circle cx="1105.0" cy="765.5" r="1.8" fill="#92400e"/>
+<text x="1112.0" y="769" font-size="10.5" fill="#374151" xml:space="preserve">Estimate state of charge</text>
+</g>
+<text x="250" y="840" font-size="10" font-weight="700" fill="#be123c" letter-spacing="1">CROSS-CUTTING - these reach every sub-system above through 401</text>
+<g id="Nexus-SubSys-501">
+<rect x="250" y="850" width="240" height="150" rx="4" fill="#ffffff" stroke="#be123c" stroke-width="1.6"/>
+<path d="M250,854 a4,4 0 0 1 4,-4 h232 a4,4 0 0 1 4,4 v38 h-240 z" fill="#ffe4e6"/>
+<line x1="250" y1="892" x2="490" y2="892" stroke="#be123c" stroke-width="0.8"/>
+<text x="262" y="866" font-size="9.5" font-weight="700" fill="#be123c" font-family="ui-monospace, Menlo, Consolas, monospace">Nexus-SubSys-501</text>
+<text x="262" y="884" font-size="13" font-weight="700" fill="#111827">Supervision &amp; Safety</text>
+<rect x="438" y="857" width="42" height="14" rx="7" fill="#dcfce7" stroke="#15803d" stroke-width="0.8"/>
+<text x="459.0" y="867.5" font-size="8.5" font-weight="700" text-anchor="middle" fill="#15803d">PHASE 1</text>
+<circle cx="266.0" cy="908.5" r="1.8" fill="#be123c"/>
+<text x="273.0" y="912" font-size="10.5" fill="#374151" xml:space="preserve">Manage vehicle modes &amp; transitions</text>
+<circle cx="266.0" cy="924.5" r="1.8" fill="#be123c"/>
+<text x="273.0" y="928" font-size="10.5" fill="#374151" xml:space="preserve">Emergency stop &amp; safe stop</text>
+<circle cx="266.0" cy="940.5" r="1.8" fill="#be123c"/>
+<text x="273.0" y="944" font-size="10.5" fill="#374151" xml:space="preserve">Watchdogs &amp; command time-outs</text>
+<circle cx="266.0" cy="956.5" r="1.8" fill="#be123c"/>
+<text x="273.0" y="960" font-size="10.5" fill="#374151" xml:space="preserve">Detect faults, enter degraded mode</text>
+<circle cx="266.0" cy="972.5" r="1.8" fill="#be123c"/>
+<text x="273.0" y="976" font-size="10.5" fill="#374151" xml:space="preserve">Shut down gracefully on low pack</text>
+<circle cx="266.0" cy="988.5" r="1.8" fill="#be123c"/>
+<text x="273.0" y="992" font-size="10.5" fill="#374151" xml:space="preserve">Command drive-power cut-off</text>
+</g>
+<g id="Nexus-SubSys-502">
+<rect x="540" y="850" width="240" height="150" rx="4" fill="#ffffff" stroke="#be123c" stroke-width="1.6"/>
+<path d="M540,854 a4,4 0 0 1 4,-4 h232 a4,4 0 0 1 4,4 v38 h-240 z" fill="#ffe4e6"/>
+<line x1="540" y1="892" x2="780" y2="892" stroke="#be123c" stroke-width="0.8"/>
+<text x="552" y="866" font-size="9.5" font-weight="700" fill="#be123c" font-family="ui-monospace, Menlo, Consolas, monospace">Nexus-SubSys-502</text>
+<text x="552" y="884" font-size="13" font-weight="700" fill="#111827">Cybersecurity</text>
+<rect x="720" y="857" width="50" height="14" rx="7" fill="#f1f5f9" stroke="#64748b" stroke-width="0.8"/>
+<text x="745.0" y="867.5" font-size="8.5" font-weight="700" text-anchor="middle" fill="#475569">LATER</text>
+<circle cx="556.0" cy="908.5" r="1.8" fill="#be123c"/>
+<text x="563.0" y="912" font-size="10.5" fill="#374151" xml:space="preserve">Secure &amp; measured boot</text>
+<circle cx="556.0" cy="924.5" r="1.8" fill="#be123c"/>
+<text x="563.0" y="928" font-size="10.5" fill="#374151" xml:space="preserve">Store keys, trusted execution</text>
+<circle cx="556.0" cy="940.5" r="1.8" fill="#be123c"/>
+<text x="563.0" y="944" font-size="10.5" fill="#374151" xml:space="preserve">Authenticate &amp; protect messages</text>
+<circle cx="556.0" cy="956.5" r="1.8" fill="#be123c"/>
+<text x="563.0" y="960" font-size="10.5" fill="#374151" xml:space="preserve">Control access to the vehicle</text>
+<circle cx="556.0" cy="972.5" r="1.8" fill="#be123c"/>
+<text x="563.0" y="976" font-size="10.5" fill="#374151" xml:space="preserve">Detect intrusions &amp; anomalies</text>
+</g>
+<g id="Nexus-SubSys-503">
+<rect x="830" y="850" width="240" height="150" rx="4" fill="#ffffff" stroke="#be123c" stroke-width="1.6"/>
+<path d="M830,854 a4,4 0 0 1 4,-4 h232 a4,4 0 0 1 4,4 v38 h-240 z" fill="#ffe4e6"/>
+<line x1="830" y1="892" x2="1070" y2="892" stroke="#be123c" stroke-width="0.8"/>
+<text x="842" y="866" font-size="9.5" font-weight="700" fill="#be123c" font-family="ui-monospace, Menlo, Consolas, monospace">Nexus-SubSys-503</text>
+<text x="842" y="884" font-size="13" font-weight="700" fill="#111827">Diagnostics &amp; Data Logging</text>
+<rect x="1018" y="857" width="42" height="14" rx="7" fill="#dcfce7" stroke="#15803d" stroke-width="0.8"/>
+<text x="1039.0" y="867.5" font-size="8.5" font-weight="700" text-anchor="middle" fill="#15803d">PHASE 1</text>
+<circle cx="846.0" cy="908.5" r="1.8" fill="#be123c"/>
+<text x="853.0" y="912" font-size="10.5" fill="#374151" xml:space="preserve">Monitor sub-system health</text>
+<circle cx="846.0" cy="924.5" r="1.8" fill="#be123c"/>
+<text x="853.0" y="928" font-size="10.5" fill="#374151" xml:space="preserve">Record fault codes &amp; event data</text>
+<circle cx="846.0" cy="940.5" r="1.8" fill="#be123c"/>
+<text x="853.0" y="944" font-size="10.5" fill="#374151" xml:space="preserve">Log &amp; replay bus and sensor data</text>
+<circle cx="846.0" cy="956.5" r="1.8" fill="#be123c"/>
+<text x="853.0" y="960" font-size="10.5" fill="#374151" xml:space="preserve">Provide debug access</text>
+<text x="853.0" y="976" font-size="10.5" fill="#374151" xml:space="preserve">  (CAN port, UART, SWD)</text>
+</g>
+<g id="Nexus-SubSys-504">
+<rect x="1120" y="850" width="240" height="150" rx="4" fill="#ffffff" stroke="#be123c" stroke-width="1.6"/>
+<path d="M1120,854 a4,4 0 0 1 4,-4 h232 a4,4 0 0 1 4,4 v38 h-240 z" fill="#ffe4e6"/>
+<line x1="1120" y1="892" x2="1360" y2="892" stroke="#be123c" stroke-width="0.8"/>
+<text x="1132" y="866" font-size="9.5" font-weight="700" fill="#be123c" font-family="ui-monospace, Menlo, Consolas, monospace">Nexus-SubSys-504</text>
+<text x="1132" y="884" font-size="13" font-weight="700" fill="#111827">Software Update &amp; Config.</text>
+<rect x="1300" y="857" width="50" height="14" rx="7" fill="#f1f5f9" stroke="#64748b" stroke-width="0.8"/>
+<text x="1325.0" y="867.5" font-size="8.5" font-weight="700" text-anchor="middle" fill="#475569">LATER</text>
+<circle cx="1136.0" cy="908.5" r="1.8" fill="#be123c"/>
+<text x="1143.0" y="912" font-size="10.5" fill="#374151" xml:space="preserve">Deliver updates (OTA, A/B slots)</text>
+<circle cx="1136.0" cy="924.5" r="1.8" fill="#be123c"/>
+<text x="1143.0" y="928" font-size="10.5" fill="#374151" xml:space="preserve">Verify integrity before install</text>
+<circle cx="1136.0" cy="940.5" r="1.8" fill="#be123c"/>
+<text x="1143.0" y="944" font-size="10.5" fill="#374151" xml:space="preserve">Roll back a failed update</text>
+<circle cx="1136.0" cy="956.5" r="1.8" fill="#be123c"/>
+<text x="1143.0" y="960" font-size="10.5" fill="#374151" xml:space="preserve">Manage configuration &amp;</text>
+<text x="1143.0" y="976" font-size="10.5" fill="#374151" xml:space="preserve">  calibration parameters</text>
+</g>
+<path d="M1440,178 L1362,178" fill="none" stroke="#c2410c" stroke-width="1.6" stroke-dasharray="6 3" marker-end="url(#mp)"/>
+<text x="1400" y="170" font-size="9" fill="#c2410c" text-anchor="middle">scene</text>
+<path d="M1120,178 L1072,178" fill="none" stroke="#374151" stroke-width="1.4" marker-end="url(#mi)"/>
+<text x="1095" y="158" font-size="9" fill="#374151" text-anchor="middle">objects</text>
+<text x="1095" y="169" font-size="9" fill="#374151" text-anchor="middle">features</text>
+<path d="M830,178 L782,178" fill="none" stroke="#374151" stroke-width="1.4" marker-end="url(#mi)"/>
+<text x="806" y="158" font-size="9" fill="#374151" text-anchor="middle">pose</text>
+<text x="806" y="169" font-size="9" fill="#374151" text-anchor="middle">map</text>
+<path d="M1300,118 L1300,106 L720,106 L720,116" fill="none" stroke="#374151" stroke-width="1.4" marker-end="url(#mi)"/>
+<text x="1010" y="102" font-size="9" fill="#374151" text-anchor="middle">tracked obstacles · free space</text>
+<path d="M200,190 L248,190" fill="none" stroke="#c2410c" stroke-width="1.6" stroke-dasharray="6 3" marker-start="url(#mps)" marker-end="url(#mp)"/>
+<text x="224" y="181" font-size="9" fill="#c2410c" text-anchor="middle">use</text>
+<path d="M200,470 L248,470" fill="none" stroke="#c2410c" stroke-width="1.6" stroke-dasharray="6 3" marker-start="url(#mps)" marker-end="url(#mp)"/>
+<text x="224" y="461" font-size="9" fill="#c2410c" text-anchor="middle">link</text>
+<path d="M370,263 L370,298" fill="none" stroke="#1d4ed8" stroke-width="1.8" marker-start="url(#mcs)" marker-end="url(#mc)"/>
+<text x="378" y="285" font-size="9" fill="#1d4ed8" text-anchor="start">drive input · mode req. ↓   status ↑</text>
+<path d="M370,360 L370,398" fill="none" stroke="#374151" stroke-width="1.4" marker-start="url(#mis)" marker-end="url(#mi)"/>
+<text x="378" y="384" font-size="9" fill="#374151" text-anchor="start">sessions · telemetry · updates</text>
+<path d="M660,263 L660,298" fill="none" stroke="#1d4ed8" stroke-width="1.8" marker-end="url(#mc)"/>
+<text x="668" y="285" font-size="9" fill="#1d4ed8" text-anchor="start">motion request</text>
+<path d="M660,360 L660,398" fill="none" stroke="#1d4ed8" stroke-width="1.8" marker-end="url(#mc)"/>
+<text x="668" y="384" font-size="9" fill="#1d4ed8" text-anchor="start">motion request</text>
+<path d="M950,400 L950,362" fill="none" stroke="#374151" stroke-width="1.4" marker-end="url(#mi)"/>
+<text x="958" y="384" font-size="9" fill="#374151" text-anchor="start">vehicle motion state</text>
+<path d="M950,300 L950,265" fill="none" stroke="#374151" stroke-width="1.4" marker-end="url(#mi)"/>
+<text x="958" y="285" font-size="9" fill="#374151" text-anchor="start">odometry · IMU</text>
+<path d="M1070,440 L1118,440" fill="none" stroke="#1d4ed8" stroke-width="1.8" marker-end="url(#mc)"/>
+<text x="1095" y="432" font-size="8" fill="#1d4ed8" text-anchor="middle">speed</text>
+<path d="M1120,470 L1072,470" fill="none" stroke="#374151" stroke-width="1.4" marker-end="url(#mi)"/>
+<text x="1095" y="484" font-size="8" fill="#374151" text-anchor="middle">actual</text>
+<path d="M1070,560 L1118,560" fill="none" stroke="#1d4ed8" stroke-width="1.8" marker-end="url(#mc)"/>
+<text x="1095" y="552" font-size="8" fill="#1d4ed8" text-anchor="middle">angle</text>
+<path d="M1120,590 L1072,590" fill="none" stroke="#374151" stroke-width="1.4" marker-end="url(#mi)"/>
+<text x="1095" y="604" font-size="8" fill="#374151" text-anchor="middle">state</text>
+<path d="M1372,450 L1438,450" fill="none" stroke="#c2410c" stroke-width="1.6" stroke-dasharray="6 3" marker-end="url(#mp)"/>
+<text x="1405" y="442" font-size="8" fill="#c2410c" text-anchor="middle">traction</text>
+<path d="M1372,570 L1438,570" fill="none" stroke="#c2410c" stroke-width="1.6" stroke-dasharray="6 3" marker-end="url(#mp)"/>
+<text x="1405" y="562" font-size="8" fill="#c2410c" text-anchor="middle">wheel angle</text>
+<path d="M1240,675 L1240,637" fill="none" stroke="#d92b2b" stroke-width="2.6" marker-end="url(#me)"/>
+<text x="1248" y="659" font-size="9" fill="#b91c1c" text-anchor="start">actuator power (drive branch)</text>
+<path d="M900,675 L900,627" fill="none" stroke="#d92b2b" stroke-width="2.6" stroke-dasharray="7 4" marker-end="url(#me)"/>
+<text x="908" y="659" font-size="9" fill="#b91c1c" text-anchor="start">logic supply → all electronics</text>
+<path d="M1440,735 L1362,735" fill="none" stroke="#d92b2b" stroke-width="2.6" marker-end="url(#me)"/>
+<text x="1400" y="727" font-size="9" fill="#b91c1c" text-anchor="middle">charge</text>
+<line x1="30" y1="1028" x2="1610" y2="1028" stroke="#e5e7eb"/>
+<text x="30" y="1050" font-size="10" font-weight="700" fill="#1a1a1a">FLOWS</text>
+<path d="M80,1046 L114,1046" fill="none" stroke="#1d4ed8" stroke-width="1.8" marker-end="url(#mc)"/>
+<text x="122" y="1050" font-size="10" fill="#374151">command / setpoint</text>
+<path d="M240.8,1046 L274.8,1046" fill="none" stroke="#374151" stroke-width="1.4" marker-end="url(#mi)"/>
+<text x="282.8" y="1050" font-size="10" fill="#374151">information / measurement</text>
+<path d="M440.8,1046 L474.8,1046" fill="none" stroke="#d92b2b" stroke-width="2.6" marker-end="url(#me)"/>
+<text x="482.8" y="1050" font-size="10" fill="#374151">energy (dashed = logic supply)</text>
+<path d="M668.8,1046 L702.8,1046" fill="none" stroke="#c2410c" stroke-width="1.6" stroke-dasharray="6 3" marker-end="url(#mp)"/>
+<text x="710.8" y="1050" font-size="10" fill="#374151">physical interaction</text>
+<text x="30" y="1076" font-size="10" font-weight="700" fill="#1a1a1a">DOMAINS</text>
+<rect x="92" y="1065" width="16" height="14" rx="2" fill="#fef3c7" stroke="#92400e" stroke-width="1.2"/>
+<text x="114" y="1076" font-size="10" fill="#374151"><tspan font-weight="700" fill="#92400e">1xx</tspan> Vehicle Foundation</text>
+<rect x="250.8" y="1065" width="16" height="14" rx="2" fill="#dbeafe" stroke="#1d4ed8" stroke-width="1.2"/>
+<text x="272.8" y="1076" font-size="10" fill="#374151"><tspan font-weight="700" fill="#1d4ed8">2xx</tspan> Motion</text>
+<rect x="342.4" y="1065" width="16" height="14" rx="2" fill="#ede9fe" stroke="#6d28d9" stroke-width="1.2"/>
+<text x="364.4" y="1076" font-size="10" fill="#374151"><tspan font-weight="700" fill="#6d28d9">3xx</tspan> Autonomy</text>
+<rect x="445.2" y="1065" width="16" height="14" rx="2" fill="#ccfbf1" stroke="#0f766e" stroke-width="1.2"/>
+<text x="467.2" y="1076" font-size="10" fill="#374151"><tspan font-weight="700" fill="#0f766e">4xx</tspan> Communication &amp; Interaction</text>
+<rect x="654.4" y="1065" width="16" height="14" rx="2" fill="#ffe4e6" stroke="#be123c" stroke-width="1.2"/>
+<text x="676.4" y="1076" font-size="10" fill="#374151"><tspan font-weight="700" fill="#be123c">5xx</tspan> Dependability &amp; Lifecycle</text>
+<rect x="862.4" y="1065" width="42" height="14" rx="7" fill="#dcfce7" stroke="#15803d" stroke-width="0.8"/>
+<text x="883.4" y="1075.5" font-size="8.5" font-weight="700" text-anchor="middle" fill="#15803d">PHASE 1</text>
+<text x="910.4" y="1076" font-size="10" fill="#374151">needed to drive end-to-end</text>
+<rect x="1062.4" y="1065" width="50" height="14" rx="7" fill="#f1f5f9" stroke="#64748b" stroke-width="0.8"/>
+<text x="1087.4" y="1075.5" font-size="8.5" font-weight="700" text-anchor="middle" fill="#475569">LATER</text>
+<text x="1118.4" y="1076" font-size="10" fill="#374151">placeholder, detailed when its phase starts</text>
+</g>
+</svg>

@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="210mm" height="148mm" viewBox="0 0 210 148" font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif">
+<!-- 1 user unit = 1 mm. Print at 100 percent, no "fit to page". A5 landscape, or A4 landscape with a margin. -->
+<rect width="210" height="148" fill="#ffffff"/>
+
+<text x="15" y="14" font-size="4.2" font-weight="700" fill="#111827">Encoder Motor Module V1.4 - 1:1 hole template</text>
+<text x="15" y="20" font-size="2.6" fill="#374151">Print at exactly 100 %. Check the scale bar with a ruler FIRST. Then lay the board on the outline.</text>
+<text x="15" y="24.6" font-size="2.6" fill="#374151">Pattern under test: 42.0 x 58.0 mm board, four holes ⌀3.8 on 32.4 x 48.4, inset 4.8 mm from each edge.</text>
+
+<!-- scale bar: 50.00 mm -->
+<g stroke="#111827" stroke-width="0.3" fill="none">
+  <line x1="15" y1="34" x2="65" y2="34"/>
+  <line x1="15" y1="31.5" x2="15" y2="36.5"/>
+  <line x1="65" y1="31.5" x2="65" y2="36.5"/>
+  <line x1="40" y1="32.5" x2="40" y2="35.5"/>
+</g>
+<text x="40" y="30.5" font-size="2.8" font-weight="700" fill="#111827" text-anchor="middle">50.00 mm - measure this</text>
+<text x="70" y="35" font-size="2.6" fill="#6b7280">if it is not 50 mm, the print is scaled and nothing below is valid</text>
+
+<!-- board outline, top-left of the board at (30, 48) -->
+<g transform="translate(30,48)">
+  <rect x="0" y="0" width="42" height="58" rx="3.5" fill="none" stroke="#111827" stroke-width="0.35"/>
+
+  <!-- nominal holes -->
+  <circle cx="4.8"  cy="4.8"  r="1.9" fill="none" stroke="#111827" stroke-width="0.3"/>
+  <circle cx="37.2" cy="4.8"  r="1.9" fill="none" stroke="#111827" stroke-width="0.3"/>
+  <circle cx="4.8"  cy="53.2" r="1.9" fill="none" stroke="#111827" stroke-width="0.3"/>
+  <circle cx="37.2" cy="53.2" r="1.9" fill="none" stroke="#111827" stroke-width="0.3"/>
+
+  <!-- +/- 0.5 mm envelope on the pattern, dashed -->
+  <g fill="none" stroke="#dc2626" stroke-width="0.18" stroke-dasharray="1 0.8">
+    <circle cx="4.8"  cy="4.8"  r="2.4"/><circle cx="37.2" cy="4.8"  r="2.4"/>
+    <circle cx="4.8"  cy="53.2" r="2.4"/><circle cx="37.2" cy="53.2" r="2.4"/>
+  </g>
+
+  <!-- centre crosses -->
+  <g stroke="#111827" stroke-width="0.15">
+    <line x1="1.8" y1="4.8" x2="7.8" y2="4.8"/><line x1="4.8" y1="1.8" x2="4.8" y2="7.8"/>
+    <line x1="34.2" y1="4.8" x2="40.2" y2="4.8"/><line x1="37.2" y1="1.8" x2="37.2" y2="7.8"/>
+    <line x1="1.8" y1="53.2" x2="7.8" y2="53.2"/><line x1="4.8" y1="50.2" x2="4.8" y2="56.2"/>
+    <line x1="34.2" y1="53.2" x2="40.2" y2="53.2"/><line x1="37.2" y1="50.2" x2="37.2" y2="56.2"/>
+  </g>
+
+  <!-- dimensions -->
+  <g stroke="#2563eb" stroke-width="0.15">
+    <line x1="4.8" y1="-4" x2="37.2" y2="-4"/>
+    <line x1="4.8" y1="-5" x2="4.8" y2="-3"/><line x1="37.2" y1="-5" x2="37.2" y2="-3"/>
+    <line x1="-4" y1="4.8" x2="-4" y2="53.2"/>
+    <line x1="-5" y1="4.8" x2="-3" y2="4.8"/><line x1="-5" y1="53.2" x2="-3" y2="53.2"/>
+  </g>
+  <text x="21" y="-5" font-size="2.6" font-weight="700" fill="#2563eb" text-anchor="middle">32.4</text>
+  <text x="-5.5" y="29" font-size="2.6" font-weight="700" fill="#2563eb" text-anchor="middle" transform="rotate(-90,-5.5,29)">48.4</text>
+
+  <text x="21" y="27" font-size="2.8" font-weight="700" fill="#9ca3af" text-anchor="middle">board sits here</text>
+  <text x="21" y="31" font-size="2.4" fill="#9ca3af" text-anchor="middle">component side up</text>
+  <text x="21" y="62.5" font-size="2.6" font-weight="700" fill="#7c3aed" text-anchor="middle">connector edge - power, 3-pin power, IIC</text>
+</g>
+
+<!-- reading instructions -->
+<text x="95" y="52" font-size="3.2" font-weight="700" fill="#111827">How to read it</text>
+<text x="95" y="58" font-size="2.7" fill="#374151">1. Lay the board on the outline, components up, connector edge on the purple line.</text>
+<text x="95" y="63" font-size="2.7" fill="#374151">2. Look down each corner hole at the printed circle.</text>
+<text x="95" y="68" font-size="2.7" fill="#374151">3. Solid black circle fully visible, even ring of paper all round it</text>
+<text x="99" y="72.6" font-size="2.7" fill="#374151">→ pattern is right to better than 0.5 mm. Commit it.</text>
+<text x="95" y="78" font-size="2.7" fill="#374151">4. Black circle clipped by the copper on one side, but still inside the</text>
+<text x="99" y="82.6" font-size="2.7" fill="#374151">dashed red ring → within 0.5 mm. Good enough for M3 in a ⌀3.8 hole.</text>
+<text x="95" y="88" font-size="2.7" fill="#374151">5. A hole sits outside its dashed ring → measurement is wrong. Mark which</text>
+<text x="99" y="92.6" font-size="2.7" fill="#374151">corner and by roughly how much, and say so.</text>
+
+<text x="95" y="102" font-size="3.2" font-weight="700" fill="#111827">Hole size check, while the board is off</text>
+<text x="95" y="108" font-size="2.7" fill="#374151">An M3 screw should drop through and rattle. An M4 should not go in at all.</text>
+<text x="95" y="113" font-size="2.7" fill="#374151">If an M4 does go in, the holes are ⌀4.2 and the pattern tolerance above</text>
+<text x="95" y="118" font-size="2.7" fill="#374151">is looser than stated - which only helps.</text>
+
+<text x="95" y="128" font-size="2.7" fill="#6b7280">Source of the numbers: ../2.4-Encoder-Motor-Module/SPECS.md</text>
+<text x="95" y="132.6" font-size="2.7" fill="#6b7280">Measured 2026-09-21 from a photo on 5 mm graph paper.</text>
+</svg>

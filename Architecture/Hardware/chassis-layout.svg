@@ -1,0 +1,527 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1320" height="990" viewBox="0 0 1320 990" font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif">
+<defs><marker id="d" markerWidth="8" markerHeight="8" refX="1" refY="3" orient="auto"><path d="M6,0 L0,3 L6,6 z" fill="#64748b"/></marker><marker id="e" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#64748b"/></marker></defs>
+<rect width="1320" height="990" fill="#fbfaf8"/>
+<text x="40" y="32" font-size="18" font-weight="700" fill="#1a1a1a">NEXUS - chassis deck layout</text>
+<text x="40" y="52" font-size="11" fill="#666">Hiwonder Ackermann advanced kit · three identical plates, outline traced from Hiwonder's own CAD · 1.7 px/mm · front of vehicle to the LEFT · <tspan font-weight="700">viewed from above, so the vehicle's own LEFT is at the BOTTOM of each plan</tspan></text>
+<text x="40" y="68" font-size="11" fill="#166534">Deck gaps measured on the built kit 2026-09-20: <tspan font-weight="700">lower 50 mm, upper 40 mm</tspan> - two standoff lengths, not one. Fascia panels are 52 and 42 mm tall.</text>
+<text x="60" y="110" font-size="13" font-weight="700" fill="#1a1a1a">UPPER DECK - plate 3</text>
+<text x="60" y="124" font-size="9.5" fill="#64748b">top face z 123.12 · FRDM-IMX91S</text>
+<path d="M60.0 188.7 L60.9 186.4 L62.6 184.8 L128.0 146.1 L139.9 133.7 L141.6 132.7 L145.0 132.0 L148.4 132.7 L151.0 134.5 L176.5 161.6 L179.0 162.7 L208.8 162.5 L252.1 136.8 L254.7 136.2 L487.6 133.5 L491.0 134.7 L516.5 150.0 L518.2 151.8 L518.2 317.1 L516.5 318.9 L489.3 335.1 L253.8 332.6 L251.3 331.6 L208.8 306.4 L179.0 306.2 L176.5 307.3 L150.1 335.2 L146.7 336.7 L143.3 336.7 L139.1 334.4 L128.0 322.8 L62.6 284.1 L60.9 282.5 L60.0 280.2 Z" fill="#f8fafc" stroke="#94a3b8" stroke-width="1.8" stroke-dasharray="7 4"/>
+<rect x="334.0" y="183.7" width="24.8" height="101.6" rx="12.4" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<rect x="247.5" y="204.3" width="38.6" height="60.1" rx="19.3" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<rect x="502.5" y="172.0" width="9.1" height="124.8" rx="4.6" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<rect x="433.1" y="176.4" width="7.3" height="116.1" rx="3.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<rect x="460.3" y="176.4" width="7.3" height="116.1" rx="3.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<rect x="405.9" y="176.4" width="7.3" height="116.1" rx="3.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<rect x="378.7" y="176.4" width="7.3" height="116.1" rx="3.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<rect x="245.9" y="148.8" width="82.1" height="9.0" rx="4.5" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<rect x="245.9" y="311.1" width="82.1" height="9.0" rx="4.5" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<rect x="155.5" y="177.8" width="40.6" height="17.5" rx="8.8" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<rect x="155.5" y="273.4" width="40.6" height="17.5" rx="8.8" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<rect x="65.1" y="197.7" width="5.4" height="73.4" rx="2.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<rect x="130.3" y="226.8" width="15.3" height="15.3" rx="7.6" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<rect x="82.7" y="226.8" width="15.3" height="15.3" rx="7.6" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<rect x="130.3" y="190.1" width="7.3" height="7.3" rx="3.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<rect x="130.3" y="271.5" width="7.3" height="7.3" rx="3.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<rect x="134.3" y="203.6" width="7.3" height="7.3" rx="3.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<rect x="134.3" y="258.0" width="7.3" height="7.3" rx="3.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<rect x="455.7" y="151.9" width="7.3" height="7.3" rx="3.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<rect x="455.7" y="309.7" width="7.3" height="7.3" rx="3.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<rect x="410.0" y="309.7" width="7.3" height="7.3" rx="3.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<rect x="77.9" y="190.1" width="7.3" height="7.3" rx="3.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<rect x="493.0" y="166.0" width="7.3" height="7.3" rx="3.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<rect x="410.0" y="151.9" width="7.3" height="7.3" rx="3.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<rect x="77.9" y="271.5" width="7.3" height="7.3" rx="3.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<rect x="493.0" y="295.5" width="7.3" height="7.3" rx="3.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<rect x="213.8" y="190.1" width="7.3" height="7.3" rx="3.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<rect x="102.8" y="166.0" width="7.3" height="7.3" rx="3.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<rect x="213.8" y="271.5" width="7.3" height="7.3" rx="3.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<rect x="102.8" y="295.5" width="7.3" height="7.3" rx="3.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<rect x="117.8" y="189.5" width="7.1" height="7.1" rx="3.6" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<rect x="117.8" y="272.2" width="7.1" height="7.1" rx="3.6" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="376.4" cy="148.5" r="2.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="376.4" cy="320.4" r="2.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="478.0" cy="296.5" r="2.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="478.0" cy="271.0" r="2.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="394.7" cy="197.9" r="2.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="394.7" cy="271.0" r="2.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="394.7" cy="296.5" r="2.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="478.0" cy="197.9" r="2.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="507.0" cy="159.9" r="2.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="394.7" cy="172.4" r="2.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="478.0" cy="172.4" r="2.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="507.0" cy="308.9" r="2.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="228.7" cy="197.9" r="2.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="311.9" cy="172.4" r="2.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="137.9" cy="246.3" r="2.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="78.4" cy="234.4" r="2.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="228.7" cy="172.4" r="2.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="149.8" cy="234.4" r="2.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="311.9" cy="271.0" r="2.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="137.9" cy="222.5" r="2.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="126.0" cy="234.4" r="2.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="311.9" cy="197.9" r="2.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="102.2" cy="234.4" r="2.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="228.7" cy="271.0" r="2.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="311.9" cy="296.5" r="2.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="90.3" cy="222.5" r="2.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="228.7" cy="296.5" r="2.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="90.3" cy="246.3" r="2.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="145.0" cy="328.4" r="2.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="237.5" cy="165.3" r="2.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="237.5" cy="303.6" r="2.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="145.0" cy="140.5" r="2.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="447.4" cy="156.2" r="2.3" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="348.8" cy="302.4" r="2.3" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="447.4" cy="302.4" r="2.3" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="348.8" cy="156.2" r="2.3" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="207.8" cy="268.4" r="2.3" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="207.8" cy="200.4" r="2.3" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="264.1" cy="193.1" r="2.3" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="224.4" cy="221.5" r="2.3" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="224.4" cy="247.4" r="2.3" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="303.9" cy="247.4" r="2.3" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="303.9" cy="221.5" r="2.3" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="264.1" cy="275.7" r="2.3" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="88.8" cy="186.8" r="2.3" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="88.8" cy="282.0" r="2.3" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="143.3" cy="275.7" r="2.3" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="103.6" cy="247.4" r="2.3" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="348.8" cy="312.6" r="2.3" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="103.6" cy="221.5" r="2.3" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="183.1" cy="221.5" r="2.3" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="348.8" cy="166.4" r="2.3" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="447.4" cy="312.6" r="2.3" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="143.3" cy="193.1" r="2.3" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="183.1" cy="247.4" r="2.3" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="447.4" cy="166.4" r="2.3" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="233.7" cy="254.8" r="2.3" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="311.9" cy="254.8" r="2.3" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="311.9" cy="214.0" r="2.3" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="233.7" cy="214.0" r="2.3" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="487.2" cy="323.0" r="2.1" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="487.2" cy="145.9" r="2.1" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="335.5" cy="160.4" r="2.1" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="335.5" cy="308.5" r="2.1" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="496.6" cy="169.7" r="3.4" fill="#fde68a" stroke="#a16207" stroke-width="1.2"/>
+<circle cx="496.6" cy="299.2" r="3.4" fill="#fde68a" stroke="#a16207" stroke-width="1.2"/>
+<circle cx="106.5" cy="169.7" r="3.4" fill="#fde68a" stroke="#a16207" stroke-width="1.2"/>
+<circle cx="106.5" cy="299.2" r="3.4" fill="#fde68a" stroke="#a16207" stroke-width="1.2"/>
+<circle cx="507.0" cy="159.9" r="4" fill="none" stroke="#7c3aed" stroke-width="1.5"/><circle cx="507.0" cy="159.9" r="1.5" fill="#7c3aed"/>
+<circle cx="507.0" cy="308.9" r="4" fill="none" stroke="#7c3aed" stroke-width="1.5"/><circle cx="507.0" cy="308.9" r="1.5" fill="#7c3aed"/>
+<text x="60" y="368" font-size="13" font-weight="700" fill="#1a1a1a">MIDDLE DECK - plate 2</text>
+<text x="60" y="382" font-size="9.5" fill="#64748b">top face z 81.12 · STM32 carrier and the 5 V converter</text>
+<path d="M60.0 446.7 L60.9 444.4 L62.6 442.8 L128.0 404.1 L139.9 391.7 L141.6 390.7 L145.0 390.0 L148.4 390.7 L151.0 392.5 L176.5 419.6 L179.0 420.7 L208.8 420.5 L252.1 394.8 L254.7 394.2 L487.6 391.5 L491.0 392.7 L516.5 408.0 L518.2 409.8 L518.2 575.1 L516.5 576.9 L489.3 593.1 L253.8 590.6 L251.3 589.6 L208.8 564.4 L179.0 564.2 L176.5 565.3 L150.1 593.2 L146.7 594.7 L143.3 594.7 L139.1 592.4 L128.0 580.8 L62.6 542.1 L60.9 540.5 L60.0 538.2 Z" fill="#f8fafc" stroke="#94a3b8" stroke-width="1.8" stroke-dasharray="7 4"/>
+<rect x="334.0" y="441.7" width="24.8" height="101.6" rx="12.4" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<rect x="247.5" y="462.3" width="38.6" height="60.1" rx="19.3" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<rect x="502.5" y="430.0" width="9.1" height="124.8" rx="4.6" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<rect x="433.1" y="434.4" width="7.3" height="116.1" rx="3.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<rect x="460.3" y="434.4" width="7.3" height="116.1" rx="3.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<rect x="405.9" y="434.4" width="7.3" height="116.1" rx="3.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<rect x="378.7" y="434.4" width="7.3" height="116.1" rx="3.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<rect x="245.9" y="406.8" width="82.1" height="9.0" rx="4.5" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<rect x="245.9" y="569.1" width="82.1" height="9.0" rx="4.5" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<rect x="155.5" y="435.8" width="40.6" height="17.5" rx="8.8" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<rect x="155.5" y="531.4" width="40.6" height="17.5" rx="8.8" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<rect x="65.1" y="455.7" width="5.4" height="73.4" rx="2.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<rect x="130.3" y="484.8" width="15.3" height="15.3" rx="7.6" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<rect x="82.7" y="484.8" width="15.3" height="15.3" rx="7.6" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<rect x="130.3" y="448.1" width="7.3" height="7.3" rx="3.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<rect x="130.3" y="529.5" width="7.3" height="7.3" rx="3.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<rect x="134.3" y="461.6" width="7.3" height="7.3" rx="3.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<rect x="134.3" y="516.0" width="7.3" height="7.3" rx="3.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<rect x="455.7" y="409.9" width="7.3" height="7.3" rx="3.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<rect x="455.7" y="567.7" width="7.3" height="7.3" rx="3.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<rect x="410.0" y="567.7" width="7.3" height="7.3" rx="3.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<rect x="77.9" y="448.1" width="7.3" height="7.3" rx="3.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<rect x="493.0" y="424.0" width="7.3" height="7.3" rx="3.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<rect x="410.0" y="409.9" width="7.3" height="7.3" rx="3.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<rect x="77.9" y="529.5" width="7.3" height="7.3" rx="3.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<rect x="493.0" y="553.5" width="7.3" height="7.3" rx="3.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<rect x="213.8" y="448.1" width="7.3" height="7.3" rx="3.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<rect x="102.8" y="424.0" width="7.3" height="7.3" rx="3.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<rect x="213.8" y="529.5" width="7.3" height="7.3" rx="3.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<rect x="102.8" y="553.5" width="7.3" height="7.3" rx="3.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<rect x="117.8" y="447.5" width="7.1" height="7.1" rx="3.6" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<rect x="117.8" y="530.2" width="7.1" height="7.1" rx="3.6" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="376.4" cy="406.5" r="2.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="376.4" cy="578.4" r="2.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="478.0" cy="554.5" r="2.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="478.0" cy="529.0" r="2.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="394.7" cy="455.9" r="2.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="394.7" cy="529.0" r="2.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="394.7" cy="554.5" r="2.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="478.0" cy="455.9" r="2.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="507.0" cy="417.9" r="2.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="394.7" cy="430.4" r="2.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="478.0" cy="430.4" r="2.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="507.0" cy="566.9" r="2.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="228.7" cy="455.9" r="2.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="311.9" cy="430.4" r="2.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="137.9" cy="504.3" r="2.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="78.4" cy="492.4" r="2.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="228.7" cy="430.4" r="2.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="149.8" cy="492.4" r="2.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="311.9" cy="529.0" r="2.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="137.9" cy="480.5" r="2.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="126.0" cy="492.4" r="2.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="311.9" cy="455.9" r="2.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="102.2" cy="492.4" r="2.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="228.7" cy="529.0" r="2.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="311.9" cy="554.5" r="2.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="90.3" cy="480.5" r="2.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="228.7" cy="554.5" r="2.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="90.3" cy="504.3" r="2.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="145.0" cy="586.4" r="2.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="237.5" cy="423.3" r="2.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="237.5" cy="561.6" r="2.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="145.0" cy="398.5" r="2.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="447.4" cy="414.2" r="2.3" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="348.8" cy="560.4" r="2.3" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="447.4" cy="560.4" r="2.3" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="348.8" cy="414.2" r="2.3" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="207.8" cy="526.4" r="2.3" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="207.8" cy="458.4" r="2.3" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="264.1" cy="451.1" r="2.3" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="224.4" cy="479.5" r="2.3" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="224.4" cy="505.4" r="2.3" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="303.9" cy="505.4" r="2.3" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="303.9" cy="479.5" r="2.3" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="264.1" cy="533.7" r="2.3" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="88.8" cy="444.8" r="2.3" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="88.8" cy="540.0" r="2.3" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="143.3" cy="533.7" r="2.3" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="103.6" cy="505.4" r="2.3" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="348.8" cy="570.6" r="2.3" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="103.6" cy="479.5" r="2.3" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="183.1" cy="479.5" r="2.3" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="348.8" cy="424.4" r="2.3" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="447.4" cy="570.6" r="2.3" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="143.3" cy="451.1" r="2.3" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="183.1" cy="505.4" r="2.3" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="447.4" cy="424.4" r="2.3" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="233.7" cy="512.8" r="2.3" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="311.9" cy="512.8" r="2.3" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="311.9" cy="472.0" r="2.3" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="233.7" cy="472.0" r="2.3" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="487.2" cy="581.0" r="2.1" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="487.2" cy="403.9" r="2.1" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="335.5" cy="418.4" r="2.1" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="335.5" cy="566.5" r="2.1" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="496.6" cy="427.7" r="3.4" fill="#fde68a" stroke="#a16207" stroke-width="1.2"/>
+<circle cx="496.6" cy="557.2" r="3.4" fill="#fde68a" stroke="#a16207" stroke-width="1.2"/>
+<circle cx="106.5" cy="427.7" r="3.4" fill="#fde68a" stroke="#a16207" stroke-width="1.2"/>
+<circle cx="106.5" cy="557.2" r="3.4" fill="#fde68a" stroke="#a16207" stroke-width="1.2"/>
+<circle cx="507.0" cy="417.9" r="4" fill="none" stroke="#7c3aed" stroke-width="1.5"/><circle cx="507.0" cy="417.9" r="1.5" fill="#7c3aed"/>
+<circle cx="507.0" cy="566.9" r="4" fill="none" stroke="#7c3aed" stroke-width="1.5"/><circle cx="507.0" cy="566.9" r="1.5" fill="#7c3aed"/>
+<text x="60" y="626" font-size="13" font-weight="700" fill="#1a1a1a">LOWER DECK - plate 1</text>
+<text x="60" y="640" font-size="9.5" fill="#64748b">top face z 29.12 · drive, battery, motor driver, WAGO 221-415 distribution and INA226 sensing</text>
+<path d="M60.0 704.7 L60.9 702.4 L62.6 700.8 L128.0 662.1 L139.9 649.7 L141.6 648.7 L145.0 648.0 L148.4 648.7 L151.0 650.5 L176.5 677.6 L179.0 678.7 L208.8 678.5 L252.1 652.8 L254.7 652.2 L487.6 649.5 L491.0 650.7 L516.5 666.0 L518.2 667.8 L518.2 833.1 L516.5 834.9 L489.3 851.1 L253.8 848.6 L251.3 847.6 L208.8 822.4 L179.0 822.2 L176.5 823.3 L150.1 851.2 L146.7 852.7 L143.3 852.7 L139.1 850.4 L128.0 838.8 L62.6 800.1 L60.9 798.5 L60.0 796.2 Z" fill="#ffffff" stroke="#334155" stroke-width="1.8"/>
+<rect x="334.0" y="699.7" width="24.8" height="101.6" rx="12.4" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<rect x="247.5" y="720.3" width="38.6" height="60.1" rx="19.3" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<rect x="502.5" y="688.0" width="9.1" height="124.8" rx="4.6" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<rect x="433.1" y="692.4" width="7.3" height="116.1" rx="3.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<rect x="460.3" y="692.4" width="7.3" height="116.1" rx="3.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<rect x="405.9" y="692.4" width="7.3" height="116.1" rx="3.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<rect x="378.7" y="692.4" width="7.3" height="116.1" rx="3.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<rect x="245.9" y="664.8" width="82.1" height="9.0" rx="4.5" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<rect x="245.9" y="827.1" width="82.1" height="9.0" rx="4.5" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<rect x="155.5" y="693.8" width="40.6" height="17.5" rx="8.8" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<rect x="155.5" y="789.4" width="40.6" height="17.5" rx="8.8" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<rect x="65.1" y="713.7" width="5.4" height="73.4" rx="2.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<rect x="130.3" y="742.8" width="15.3" height="15.3" rx="7.6" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<rect x="82.7" y="742.8" width="15.3" height="15.3" rx="7.6" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<rect x="130.3" y="706.1" width="7.3" height="7.3" rx="3.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<rect x="130.3" y="787.5" width="7.3" height="7.3" rx="3.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<rect x="134.3" y="719.6" width="7.3" height="7.3" rx="3.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<rect x="134.3" y="774.0" width="7.3" height="7.3" rx="3.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<rect x="455.7" y="667.9" width="7.3" height="7.3" rx="3.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<rect x="455.7" y="825.7" width="7.3" height="7.3" rx="3.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<rect x="410.0" y="825.7" width="7.3" height="7.3" rx="3.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<rect x="77.9" y="706.1" width="7.3" height="7.3" rx="3.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<rect x="493.0" y="682.0" width="7.3" height="7.3" rx="3.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<rect x="410.0" y="667.9" width="7.3" height="7.3" rx="3.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<rect x="77.9" y="787.5" width="7.3" height="7.3" rx="3.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<rect x="493.0" y="811.5" width="7.3" height="7.3" rx="3.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<rect x="213.8" y="706.1" width="7.3" height="7.3" rx="3.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<rect x="102.8" y="682.0" width="7.3" height="7.3" rx="3.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<rect x="213.8" y="787.5" width="7.3" height="7.3" rx="3.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<rect x="102.8" y="811.5" width="7.3" height="7.3" rx="3.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<rect x="117.8" y="705.5" width="7.1" height="7.1" rx="3.6" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<rect x="117.8" y="788.2" width="7.1" height="7.1" rx="3.6" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="376.4" cy="664.5" r="2.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="376.4" cy="836.4" r="2.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="478.0" cy="812.5" r="2.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="478.0" cy="787.0" r="2.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="394.7" cy="713.9" r="2.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="394.7" cy="787.0" r="2.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="394.7" cy="812.5" r="2.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="478.0" cy="713.9" r="2.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="507.0" cy="675.9" r="2.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="394.7" cy="688.4" r="2.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="478.0" cy="688.4" r="2.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="507.0" cy="824.9" r="2.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="228.7" cy="713.9" r="2.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="311.9" cy="688.4" r="2.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="137.9" cy="762.3" r="2.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="78.4" cy="750.4" r="2.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="228.7" cy="688.4" r="2.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="149.8" cy="750.4" r="2.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="311.9" cy="787.0" r="2.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="137.9" cy="738.5" r="2.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="126.0" cy="750.4" r="2.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="311.9" cy="713.9" r="2.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="102.2" cy="750.4" r="2.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="228.7" cy="787.0" r="2.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="311.9" cy="812.5" r="2.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="90.3" cy="738.5" r="2.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="228.7" cy="812.5" r="2.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="90.3" cy="762.3" r="2.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="145.0" cy="844.4" r="2.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="237.5" cy="681.3" r="2.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="237.5" cy="819.6" r="2.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="145.0" cy="656.5" r="2.7" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="447.4" cy="672.2" r="2.3" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="348.8" cy="818.4" r="2.3" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="447.4" cy="818.4" r="2.3" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="348.8" cy="672.2" r="2.3" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="207.8" cy="784.4" r="2.3" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="207.8" cy="716.4" r="2.3" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="264.1" cy="709.1" r="2.3" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="224.4" cy="737.5" r="2.3" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="224.4" cy="763.4" r="2.3" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="303.9" cy="763.4" r="2.3" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="303.9" cy="737.5" r="2.3" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="264.1" cy="791.7" r="2.3" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="88.8" cy="702.8" r="2.3" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="88.8" cy="798.0" r="2.3" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="143.3" cy="791.7" r="2.3" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="103.6" cy="763.4" r="2.3" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="348.8" cy="828.6" r="2.3" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="103.6" cy="737.5" r="2.3" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="183.1" cy="737.5" r="2.3" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="348.8" cy="682.4" r="2.3" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="447.4" cy="828.6" r="2.3" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="143.3" cy="709.1" r="2.3" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="183.1" cy="763.4" r="2.3" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="447.4" cy="682.4" r="2.3" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="233.7" cy="770.8" r="2.3" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="311.9" cy="770.8" r="2.3" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="311.9" cy="730.0" r="2.3" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="233.7" cy="730.0" r="2.3" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="487.2" cy="839.0" r="2.1" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="487.2" cy="661.9" r="2.1" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="335.5" cy="676.4" r="2.1" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="335.5" cy="824.5" r="2.1" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
+<circle cx="496.6" cy="685.7" r="3.4" fill="#fde68a" stroke="#a16207" stroke-width="1.2"/>
+<circle cx="496.6" cy="815.2" r="3.4" fill="#fde68a" stroke="#a16207" stroke-width="1.2"/>
+<circle cx="106.5" cy="685.7" r="3.4" fill="#fde68a" stroke="#a16207" stroke-width="1.2"/>
+<circle cx="106.5" cy="815.2" r="3.4" fill="#fde68a" stroke="#a16207" stroke-width="1.2"/>
+<circle cx="507.0" cy="675.9" r="4" fill="none" stroke="#7c3aed" stroke-width="1.5"/><circle cx="507.0" cy="675.9" r="1.5" fill="#7c3aed"/>
+<circle cx="507.0" cy="824.9" r="4" fill="none" stroke="#7c3aed" stroke-width="1.5"/><circle cx="507.0" cy="824.9" r="1.5" fill="#7c3aed"/>
+<rect x="222.8" y="166.4" width="178.5" height="110.5" rx="3" fill="#eef2ff" fill-opacity="0.92" stroke="#4338ca" stroke-width="1.8"/>
+<circle cx="228.7" cy="172.4" r="4.2" fill="none" stroke="#4338ca" stroke-width="1.8"/><line x1="222.2" y1="172.4" x2="235.2" y2="172.4" stroke="#4338ca" stroke-width="1.3"/><line x1="228.7" y1="165.9" x2="228.7" y2="178.9" stroke="#4338ca" stroke-width="1.3"/>
+<circle cx="228.7" cy="172.4" r="1.5" fill="#4338ca"/>
+<circle cx="228.7" cy="271.0" r="4.2" fill="none" stroke="#4338ca" stroke-width="1.8"/><line x1="222.2" y1="271.0" x2="235.2" y2="271.0" stroke="#4338ca" stroke-width="1.3"/><line x1="228.7" y1="264.5" x2="228.7" y2="277.5" stroke="#4338ca" stroke-width="1.3"/>
+<circle cx="228.7" cy="271.0" r="1.5" fill="#4338ca"/>
+<circle cx="311.9" cy="172.4" r="4.2" fill="none" stroke="#4338ca" stroke-width="1.8"/><line x1="305.4" y1="172.4" x2="318.4" y2="172.4" stroke="#4338ca" stroke-width="1.3"/><line x1="311.9" y1="165.9" x2="311.9" y2="178.9" stroke="#4338ca" stroke-width="1.3"/>
+<circle cx="311.9" cy="172.4" r="1.5" fill="#4338ca"/>
+<circle cx="311.9" cy="271.0" r="4.2" fill="none" stroke="#4338ca" stroke-width="1.8"/><line x1="305.4" y1="271.0" x2="318.4" y2="271.0" stroke="#4338ca" stroke-width="1.3"/><line x1="311.9" y1="264.5" x2="311.9" y2="277.5" stroke="#4338ca" stroke-width="1.3"/>
+<circle cx="311.9" cy="271.0" r="1.5" fill="#4338ca"/>
+<circle cx="389.4" cy="199.6" r="2.6" fill="none" stroke="#94a3b8" stroke-width="1.2" stroke-dasharray="2 2"/>
+<circle cx="389.4" cy="265.0" r="2.6" fill="none" stroke="#94a3b8" stroke-width="1.2" stroke-dasharray="2 2"/>
+<text x="312.0" y="208.1" font-size="10.5" font-weight="700" fill="#4338ca" text-anchor="middle">FRDM-IMX91S  105 × 65</text>
+<text x="312.0" y="225.1" font-size="8.2" font-weight="700" fill="#4338ca" text-anchor="middle">4 × M2.5 + washer - 48.94 × 58.00</text>
+<text x="312.0" y="242.1" font-size="7.8" fill="#4338ca" text-anchor="middle">µSD on the UNDERSIDE</text>
+<text x="300" y="288" font-size="7.8" fill="#64748b" text-anchor="middle">pattern 49.00 × 58.00 from NXP drill T11 - 0.06 mm out in x · dashed = its other 2 holes</text>
+
+<text x="300" y="300" font-size="8.5" fill="#7c3aed" text-anchor="middle">fascia upper panel clamps here - 2 × M3×8 driven down from the top (MEC-07)</text>
+<rect x="218.4" y="420.3" width="221.0" height="144.5" rx="4" fill="#ecfdf5" fill-opacity="0.92" stroke="#047857" stroke-width="1.8"/>
+<rect x="229.3" y="436.3" width="164.9" height="112.2" rx="3" fill="#eef2ff" fill-opacity="0.75" stroke="#4338ca" stroke-width="1.3" stroke-dasharray="5 3"/>
+<rect x="259.9" y="442.8" width="103.6" height="8.6" rx="2" fill="#c7d2fe" stroke="#4338ca" stroke-width="0.8"/>
+<rect x="259.9" y="533.5" width="103.6" height="8.6" rx="2" fill="#c7d2fe" stroke="#4338ca" stroke-width="0.8"/>
+<circle cx="228.7" cy="430.4" r="4.2" fill="none" stroke="#047857" stroke-width="1.8"/>
+<circle cx="228.7" cy="430.4" r="1.5" fill="#047857"/>
+<circle cx="228.7" cy="554.5" r="4.2" fill="none" stroke="#047857" stroke-width="1.8"/>
+<circle cx="228.7" cy="554.5" r="1.5" fill="#047857"/>
+<circle cx="394.7" cy="430.4" r="4.2" fill="none" stroke="#047857" stroke-width="1.8"/>
+<circle cx="394.7" cy="430.4" r="1.5" fill="#047857"/>
+<circle cx="394.7" cy="554.5" r="4.2" fill="none" stroke="#047857" stroke-width="1.8"/>
+<circle cx="394.7" cy="554.5" r="1.5" fill="#047857"/>
+<text x="311.7" y="477.1" font-size="10.5" font-weight="700" fill="#047857" text-anchor="middle">STM32 CARRIER 130 × 85</text>
+<text x="311.7" y="494.1" font-size="8.2" fill="#4338ca" text-anchor="middle">STM32F4DISCOVERY 66 × 97</text>
+<text x="311.7" y="511.1" font-size="8.2" font-weight="700" fill="#047857" text-anchor="middle">4 × M3 - 97.70 × 73.00</text>
+<text x="300" y="574" font-size="7.8" fill="#047857" text-anchor="middle">holes cut onto chassis x 99.24/196.88 × y 23.76/96.76 - 7.3 mm outboard of the headers (MEC-11)</text>
+
+<rect x="94.0" y="444.4" width="108.8" height="96.9" rx="2.5" fill="#fff1f2" stroke="#be123c" stroke-width="1.4"/>
+<text x="149.2" y="470.0" font-size="9" font-weight="700" fill="#be123c" text-anchor="middle">BAUER 50 W</text>
+<text x="149.2" y="480.0" font-size="7" fill="#be123c" text-anchor="middle">64 x 57 x 22</text><text x="149.2" y="524.0" font-size="7" fill="#be123c" text-anchor="middle">2 x 6.8 ears, 54 mm apart</text>
+<rect x="94.0" y="444.4" width="108.8" height="96.9" rx="2.5" fill="none" stroke="#dc2626" stroke-width="2" stroke-dasharray="5 3"/><circle cx="196.0" cy="452.9" r="6" fill="#dc2626"/><text x="196.0" y="456.3" font-size="9" font-weight="700" fill="#ffffff" text-anchor="middle">?</text>
+<circle cx="102.5" cy="492.9" r="5.8" fill="none" stroke="#be123c" stroke-width="1.6"/><circle cx="102.5" cy="492.9" r="1.6" fill="#be123c"/><circle cx="194.3" cy="492.9" r="5.8" fill="none" stroke="#be123c" stroke-width="1.6"/><circle cx="194.3" cy="492.9" r="1.6" fill="#be123c"/><text x="300" y="404" font-size="8.5" fill="#7c3aed" text-anchor="middle">one M3×12 through this plate clamps BOTH fascia panels (MEC-07)</text>
+<text x="300" y="416" font-size="8.5" fill="#b45309" text-anchor="middle">gap ABOVE carries the 3 debug ports · gap BELOW has the switch bodies</text>
+<rect x="92.8" y="716.5" width="49.0" height="68.0" rx="3" fill="#fff7ed" stroke="#c2410c" stroke-width="1.4"/>
+<text x="117.3" y="747.5" font-size="8.5" font-weight="700" fill="#c2410c" text-anchor="middle">SERVO</text>
+<text x="117.3" y="759.5" font-size="7.5" fill="#c2410c" text-anchor="middle">LD-1501MG</text>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<rect x="153.5" y="699.0" width="130.9" height="107.1" rx="2.5" fill="#fef2f2" stroke="#b91c1c" stroke-width="1.4"/>
+<rect x="158.6" y="693.9" width="34.0" height="113.1" rx="2" fill="#0f766e" fill-opacity="0.14" stroke="#0f766e" stroke-width="1" stroke-dasharray="4 2.5"/>
+<rect x="158.6" y="693.8" width="34.0" height="17.5" fill="#0f766e" fill-opacity="0.38"/>
+<rect x="158.6" y="789.4" width="34.0" height="17.5" fill="#0f766e" fill-opacity="0.38"/>
+<rect x="247.0" y="664.8" width="34.0" height="171.3" rx="2" fill="#0f766e" fill-opacity="0.14" stroke="#0f766e" stroke-width="1" stroke-dasharray="4 2.5"/>
+<rect x="247.0" y="664.8" width="34.0" height="9.0" fill="#0f766e" fill-opacity="0.38"/>
+<rect x="247.0" y="827.1" width="34.0" height="9.0" fill="#0f766e" fill-opacity="0.38"/>
+<text x="218.9" y="742.0" font-size="9" font-weight="700" fill="#b91c1c" text-anchor="middle">3S 11.1 V lithium pack</text>
+<text x="218.9" y="752.0" font-size="6.8" fill="#b91c1c" text-anchor="middle">63 x 77 x 20 - shrink-wrapped, soft</text>
+<text x="218.9" y="761.0" font-size="6.8" fill="#b91c1c" text-anchor="middle">label 6000 mAh · cells say ~5000</text>
+<text x="218.9" y="770.0" font-size="6.6" font-weight="700" fill="#0f766e" text-anchor="middle">on a 2 mm non-slip pad</text>
+<circle cx="284.4" cy="701.5" r="3.2" fill="#b91c1c"/>
+<text x="279.5" y="695.5" font-size="6.4" font-weight="700" fill="#b91c1c" text-anchor="end">SM-2P</text>
+<circle cx="284.4" cy="803.6" r="3.2" fill="#334155"/>
+<text x="279.5" y="815.5" font-size="6.4" font-weight="700" fill="#334155" text-anchor="end">charge socket</text>
+<text x="215" y="687.5" font-size="6.4" font-weight="700" fill="#b45309" text-anchor="middle">battery leads and the 7.5 A main fuse route here</text>
+<text x="215" y="818.5" font-size="6.4" font-weight="700" fill="#b45309" text-anchor="middle">charge socket parks and ties in this channel</text>
+<rect x="289.5" y="651.4" width="37.4" height="44.2" rx="2.5" fill="#ecfeff" stroke="#0e7490" stroke-width="1.4"/>
+<text x="308.2" y="668.0" font-size="7.6" font-weight="700" fill="#0e7490" text-anchor="middle">INA226</text>
+<text x="308.2" y="677.0" font-size="6.6" fill="#0e7490" text-anchor="middle">22 x 26 x 14</text>
+<text x="308.2" y="685.5" font-size="6" font-weight="700" fill="#0e7490" text-anchor="middle">not screwed</text>
+<line x1="289.5" y1="695.6" x2="326.9" y2="695.6" stroke="#0e7490" stroke-width="2.4"/>
+<rect x="289.5" y="695.6" width="31.6" height="48.4" rx="2.5" fill="#fef2f2" stroke="#b91c1c" stroke-width="1.4"/>
+<text x="305.3" y="722.8" font-size="7.5" font-weight="700" fill="#b91c1c" text-anchor="middle">(+)</text>
+<rect x="289.5" y="746.6" width="31.6" height="48.4" rx="2.5" fill="#f1f5f9" stroke="#334155" stroke-width="1.4"/>
+<text x="305.3" y="773.8" font-size="7.5" font-weight="700" fill="#334155" text-anchor="middle">(-) A</text>
+<rect x="289.5" y="797.6" width="31.6" height="48.4" rx="2.5" fill="#f1f5f9" stroke="#334155" stroke-width="1.4"/>
+<text x="305.3" y="824.8" font-size="7.5" font-weight="700" fill="#334155" text-anchor="middle">(-) B</text>
+<rect x="342.2" y="816.3" width="59.5" height="20.4" rx="2.5" fill="#fffbeb" stroke="#a16207" stroke-width="1.4"/>
+<text x="372.0" y="829.5" font-size="7.6" font-weight="700" fill="#a16207" text-anchor="middle">UBEC 6 V</text>
+<text x="95" y="800" font-size="8.5" font-weight="700" fill="#475569">Front axle</text>
+<text x="95" y="811" font-size="7.8" fill="#475569">as supplied</text>
+<rect x="405.4" y="637.9" width="62.7" height="40.8" rx="2" fill="#e0e7ff" stroke="#4338ca" stroke-width="1.1"/>
+<rect x="405.4" y="668.0" width="62.7" height="16.5" rx="2" fill="#eef2ff" stroke="#4338ca" stroke-width="1.1"/>
+<rect x="408.8" y="684.5" width="55.9" height="50.0" rx="2" fill="#eef2ff" stroke="#4338ca" stroke-width="1.1"/>
+<rect x="407.8" y="723.3" width="57.8" height="21.1" rx="2" fill="#eef2ff" stroke="#4338ca" stroke-width="1.1"/>
+<rect x="431.4" y="614.3" width="10.4" height="62.9" rx="2" fill="#cbd5e1" stroke="#4338ca" stroke-width="1.1"/>
+<text x="436.8" y="656.3" font-size="7.5" font-weight="700" fill="#4338ca" text-anchor="middle">MOTOR R</text>
+<text x="436.8" y="666.3" font-size="6.5" fill="#4338ca" text-anchor="middle">gearbox</text>
+<rect x="405.4" y="822.2" width="62.7" height="40.8" rx="2" fill="#e0e7ff" stroke="#4338ca" stroke-width="1.1"/>
+<rect x="405.4" y="816.4" width="62.7" height="16.5" rx="2" fill="#eef2ff" stroke="#4338ca" stroke-width="1.1"/>
+<rect x="408.8" y="766.5" width="55.9" height="50.0" rx="2" fill="#eef2ff" stroke="#4338ca" stroke-width="1.1"/>
+<rect x="407.8" y="756.6" width="57.8" height="21.1" rx="2" fill="#eef2ff" stroke="#4338ca" stroke-width="1.1"/>
+<rect x="431.8" y="823.7" width="10.4" height="62.9" rx="2" fill="#cbd5e1" stroke="#4338ca" stroke-width="1.1"/>
+<text x="436.8" y="840.6" font-size="7.5" font-weight="700" fill="#4338ca" text-anchor="middle">MOTOR L</text>
+<text x="436.8" y="850.6" font-size="6.5" fill="#4338ca" text-anchor="middle">gearbox</text>
+<rect x="345.6" y="686.4" width="71.4" height="98.6" rx="4" fill="#f5f3ff" fill-opacity="0.82" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="375.5" y="725.0" font-size="8.2" font-weight="700" fill="#6d28d9" text-anchor="middle">MOTOR DRIVER</text>
+<text x="375.5" y="734.5" font-size="6.6" fill="#6d28d9" text-anchor="middle">42 x 58 x 10</text>
+<text x="375.5" y="743.0" font-size="6.4" fill="#7c3aed" text-anchor="middle">holes 32.4 x 48.4</text>
+<text x="375.5" y="751.5" font-size="6.2" font-weight="700" fill="#047857" text-anchor="middle">as mounted 21 Sep</text>
+<line x1="345.6" y1="686.4" x2="417.0" y2="686.4" stroke="#7c3aed" stroke-width="2.6"/>
+<rect x="359.9" y="680.4" width="9.0" height="6.0" fill="#ddd6fe" stroke="#7c3aed" stroke-width="0.9"/>
+<rect x="369.2" y="678.4" width="22.6" height="8.0" fill="#ddd6fe" stroke="#7c3aed" stroke-width="0.9"/>
+<rect x="392.4" y="680.4" width="8.5" height="6.0" fill="#ddd6fe" stroke="#7c3aed" stroke-width="0.9"/>
+<text x="375.5" y="671.5" font-size="6.6" font-weight="700" fill="#7c3aed" text-anchor="middle">VM · 3-pin · I2C</text>
+<text x="375.5" y="663.0" font-size="6.2" fill="#7c3aed" text-anchor="middle">harness fans out</text>
+<circle cx="408.8" cy="694.6" r="3.2" fill="#ffffff" stroke="#047857" stroke-width="1.6"/><circle cx="408.8" cy="694.6" r="1.4" fill="#047857"/>
+<circle cx="408.8" cy="776.9" r="3.2" fill="#ffffff" stroke="#047857" stroke-width="1.6"/><circle cx="408.8" cy="776.9" r="1.4" fill="#047857"/>
+<circle cx="353.8" cy="694.6" r="3.2" fill="#ffffff" stroke="#0891b2" stroke-width="1.6" stroke-dasharray="2.2 1.8"/>
+<circle cx="353.8" cy="776.9" r="3.2" fill="#ffffff" stroke="#0891b2" stroke-width="1.6" stroke-dasharray="2.2 1.8"/>
+<path d="M350.6 691.4 L345.0 685.8 M353.8 780.1 L353.8 786.5" stroke="#0891b2" stroke-width="1.3" stroke-dasharray="2.2 1.8"/>
+<rect x="341.0" y="708.4" width="6.0" height="7.0" rx="1" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1"/>
+<rect x="341.0" y="756.0" width="6.0" height="7.0" rx="1" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1"/>
+<text x="350.0" y="714.4" font-size="6.4" font-weight="700" fill="#6d28d9">M3 - R motor</text>
+<text x="350.0" y="762.0" font-size="6.4" font-weight="700" fill="#6d28d9">M1 - L motor</text>
+<text x="366" y="793.5" font-size="6.2" font-weight="700" fill="#047857" text-anchor="middle">2 × M3 + spacers, slot x 203.5</text>
+<circle cx="333.0" cy="801.0" r="5" fill="#dc2626"/>
+<text x="333.0" y="803.8" font-size="7.5" font-weight="700" fill="#ffffff" text-anchor="middle">?</text>
+<text x="341.0" y="803.8" font-size="6.2" fill="#b91c1c">front pair: add 2 ties</text>
+
+
+
+
+<text x="66" y="871" font-size="8" fill="#4338ca">JGB37-520 ×2 from the CAD: ⌀37 gearbox outboard · ⌀33 can · encoder inboard</text>
+<text x="66" y="883" font-size="8" fill="#b45309">motors reach to 29.8 mm from the rear edge - switches stop ~8 mm short</text>
+<text x="66" y="895" font-size="8" fill="#b45309">the driver's rear 7 mm sits over the cans - clearance is vertical only, set by the spacer height</text>
+<line x1="60" y1="899" x2="518" y2="899" stroke="#94a3b8" stroke-width="1" marker-start="url(#d)" marker-end="url(#e)"/>
+<text x="289" y="913" font-size="9" fill="#64748b" text-anchor="middle">270 mm</text>
+<text x="289" y="927" font-size="8.5" fill="#64748b" text-anchor="middle">widest 120.4 mm at the front axle · 84.7 mm at the waist · 94.2 mm across the rear flat</text>
+<text x="63" y="913" font-size="9" fill="#64748b">◀ FRONT</text>
+<text x="515" y="913" font-size="9" fill="#64748b" text-anchor="end">REAR ▶</text>
+<text x="600" y="110" font-size="13" font-weight="700" fill="#1a1a1a">DECK STACK - side elevation</text>
+<line x1="600" y1="118" x2="1280" y2="118" stroke="#e2e8f0"/>
+<rect x="600" y="156.0" width="300" height="4.7" fill="#cbd5e1" stroke="#94a3b8"/>
+<text x="908" y="161.7" font-size="9" font-weight="700" fill="#334155">plate 3  z 121.12–123.12</text>
+<rect x="600" y="254.7" width="300" height="4.7" fill="#cbd5e1" stroke="#94a3b8"/>
+<text x="908" y="260.4" font-size="9" font-weight="700" fill="#334155">plate 2  z 79.12–81.12</text>
+<rect x="600" y="376.9" width="300" height="4.7" fill="#cbd5e1" stroke="#94a3b8"/>
+<text x="908" y="382.6" font-size="9" font-weight="700" fill="#334155">plate 1  z 27.12–29.12</text>
+<rect x="600" y="160.7" width="300" height="94.0" fill="#f8fafc" stroke="#cbd5e1" stroke-dasharray="4 3"/>
+<text x="750" y="203.7" font-size="8.5" font-weight="700" fill="#334155" text-anchor="middle">UPPER GAP 40 mm - measured</text>
+<text x="750" y="216.7" font-size="8" fill="#64748b" text-anchor="middle">fascia upper panel, 42 mm tall: USB-C · DE-9 · Mini-B</text>
+<rect x="600" y="259.4" width="300" height="117.5" fill="#f8fafc" stroke="#cbd5e1" stroke-dasharray="4 3"/>
+<text x="750" y="314.1" font-size="8.5" font-weight="700" fill="#334155" text-anchor="middle">LOWER GAP 50 mm - measured</text>
+<text x="750" y="327.1" font-size="8" fill="#64748b" text-anchor="middle">fascia lower panel, 52 mm tall: DRIVE / LOGIC switches</text>
+<text x="600" y="395.6" font-size="8.5" fill="#64748b">below plate 1: running gear, wheels, ground clearance - nothing mounted</text>
+<text x="600" y="470" font-size="13" font-weight="700" fill="#1a1a1a">WHAT IS FIXED, AND WHAT IS NOT</text>
+<line x1="600" y1="478" x2="1280" y2="478" stroke="#e2e8f0"/>
+<text x="600" y="498" font-size="9.5" font-weight="700" fill="#166534">Deck spacing - settled 2026-09-20</text>
+<text x="600" y="512" font-size="9" fill="#475569">Measured on the built kit: 50 mm below, 40 mm above. The kit ships two standoff lengths; the</text>
+<text x="600" y="525" font-size="9" fill="#475569">single-plate CAD only ever had the 50 and our 3-deck model repeated it for both gaps. The fascia</text>
+<text x="600" y="538" font-size="9" fill="#475569">panels are therefore 52 and 42 mm tall and are no longer one blank (MEC-09).</text>
+<text x="600" y="557" font-size="9.5" font-weight="700" fill="#1e293b">Plate 1 - fixed</text>
+<text x="600" y="571" font-size="9" fill="#475569">Motors are mounted and the battery goes here: the heaviest mass low and central. Each motor reaches</text>
+<text x="600" y="584" font-size="9" fill="#475569">from the centreline out past the plate edge to its wheel, 29.8–66.7 mm forward of the rear edge.</text>
+<text x="600" y="603" font-size="9.5" font-weight="700" fill="#1e293b">Plate 2 / 3 - open</text>
+<text x="600" y="617" font-size="9" fill="#475569">Deliberately blank. Compute boards, power stage and the Pi 5 all want deck space; nothing is committed</text>
+<text x="600" y="630" font-size="9" fill="#475569">until the wiring and thermal picture settle.</text>
+<text x="600" y="649" font-size="9.5" font-weight="700" fill="#1e293b">The fascia already constrains all three</text>
+<text x="600" y="663" font-size="9" fill="#475569">Purple rings are the fascia clamp holes (y 124.54, x −41.34 / +46.30) and yellow are the four standoffs.</text>
+<text x="600" y="676" font-size="9" fill="#475569">Every other hole and slot is drawn from the CAD - 96 of them per plate - so a board can be placed on</text>
+<text x="600" y="689" font-size="9" fill="#475569">real fixings. Plate 2's single M3×12 clamps both panels at once (MEC-07).</text>
+<text x="600" y="708" font-size="9.5" font-weight="700" fill="#1e293b">Keep clear of the rear on plate 1</text>
+<text x="600" y="722" font-size="9" fill="#475569">Switch bodies protrude ~25 mm into the lower gap and the motors start 29.8 mm in, leaving about 8 mm</text>
+<text x="600" y="735" font-size="9" fill="#475569">between them - confirm with the switches in hand before printing (MEC-07).</text>
+<text x="600" y="754" font-size="9.5" font-weight="700" fill="#1e293b">Battery is measured</text>
+<text x="600" y="768" font-size="9" fill="#475569">The servo box is traced from the CAD. The pack is 63 × 77 × 20 mm (2026-09-20) - 20 mm tall clears any</text>
+<text x="600" y="781" font-size="9" fill="#475569">plausible lower gap with room for the strap and the leads.</text>
+<text x="600" y="812" font-size="13" font-weight="700" fill="#1a1a1a">LEGEND</text>
+<line x1="600" y1="820" x2="1280" y2="820" stroke="#e2e8f0"/>
+<rect x="600" y="832" width="18" height="12" rx="2" fill="none" stroke="#dc2626" stroke-width="1.8" stroke-dasharray="4 2.5"/>
+<circle cx="618" cy="832" r="4.5" fill="#dc2626"/>
+<text x="618" y="835" font-size="7" font-weight="700" fill="#fff" text-anchor="middle">?</text>
+<text x="634" y="840" font-size="8.8" fill="#475569">Size or fixing NOT resolved - do not commit this position yet</text>
+<circle cx="609" cy="856" r="4.2" fill="none" stroke="#4338ca" stroke-width="1.8"/>
+<line x1="602.5" y1="856" x2="615.5" y2="856" stroke="#4338ca" stroke-width="1.3"/>
+<line x1="609" y1="849.5" x2="609" y2="862.5" stroke="#4338ca" stroke-width="1.3"/>
+<text x="634" y="859" font-size="8.8" fill="#475569">M2.5 screw into an existing chassis hole - washer spans the 0.34 mm slop (MEC-10)</text>
+<circle cx="609" cy="875" r="4.2" fill="none" stroke="#047857" stroke-width="1.8"/>
+<circle cx="609" cy="875" r="1.5" fill="#047857"/>
+<text x="634" y="878" font-size="8.8" fill="#475569">M3 screw into a 3.18 mm chassis hole - close fit, ease the part not the plate</text>
+<circle cx="609" cy="894" r="4" fill="none" stroke="#7c3aed" stroke-width="1.5"/>
+<circle cx="609" cy="894" r="1.5" fill="#7c3aed"/>
+<text x="634" y="897" font-size="8.8" fill="#475569">Fascia clamp hole, M3, present on every deck (MEC-07)</text>
+<circle cx="609" cy="913" r="4" fill="none" stroke="#a16207" stroke-width="1.5"/>
+<text x="634" y="916" font-size="8.8" fill="#475569">Chassis standoff, 6.0 mm A/F hex</text>
+<circle cx="609" cy="932" r="4.2" fill="#ffffff" stroke="#047857" stroke-width="1.6"/><circle cx="609" cy="932" r="1.4" fill="#047857"/>
+<text x="634" y="935" font-size="8.8" fill="#475569">M3 through a 4.29 mm chassis <tspan font-weight="700">slot</tspan> - free to slide along it, washer under the head</text>
+<circle cx="609" cy="951" r="4.2" fill="#ffffff" stroke="#0891b2" stroke-width="1.6" stroke-dasharray="2.2 1.8"/>
+<path d="M609 951 L621 951" stroke="#0891b2" stroke-width="1.3" stroke-dasharray="2.2 1.8"/>
+<text x="634" y="954" font-size="8.8" fill="#475569">Cable tie through the part's own hole into the slot or cutout under it - no chassis hole exists there</text>
+<rect x="601" y="964" width="16" height="10" rx="1.5" fill="#0f766e" fill-opacity="0.14" stroke="#0f766e" stroke-width="1" stroke-dasharray="3 2"/><rect x="601" y="964" width="16" height="3.4" fill="#0f766e" fill-opacity="0.38"/>
+<text x="634" y="973" font-size="8.8" fill="#475569">20 mm hook-and-loop strap - up through one chassis slot, over the pack, down the other, closed underneath</text>
+</svg>
