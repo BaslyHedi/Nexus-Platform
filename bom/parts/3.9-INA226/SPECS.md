@@ -1,6 +1,7 @@
 # 3.9 - INA226 current/voltage monitor
 
-`INA226-TI-Datasheet.pdf` is the authoritative silicon datasheet (TI SBOS547).
+**Texas Instruments** · *INA226*, SBOS547C, is the authoritative silicon datasheet. It is
+copyrighted and **not in the repository** - fetch it from ti.com if you need it.
 The module in hand is silkscreened **MJKDZ · INA226** (red PCB, photographed 2026-09-21).
 
 | Parameter | Value |

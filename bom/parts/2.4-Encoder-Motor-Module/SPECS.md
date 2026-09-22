@@ -3,7 +3,7 @@
 Vendor page: [4-Channel Encoder Motor Driver with Onboard Voltage Regulation
 Circuit](https://www.hiwonder.com/products/4-channel-encoder-motor-driver). This file owns the
 **physical** numbers for the module; BOM 2.4 owns its status and the wiring decisions live in
-`Architecture/Design-Decisions/HW-Electrical-Decisions.md` (HW-11).
+`decisions/HW-Electrical-Decisions.md` (HW-11).
 
 ## Where the numbers come from
 

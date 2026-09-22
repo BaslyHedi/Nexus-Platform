@@ -1,7 +1,9 @@
 # 2.3 - LD-1501MG steering servo · and the drive motors
 
-Captured from the ThinkRobotics listing for the Hiwonder Ackerman metal chassis
-(`ThinkRobotics-Chassis-Motor-Servo-Specs.pdf` in this folder).
+Captured from the ThinkRobotics listing for the Hiwonder Ackerman metal chassis -
+**ThinkRobotics** · *Ackerman metal chassis listing, motor and servo specs*. That document
+is copyrighted and **not in the repository**; the numbers below are the whole of what it
+gave us. Fetch it by hand if you need the original.
 
 ## LD-1501MG steering servo
 

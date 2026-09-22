@@ -8,7 +8,7 @@ Reads  : chassis-3deck-fascia.obj  (Hiwonder's .3dm export + our duplicated deck
 Writes : chassis-3deck-fascia.obj  (chassis untouched, fascia groups replaced)
          assembly.stl              (the same thing as one mesh, for renders)
 
-The chassis geometry is never regenerated here — only the FASCIA_* groups are
+The chassis geometry is never regenerated here - only the FASCIA_* groups are
 dropped and rebuilt, so the file stays in step with fascia.scad. Deck tops are
 D1T/D2T in fascia.scad; keep the two in sync if the stack ever changes.
 

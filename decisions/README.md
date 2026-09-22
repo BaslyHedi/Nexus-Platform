@@ -65,8 +65,20 @@ is usually more informative than one that never moved.
 ## Old HD numbers
 
 These entries were one file, `Architecture/Hardware/Hardware-Design-Decisions.md`, numbered
-`HD-nn` in one sequence. That file is gone and every reference in the project was updated. This
-table is here for anything outside the project - notes, chat history, a photo caption:
+`HD-nn` in one sequence. That file is gone: its entries were split by discipline into the files
+in **this** folder, `decisions/`, and every reference in the project was updated. The prefix in
+the **Now** column names the file that holds the entry:
+
+| Prefix | File |
+|---|---|
+| `HW-` | [`HW-Electrical-Decisions.md`](HW-Electrical-Decisions.md) |
+| `MEC-` | [`MEC-Mechanical-Decisions.md`](MEC-Mechanical-Decisions.md) |
+| `SYS-` | [`SYS-System-Decisions.md`](SYS-System-Decisions.md) |
+
+No `HD-` entry became an `SW-` one, so [`SW-Software-Decisions.md`](SW-Software-Decisions.md)
+took none of them.
+
+The table below is here for anything outside the project - notes, chat history, a photo caption:
 
 | Was | Now |
 |---|---|

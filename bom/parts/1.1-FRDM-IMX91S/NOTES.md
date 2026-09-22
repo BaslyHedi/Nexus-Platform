@@ -1,9 +1,12 @@
 # 1.1 - NXP FRDM-IMX91S
 
-| File | What it is |
+Both documents below are **NXP**, copyrighted, and **not in the repository** - search the
+titles on nxp.com. Everything they settled for us is written out here.
+
+| Document | What it is |
 |---|---|
-| `FRDM-IMX91S-QuickStartGuide.pdf` | Official QSG for **our** board. Connector map, 40-pin pinout, boot switch table, J1/J11 |
-| `UM12262-FRDM-IMX91-BoardUserManual.pdf` | Board user manual, Rev 3.0, 22 Apr 2025 - **for the FRDM-IMX91, not the -IMX91S** |
+| *FRDM-IMX91S Quick Start Guide* | Official QSG for **our** board. Connector map, 40-pin pinout, boot switch table, J1/J11 |
+| *UM12262, FRDM-IMX91 Board User Manual*, Rev 3.0, 22 Apr 2025 | Board user manual - **for the FRDM-IMX91, not the -IMX91S** |
 
 ⚠️ UM12262 covers the non-S board. Use it for the shared FRDM form factor and board-level
 detail, but **verify anything -S-specific against the QSG**. The -S adds the IW610 wireless
