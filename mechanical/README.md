@@ -1,7 +1,7 @@
-# 3D drawings - rear fascia and the chassis it mounts to
+# Mechanical - rear fascia and the chassis it mounts to
 
 Everything the rear fascia is built from. The **why** lives in the design decisions
-([`../../Architecture/Design-Decisions/README.md`](../../Architecture/Design-Decisions/README.md));
+([`../../Architecture/Design-Decisions/README.md`](../decisions/README.md));
 this folder owns the geometry, and the table below says which file is which.
 
 | File | Size | What it is |
@@ -9,9 +9,9 @@ this folder owns the geometry, and the table below says which file is which.
 | [`fascia.scad`](fascia.scad) | 18 kB | **Source of truth for both panels.** Every dimension, and why, in comments. Edit only here |
 | [`fascia-lower.stl`](fascia-lower.stl) | 1.3 MB | Print file - lower panel, 124.2 × 18.9 × **52** mm, 20.5 cm³ (~26 g in PETG) |
 | [`fascia-upper.stl`](fascia-upper.stl) | 1.9 MB | Print file - upper panel, 124.2 × 18.9 × **42** mm, 17.5 cm³ (~22 g in PETG) |
-| `Ackermann Chassis (Single Layer).3dm` | 186 MB | **Hiwonder's own CAD**, untouched. Every chassis number in the project is measured from this, not from photos - see [`../Datasheets/2.1-Hiwonder-Ackermann-Chassis/SPECS.md`](../Datasheets/2.1-Hiwonder-Ackermann-Chassis/SPECS.md). It is the **single-plate** version |
-| `chassis-3deck-fascia.obj` | 65 MB | Whole-vehicle mock-up: Hiwonder's chassis + our deck 3 + the current panels. **Generated** |
-| `assembly.stl` | 69 MB | The same assembly as one mesh, for renders. **Generated** |
+| `../vendor/cad/Ackermann Chassis (Single Layer).3dm` | 186 MB | **Hiwonder's own CAD**, untouched, and **not in the repository** - it lives in the local vendor library. Every chassis number in the project is measured from this, not from photos - see [`../Datasheets/2.1-Hiwonder-Ackermann-Chassis/SPECS.md`](../bom/parts/2.1-Hiwonder-Ackermann-Chassis/SPECS.md). It is the **single-plate** version |
+| `chassis-3deck-fascia.obj` | 65 MB | Whole-vehicle mock-up: Hiwonder's chassis + our deck 3 + the current panels. **Untracked, and a seed rather than output** - `make-assembly.py` reads it and rewrites it in place, so it cannot be rebuilt from this repository alone. It began as a Rhino export of the `.3dm`. Keep a local backup |
+| `assembly.stl` | 69 MB | The same assembly as one mesh, for renders. **Generated and untracked** - delete it and re-run |
 | [`make-assembly.py`](make-assembly.py) | 5 kB | Rebuilds both of the above from the current STLs. Run it after any fascia change |
 
 ## Building

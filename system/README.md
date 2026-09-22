@@ -2,14 +2,15 @@
 
 What NEXUS must **do**, decomposed top-down. This is the logical view - it names functions and
 the sub-systems that own them, not the boards that run them. Hardware allocation comes later
-and lives in [`../Architecture/`](../Architecture/).
+and lives in [`../hardware/`](../hardware/README.md), with the reasoning in
+[`../decisions/`](../decisions/README.md).
 
 Each drawing exists as an `.svg` (editable source) and a `.pdf` (for reading and printing) -
 regenerate the PDF from the SVG after any edit.
 
 | Drawing | Owns |
 |---|---|
-| [Nexus-Platform-System-Layout](Nexus-Platform-System-Layout.pdf) | The sub-system decomposition - every `Nexus-SubSys-DNN` ID, its name, phase and key flows |
+| [Nexus-Platform-System-Layout](Nexus-Platform-System-Layout.svg) | The sub-system decomposition - every `Nexus-SubSys-DNN` ID, its name, phase and key flows |
 
 The layout owns the list of sub-systems. Do not restate it here; link to it.
 

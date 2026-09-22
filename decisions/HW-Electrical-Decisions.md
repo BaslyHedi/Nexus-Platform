@@ -2,9 +2,9 @@
 
 Power, protection, grounding, wiring and on-vehicle networking. Each entry is settled - revisit one only if something concrete contradicts it.
 
-Numbering is `HW-nn`, unique across the project and never reused. Format, and how to add one: [README](README.md). Parts, prices and status: [`../../RnD-Docs/BOM.md`](../../RnD-Docs/BOM.md).
+Numbering is `HW-nn`, unique across the project and never reused. Format, and how to add one: [README](README.md). Parts, prices and status: [`../../RnD-Docs/BOM.md`](../bom/BOM.md).
 
-Drawings: [wiring schematic](../Hardware/wiring-schematic.svg) · [STM32 carrier](../Hardware/stm32-carrier.svg).
+Drawings: [wiring schematic](../hardware/wiring-schematic.svg) · [STM32 carrier](../hardware/stm32-carrier.svg).
 
 | # | Decision |
 |---|---|

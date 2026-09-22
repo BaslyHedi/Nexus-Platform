@@ -92,9 +92,9 @@ a powered-up Phase 1: the converter, both CAN transceivers and the board variant
 What remains is bench verification, and the connectors that break CAN out of the two boards -
 of which the FRDM's 2×5 mating connector is the only real blocker, and it is free to resolve.
 
-Component status and quantities live in [`RnD-Docs/BOM.md`](RnD-Docs/BOM.md); the electrical
+Component status and quantities live in [`bom/BOM.md`](bom/BOM.md); the electrical
 and mechanical rationale, and the list of what is still open, lives in
-[`Architecture/Design-Decisions/`](Architecture/Design-Decisions/README.md).
+[`decisions/`](decisions/README.md).
 Those two files own them; do not restate them here.
 
 ## The video series
@@ -104,7 +104,7 @@ engine that makes those videos lives in `~/work/EmbeddedStack-VideoGen`, and
 **that repo owns everything about the videos** - the series plan, the playlist,
 the per-video briefs, what is scheduled and what is blocked:
 
-- [`notes/series/nexus-platform.md`](../EmbeddedStack-VideoGen/notes/series/nexus-platform.md)
+- `~/work/EmbeddedStack-VideoGen/notes/series/nexus-platform.md`
   - the four videos, the playlist title, and what each one is waiting for.
 
 Nothing about the videos is recorded in this project, and nothing about the

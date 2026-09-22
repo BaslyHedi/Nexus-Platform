@@ -11,10 +11,10 @@ SVG in a browser; to render, point headless Chrome at it.
 | [chassis-layout.svg](chassis-layout.svg) | Where components sit on the **three** decks, to scale at 1.7 px/mm, plus the side elevation of the deck stack |
 | [wiring-schematic.svg](wiring-schematic.svg) | What connects to what - fuses, switches, wire gauges, 5 V rails, CAN, I²C, motor control |
 | [stm32-carrier.svg](stm32-carrier.svg) | The carrier the Discovery drops onto - placement, every route, netlist, dimensions and rationale on one sheet (MEC-08, MEC-11) |
-| [`../Design-Decisions/`](../Design-Decisions/README.md) | **Why** the drawings look the way they do - HW, MEC, SYS and SW entries, each with its reasoning and consequences. Not in this folder any more |
+| [`../Design-Decisions/`](../decisions/README.md) | **Why** the drawings look the way they do - HW, MEC, SYS and SW entries, each with its reasoning and consequences. Not in this folder any more |
 
-Part numbers, prices and status live in [`../../RnD-Docs/BOM.md`](../../RnD-Docs/BOM.md);
-datasheets in [`../../RnD-Docs/Datasheets/`](../../RnD-Docs/Datasheets/).
+Part numbers, prices and status live in [`../../RnD-Docs/BOM.md`](../bom/BOM.md);
+datasheets in [`../../RnD-Docs/Datasheets/`](../bom/).
 
 ## Still open
 
@@ -22,7 +22,7 @@ datasheets in [`../../RnD-Docs/Datasheets/`](../../RnD-Docs/Datasheets/).
 
 Footprint and position are both settled and the drawing matches the hardware. Geometry, the
 as-mounted coordinates and the method behind them are in
-[`../../RnD-Docs/Datasheets/2.4-Encoder-Motor-Module/SPECS.md`](../../RnD-Docs/Datasheets/2.4-Encoder-Motor-Module/SPECS.md).
+[`../../RnD-Docs/Datasheets/2.4-Encoder-Motor-Module/SPECS.md`](../bom/parts/2.4-Encoder-Motor-Module/SPECS.md).
 In short: **42 x 58 at x 168-210, y 22.6-80.6**, long axis across the vehicle, connector edge to
 the vehicle's right, **2 x M3 and spacers through the chassis slot at x 203.5**.
 
@@ -58,14 +58,15 @@ both rear holes anywhere along its length. What is still open:
 - **The pack's real capacity is unknown.** 63 x 77 x 20 with the leads on a 63 face is three
   21700s in a single row, so 3S1P and **4300-5000 mAh, not the 6000 on the label**. Measure it on
   the first full discharge through the INA226 - it is the denominator for coulomb counting.
+- **The CAN matrix is still to draw** - message IDs, rates, payloads.
 - Switch depth and mounting-nut OD, once SW1/SW2 arrive (MEC-07).
 - USB-C and Mini-B aperture sizes on the parts ordered 20 Sep (MEC-05).
 
 ## Related 3D files
 
 The rear fascia and the chassis CAD live in
-[`../../RnD-Docs/3D-Drawings/`](../../RnD-Docs/3D-Drawings/). Its
-[README](../../RnD-Docs/3D-Drawings/README.md) owns the file-by-file description, the build
+[`../../RnD-Docs/3D-Drawings/`](../mechanical/). Its
+[README](../mechanical/README.md) owns the file-by-file description, the build
 commands and the `PART="clash"` check that must pass before any print. The decisions behind the
 panels are MEC-02, HW-18 to MEC-07 and MEC-09 in
-[`../Design-Decisions/`](../Design-Decisions/README.md).
+[`../Design-Decisions/`](../decisions/README.md).

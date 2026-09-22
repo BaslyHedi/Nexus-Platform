@@ -1,7 +1,7 @@
 # Datasheets
 
 One folder per BOM line item, named `<BOM item>-<part>`. The BOM
-([`../BOM.md`](../BOM.md)) owns status, price and sourcing; this tree owns the documents.
+([`../BOM.md`](BOM.md)) owns status, price and sourcing; this tree owns the documents.
 
 Where a vendor publishes nothing - which is true of every Amazon power component - the
 folder carries a `SPECS.md` recording what the listing claimed, with the date it was

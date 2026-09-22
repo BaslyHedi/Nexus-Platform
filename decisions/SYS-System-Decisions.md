@@ -2,7 +2,7 @@
 
 Behaviour that no single discipline owns - protection strategies, modes, and anything where hardware, firmware and the operator each carry part of the answer.
 
-Numbering is `SYS-nn`, unique across the project and never reused. Format, and how to add one: [README](README.md). Parts, prices and status: [`../../RnD-Docs/BOM.md`](../../RnD-Docs/BOM.md).
+Numbering is `SYS-nn`, unique across the project and never reused. Format, and how to add one: [README](README.md). Parts, prices and status: [`../../RnD-Docs/BOM.md`](../bom/BOM.md).
 
 | # | Decision |
 |---|---|

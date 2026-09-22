@@ -1,15 +1,19 @@
-# Vendor documents. Every one of these was downloaded, not written here, and
-# each is named, dated and graded in the README of the folder it sits in -
-# which is what makes it findable again. Git would carry them forever.
-RnD-Docs/Datasheets/**/*.pdf
-RnD-Docs/Datasheets/**/*.zip
-RnD-Docs/Datasheets/1.1-FRDM-IMX91S/FRDM-IMX91-DESIGNFILES/
+# The vendor reference library: datasheets, NXP's FRDM design-file package and
+# Hiwonder's 186 MB chassis CAD. Every one of them was downloaded, not written
+# here, and bom/README.md names, dates and grades each document - which is what
+# makes it findable again. The .3dm is also past GitHub's 100 MB per-file limit.
+# Present on disk, never pushed.
+/vendor/
 
-# Hiwonder's own chassis CAD, untouched, 186 MB - past GitHub's 100 MB
-# per-file limit, and re-downloadable from the vendor.
-RnD-Docs/3D-Drawings/*.3dm
+# Written by mechanical/make-assembly.py, which chdir's to its own directory,
+# so both files have to sit beside it rather than under vendor/.
+#   assembly.stl              pure output - delete it and re-run
+#   chassis-3deck-fascia.obj  a SEED the script rewrites in place. It is not
+#                             reproducible from the script alone; it started as
+#                             a Rhino export of the .3dm. Back it up locally.
+mechanical/assembly.stl
+mechanical/chassis-3deck-fascia.obj
 
-# Written by make-assembly.py. assembly.stl is pure output; the .obj is a
-# seed that the script rewrites in place - see 3D-Drawings/README.md.
-RnD-Docs/3D-Drawings/assembly.stl
-RnD-Docs/3D-Drawings/chassis-3deck-fascia.obj
+# fascia-lower.stl and fascia-upper.stl are tracked on purpose: OpenSCAD output
+# shifts between versions, and these are the files that actually went to the
+# printer.
