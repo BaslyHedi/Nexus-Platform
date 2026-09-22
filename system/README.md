@@ -5,8 +5,10 @@ the sub-systems that own them, not the boards that run them. Hardware allocation
 and lives in [`../hardware/`](../hardware/README.md), with the reasoning in
 [`../decisions/`](../decisions/README.md).
 
-Each drawing exists as an `.svg` (editable source) and a `.pdf` (for reading and printing) -
-regenerate the PDF from the SVG after any edit.
+Each drawing is an `.svg` - the editable source and the only copy. **No PDFs.** They are
+generated once, when the design is frozen; until then the SVG is the truth and a stale PDF
+beside it is just a second thing to get wrong. To read one, open the SVG in a browser; to
+render, point headless Chrome at it. Same rule as [`../hardware/`](../hardware/README.md).
 
 | Drawing | Owns |
 |---|---|
@@ -26,6 +28,6 @@ IDs are never reused. A retired sub-system keeps its number.
 ## Workflow
 
 1. **System layout** - settle the decomposition. *← current step, Draft A*
-2. **One drawing per sub-system** - `Nexus-SubSys-DNN-<Name>.svg` / `.pdf`, showing the
+2. **One drawing per sub-system** - `Nexus-SubSys-DNN-<Name>.svg`, showing the
    functions it realises and its interfaces to other sub-systems.
 3. **Requirements per function**, traced to the `-Fnn` IDs.
