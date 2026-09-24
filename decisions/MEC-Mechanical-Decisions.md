@@ -21,6 +21,7 @@ Drawings: [chassis layout](../hardware/chassis-layout.svg). Geometry and build c
 | **MEC-11** | The FRDM's mounting holes land on the Hiwonder grid - 0.06 mm out |
 | **MEC-12** | Component allocation across the three plates |
 | **MEC-13** | The debug ports mount from behind - and the Mini-B stands upright |
+| **MEC-14** | The switch drawing closes the lower panel - and its holes open to 22.4 |
 
 ---
 
@@ -46,6 +47,8 @@ short wires carry 5 V board-adjacent, which is where droop actually hurts.
 ## MEC-02 · Rear fascia - 3D printed, covers the inter-deck gaps
 
 *Formerly HD-15.*
+
+**Updated by MEC-14:** the switch holes are ⌀22.4, not 22.2.
 
 **Superseded in part by MEC-09 (2026-09-20).** The gaps were measured on the built kit: **lower 50,
 upper 40** - the kit ships two standoff lengths. Everything below that assumes 52 mm pitch, a
@@ -287,6 +290,8 @@ one line in `labels_lower()`.
 ---
 
 ## MEC-07 · The fascia is clamped at four corners - six M3 for the whole thing
+
+**Updated by MEC-14:** the switch drawing gives the nut (25 A/F, 28.5 across corners) and the bare depth (25 mm), closing the check below for the switch itself. The harness depth is still open.
 
 **Confirmed by MEC-10 (2026-09-20):** both fixing positions land exactly on real CAD holes,
 and both are ⌀3.18 - the only M3-capable class on the plate.
@@ -686,5 +691,35 @@ the vendor photo in MEC-05.
 - **Mini-B body**, ~20 × 10 × 13 (photo). It has 7.57 mm to the standoff, so this one is not
   critical.
 - **The DE-9 rear insulator** is assumed 19 × 10.5 × 8 in the stand-in, not measured.
+
+---
+
+## MEC-14 · The switch drawing closes the lower panel - and its holes open to 22.4
+
+**Decision (2026-09-24).** The lower panel's two switch holes are **⌀22.4**, up from 22.2. The
+vendor drawing for the 22 mm switches (3.5a/3.5c) settles everything else the printed part
+depended on, so the lower panel is ready to print.
+
+| From the drawing (22 mm version) | What it settles |
+|---|---|
+| Thread **M22 × 1**, mounting hole 22 | the hole |
+| Bezel **⌀24.8 × 2.0** | sits on the outer face. The DRIVE / LOGIC labels at z 43 clear it by 3.35 mm |
+| Nut **25.0 A/F, 28.5 across corners** | under MEC-07's ~30 mm limit before a nut reaches the pad bands. The two nuts, 44 apart, are 15.5 mm apart |
+| Thread length 14.2 | 3 mm wall plus nut uses ~6 of it |
+| Body **20** behind the bezel, tabs **5** more | 25 mm: exactly the depth MEC-07 assumed, ending at y ≈ 109.9, 8 mm clear of the motors |
+| Tabs **4.8 mm** wide | not 6.3 as BOM 3.17 assumed |
+
+**Why 22.4.** 22.2 left 0.2 mm over a 22.0 thread. FDM holes from a print service commonly come out
+0.1-0.2 mm small, which would leave the thread binding or no clearance at all. The bezel and nut
+cover a 22.4 hole with 1.2 mm to spare a side.
+
+**Consequences.**
+
+- **MEC-07's "check before printing" is closed** for the switch itself: nut size and bare depth
+  are on the drawing.
+- **The wiring on the tabs is still open.** The red plug-on socket harness runs straight back;
+  if the bezel-to-wire-exit depth is over ~33 mm it reaches the motors. The seller has been asked.
+  The fallback is 4.8 mm flag (right-angle) receptacles, which add only 2-3 mm past the tabs.
+- **BOM 3.17 is 4.8 mm receptacles, not 6.3.**
 
 ---

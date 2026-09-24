@@ -73,7 +73,8 @@ PITCH_U = GAP_U + PLATE_T_;  // 42
 FZ_L    = GAP_L / 2;         // 25.0 - cut-outs sit dead centre of their own gap
 FZ_U    = GAP_U / 2;         // 20.0
 
-BTN_D = 22.2;  BTN_C = 44.0;
+BTN_D = 22.4;  BTN_C = 44.0;   // M22x1 switches (vendor drawing). 0.4 over the thread: FDM holes print
+                               // 0.1-0.2 small, and the 24.8 bezel and 25 A/F nut cover the rest (MEC-14)
 
 // ---- upper-panel ports (MEC-13). Measured on the parts 2026-09-24:
 //   DE-9    flange 30.84, screws 24.99, shell 16.92 x 8.38 - vendor drawing
@@ -317,11 +318,11 @@ LBL_D = 0.6;     // depth into the wall
 LBL_Z = 35.0;    // upper panel: 32.75..37.25, clear of the vent row top (32.5) and the 40 wrap line
 LBL_F = "Liberation Sans:style=Bold";
 
-// Lower panel sits higher. A 22.2 mm button leaves only 3.9 mm above it, too
+// Lower panel sits higher. A 22.4 mm button leaves only 3.8 mm above it, too
 // little for 4.5 mm text - but the upper vent row leaves 27.2 mm gaps BETWEEN
 // its slots (x -32.69..-5.52 and 10.48..37.65), clear from the button tops to
 // the panel top, and each gap sits almost exactly over its own button.
-// z 43 clears even a 26 mm switch bezel by 2.75 mm.
+// z 43 clears the real 24.8 mm bezel (MEC-14) by 3.35 mm.
 LBL_ZL = 43.0;
 
 // mirror(): the rear face looks down +y, so an observer outside sees world +x
@@ -359,8 +360,8 @@ VENT_DZU = 11.0;             // upper panel: rows at 20 +/- 11 = 9 and 31. The 4
                              // leaves two clear bands only - 5..13.7 and 26.3..35, between
                              // the pads and the DE-9 flange - and these sit centred in them.
 
-// [x offset from XC, slot length]. The button holes span XC-33.1..XC-10.9 and
-// XC+10.9..XC+33.1, so these three columns land in the clear gaps: outside the
+// [x offset from XC, slot length]. The button holes span XC-33.2..XC-10.8 and
+// XC+10.8..XC+33.2, so these three columns land in the clear gaps: outside the
 // left button, between the two, and outside the right button. Nothing is cut
 // above or below a switch.
 VENT    = [[-38.67, 7], [0, 16], [38.67, 7]];

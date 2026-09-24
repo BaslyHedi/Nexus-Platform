@@ -66,6 +66,7 @@ ships two standoff lengths. So the panels are different parts and are **not** in
 | **MEC-07** | The fixing: four pads per panel, six M3, captive nuts |
 | **MEC-09** | The measured gaps, and the panels being different parts |
 | **MEC-13** | The ports mounted from behind in pockets, the upright Mini-B, the USB-C grip limit, the port positions |
+| **MEC-14** | The switch holes (⌀22.4) and what the switch drawing settles |
 
 ## Caveats worth knowing before you trust this geometry
 
@@ -75,5 +76,6 @@ ships two standoff lengths. So the panels are different parts and are **not** in
 - **Some port geometry is read off photos** - the USB-C body width and flange depth, the Mini-B
   screw pitch and body. The USB-C body width is the one that matters: over 14.6 mm it touches the
   left standoff (MEC-13). Measure it before printing.
-- **Switch depth with terminals fitted is unverified** and it is tight against the motors,
-  about 8 mm (MEC-02, MEC-07).
+- **The switch harness depth is unverified.** The bare switch is 25 mm deep and clears the motors by
+  about 8 mm, but the plug-on socket harness adds to that (MEC-14). It affects the wiring, not the
+  print.

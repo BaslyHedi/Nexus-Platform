@@ -116,7 +116,7 @@ Measure before cutting and keep offcuts.
 | 3.14 | **elpohl 470 µF / 35 V low-ESR radial electrolytic, 105 °C, 10 × 13 mm - pack of 5** (B0FK3QYPKM) | 2 used, 3 spare | ✅ Dispatched 18 Sep €5.99 (+€2.75 del.) | **Smoothing** - one at the 5 V split, one at the UBEC output | 35 V on a 5 V rail is harmless over-rating. **No PCB needed:** the legs are ~0.6–0.8 mm (0.28–0.5 mm²), inside the WAGO 221's 0.2–4 mm² solid range, so they go straight into a spare port - + leg into the 5 V WAGO, − leg (striped side) into the (−) WAGO. Leave ~15 mm of leg, and **tie or glue the body to the chassis** - an electrolytic fails at the lead seal if a heavy can vibrates on thin legs. **Check polarity before closing the lever;** reversed, it vents |
 | 3.15 | Heat-shrink assortment, cable ties, spiral wrap | 📦 **Delivered 18 Sep** | Insulating the switch terminals, and tying the WAGO connectors and converters to the chassis holes | Tie around connector bodies, never across the levers |
 | 3.16 | ~~22 mm step drill or hole saw~~ | ❌ **Not needed** | - | The switches now mount in the printed rear fascia, whose holes are printed in (MEC-02) |
-| 3.17 | **6.3 mm insulated female spade terminals** | 🟡 Check the crimp kit | 18 AWG onto SW1/SW2 tabs | Measure the blade width when the switches arrive; crimp your own spades if the supplied harness is thin |
+| 3.17 | **4.8 mm insulated female receptacles, flag (right-angle) type** | 🟡 Check the crimp kit | 18 AWG onto SW1/SW2 tabs | The vendor drawing gives **4.8 mm** tabs, not 6.3 (MEC-14). Flag type keeps the depth to 2-3 mm past the tabs. Needed if the supplied socket harness is too deep for the motors or too thin for the DRIVE current |
 | 3.18 | **ZHITING switching UBEC, 5 V / 6 V, 3 A continuous / 5 A max**, 2–6S input - B089SH9YWV | 1 | 📦 **Delivered 18 Sep** €6.68 | Steering servo supply, fed from **SW1 via a 5 A inline fuse** (power train, HW-14) | Separate converter required (HW-11): the servo is a 6–7.4 V part, the vehicle has only 5 V rails and the ~11 V pack, and its stall current must stay off the logic rails. Sizing: stall 2.5 A @ 6 V (LD-1501MG datasheet) → 3 A continuous has thin but adequate margin; > 3 A bursts are inside the 5 A max. Reverse-polarity protected, metal-shielded, output filter, status LED. **35 x 12 x 5 mm confirmed from the supplier drawing; potted, with no mounting holes - cable tie or adhesive pad.** **Set the jumper to 6 V before first power-up.** Wire servo +/− to the UBEC, signal to the STM32 PWM pin, UBEC ground to the star ground. A sustained stall trips its over-temperature cut-out - steering goes limp |
 | 3.21 | **Elegoo metal film resistor kit, 525 pc, 1/4 W, 0 Ω – 10 kΩ** | 📦 **Delivered 18 Sep** €11.99 | **Closes two open items at once:** the CAN bus **120 Ω** terminators (4.3) and the **10 kΩ** Rp fallback for the USB-C feed (5.1). Bought 17 Sep but never recorded - added 19 Sep. 1/4 W is ample: a 120 Ω terminator across a 2 V CAN differential dissipates ~33 mW. **Check the kit actually contains 120 Ω** - E12 would give 120, E24 gives both 120 and 110/130 |
 | 3.19 | ~~Insulated ring terminal kit with ratchet crimper~~ | ❌ **Not needed** | - | Only required for the LAOYE M4 screw terminals, dropped in HW-16 |
@@ -225,8 +225,8 @@ kit, heat-shrink, UBEC, INA226, CAN transceiver, resistor kit and the USB-C feed
 ### Waiting on delivery
 
 3.8 WAGO 221-415 and 5.8 Mini-B cable (dispatched 18 Sep) · 3.14 capacitors (dispatched 18 Sep)
-· **3.5a/3.5c switches, due 29 Sep – 13 Oct** - the long pole, and the fascia's button holes
-cannot be verified against a real switch bezel until they arrive.
+· **3.5a/3.5c switches, due 29 Sep – 13 Oct** - no longer blocks the fascia: the vendor
+drawing settles the hole, bezel and nut (MEC-14). Only the harness depth waits for them.
 
 Resolved: board variant · DC-DC choice · servo rail · over-discharge approach · FRDM power
 input (plain 5 V) · CAN transceiver count · bus distribution · fascia geometry.
