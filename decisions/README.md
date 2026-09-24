@@ -119,7 +119,7 @@ Questions that block a decision, or that a decision rests on and nobody has meas
 |---|---|
 | SM-2P battery connector temperature under load | HW-13 - XT30 if it runs warm |
 | FRDM loaded current draw | compute branch fuse sizing |
-| USB-C and Mini-B **aperture** sizes - **neither part is ordered yet** (DE-9 confirmed from its drawing; Mini-B pitch now slotted, so no longer blocking) | MEC-05 - upper panel print |
+| USB-C **body width** behind the flange (14.0 from a photo; over 14.6 touches the left standoff) and **flange depth** (6.0, sets the clip) | MEC-13 - upper panel print |
 | Switch depth with the spade terminals fitted, and the mounting nut's OD | MEC-07 - fascia print |
 | Which USB-CAN adapter, and is its 120 Ω switchable? | HW-18 - must be OFF |
 | Does the Encoder Motor Module time out when I²C commands stop? | HW-17 - decides whether the HW-12 relay is needed before autonomy |

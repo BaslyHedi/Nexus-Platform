@@ -17,6 +17,10 @@ Drawings: [chassis layout](../hardware/chassis-layout.svg). Geometry and build c
 | **MEC-07** | The fascia is clamped at four corners - six M3 for the whole thing |
 | **MEC-08** | The STM32 rides on a perfboard carrier, not on the chassis directly |
 | **MEC-09** | The two deck gaps are 50 and 40 mm - the panels are different parts |
+| **MEC-10** | The chassis holes are three sizes - and half of them are M2.5, not M3 |
+| **MEC-11** | The FRDM's mounting holes land on the Hiwonder grid - 0.06 mm out |
+| **MEC-12** | Component allocation across the three plates |
+| **MEC-13** | The debug ports mount from behind - and the Mini-B stands upright |
 
 ---
 
@@ -175,6 +179,8 @@ cheap once the slots cost nothing structurally, and the lower gap is where the F
 ## MEC-05 · Board debug ports on the fascia - and the DE-9 moves off centre to fit
 
 *Formerly HD-24.*
+
+**Updated by MEC-13:** both extensions mount from behind in pockets, the Mini-B flange is 36 mm and stands upright, and the row is now USB-C x −25.0 · DE-9 x +3.25 · Mini-B x +25.0. The positions, apertures and Mini-B figures below are historical.
 
 **Updated by MEC-07:** the flat face widened from 88.47 to 94.24 mm. Port positions are unchanged, so every bay gained ~3 mm of margin.
 
@@ -605,5 +611,74 @@ and 26 mm behind the battery.
 path: the **Bauer 50 W** (drawn 65 x 55) and the **Hiwonder motor driver** (drawn 40 x 60). Neither
 is measured, and the Bauer is the larger risk since plate 2's front region is only 80 mm wide at
 the waist.
+
+---
+
+## MEC-13 · The debug ports mount from behind - and the Mini-B stands upright
+
+**Decision (2026-09-24).** Both panel-mount extensions sit in **pockets on the inside face** of
+the upper panel, not on its outside. The **Mini-B stands upright**. The row is re-laid so every
+connector body clears the rear standoffs:
+
+| x | Port | Mounting | Held by |
+|---|---|---|---|
+| **−25.0** | USB-C (5.9), flange 23 × ~8.3 × 6 deep | pocket 23.6 × 9.0, **1.2 mm skin**, rim slot 9.6 × 3.8 | a **printed clip** behind the flange, 2 × M2.5 × 5 into two bosses |
+| **+3.25** | DE-9 (4.5), unchanged in itself | from behind, as before | its own screws, as before |
+| **+25.0** | Mini-B (5.10), flange **36 × 10 × 8 deep**, **upright** | pocket 10.4 × 36.4, **1.5 mm skin**, grip aperture 9.5 × 14 | its own M2.5 screws from outside, bottom hole round, top a z-slot |
+
+**What the parts showed (measured 2026-09-24).** Both extensions have **threaded M2.5 holes** in
+the flange face, so the screws come from the front and the flange has to sit behind the wall.
+Neither body can pass through the panel. And the Mini-B flange is **36 mm**, not the 28 read off
+the vendor photo in MEC-05.
+
+**Why.**
+
+- **The bodies run forward into the vehicle, past the rear standoffs.** The USB-C body is ~14 wide
+  and ~40 long; at MEC-05's x −28.58 it overlapped the left standoff (flat at x −32.61) by ~3 mm.
+  Only the flanges had ever been modelled, never the bodies. At **x −25.0** it clears by **0.61 mm**.
+- **Three flanges side by side no longer fit.** 23 + 30.84 + 36 = 89.8 mm on a 94.24 mm face, and
+  the two standoffs pin the outer bodies inward. Upright, the Mini-B takes 10 mm of width instead
+  of 36. Its flange spans z 2…38 of the 40 mm gap, and nothing else occupies its x band there: no
+  vent column, no pad.
+- **The USB-C cannot use its own screws.** They are 15 apart, so M2.5 heads on the outside would
+  come within **5.0 mm** of centre. The USB-C spec allows a plug grip up to **12.35 wide**, which
+  reaches 6.2 mm, so the plug would stop on the heads 1.5-2 mm short of seating. A printed clip
+  behind the flange keeps the front clean for any compliant cable. The clip presses the flange's
+  side shoulders (23 flange, 14 body) and is screwed to two bosses at z 12.3 and 27.7 with the
+  part's own M2.5 × 5 screws, self-tapping into PETG. The bosses stop 0.3 mm short of the clip, so
+  tightening clamps the flange.
+- **The Mini-B can use its own screws.** They are ~28.5 apart, so the heads sit ~11.7 mm from
+  centre, far outside any Mini-B grip.
+- **Skins, not full walls, in front of the sockets.** The USB-C metal rim stands ~0.9 proud of its
+  flange, so a 1.2 skin leaves the socket face ~0.3 below the outside and the plug seats with the
+  grip clear of the panel. The Mini-B surround is flush with its ears, so its grip enters a 1.5 mm
+  skin through a generous aperture.
+- **Rejected: turning the DE-9 around**, mounting it from the front so its flange sits outside the
+  others. It would put the DE-9 flange on the outer face exactly where the Mini-B's screw heads go.
+
+**Consequences.**
+
+- **A third printed part:** `fascia-usbc-clip.stl`, 23 × 21 × 2 mm, 0.7 cm³ (~1 g PETG), printed
+  flat. Order it with the panels.
+- **The STM32 label runs upright** beside the Mini-B (x 35.5, z 11.5…28.5), because a screw head now
+  sits where a flat label would go. All upper labels moved up 0.5 mm, to z 32.75…37.25: at the old
+  z 34.5 the CAN label touched the top vent row (32.5).
+- **The upper panel is now 17.0 cm³** (~21 g PETG).
+- **`PART="portclash"` is a second gate**, beside `clash`. It checks rough stand-ins of the three
+  connectors and the clip against the upper panel, the rear chassis and each other. It renders
+  **zero volume**; the faces it returns are the flange-on-pocket and clip-on-flange contacts.
+- **Margins are thin where they matter:** 0.61 mm from the USB-C body to the standoff, and 1.33 mm
+  from the DE-9 flange to each neighbour.
+
+**To confirm.**
+
+- **USB-C body width** behind the flange: 14.0 is read off a photo, and a body wider than 14.6
+  touches the standoff. Measure it before printing.
+- **USB-C flange depth** (6, photo) sets where the clip sits. A deeper flange stops the clip on its
+  bosses before it clamps. A shallower one leaves the flange loose by the difference.
+- **Mini-B screw pitch** (~28.5, photo). The top slot takes 27…30.
+- **Mini-B body**, ~20 × 10 × 13 (photo). It has 7.57 mm to the standoff, so this one is not
+  critical.
+- **The DE-9 rear insulator** is assumed 19 × 10.5 × 8 in the stand-in, not measured.
 
 ---
