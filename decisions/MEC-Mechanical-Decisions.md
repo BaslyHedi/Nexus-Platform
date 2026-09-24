@@ -622,7 +622,7 @@ connector body clears the rear standoffs:
 
 | x | Port | Mounting | Held by |
 |---|---|---|---|
-| **−25.0** | USB-C (5.9), flange 23 × ~8.3 × 6 deep | pocket 23.6 × 9.0, **1.2 mm skin**, rim slot 9.6 × 3.8 | a **printed clip** behind the flange, 2 × M2.5 × 5 into two bosses |
+| **−25.0** | USB-C (5.9), flange 23 × ~8.3 × 6 deep | pocket 23.6 × 9.0, **1.2 mm skin**, rim slot 9.6 × 3.8 its own **2 × M2.5 × 5** from outside, through the skin into the flange's metal inserts |
 | **+3.25** | DE-9 (4.5), unchanged in itself | from behind, as before | its own screws, as before |
 | **+25.0** | Mini-B (5.10), flange **36 × 10 × 8 deep**, **upright** | pocket 10.4 × 36.4, **1.5 mm skin**, grip aperture 9.5 × 14 | its own M2.5 screws from outside, bottom hole round, top a z-slot |
 
@@ -640,14 +640,12 @@ the vendor photo in MEC-05.
   the two standoffs pin the outer bodies inward. Upright, the Mini-B takes 10 mm of width instead
   of 36. Its flange spans z 2…38 of the 40 mm gap, and nothing else occupies its x band there: no
   vent column, no pad.
-- **The USB-C cannot use its own screws.** They are 15 apart, so M2.5 heads on the outside would
-  come within **5.0 mm** of centre. The USB-C spec allows a plug grip up to **12.35 wide**, which
-  reaches 6.2 mm, so the plug would stop on the heads 1.5-2 mm short of seating. A printed clip
-  behind the flange keeps the front clean for any compliant cable. The clip presses the flange's
-  side shoulders (23 flange, 14 body) and is screwed to two bosses at z 12.3 and 27.7 with the
-  part's own M2.5 × 5 screws, self-tapping into PETG. The bosses stop 0.3 mm short of the clip, so
-  tightening clamps the flange.
-- **The Mini-B can use its own screws.** They are ~28.5 apart, so the heads sit ~11.7 mm from
+- **The USB-C uses its own screws, the way the vendor's bracket does.** The part ships with a
+  ~1 mm steel bracket and two M2.5 × 5 screws driven from the front into the flange's metal
+  inserts. The heads are **~4 across, 15 apart**, which leaves **~11 mm** clear between them. The
+  bench cable's round grip is **10 mm** (tape-measured), and a photo of it seated in the vendor
+  bracket confirms it clears the heads. Metal threads survive any number of refits.
+- **The Mini-B uses its own screws too.** They are ~28.5 apart, so the heads sit ~11.7 mm from
   centre, far outside any Mini-B grip.
 - **Skins, not full walls, in front of the sockets.** The USB-C metal rim stands ~0.9 proud of its
   flange, so a 1.2 skin leaves the socket face ~0.3 below the outside and the plug seats with the
@@ -655,18 +653,26 @@ the vendor photo in MEC-05.
   skin through a generous aperture.
 - **Rejected: turning the DE-9 around**, mounting it from the front so its flange sits outside the
   others. It would put the DE-9 flange on the outer face exactly where the Mini-B's screw heads go.
+- **Rejected: a printed clip behind the USB-C flange.** It was designed first, for the worst case:
+  the USB-C spec allows a plug grip up to **12.35 wide**, which would land on the heads and stop the
+  plug ~1.8 mm short of seating. The clip pressed the flange's side shoulders and was screwed to two
+  printed bosses. It worked with any cable, but it added a part and put the thread in printed PETG
+  instead of the flange's metal inserts. Dropped once the real cable proved narrow enough. Thinning
+  the wall or countersinking the heads does not fix a fat grip: a countersunk M2.5 head is ~1.5
+  tall, and only ~0.9 mm lies between the flange face and where the grip ends up.
 
 **Consequences.**
 
-- **A third printed part:** `fascia-usbc-clip.stl`, 23 × 21 × 2 mm, 0.7 cm³ (~1 g PETG), printed
-  flat. Order it with the panels.
+- **The USB-C debug lead must have a slim grip, under ~11 mm.** The 10 mm bench cable fits. Most
+  chunky USB-C cables (11.5-12.5 mm) will stop on the screw heads and not seat. Keep one slim
+  cable as the robot's debug lead.
 - **The STM32 label runs upright** beside the Mini-B (x 35.5, z 11.5…28.5), because a screw head now
   sits where a flat label would go. All upper labels moved up 0.5 mm, to z 32.75…37.25: at the old
   z 34.5 the CAN label touched the top vent row (32.5).
-- **The upper panel is now 17.0 cm³** (~21 g PETG).
+- **The upper panel is now 16.9 cm³** (~21 g PETG).
 - **`PART="portclash"` is a second gate**, beside `clash`. It checks rough stand-ins of the three
-  connectors and the clip against the upper panel, the rear chassis and each other. It renders
-  **zero volume**; the faces it returns are the flange-on-pocket and clip-on-flange contacts.
+  connectors, including the USB-C screw heads, against the upper panel, the rear chassis and each
+  other. It renders **zero volume**; the faces it returns are the flange-on-pocket contacts.
 - **Margins are thin where they matter:** 0.61 mm from the USB-C body to the standoff, and 1.33 mm
   from the DE-9 flange to each neighbour.
 
@@ -674,8 +680,8 @@ the vendor photo in MEC-05.
 
 - **USB-C body width** behind the flange: 14.0 is read off a photo, and a body wider than 14.6
   touches the standoff. Measure it before printing.
-- **USB-C flange depth** (6, photo) sets where the clip sits. A deeper flange stops the clip on its
-  bosses before it clamps. A shallower one leaves the flange loose by the difference.
+- **The grip limit** rests on a tape measure: collar 10, heads 4, so ~0.5 mm a side. The photo of
+  the cable seated in the vendor bracket is the stronger evidence.
 - **Mini-B screw pitch** (~28.5, photo). The top slot takes 27…30.
 - **Mini-B body**, ~20 × 10 × 13 (photo). It has 7.57 mm to the standoff, so this one is not
   critical.

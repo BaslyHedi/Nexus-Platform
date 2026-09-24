@@ -4,7 +4,6 @@
 //         screwed pads per panel (MEC-07).
 //         Ports (MEC-13): all three measured or drawn. USB-C and Mini-B mount
 //         from behind in pockets; the Mini-B stands upright. See the port block.
-//         Third part: the USB-C clip, PART="uclip".
 //
 // TWO PANELS, TWO HEIGHTS. Measured on the built kit 2026-09-20: the lower gap
 // is 50.00 mm and the upper is 40.00 mm - the kit ships two standoff lengths,
@@ -48,7 +47,6 @@
 //          openscad -D 'PART="blank"'    ...  // the uncut common body
 //          openscad -D 'PART="fit"'      ...  // both panels + rear decks and standoffs
 //          openscad -D 'PART="clash"'    ...  // panels ∩ chassis - must render EMPTY
-//          openscad -D 'PART="uclip"'    -o fascia-usbc-clip.stl fascia.scad
 //          openscad -D 'PART="portclash"' ... // connectors ∩ panel, chassis, each other - EMPTY
 // The two panels are ALWAYS separate parts. "both" only places them at their
 // installed heights, where they meet flush and read as one continuous face.
@@ -103,32 +101,27 @@ DE9_SD =  3.4;    // panel clearance; the connector's own holes are 3.05 (M3 is 
 DE9_X  =  3.25;   // centred between the USB-C and Mini-B flanges (MEC-13)
 
 // USB-C panel-mount extension, CY type, 20 cm -> FRDM J11 (USB-C UART console).
-// Mounted from behind, and held by a printed CLIP rather than its own screws: the
-// screws are 15 apart, so M2.5 heads on the outside would sit 5.0 mm from centre,
-// under the grip of any USB-C plug (up to 12.35 wide by the spec) - it could not
-// seat. The clip presses the flange's side shoulders (23 flange vs 14 body)
-// against a 1.2 mm skin, and is screwed to two bosses with the part's own M2.5 x 5
-// screws, self-tapping into PETG. The inserts in the flange face go unused.
+// Mounted from behind, the way the vendor's own bracket does it: its two M2.5 x 5
+// screws go through the 1.2 mm skin from outside into the metal inserts in the
+// flange face. The heads (~4 across, 15 apart) leave ~11 mm clear between them, so
+// the plug grip has to be narrower than that - the bench cable's is 10. A full-width
+// grip (up to 12.35 by the spec) would land on the heads and not seat (MEC-13).
 UC_X    = -25.0;  // body clears the left standoff by 0.61 (MEC-13)
 UC_FW   = 23.0;   // flange width - drawing
 UC_FH   =  8.3;   // flange face height - PHOTO; measured "6" is probably the depth. Pocket fits both
-UC_K    =  6.0;   // flange depth along the cable - PHOTO, sets where the clip sits
+UC_K    =  6.0;   // flange depth along the cable - PHOTO
 UC_BW   = 14.0;   // body width behind the flange - PHOTO, MEASURE: it sets the standoff margin
 UC_BH   =  7.5;   // body thickness - drawing
 UC_BL   = 40.0;   // body length - drawing, taken as all behind the flange (conservative)
 UC_SKIN =  1.2;   // wall left in front of the flange. The metal rim stands ~0.9 proud, so
                   // the socket face ends ~0.3 below the outside and any plug seats fully
 UC_PW   = 23.6;   // pocket width
-UC_PH   =  9.0;   // pocket height - fits a 6 or an 8.3 face; the clip, not the pocket, holds it
+UC_PH   =  9.0;   // pocket height - fits a 6 or an 8.3 face; the screws, not the pocket, hold it
 UC_SW   =  9.6;   // slot for the metal rim (~9 x 3 in the photo; 8.94 x 3.2 by the spec)
 UC_SH   =  3.8;
-UC_CT   =  2.0;   // clip thickness
-UC_CH   = 21.0;   // clip height, z 9.5 .. 30.5 - between the vent rows
-UC_CS   = 15.4;   // clip screw centres, in z: bosses at z 12.3 and 27.7, above and below the body
-UC_BOSS =  5.5;   // boss diameter
-UC_PILOT = 2.2;   // M2.5 self-tapping pilot in PETG
-UC_CSD  =  2.9;   // M2.5 clearance through the clip
-UC_CLAMP = 0.3;   // bosses stop this short of the clip, so tightening clamps the flange
+UC_S    = 15.0;   // screw centres - drawing, and the face-on photo agrees
+UC_SD   =  2.9;   // M2.5 clearance. 1.25 mm of skin is left between each hole and the slot
+UC_HD   =  4.0;   // screw head diameter - tape-measured; sets the 11 mm grip limit
 
 // Mini-B panel-mount extension, JSER type, 50 cm -> Discovery CN1 (ST-LINK).
 // Stands UPRIGHT: long axis in z. Its screws are ~28.5 apart, so the heads sit
@@ -275,31 +268,15 @@ module xz_block(x, z, w, h, y0, y1, r = 0.5)
   translate([x, y1, z]) rotate([90,0,0])
     linear_extrude(y1 - y0) offset(r=r) square([w - 2*r, h - 2*r], center=true);
 
-// USB-C (MEC-13): pocket from the inside, rim slot through the skin, and the two
-// boss pilots. No screw holes in the wall - the flange's own inserts go unused.
+// USB-C (MEC-13): pocket from the inside, rim slot and two screw holes through the
+// skin. The screws, driven from outside, pull the flange onto the skin.
 module usbc_cut() {
   xz_block(UC_X, FZ_U, UC_PW, UC_PH, YI - 1, YR - UC_SKIN);
   xz_block(UC_X, FZ_U, UC_SW, UC_SH, YI - 1, YR + 1, r = UC_SH/2 - 0.01);
-  for (s=[-1,1]) translate([UC_X, 0, FZ_U + s*UC_CS/2])
-    rotate([-90,0,0]) translate([0,0,YI - UC_K]) cylinder(d=UC_PILOT, h=UC_K);
+  for (s=[-1,1]) translate([UC_X + s*UC_S/2, YR + 1, FZ_U]) rotate([90,0,0]) cylinder(d=UC_SD, h=WALL + 2);
 }
 
-// Flange back face, and the bosses the clip is screwed to. They stop UC_CLAMP
-// short of the clip, so tightening pulls the clip onto the flange, not the boss.
-UC_YB = YR - UC_SKIN - UC_K;   // 127.742
-module usbc_bosses()
-  for (s=[-1,1]) translate([UC_X, 0, FZ_U + s*UC_CS/2])
-    rotate([-90,0,0]) translate([0,0,UC_YB + UC_CLAMP]) cylinder(d=UC_BOSS, h=YI - UC_YB - UC_CLAMP + 0.5);
-
-// The clip, in place: a frame round the body, pressing the flange's side shoulders.
-module usbc_clip_placed()
-  difference() {
-    xz_block(UC_X, FZ_U, UC_FW, UC_CH, UC_YB - UC_CT, UC_YB, r = 1.5);
-    xz_block(UC_X, FZ_U, UC_BW + 0.6, UC_BH + 0.6, UC_YB - UC_CT - 1, UC_YB + 1);
-    for (s=[-1,1]) translate([UC_X, UC_YB + 1, FZ_U + s*UC_CS/2]) rotate([90,0,0]) cylinder(d=UC_CSD, h=UC_CT + 2);
-  }
-// ...and flat on the bed for printing: the flange-side face down.
-module usbc_clip() translate([0,0,UC_YB]) rotate([-90,0,0]) translate([-UC_X, 0, -FZ_U]) usbc_clip_placed();
+UC_YB = YR - UC_SKIN - UC_K;   // flange back face, 127.742
 
 // Mini-B (MEC-13), upright: pocket from the inside, a grip aperture through the
 // skin, one round screw hole (bottom) and one slot (top) through the skin.
@@ -317,6 +294,7 @@ module usbc_standin() {
   xz_block(UC_X, FZ_U, UC_FW, UC_FH, UC_YB, YR - UC_SKIN);                          // flange
   xz_block(UC_X, FZ_U, 8.94, 3.2, YR - UC_SKIN - 0.01, YR - UC_SKIN + 0.9, r = 1.5); // metal rim
   xz_block(UC_X, FZ_U, UC_BW, UC_BH, UC_YB - UC_BL, UC_YB + 0.01);                 // body
+  for (s=[-1,1]) translate([UC_X + s*UC_S/2, YR, FZ_U]) rotate([-90,0,0]) cylinder(d=UC_HD, h=1.8); // screw heads
 }
 module minib_standin() {
   xz_block(MB_X, FZ_U, MB_FW, MB_FL, YR - MB_SKIN - MB_K, YR - MB_SKIN);
@@ -329,8 +307,8 @@ module de9_standin() {
 }
 
 // ---------- port labels, upper panel only ------------------------------------
-// Debossed 0.6 mm into the rear face, in the 8 mm band between the flange tops
-// (z 32) and the upper vent row (z 40). Debossed, not raised: raised letters on
+// Debossed 0.6 mm into the rear face, in the band between the top vent row
+// (top edge z 32.5) and the wrap line at z 40. Debossed, not raised: raised letters on
 // a vertical wall are fragile and print mushy, and a recess takes a paint pen -
 // wipe it across, wipe the face clean, the letters stay filled.
 // 0.6 mm into a 3 mm wall removes nothing structural.
@@ -400,7 +378,7 @@ module fascia_lower() difference() {
   buttons_cut(FZ_L); vents(FZ_L, VENT_DZ); labels_lower();
 }
 module fascia_upper() difference() {
-  union() { blank(GAP_U); usbc_bosses(); }
+  blank(GAP_U);
   de9_cut(); usbc_cut(); minib_cut();
   vents(FZ_U, VENT_DZU); labels_upper();
 }
@@ -410,22 +388,19 @@ assert(abs(YI - (PLATE_YR + CLR)) < 1e-3, "YI must equal PLATE_YR + CLR");
 
 if      (PART == "lower") fascia_lower();
 else if (PART == "upper") fascia_upper();
-else if (PART == "uclip") usbc_clip();
 else if (PART == "portclash") translate([0,0,D2T]) {   // must render EMPTY, like "clash"
   // every connector against the upper panel, the rear chassis and each other
-  for (p=[0:3]) intersection() {
-    if (p==0) usbc_standin(); else if (p==1) minib_standin(); else if (p==2) de9_standin(); else usbc_clip_placed();
+  for (p=[0:2]) intersection() {
+    if (p==0) usbc_standin(); else if (p==1) minib_standin(); else de9_standin();
     union() { fascia_upper(); translate([0,0,-D2T]) chassis_rear(); }
   }
-  intersection() { usbc_standin();  usbc_clip_placed(); }
   intersection() { usbc_standin();  de9_standin(); }
   intersection() { minib_standin(); de9_standin(); }
-  intersection() { usbc_clip_placed(); de9_standin(); }
 }
 else if (PART == "blank") blank(GAP_L);
 else if (PART == "fit") {                // panels in situ, with the rear chassis in grey
   translate([0,0,D1T]) fascia_lower();
-  translate([0,0,D2T]) { fascia_upper(); usbc_clip_placed(); }
+  translate([0,0,D2T]) fascia_upper();
   %chassis_rear();
 }
 else if (PART == "clash") intersection() {   // anything rendered here is an interference
