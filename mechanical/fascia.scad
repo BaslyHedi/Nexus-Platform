@@ -329,12 +329,10 @@ LBL_ZB = 17.0;   // upper, bottom row: z 14.75..19.25, above the screw heads (to
 LBL_ZT = 35.5;   // upper, top row: z 33.25..37.75, above the DE-9 aperture (30.6), below the 42 top edge
 LBL_F = "Liberation Sans:style=Bold";
 
-// Lower panel sits higher. A 22.4 mm button leaves only 3.8 mm above it, too
-// little for 4.5 mm text - but the upper vent row leaves 27.2 mm gaps BETWEEN
-// its slots (x -32.69..-5.52 and 10.48..37.65), clear from the button tops to
-// the panel top, and each gap sits almost exactly over its own button.
-// z 43 clears the real 24.8 mm bezel (MEC-14) by 3.35 mm.
-LBL_ZL = 43.0;
+// Lower panel: each legend sits over its own button, between the bezel and the
+// top vent row. z 41 (38.75..43.25) clears the real 24.8 mm bezel (top z 37.4,
+// MEC-14) by 1.35 mm and the top vent row (46..49) by 2.75 mm.
+LBL_ZL = 41.0;
 
 // mirror(): the rear face looks down +y, so an observer outside sees world +x
 // running to their LEFT. Without the flip every label reads backwards.
@@ -363,47 +361,55 @@ module labels_lower() {
 
 // ---------- vents ------------------------------------------------------------
 // Obround, not rectangular: radiused ends leave no sharp internal corner.
-VENT_H   = 3.0;              // slot height
-VENT_DZ  = 16.5;             // lower panel: rows at 25 +/- 16.5 = 8.5 and 41.5
+VENT_H   = 3.0;              // slot width
 
-// Lower panel. [x offset from XC, slot length]. The button holes span
-// XC-33.2..XC-10.8 and XC+10.8..XC+33.2, so these three columns land in the clear
-// gaps: outside the left button, between the two, and outside the right button.
-// Nothing is cut above or below a switch. Lengthened 2026-09-25 (MEC-14): outer
-// 7 -> 10, still starting outside the button (34.17 > 33.2) and ending 2.95 short
-// of the flat face; centre 16 -> 18, ending 1.8 short of the button span.
-// 76 mm of slot, against 60.
-VENT    = [[-39.17, 10], [0, 18], [39.17, 10]];
+// Each panel has its own list: [x offset from XC, z, length, upright?]. The panels
+// are NOT matched to each other - each is laid out for what sits behind it (MEC-14).
+
+// Lower panel (MEC-14): the heat is behind it - the motor driver at the rear of
+// plate 1, the UBEC, the battery. Slots LOW let air in by the driver, slots HIGH let
+// warm air out. The MEC-04 rule still holds in its intent: no slot comes within
+// ~10 mm of a switch hole (holes z 13.8..36.2 at XC +/- 22), and none cuts into
+// the nut footprint on the inside face (25 A/F, 28.5 across corners -> XC +/- 7.75
+// .. 36.25, z 10.75 .. 39.25).
+//   centre ladder  x XC +/- 6, five rows z 8..40, 5 mm bars - between the switches,
+//                  1.75 mm inside the nut footprints' edge
+//   end uprights   x XC +/- 41, z 8..42 - 3.25 mm of web to the nut footprint,
+//                  clear of the pad bands (z 0..5, 45..50)
+//   top row        x XC +/- (13..31), z 47.5 - above the DRIVE/LOGIC labels, 9.8 mm
+//                  from the hole edges, 3 mm of wall left under the plate-2 wrap
+// 164 mm of slot, against 60 originally.
+VENT_L  = concat(
+  [for (z=[8, 16, 24, 32, 40]) [0, z, 12, false]],
+  [[-41.0, 25, 34, true], [41.0, 25, 34, true],
+   [-22.0, 47.5, 18, false], [22.0, 47.5, 18, false]]);
+
+// Upper panel (MEC-13): laid out AFTER the ports, in the space they leave. Little
+// heat behind it (the 5 V converter at under 1 A, the STM32 carrier), so the slots
+// stay short and the face stays stiff: an upright slot at each end (z 12..28, clear
+// of the pad bands z 0..5 and 35..40, 3.3 mm of web to the Mini-B pocket), and two
+// flat slots in each top corner beside the DE-9 (x XC +/- 22.25..34.25), clear of
+// its screws and of the labels. 80 mm of slot.
+VENT_U  = [[-42.0, 20, 16, true],   [42.0, 20, 16, true],
+           [-28.25, 23, 12, false], [28.25, 23, 12, false],
+           [-28.25, 30, 12, false], [28.25, 30, 12, false]];
 
 module vent_slot(L)
   hull() for (s=[-1,1])
     translate([s*(L/2 - VENT_H/2), 0, 0]) cylinder(d=VENT_H, h=40);
 
-module vents(fz, dz_)
-  for (dz=[-dz_, dz_]) for (v=VENT)
-    translate([XC+v[0], YR+8, fz+dz]) rotate([90,0,0]) vent_slot(v[1]);
-
-// Upper panel (MEC-13): laid out AFTER the ports, and matched to the lower panel -
-// it reuses the lower panel's OUTER columns, same x (XC +/- 39.17) and same 10 mm
-// length, so the slots line up in two columns down the whole rear face. Two rows,
-// z 20 and 31: at the bottom-row height (z 9) the right column would cut the
-// Mini-B pocket and its screw slot, so neither side has one there. Clear of the pad
-// bands (z 0..5, 35..40), the labels and the DE-9. The middle stays solid.
-// 40 mm of slot. [x offset from XC, z, length, upright?]
-VENT_U  = [[VENT[0][0], 20, VENT[0][1], false], [VENT[2][0], 20, VENT[2][1], false],
-           [VENT[0][0], 31, VENT[0][1], false], [VENT[2][0], 31, VENT[2][1], false]];
-module vents_upper()
-  for (v=VENT_U)
+module vents(list)
+  for (v=list)
     translate([XC + v[0], YR+8, v[1]]) rotate([90,0,0]) rotate([0,0, v[3] ? 90 : 0]) vent_slot(v[2]);
 
 module fascia_lower() difference() {
   blank(GAP_L);
-  buttons_cut(FZ_L); vents(FZ_L, VENT_DZ); labels_lower();
+  buttons_cut(FZ_L); vents(VENT_L); labels_lower();
 }
 module fascia_upper() difference() {
   blank(GAP_U);
   de9_cut(); usbc_cut(); minib_cut();
-  vents_upper(); labels_upper();
+  vents(VENT_U); labels_upper();
 }
 
 // ---------- output -----------------------------------------------------------

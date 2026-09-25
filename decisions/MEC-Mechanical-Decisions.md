@@ -136,9 +136,9 @@ reprinting 104 mm of shell.
 
 ## MEC-04 · Vents - six obround slots per panel, in the bands the features do not use
 
-**Updated by MEC-13:** on the upper panel the two port rows fill the middle, so its vents are four slots in the lower panel's outer columns (same x, same 10 mm), two rows each side.
+**Updated by MEC-13:** on the upper panel the two port rows fill the middle, so its vents are six short slots at the ends and top corners.
 
-**Updated by MEC-14:** the lower panel's slots are lengthened, outer 7 → 10 and centre 16 → 18, same positions and rule.
+**Updated by MEC-14:** the lower panel's vents are redesigned for cooling: a centre ladder, an upright slot at each end and a top row, 164 mm of slot. The rule below is kept in its intent (~10 mm from any switch hole).
 
 *Formerly HD-23.*
 
@@ -257,6 +257,8 @@ UART console. Bringing J1 out here would be actively wrong.
 ## MEC-06 · Switch legends - DRIVE and LOGIC, not POWER
 
 *Formerly HD-25.*
+
+**Updated by MEC-14:** the legends sit at z 41, not 43, to make room for the lower panel's top vent row.
 
 **Decision.** The lower panel names both switches, debossed 0.6 mm at 4.5 mm cap height, z 43:
 
@@ -700,18 +702,19 @@ the vendor photo in MEC-05.
   cable as the robot's debug lead.
 - **Each label sits directly above its port.** IMX91 and STM32 at z 14.75…19.25, between the
   screw heads and the DE-9 aperture; CAN at z 33.25…37.75, above the DE-9.
-- **The upper vents are laid out after the ports, and matched to the lower panel (updates MEC-04
-  for this panel).** They reuse the lower panel's outer columns, same x (XC ± 39.17) and same 10 mm
-  slots, so the vents line up in two columns down the whole rear face: two rows, z 20 and 31. The
-  bottom-row height is left solid on both sides, because on the right that column would cut the
-  Mini-B pocket and its screw slot. 40 mm of slot. Two earlier cuts were dropped: 118 mm of long
-  slots left too little face to keep the panel stiff, and a shorter 80 mm set of end and corner
-  slots did not line up with anything on the lower panel.
-- **The upper panel is now 17.0 cm³** (~21 g PETG).
+- **The upper vents are laid out after the ports, in the space they leave (updates MEC-04 for
+  this panel).** Little heat sits behind this panel (the 5 V converter at under 1 A, the STM32
+  carrier), so the slots stay short and the face stays stiff: one upright slot at each end (XC ± 42,
+  z 12…28) and two flat slots in each top corner beside the DE-9 (XC ± 28.25, z 23 and 30, 12 long).
+  80 mm of slot. The right upright keeps 3.3 mm of web to the Mini-B pocket. Dropped on the way: a
+  118 mm set of long slots, too little face left to keep the panel stiff; and a 40 mm set matched to
+  the lower panel's columns, symmetric but too little air.
+- **The upper panel is now 16.7 cm³** (~21 g PETG).
 - **`PART="portclash"` is a second gate**, beside `clash`. It checks rough stand-ins of the three
   connectors, including the screw heads, against the upper panel, the rear chassis and each
   other. It renders **zero volume**; the faces it returns are the flange-on-pocket contacts.
-- **No thin margins left.** The closest is 6.1 mm from the Mini-B body to the right standoff.
+- **No thin margins left.** The closest are 6.1 mm from the Mini-B body to the right standoff and
+  3.3 mm of web between the right vent and the Mini-B pocket.
 
 **To confirm.**
 
@@ -753,9 +756,20 @@ cover a 22.4 hole with 1.2 mm to spare a side.
   if the bezel-to-wire-exit depth is over ~33 mm it reaches the motors. The seller has been asked.
   The fallback is 4.8 mm flag (right-angle) receptacles, which add only 2-3 mm past the tabs.
 - **BOM 3.17 is 4.8 mm receptacles, not 6.3.**
-- **The lower panel's vents are lengthened (updates MEC-04),** 2026-09-25: the outer columns from
-  7 to 10 mm, the centre one from 16 to 18. The layout rule holds: the outer slots still start
-  outside the button span (x 34.17 against 33.2 from XC) and the centre one ends 1.8 mm short of
-  it, so nothing is cut above or below a switch. 76 mm of slot against 60. The panel is 20.3 cm³.
+- **The lower panel's vents are redesigned for cooling (updates MEC-04),** 2026-09-25. The heat is
+  behind this panel: the motor driver at the rear of plate 1, the UBEC, the battery. So it gets most
+  of the open area, low to let air in by the driver and high to let warm air out:
+  - a **centre ladder** between the switches, five 12 mm slots at z 8…40 with 5 mm bars;
+  - an **upright slot at each end**, XC ± 41, z 8…42, 34 mm long;
+  - a **top row** over each switch, XC ± 22, z 47.5, 18 mm long.
 
+  164 mm of slot, against 60 originally. MEC-04's rule is kept in its intent rather than its
+  letter: no slot comes within ~10 mm of a switch hole (the top row is 9.8 mm above), and none
+  cuts into the nut footprint on the inside (25 A/F, 28.5 across corners). The closest is the
+  centre ladder, 1.6 mm from a nut corner turned towards it. The DRIVE / LOGIC legends drop from
+  z 43 to **z 41** to make room for the top row (updates MEC-06). The panel is 19.6 cm³.
+- **Drag is not a concern.** A reader may worry the rear panel acts as an air brake at speed. At
+  1.5 m/s it is ½ · 1.2 · 1.5² · 1.2 · 0.012 m² ≈ **0.02 N**, and about 0.2 N even at 5 m/s,
+  against ~0.4 N of rolling resistance for a ~2 kg vehicle. What matters at speed is the panel
+  staying put under vibration, which is MEC-07's clamp, unchanged by the vents.
 ---
