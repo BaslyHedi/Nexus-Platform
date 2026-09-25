@@ -218,10 +218,12 @@ module pad2d(f)
     for (p=SO) translate(p) circle(r=SO_AF/sqrt(3) + SO_CLR);
   }
 
-// One band on the deck below (0..5) and one under the deck above (gap-5..gap).
-// Lower panel: 0..5 and 45..50, clear of its vents (7..10, 40..43), the buttons
-// and their nuts (~10..40). Upper panel: 0..5 and 35..40, clear of both port rows
-// (flanges z 6..16 and 21.7..34.3) and, in x, of every vent (MEC-13).
+// One band on the deck below (0..5) and one under the deck above (gap-5..gap), at
+// x beyond about XC +/- 39. Lower panel: 0..5 and 45..50, clear of the buttons and
+// their nuts (~10..40) by height, and of the vents sideways - the top vent row
+// (z 46..49) shares the band's height but stops at XC +/- 31 (MEC-14). Upper
+// panel: 0..5 and 35..40, clear of both port rows by height (flanges z 4..14 and
+// 19.73..32.27) and of every vent sideways (MEC-13).
 module pads(gap)
   difference() {
     for (z=[0, gap-PAD_H]) translate([0,0,z]) linear_extrude(PAD_H) for (f=FIX) pad2d(f);

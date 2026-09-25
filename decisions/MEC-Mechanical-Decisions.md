@@ -435,6 +435,8 @@ STM32F4DISCOVERY to a standard prototyping/wrapping board."* The headers ship po
 
 *Formerly HD-28.*
 
+**Updated by MEC-13:** the upper panel's ports are no longer one row at local z 20; they are two rows, at z 26 and z 9.
+
 **Decision (2026-09-20).** Measured on the built kit: the **lower gap is 50.00 mm and the upper is
 40.00 mm**. The kit ships two standoff lengths. The fascia is therefore two different panels -
 **52 mm** and **42 mm** tall - and MEC-03's "one blank, two panels" is dead.
@@ -726,6 +728,14 @@ the vendor photo in MEC-05.
 - **Mini-B body**, ~20 × 10 × 13 (photo). It has 6.1 mm to the standoff, so it would have to be
   over 32 mm wide to touch.
 - **The DE-9 rear insulator** is assumed 19 × 10.5 × 8 in the stand-in, not measured.
+- **The USB-C body against the STM32 carrier - open, found in review.** If the drawing's 40 mm body
+  is all behind the flange, the body ends at y 87.7; the carrier's rear edge (MEC-12, plate x 223.2)
+  is at y 84.8. That leaves **2.9 mm** at the carrier's height, and the cable still has to leave the
+  body and bend up to the FRDM on deck 3. If the 40 mm includes the 6 mm flange, the gap is 8.9 mm.
+  `portclash` cannot see this: it checks the plates and standoffs, not what sits on them. Moving
+  the port sideways does not help, since the carrier spans that width. It is a packaging question,
+  not a print one: measure the body length behind the flange, then either shift the carrier
+  forward (up to ~8 mm before it meets the converter at x 85) or route the cable around it.
 
 ---
 
@@ -738,7 +748,7 @@ depended on, so the lower panel is ready to print.
 | From the drawing (22 mm version) | What it settles |
 |---|---|
 | Thread **M22 × 1**, mounting hole 22 | the hole |
-| Bezel **⌀24.8 × 2.0** | sits on the outer face. The DRIVE / LOGIC labels at z 43 clear it by 3.35 mm |
+| Bezel **⌀24.8 × 2.0** | sits on the outer face. The DRIVE / LOGIC labels, moved to z 41 for the top vent row, clear it by 1.35 mm |
 | Nut **25.0 A/F, 28.5 across corners** | under MEC-07's ~30 mm limit before a nut reaches the pad bands. The two nuts, 44 apart, are 15.5 mm apart |
 | Thread length 14.2 | 3 mm wall plus nut uses ~6 of it |
 | Body **20** behind the bezel, tabs **5** more | 25 mm: exactly the depth MEC-07 assumed, ending at y ≈ 109.9, 8 mm clear of the motors |

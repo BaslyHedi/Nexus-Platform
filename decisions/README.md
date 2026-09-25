@@ -123,3 +123,4 @@ Questions that block a decision, or that a decision rests on and nobody has meas
 | Which USB-CAN adapter, and is its 120 Ω switchable? | HW-18 - must be OFF |
 | Does the Encoder Motor Module time out when I²C commands stop? | HW-17 - decides whether the HW-12 relay is needed before autonomy |
 | Which way do the Discovery's P1/P2 pins protrude? | MEC-08 - decides whether the carrier sits above or below the board |
+| USB-C (5.9) **body length behind the flange**: 40 would leave 2.9 mm to the STM32 carrier's rear edge, 34 would leave 8.9 | MEC-13 / MEC-12 - carrier position or cable routing, not the print |
