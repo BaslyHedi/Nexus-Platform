@@ -361,16 +361,19 @@ module labels_lower() {
   label(XC - BTN_C/2, "LOGIC", LBL_ZL);   // SW2, green - right as faced
 }
 
-// ---------- vents, identical on both panels ----------------------------------
+// ---------- vents ------------------------------------------------------------
 // Obround, not rectangular: radiused ends leave no sharp internal corner.
 VENT_H   = 3.0;              // slot height
 VENT_DZ  = 16.5;             // lower panel: rows at 25 +/- 16.5 = 8.5 and 41.5
 
-// [x offset from XC, slot length]. The button holes span XC-33.2..XC-10.8 and
-// XC+10.8..XC+33.2, so these three columns land in the clear gaps: outside the
-// left button, between the two, and outside the right button. Nothing is cut
-// above or below a switch.
-VENT    = [[-38.67, 7], [0, 16], [38.67, 7]];
+// Lower panel. [x offset from XC, slot length]. The button holes span
+// XC-33.2..XC-10.8 and XC+10.8..XC+33.2, so these three columns land in the clear
+// gaps: outside the left button, between the two, and outside the right button.
+// Nothing is cut above or below a switch. Lengthened 2026-09-25 (MEC-14): outer
+// 7 -> 10, still starting outside the button (34.17 > 33.2) and ending 2.95 short
+// of the flat face; centre 16 -> 18, ending 1.8 short of the button span.
+// 76 mm of slot, against 60.
+VENT    = [[-39.17, 10], [0, 18], [39.17, 10]];
 
 module vent_slot(L)
   hull() for (s=[-1,1])
@@ -381,14 +384,16 @@ module vents(fz, dz_)
     translate([XC+v[0], YR+8, fz+dz]) rotate([90,0,0]) vent_slot(v[1]);
 
 // Upper panel (MEC-13): laid out AFTER the ports, in the space they leave, and
-// symmetric about XC like them - not matched to the lower panel. An upright slot
-// at each end (z 8..32, clear of the pad bands z 0..5 and 35..40, 1.8 mm of web to
-// the Mini-B pocket), and two flat slots in each top corner beside the DE-9, clear
-// of its screws and of the labels. 118 mm of slot, against 60 before.
+// symmetric about XC like them - not matched to the lower panel. Kept short so the
+// face stays stiff: an upright slot at each end (z 12..28, clear of the pad bands
+// z 0..5 and 35..40, 3.3 mm of web to the Mini-B pocket), and two flat slots in
+// each top corner beside the DE-9 (x XC +/- 22.25..34.25), clear of its screws and
+// of the labels, with 4 mm bars between them and 4.75 mm to the upright slot.
+// 80 mm of slot, against 60 on the original upper panel.
 // [x offset from XC, z, length, upright?]
-VENT_U  = [[-40.5, 20, 24, true],   [40.5, 20, 24, true],
-           [-28.25, 23, 17.5, false], [28.25, 23, 17.5, false],
-           [-28.25, 30, 17.5, false], [28.25, 30, 17.5, false]];
+VENT_U  = [[-42.0, 20, 16, true],   [42.0, 20, 16, true],
+           [-28.25, 23, 12, false], [28.25, 23, 12, false],
+           [-28.25, 30, 12, false], [28.25, 30, 12, false]];
 module vents_upper()
   for (v=VENT_U)
     translate([XC + v[0], YR+8, v[1]]) rotate([90,0,0]) rotate([0,0, v[3] ? 90 : 0]) vent_slot(v[2]);

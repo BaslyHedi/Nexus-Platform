@@ -136,7 +136,9 @@ reprinting 104 mm of shell.
 
 ## MEC-04 · Vents - six obround slots per panel, in the bands the features do not use
 
-**Updated by MEC-13:** on the upper panel the two port rows fill the middle, so its vents are four slots at the ends and top corners. The lower panel is unchanged.
+**Updated by MEC-13:** on the upper panel the two port rows fill the middle, so its vents are six short slots at the ends and top corners.
+
+**Updated by MEC-14:** the lower panel's slots are lengthened, outer 7 → 10 and centre 16 → 18, same positions and rule.
 
 *Formerly HD-23.*
 
@@ -700,16 +702,17 @@ the vendor photo in MEC-05.
   screw heads and the DE-9 aperture; CAN at z 33.25…37.75, above the DE-9.
 - **The upper vents are laid out after the ports, in the space they leave (updates MEC-04 for
   this panel).** Symmetric about XC like the ports, and deliberately not matched to the lower
-  panel: one upright slot at each end (XC ± 40.5, z 8…32) and two flat slots in each top corner
-  beside the DE-9 (XC ± 28.25, z 23 and 30, 17.5 long). That is 118 mm of slot against 60 before.
-  The right upright slot keeps 1.8 mm of web to the Mini-B pocket. The lower panel's vents are
-  unchanged.
-- **The upper panel is now 16.3 cm³** (~21 g PETG).
+  panel: one upright slot at each end (XC ± 42, z 12…28) and two flat slots in each top corner
+  beside the DE-9 (XC ± 28.25, z 23 and 30, 12 long). That is 80 mm of slot against 60 on the
+  original upper panel. A first cut at 118 mm (24 mm uprights, 17.5 mm flats) was cut back because
+  it left too little face to keep the panel stiff; the uprights also moved out 1.5 mm so the right
+  one keeps 3.3 mm of web to the Mini-B pocket instead of 1.8.
+- **The upper panel is now 16.7 cm³** (~21 g PETG).
 - **`PART="portclash"` is a second gate**, beside `clash`. It checks rough stand-ins of the three
   connectors, including the screw heads, against the upper panel, the rear chassis and each
   other. It renders **zero volume**; the faces it returns are the flange-on-pocket contacts.
 - **No thin margins left.** The closest are 6.1 mm from the Mini-B body to the right standoff and
-  1.8 mm of web between the right vent and the Mini-B pocket.
+  3.3 mm of web between the right vent and the Mini-B pocket.
 
 **To confirm.**
 
@@ -751,5 +754,9 @@ cover a 22.4 hole with 1.2 mm to spare a side.
   if the bezel-to-wire-exit depth is over ~33 mm it reaches the motors. The seller has been asked.
   The fallback is 4.8 mm flag (right-angle) receptacles, which add only 2-3 mm past the tabs.
 - **BOM 3.17 is 4.8 mm receptacles, not 6.3.**
+- **The lower panel's vents are lengthened (updates MEC-04),** 2026-09-25: the outer columns from
+  7 to 10 mm, the centre one from 16 to 18. The layout rule holds: the outer slots still start
+  outside the button span (x 34.17 against 33.2 from XC) and the centre one ends 1.8 mm short of
+  it, so nothing is cut above or below a switch. 76 mm of slot against 60. The panel is 20.3 cm³.
 
 ---
