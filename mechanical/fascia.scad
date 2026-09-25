@@ -2,8 +2,8 @@
 // STATUS: gaps measured 2026-09-20 - LOWER 50, UPPER 40. The two panels are now
 //         DIFFERENT parts (MEC-09); MEC-03's single blank is dead. Fixing: two
 //         screwed pads per panel (MEC-07).
-//         Ports (MEC-13): all three measured or drawn. USB-C and Mini-B mount
-//         from behind in pockets; the Mini-B stands upright. See the port block.
+//         Ports (MEC-13): all three measured or drawn, in two rows - DE-9 on
+//         top, USB-C and Mini-B below. See the port block.
 //
 // TWO PANELS, TWO HEIGHTS. Measured on the built kit 2026-09-20: the lower gap
 // is 50.00 mm and the upper is 40.00 mm - the kit ships two standoff lengths,
@@ -83,23 +83,25 @@ BTN_D = 22.4;  BTN_C = 44.0;   // M22x1 switches (vendor drawing). 0.4 over the 
 // Both extensions have threaded flange holes, so both mount from BEHIND the wall,
 // in a pocket on its inside face. Neither body passes through the panel.
 //
-// Layout on the 94.24 mm flat face (x -44.64 .. 49.60). Two things fix it:
-//   - each body runs ~13-40 mm forward into the vehicle, past the rear standoffs,
-//     whose flats are at x -32.61 and +37.57 (6.0 A/F hex at -35.61 / +40.57);
-//   - the three flanges would total 23 + 30.84 + 36 = 89.8 mm side by side.
-// So the Mini-B stands UPRIGHT (36 tall in the 40 mm gap, 10 wide), the USB-C
-// moves right until its body clears the left standoff, and the DE-9 sits centred
-// in what is left between them:
-//   USB-C  flange -36.50 .. -13.50   body -32.00 .. -18.00  (0.61 to the standoff)
-//   DE-9   flange -12.17 ..  18.67   1.33 to each neighbour
-//   Mini-B flange  20.00 ..  30.00   body  20.00 ..  30.00  (7.57 to the standoff)
+// Layout on the 94.24 mm flat face (x -44.64 .. 49.60), all three HORIZONTAL, in
+// two rows (MEC-13). Side by side they would total 23 + 30.84 + 36 = 89.8 mm, and
+// each body runs ~13-40 mm forward into the vehicle past the rear standoffs, whose
+// flats are at x -32.61 and +37.57 (6.0 A/F hex at -35.61 / +40.57). Two rows take
+// the width problem away:
+//   top row,    z 28:  DE-9   flange -12.94 .. 17.90, z 21.73 .. 34.27, on XC
+//   bottom row, z 11:  USB-C  flange -36.50 .. -13.50, body -32.00 .. -18.00
+//                                    (0.61 to the left standoff)
+//                      Mini-B flange  -6.00 ..  30.00, body   2.00 ..  22.00
+//                                    (15.57 to the right standoff), 7.5 from the USB-C
 YI = 131.942;     // inside face of the wall on the flat: PLATE_YR + CLR (set below)
 
 DE9_W  = 17.9;    // shell aperture width   - drawing: shell 16.92 +/-0.13, so 0.5 a side
 DE9_H  =  9.2;    // shell aperture height  - drawing: shell  8.38 +/-0.13, so 0.4 a side
 DE9_S  = 24.99;   // mounting screw centres - CONFIRMED on the drawing, +/-0.13
 DE9_SD =  3.4;    // panel clearance; the connector's own holes are 3.05 (M3 is a squeeze there)
-DE9_X  =  3.25;   // centred between the USB-C and Mini-B flanges (MEC-13)
+DE9_X  =  2.48;   // = XC (set below), the chassis centreline: alone in its row (MEC-13)
+ROW_T  = 28.0;    // top row: DE-9. Flange top 34.27, 5.7 clear of the 40 wrap line
+ROW_B  = 11.0;    // bottom row: USB-C and Mini-B. Flanges z 6..16, 5.7 clear of the DE-9
 
 // USB-C panel-mount extension, CY type, 20 cm -> FRDM J11 (USB-C UART console).
 // Mounted from behind, the way the vendor's own bracket does it: its two M2.5 x 5
@@ -108,6 +110,7 @@ DE9_X  =  3.25;   // centred between the USB-C and Mini-B flanges (MEC-13)
 // the plug grip has to be narrower than that - the bench cable's is 10. A full-width
 // grip (up to 12.35 by the spec) would land on the heads and not seat (MEC-13).
 UC_X    = -25.0;  // body clears the left standoff by 0.61 (MEC-13)
+UC_Z    = ROW_B;
 UC_FW   = 23.0;   // flange width - drawing
 UC_FH   =  8.3;   // flange face height - PHOTO; measured "6" is probably the depth. Pocket fits both
 UC_K    =  6.0;   // flange depth along the cable - PHOTO
@@ -125,25 +128,26 @@ UC_SD   =  2.9;   // M2.5 clearance. 1.25 mm of skin is left between each hole a
 UC_HD   =  4.0;   // screw head diameter - tape-measured; sets the 11 mm grip limit
 
 // Mini-B panel-mount extension, JSER type, 50 cm -> Discovery CN1 (ST-LINK).
-// Stands UPRIGHT: long axis in z. Its screws are ~28.5 apart, so the heads sit
+// Horizontal, like the others. Its screws are ~28.5 apart, so the heads sit
 // ~11.7 from centre, far outside any plug grip - it keeps its own screws, driven
 // from outside through a 1.5 mm skin into the threaded ears (~3.5 mm of thread).
-MB_X    = 25.0;
-MB_FL   = 36.0;   // flange length (z) - measured
-MB_FW   = 10.0;   // flange width  (x) - measured
+MB_X    = 12.0;
+MB_Z    = ROW_B;
+MB_FL   = 36.0;   // flange length (x) - measured
+MB_FW   = 10.0;   // flange height (z) - measured
 MB_K    =  8.0;   // flange depth - measured
-MB_BW   = 20.0;   // body, along z - PHOTO
-MB_BT   = 10.0;   // body, along x - PHOTO
+MB_BW   = 20.0;   // body, along x - PHOTO
+MB_BT   = 10.0;   // body, along z - PHOTO
 MB_BL   = 13.0;   // body length behind the flange - PHOTO, then a ~5.6 mm cable sleeve
 MB_S    = 28.5;   // screw centres - PHOTO, not measured; see MB_SLOT
-MB_SLOT =  3.0;   // top hole only is a slot, z +/-1.5: any pitch 27..30 bolts up. One hole
+MB_SLOT =  3.0;   // outboard (+x) hole only is a slot, +/-1.5: any pitch 27..30 bolts up. One hole
                   // stays round so the part can only pivot about it, never slide bodily
 MB_SD   =  2.9;   // M2.5 clearance
 MB_SKIN =  1.5;
-MB_PW   = 10.4;   // pocket, x
-MB_PL   = 36.4;   // pocket, z
-MB_AW   =  9.5;   // aperture for the plug grip, x - the flange bears on its ears, not here
-MB_AL   = 14.0;   // aperture, z - ears start 10.5 from centre, so they bear in full
+MB_PL   = 36.4;   // pocket, x
+MB_PW   = 10.4;   // pocket, z
+MB_AL   = 14.0;   // aperture for the plug grip, x - ears start 10.5 from centre, so they bear in full
+MB_AW   =  9.5;   // aperture, z - the flange bears on its ears, not here
 
 XC = 2.48;
 
@@ -211,8 +215,8 @@ module pad2d(f)
 
 // One band on the deck below (0..5) and one under the deck above (gap-5..gap).
 // Lower panel: 0..5 and 45..50, clear of its vents (7..10, 40..43), the buttons
-// and their nuts (~10..40). Upper panel: 0..5 and 35..40, clear of its vents
-// (7.5..10.5, 29.5..32.5) and every port flange (13.7..26.3).
+// and their nuts (~10..40). Upper panel: 0..5 and 35..40, clear of both port rows
+// (flanges z 6..16 and 21.7..34.3) and, in x, of every vent (MEC-13).
 module pads(gap)
   difference() {
     for (z=[0, gap-PAD_H]) translate([0,0,z]) linear_extrude(PAD_H) for (f=FIX) pad2d(f);
@@ -262,7 +266,7 @@ module panel_port(x, w, h, sp, sd, slot = 0, fz = 20)
   }
 
 // DE-9, CiA 303-1 pinout (2 = CAN_L, 3 = CAN_GND, 7 = CAN_H).
-module de9_cut()   panel_port(DE9_X, DE9_W, DE9_H, DE9_S, DE9_SD, 0, FZ_U);
+module de9_cut()   panel_port(DE9_X, DE9_W, DE9_H, DE9_S, DE9_SD, 0, ROW_T);
 
 // A rounded rectangle in the x-z plane, w along x and h along z, from y0 to y1.
 module xz_block(x, z, w, h, y0, y1, r = 0.5)
@@ -272,50 +276,52 @@ module xz_block(x, z, w, h, y0, y1, r = 0.5)
 // USB-C (MEC-13): pocket from the inside, rim slot and two screw holes through the
 // skin. The screws, driven from outside, pull the flange onto the skin.
 module usbc_cut() {
-  xz_block(UC_X, FZ_U, UC_PW, UC_PH, YI - 1, YR - UC_SKIN);
-  xz_block(UC_X, FZ_U, UC_SW, UC_SH, YI - 1, YR + 1, r = UC_SH/2 - 0.01);
-  for (s=[-1,1]) translate([UC_X + s*UC_S/2, YR + 1, FZ_U]) rotate([90,0,0]) cylinder(d=UC_SD, h=WALL + 2);
+  xz_block(UC_X, UC_Z, UC_PW, UC_PH, YI - 1, YR - UC_SKIN);
+  xz_block(UC_X, UC_Z, UC_SW, UC_SH, YI - 1, YR + 1, r = UC_SH/2 - 0.01);
+  for (s=[-1,1]) translate([UC_X + s*UC_S/2, YR + 1, UC_Z]) rotate([90,0,0]) cylinder(d=UC_SD, h=WALL + 2);
 }
 
 UC_YB = YR - UC_SKIN - UC_K;   // flange back face, 127.742
 
-// Mini-B (MEC-13), upright: pocket from the inside, a grip aperture through the
-// skin, one round screw hole (bottom) and one slot (top) through the skin.
+// Mini-B (MEC-13): pocket from the inside, a grip aperture through the skin, one
+// round screw hole (inboard, -x) and one slot (outboard, +x) through the skin.
 module minib_cut() {
-  xz_block(MB_X, FZ_U, MB_PW, MB_PL, YI - 1, YR - MB_SKIN);
-  xz_block(MB_X, FZ_U, MB_AW, MB_AL, YI - 1, YR + 1, r = 1.5);
-  translate([MB_X, YR + 1, FZ_U - MB_S/2]) rotate([90,0,0]) cylinder(d=MB_SD, h=WALL + 2);
-  hull() for (k=[-1,1]) translate([MB_X, YR + 1, FZ_U + MB_S/2 + k*MB_SLOT/2]) rotate([90,0,0]) cylinder(d=MB_SD, h=WALL + 2);
+  xz_block(MB_X, MB_Z, MB_PL, MB_PW, YI - 1, YR - MB_SKIN);
+  xz_block(MB_X, MB_Z, MB_AL, MB_AW, YI - 1, YR + 1, r = 1.5);
+  translate([MB_X - MB_S/2, YR + 1, MB_Z]) rotate([90,0,0]) cylinder(d=MB_SD, h=WALL + 2);
+  hull() for (k=[-1,1]) translate([MB_X + MB_S/2 + k*MB_SLOT/2, YR + 1, MB_Z]) rotate([90,0,0]) cylinder(d=MB_SD, h=WALL + 2);
 }
 
 // ---------- port stand-ins, for PART="portclash" only ------------------------
 // Rough solids of the three connectors as installed, from the measurements above.
 // A DE-9 rear insulator of 19 x 10.5 x 8 is assumed, not measured.
 module usbc_standin() {
-  xz_block(UC_X, FZ_U, UC_FW, UC_FH, UC_YB, YR - UC_SKIN);                          // flange
-  xz_block(UC_X, FZ_U, 8.94, 3.2, YR - UC_SKIN - 0.01, YR - UC_SKIN + 0.9, r = 1.5); // metal rim
-  xz_block(UC_X, FZ_U, UC_BW, UC_BH, UC_YB - UC_BL, UC_YB + 0.01);                 // body
-  for (s=[-1,1]) translate([UC_X + s*UC_S/2, YR, FZ_U]) rotate([-90,0,0]) cylinder(d=UC_HD, h=1.8); // screw heads
+  xz_block(UC_X, UC_Z, UC_FW, UC_FH, UC_YB, YR - UC_SKIN);                          // flange
+  xz_block(UC_X, UC_Z, 8.94, 3.2, YR - UC_SKIN - 0.01, YR - UC_SKIN + 0.9, r = 1.5); // metal rim
+  xz_block(UC_X, UC_Z, UC_BW, UC_BH, UC_YB - UC_BL, UC_YB + 0.01);                 // body
+  for (s=[-1,1]) translate([UC_X + s*UC_S/2, YR, UC_Z]) rotate([-90,0,0]) cylinder(d=UC_HD, h=1.8); // screw heads
 }
 module minib_standin() {
-  xz_block(MB_X, FZ_U, MB_FW, MB_FL, YR - MB_SKIN - MB_K, YR - MB_SKIN);
-  xz_block(MB_X, FZ_U, MB_BT, MB_BW, YR - MB_SKIN - MB_K - MB_BL, YR - MB_SKIN - MB_K + 0.01);
+  xz_block(MB_X, MB_Z, MB_FL, MB_FW, YR - MB_SKIN - MB_K, YR - MB_SKIN);
+  xz_block(MB_X, MB_Z, MB_BW, MB_BT, YR - MB_SKIN - MB_K - MB_BL, YR - MB_SKIN - MB_K + 0.01);
+  for (s=[-1,1]) translate([MB_X + s*MB_S/2, YR, MB_Z]) rotate([-90,0,0]) cylinder(d=4.0, h=1.8); // screw heads
 }
 module de9_standin() {
-  xz_block(DE9_X, FZ_U, 30.84, 12.55, YI - 1.0, YI, r = 1);                         // flange
-  xz_block(DE9_X, FZ_U, 16.92, 8.38, YI - 0.01, YI + 6, r = 1);                      // shell
-  xz_block(DE9_X, FZ_U, 19.0, 10.5, YI - 9.0, YI - 0.99, r = 1);                    // insulator
+  xz_block(DE9_X, ROW_T, 30.84, 12.55, YI - 1.0, YI, r = 1);                        // flange
+  xz_block(DE9_X, ROW_T, 16.92, 8.38, YI - 0.01, YI + 6, r = 1);                     // shell
+  xz_block(DE9_X, ROW_T, 19.0, 10.5, YI - 9.0, YI - 0.99, r = 1);                   // insulator
 }
 
 // ---------- port labels, upper panel only ------------------------------------
-// Debossed 0.6 mm into the rear face, in the band between the top vent row
-// (top edge z 32.5) and the wrap line at z 40. Debossed, not raised: raised letters on
+// Debossed 0.6 mm into the rear face, each directly above its own port. Debossed,
+// not raised: raised letters on
 // a vertical wall are fragile and print mushy, and a recess takes a paint pen -
 // wipe it across, wipe the face clean, the letters stay filled.
 // 0.6 mm into a 3 mm wall removes nothing structural.
 LBL_H = 4.5;     // cap height
 LBL_D = 0.6;     // depth into the wall
-LBL_Z = 35.0;    // upper panel: 32.75..37.25, clear of the vent row top (32.5) and the 40 wrap line
+LBL_ZB = 19.0;   // upper, bottom row: z 16.75..21.25, between the flange tops (16) and the DE-9 aperture (23.4)
+LBL_ZT = 37.5;   // upper, top row: z 35.25..39.75, above the DE-9 aperture (32.6), below the 42 top edge
 LBL_F = "Liberation Sans:style=Bold";
 
 // Lower panel sits higher. A 22.4 mm button leaves only 3.8 mm above it, too
@@ -329,18 +335,17 @@ LBL_ZL = 43.0;
 // running to their LEFT. Without the flip every label reads backwards.
 // `rot` 90 runs the text upward; after the mirror the letter tops face the
 // observer's left, the normal way to read a bottom-to-top label.
-module label(x, txt, z = LBL_Z, rot = 0)
+module label(x, txt, z, rot = 0)
   translate([x, YR + 0.05, z]) rotate([90,0,0]) mirror([1,0,0])
     linear_extrude(LBL_D + 0.05) rotate(rot)
       text(txt, size=LBL_H, halign="center", valign="center", font=LBL_F);
 
-// STM32 runs upright beside the Mini-B: a screw head sits where a flat label
-// would go. x 33.25 .. 37.75, z 11.5 .. 28.5 - between the right vent column's
-// two rows and clear of the Mini-B pocket (x <= 30.2).
+// Each name sits over its own port. The bottom-row labels clear the USB-C and
+// Mini-B screw heads (top z 13) and the DE-9 aperture (bottom z 23.4).
 module labels_upper() {
-  label(UC_X,  "IMX91");
-  label(DE9_X, "CAN");
-  label(35.5,  "STM32", FZ_U, 90);
+  label(UC_X,  "IMX91", LBL_ZB);
+  label(MB_X,  "STM32", LBL_ZB);
+  label(DE9_X, "CAN",   LBL_ZT);
 }
 
 // DRIVE, not POWER: SW1 switches the power TRAIN, and neither switch is a master
@@ -356,9 +361,6 @@ module labels_lower() {
 // Obround, not rectangular: radiused ends leave no sharp internal corner.
 VENT_H   = 3.0;              // slot height
 VENT_DZ  = 16.5;             // lower panel: rows at 25 +/- 16.5 = 8.5 and 41.5
-VENT_DZU = 11.0;             // upper panel: rows at 20 +/- 11 = 9 and 31. The 40 mm gap
-                             // leaves two clear bands only - 5..13.7 and 26.3..35, between
-                             // the pads and the DE-9 flange - and these sit centred in them.
 
 // [x offset from XC, slot length]. The button holes span XC-33.2..XC-10.8 and
 // XC+10.8..XC+33.2, so these three columns land in the clear gaps: outside the
@@ -374,6 +376,16 @@ module vents(fz, dz_)
   for (dz=[-dz_, dz_]) for (v=VENT)
     translate([XC+v[0], YR+8, fz+dz]) rotate([90,0,0]) vent_slot(v[1]);
 
+// Upper panel (MEC-13): the two port rows fill the middle, so the vents move to
+// where nothing else is - one upright slot at each end of the face, clear of the
+// pad bands (z 0..5, 35..40), and one flat slot in each top corner beside the
+// DE-9. 82 mm of slot, against 60 before. [x, z, length, upright?]
+VENT_U  = [[-40.5, 20, 24, true], [40.5, 20, 24, true],
+           [-25.0, 35.5, 18, false], [29.0, 35.5, 16, false]];
+module vents_upper()
+  for (v=VENT_U)
+    translate([v[0], YR+8, v[1]]) rotate([90,0,0]) rotate([0,0, v[3] ? 90 : 0]) vent_slot(v[2]);
+
 module fascia_lower() difference() {
   blank(GAP_L);
   buttons_cut(FZ_L); vents(FZ_L, VENT_DZ); labels_lower();
@@ -381,7 +393,7 @@ module fascia_lower() difference() {
 module fascia_upper() difference() {
   blank(GAP_U);
   de9_cut(); usbc_cut(); minib_cut();
-  vents(FZ_U, VENT_DZU); labels_upper();
+  vents_upper(); labels_upper();
 }
 
 // ---------- output -----------------------------------------------------------
@@ -397,6 +409,7 @@ else if (PART == "portclash") translate([0,0,D2T]) {   // must render EMPTY, lik
   }
   intersection() { usbc_standin();  de9_standin(); }
   intersection() { minib_standin(); de9_standin(); }
+  intersection() { usbc_standin();  minib_standin(); }
 }
 else if (PART == "blank") blank(GAP_L);
 else if (PART == "fit") {                // panels in situ, with the rear chassis in grey

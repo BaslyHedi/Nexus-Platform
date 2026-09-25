@@ -20,7 +20,7 @@ Drawings: [chassis layout](../hardware/chassis-layout.svg). Geometry and build c
 | **MEC-10** | The chassis holes are three sizes - and half of them are M2.5, not M3 |
 | **MEC-11** | The FRDM's mounting holes land on the Hiwonder grid - 0.06 mm out |
 | **MEC-12** | Component allocation across the three plates |
-| **MEC-13** | The debug ports mount from behind - and the Mini-B stands upright |
+| **MEC-13** | The debug ports mount from behind, in two horizontal rows |
 | **MEC-14** | The switch drawing closes the lower panel - and its holes open to 22.4 |
 
 ---
@@ -49,6 +49,8 @@ short wires carry 5 V board-adjacent, which is where droop actually hurts.
 *Formerly HD-15.*
 
 **Updated by MEC-14:** the switch holes are ⌀22.4, not 22.2.
+
+**Updated by MEC-13:** the upper panel's ports are in two rows, not one, and mount from behind.
 
 **Superseded in part by MEC-09 (2026-09-20).** The gaps were measured on the built kit: **lower 50,
 upper 40** - the kit ships two standoff lengths. Everything below that assumes 52 mm pitch, a
@@ -134,6 +136,8 @@ reprinting 104 mm of shell.
 
 ## MEC-04 · Vents - six obround slots per panel, in the bands the features do not use
 
+**Updated by MEC-13:** on the upper panel the two port rows fill the middle, so its vents are four slots at the ends and top corners. The lower panel is unchanged.
+
 *Formerly HD-23.*
 
 **Decision.** Each panel carries **six obround slots**, two rows of three, symmetric about the
@@ -183,7 +187,7 @@ cheap once the slots cost nothing structurally, and the lower gap is where the F
 
 *Formerly HD-24.*
 
-**Updated by MEC-13:** both extensions mount from behind in pockets, the Mini-B flange is 36 mm and stands upright, and the row is now USB-C x −25.0 · DE-9 x +3.25 · Mini-B x +25.0. The positions, apertures and Mini-B figures below are historical.
+**Updated by MEC-13:** both extensions mount from behind in pockets, the Mini-B flange is 36 mm, and the ports are in two rows: DE-9 on top at x +2.48, USB-C (x −25.0) and Mini-B (x +12.0) below. The single row, positions, apertures and Mini-B figures below are historical.
 
 **Updated by MEC-07:** the flat face widened from 88.47 to 94.24 mm. Port positions are unchanged, so every bay gained ~3 mm of margin.
 
@@ -619,17 +623,21 @@ the waist.
 
 ---
 
-## MEC-13 · The debug ports mount from behind - and the Mini-B stands upright
+## MEC-13 · The debug ports mount from behind, in two horizontal rows
 
-**Decision (2026-09-24).** Both panel-mount extensions sit in **pockets on the inside face** of
-the upper panel, not on its outside. The **Mini-B stands upright**. The row is re-laid so every
-connector body clears the rear standoffs:
+**Decision (2026-09-24, layout revised 2026-09-25).** Both panel-mount extensions sit in
+**pockets on the inside face** of the upper panel, not on its outside. All three ports are
+**horizontal**, in **two rows**: the DE-9 alone on top, the two USB debug ports side by side
+below. Every connector body clears the rear standoffs:
 
-| x | Port | Mounting | Held by |
-|---|---|---|---|
-| **−25.0** | USB-C (5.9), flange 23 × ~8.3 × 6 deep | pocket 23.6 × 9.0, **1.2 mm skin**, rim slot 9.6 × 3.8 its own **2 × M2.5 × 5** from outside, through the skin into the flange's metal inserts |
-| **+3.25** | DE-9 (4.5), unchanged in itself | from behind, as before | its own screws, as before |
-| **+25.0** | Mini-B (5.10), flange **36 × 10 × 8 deep**, **upright** | pocket 10.4 × 36.4, **1.5 mm skin**, grip aperture 9.5 × 14 | its own M2.5 screws from outside, bottom hole round, top a z-slot |
+| Row | x | Port | Mounting | Held by |
+|---|---|---|---|---|
+| top, z 28 | **+2.48** (XC) | DE-9 (4.5), unchanged in itself | from behind, as before | its own screws, as before |
+| bottom, z 11 | **−25.0** | USB-C (5.9), flange 23 × ~8.3 × 6 deep | pocket 23.6 × 9.0, **1.2 mm skin**, rim slot 9.6 × 3.8 | its own **2 × M2.5 × 5** from outside, through the skin into the flange's metal inserts |
+| bottom, z 11 | **+12.0** | Mini-B (5.10), flange **36 × 10 × 8 deep** | pocket 36.4 × 10.4, **1.5 mm skin**, grip aperture 14 × 9.5 | its own M2.5 screws from outside, inboard hole round, outboard a slot |
+
+Local z is measured from the top of deck 2; world z is 81.12 higher (top row 109.12, bottom row
+92.12).
 
 **What the parts showed (measured 2026-09-24).** Both extensions have **threaded M2.5 holes** in
 the flange face, so the screws come from the front and the flange has to sit behind the wall.
@@ -641,10 +649,14 @@ the vendor photo in MEC-05.
 - **The bodies run forward into the vehicle, past the rear standoffs.** The USB-C body is ~14 wide
   and ~40 long; at MEC-05's x −28.58 it overlapped the left standoff (flat at x −32.61) by ~3 mm.
   Only the flanges had ever been modelled, never the bodies. At **x −25.0** it clears by **0.61 mm**.
+  The Mini-B body (~20 wide) at x 2…22 clears the right standoff (flat at x +37.57) by 15.6 mm.
 - **Three flanges side by side no longer fit.** 23 + 30.84 + 36 = 89.8 mm on a 94.24 mm face, and
-  the two standoffs pin the outer bodies inward. Upright, the Mini-B takes 10 mm of width instead
-  of 36. Its flange spans z 2…38 of the 40 mm gap, and nothing else occupies its x band there: no
-  vent column, no pad.
+  the two standoffs pin the outer bodies inward. Two rows take the width problem away: the bottom
+  row carries 23 + 36 = 59 mm with 7.5 mm between the flanges, and the DE-9 has its row to itself,
+  so it goes back on the chassis centreline.
+- **The rows fit the 40 mm gap with room left.** Bottom-row flanges span z 6…16, the DE-9 flange
+  z 21.7…34.3, which leaves 5.7 mm between the rows and 5.7 mm to the wrap line at z 40. Nothing
+  in either row reaches the fixing pads (z 0…5 and 35…40, x beyond ±36.7).
 - **The USB-C uses its own screws, the way the vendor's bracket does.** The part ships with a
   ~1 mm steel bracket and two M2.5 × 5 screws driven from the front into the flange's metal
   inserts. The heads are **~4 across, 15 apart**, which leaves **~11 mm** clear between them. The
@@ -656,8 +668,12 @@ the vendor photo in MEC-05.
   flange, so a 1.2 skin leaves the socket face ~0.3 below the outside and the plug seats with the
   grip clear of the panel. The Mini-B surround is flush with its ears, so its grip enters a 1.5 mm
   skin through a generous aperture.
+- **Rejected: the Mini-B standing upright** in a single row (USB-C −25.0 · DE-9 +3.25 · Mini-B
+  +25.0, 2026-09-24). It fitted, but left one port turned 90° to the others and pushed the STM32
+  label onto its side. Two horizontal rows read as one panel and give every part more margin.
 - **Rejected: turning the DE-9 around**, mounting it from the front so its flange sits outside the
-  others. It would put the DE-9 flange on the outer face exactly where the Mini-B's screw heads go.
+  others. In the single-row layout it would have put the DE-9 flange on the outer face exactly
+  where the Mini-B's screw heads went.
 - **Rejected: a printed clip behind the USB-C flange.** It was designed first, for the worst case:
   the USB-C spec allows a plug grip up to **12.35 wide**, which would land on the heads and stop the
   plug ~1.8 mm short of seating. The clip pressed the flange's side shoulders and was screwed to two
@@ -671,15 +687,17 @@ the vendor photo in MEC-05.
 - **The USB-C debug lead must have a slim grip, under ~11 mm.** The 10 mm bench cable fits. Most
   chunky USB-C cables (11.5-12.5 mm) will stop on the screw heads and not seat. Keep one slim
   cable as the robot's debug lead.
-- **The STM32 label runs upright** beside the Mini-B (x 35.5, z 11.5…28.5), because a screw head now
-  sits where a flat label would go. All upper labels moved up 0.5 mm, to z 32.75…37.25: at the old
-  z 34.5 the CAN label touched the top vent row (32.5).
-- **The upper panel is now 16.9 cm³** (~21 g PETG).
+- **Each label sits directly above its port.** IMX91 and STM32 at z 16.75…21.25, between the
+  bottom-row flanges and the DE-9 aperture; CAN at z 35.25…39.75, above the DE-9.
+- **The upper vents move to the free space (updates MEC-04 for this panel).** The two rows fill the
+  middle of the face, so the six slots in two rows become four: one upright slot at each end
+  (x ±40.5, z 8…32) and one flat slot in each top corner beside the DE-9 (z 35.5). That is 82 mm
+  of slot against 60 before. The lower panel's vents are unchanged.
+- **The upper panel is now 16.7 cm³** (~21 g PETG).
 - **`PART="portclash"` is a second gate**, beside `clash`. It checks rough stand-ins of the three
-  connectors, including the USB-C screw heads, against the upper panel, the rear chassis and each
+  connectors, including the screw heads, against the upper panel, the rear chassis and each
   other. It renders **zero volume**; the faces it returns are the flange-on-pocket contacts.
-- **Margins are thin where they matter:** 0.61 mm from the USB-C body to the standoff, and 1.33 mm
-  from the DE-9 flange to each neighbour.
+- **One margin is thin:** 0.61 mm from the USB-C body to the left standoff.
 
 **To confirm.**
 
@@ -687,8 +705,8 @@ the vendor photo in MEC-05.
   touches the standoff. Measure it before printing.
 - **The grip limit** rests on a tape measure: collar 10, heads 4, so ~0.5 mm a side. The photo of
   the cable seated in the vendor bracket is the stronger evidence.
-- **Mini-B screw pitch** (~28.5, photo). The top slot takes 27…30.
-- **Mini-B body**, ~20 × 10 × 13 (photo). It has 7.57 mm to the standoff, so this one is not
+- **Mini-B screw pitch** (~28.5, photo). The outboard slot takes 27…30.
+- **Mini-B body**, ~20 × 10 × 13 (photo). It has 15.6 mm to the standoff, so this one is not
   critical.
 - **The DE-9 rear insulator** is assumed 19 × 10.5 × 8 in the stand-in, not measured.
 
