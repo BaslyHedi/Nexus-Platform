@@ -509,7 +509,7 @@ watchdog. If the wheels stop, the module times out and this decision costs nothi
 
 *Formerly HD-21.*
 
-**Updated by MEC-13:** the DE-9 now has the upper panel's top row to itself, back on the centreline at x +2.48, z 109.12 in vehicle coordinates.
+**Updated by MEC-13:** the DE-9 now has the upper panel's top row to itself, back on the centreline at x +2.48, z 107.12 in vehicle coordinates.
 
 **Decision.** A **male DE-9** panel connector sits in the upper gap of the rear fascia
 (z 101.12, x 0 - moved off the panel centreline by MEC-05 to make room for the two USB debug

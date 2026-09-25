@@ -8,7 +8,7 @@ this folder owns the geometry, and the table below says which file is which.
 |---|---|---|
 | [`fascia.scad`](fascia.scad) | 18 kB | **Source of truth for both panels.** Every dimension, and why, in comments. Edit only here |
 | [`fascia-lower.stl`](fascia-lower.stl) | 1.3 MB | Print file - lower panel, 124.2 × 18.9 × **52** mm, 20.5 cm³ (~26 g in PETG) |
-| [`fascia-upper.stl`](fascia-upper.stl) | 2.2 MB | Print file - upper panel, 124.2 × 18.9 × **42** mm, 16.7 cm³ (~21 g in PETG) |
+| [`fascia-upper.stl`](fascia-upper.stl) | 2.2 MB | Print file - upper panel, 124.2 × 18.9 × **42** mm, 16.3 cm³ (~20 g in PETG) |
 | **Hiwonder** · *Ackermann Chassis (Single Layer)* `.3dm` | 186 MB | Hiwonder's own CAD, untouched. **Not in the repository** - it is theirs, not ours to redistribute, and it has to be fetched by hand on a fresh clone. Every chassis number in the project is measured from this, not from photos - see [`../bom/parts/2.1-Hiwonder-Ackermann-Chassis/SPECS.md`](../bom/parts/2.1-Hiwonder-Ackermann-Chassis/SPECS.md). It is the **single-plate** version |
 | `chassis-3deck-fascia.obj` | 65 MB | Whole-vehicle mock-up: Hiwonder's chassis + our deck 3 + the current panels. **Untracked, and a seed rather than output** - `make-assembly.py` reads it and rewrites it in place, so it cannot be rebuilt from this repository alone. It began as a Rhino export of the `.3dm`. Keep a local backup |
 | `assembly.stl` | 69 MB | The same assembly as one mesh, for renders. **Generated and untracked** - delete it and re-run |
@@ -74,8 +74,8 @@ ships two standoff lengths. So the panels are different parts and are **not** in
   `.obj` is a copy of deck 2, dropped to the measured 40 mm gap by `make-assembly.py`. Fixing
   the source CAD would make that patch unnecessary.
 - **Some port geometry is read off photos** - the USB-C body width and flange depth, the Mini-B
-  screw pitch and body. The USB-C body width is the one that matters: over 14.6 mm it touches the
-  left standoff (MEC-13). Measure it before printing.
+  screw pitch and body. None of it is critical any more: the nearest body is 6 mm from a standoff,
+  and the Mini-B's slotted hole takes any pitch from 27 to 30 (MEC-13).
 - **The switch harness depth is unverified.** The bare switch is 25 mm deep and clears the motors by
   about 8 mm, but the plug-on socket harness adds to that (MEC-14). It affects the wiring, not the
   print.

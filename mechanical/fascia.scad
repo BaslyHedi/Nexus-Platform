@@ -87,12 +87,14 @@ BTN_D = 22.4;  BTN_C = 44.0;   // M22x1 switches (vendor drawing). 0.4 over the 
 // two rows (MEC-13). Side by side they would total 23 + 30.84 + 36 = 89.8 mm, and
 // each body runs ~13-40 mm forward into the vehicle past the rear standoffs, whose
 // flats are at x -32.61 and +37.57 (6.0 A/F hex at -35.61 / +40.57). Two rows take
-// the width problem away:
-//   top row,    z 28:  DE-9   flange -12.94 .. 17.90, z 21.73 .. 34.27, on XC
-//   bottom row, z 11:  USB-C  flange -36.50 .. -13.50, body -32.00 .. -18.00
-//                                    (0.61 to the left standoff)
-//                      Mini-B flange  -6.00 ..  30.00, body   2.00 ..  22.00
-//                                    (15.57 to the right standoff), 7.5 from the USB-C
+// the width problem away. The layout is CENTRED on what shows on the face - the
+// flanges are hidden inside: the DE-9 on the centreline XC, the two USB sockets
+// 19 mm either side of it, and the whole group centred on the 42 mm face height.
+//   top row,    z 26:  DE-9   flange -12.94 .. 17.90, z 19.73 .. 32.27, on XC
+//   bottom row, z  9:  USB-C  at XC-19, flange -28.02 ..  -5.02, body -23.52 .. -9.52
+//                                    (9.09 to the left standoff)
+//                      Mini-B at XC+19, flange   3.48 ..  39.48, body  11.48 .. 31.48
+//                                    (6.09 to the right standoff), 8.5 from the USB-C
 YI = 131.942;     // inside face of the wall on the flat: PLATE_YR + CLR (set below)
 
 DE9_W  = 17.9;    // shell aperture width   - drawing: shell 16.92 +/-0.13, so 0.5 a side
@@ -100,8 +102,11 @@ DE9_H  =  9.2;    // shell aperture height  - drawing: shell  8.38 +/-0.13, so 0
 DE9_S  = 24.99;   // mounting screw centres - CONFIRMED on the drawing, +/-0.13
 DE9_SD =  3.4;    // panel clearance; the connector's own holes are 3.05 (M3 is a squeeze there)
 DE9_X  =  2.48;   // = XC (set below), the chassis centreline: alone in its row (MEC-13)
-ROW_T  = 28.0;    // top row: DE-9. Flange top 34.27, 5.7 clear of the 40 wrap line
-ROW_B  = 11.0;    // bottom row: USB-C and Mini-B. Flanges z 6..16, 5.7 clear of the DE-9
+ROW_T  = 26.0;    // top row: DE-9. Flange z 19.73 .. 32.27
+ROW_B  =  9.0;    // bottom row: USB-C and Mini-B. Flanges z 4..14, 5.7 clear of the DE-9.
+                  // Visible group: apertures from z 4.25 to the CAN label top at 37.75,
+                  // centred on the 42 mm face (0 .. 42)
+USB_DX = 19.0;    // each USB socket this far either side of XC
 
 // USB-C panel-mount extension, CY type, 20 cm -> FRDM J11 (USB-C UART console).
 // Mounted from behind, the way the vendor's own bracket does it: its two M2.5 x 5
@@ -109,12 +114,12 @@ ROW_B  = 11.0;    // bottom row: USB-C and Mini-B. Flanges z 6..16, 5.7 clear of
 // flange face. The heads (~4 across, 15 apart) leave ~11 mm clear between them, so
 // the plug grip has to be narrower than that - the bench cable's is 10. A full-width
 // grip (up to 12.35 by the spec) would land on the heads and not seat (MEC-13).
-UC_X    = -25.0;  // body clears the left standoff by 0.61 (MEC-13)
+UC_X    = 2.48 - USB_DX;   // -16.52; body clears the left standoff by 9.09 (MEC-13)
 UC_Z    = ROW_B;
 UC_FW   = 23.0;   // flange width - drawing
 UC_FH   =  8.3;   // flange face height - PHOTO; measured "6" is probably the depth. Pocket fits both
 UC_K    =  6.0;   // flange depth along the cable - PHOTO
-UC_BW   = 14.0;   // body width behind the flange - PHOTO, MEASURE: it sets the standoff margin
+UC_BW   = 14.0;   // body width behind the flange - PHOTO; anything up to ~31 clears the standoff
 UC_BH   =  7.5;   // body thickness - drawing
 UC_BL   = 40.0;   // body length - drawing, taken as all behind the flange (conservative)
 UC_SKIN =  1.2;   // wall left in front of the flange. The metal rim stands ~0.9 proud, so
@@ -131,7 +136,7 @@ UC_HD   =  4.0;   // screw head diameter - tape-measured; sets the 11 mm grip li
 // Horizontal, like the others. Its screws are ~28.5 apart, so the heads sit
 // ~11.7 from centre, far outside any plug grip - it keeps its own screws, driven
 // from outside through a 1.5 mm skin into the threaded ears (~3.5 mm of thread).
-MB_X    = 12.0;
+MB_X    = 2.48 + USB_DX;   // 21.48; body clears the right standoff by 6.09
 MB_Z    = ROW_B;
 MB_FL   = 36.0;   // flange length (x) - measured
 MB_FW   = 10.0;   // flange height (z) - measured
@@ -320,8 +325,8 @@ module de9_standin() {
 // 0.6 mm into a 3 mm wall removes nothing structural.
 LBL_H = 4.5;     // cap height
 LBL_D = 0.6;     // depth into the wall
-LBL_ZB = 19.0;   // upper, bottom row: z 16.75..21.25, between the flange tops (16) and the DE-9 aperture (23.4)
-LBL_ZT = 37.5;   // upper, top row: z 35.25..39.75, above the DE-9 aperture (32.6), below the 42 top edge
+LBL_ZB = 17.0;   // upper, bottom row: z 14.75..19.25, above the screw heads (top 11), below the DE-9 aperture (21.4)
+LBL_ZT = 35.5;   // upper, top row: z 33.25..37.75, above the DE-9 aperture (30.6), below the 42 top edge
 LBL_F = "Liberation Sans:style=Bold";
 
 // Lower panel sits higher. A 22.4 mm button leaves only 3.8 mm above it, too
@@ -340,8 +345,7 @@ module label(x, txt, z, rot = 0)
     linear_extrude(LBL_D + 0.05) rotate(rot)
       text(txt, size=LBL_H, halign="center", valign="center", font=LBL_F);
 
-// Each name sits over its own port. The bottom-row labels clear the USB-C and
-// Mini-B screw heads (top z 13) and the DE-9 aperture (bottom z 23.4).
+// Each name sits over its own port.
 module labels_upper() {
   label(UC_X,  "IMX91", LBL_ZB);
   label(MB_X,  "STM32", LBL_ZB);
@@ -376,15 +380,18 @@ module vents(fz, dz_)
   for (dz=[-dz_, dz_]) for (v=VENT)
     translate([XC+v[0], YR+8, fz+dz]) rotate([90,0,0]) vent_slot(v[1]);
 
-// Upper panel (MEC-13): the two port rows fill the middle, so the vents move to
-// where nothing else is - one upright slot at each end of the face, clear of the
-// pad bands (z 0..5, 35..40), and one flat slot in each top corner beside the
-// DE-9. 82 mm of slot, against 60 before. [x, z, length, upright?]
-VENT_U  = [[-40.5, 20, 24, true], [40.5, 20, 24, true],
-           [-25.0, 35.5, 18, false], [29.0, 35.5, 16, false]];
+// Upper panel (MEC-13): laid out AFTER the ports, in the space they leave, and
+// symmetric about XC like them - not matched to the lower panel. An upright slot
+// at each end (z 8..32, clear of the pad bands z 0..5 and 35..40, 1.8 mm of web to
+// the Mini-B pocket), and two flat slots in each top corner beside the DE-9, clear
+// of its screws and of the labels. 118 mm of slot, against 60 before.
+// [x offset from XC, z, length, upright?]
+VENT_U  = [[-40.5, 20, 24, true],   [40.5, 20, 24, true],
+           [-28.25, 23, 17.5, false], [28.25, 23, 17.5, false],
+           [-28.25, 30, 17.5, false], [28.25, 30, 17.5, false]];
 module vents_upper()
   for (v=VENT_U)
-    translate([v[0], YR+8, v[1]]) rotate([90,0,0]) rotate([0,0, v[3] ? 90 : 0]) vent_slot(v[2]);
+    translate([XC + v[0], YR+8, v[1]]) rotate([90,0,0]) rotate([0,0, v[3] ? 90 : 0]) vent_slot(v[2]);
 
 module fascia_lower() difference() {
   blank(GAP_L);
