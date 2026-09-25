@@ -383,17 +383,15 @@ module vents(fz, dz_)
   for (dz=[-dz_, dz_]) for (v=VENT)
     translate([XC+v[0], YR+8, fz+dz]) rotate([90,0,0]) vent_slot(v[1]);
 
-// Upper panel (MEC-13): laid out AFTER the ports, in the space they leave, and
-// symmetric about XC like them - not matched to the lower panel. Kept short so the
-// face stays stiff: an upright slot at each end (z 12..28, clear of the pad bands
-// z 0..5 and 35..40, 3.3 mm of web to the Mini-B pocket), and two flat slots in
-// each top corner beside the DE-9 (x XC +/- 22.25..34.25), clear of its screws and
-// of the labels, with 4 mm bars between them and 4.75 mm to the upright slot.
-// 80 mm of slot, against 60 on the original upper panel.
-// [x offset from XC, z, length, upright?]
-VENT_U  = [[-42.0, 20, 16, true],   [42.0, 20, 16, true],
-           [-28.25, 23, 12, false], [28.25, 23, 12, false],
-           [-28.25, 30, 12, false], [28.25, 30, 12, false]];
+// Upper panel (MEC-13): laid out AFTER the ports, and matched to the lower panel -
+// it reuses the lower panel's OUTER columns, same x (XC +/- 39.17) and same 10 mm
+// length, so the slots line up in two columns down the whole rear face. Two rows,
+// z 20 and 31: at the bottom-row height (z 9) the right column would cut the
+// Mini-B pocket and its screw slot, so neither side has one there. Clear of the pad
+// bands (z 0..5, 35..40), the labels and the DE-9. The middle stays solid.
+// 40 mm of slot. [x offset from XC, z, length, upright?]
+VENT_U  = [[VENT[0][0], 20, VENT[0][1], false], [VENT[2][0], 20, VENT[2][1], false],
+           [VENT[0][0], 31, VENT[0][1], false], [VENT[2][0], 31, VENT[2][1], false]];
 module vents_upper()
   for (v=VENT_U)
     translate([XC + v[0], YR+8, v[1]]) rotate([90,0,0]) rotate([0,0, v[3] ? 90 : 0]) vent_slot(v[2]);

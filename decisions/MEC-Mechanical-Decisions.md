@@ -136,7 +136,7 @@ reprinting 104 mm of shell.
 
 ## MEC-04 · Vents - six obround slots per panel, in the bands the features do not use
 
-**Updated by MEC-13:** on the upper panel the two port rows fill the middle, so its vents are six short slots at the ends and top corners.
+**Updated by MEC-13:** on the upper panel the two port rows fill the middle, so its vents are four slots in the lower panel's outer columns (same x, same 10 mm), two rows each side.
 
 **Updated by MEC-14:** the lower panel's slots are lengthened, outer 7 → 10 and centre 16 → 18, same positions and rule.
 
@@ -700,19 +700,18 @@ the vendor photo in MEC-05.
   cable as the robot's debug lead.
 - **Each label sits directly above its port.** IMX91 and STM32 at z 14.75…19.25, between the
   screw heads and the DE-9 aperture; CAN at z 33.25…37.75, above the DE-9.
-- **The upper vents are laid out after the ports, in the space they leave (updates MEC-04 for
-  this panel).** Symmetric about XC like the ports, and deliberately not matched to the lower
-  panel: one upright slot at each end (XC ± 42, z 12…28) and two flat slots in each top corner
-  beside the DE-9 (XC ± 28.25, z 23 and 30, 12 long). That is 80 mm of slot against 60 on the
-  original upper panel. A first cut at 118 mm (24 mm uprights, 17.5 mm flats) was cut back because
-  it left too little face to keep the panel stiff; the uprights also moved out 1.5 mm so the right
-  one keeps 3.3 mm of web to the Mini-B pocket instead of 1.8.
-- **The upper panel is now 16.7 cm³** (~21 g PETG).
+- **The upper vents are laid out after the ports, and matched to the lower panel (updates MEC-04
+  for this panel).** They reuse the lower panel's outer columns, same x (XC ± 39.17) and same 10 mm
+  slots, so the vents line up in two columns down the whole rear face: two rows, z 20 and 31. The
+  bottom-row height is left solid on both sides, because on the right that column would cut the
+  Mini-B pocket and its screw slot. 40 mm of slot. Two earlier cuts were dropped: 118 mm of long
+  slots left too little face to keep the panel stiff, and a shorter 80 mm set of end and corner
+  slots did not line up with anything on the lower panel.
+- **The upper panel is now 17.0 cm³** (~21 g PETG).
 - **`PART="portclash"` is a second gate**, beside `clash`. It checks rough stand-ins of the three
   connectors, including the screw heads, against the upper panel, the rear chassis and each
   other. It renders **zero volume**; the faces it returns are the flange-on-pocket contacts.
-- **No thin margins left.** The closest are 6.1 mm from the Mini-B body to the right standoff and
-  3.3 mm of web between the right vent and the Mini-B pocket.
+- **No thin margins left.** The closest is 6.1 mm from the Mini-B body to the right standoff.
 
 **To confirm.**
 
