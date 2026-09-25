@@ -15,11 +15,15 @@ D1T/D2T in fascia.scad; keep the two in sync if the stack ever changes.
 Deck 3 is not Hiwonder's: the .3dm is the single-plate version, and the DECK3f_*
 groups are our own copy of deck 2. They were built on the assumption that both
 gaps are 50 mm. The real upper gap measured 40 mm (2026-09-20), so the plate is
-dropped 10 mm here and its four standoffs are shortened to 40 mm about their
-bases. Fix the source CAD and this becomes unnecessary.
+dropped here to sit on 40 mm standoffs, and its four standoffs are shortened
+about their bases. Fix the source CAD and this becomes unnecessary.
+
+The seed is rewritten in place, so the adjustment is computed from where deck 3
+is NOW, not applied as a fixed offset: re-running is a no-op for the deck. (It
+used to subtract 10 mm on every run, so each run sank deck 3 another 10 mm.)
 """
 SO_U = 40.0          # upper standoff, measured
-D2T, D3B_OLD = 81.12, 131.12
+D2T = 81.12
 import re, struct, sys, os
 
 OBJ = "chassis-3deck-fascia.obj"
@@ -63,6 +67,18 @@ def main():
     lines = open(OBJ).readlines()
     plate3, pillar3 = deck3_index_sets(lines)
 
+    # where deck 3 sits now: plate underside and standoff top, above plate 2
+    vz, vi = {}, 0
+    for line in lines:
+        if line.startswith("v "):
+            vi += 1
+            if vi in plate3 or vi in pillar3:
+                vz[vi] = float(line.split()[3])
+    plate_bot = min(vz[i] for i in plate3)
+    pillar_top = max(vz[i] for i in pillar3)
+    drop = plate_bot - (D2T + SO_U)             # 0 once the seed is right
+    scale = SO_U / (pillar_top - D2T)           # 1 once the seed is right
+
     keep, verts, dropped = [], [], 0
     cur_kept = True
     vi = 0
@@ -72,9 +88,9 @@ def main():
             if vi in plate3 or vi in pillar3:
                 x, y, z = (float(t) for t in line.split()[1:4])
                 if vi in pillar3:                      # shorten about its base
-                    z = D2T + (z - D2T) * (SO_U / (D3B_OLD - D2T))
+                    z = D2T + (z - D2T) * scale
                 else:                                  # drop the plate
-                    z -= (D3B_OLD - D2T) - SO_U
+                    z -= drop
                 line = "v %.4f %.4f %.4f\n" % (x, y, z)
             verts.append(line)
             keep.append(line)

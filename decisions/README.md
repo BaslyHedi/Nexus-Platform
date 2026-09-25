@@ -119,8 +119,8 @@ Questions that block a decision, or that a decision rests on and nobody has meas
 |---|---|
 | SM-2P battery connector temperature under load | HW-13 - XT30 if it runs warm |
 | FRDM loaded current draw | compute branch fuse sizing |
-| USB-C and Mini-B **aperture** sizes - **neither part is ordered yet** (DE-9 confirmed from its drawing; Mini-B pitch now slotted, so no longer blocking) | MEC-05 - upper panel print |
-| Switch depth with the spade terminals fitted, and the mounting nut's OD | MEC-07 - fascia print |
+| Switch **harness depth**: bezel to wire exit with the red socket fitted (over ~33 mm reaches the motors). Seller asked | MEC-14 - wiring only, not the print |
 | Which USB-CAN adapter, and is its 120 Ω switchable? | HW-18 - must be OFF |
 | Does the Encoder Motor Module time out when I²C commands stop? | HW-17 - decides whether the HW-12 relay is needed before autonomy |
 | Which way do the Discovery's P1/P2 pins protrude? | MEC-08 - decides whether the carrier sits above or below the board |
+| USB-C (5.9) **body length behind the flange**: 40 would leave 2.9 mm to the STM32 carrier's rear edge, 34 would leave 8.9 | MEC-13 / MEC-12 - carrier position or cable routing, not the print |
