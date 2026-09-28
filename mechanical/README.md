@@ -13,7 +13,7 @@ this folder owns the geometry, and the table below says which file is which.
 | `chassis-3deck-fascia.obj` | 65 MB | Whole-vehicle mock-up: Hiwonder's chassis + our deck 3 + the current panels. **Untracked, and a seed rather than output** - `make-assembly.py` reads it and rewrites it in place, so it cannot be rebuilt from this repository alone. It began as a Rhino export of the `.3dm`. Keep a local backup |
 | `assembly.stl` | 69 MB | The same assembly as one mesh, for renders. **Generated and untracked** - delete it and re-run |
 | [`plate1.py`](plate1.py) | 20 kB | **Plate 1 stand-ins for an eye review** (MEC-16): every component and every wire run as its own STL in `plate1/`, at the assumed sizes. Not for building from |
-| `plate1/*.stl`, `chassis-3deck-fascia.mtl` | 1 MB | **Generated and untracked** - the parts, and the colours for the assembly. Re-run the two scripts |
+| `plate1/*.stl`, `plate1/states/`, `chassis-3deck-fascia.mtl` | 1 MB | **Generated and untracked** - the parts; the two wires that cross between the decks in the `raised` and `open` positions (plate 2 lowering, 60 mm up, or hinged over like a book); and the colours. Re-run the two scripts |
 | [`make-assembly.py`](make-assembly.py) | 8 kB | Rebuilds the assembly from the current STLs, fascia and plate 1, coloured through the `.mtl`. Run it after any fascia or plate 1 change |
 
 ## Building

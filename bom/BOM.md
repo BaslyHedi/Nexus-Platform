@@ -101,7 +101,7 @@ Every run is short. Measured off the layout drawing, with routing slack:
 
 | Gauge | Runs | Total per colour |
 |---|---|---|
-| 18 AWG | plate 1 runs as listed on the [chassis layout](../hardware/chassis-layout.svg) (MEC-16): 16 runs, the fuse leads doing the fused ones | **~1.8 m red + ~1.2 m black** of 2.5 + 2.5 m bought, measured off the 3D model with the drops long enough to plug in with plate 2 held above |
+| 18 AWG | plate 1 runs as listed on the [chassis layout](../hardware/chassis-layout.svg) (MEC-16): 16 runs, the fuse leads doing the fused ones | **~1.5 m red + ~1.1 m black** of 2.5 + 2.5 m bought, measured off the 3D model |
 
 The inline fuse holders bring their own 30 cm of 16 AWG, which shortens the main run.
 Measure before cutting and keep offcuts.

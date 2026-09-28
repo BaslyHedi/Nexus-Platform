@@ -876,9 +876,11 @@ a seam without adding anything the Discovery does not already provide.
 
 **Decision (2026-09-28).** Every clip, fuse, splice and the INA226 is stuck to the **lower face of
 plate 2** with 3M double-sided foam tape, and the harness is wired there with plate 2 upside down on
-the bench. Plate 1's floor keeps only what is fixed to it: the battery, the motor driver, and the
-switches in the lower fascia panel. When plate 2 goes onto its standoffs, the few wires that cross
-between the decks fold down into the 50 mm gap - the harness closes like a sandwich.
+the bench. The **lower fascia panel with SW1 and SW2 rides with plate 2** during the build, so the
+switches are wired there too. Plate 1's floor keeps only the battery and the motor driver. Plate 2
+and the panel go down onto plate 1 together, and **only two plugs cross between the decks** - the
+SM-2P and the driver's VM - both plugged from the vehicle's right side once it is closed. The
+harness closes like a sandwich.
 
 Positions, x from the front of plate 1 and y from its right edge, as modelled in
 [`../mechanical/plate1.py`](../mechanical/plate1.py) and checked there against Hiwonder's CAD:
@@ -922,9 +924,15 @@ return - goes up through it, between the buses. The rearward runs lie flat on pl
   the 3D model showed the collision.
 - **A harness built flat on one board is built at a bench, not inside a 50 mm gap.** Every joint
   is made with plate 2 upside down and in the open, and checked before it closes.
-- **Every crossing already ends in a plug.** The pack lead in its SM-2P, the driver's VM and I²C
-  in their connectors, the switches in 4.8 mm receptacles. Plate 2 comes off by unplugging them;
-  nothing is cut.
+- **Only two wires cross, and both end in a plug that already exists.** The pack lead's SM-2P
+  and the driver's VM connector are both at the vehicle's right side, below the harness board, so
+  they are plugged with the sandwich closed. The SM-2P last, because it is the disconnect.
+- **The switches ride with plate 2 because the lower panel already clamps to it** (MEC-07). Wired
+  on the bench, their leads never cross the decks. The first version of this entry had them as
+  drops with 6 cm spare, plugged with plate 2 held above; the 3D states showed that slack had
+  nowhere to go - over the motors there is 9 mm.
+- **Modelled open, lowering and closed.** `plate1.py` gives each crossing wire a fixed length and
+  recomputes its curve for each position of plate 2.
 - **Foam tape instead of zip ties.** The parts are small and light, the tape takes up the plate's
   holes and slots, and it holds a part wherever it has to go rather than where a hole happens to be.
 - **The UBEC left plate 1** because its output never stays there: HW-19 routes the servo's 6 V
@@ -946,16 +954,19 @@ return - goes up through it, between the buses. The rearward runs lie flat on pl
 
 1. **Plate 2 off, upside down on the bench**, on two blocks so the carrier and the Bauer on its top
    face hang free. Clean the face with isopropyl alcohol where each part goes.
-2. **Tape the parts** in the positions above: buses levers-down, fuse holders flat with the lids to
-   the sides, the INA226 on its tape upside down, the splices beside their runs. Fuses out.
-3. **Wire everything that stays on plate 2**, then the trunk to the switches. Leave every drop long
-   and labelled: SM-2P mate, the driver's VM pigtail, the four switch leads.
-4. **Bring the switches in:** lower fascia panel onto plate 1 with SW1 and SW2 fitted (MEC-07).
-5. **Hold plate 2 over its standoffs**, about 6 cm up, and plug in the drops: the switch
-   receptacles, the VM plug, the I²C lead. The run table gives the drops 6 cm extra for this.
-6. **Lower plate 2**, folding each drop into the gap, and fit its screws. Check nothing is pinched
-   over the motors or against the pack.
-7. **Fuses in, SM-2P last** - the battery is the disconnect (HW-08).
+2. **Hold the lower fascia panel with SW1 and SW2 to plate 2** at its top pads - a temporary
+   M3 × 8 into each captive nut, replaced by the M3 × 12 when the upper panel goes on (MEC-07).
+3. **Tape the parts** in the positions above: buses levers-down, fuse holders flat with the lids to
+   the sides, the INA226 upside down, the splices beside their runs. Fuses out.
+4. **Wire everything**, switches included. Two tails stay loose: the SM-2P male (from S1 and the
+   (−) bus) and the driver's VM plug (from S2 and S4), about 3 and 7 cm.
+5. **Lower plate 2 and the panel together** onto the standoffs, the panel's bottom pads onto
+   plate 1, and fit the screws (panel bottom from under the vehicle). Check nothing is pinched
+   against the pack.
+6. **From the right side**, plug the driver's VM, fuses in, then the SM-2P last - the battery is
+   the disconnect (HW-08).
+7. The driver's I²C lead goes up to the carrier on plate 2's top face; route it with the 6 V pair
+   through plate 2's opening.
 
 **Consequences.**
 
@@ -965,8 +976,7 @@ return - goes up through it, between the buses. The rearward runs lie flat on pl
   used: the pack is held by felt strips and zip ties.
 - **The fuse lids face the sides of the lower gap** and are changed from there without lifting
   plate 2. The main fuse's front end reaches past the plate edge by about 4 mm at the waist.
-- **18 AWG needed is about 1.8 m red and 1.2 m black** against 2.5 m each bought, with the drops
-  long enough to plug in with plate 2 held above. The clips come from stock: 2 × 221-415 (3 spare),
+- **18 AWG needed is about 1.5 m red and 1.1 m black** against 2.5 m each bought. The clips come from stock: 2 × 221-415 (3 spare),
   1 × 3-port and 7 × 2-port from the DOMAXWILL kit.
 - **The chassis layout drawing shows plate 1's floor only**; the harness board is this table and
   the 3D model, where each part and each run is its own coloured group.
@@ -980,4 +990,7 @@ return - goes up through it, between the buses. The rearward runs lie flat on pl
 - The screw heads under plate 2 - carrier A1, A2, B1, B2 and board C's two - against the taped parts.
   A2 lands at the motor fuse's lid edge.
 - The SW1 / SW2 tab layout, and which tab carries LED − (runs 13 and 14).
+- That the driver's VM socket can be reached from the right side under the motor fuse - about
+  16 mm of height between the floor parts and the holder. If not, the VM tail needs about 12 cm to
+  be plugged with plate 2 held above, and that slack has to be stowed.
 - The Bauer's own lead length, which sets S6 and S7.

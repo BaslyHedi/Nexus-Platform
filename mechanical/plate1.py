@@ -223,8 +223,9 @@ def build():
     clip("splice-s6-bauer-plus", 87.7, 106.3, 41.5, 54.5, PLATE2_TOP, PLATE2_TOP + 8.5, (48, 52), 87.7, (60.5, 62))
     clip("splice-s7-bauer-minus", 87.7, 106.3, 63.5, 76.5, PLATE2_TOP, PLATE2_TOP + 8.5, (68, 74), 87.7, (60.5, 62))
 
-    # SM-2P mated, hanging on the pack lead in front of S1 - the battery disconnect
-    part("sm2p", "connector", box(85, 91, 21, 37, 33, 39))
+    # SM-2P, the battery disconnect: the female half stays on the pack lead (plate 1),
+    # the male half is on a drop from plate 2 and is plugged in last (DROPS)
+    part("sm2p-female", "connector", box(85, 91, 21, 29, 33, 39))
 
     # switches: bezel on the fascia's outer face (x 273.3), body 20 behind it, tabs 5 more
     for nm, yc, bz in (("sw1-drive", 82.3, "bezel_red"), ("sw2-logic", 38.3, "bezel_green")):
@@ -254,14 +255,14 @@ def build():
     W("run04a-pack-lead-minus", "wire_black", AWG22,
       [(85, 35, 12), (89.5, 21, 14), (90, 19, 26), (90, 18, 33), (90, 21, 36)])
     # --- plate 2 harness
-    W("run01b-sm2p-to-s1", "wire_red", AWG18, [(86, 37, 36), (81, 36, 40), (81, 33, pz), (83, 33, pz)])
+    W("run01b-sm2p-to-s1", "wire_red", AWG18, [(81, 37, 44), (81, 33, pz), (83, 33, pz)])
     W("run01c-s1-to-main-fuse", "wire_red", AWG16, [(83, 27, pz), (81, 26, 44), (84, 22, zc), main_in + (zc,)])
     W("run02-main-fuse-to-ina226", "wire_red", AWG16,
       [main_out + (zc,), (150, 26, F), (154, 34, F), (154, 76, F), (114, 76, F), (114, 77, pz), (114, 78, T1 - 7)])
     W("run03-ina226-to-plus-bus", "wire_red", AWG18,
       [(126, 78, T1 - 7), (126, 76, pz), (110, 74, F), (109, 43, F), (109, 43, pz), P(43)])
     W("run04b-battery-minus-to-bus", "wire_black", AWG18,
-      [(90, 37, 36), (95, 39, 40), (107, 39, F), (108, 66, F), (128, 67, F), (128, 67, pz), M(67)])
+      [(95, 39, 44), (107, 39, F), (108, 66, F), (128, 67, F), (128, 67, pz), M(67)])
     W("run05-plus-bus-to-sw1", "wire_red", AWG18,
       [P(49), (109, 49, F), (109, 74, F), (200, 74, F), (203, 62, F), (240, 62, F), (244, 80, 30), (248.3, 79.8, 22.5)])
     W("run06-plus-bus-to-sw2", "wire_red", AWG18,
@@ -273,8 +274,7 @@ def build():
       [(196.6, 54, pz), (203, 50, 45), (204, 25, 42), mot_in + (zc,)])
     W("run08b-motor-fuse-to-s2", "wire_orange", AWG16,
       [mot_out + (zc,), (150, 26, 44), (150, 38, pz), (157, 38, pz)])
-    W("run08c-vm-plus-pigtail", "wire_orange", AWG18,
-      [(178, 22, 11), (178, 24, 14), (176, 30, 20), (159, 46, 40), (155, 46, 44), (155, 44, pz), (157, 44, pz)])
+    W("run08c-vm-plus-pigtail", "wire_orange", AWG18, [(155, 46, 44), (155, 44, pz), (157, 44, pz)])
     W("run09a-split-to-ubec-fuse", "wire_orange", AWG16,
       [(196.6, 66.4, pz), (203, 70, 45), (204, 95, 42), ub_in + (zc,)])
     W("run09b-ubec-fuse-to-s3", "wire_orange", AWG16,
@@ -291,8 +291,21 @@ def build():
       [(135, 109, T1 - 2.5), (136, 110, 36), (138.7, 110, T1 - 14.25)])
     W("run11b-s5-to-minus-bus", "wire_black", AWG18,
       [(138.7, 115, T1 - 14.25), (137, 116, 36), (137, 76, 40), (130, 76, 42), (128, 61, 44), M(61)])
-    W("run12a-vm-minus-pigtail", "wire_black", AWG18,
-      [(180, 22, 11), (180, 24, 14), (178, 30, 20), (159, 46, 33), (155, 46, 36), (155, 44, T1 - 14.25), (157, 44, T1 - 14.25)])
+    W("run12a-vm-minus-pigtail", "wire_black", AWG18, [(155, 46, 36), (155, 44, T1 - 14.25), (157, 44, T1 - 14.25)])
+    part("driver-vm-socket", "connector", box(176, 182, 19, 23, 7.6, 14))
+
+    # --- drops: the only wires that cross between the decks (see DROPS below).
+    # The switches ride with plate 2: the lower fascia panel is held to plate 2 on the
+    # bench and wired there, so their leads never cross. What crosses is two plugs, the
+    # SM-2P and the driver's VM, and both are plugged from the right side once closed.
+    D("drop-sm2p-plus", "wire_red", AWG18, (81, 37, 44), (86, 37, 36), (0, 0, -1), (0, 1, 0), 30,
+      plug="sm2p", plugged=("closed",), tail=(-1, 0, 0))
+    D("drop-sm2p-minus", "wire_black", AWG18, (95, 39, 44), (90, 37, 36), (0, 0, -1), (0, 1, 0), 30,
+      plug=None, plugged=("closed",), tail=(-1, 0, 0))
+    D("drop-vm-plus", "wire_orange", AWG18, (155, 46, 44), (178, 19, 11), (0, 0, -1), (0, -1, 0.3), 70,
+      plug="vm", plugged=("closed",), tail=(1, 0, 0))
+    D("drop-vm-minus", "wire_black", AWG18, (155, 48, 36), (180, 19, 11), (0, 0, -1), (0, -1, 0.3), 70,
+      plug=None, plugged=("closed",), tail=(1, 0, 0))
     W("run12b-s4-to-minus-bus", "wire_black", AWG18,
       [(157, 38, T1 - 14.25), (155, 38, 37), (130, 38, 38), (128, 55, 44), M(55)])
     W("run13a-led-minus-jumper", "wire_black", AWG18, [(248.3, 84.8, 27.5), (247, 62, 29), (248.3, 40.8, 27.5)])
@@ -317,6 +330,81 @@ RUNS = []             # (name, material, diameter, polyline) - lengths come from
 def W(name, mat, d, pts):
     RUNS.append((name, mat, d, pts))
     part(name, mat, wire(pts, d))
+
+
+DROPS = []            # wires that cross between the decks, one curve per state
+STATES = ("closed", "raised", "open")
+LIFT = 60.0           # "raised": plate 2 on its way down, both plugs still hanging free
+
+
+def plate2_move(p, state):
+    """Where a point fixed to plate 2 goes in each state, in layout coordinates.
+
+    raised: straight up LIFT mm. open: hinged 180 deg like a book about a line along
+    the vehicle's right side (vehicle X -85, Z 50.56), so plate 2 lies beside the
+    chassis with its lower face up - the renders use the same hinge.
+    """
+    x, y, z = p
+    if state == "raised":
+        return (x, y, z + LIFT)
+    if state == "open":
+        return (x, -54.4 - y, 42.88 - z)
+    return p
+
+
+def _bez(p0, p1, p2, p3, n=24):
+    return [tuple((1 - t) ** 3 * a + 3 * (1 - t) ** 2 * t * b + 3 * (1 - t) * t * t * c + t ** 3 * d
+                  for a, b, c, d in zip(p0, p1, p2, p3)) for t in (i / n for i in range(n + 1))]
+
+
+def _plen(pts):
+    return sum(math.dist(a, b) for a, b in zip(pts, pts[1:]))
+
+
+def drop_curve(b, a, db, da, L):
+    """A wire of length L from b to a, leaving b along db and a along da: a cubic whose
+    handles are stretched until the length fits - the slack is what the handles hold."""
+    db, da = _norm(db), _norm(da)
+    lo, hi = 0.0, 400.0
+    for _ in range(40):
+        s = (lo + hi) / 2
+        pts = _bez(b, _add(b, _mul(db, s)), _add(a, _mul(da, s)), a)
+        lo, hi = (s, hi) if _plen(pts) < L else (lo, s)
+    return pts
+
+
+def plug_box(c, kind):
+    if kind == "sm2p":
+        return box(c[0] - 3, c[0] + 7, c[1] - 8, c[1], c[2] - 3, c[2] + 3)
+    return box(c[0] - 4, c[0] + 4, c[1] - 2, c[1] + 4, c[2] - 3, c[2] + 3)
+
+
+def D(name, mat, d, b, a, db, da, L, plug, plugged, tail):
+    DROPS.append(dict(name=name, mat=mat, d=d, b=b, a=a, db=db, da=da, L=L, plug=plug,
+                      plugged=plugged, tail=tail))
+    for n, m, tris in drop_parts(DROPS[-1], "closed"):
+        part(n, m, tris)
+
+
+def drop_parts(dp, state):
+    """The drop's wire (and its plug) for one state, in layout coordinates."""
+    b = plate2_move(dp["b"], state)
+    if state in dp["plugged"]:
+        db = dp["db"] if state != "open" else _mul(dp["db"], -1)
+        pts = drop_curve(b, dp["a"], db, dp["da"], dp["L"])
+        end = dp["a"]
+    elif state == "open":                    # unplugged, lying on the upturned face
+        t = dp["tail"]
+        e = (dp["b"][0] + t[0] * dp["L"], dp["b"][1] + t[1] * dp["L"], dp["b"][2])
+        pts = [plate2_move(dp["b"], state), plate2_move(e, state)]
+        end = pts[-1]
+    else:                                    # unplugged, hanging from plate 2
+        pts = [b, (b[0], b[1], b[2] - dp["L"])]
+        end = pts[-1]
+    out = [(dp["name"], dp["mat"], wire(pts, dp["d"]))]
+    if dp["plug"]:
+        out.append((dp["name"] + "-plug", "connector", plug_box(end, dp["plug"])))
+    return out
 
 
 def run_lengths():
@@ -353,6 +441,14 @@ def main():
     for name, mat, tris in PARTS:
         write_stl(os.path.join(OUT, name + ".stl"), tris)
     print(f"plate1/: {len(PARTS)} parts, {sum(len(t) for _, _, t in PARTS)} triangles")
+    for st in ("raised", "open"):
+        d = os.path.join(OUT, "states", st)
+        os.makedirs(d, exist_ok=True)
+        for old in os.listdir(d):
+            os.remove(os.path.join(d, old))
+        for dp in DROPS:
+            for n, m, tris in drop_parts(dp, st):
+                write_stl(os.path.join(d, n + ".stl"), tris)
     for name, mat, d, L in run_lengths():
         print(f"  {name:36s} {mat:12s} {L:6.0f} mm")
 
