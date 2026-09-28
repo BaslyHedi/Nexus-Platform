@@ -22,6 +22,7 @@ Drawings: [chassis layout](../hardware/chassis-layout.svg). Geometry and build c
 | **MEC-12** | Component allocation across the three plates |
 | **MEC-13** | The debug ports mount from behind, in two horizontal rows |
 | **MEC-14** | The switch drawing closes the lower panel - and its holes open to 22.4 |
+| **MEC-15** | The carrier is two kit boards joined by the Discovery, not one board |
 
 ---
 
@@ -379,6 +380,8 @@ the pad bands.
 
 ## MEC-08 · The STM32 rides on a perfboard carrier, not on the chassis directly
 
+**Updated by MEC-15:** no kit board is large enough, so the carrier is two boards, A under P1 and B under P2, and the 130 × 85 outline is gone.
+
 **Resolved 2026-09-20:** the Discovery's P1/P2 pins protrude **downward**, so the carrier sits
 **below** the board and the Discovery drops onto female headers. The open question about pin
 direction is closed, and the arrangement in the carrier schematic is the correct one.
@@ -531,6 +534,8 @@ the transverse hypothesis above was wrong - it mounts fore-aft on the M3 grid.
 
 ## MEC-11 · The FRDM's mounting holes land on the Hiwonder grid - 0.06 mm out
 
+**Updated by MEC-15:** the carrier's 49.00 × 58.00 pattern is gone. The kit-board carrier fixes to (148.18, 23.76), (148.2, 72.2), (169.88, 14.24) and (169.88, 100.24).
+
 **Decision (2026-09-20).** The FRDM-IMX91 bolts **fore-aft to plate holes that already exist**, on
 four of its six mounting holes, with **M2.5 screws and washers up through the chassis** into the
 female standoffs the board already carries.
@@ -583,6 +588,8 @@ fitted, so the standoff sets card access, not just clearance.
 ---
 
 ## MEC-12 · Component allocation across the three plates
+
+**Updated by MEC-15:** on plate 2 the carrier is x 117.0-215.0 (boards to x 187.0), and board C, the 5 V split, sits across the waist at x 85.5-115.5.
 
 **Decision (2026-09-21).** Parts sit where their function puts them, not where a rule puts them.
 
@@ -728,7 +735,7 @@ the vendor photo in MEC-05.
 - **Mini-B body**, ~20 × 10 × 13 (photo). It has 6.1 mm to the standoff, so it would have to be
   over 32 mm wide to touch.
 - **The DE-9 rear insulator** is assumed 19 × 10.5 × 8 in the stand-in, not measured.
-- **The USB-C body against the STM32 carrier - open, found in review.** If the drawing's 40 mm body
+- **The USB-C body against the STM32 carrier - closed by MEC-15:** the boards now end at x 187, and the Discovery reaches x 215 only at z 101 or higher, so even a 40 mm body clears by 5.3 mm. *Original note:* If the drawing's 40 mm body
   is all behind the flange, the body ends at y 87.7; the carrier's rear edge (MEC-12, plate x 223.2)
   is at y 84.8. That leaves **2.9 mm** at the carrier's height, and the cable still has to leave the
   body and bend up to the FRDM on deck 3. If the 40 mm includes the 6 mm flange, the gap is 8.9 mm.
@@ -783,3 +790,79 @@ cover a 22.4 hole with 1.2 mm to spare a side.
   against ~0.4 N of rolling resistance for a ~2 kg vehicle. What matters at speed is the panel
   staying put under vibration, which is MEC-07's clamp, unchanged by the vents.
 ---
+
+---
+
+## MEC-15 · The carrier is two kit boards joined by the Discovery, not one board
+
+**Decision (2026-09-28).** The carrier is built from the prototype kit that is in hand (BOM 5.11), as
+**two boards under the two headers**: **board A**, a 3×7 cm board (10 × 24 holes), under P1, and
+**board B**, a 5×7 cm board (18 × 24 holes), under P2. Each carries two 1×24 female sockets. The
+Discovery plugs into both and is what holds them 53.34 mm apart. The USB-C pull-ups and the 5 V bulk
+capacitor go on a third board, C, which is HW-19's business. The build drawing is
+[`stm32-carrier.svg`](../hardware/stm32-carrier.svg).
+
+**Why.**
+
+- **Nothing in the kit spans the Discovery.** The kit holds 2×8, 3×7, 4×6 and 5×7 cm boards. The
+  outer header rows are 53.34 mm apart (UM1472 Fig. 10), which is 22 holes across, and a header is
+  25 rows long. The largest board is 18 × 24. MEC-08's "70 × 90 from the kit" was never in the kit.
+- **The Discovery is a better jig than a ruler.** Soldering the four sockets with the board plugged in
+  puts A and B exactly where the pins are, which a single large board would only do if its grid and
+  the Discovery's agreed.
+- **24 rows are enough.** Row 25 is pins 49/50, GND on both headers. Every net the carrier uses is in
+  rows 1-18, and 96 of the 100 pins are still socketed for later I/O.
+- **Tall parts go outboard.** Terminals, the servo and I²C headers, the capacitor and the SN65HVD230
+  sit beyond the Discovery's edge, so the part of each board under it carries only wire and resistors.
+  B needs the wider board because the transceiver module lives there.
+
+**Rejected.** One 2×8 rail per header (25 rows): the 8 columns leave about 10 mm outboard, too
+narrow for the 470 µF can or the module. Cutting and butting two 5×7 boards across the middle: it adds
+a seam without adding anything the Discovery does not already provide.
+
+**Consequences.**
+
+- **The carrier is 98 × 106 mm, not 130 × 85:** 70 mm of board plus the Discovery's 28 mm rearward
+  overhang, and 106 mm across. It needs the full-width part of plate 2, which runs from x 114 and is
+  about 115 mm wide there.
+- **Where it sits (2026-09-28).** Header row 1 at **chassis x 181.20**, boards from x 117.0 to 187.0,
+  the Discovery's rear edge at x 215.0. Board A's outboard edge at y 4.95, board B's at y 110.99. The
+  window was narrow: the front is held by the plate's full width starting at x 114, and the rear by
+  the fascia port bodies near x 220 and the harness zone behind x 224.
+- **Fixings, all into holes plate 2 already has.** Only one M3 cross-line (x 148.2) and one M2.5 line
+  (x 169.88) fall on the boards in that window, and the parts on A and B were moved to suit them:
+
+  | Fix | Board hole | Chassis hole |
+  |---|---|---|
+  | A1 | A g14, on grid | M3 ⌀3.18 (148.18, 23.76) |
+  | B1 | B d14, 0.18 mm | M2.5 ⌀2.71 (148.2, 72.2) |
+  | A2 | A between c5 and d6, off grid | M2.5 ⌀2.71 (169.88, 14.24) |
+  | B2 | B between o5 and o6, off grid, under the module | M2.5 ⌀2.71 (169.88, 100.24) |
+
+  A 21.7 × 86 mm four-point pattern. ⌀3.2 in the board, **M2.5 on 10 mm standoffs**, a washer in
+  every ⌀3.18 hole, as for the FRDM (MEC-11). Drill A1 and B1 on the grid, screw the carrier down,
+  then mark A2 and B2 from under the plate. 10 mm keeps the solder side, bare spines included, well
+  off the aluminium, and the stack still clears plate 3: the Discovery's top is at about z 111
+  against the FRDM's screw heads at z 119.4 under plate 3.
+- **Board C sits across the waist**, x 85.5-115.5 and y 25.2-95.2, between the Bauer and the
+  carrier with 1.5 mm to spare at each side. Its terminals are at the two short ends, facing the
+  plate edges, because there is no room at the front or rear for wires to enter. It is fixed at
+  **C e4 and C e21** to the M3 holes (99.24, 38.76) and (99.24, 81.76), which are 43.00 mm apart:
+  17 rows plus 0.18 mm. The Bauer's position is still a placeholder, and if it moves rearward it
+  meets C.
+- **MEC-13's USB-C clearance question is closed.** The boards now end at x 187. Only the Discovery
+  reaches x 215, and it does so at about z 101 or higher, above the bottom-row ports at z 90. A
+  40 mm body behind the flange, which ends at x 220.3, still clears by 5.3 mm.
+- **The two boards meet only through the Discovery and two soldered bridges** (GND and 3V3). Tie
+  the bridges together; they are the only wires that cross between the boards.
+- **Hook-up wire is not in the BOM.** The Dupont leads are copper-clad aluminium (5.7) and are not
+  used for anything soldered here.
+
+**To confirm.**
+
+- The kit's hole counts. The drawing assumes the usual 10 × 24 and 18 × 24.
+- The SN65HVD230 module's outline. B reserves rows 3-17 by columns k-r, about 36 × 21 mm, and the
+  module is socketed so that it can move within that. B2's screw sits under it, so the module comes
+  out to reach that screw.
+- That six 10 mm M2.5 standoffs are in the M2.5 kit. They are not in the BOM.
+- Clearance under the Discovery with it seated. The design only needs resistor height there.
