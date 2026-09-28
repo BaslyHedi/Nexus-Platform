@@ -1831,10 +1831,10 @@
 <polyline points="862.0,200.7 856.2,200.7 856.2,218.3 640.0,218.3 640.0,224.1" fill="none" stroke="#60a5fa" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
 <circle cx="862.0" cy="200.7" r="2.3" fill="#60a5fa" stroke="#fff" stroke-width="0.6"/>
 <circle cx="640.0" cy="224.1" r="2.3" fill="#60a5fa" stroke="#fff" stroke-width="0.6"/>
-<polyline points="628.3,247.5 628.3,224.1" fill="none" stroke="#1d4ed8" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="628.3,247.5 628.3,224.1" fill="none" stroke="#64748b" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round"/>
 <polyline points="628.3,247.5 628.3,224.1" fill="none" stroke="#e5e7eb" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
-<circle cx="628.3" cy="247.5" r="2.3" fill="#1d4ed8" stroke="#fff" stroke-width="0.6"/>
-<circle cx="628.3" cy="224.1" r="2.3" fill="#1d4ed8" stroke="#fff" stroke-width="0.6"/>
+<circle cx="628.3" cy="247.5" r="2.3" fill="#64748b" stroke="#fff" stroke-width="0.6"/>
+<circle cx="628.3" cy="224.1" r="2.3" fill="#64748b" stroke="#fff" stroke-width="0.6"/>
 <path d="M885.4,539.6 C895.4,422.7 895.4,422.7 885.4,305.9" fill="none" stroke="#111827" stroke-width="2.2" stroke-dasharray="6 3"/>
 <circle cx="885.4" cy="539.6" r="2.6" fill="#111827" stroke="#fff" stroke-width="0.6"/>
 <circle cx="885.4" cy="305.9" r="2.6" fill="#111827" stroke="#fff" stroke-width="0.6"/>
