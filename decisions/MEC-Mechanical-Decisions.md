@@ -22,6 +22,7 @@ Drawings: [chassis layout](../hardware/chassis-layout.svg). Geometry and build c
 | **MEC-12** | Component allocation across the three plates |
 | **MEC-13** | The debug ports mount from behind, in two horizontal rows |
 | **MEC-14** | The switch drawing closes the lower panel - and its holes open to 22.4 |
+| **MEC-15** | The carrier is two kit boards joined by the Discovery, not one board |
 
 ---
 
@@ -378,6 +379,8 @@ the pad bands.
 ---
 
 ## MEC-08 · The STM32 rides on a perfboard carrier, not on the chassis directly
+
+**Updated by MEC-15:** no kit board is large enough, so the carrier is two boards, A under P1 and B under P2, and the 130 × 85 outline is gone.
 
 **Resolved 2026-09-20:** the Discovery's P1/P2 pins protrude **downward**, so the carrier sits
 **below** the board and the Discovery drops onto female headers. The open question about pin
@@ -783,3 +786,52 @@ cover a 22.4 hole with 1.2 mm to spare a side.
   against ~0.4 N of rolling resistance for a ~2 kg vehicle. What matters at speed is the panel
   staying put under vibration, which is MEC-07's clamp, unchanged by the vents.
 ---
+
+---
+
+## MEC-15 · The carrier is two kit boards joined by the Discovery, not one board
+
+**Decision (2026-09-28).** The carrier is built from the prototype kit that is in hand (BOM 5.11), as
+**two boards under the two headers**: **board A**, a 3×7 cm board (10 × 24 holes), under P1, and
+**board B**, a 5×7 cm board (18 × 24 holes), under P2. Each carries two 1×24 female sockets. The
+Discovery plugs into both and is what holds them 53.34 mm apart. The USB-C pull-ups and the 5 V bulk
+capacitor go on a third board, C, which is HW-19's business. The build drawing is
+[`stm32-carrier.svg`](../hardware/stm32-carrier.svg).
+
+**Why.**
+
+- **Nothing in the kit spans the Discovery.** The kit holds 2×8, 3×7, 4×6 and 5×7 cm boards. The
+  outer header rows are 53.34 mm apart (UM1472 Fig. 10), which is 22 holes across, and a header is
+  25 rows long. The largest board is 18 × 24. MEC-08's "70 × 90 from the kit" was never in the kit.
+- **The Discovery is a better jig than a ruler.** Soldering the four sockets with the board plugged in
+  puts A and B exactly where the pins are, which a single large board would only do if its grid and
+  the Discovery's agreed.
+- **24 rows are enough.** Row 25 is pins 49/50, GND on both headers. Every net the carrier uses is in
+  rows 1-18, and 96 of the 100 pins are still socketed for later I/O.
+- **Tall parts go outboard.** Terminals, the servo and I²C headers, the capacitor and the SN65HVD230
+  sit beyond the Discovery's edge, so the part of each board under it carries only wire and resistors.
+  B needs the wider board because the transceiver module lives there.
+
+**Rejected.** One 2×8 rail per header (25 rows): the 8 columns leave about 10 mm outboard, too
+narrow for the 470 µF can or the module. Cutting and butting two 5×7 boards across the middle: it adds
+a seam without adding anything the Discovery does not already provide.
+
+**Consequences.**
+
+- **The carrier is 98 × 106 mm, not 130 × 85:** 70 mm of board plus the Discovery's 28 mm rearward
+  overhang, and 106 mm across. It needs a full-width station on plate 2 (about 115 mm wide from
+  x 114), and the chassis layout still shows the old outline. MEC-12's position has to be redrawn.
+- **MEC-11's 49.00 × 58.00 carrier pattern no longer applies.** Each board takes two fixings; the
+  drawing marks keep-out zones for them, and the holes are drilled where plate 2's holes land, M2.5
+  with washers as for the FRDM.
+- **The two boards meet only through the Discovery and two soldered bridges** (GND and 3V3). Tie
+  the bridges together; they are the only wires that cross between the boards.
+- **Hook-up wire is not in the BOM.** The Dupont leads are copper-clad aluminium (5.7) and are not
+  used for anything soldered here.
+
+**To confirm.**
+
+- The kit's hole counts. The drawing assumes the usual 10 × 24 and 18 × 24.
+- The SN65HVD230 module's outline. B reserves rows 3-17 by columns k-r, about 36 × 21 mm, and the
+  module is socketed so that it can move within that.
+- Clearance under the Discovery with it seated. The design only needs resistor height there.

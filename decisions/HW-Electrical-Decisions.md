@@ -26,6 +26,7 @@ Drawings: [wiring schematic](../hardware/wiring-schematic.svg) · [STM32 carrier
 | **HW-16** | WAGO 221-415 lever connectors as the power buses |
 | **HW-17** | One 5 V converter, not two |
 | **HW-18** | CAN debug port - DE-9 on the fascia, PC as an unterminated third node |
+| **HW-19** | The 5 V split, its bulk capacitor and the USB-C Rp move onto a board; CAN termination is a jumper |
 
 ---
 
@@ -210,6 +211,8 @@ the 20 A main fuse, which is precisely its job (HW-03).
 ---
 
 ## HW-09 · CAN - transceiver on the STM32 side only
+
+**Updated by HW-19:** the STM32 end's 120 Ω is on the carrier behind a jumper, and the module's own resistor comes off.
 
 *Formerly HD-10.*
 
@@ -476,6 +479,8 @@ every return ─ (−) bar ─ battery −
 
 ## HW-17 · One 5 V converter, not two
 
+**Updated by HW-19:** the split is board C, not a WAGO 3-port.
+
 *Formerly HD-20.*
 
 **Decision (2026-09-17).** Drop the Bauer 15 W. The **Bauer 50 W** feeds both boards, split at a
@@ -551,3 +556,51 @@ about 10 ns, four orders of magnitude below anything that matters.
   itself - see MEC-05 for how it shares it with the USB ports.
 
 ---
+
+---
+
+## HW-19 · The 5 V split, its bulk capacitor and the USB-C Rp move onto a board; CAN termination is a jumper
+
+**Decision (2026-09-28).** No passive part is left hanging in a lever connector or on its own legs.
+
+- **Board C, the 5 V split.** A 3×7 cm kit board takes the Bauer's 5 V and splits it in two, one
+  output to the STM32 carrier and one to the USB-C pigtail that feeds the FRDM's J1. It carries **C1,
+  470 µF**, and **R1/R2, 10 kΩ from CC1 and CC2 to 5 V**, the source Rp that HW-02 calls for. Four
+  2-pin screw terminals: IN 5V, TO STM32, FRDM PWR (VBUS/GND), FRDM CC.
+- **C2, the second 470 µF, sits on carrier board A across the servo header,** where the stall current
+  is drawn.
+- **The carrier's end of the CAN bus is terminated by a jumper.** R3, 120 Ω, in series with a 2-pin
+  header across CAN_H/CAN_L on board B. Jumper on means terminated.
+- **R4, 1 kΩ, in series with the servo PWM** between PE9 and the servo header.
+
+**Why.**
+
+- **A capacitor in a WAGO port is a lead seal waiting to fail.** BOM 3.14 already had to say "tie or
+  glue the body". A radial can soldered to a board and sitting beside its terminals does not need
+  that.
+- **Board C rather than the STM32 carrier.** The carrier had no room left once the module and its
+  terminals were placed (MEC-15). A separate board also keeps the FRDM's 1-2 A off the STM32
+  carrier's wiring, and it sits where the old WAGO split did, so the topology of HW-17 is unchanged.
+- **Selectable termination is how the bus actually gets debugged.** Which end is terminated has been
+  an open question since HW-09 (the module's resistor, the FRDM's SW4). A jumper makes it a setting.
+  It only works if the module's own 120 Ω is removed, so it is.
+- **R4 is the cheapest insurance on the board.** A servo plug fitted one pin off puts 6 V on PE9; 1 kΩ
+  limits that to about 3 mA into the clamp diode. At 50 Hz it costs nothing.
+
+**The header pinout was wrong on the old carrier drawing, and this corrects it.** UM1472 Table 5 and
+the P1/P2 schematic give **P2-3/4 = 5V, P2-5/6 = 3V, P2-7 = PH0**. The old sheet fed 5 V into
+P2-5 (the 3 V pin), took 3.3 V from P2-7 (the oscillator input) and treated P2-3 (5 V) as ground.
+Built as drawn, it would have shorted the 5 V rail. It also said odd pins are outboard on both
+headers; Fig. 10 puts P2's odd pins **inboard**.
+
+**Consequences.**
+
+- The WAGO 3-port for the 5 V split is no longer used, and BOM 3.14's "legs into a WAGO port" and
+  5.1's "resistor leg into a WAGO port" are superseded.
+- **The carrier's single ground lead is its 5V IN pair**, back through board C to the (−) WAGO
+  (HW-06). The I²C and 6 V grounds also reach the bus through the INA226, the motor module and the
+  UBEC. They carry signal or return current only, and the loop is accepted.
+- A third board needs a home on plate 2, next to the Bauer.
+
+**To confirm.** CANH-CANL on the module, unpowered, before it is fitted. If it reads about 120 Ω,
+remove that resistor.

@@ -10,7 +10,7 @@ SVG in a browser; to render, point headless Chrome at it.
 |---|---|
 | [chassis-layout.svg](chassis-layout.svg) | Where components sit on the **three** decks, to scale at 1.7 px/mm, plus the side elevation of the deck stack |
 | [wiring-schematic.svg](wiring-schematic.svg) | What connects to what - fuses, switches, wire gauges, 5 V rails, CAN, I²C, motor control |
-| [stm32-carrier.svg](stm32-carrier.svg) | The carrier the Discovery drops onto - placement, every route, netlist, dimensions and rationale on one sheet (MEC-08, MEC-11) |
+| [stm32-carrier.svg](stm32-carrier.svg) | Soldering and wiring for the three kit boards: A and B, which the Discovery drops onto, and C, the 5 V split. Component side and solder side, hole by hole, with netlist and pre-solder checks (MEC-08, MEC-15, HW-19) |
 | [`../decisions/README.md`](../decisions/README.md) | **Why** the drawings look the way they do - HW, MEC, SYS and SW entries, each with its reasoning and consequences. Not in this folder any more |
 
 Part numbers, prices and status live in [`../bom/BOM.md`](../bom/BOM.md);
@@ -48,6 +48,10 @@ both rear holes anywhere along its length. What is still open:
 
 ### Elsewhere
 
+- **The carrier changed shape and plate 2 has not caught up.** MEC-15 makes it 98 × 106 mm
+  (boards plus the Discovery's rear overhang) instead of 130 × 85, and adds board C, the 5 V split,
+  which wants a spot next to the Bauer. `chassis-layout.svg` still shows the old outline and the old
+  4-hole pattern; redraw both, then drill the carrier's fixings where plate 2's holes land.
 - **The power stage still has no home.** Plate 1 is now full: servo, battery, motor driver,
   WAGO column, INA226, UBEC. Decks 2 and 3 are allocated (carrier, FRDM), and the Bauer 50 W is
   parked on plate 2 with a `?` on it because its 54 mm ear pitch matches no chassis rectangle.

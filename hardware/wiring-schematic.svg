@@ -123,7 +123,7 @@
   <circle cx="1145" cy="330" r="3.2" fill="#15803d"/>
   <path d="M1145,330 L1145,400 L1160,400" fill="none" stroke="#15803d" stroke-width="3"/>
   <text x="1132" y="323" font-size="8" fill="#15803d" text-anchor="middle">5 V</text>
-  <text x="1035" y="368" font-size="7.5" fill="#15803d" text-anchor="middle">5 V split at a WAGO 3-port</text>
+  <text x="1035" y="368" font-size="7.5" fill="#15803d" text-anchor="middle">5 V split on board C (HW-19)</text>
   <rect x="1160" y="305" width="135" height="50" fill="#dbeafe" stroke="#1d4ed8" stroke-width="1.6" rx="2"/>
   <text x="1227" y="323" font-size="10" font-weight="700" fill="#1e3a8a" text-anchor="middle">FRDM-IMX91S</text>
   <text x="1227" y="337" font-size="9" fill="#1e40af" text-anchor="middle">J1 USB-C · 10 kΩ Rp</text>
