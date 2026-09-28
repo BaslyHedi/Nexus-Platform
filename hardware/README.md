@@ -44,17 +44,19 @@ both rear holes anywhere along its length. What is still open:
 - **The board sits 8.6 mm off the centreline** because the forward screw is at the end of its
   slot. Fine as it is; the UBEC it displaced no longer sits on the floor at all (MEC-16).
 
-### Plate 1, the clips and the fuses - proposed 2026-09-28
+### Plate 1 and the harness board - 2026-09-28
 
-The floor now carries only the INA226 and two 221-415 buses, in the bay between the pack and the
-driver. The main fuse, the SW1 split, the motor and UBEC fuses, the UBEC and seven 2-port splices
-hang under plate 2 (MEC-16), and the logic fuse is gone (HW-20). The drawing lists all 16 runs
-with cut lengths. What it still rests on:
+The pack is fixed right behind the tie rod (x 85-162). Plate 1's floor carries only the pack and the
+driver; every clip, fuse, splice, the INA226 and the UBEC are taped to **plate 2's lower face**, and
+the drops to plate 1 fold down when plate 2 is lowered (MEC-16). The logic fuse is gone (HW-20). The
+drawing has plate 2's two faces as separate plans and the run table with cut lengths; the 3D model
+is [`../mechanical/plate1.py`](../mechanical/plate1.py). What it still rests on:
 
 - **Clip outlines**: 221-415, DOMAXWILL 3-port and 2-port, and which face the wires enter.
 - **Fuse holder body**, with calipers - 50 x 18 x 30 is scaled off a photo.
-- **Battery height and driver top height** - they set the clear air under plate 2, where the three
-  fuse holders are zip-tied flat with their lids to the side.
+- **Battery height with its felt, and the driver's top height** - they set the clear air under the
+  harness board.
+- **The carrier and board C screw heads under plate 2** against the taped parts.
 - **SW1 / SW2 tab layout** and the lengths of the SM-2P mating lead and the Bauer's own leads.
 
 ### Elsewhere
