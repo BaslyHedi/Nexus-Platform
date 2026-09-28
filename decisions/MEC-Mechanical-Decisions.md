@@ -23,6 +23,7 @@ Drawings: [chassis layout](../hardware/chassis-layout.svg). Geometry and build c
 | **MEC-13** | The debug ports mount from behind, in two horizontal rows |
 | **MEC-14** | The switch drawing closes the lower panel - and its holes open to 22.4 |
 | **MEC-15** | The carrier is two kit boards joined by the Discovery, not one board |
+| **MEC-16** | Plate 1 floor carries only the INA226 and two buses - every inline part hangs under plate 2 |
 
 ---
 
@@ -589,6 +590,8 @@ fitted, so the standoff sets card access, not just clearance.
 
 ## MEC-12 · Component allocation across the three plates
 
+**Updated by MEC-16:** plate 1's floor now carries only the battery, the driver, the INA226 and two WAGO buses. The UBEC and every fuse hang under plate 2, and the (−) B bus is gone.
+
 **Updated by MEC-15:** on plate 2 the carrier is x 117.0-215.0 (boards to x 187.0), and board C, the 5 V split, sits across the waist at x 85.5-115.5.
 
 **Decision (2026-09-21).** Parts sit where their function puts them, not where a rule puts them.
@@ -866,3 +869,76 @@ a seam without adding anything the Discovery does not already provide.
   out to reach that screw.
 - That six 10 mm M2.5 standoffs are in the M2.5 kit. They are not in the BOM.
 - Clearance under the Discovery with it seated. The design only needs resistor height there.
+
+---
+
+## MEC-16 · Plate 1 floor carries only the INA226 and two buses - every inline part hangs under plate 2
+
+**Decision (2026-09-28).** The battery and the motor driver stay where they are. Only three movable
+parts sit on plate 1's floor, all in the bay between the pack's rear face (x 132) and the driver
+(x 168). Everything else is an **inline part**: it hangs in the lower gap, cable-tied to plate 2's
+own holes, and takes no floor space. Drawing: [chassis layout](../hardware/chassis-layout.svg),
+plate 1, with every run and its cut length in the table beside it.
+
+| Part | Where | Held by |
+|---|---|---|
+| **INA226** | floor, x 135-157, y 2-28, terminals facing the buses | adhesive pad, as before |
+| **(+) bus**, 221-415, 3 of 5 ports | floor, x 135-154, y 31-61 | cable tie to plate 1 |
+| **(−) bus**, 221-415, 5 of 5 ports | floor, x 135-154, y 65-95 | cable tie to plate 1 |
+| **Main fuse** 7.5 A | under plate 2, x 110-160, y 2-32, lid facing the right side | ties through plate 2's y 12.5 strap slot |
+| **SW1 split**, DOMAXWILL 3-port | under plate 2, x 226-245, y 51-69 | tied to the trunk |
+| **Motor fuse** 5 A | under plate 2, x 186-236, y 21-51, lid facing right | ties through plate 2's x 203.5 / 219.5 slots |
+| **UBEC fuse** 5 A | under plate 2, x 186-236, y 69-99, lid facing left | ties through the same slots |
+| **UBEC** | under plate 2, x 150-185, y 101-113 | tie or adhesive pad, it has no holes |
+| **2-port splices**, 7 | in their runs | tied to the bundle either side |
+
+Both buses take their wires on the **rear face**, and the bends happen in the air over the
+14.6 × 59.8 cutout. That is where almost every wire comes from: the switches, the driver, the UBEC
+and the Bauer. The rearward runs go in one **trunk** along the centreline, over the driver and the
+motors, tied under plate 2, and branch to SW2 (y 38) and SW1 (y 82) at the fascia.
+
+**Why.**
+
+- **The clips and fuses were never on the drawing.** MEC-12 placed bare WAGO bodies and no fuse
+  holders. With the holders at about 50 × 18 × 30 and every WAGO needing 11 mm of strip and a bend in
+  front of its face, the 36 mm bay could not take four fuses and three buses by any arrangement.
+- **An inline part does not need a footprint, only a place to be tied.** A fuse holder, a splice and
+  the potted UBEC each sit in the middle of their own run. The lower gap is 50 mm and the motors top
+  out about 16 mm above plate 1, so about 34 mm is free under plate 2 over the motors, and more over
+  the bay.
+- **The UBEC left plate 1's floor because its output never stays there.** HW-19 routes the servo's
+  6 V through carrier board A (C2 sits across the servo header), so the UBEC's output climbs to
+  plate 2 whatever happens. MEC-12's "near the servo" no longer applies.
+- **One (−) bus is enough.** With the two switch LED returns joined at the switches, the star has
+  exactly five returns: battery, driver, UBEC, Bauer and the LEDs. The bridged second connector and
+  its jumper go, and so does the only joint in the star.
+- **Fuses face an open side.** Plate 2 would have to come off to reach anything tied under it, so
+  each lid faces the side of the vehicle, where a fuse can be pulled without taking anything apart.
+
+**Rejected.**
+
+- **All fuses on the plate 1 floor.** About 6000 mm² for four holders against 4300 in the bay.
+- **Fuses beside the switches at the rear.** The switch bodies fill the rear 22 mm from 15 to 35 mm
+  up, and the motors fill everything forward of them to x 203.
+- **Lids facing down.** Over the motors that leaves about 4 mm to open a lid.
+
+**Consequences.**
+
+- **The (−) bus has no spare port.** A sixth return means bridging one of the three spare 221-415s
+  back in, which is the HW-16 arrangement.
+- **Plate 2 goes on with the harness hanging from it.** Tie the overhead parts to plate 2 on the
+  bench, then lower it onto its standoffs. Leave slack in every run that crosses between the decks.
+- **The UBEC is no longer on the floor at x 166-201, y 99-111,** which was a proposal anyway.
+- **18 AWG needed is about 1.1 m of each colour** against 2.5 m bought. The clips come from stock:
+  2 × 221-415 (3 spare), 1 × 3-port and 7 × 2-port from the DOMAXWILL kit.
+
+**To confirm.**
+
+- The clip outlines. The drawing uses 30 × 18.6 × 8.5 for the 221-415 and about 18.6 × 18 for the
+  3-port, both nominal. Which face the wires enter decides the bus orientation.
+- The fuse holder body, measured with calipers. 50 × 18 × 30 is scaled off the vendor photo.
+- The battery height and the driver's top height, which set the clear air under plate 2.
+- The rear wheel tops. The lids over the motors face the sides at 32-50 mm above plate 1; if the
+  wheels reach that high, those two fuses need another spot.
+- The SW1 / SW2 tab layout, and which tab carries LED − (runs 13 and 14).
+- The lengths of the SM-2P mating lead and the Bauer's own leads, which set runs 1, 4, 15 and 16.

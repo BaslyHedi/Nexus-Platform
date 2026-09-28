@@ -27,6 +27,7 @@ Drawings: [wiring schematic](../hardware/wiring-schematic.svg) · [STM32 carrier
 | **HW-17** | One 5 V converter, not two |
 | **HW-18** | CAN debug port - DE-9 on the fascia, PC as an unterminated third node |
 | **HW-19** | The 5 V split, its bulk capacitor and the USB-C Rp move onto a board; CAN termination is a jumper |
+| **HW-20** | Three fuses - the logic branch runs on the main fuse |
 
 ---
 
@@ -412,6 +413,8 @@ F3 → spare
 
 *Formerly HD-18.*
 
+**Updated by HW-20:** the logic fuse is removed - three fuses, not four.
+
 **Hardware superseded by HW-16:** WAGO 221-415 connectors replace the LAOYE bus bars. The inline-fuse layout below still stands.
 
 **Decision (2026-09-15).** Replace the Geloo 6-way fuse block with a **LAOYE bus bar pair** - red (+)
@@ -447,6 +450,8 @@ every return ─ (−) bar ─ battery −
 ## HW-16 · WAGO 221-415 lever connectors as the power buses
 
 *Formerly HD-19.*
+
+**Updated by MEC-16:** the (−) bus is **one** 221-415, five ports, with the two switch LED returns joined at the switches. The 221-500 carriers were already dropped; both buses are cable-tied to plate 1.
 
 **Decision (2026-09-16).** Replace the LAOYE bus bars with **WAGO 221-415** lever connectors on
 **221-500** mounting carriers.
@@ -604,3 +609,39 @@ headers; Fig. 10 puts P2's odd pins **inboard**.
 
 **To confirm.** CANH-CANL on the module, unpowered, before it is fitted. If it reads about 120 Ω,
 remove that resistor.
+
+---
+
+## HW-20 · Three fuses - the logic branch runs on the main fuse
+
+**Decision (2026-09-28).** The 5 A logic fuse is removed. The (+) bus feeds SW2 directly on 18 AWG,
+and SW2 feeds the Bauer 50 W. The vehicle has **three** fuses: main 7.5 A, motors 5 A, UBEC 5 A.
+
+```
+battery + ─ 7.5 A ─ shunt ─ (+) bus ─┬─ SW1 ─┬─ 5 A ─ Encoder Motor Module
+                                     │       └─ 5 A ─ UBEC 6.0 V ─ servo (via carrier board A)
+                                     └─ SW2 ─ Bauer 50 W ─ board C ─ FRDM, STM32
+```
+
+**Why.**
+
+- **A fuse protects the thinnest conductor it feeds.** Every conductor on the logic branch is
+  18 AWG, the Bauer's own leads included (HW-05), good for about 10 A. The 7.5 A main already
+  protects all of it. The two fuses that stay each feed something thinner: the motor module's VM
+  connector is good for about 3 A, and the UBEC's input leads are lighter than 18 AWG.
+- **Keeping the drive branch alive after a logic fault is worth nothing.** A logic fault leaves the
+  FRDM and the STM32 dead either way. The STM32 is the safety controller, and HW-17 already names
+  the drive running on without it as the risk. The main blowing, which cuts the wheels as well, is
+  the safer outcome.
+- **The holders are large** (about 50 x 18 mm, 30 mm tall with the lid, 12-13 cm of 16 AWG each
+  side) and plate 1 could not take four of them (MEC-16). The logic holder was also the one that
+  had to follow the longest run, from the (+) bus back to SW2 at the fascia.
+
+**Consequences.**
+
+- **Three holders in use, two spare.** HW-15's four fuses become three.
+- **A logic-branch short now blows the main.** Accepted, for the reason above.
+- **The (+) bus uses 3 of its 5 ports**: INA226 out, SW1, SW2.
+- The BOM fuse table and the wiring schematic drop the logic fuse.
+
+**To confirm.** The UBEC's input lead gauge, which is what keeps its fuse on the list.

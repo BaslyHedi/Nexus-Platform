@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1320" height="990" viewBox="0 0 1320 990" font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" width="1320" height="1046" viewBox="0 0 1320 1046" font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif">
 <defs><marker id="d" markerWidth="8" markerHeight="8" refX="1" refY="3" orient="auto"><path d="M6,0 L0,3 L6,6 z" fill="#64748b"/></marker><marker id="e" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#64748b"/></marker></defs>
-<rect width="1320" height="990" fill="#fbfaf8"/>
+<rect width="1320" height="1046" fill="#fbfaf8"/>
 <text x="40" y="32" font-size="18" font-weight="700" fill="#1a1a1a">NEXUS - chassis deck layout</text>
 <text x="40" y="52" font-size="11" fill="#666">Hiwonder Ackermann advanced kit · three identical plates, outline traced from Hiwonder's own CAD · 1.7 px/mm · front of vehicle to the LEFT · <tspan font-weight="700">viewed from above, so the vehicle's own LEFT is at the BOTTOM of each plan</tspan></text>
 <text x="40" y="68" font-size="11" fill="#166534">Deck gaps measured on the built kit 2026-09-20: <tspan font-weight="700">lower 50 mm, upper 40 mm</tspan> - two standoff lengths, not one. Fascia panels are 52 and 42 mm tall.</text>
@@ -215,7 +215,7 @@
 <circle cx="507.0" cy="417.9" r="4" fill="none" stroke="#7c3aed" stroke-width="1.5"/><circle cx="507.0" cy="417.9" r="1.5" fill="#7c3aed"/>
 <circle cx="507.0" cy="566.9" r="4" fill="none" stroke="#7c3aed" stroke-width="1.5"/><circle cx="507.0" cy="566.9" r="1.5" fill="#7c3aed"/>
 <text x="60" y="626" font-size="13" font-weight="700" fill="#1a1a1a">LOWER DECK - plate 1</text>
-<text x="60" y="640" font-size="9.5" fill="#64748b">top face z 29.12 · drive, battery, motor driver, WAGO 221-415 distribution and INA226 sensing</text>
+<text x="60" y="640" font-size="9.5" fill="#64748b">top face z 29.12 · <tspan fill="#be185d" font-weight="700">magenta dashed = under plate 2</tspan> (MEC-16)</text>
 <path d="M60.0 704.7 L60.9 702.4 L62.6 700.8 L128.0 662.1 L139.9 649.7 L141.6 648.7 L145.0 648.0 L148.4 648.7 L151.0 650.5 L176.5 677.6 L179.0 678.7 L208.8 678.5 L252.1 652.8 L254.7 652.2 L487.6 649.5 L491.0 650.7 L516.5 666.0 L518.2 667.8 L518.2 833.1 L516.5 834.9 L489.3 851.1 L253.8 848.6 L251.3 847.6 L208.8 822.4 L179.0 822.2 L176.5 823.3 L150.1 851.2 L146.7 852.7 L143.3 852.7 L139.1 850.4 L128.0 838.8 L62.6 800.1 L60.9 798.5 L60.0 796.2 Z" fill="#ffffff" stroke="#334155" stroke-width="1.8"/>
 <rect x="334.0" y="699.7" width="24.8" height="101.6" rx="12.4" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
 <rect x="247.5" y="720.3" width="38.6" height="60.1" rx="19.3" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
@@ -409,21 +409,22 @@
 <text x="279.5" y="695.5" font-size="6.4" font-weight="700" fill="#b91c1c" text-anchor="end">SM-2P</text>
 <circle cx="284.4" cy="803.6" r="3.2" fill="#334155"/>
 <text x="279.5" y="815.5" font-size="6.4" font-weight="700" fill="#334155" text-anchor="end">charge socket</text>
-<text x="215" y="687.5" font-size="6.4" font-weight="700" fill="#b45309" text-anchor="middle">battery leads and the 7.5 A main fuse route here</text>
+<text x="215" y="687.5" font-size="6.4" font-weight="700" fill="#b45309" text-anchor="middle">battery leads leave here</text>
 <text x="215" y="818.5" font-size="6.4" font-weight="700" fill="#b45309" text-anchor="middle">charge socket parks and ties in this channel</text>
 <rect x="289.5" y="651.4" width="37.4" height="44.2" rx="2.5" fill="#ecfeff" stroke="#0e7490" stroke-width="1.4"/>
 <text x="308.2" y="668.0" font-size="7.6" font-weight="700" fill="#0e7490" text-anchor="middle">INA226</text>
 <text x="308.2" y="677.0" font-size="6.6" fill="#0e7490" text-anchor="middle">22 x 26 x 14</text>
 <text x="308.2" y="685.5" font-size="6" font-weight="700" fill="#0e7490" text-anchor="middle">not screwed</text>
 <line x1="289.5" y1="695.6" x2="326.9" y2="695.6" stroke="#0e7490" stroke-width="2.4"/>
-<rect x="289.5" y="695.6" width="31.6" height="48.4" rx="2.5" fill="#fef2f2" stroke="#b91c1c" stroke-width="1.4"/>
+<!-- Plate 1 floor: the two WAGO 221-415 buses, wires entering on the rear face (MEC-16, HW-20). Outlines nominal 30 x 18.6 until measured -->
+<rect x="321.1" y="700.7" width="24.5" height="108.8" fill="#fde68a" fill-opacity="0.35" stroke="#b45309" stroke-width="0.8" stroke-dasharray="3 2"/>
+<rect x="289.5" y="700.7" width="31.6" height="51.0" rx="2.5" fill="#fef2f2" stroke="#b91c1c" stroke-width="1.4"/>
 <text x="305.3" y="722.8" font-size="7.5" font-weight="700" fill="#b91c1c" text-anchor="middle">(+)</text>
-<rect x="289.5" y="746.6" width="31.6" height="48.4" rx="2.5" fill="#f1f5f9" stroke="#334155" stroke-width="1.4"/>
-<text x="305.3" y="773.8" font-size="7.5" font-weight="700" fill="#334155" text-anchor="middle">(-) A</text>
-<rect x="289.5" y="797.6" width="31.6" height="48.4" rx="2.5" fill="#f1f5f9" stroke="#334155" stroke-width="1.4"/>
-<text x="305.3" y="824.8" font-size="7.5" font-weight="700" fill="#334155" text-anchor="middle">(-) B</text>
-<rect x="342.2" y="816.3" width="59.5" height="20.4" rx="2.5" fill="#fffbeb" stroke="#a16207" stroke-width="1.4"/>
-<text x="372.0" y="829.5" font-size="7.6" font-weight="700" fill="#a16207" text-anchor="middle">UBEC 6 V</text>
+<text x="305.3" y="731.8" font-size="5.6" fill="#b91c1c" text-anchor="middle">3 of 5</text>
+<rect x="289.5" y="758.5" width="31.6" height="51.0" rx="2.5" fill="#f1f5f9" stroke="#334155" stroke-width="1.4"/>
+<text x="305.3" y="780.6" font-size="7.5" font-weight="700" fill="#334155" text-anchor="middle">(-)</text>
+<text x="305.3" y="789.6" font-size="5.6" fill="#334155" text-anchor="middle">5 of 5</text>
+<text x="333.4" y="756.0" font-size="5.4" font-weight="700" fill="#b45309" text-anchor="middle" transform="rotate(-90 333.4 756.0)">wire entry · bend</text>
 <text x="95" y="800" font-size="8.5" font-weight="700" fill="#475569">Front axle</text>
 <text x="95" y="811" font-size="7.8" fill="#475569">as supplied</text>
 <rect x="405.4" y="637.9" width="62.7" height="40.8" rx="2" fill="#e0e7ff" stroke="#4338ca" stroke-width="1.1"/>
@@ -464,6 +465,36 @@
 <circle cx="333.0" cy="801.0" r="5" fill="#dc2626"/>
 <text x="333.0" y="803.8" font-size="7.5" font-weight="700" fill="#ffffff" text-anchor="middle">?</text>
 <text x="341.0" y="803.8" font-size="6.2" fill="#b91c1c">front pair: add 2 ties</text>
+<!-- Lower gap, hung under plate 2 (MEC-16): inline parts, drawn dashed in magenta. Holders 50 x 18, 30 with the lid; thick edge = lid side -->
+<g fill="none" stroke="#be185d" stroke-width="1.2" stroke-dasharray="4 2">
+<rect x="247.0" y="651.4" width="85.0" height="51.0" rx="3"/>
+<rect x="376.2" y="683.7" width="85.0" height="51.0" rx="3"/>
+<rect x="376.2" y="765.3" width="85.0" height="51.0" rx="3"/>
+<rect x="444.2" y="734.7" width="32.3" height="30.6" rx="2"/>
+<rect x="315.0" y="820.0" width="59.5" height="20.4" rx="2"/>
+</g>
+<g stroke="#be185d" stroke-width="3"><line x1="249" y1="651.4" x2="330" y2="651.4"/><line x1="378" y1="683.7" x2="459" y2="683.7"/><line x1="378" y1="816.3" x2="459" y2="816.3"/></g>
+<rect x="345.6" y="752.6" width="136.0" height="4.0" fill="#64748b" fill-opacity="0.18" stroke="#64748b" stroke-width="0.8" stroke-dasharray="3 2"/>
+<g font-size="6" font-weight="700" fill="#be185d">
+<text x="251" y="663">MAIN 7.5 A</text>
+<text x="251" y="671" font-weight="400" font-size="5.4">under plate 2</text>
+<text x="458" y="731" text-anchor="end">F-MOT 5 A</text>
+<text x="458" y="776" text-anchor="end">F-UBEC 5 A</text>
+<text x="460.3" y="747" text-anchor="middle" font-size="5.4">3-port</text>
+<text x="460.3" y="762" text-anchor="middle" font-size="5.4">split</text>
+<text x="344.7" y="829.0" text-anchor="middle" font-size="5.8">UBEC 6 V</text>
+<text x="344.7" y="836.5" text-anchor="middle" font-size="4.8" font-weight="400">6 V pair ↑ board A</text>
+</g>
+<g fill="#be185d"><rect x="264.4" y="651.8" width="7" height="5" rx="1"/><rect x="366.4" y="690.2" width="7" height="5" rx="1"/><rect x="374.0" y="812.0" width="7" height="5" rx="1"/></g>
+<!-- Switch bodies reaching in from the lower fascia panel, 15-35 mm above plate 1 (MEC-14) -->
+<rect x="481.6" y="770.4" width="37.4" height="34.0" rx="3" fill="#fee2e2" fill-opacity="0.7" stroke="#b91c1c" stroke-width="1.2" stroke-dasharray="3 2"/>
+<text x="500.3" y="786.0" font-size="6.4" font-weight="700" fill="#b91c1c" text-anchor="middle">SW1</text>
+<text x="500.3" y="794.0" font-size="5.2" fill="#b91c1c" text-anchor="middle">DRIVE</text>
+<rect x="481.6" y="695.6" width="37.4" height="34.0" rx="3" fill="#dcfce7" fill-opacity="0.7" stroke="#15803d" stroke-width="1.2" stroke-dasharray="3 2"/>
+<text x="500.3" y="711.2" font-size="6.4" font-weight="700" fill="#15803d" text-anchor="middle">SW2</text>
+<text x="500.3" y="719.2" font-size="5.2" fill="#15803d" text-anchor="middle">LOGIC</text>
+<text x="500.3" y="740.5" font-size="5.2" fill="#15803d" text-anchor="middle">+ ↑ Bauer</text>
+<text x="308" y="815.5" font-size="5.4" font-weight="700" fill="#334155" text-anchor="middle">Bauer − ↓</text>
 
 
 
@@ -497,22 +528,27 @@
 <text x="600" y="512" font-size="9" fill="#475569">Measured on the built kit: 50 mm below, 40 mm above. The kit ships two standoff lengths; the</text>
 <text x="600" y="525" font-size="9" fill="#475569">single-plate CAD only ever had the 50 and our 3-deck model repeated it for both gaps. The fascia</text>
 <text x="600" y="538" font-size="9" fill="#475569">panels are therefore 52 and 42 mm tall and are no longer one blank (MEC-09).</text>
-<text x="600" y="557" font-size="9.5" font-weight="700" fill="#1e293b">Plate 1 - fixed</text>
-<text x="600" y="571" font-size="9" fill="#475569">Motors are mounted and the battery goes here: the heaviest mass low and central. Each motor reaches</text>
-<text x="600" y="584" font-size="9" fill="#475569">from the centreline out past the plate edge to its wheel, 29.8–66.7 mm forward of the rear edge.</text>
-<text x="600" y="603" font-size="9.5" font-weight="700" fill="#1e293b">Plate 2 / 3 - open</text>
-<text x="600" y="617" font-size="9" fill="#475569">Deliberately blank. Compute boards, power stage and the Pi 5 all want deck space; nothing is committed</text>
-<text x="600" y="630" font-size="9" fill="#475569">until the wiring and thermal picture settle.</text>
-<text x="600" y="649" font-size="9.5" font-weight="700" fill="#1e293b">The fascia already constrains all three</text>
-<text x="600" y="663" font-size="9" fill="#475569">Purple rings are the fascia clamp holes (y 124.54, x −41.34 / +46.30) and yellow are the four standoffs.</text>
-<text x="600" y="676" font-size="9" fill="#475569">Every other hole and slot is drawn from the CAD - 96 of them per plate - so a board can be placed on</text>
-<text x="600" y="689" font-size="9" fill="#475569">real fixings. Plate 2's single M3×12 clamps both panels at once (MEC-07).</text>
-<text x="600" y="708" font-size="9.5" font-weight="700" fill="#1e293b">Keep clear of the rear on plate 1</text>
-<text x="600" y="722" font-size="9" fill="#475569">Switch bodies protrude ~25 mm into the lower gap and the motors start 29.8 mm in, leaving about 8 mm</text>
-<text x="600" y="735" font-size="9" fill="#475569">between them - confirm with the switches in hand before printing (MEC-07).</text>
-<text x="600" y="754" font-size="9.5" font-weight="700" fill="#1e293b">Battery is measured</text>
-<text x="600" y="768" font-size="9" fill="#475569">The servo box is traced from the CAD. The pack is 63 × 77 × 20 mm (2026-09-20) - 20 mm tall clears any</text>
-<text x="600" y="781" font-size="9" fill="#475569">plausible lower gap with room for the strap and the leads.</text>
+<text x="600" y="557" font-size="9.5" font-weight="700" fill="#1e293b">Plate 1 wiring - every run, proposed 2026-09-28 (MEC-16, HW-20)</text>
+<g font-size="7.6" font-weight="700" fill="#64748b"><text x="600" y="572">#</text><text x="614" y="572">Run</text><text x="772" y="572">Wire</text><text x="862" y="572">Cut, cm</text><text x="906" y="572">Ends and clips</text></g>
+<line x1="600" y1="576" x2="1280" y2="576" stroke="#e2e8f0"/>
+<g font-size="7.8" fill="#475569"><text x="600" y="587" font-weight="700">1</text><text x="614" y="587">Battery + → main fuse</text><text x="772" y="587">pack lead · fuse lead</text><text x="862" y="587">as is</text><text x="906" y="587">2-port at the SM-2P mating lead</text></g>
+<g font-size="7.8" fill="#475569"><text x="600" y="599.2" font-weight="700">2</text><text x="614" y="599.2">Main fuse → INA226 IN+</text><text x="772" y="599.2">fuse lead 16 AWG</text><text x="862" y="599.2">~8</text><text x="906" y="599.2">ferrule into the screw terminal</text></g>
+<g font-size="7.8" fill="#475569"><text x="600" y="611.4000000000001" font-weight="700">3</text><text x="614" y="611.4000000000001">INA226 IN− → (+) bus</text><text x="772" y="611.4000000000001">18 red</text><text x="862" y="611.4000000000001">6</text><text x="906" y="611.4000000000001">ferrule · WAGO</text></g>
+<g font-size="7.8" fill="#475569"><text x="600" y="623.6000000000001" font-weight="700">4</text><text x="614" y="623.6000000000001">Battery − → (−) bus</text><text x="772" y="623.6000000000001">SM-2P mate −</text><text x="862" y="623.6000000000001">~15</text><text x="906" y="623.6000000000001">down the rear face of the pack · WAGO</text></g>
+<g font-size="7.8" fill="#475569"><text x="600" y="635.8000000000002" font-weight="700">5</text><text x="614" y="635.8000000000002">(+) bus → SW1 C</text><text x="772" y="635.8000000000002">18 red</text><text x="862" y="635.8000000000002">20</text><text x="906" y="635.8000000000002">trunk · 4.8 mm receptacle</text></g>
+<g font-size="7.8" fill="#475569"><text x="600" y="648.0000000000002" font-weight="700">6</text><text x="614" y="648.0000000000002">(+) bus → SW2 C</text><text x="772" y="648.0000000000002">18 red</text><text x="862" y="648.0000000000002">17</text><text x="906" y="648.0000000000002">trunk · 4.8 mm receptacle</text></g>
+<g font-size="7.8" fill="#475569"><text x="600" y="660.2000000000003" font-weight="700">7</text><text x="614" y="660.2000000000003">SW1 NO → split</text><text x="772" y="660.2000000000003">18 red</text><text x="862" y="660.2000000000003">8</text><text x="906" y="660.2000000000003">receptacle · 3-port</text></g>
+<g font-size="7.8" fill="#475569"><text x="600" y="672.4000000000003" font-weight="700">8</text><text x="614" y="672.4000000000003">split → F-MOT → driver VM+</text><text x="772" y="672.4000000000003">fuse lead 16 AWG</text><text x="862" y="672.4000000000003">5 · 10</text><text x="906" y="672.4000000000003">3-port · 2-port to the VM pigtail</text></g>
+<g font-size="7.8" fill="#475569"><text x="600" y="684.6000000000004" font-weight="700">9</text><text x="614" y="684.6000000000004">split → F-UBEC → UBEC in+</text><text x="772" y="684.6000000000004">fuse lead 16 AWG</text><text x="862" y="684.6000000000004">5 · 5</text><text x="906" y="684.6000000000004">3-port · 2-port to the UBEC lead</text></g>
+<g font-size="7.8" fill="#475569"><text x="600" y="696.8000000000004" font-weight="700">10</text><text x="614" y="696.8000000000004">UBEC 6 V → board A 6V IN</text><text x="772" y="696.8000000000004">18 red + black</text><text x="862" y="696.8000000000004">20</text><text x="906" y="696.8000000000004">up to plate 2 · A terminal</text></g>
+<g font-size="7.8" fill="#475569"><text x="600" y="709.0000000000005" font-weight="700">11</text><text x="614" y="709.0000000000005">UBEC in − → (−) bus</text><text x="772" y="709.0000000000005">18 black</text><text x="862" y="709.0000000000005">13</text><text x="906" y="709.0000000000005">2-port to the UBEC lead · WAGO</text></g>
+<g font-size="7.8" fill="#475569"><text x="600" y="721.2000000000005" font-weight="700">12</text><text x="614" y="721.2000000000005">Driver VM − → (−) bus</text><text x="772" y="721.2000000000005">18 black</text><text x="862" y="721.2000000000005">12</text><text x="906" y="721.2000000000005">2-port to the VM pigtail · WAGO</text></g>
+<g font-size="7.8" fill="#475569"><text x="600" y="733.4000000000005" font-weight="700">13</text><text x="614" y="733.4000000000005">LED − SW1 ↔ SW2, then → (−)</text><text x="772" y="733.4000000000005">18 black</text><text x="862" y="733.4000000000005">6 + 17</text><text x="906" y="733.4000000000005">receptacles · trunk · WAGO</text></g>
+<g font-size="7.8" fill="#475569"><text x="600" y="745.6000000000006" font-weight="700">14</text><text x="614" y="745.6000000000006">LED + ↔ NO, on each switch</text><text x="772" y="745.6000000000006">18 red</text><text x="862" y="745.6000000000006">2 × 3</text><text x="906" y="745.6000000000006">receptacles, at the switch</text></g>
+<g font-size="7.8" fill="#475569"><text x="600" y="757.8000000000006" font-weight="700">15</text><text x="614" y="757.8000000000006">SW2 NO → Bauer + (plate 2)</text><text x="772" y="757.8000000000006">18 red</text><text x="862" y="757.8000000000006">~30</text><text x="906" y="757.8000000000006">receptacle · 2-port to the Bauer lead</text></g>
+<g font-size="7.8" fill="#475569"><text x="600" y="770.0000000000007" font-weight="700">16</text><text x="614" y="770.0000000000007">Bauer − → (−) bus</text><text x="772" y="770.0000000000007">18 black</text><text x="862" y="770.0000000000007">~27</text><text x="906" y="770.0000000000007">2-port to the Bauer lead · WAGO</text></g>
+<text x="600" y="786" font-size="8" font-weight="700" fill="#1e293b">18 AWG cut: ~1.1 m red, ~1.1 m black, of 2.5 + 2.5 m bought · clips: 2 × 221-415, 1 × 3-port, 7 × 2-port</text>
+<text x="600" y="798" font-size="8" fill="#b45309">Lengths include 11 mm strip at each end and ~20 % slack, from nominal heights: measure on the vehicle before cutting.</text>
 <text x="600" y="812" font-size="13" font-weight="700" fill="#1a1a1a">LEGEND</text>
 <line x1="600" y1="820" x2="1280" y2="820" stroke="#e2e8f0"/>
 <rect x="600" y="832" width="18" height="12" rx="2" fill="none" stroke="#dc2626" stroke-width="1.8" stroke-dasharray="4 2.5"/>
@@ -538,4 +574,10 @@
 <text x="634" y="954" font-size="8.8" fill="#475569">Cable tie through the part's own hole into the slot or cutout under it - no chassis hole exists there</text>
 <rect x="601" y="964" width="16" height="10" rx="1.5" fill="#0f766e" fill-opacity="0.14" stroke="#0f766e" stroke-width="1" stroke-dasharray="3 2"/><rect x="601" y="964" width="16" height="3.4" fill="#0f766e" fill-opacity="0.38"/>
 <text x="634" y="973" font-size="8.8" fill="#475569">20 mm hook-and-loop strap - up through one chassis slot, over the pack, down the other, closed underneath</text>
+<rect x="601" y="983" width="16" height="10" rx="1.5" fill="none" stroke="#be185d" stroke-width="1.2" stroke-dasharray="3 2"/><line x1="601" y1="983" x2="617" y2="983" stroke="#be185d" stroke-width="2.5"/>
+<text x="634" y="992" font-size="8.8" fill="#475569">Hangs under plate 2, in the lower gap - cable-tied through plate 2's own holes. Thick edge = fuse lid, faces the open side</text>
+<rect x="605.5" y="1002" width="7" height="5" rx="1" fill="#be185d"/>
+<text x="634" y="1008" font-size="8.8" fill="#475569">DOMAXWILL 2-port splice - inline, tied to its bundle, no floor space</text>
+<rect x="601" y="1019" width="16" height="4" fill="#64748b" fill-opacity="0.18" stroke="#64748b" stroke-width="0.8" stroke-dasharray="3 2"/>
+<text x="634" y="1024" font-size="8.8" fill="#475569">Trunk to the switches - runs 5, 6, 11, 13 - over the driver and motors, tied under plate 2</text>
 </svg>
