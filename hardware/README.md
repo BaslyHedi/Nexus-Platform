@@ -53,8 +53,8 @@ with cut lengths. What it still rests on:
 
 - **Clip outlines**: 221-415, DOMAXWILL 3-port and 2-port, and which face the wires enter.
 - **Fuse holder body**, with calipers - 50 x 18 x 30 is scaled off a photo.
-- **Battery height, driver top height, rear wheel tops** - they set the clear air under plate 2
-  and whether the two lids over the motors can be reached from the side.
+- **Battery height and driver top height** - they set the clear air under plate 2, where the three
+  fuse holders are zip-tied flat with their lids to the side.
 - **SW1 / SW2 tab layout** and the lengths of the SM-2P mating lead and the Bauer's own leads.
 
 ### Elsewhere

@@ -885,11 +885,11 @@ plate 1, with every run and its cut length in the table beside it.
 | **INA226** | floor, x 135-157, y 2-28, terminals facing the buses | adhesive pad, as before |
 | **(+) bus**, 221-415, 3 of 5 ports | floor, x 135-154, y 31-61 | cable tie to plate 1 |
 | **(−) bus**, 221-415, 5 of 5 ports | floor, x 135-154, y 65-95 | cable tie to plate 1 |
-| **Main fuse** 7.5 A | under plate 2, x 110-160, y 2-32, lid facing the right side | ties through plate 2's y 12.5 strap slot |
-| **SW1 split**, DOMAXWILL 3-port | under plate 2, x 226-245, y 51-69 | tied to the trunk |
-| **Motor fuse** 5 A | under plate 2, x 186-236, y 21-51, lid facing right | ties through plate 2's x 203.5 / 219.5 slots |
-| **UBEC fuse** 5 A | under plate 2, x 186-236, y 69-99, lid facing left | ties through the same slots |
-| **UBEC** | under plate 2, x 150-185, y 101-113 | tie or adhesive pad, it has no holes |
+| **Main fuse** 7.5 A | under plate 2, x 106-156, y 2-32, lid facing right | 2 zip ties through plate 2's y 12.5 strap slot |
+| **Motor fuse** 5 A | under plate 2, x 166-216, y 2-32, lid facing right | 2 zip ties through plate 2's own holes |
+| **UBEC fuse** 5 A | under plate 2, x 166-216, y 88-118, lid facing left | 2 zip ties through plate 2's own holes |
+| **SW1 split**, DOMAXWILL 3-port | under plate 2, x 218-237, y 51-69 | tied to the trunk |
+| **UBEC** | under plate 2, x 115-150, y 102-114 | zip tie or adhesive pad, it has no holes |
 | **2-port splices**, 7 | in their runs | tied to the bundle either side |
 
 Both buses take their wires on the **rear face**, and the bends happen in the air over the
@@ -912,15 +912,26 @@ motors, tied under plate 2, and branch to SW2 (y 38) and SW1 (y 82) at the fasci
 - **One (−) bus is enough.** With the two switch LED returns joined at the switches, the star has
   exactly five returns: battery, driver, UBEC, Bauer and the LEDs. The bridged second connector and
   its jumper go, and so does the only joint in the star.
-- **Fuses face an open side.** Plate 2 would have to come off to reach anything tied under it, so
-  each lid faces the side of the vehicle, where a fuse can be pulled without taking anything apart.
+- **The holders are fixed flat to plate 2, lying on their side, lids to the side.** A fuse comes out
+  along its own axis, about 20 mm. Lying flat, each holder takes 18 mm below plate 2 (z 32-50 above
+  plate 1) and the fuse comes out sideways into open air, where a hand or the puller reaches in from
+  the side. Two zip ties hold each body, never across the lid.
+- **Mid-vehicle, not over the motors.** All three sit between x 106 and 216, along the two plate
+  edges, where the sides of the lower gap are open. The motor fuse lands right above the driver's VM
+  connector, and the UBEC fuse beside the UBEC.
 
 **Rejected.**
 
 - **All fuses on the plate 1 floor.** About 6000 mm² for four holders against 4300 in the bay.
 - **Fuses beside the switches at the rear.** The switch bodies fill the rear 22 mm from 15 to 35 mm
   up, and the motors fill everything forward of them to x 203.
-- **Lids facing down.** Over the motors that leaves about 4 mm to open a lid.
+- **Lids facing down.** A holder is 30 mm tall that way, and changing a fuse needs about 20 mm more
+  below the lid. Only the plate 1 cutout has that; over the pack, the INA226, the buses, the driver or
+  the motors a fuse could not be changed without lifting plate 2, which carries the carrier and the
+  Bauer.
+- **The SW1 pair over the motors, lids to the sides** (the first draft of this entry, same day). The
+  rear wheels are beside the motors, so the lids could only be reached if the wheel tops stay below
+  32 mm. Moving the pair forward to x 166-216 takes the wheels out of the question.
 
 **Consequences.**
 
@@ -938,7 +949,7 @@ motors, tied under plate 2, and branch to SW2 (y 38) and SW1 (y 82) at the fasci
   3-port, both nominal. Which face the wires enter decides the bus orientation.
 - The fuse holder body, measured with calipers. 50 × 18 × 30 is scaled off the vendor photo.
 - The battery height and the driver's top height, which set the clear air under plate 2.
-- The rear wheel tops. The lids over the motors face the sides at 32-50 mm above plate 1; if the
-  wheels reach that high, those two fuses need another spot.
+- The rear wheel tops, for the last 13 mm of the SW1 pair (x 203-216). Anything below 32 mm above
+  plate 1 clears the lids.
 - The SW1 / SW2 tab layout, and which tab carries LED − (runs 13 and 14).
 - The lengths of the SM-2P mating lead and the Bauer's own leads, which set runs 1, 4, 15 and 16.
