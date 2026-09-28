@@ -465,27 +465,26 @@
 <circle cx="333.0" cy="801.0" r="5" fill="#dc2626"/>
 <text x="333.0" y="803.8" font-size="7.5" font-weight="700" fill="#ffffff" text-anchor="middle">?</text>
 <text x="341.0" y="803.8" font-size="6.2" fill="#b91c1c">front pair: add 2 ties</text>
-<!-- Lower gap, hung under plate 2 (MEC-16): inline parts, drawn dashed in magenta. Holders 50 x 18, 30 with the lid; thick edge = lid side -->
+<!-- Lower gap, fixed flat to plate 2's underside (MEC-16), as modelled in mechanical/plate1.py. Nothing over the motors: they reach to 9 mm under plate 2. Holders 50 x 18, 30 with the lid; thick edge = lid side -->
 <g fill="none" stroke="#be185d" stroke-width="1.2" stroke-dasharray="4 2">
-<rect x="240.2" y="651.4" width="85.0" height="51.0" rx="3"/>
-<rect x="342.2" y="651.4" width="85.0" height="51.0" rx="3"/>
-<rect x="342.2" y="797.6" width="85.0" height="51.0" rx="3"/>
-<rect x="430.6" y="734.7" width="32.3" height="30.6" rx="2"/>
-<rect x="255.5" y="822.0" width="59.5" height="20.4" rx="2"/>
+<rect x="250.4" y="651.4" width="51.0" height="85.0" rx="3"/>
+<rect x="304.8" y="651.4" width="85.0" height="51.0" rx="3"/>
+<rect x="304.8" y="797.6" width="85.0" height="51.0" rx="3"/>
+<rect x="362.6" y="734.7" width="31.6" height="31.3" rx="2"/>
+<rect x="213.0" y="753.4" width="20.4" height="59.5" rx="2"/>
 </g>
-<g stroke="#be185d" stroke-width="3"><line x1="242" y1="651.4" x2="323" y2="651.4"/><line x1="344" y1="651.4" x2="425" y2="651.4"/><line x1="344" y1="848.6" x2="425" y2="848.6"/></g>
-<rect x="345.6" y="752.6" width="136.0" height="4.0" fill="#64748b" fill-opacity="0.18" stroke="#64748b" stroke-width="0.8" stroke-dasharray="3 2"/>
+<g stroke="#be185d" stroke-width="3"><line x1="250.4" y1="671.8" x2="250.4" y2="716.0"/><line x1="325.2" y1="651.4" x2="369.4" y2="651.4"/><line x1="325.2" y1="848.6" x2="369.4" y2="848.6"/></g>
+<rect x="328.6" y="747.0" width="153.0" height="6.0" fill="#64748b" fill-opacity="0.18" stroke="#64748b" stroke-width="0.8" stroke-dasharray="3 2"/>
 <g font-size="6" font-weight="700" fill="#be185d">
-<text x="244" y="663">MAIN 7.5 A</text>
-<text x="244" y="671" font-weight="400" font-size="5.4">under plate 2</text>
-<text x="424" y="698" text-anchor="end">F-MOT 5 A</text>
-<text x="424" y="809" text-anchor="end">F-UBEC 5 A</text>
-<text x="446.8" y="747" text-anchor="middle" font-size="5.4">3-port</text>
-<text x="446.8" y="762" text-anchor="middle" font-size="5.4">split</text>
-<text x="285.2" y="831.0" text-anchor="middle" font-size="5.8">UBEC 6 V</text>
-<text x="285.2" y="838.5" text-anchor="middle" font-size="4.8" font-weight="400">6 V pair ↑ board A</text>
+<text x="254" y="728">MAIN</text>
+<text x="254" y="734.5">7.5 A</text>
+<text x="386" y="698" text-anchor="end">F-MOT 5 A</text>
+<text x="386" y="809" text-anchor="end">F-UBEC 5 A</text>
+<text x="378.4" y="747" text-anchor="middle" font-size="5.4">3-port</text>
+<text x="378.4" y="762" text-anchor="middle" font-size="5.4">split</text>
+<text x="223.2" y="787" text-anchor="middle" font-size="5.4" transform="rotate(-90 223.2 787)">UBEC 6 V</text>
 </g>
-<g fill="#be185d"><rect x="264.4" y="651.8" width="7" height="5" rx="1"/><rect x="349.4" y="666.0" width="7" height="5" rx="1"/><rect x="325.1" y="822.3" width="7" height="5" rx="1"/></g>
+<g fill="#be185d"><rect x="299.6" y="720.3" width="7" height="5" rx="1"/><rect x="354.0" y="660.8" width="7" height="5" rx="1"/><rect x="257.1" y="810.4" width="7" height="5" rx="1"/></g>
 <!-- Switch bodies reaching in from the lower fascia panel, 15-35 mm above plate 1 (MEC-14) -->
 <rect x="481.6" y="770.4" width="37.4" height="34.0" rx="3" fill="#fee2e2" fill-opacity="0.7" stroke="#b91c1c" stroke-width="1.2" stroke-dasharray="3 2"/>
 <text x="500.3" y="786.0" font-size="6.4" font-weight="700" fill="#b91c1c" text-anchor="middle">SW1</text>
@@ -579,5 +578,5 @@
 <rect x="605.5" y="1002" width="7" height="5" rx="1" fill="#be185d"/>
 <text x="634" y="1008" font-size="8.8" fill="#475569">DOMAXWILL 2-port splice - inline, tied to its bundle, no floor space</text>
 <rect x="601" y="1019" width="16" height="4" fill="#64748b" fill-opacity="0.18" stroke="#64748b" stroke-width="0.8" stroke-dasharray="3 2"/>
-<text x="634" y="1024" font-size="8.8" fill="#475569">Trunk to the switches - runs 5, 6, 11, 13 - over the driver and motors, tied under plate 2</text>
+<text x="634" y="1024" font-size="8.8" fill="#475569">Trunk to the switches - runs 5, 6, 7, 13, 15 - over the driver, then through the 7 mm slot between the encoders</text>
 </svg>

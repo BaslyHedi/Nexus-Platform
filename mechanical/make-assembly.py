@@ -5,11 +5,15 @@
 
 Reads  : chassis-3deck-fascia.obj  (Hiwonder's .3dm export + our duplicated deck 3)
          fascia-lower.stl, fascia-upper.stl  (current panels, local z 0..52)
-Writes : chassis-3deck-fascia.obj  (chassis untouched, fascia groups replaced)
+         plate1/*.stl              (plate 1 stand-ins and wire runs, from plate1.py)
+Writes : chassis-3deck-fascia.obj  (chassis untouched, fascia and plate 1 groups replaced)
+         chassis-3deck-fascia.mtl  (colours, for any viewer that reads OBJ materials)
          assembly.stl              (the same thing as one mesh, for renders)
 
-The chassis geometry is never regenerated here - only the FASCIA_* groups are
-dropped and rebuilt, so the file stays in step with fascia.scad. Deck tops are
+The chassis geometry is never regenerated here - only the FASCIA_* and P1_* groups
+are dropped and rebuilt, so the file stays in step with fascia.scad and plate1.py.
+Every group gets a material: the chassis ones from the colour word Hiwonder's CAD
+put in each object name, ours from plate1.MATERIALS. Deck tops are
 D1T/D2T in fascia.scad; keep the two in sync if the stack ever changes.
 
 Deck 3 is not Hiwonder's: the .3dm is the single-plate version, and the DECK3f_*
@@ -27,9 +31,43 @@ D2T = 81.12
 import re, struct, sys, os
 
 OBJ = "chassis-3deck-fascia.obj"
+MTL = "chassis-3deck-fascia.mtl"
 PANELS = [("FASCIA_LOWER", "fascia-lower.stl", 29.12), ("FASCIA_UPPER", "fascia-upper.stl", 81.12)]
 
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, ".")
+sys.dont_write_bytecode = True
+import plate1  # noqa: E402
+
+# Hiwonder's object names end in a colour word; the plates are anodised black
+# sheet, drawn dark grey here so black wires stay visible against them.
+CHASSIS_MATS = [("黑色钣金", "chassis_plate", (0.30, 0.32, 0.36, 1)),
+                ("黑色螺丝", "chassis_black_screw", (0.15, 0.15, 0.15, 1)),
+                ("螺丝", "chassis_screw", (0.62, 0.62, 0.64, 1)),
+                ("铜色", "chassis_brass", (0.78, 0.55, 0.22, 1)),
+                ("银色", "chassis_silver", (0.72, 0.72, 0.75, 1)),
+                ("白色", "chassis_white", (0.95, 0.95, 0.95, 1)),
+                ("红色", "chassis_red", (0.80, 0.10, 0.10, 1)),
+                ("黑色", "chassis_black", (0.14, 0.14, 0.14, 1))]
+EXTRA_MATS = {"fascia": (0.62, 0.66, 0.70, 1), "chassis_default": (0.30, 0.32, 0.36, 1)}
+
+
+def chassis_mat(group):
+    if group.startswith("FASCIA"):
+        return "fascia"
+    for word, mat, _ in CHASSIS_MATS:
+        if word in group:
+            return mat
+    return "chassis_default"
+
+
+def write_mtl():
+    mats = {m: c for _, m, c in CHASSIS_MATS}
+    mats.update(EXTRA_MATS)
+    mats.update(plate1.MATERIALS)
+    with open(MTL, "w") as f:
+        for name, (r, g, b, a) in mats.items():
+            f.write(f"newmtl {name}\nKd {r:.3f} {g:.3f} {b:.3f}\nKa 0 0 0\nKs 0.1 0.1 0.1\nd {a:.2f}\n\n")
 
 
 def read_stl(path, dz):
@@ -63,6 +101,37 @@ def deck3_index_sets(lines):
     return plate, pillar
 
 
+def compact(lines):
+    """Drop every vertex no face uses, and renumber the faces.
+
+    Groups this script replaces carry their own vertices, and dropping a group's
+    faces used to leave those vertices behind: the seed grew by the whole fascia
+    on every run, and had collected about a million orphans by 2026-09-28.
+    """
+    used = set()
+    for line in lines:
+        if line.startswith("f "):
+            used.update(int(t.split("/")[0]) for t in line.split()[1:])
+    new, vi, nv = {}, 0, 0
+    for line in lines:
+        if line.startswith("v "):
+            vi += 1
+            if vi in used:
+                nv += 1
+                new[vi] = nv
+    res, vi = [], 0
+    for line in lines:
+        if line.startswith("v "):
+            vi += 1
+            if vi in new:
+                res.append(line)
+        elif line.startswith("f "):
+            res.append("f " + " ".join(str(new[int(t.split("/")[0])]) for t in line.split()[1:]) + "\n")
+        else:
+            res.append(line)
+    return res
+
+
 def main():
     lines = open(OBJ).readlines()
     plate3, pillar3 = deck3_index_sets(lines)
@@ -94,11 +163,15 @@ def main():
                 line = "v %.4f %.4f %.4f\n" % (x, y, z)
             verts.append(line)
             keep.append(line)
+        elif line.startswith(("mtllib", "usemtl")):
+            continue                                   # re-added below
         elif line.startswith("g "):
-            cur_kept = not line[2:].strip().startswith("FASCIA")
+            gname = line[2:].strip()
+            cur_kept = not gname.startswith(("FASCIA", "P1_"))
             dropped += 0 if cur_kept else 1
             if cur_kept:
                 keep.append(line)
+                keep.append(f"usemtl {chassis_mat(gname)}\n")
         elif line.startswith(("f ", "vn ", "vt ")):
             if cur_kept or not line.startswith("f "):
                 keep.append(line)
@@ -106,11 +179,16 @@ def main():
             keep.append(line)
 
     base = len(verts)
-    out = keep[:]
+    out = [f"mtllib {MTL}\n"] + keep
     tris = []
-    for name, stl, dz in PANELS:
+    plate1.PARTS.clear()
+    plate1.build()
+    groups = [(n, s, dz, "fascia") for n, s, dz in PANELS]
+    groups += [("P1_" + n, os.path.join("plate1", n + ".stl"), 0.0, m) for n, m, _ in plate1.PARTS]
+    for name, stl, dz, mat in groups:
         v = read_stl(stl, dz)
         out.append(f"g {name}\n")
+        out.append(f"usemtl {mat}\n")
         for p in v:
             out.append("v %.4f %.4f %.4f\n" % p)
         for i in range(0, len(v), 3):
@@ -118,9 +196,11 @@ def main():
         base += len(v)
         tris.append((name, len(v) // 3))
 
+    out = compact(out)
     open(OBJ, "w").writelines(out)
-    print(f"{OBJ}: dropped {dropped} old fascia group(s), added " +
-          ", ".join(f"{n} ({t} tris)" for n, t in tris))
+    write_mtl()
+    print(f"{OBJ}: dropped {dropped} old fascia / plate 1 group(s), added {len(tris)} groups, "
+          f"{sum(t for _, t in tris)} tris; {MTL} written")
 
     # flat STL of everything, for renders
     V, F = [], []

@@ -885,17 +885,24 @@ plate 1, with every run and its cut length in the table beside it.
 | **INA226** | floor, x 135-157, y 2-28, terminals facing the buses | adhesive pad, as before |
 | **(+) bus**, 221-415, 3 of 5 ports | floor, x 135-154, y 31-61 | cable tie to plate 1 |
 | **(−) bus**, 221-415, 5 of 5 ports | floor, x 135-154, y 65-95 | cable tie to plate 1 |
-| **Main fuse** 7.5 A | under plate 2, x 106-156, y 2-32, lid facing right | 2 zip ties through plate 2's y 12.5 strap slot |
-| **Motor fuse** 5 A | under plate 2, x 166-216, y 2-32, lid facing right | 2 zip ties through plate 2's own holes |
-| **UBEC fuse** 5 A | under plate 2, x 166-216, y 88-118, lid facing left | 2 zip ties through plate 2's own holes |
-| **SW1 split**, DOMAXWILL 3-port | under plate 2, x 218-237, y 51-69 | tied to the trunk |
-| **UBEC** | under plate 2, x 115-150, y 102-114 | zip tie or adhesive pad, it has no holes |
+| **Main fuse** 7.5 A | under plate 2, x 112-142, y 2-52, along the pack's rear corner, lid facing forward | 2 zip ties through plate 2's own holes |
+| **Motor fuse** 5 A | under plate 2, x 144-194, y 2-32, lid facing right | 2 zip ties through plate 2's own holes |
+| **UBEC fuse** 5 A | under plate 2, x 144-194, y 88-118, lid facing left | 2 zip ties through plate 2's own holes |
+| **SW1 split**, DOMAXWILL 3-port | under plate 2, x 178-197, y 51-69, over the driver, levers down | tied to the trunk |
+| **UBEC** | under plate 2, x 90-102, y 62-97, over the pack | zip tie or adhesive pad, it has no holes |
 | **2-port splices**, 7 | in their runs | tied to the bundle either side |
 
 Both buses take their wires on the **rear face**, and the bends happen in the air over the
 14.6 × 59.8 cutout. That is where almost every wire comes from: the switches, the driver, the UBEC
-and the Bauer. The rearward runs go in one **trunk** along the centreline, over the driver and the
-motors, tied under plate 2, and branch to SW2 (y 38) and SW1 (y 82) at the fascia.
+and the Bauer. The rearward runs go in one **trunk** along the centreline, over the driver and then
+**through the 7 mm slot between the two encoders** (y 57-63, open from 5 to 40 mm above plate 1),
+and branch to SW2 (y 38) and SW1 (y 82) in the 8 mm between the motors and the switch tabs. The
+Bauer's pair and the UBEC's 6 V pair cross to plate 2 through plate 2's 22.7 × 35.4 opening at
+x 110-133.
+
+**Checked in 3D (2026-09-28).** `mechanical/plate1.py` builds every part and run at these sizes
+and `make-assembly.py` places them in the three-deck assembly, coloured: red unswitched +, orange
+switched +, black ground, teal 6 V. Nothing intersects the chassis, the motors or the wheels.
 
 **Why.**
 
@@ -903,9 +910,12 @@ motors, tied under plate 2, and branch to SW2 (y 38) and SW1 (y 82) at the fasci
   holders. With the holders at about 50 × 18 × 30 and every WAGO needing 11 mm of strip and a bend in
   front of its face, the 36 mm bay could not take four fuses and three buses by any arrangement.
 - **An inline part does not need a footprint, only a place to be tied.** A fuse holder, a splice and
-  the potted UBEC each sit in the middle of their own run. The lower gap is 50 mm and the motors top
-  out about 16 mm above plate 1, so about 34 mm is free under plate 2 over the motors, and more over
-  the bay.
+  the potted UBEC each sit in the middle of their own run. The lower gap is 50 mm, and forward of
+  the motors the tallest thing on the floor is the driver at about 16 mm, so 34 mm is free under
+  plate 2 there.
+- **Nothing hangs over the motors.** Hiwonder's CAD puts the motor tops at 40.8 mm above plate 1,
+  9 mm under plate 2. The first draft of this entry assumed 16 mm and hung the SW1 split and both
+  SW1 fuses over them; the 3D model showed the collision, and all three moved forward.
 - **The UBEC left plate 1's floor because its output never stays there.** HW-19 routes the servo's
   6 V through carrier board A (C2 sits across the servo header), so the UBEC's output climbs to
   plate 2 whatever happens. MEC-12's "near the servo" no longer applies.
@@ -929,9 +939,9 @@ motors, tied under plate 2, and branch to SW2 (y 38) and SW1 (y 82) at the fasci
   below the lid. Only the plate 1 cutout has that; over the pack, the INA226, the buses, the driver or
   the motors a fuse could not be changed without lifting plate 2, which carries the carrier and the
   Bauer.
-- **The SW1 pair over the motors, lids to the sides** (the first draft of this entry, same day). The
-  rear wheels are beside the motors, so the lids could only be reached if the wheel tops stay below
-  32 mm. Moving the pair forward to x 166-216 takes the wheels out of the question.
+- **The SW1 pair over the motors** (the first draft of this entry, same day), and then at x 166-216.
+  Both collide with the motors, which reach to 9 mm under plate 2, and the rear wheels (44.7 mm tall,
+  x 192-251) stand beside that zone. At x 144-194 the lids are clear of both.
 
 **Consequences.**
 
@@ -949,7 +959,5 @@ motors, tied under plate 2, and branch to SW2 (y 38) and SW1 (y 82) at the fasci
   3-port, both nominal. Which face the wires enter decides the bus orientation.
 - The fuse holder body, measured with calipers. 50 × 18 × 30 is scaled off the vendor photo.
 - The battery height and the driver's top height, which set the clear air under plate 2.
-- The rear wheel tops, for the last 13 mm of the SW1 pair (x 203-216). Anything below 32 mm above
-  plate 1 clears the lids.
 - The SW1 / SW2 tab layout, and which tab carries LED − (runs 13 and 14).
 - The lengths of the SM-2P mating lead and the Bauer's own leads, which set runs 1, 4, 15 and 16.
