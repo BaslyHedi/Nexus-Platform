@@ -534,6 +534,8 @@ the transverse hypothesis above was wrong - it mounts fore-aft on the M3 grid.
 
 ## MEC-11 · The FRDM's mounting holes land on the Hiwonder grid - 0.06 mm out
 
+**Updated by MEC-15:** the carrier's 49.00 × 58.00 pattern is gone. The kit-board carrier fixes to (148.18, 23.76), (148.2, 72.2), (169.88, 14.24) and (169.88, 100.24).
+
 **Decision (2026-09-20).** The FRDM-IMX91 bolts **fore-aft to plate holes that already exist**, on
 four of its six mounting holes, with **M2.5 screws and washers up through the chassis** into the
 female standoffs the board already carries.
@@ -586,6 +588,8 @@ fitted, so the standoff sets card access, not just clearance.
 ---
 
 ## MEC-12 · Component allocation across the three plates
+
+**Updated by MEC-15:** on plate 2 the carrier is x 117.0-215.0 (boards to x 187.0), and board C, the 5 V split, sits across the waist at x 85.5-115.5.
 
 **Decision (2026-09-21).** Parts sit where their function puts them, not where a rule puts them.
 
@@ -731,7 +735,7 @@ the vendor photo in MEC-05.
 - **Mini-B body**, ~20 × 10 × 13 (photo). It has 6.1 mm to the standoff, so it would have to be
   over 32 mm wide to touch.
 - **The DE-9 rear insulator** is assumed 19 × 10.5 × 8 in the stand-in, not measured.
-- **The USB-C body against the STM32 carrier - open, found in review.** If the drawing's 40 mm body
+- **The USB-C body against the STM32 carrier - closed by MEC-15:** the boards now end at x 187, and the Discovery reaches x 215 only at z 101 or higher, so even a 40 mm body clears by 5.3 mm. *Original note:* If the drawing's 40 mm body
   is all behind the flange, the body ends at y 87.7; the carrier's rear edge (MEC-12, plate x 223.2)
   is at y 84.8. That leaves **2.9 mm** at the carrier's height, and the cable still has to leave the
   body and bend up to the FRDM on deck 3. If the 40 mm includes the 6 mm flange, the gap is 8.9 mm.
@@ -819,11 +823,36 @@ a seam without adding anything the Discovery does not already provide.
 **Consequences.**
 
 - **The carrier is 98 × 106 mm, not 130 × 85:** 70 mm of board plus the Discovery's 28 mm rearward
-  overhang, and 106 mm across. It needs a full-width station on plate 2 (about 115 mm wide from
-  x 114), and the chassis layout still shows the old outline. MEC-12's position has to be redrawn.
-- **MEC-11's 49.00 × 58.00 carrier pattern no longer applies.** Each board takes two fixings; the
-  drawing marks keep-out zones for them, and the holes are drilled where plate 2's holes land, M2.5
-  with washers as for the FRDM.
+  overhang, and 106 mm across. It needs the full-width part of plate 2, which runs from x 114 and is
+  about 115 mm wide there.
+- **Where it sits (2026-09-28).** Header row 1 at **chassis x 181.20**, boards from x 117.0 to 187.0,
+  the Discovery's rear edge at x 215.0. Board A's outboard edge at y 4.95, board B's at y 110.99. The
+  window was narrow: the front is held by the plate's full width starting at x 114, and the rear by
+  the fascia port bodies near x 220 and the harness zone behind x 224.
+- **Fixings, all into holes plate 2 already has.** Only one M3 cross-line (x 148.2) and one M2.5 line
+  (x 169.88) fall on the boards in that window, and the parts on A and B were moved to suit them:
+
+  | Fix | Board hole | Chassis hole |
+  |---|---|---|
+  | A1 | A g14, on grid | M3 ⌀3.18 (148.18, 23.76) |
+  | B1 | B d14, 0.18 mm | M2.5 ⌀2.71 (148.2, 72.2) |
+  | A2 | A between c5 and d6, off grid | M2.5 ⌀2.71 (169.88, 14.24) |
+  | B2 | B between o5 and o6, off grid, under the module | M2.5 ⌀2.71 (169.88, 100.24) |
+
+  A 21.7 × 86 mm four-point pattern. ⌀3.2 in the board, **M2.5 on 10 mm standoffs**, a washer in
+  every ⌀3.18 hole, as for the FRDM (MEC-11). Drill A1 and B1 on the grid, screw the carrier down,
+  then mark A2 and B2 from under the plate. 10 mm keeps the solder side, bare spines included, well
+  off the aluminium, and the stack still clears plate 3: the Discovery's top is at about z 111
+  against the FRDM's screw heads at z 119.4 under plate 3.
+- **Board C sits across the waist**, x 85.5-115.5 and y 25.2-95.2, between the Bauer and the
+  carrier with 1.5 mm to spare at each side. Its terminals are at the two short ends, facing the
+  plate edges, because there is no room at the front or rear for wires to enter. It is fixed at
+  **C e4 and C e21** to the M3 holes (99.24, 38.76) and (99.24, 81.76), which are 43.00 mm apart:
+  17 rows plus 0.18 mm. The Bauer's position is still a placeholder, and if it moves rearward it
+  meets C.
+- **MEC-13's USB-C clearance question is closed.** The boards now end at x 187. Only the Discovery
+  reaches x 215, and it does so at about z 101 or higher, above the bottom-row ports at z 90. A
+  40 mm body behind the flange, which ends at x 220.3, still clears by 5.3 mm.
 - **The two boards meet only through the Discovery and two soldered bridges** (GND and 3V3). Tie
   the bridges together; they are the only wires that cross between the boards.
 - **Hook-up wire is not in the BOM.** The Dupont leads are copper-clad aluminium (5.7) and are not
@@ -833,5 +862,7 @@ a seam without adding anything the Discovery does not already provide.
 
 - The kit's hole counts. The drawing assumes the usual 10 × 24 and 18 × 24.
 - The SN65HVD230 module's outline. B reserves rows 3-17 by columns k-r, about 36 × 21 mm, and the
-  module is socketed so that it can move within that.
+  module is socketed so that it can move within that. B2's screw sits under it, so the module comes
+  out to reach that screw.
+- That six 10 mm M2.5 standoffs are in the M2.5 kit. They are not in the BOM.
 - Clearance under the Discovery with it seated. The design only needs resistor height there.

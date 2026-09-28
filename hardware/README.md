@@ -48,10 +48,10 @@ both rear holes anywhere along its length. What is still open:
 
 ### Elsewhere
 
-- **The carrier changed shape and plate 2 has not caught up.** MEC-15 makes it 98 × 106 mm
-  (boards plus the Discovery's rear overhang) instead of 130 × 85, and adds board C, the 5 V split,
-  which wants a spot next to the Bauer. `chassis-layout.svg` still shows the old outline and the old
-  4-hole pattern; redraw both, then drill the carrier's fixings where plate 2's holes land.
+- **The carrier and board C are placed but not fitted** (MEC-15). The carrier's header row 1 is at
+  x 181.20, fixed at four existing plate-2 holes. Board C sits across the waist at x 85.5-115.5, on
+  the M3 pair at x 99.24. Two of the carrier's holes are drilled off grid, marked from the plate.
+  Still to check: six 10 mm M2.5 standoffs in stock, and the Bauer not moving rearward into C.
 - **The power stage still has no home.** Plate 1 is now full: servo, battery, motor driver,
   WAGO column, INA226, UBEC. Decks 2 and 3 are allocated (carrier, FRDM), and the Bauer 50 W is
   parked on plate 2 with a `?` on it because its 54 mm ear pitch matches no chassis rectangle.
