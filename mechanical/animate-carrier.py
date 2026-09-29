@@ -56,9 +56,9 @@ BRIDGE = (51.4, 55.0)
 FLIP2B = (56.0, 58.4)
 MODULE, LINKS, JUMPER, STANDOFFS = 58.8, 60.0, 61.0, 62.0
 DISCO_ON = (64.0, 66.6)
-C_PARTS = {'terms': 68.4, 'res': 69.6, 'cap': 70.4}
-C_FLIP = (72.0, 74.2)
-C_J, C_SPINES, C_WIRES = 74.6, (75.4, 77.2), (77.6, 80.2)
+C_PARTS = {'terms': 68.4, 'res': 69.2, 'cap': 69.8, 'screws': 70.5, 'socket': 71.1, 'pigtail': 71.6, 'ties': 72.1}
+C_FLIP = (72.8, 75.0)
+C_J, C_SPINES, C_WIRES = 75.3, (75.9, 77.5), (77.9, 80.4)
 C_FLIPB = (81.0, 83.2)
 ORBIT = 84.0
 DROP = S(0.7) - 1            # how long a part takes to settle
@@ -81,8 +81,9 @@ CAPTIONS = [
     ((56, 58.8), "   Right way up again"),
     ((58.8, 64), "12  Module in, H / L links to m3 / o3, TERM jumper on, four 10 mm M2.5 standoffs"),
     ((64, 67.4), "13  The Discovery drops onto the carrier"),
-    ((67.4, 72), "14  Board C, the 5 V split: four terminals, R1 / R2 10k source Rp for the USB-C, C1 470 uF"),
-    ((72, 84), "15  Solder side: 5 V spine col a, GND spine col c, the TO STM32 pair in 18 AWG, the CC network"),
+    ((67.4, 70.5), "14  Board C, the 5 V split: IN 5V and TO STM32, R1 / R2 10k source Rp, C1 470 uF"),
+    ((70.5, 72.8), "    The e4 screw first, then the USB-C socket over it: pigtail into a7 / c7 / g7 / i7, two zip ties"),
+    ((72.8, 84), "15  Solder side: 5 V spine col a, GND spine col c, the TO STM32 pair in 18 AWG, the CC network"),
     ((84, 95), "The carrier and the 5 V split, ready for plate 2 (MEC-15, HW-19) - the Discovery is a mock"),
 ]
 
@@ -249,7 +250,7 @@ def flip(root, a, b, lift=45.0):
     root.keyframe_insert("rotation_euler", frame=fb)
 
 
-def wire(name, pts, net, kind, parent, sec, dur=None, z=None):
+def wire(name, pts, net, kind, parent, sec, dur=None, z=None, colour=None):
     """A run on the solder side (z below the board), grown from its first point."""
     r = {'bare': 0.5, 'ins': 0.55, 'pwr': 0.9}[kind]
     z = -1.6 - r if z is None else z
@@ -263,7 +264,7 @@ def wire(name, pts, net, kind, parent, sec, dur=None, z=None):
     sp.points.add(len(pts) - 1)
     for p, q in zip(sp.points, pts):
         p.co = mirror((q[0], q[1], q[2] if len(q) > 2 else z)) + (1,)
-    cu.materials.append(MATS['bare' if kind == 'bare' else 'net_' + net])
+    cu.materials.append(mat('wire' + colour, colour) if colour else MATS['bare' if kind == 'bare' else 'net_' + net])
     o = bpy.data.objects.new(name, cu)
     sc.collection.objects.link(o)
     adopt(o, parent)
@@ -572,6 +573,47 @@ for c, r, _, _ in C.C_FIX:
     x, y = ch(c, r)
     m.cone((x, y, -1.6), (x, y, -11.6), 2.5, 2.5, 'brass', 6)
 drop(m.make('c-standoffs', cr), C_PARTS['cap'] + 0.6, -30)
+
+# ---- the e4 / e21 screws, then the USB-C socket lying over e4, its pigtail and two ties
+m = Mesh()
+for c, r, _, _ in C.C_FIX:
+    x, y = ch(c, r)
+    m.cyl((x, y, 0), (x, y, 1.7), 2.25, 'screw', 16)
+    m.box(x - 1.5, x + 1.5, y - 0.3, y + 0.3, 1.7, 1.75, 'hole')
+drop(m.make('c-screws', cr), C_PARTS['screws'], 20)
+sk = C.C_SOCKET
+X = lambda x: OXc + x
+Yc = OYc + sk['y']
+m = Mesh()
+m.box(X(sk['flange'][0]), X(sk['flange'][1]), Yc - sk['flange_w'] / 2, Yc + sk['flange_w'] / 2, 0, sk['flange_h'], 'black')
+zb = (sk['flange_h'] - sk['body_h']) / 2
+m.box(X(sk['body'][0]), X(sk['body'][1]), Yc - sk['body_w'] / 2, Yc + sk['body_w'] / 2, zb, zb + sk['body_h'], 'black')
+zc = sk['flange_h'] / 2
+m.box(X(sk['flange'][0]) - 0.06, X(sk['flange'][0]), Yc - 4.3, Yc + 4.3, zc - 1.3, zc + 1.3, 'hole')
+m.box(X(sk['flange'][0]) - 0.08, X(sk['flange'][0]) - 0.06, Yc - 3.2, Yc + 3.2, zc - 0.3, zc + 0.3, 'usb')
+drop(m.make('c-usb-socket', cr), C_PARTS['socket'], 25)
+x1 = X(sk['body'][1])
+for lab, colour, col, row, ye in C.C_PIGTAIL:
+    hx, hy = ch(C.ci(col), row)
+    wire('c-pigtail-' + lab, [(x1, OYc + ye, zc), (x1 + 2.2, OYc + ye, zc), (hx, hy, 3.0), (hx, hy, -2.2)],
+         lab, 'ins', cr, C_PARTS['pigtail'], colour=colour)
+    C_PINS.append((hx, hy))
+m = Mesh()
+for lab, colour, ye in C.C_CUT:
+    m.cyl((x1, OYc + ye, zc), (x1 + 1.6, OYc + ye, zc), 0.55, 'screw', 8)
+    m.cyl((x1 + 1.6, OYc + ye, zc), (x1 + 5.0, OYc + ye, zc), 0.85, 'capsleeve', 10)
+show(m.make('c-cut-dplus-dminus', cr), [(S(C_PARTS['pigtail']), END + 1)])
+m = Mesh()
+yb_, yi_ = OYc + (C.ci('b') - 1) * P, OYc + (C.ci('i') - 1) * P
+for r in C.C_TIES:
+    x = OXc + (r - 1) * P
+    top = zb + sk['body_h'] if X(sk['body'][0]) < x < x1 else zc + 0.6
+    for ya, yb2, z0, z1 in ((yb_, yi_, top, top + 0.4), (yb_, yi_, -2.0, -1.6)):
+        m.box(x - 1.25, x + 1.25, ya, yb2, z0, z1, 'captop')
+    for y in (yb_, yi_):
+        m.box(x - 1.25, x + 1.25, y - 0.2, y + 0.2, -2.0, top + 0.4, 'captop')
+    m.box(x - 1.6, x + 1.6, yi_ - 3.2, yi_ - 0.2, top, top + 1.6, 'captop')      # the lock
+drop(m.make('c-zip-ties', cr), C_PARTS['ties'], 15)
 joints('c-joints', C_PINS, cr, C_J)
 c_sp = [w_ for w_ in C.C_WIRES if w_[2] == 'bare']
 c_ot = [w_ for w_ in C.C_WIRES if w_[2] != 'bare']

@@ -566,12 +566,17 @@ about 10 ns, four orders of magnitude below anything that matters.
 
 ## HW-19 · The 5 V split, its bulk capacitor and the USB-C Rp move onto a board; CAN termination is a jumper
 
+**Revised 2026-09-29: the USB-C socket itself sits on board C.** The FRDM PWR and FRDM CC
+terminals are gone. The KUOQIY socket (BOM 5.1) is zip-tied flat at C's row-1 end, opening out, and
+its pigtail is soldered straight into the board. See "Revision 2026-09-29" at the end.
+
 **Decision (2026-09-28).** No passive part is left hanging in a lever connector or on its own legs.
 
 - **Board C, the 5 V split.** A 3×7 cm kit board takes the Bauer's 5 V and splits it in two, one
   output to the STM32 carrier and one to the USB-C pigtail that feeds the FRDM's J1. It carries **C1,
   470 µF**, and **R1/R2, 10 kΩ from CC1 and CC2 to 5 V**, the source Rp that HW-02 calls for. Four
-  2-pin screw terminals: IN 5V, TO STM32, FRDM PWR (VBUS/GND), FRDM CC.
+  2-pin screw terminals: IN 5V, TO STM32, FRDM PWR (VBUS/GND), FRDM CC. *Since 2026-09-29:
+  two terminals, and the USB-C socket soldered in place of the FRDM pair (see the revision below).*
 - **C2, the second 470 µF, sits on carrier board A across the servo header,** where the stall current
   is drawn.
 - **The carrier's end of the CAN bus is terminated by a jumper.** R3, 120 Ω, in series with a 2-pin
@@ -609,6 +614,30 @@ headers; Fig. 10 puts P2's odd pins **inboard**.
 
 **To confirm.** CANH-CANL on the module, unpowered, before it is fitted. If it reads about 120 Ω,
 remove that resistor.
+
+**Revision 2026-09-29 · the USB-C socket lives on board C.**
+
+- **Where.** At C's row-1 end, lying on its side with the flange flush at the board edge and the
+  opening facing the vehicle's right. That end is the only free one: C's long sides have 1.5 mm to
+  the Bauer and the carrier (MEC-15), and the row-24 end keeps IN 5V and TO STM32.
+- **Held by two zip ties** through 3 mm holes drilled at b2 / i2 and b6 / i6: one over the body,
+  one over the pigtail as strain relief. Both clear the e4 standoff underneath by about 0.9 mm.
+- **The e4 screw is under the body.** The flange is 10.3 mm tall and the body 5.3 mm, centred, so
+  the body rides 2.5 mm off the board and clears a pan-head M2.5. Fit that screw first.
+- **The pigtail is soldered, cut to about 20 mm:** red V into a7 on the 5 V spine, black G into
+  c7 on the GND spine, green CC1 into g7 and yellow CC2 into i7. Each CC landing is linked to its
+  resistor at g8 / i8. **R1 and R2 move to g8-g12 and i8-i12**, their tops joined at g12-i12 and
+  taken to the 5 V spine at a15. White D− and blue D+ are cut short and insulated one by one,
+  never twisted together.
+- **Why solder rather than terminals.** The pigtail is 24 AWG, which a 5.08 screw clamp holds
+  poorly without ferrules, and two terminals and a loose socket become one tied-down part. It costs
+  unplugging: to free the socket, cut the ties and desolder four wires.
+- **Check first:** CC1 and CC2 to V and to G, all four open (BOM 5.1). A socket with its own
+  Rd or Rp cannot be the source.
+- **To confirm on the vehicle.** The socket's face is at C's edge, and plate 2 is only about 80 mm
+  wide at the waist, so the C-to-C plug stands about 20 mm past the plate edge at plate-2 height.
+  Check nothing outboard is in its way, and that the 20 cm cable reaches J1 on plate 3.
+  J1's position on the FRDM is not recorded in this repository.
 
 ---
 

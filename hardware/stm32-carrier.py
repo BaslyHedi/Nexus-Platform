@@ -447,31 +447,82 @@ def draw_links(v):
 
 # ---------------------------------------------------------------- board C
 # Rows 1-24 run across the vehicle (row 1 at the vehicle's right), columns a-j run
-# front to rear. Terminals sit at the two short ends, entries facing the plate edges.
+# front to rear. The USB-C socket for the FRDM's J1 is tied down at the row-1 end, opening
+# out; the two terminals sit at the row-24 end. Both face the plate edges.
 C_COLS, C_ROWS = 10, 24
 C_EDGE_X, C_EDGE_Y = (-5.79, 58.42 + 5.79), (-3.57, 22.86 + 3.57)
 
 def c_hole(col, row):
     return (row - 1) * P, (col - 1) * P
 
-C_TERMS = [   # pins, entry (-X row-1 end, +X row-24 end), name, note
-    ([('a', 1, 'VBUS'), ('c', 1, 'GND')], '-X', 'FRDM PWR', 'pigtail VBUS / GND'),
-    ([('g', 1, 'CC1'), ('i', 1, 'CC2')], '-X', 'FRDM CC', 'pigtail CC1 / CC2'),
+C_TERMS = [   # pins, entry (+X, the row-24 end), name, note
     ([('a', 24, '+5V'), ('c', 24, 'GND')], '+X', 'IN 5V', 'Bauer via SW2'),
     ([('g', 24, '+5V'), ('i', 24, 'GND')], '+X', 'TO STM32', 'to B 5V IN'),
 ]
-C_RES = [(('g', 4), ('g', 8), 'R1 10k'), (('i', 4), ('i', 8), 'R2 10k')]
+C_RES = [(('g', 8), ('g', 12), 'R1 10k'), (('i', 8), ('i', 12), 'R2 10k')]
+
+# The KUOQIY 6-wire USB-C female socket (BOM 5.1), lying on its side with its flange flush
+# at the row-1 edge. The flange is 16.7 x 10.3 and the body 12.0 x 5.3, centred on it, so the
+# body rides 2.5 mm off the board and clears the pan head of the e4 screw beneath it.
+C_SOCKET = dict(y=11.43, flange=(-5.79, -3.79), flange_w=16.7, body=(-3.79, 10.21), body_w=12.0,
+                flange_h=10.3, body_h=5.3)
+# pigtail wire -> landing hole, cut to about 20 mm: (label, colour, col, row, exit Y on the body)
+C_PIGTAIL = [('V', '#dc2626', 'a', 7, 7.2), ('G', '#111827', 'c', 7, 9.0),
+             ('CC1', '#16a34a', 'g', 7, 13.8), ('CC2', '#eab308', 'i', 7, 15.6)]
+C_CUT = [('D-', '#e5e7eb', 10.8), ('D+', '#1e3a8a', 12.2)]  # cut short, each insulated alone
+C_TIES = [2, 6]              # zip ties at these rows, through 3 mm holes drilled at b and i
 C_FIX = [(5, 4, 'C1 fix', '(99.24, 38.76)'), (5, 21, 'C2 fix', '(99.24, 81.76)')]
 C_WIRES = [
     ('5V', [(1, 1), (1, 24)], 'bare'),                        # 5 V spine, column a
     ('GND', [(3, 1), (3, 24)], 'bare'),                       # GND spine, column c
     ('5V', [(7, 24), (7, 23.5), (1, 23.5), (1, 24)], 'pwr'),  # TO STM32 +
     ('GND', [(9, 24), (9, 24.5), (3, 24.5), (3, 24)], 'pwr'), # TO STM32 -
-    ('CC', [(7, 1), (7, 4)], 'bare'),
-    ('CC', [(9, 1), (9, 4)], 'bare'),
-    ('5V', [(7, 8), (9, 8)], 'bare'),
-    ('5V', [(7, 8), (7, 8.5), (1, 8.5), (1, 9)], 'ins'),
+    ('CC', [(7, 7), (7, 8)], 'bare'),                         # CC1 landing g7 to R1, g8
+    ('CC', [(9, 7), (9, 8)], 'bare'),                         # CC2 landing i7 to R2, i8
+    ('5V', [(7, 12), (9, 12)], 'bare'),                       # R1 / R2 tops
+    ('5V', [(7, 12), (7, 14.5), (1.5, 14.5), (1.5, 15), (1, 15)], 'ins'),   # tops to the 5 V spine
 ]
+
+def draw_socket(v, top, hf):
+    sk, yc = C_SOCKET, C_SOCKET['y']
+    tie = lambda r: [(ci('b'), r), (ci('i'), r)]
+    for r in C_TIES:                                  # the 3 mm holes, both sides
+        for c, rr in tie(r):
+            x, y = hf(c, rr)
+            w(f'<circle cx="{x:.1f}" cy="{y:.1f}" r="{1.5 * v.s:.1f}" fill="#334155" stroke="#0f172a" stroke-width="0.8"/>')
+    if top:
+        v.rect(sk['body'][0], sk['body'][1], yc - sk['body_w'] / 2, yc + sk['body_w'] / 2, rx=2,
+               fill='#1f2937', stroke='#0f172a', stroke_width=1.2)
+        v.rect(sk['flange'][0], sk['flange'][1], yc - sk['flange_w'] / 2, yc + sk['flange_w'] / 2, rx=1.5,
+               fill='#111827', stroke='#0f172a', stroke_width=1.2)
+        for lab, colr, col, row, ye in C_PIGTAIL:
+            a_, m_, b_ = v.px(sk['body'][1], ye), v.px(sk['body'][1] + 2.2, ye), hf(ci(col), row)
+            w(f'<polyline points="{a_[0]:.1f},{a_[1]:.1f} {m_[0]:.1f},{m_[1]:.1f} {b_[0]:.1f},{b_[1]:.1f}" fill="none" stroke="{colr}" stroke-width="2.4" stroke-linecap="round"/>')
+            w(f'<circle cx="{b_[0]:.1f}" cy="{b_[1]:.1f}" r="2.6" fill="{colr}" stroke="#fff" stroke-width="0.6"/>')
+        for lab, colr, ye in C_CUT:
+            a_, b_ = v.px(sk['body'][1], ye), v.px(sk['body'][1] + 1.6, ye)
+            w(f'<line x1="{a_[0]:.1f}" y1="{a_[1]:.1f}" x2="{b_[0]:.1f}" y2="{b_[1]:.1f}" stroke="{colr}" stroke-width="2.4"/>')
+            w(f'<rect x="{b_[0]:.1f}" y="{b_[1] - 2:.1f}" width="6" height="4" rx="1" fill="#475569"/>')
+        for r in C_TIES:
+            (xa, ya), (xb, yb) = [hf(c, rr) for c, rr in tie(r)]
+            w(f'<line x1="{xa:.1f}" y1="{ya:.1f}" x2="{xb:.1f}" y2="{yb:.1f}" stroke="#e5e7eb" stroke-width="{2.5 * v.s:.1f}" stroke-opacity="0.9"/>')
+            w(f'<line x1="{xa:.1f}" y1="{ya:.1f}" x2="{xb:.1f}" y2="{yb:.1f}" stroke="#94a3b8" stroke-width="0.8" stroke-dasharray="2 2"/>')
+        lx, ly = v.px(C_EDGE_X[0] - 3.2, yc)
+        text(lx, ly - 12, 'USB-C SOCKET', 8, '#1e40af', '700', anchor='end')
+        text(lx, ly - 2, 'opening out, C-to-C', 6.5, '#64748b', anchor='end')
+        text(lx, ly + 7, 'cable to FRDM J1', 6.5, '#64748b', anchor='end')
+        text(lx, ly + 18, 'zip ties at rows 2, 6', 6.5, '#64748b', anchor='end')
+        text(lx, ly + 27, 'D−/D+ cut, insulated', 6.5, '#64748b', anchor='end')
+        x, y = hf(5, 4)                               # the e4 screw, under the body
+        w(f'<circle cx="{x:.1f}" cy="{y:.1f}" r="{2.25 * v.s:.1f}" fill="none" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="3 2"/>')
+    else:
+        for lab, colr, col, row, ye in C_PIGTAIL:
+            x, y = hf(ci(col), row)
+            w(f'<circle cx="{x:.1f}" cy="{y:.1f}" r="3.4" fill="#e2e8f0" stroke="{colr}" stroke-width="1.6"/>')
+        for r in C_TIES:
+            (xa, ya), (xb, yb) = [hf(c, rr) for c, rr in tie(r)]
+            w(f'<line x1="{xa:.1f}" y1="{ya:.1f}" x2="{xb:.1f}" y2="{yb:.1f}" stroke="#cbd5e1" stroke-width="{2.5 * v.s:.1f}" stroke-opacity="0.8"/>')
+
 
 def board_c(v, top):
     hf = lambda c, r: v.px(*c_hole(c, r))
@@ -509,6 +560,7 @@ def board_c(v, top):
             if top:
                 text(x + (9 if entry == '-X' else -9), y + 2.5, lab, 5.8, '#1e40af', '700',
                      anchor='start' if entry == '-X' else 'end', halo=True)
+    draw_socket(v, top, hf)
     for a_, c_, lab in C_RES:
         xa, ya = hf(ci(a_[0]), a_[1])
         xb, yb = hf(ci(c_[0]), c_[1])
@@ -525,9 +577,11 @@ def board_c(v, top):
         text(x, y + 3, 'C1', 8, '#a16207', '700', anchor='middle')
         x, y = hf(ci('e'), 12)
         text(x + 4, y + 3, '470µF', 6.5, '#a16207', '700', anchor='start', halo=True)
-        for col, row, lab, ch in C_FIX:
+        _, yb = v.px(0, C_EDGE_Y[1])
+        for col, row, lab, ch in C_FIX:                # below the board, clear of the socket
             x, y = hf(col, row)
-            text(x + 10, y - 7, ch, 6.5, '#0f172a', '700', halo=True)
+            w(f'<line x1="{x:.1f}" y1="{y + 2.9 * v.s:.1f}" x2="{x:.1f}" y2="{yb + 4:.1f}" stroke="#64748b" stroke-width="0.7" stroke-dasharray="2 2"/>')
+            text(x, yb + 13, f'{ch} · e{row}', 6.5, '#0f172a', '700', anchor='middle', halo=True)
     else:
         for net, pts, kind in C_WIRES:
             draw_wire(v, net, 'C', pts, kind, hfun=hf)
@@ -588,13 +642,15 @@ if __name__ == "__main__":
     # board C views
     CY = 760
     text(VX1 - 30, CY - 42, 'C  5 V SPLIT BOARD  (component side)', 12, '#1a1a1a', '700')
-    text(VX1 - 30, CY - 27, 'across the plate-2 waist, x 85.5-115.5: row 1 at the vehicle right, column a to the front', 8.5, '#64748b')
+    text(VX1 - 30, CY - 27, 'across the plate-2 waist, x 85.5-115.5: row 1 at the vehicle right, column a to the front · socket opening faces the vehicle right', 8.5, '#64748b')
     text(VX2 - 30, CY - 42, 'C  SOLDER SIDE  (turned over about the long axis)', 12, '#1a1a1a', '700')
     text(VX2 - 30, CY - 27, 'spines in bare tinned 18 AWG, TO STM32 in 18 AWG (thick), the CC network in thin wire', 8.5, '#64748b')
     vc_t = View(VX1 + 70, CY, C_EDGE_X[0], C_EDGE_Y[0], C_EDGE_Y[1], flip=False, scale=4.6)
     vc_b = View(VX2 + 70, CY, C_EDGE_X[0], C_EDGE_Y[0], C_EDGE_Y[1], flip=True, scale=4.6)
     board_c(vc_t, True)
     board_c(vc_b, False)
+    text(VX1 - 30, CY + 165, 'Socket first: meter CC1 and CC2 to V and to G, all four open - a socket with its own Rd (5.1k) or Rp cannot be the source.', 8.4, '#b45309')
+    text(VX1 - 30, CY + 179, 'Fit the e4 pan-head screw before the socket: the body rides 2.5 mm up on its flange, over the head. Ties through 3 mm holes at b2 / i2 and b6 / i6, the second one over the pigtail.', 8.4, '#b45309')
 
     # ---------------------------------------------------------------- right column
     RX0 = 1130
@@ -619,7 +675,7 @@ if __name__ == "__main__":
 
     net_rows = [
         (NET['5V'], '5 V', 'C IN 5V', 'C TO STM32 → B 5V IN (q21) → P2-3 / P2-4 (g2 = h2)'),
-        (NET['5V'], '5 V FRDM', 'C IN 5V', 'C FRDM PWR VBUS (a1) · C1 + (a12) · R1 / R2 tops (g8, i8)'),
+        (NET['5V'], '5 V FRDM', 'C IN 5V', 'socket red V (a7) · C1 + (a12) · R1 / R2 tops (g12 = i12 → a15)'),
         (NET['GND'], 'GND', 'C IN GND', 'C spine c → B 5V IN GND → spine j → P2-1/2 · CAN GND · XCVR GND'),
         (NET['GND'], 'GND (A)', 'B g1', 'bare row 1: B a1 → A r1 → j1 = i1 (P1-2, P1-1) · spine e → 6V IN, C2, SERVO, I2C'),
         (NET['3V3'], '3.3 V', 'P2-5 / P2-6', 'XCVR 3V3 (n13) · bare row 3: B a3 → A r3 → k3, never j3 · k3 → I2C-A VCC (c21)'),
@@ -631,15 +687,15 @@ if __name__ == "__main__":
         (NET['CRX'], 'CAN1_RX', 'P2-36 PD0', 'XCVR CRX (p13)'),
         (NET['CANH'], 'CAN_H', 'module H', 'link → m3 → CAN H (m1) · R3 120R → TERM'),
         (NET['CANL'], 'CAN_L', 'module L', 'link → o3 → CAN L (o1) · TERM'),
-        (NET['CC'], 'USB-C CC', 'C FRDM CC', 'CC1 → R1 10k → 5 V · CC2 → R2 10k → 5 V (source Rp, HW-02)'),
+        (NET['CC'], 'USB-C CC', 'C socket', 'green CC1 (g7) → R1 10k → 5 V · yellow CC2 (i7) → R2 10k → 5 V (source Rp, HW-02)'),
     ]
     y = table(100, 'NETLIST', ['Net', 'From', 'To'], net_rows, [12, 96, 190])
 
     ext_rows = [
         (None, 'C IN 5V', 'Bauer 50 W via SW2, 18 AWG pair (HW-17)'),
         (None, 'C TO STM32', '18 AWG pair to B 5V IN'),
-        (None, 'C FRDM PWR', 'pigtail VBUS / GND, 0.25 ferrules; D+ / D− folded back, insulated'),
-        (None, 'C FRDM CC', 'pigtail CC1 / CC2 - order does not matter'),
+        (None, 'C USB-C', 'socket on C, pigtail soldered: red a7, black c7, green g7, yellow i7 · C-to-C data cable to FRDM J1'),
+        (None, 'C D+ / D−', 'white and blue cut short, each insulated on its own - never twisted together'),
         (None, 'A 6V IN', 'UBEC 6 V out, 18 AWG pair (HW-14)'),
         (None, 'A SERVO', 'servo plug: signal to row 14 (rear), brown/black to row 12'),
         (None, 'A I2C-A', 'INA226 GND, VCC, SCL, SDA - F-F leads, signal only'),
@@ -652,7 +708,7 @@ if __name__ == "__main__":
     parts = [
         (None, 'Board A', '5×7 board · 2 × 1×25 female · 1 × 2p terminal · 1×3 + 1×3 + 1×4 male · C2 470µF · R4 1k'),
         (None, 'Board B', '5×7 board · 2 × 1×25 + 1 × 1×4 female · 3p + 2p terminal · 1×2 male + jumper cap · R3 120Ω'),
-        (None, 'Board C', '3×7 board · 4 × 2p terminal · C1 470µF · R1, R2 10k'),
+        (None, 'Board C', '3×7 board · 2 × 2p terminal · USB-C socket (5.1), 2 zip ties · C1 470µF · R1, R2 10k'),
         (None, 'From stock', 'caps: 2 of the 5 in 3.14 · resistors: 3.21 · module: 4.1 · headers, terminals: 5.11'),
         (None, 'Not in BOM', 'thin copper hook-up wire, 22-26 AWG, and bare tinned copper for the spines and bridges - not the CCA Dupont leads (5.7)'),
     ]

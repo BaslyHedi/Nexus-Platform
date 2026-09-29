@@ -859,7 +859,9 @@ a seam without adding anything the Discovery does not already provide.
   against the FRDM's screw heads at z 119.4 under plate 3.
 - **Board C sits across the waist**, x 85.5-115.5 and y 25.2-95.2, between the Bauer and the
   carrier with 1.5 mm to spare at each side. Its terminals are at the two short ends, facing the
-  plate edges, because there is no room at the front or rear for wires to enter. It is fixed at
+  plate edges, because there is no room at the front or rear for wires to enter. *Since
+  2026-09-29 the row-1 end carries the USB-C socket instead, opening to the vehicle's right
+  (HW-19). The plug stands about 20 mm past the plate edge there, which is still to be checked.* It is fixed at
   **C e4 and C e21** to the M3 holes (99.24, 38.76) and (99.24, 81.76), which are 43.00 mm apart:
   17 rows plus 0.18 mm. The Bauer's position is still a placeholder, and if it moves rearward it
   meets C.
