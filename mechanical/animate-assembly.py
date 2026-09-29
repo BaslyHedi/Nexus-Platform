@@ -1,7 +1,7 @@
 """Assembly animation of the harness-board sandwich (MEC-16), rendered by Blender.
 
     python3 plate1.py && python3 make-assembly.py      # the model it animates
-    blender -b -P animate-assembly.py                   # -> assembly-animation.mp4
+    blender -b -P animate-assembly.py                   # -> assembly-animation.mp4, 72 s
     blender -b -P animate-assembly.py -- --preview      # quarter size, every 4th frame
 
 It follows MEC-16's build steps: plate 2 lies upside down beside the chassis, its parts
@@ -31,18 +31,23 @@ STAY = ("P1_battery", "P1_driver", "P1_run01a", "P1_run04a", "P1_sm2p-female", "
 PLATE2_CAD = ("obj36_", "obj146_", "obj147_", "obj148_", "obj149_", "FASCIA_LOWER")
 DECK3 = ("DECK3", "FASCIA_UPPER")
 
-# when each part goes onto the upturned plate 2 (frame), in MEC-16's order
-PARTS = [("P1_bus-", 30), ("P1_fuse-main", 44), ("P1_fuse-motor", 52), ("P1_fuse-ubec", 60),
-         ("P1_ina226", 70), ("P1_split-sw1", 80), ("P1_ubec", 88), ("P1_splice-s1", 96),
-         ("P1_splice-s2", 101), ("P1_splice-s4", 104), ("P1_splice-s3", 109), ("P1_splice-s5", 112),
-         ("P1_splice-s6", 117), ("P1_splice-s7", 120), ("FASCIA_LOWER", 130), ("P1_sw1", 138),
-         ("P1_sw2", 138)]
-WIRES = (150, 255)          # every run grows in this window, in run order
-FLIP = (285, 360)           # over the top, lifting LIFT mm
-LOWER = (372, 410)
-PLUGS = 420
-DECK3_IN = (440, 490)
-END = 600
+FPS = 24
+S = lambda sec: int(round(sec * FPS)) + 1      # the timeline is written in seconds
+
+# when each part goes onto the upturned plate 2 (seconds), in MEC-16's order
+PARTS = [("P1_bus-", 3.0), ("P1_fuse-main", 4.4), ("P1_fuse-motor", 5.6), ("P1_fuse-ubec", 6.8),
+         ("P1_ina226", 8.2), ("P1_split-sw1", 9.6), ("P1_ubec", 11.0), ("P1_splice-s1", 12.4),
+         ("P1_splice-s2", 13.4), ("P1_splice-s4", 14.2), ("P1_splice-s3", 15.2), ("P1_splice-s5", 16.0),
+         ("P1_splice-s6", 17.0), ("P1_splice-s7", 17.8), ("FASCIA_LOWER", 20.5), ("P1_sw1", 21.6),
+         ("P1_sw2", 21.6)]
+DROP_IN = S(0.8) - 1         # how long a part takes to settle onto the face
+WIRES = (S(24), S(42))       # every run grows in this window, in run order
+GROW = S(1.2) - 1
+FLIP = (S(45), S(51))        # over the top, lifting LIFT mm
+LOWER = (S(52.5), S(56))     # held a moment at the top, then down onto the standoffs
+PLUGS = S(57)
+DECK3_IN = (S(60), S(63))
+END = S(72)
 
 bpy.ops.wm.read_factory_settings(use_empty=True)
 bpy.ops.wm.obj_import(filepath=OBJ, use_split_objects=True, use_split_groups=True,
@@ -104,12 +109,13 @@ for o in meshes:
         continue
     for prefix, f in PARTS:
         if n.startswith(prefix):
-            f = f - 5 if n.endswith("-tape") else f
+            f = S(f)
+            f = f - S(0.5) + 1 if n.endswith("-tape") else f
             show(o, [(f, END + 1)])
             o.location = (0, 0, -40 if not n.startswith(("FASCIA", "P1_sw")) else -25)
             o.keyframe_insert("location", frame=f)
             o.location = (0, 0, 0)
-            o.keyframe_insert("location", frame=f + 8)
+            o.keyframe_insert("location", frame=f + DROP_IN)
             break
 
 # ---- wires grow, run by run
@@ -118,7 +124,7 @@ step = (WIRES[1] - WIRES[0]) / max(1, len(runs))
 for i, o in enumerate(runs):
     mod = o.modifiers.new("grow", 'BUILD')
     mod.frame_start = WIRES[0] + i * step
-    mod.frame_duration = 14
+    mod.frame_duration = GROW
 
 # ---- the two crossing wires: tails while open, hanging while lowering, plugged when closed
 for o in meshes:
@@ -139,7 +145,7 @@ def import_state(state, window):
 
 
 import_state("open", (WIRES[1], FLIP[0]))
-import_state("raised", (LOWER[0], LOWER[0] + 2))     # a glimpse at the top of the lowering
+import_state("raised", (FLIP[1], LOWER[0] + 1))      # while it is held at the top
 
 # ---- plate 3 and the upper panel come down last
 for o in meshes:
@@ -162,19 +168,20 @@ tc = cam.constraints.new('TRACK_TO')
 tc.target = target
 tc.track_axis = 'TRACK_NEGATIVE_Z'
 tc.up_axis = 'UP_Y'
-KEYS = [(1, (-140, -430, 390), (-95, 5, 25)),
-        (26, (-150, -250, 250), (-165, 0, 15)),
-        (150, (-140, -210, 230), (-168, 5, 15)),
-        (262, (-150, -250, 250), (-165, 0, 15)),
-        (284, (-140, -430, 390), (-95, 5, 25)),
-        (330, (-420, -330, 300), (-40, 0, 60)),
-        (430, (-330, -300, 180), (0, 10, 50))]
-for f, c, t in KEYS:
+KEYS = [(0, (-140, -430, 390), (-95, 5, 25)),
+        (2.0, (-150, -250, 250), (-165, 0, 15)),
+        (23.0, (-140, -210, 230), (-168, 5, 15)),
+        (42.5, (-150, -250, 250), (-165, 0, 15)),
+        (44.5, (-140, -430, 390), (-95, 5, 25)),
+        (49.0, (-420, -330, 300), (-40, 0, 60)),
+        (57.5, (-330, -300, 180), (0, 10, 50))]
+for sec, c, t in KEYS:
+    f = S(sec)
     cam.location, target.location = c, t
     cam.keyframe_insert("location", frame=f)
     target.keyframe_insert("location", frame=f)
 for i in range(0, 17):                      # orbit from the front-right round the rear
-    f = 440 + i * 10
+    f = S(60) + i * S(0.75)
     a = math.radians(-130 + i * 11)
     cam.location = (360 * math.cos(a), 360 * math.sin(a), 210 - i * 2)
     target.location = (0, 10, 55)
@@ -184,14 +191,15 @@ for i in range(0, 17):                      # orbit from the front-right round t
 # ---- captions, riding with the camera
 white = bpy.data.materials.new("caption")
 white.diffuse_color = (0.95, 0.95, 0.95, 1)
-CAPTIONS = [((1, 28), "Plate 2 upside down beside the chassis - pack and driver already on plate 1"),
-            ((28, 128), "1  Parts onto plate 2 with 3M foam tape: buses, fuses, INA226, split, UBEC, splices"),
-            ((128, 150), "2  The lower rear panel with SW1 / SW2 held to plate 2"),
-            ((150, 285), "3  Wire the whole harness on the bench"),
-            ((285, 415), "4  Flip plate 2 and the panel over, lower onto the standoffs"),
-            ((415, 440), "5  From the right side: driver VM plug, fuses in, SM-2P last"),
-            ((440, END + 1), "6  Plate 3 and the upper panel close the stack (MEC-16)")]
+CAPTIONS = [((0, 3), "Plate 2 upside down beside the chassis - pack and driver already on plate 1"),
+            ((3, 20.5), "1  Parts onto plate 2 with 3M foam tape: buses, fuses, INA226, split, UBEC, splices"),
+            ((20.5, 23.5), "2  The lower rear panel with SW1 / SW2 held to plate 2"),
+            ((23.5, 44.5), "3  Wire the whole harness on the bench"),
+            ((44.5, 56.8), "4  Flip plate 2 and the panel over, lower onto the standoffs"),
+            ((56.8, 60), "5  From the right side: driver VM plug, fuses in, SM-2P last"),
+            ((60, 73), "6  Plate 3 and the upper panel close the stack (MEC-16)")]
 for (a, b), text in CAPTIONS:
+    a, b = S(a), min(S(b), END + 1)
     cu = bpy.data.curves.new("cap", 'FONT')
     cu.body = text
     cu.size = 0.52
@@ -204,7 +212,7 @@ for (a, b), text in CAPTIONS:
 
 # ---- render
 sc.frame_start, sc.frame_end = 1, END
-sc.render.fps = 24
+sc.render.fps = FPS
 sc.render.engine = 'BLENDER_WORKBENCH'
 sh = sc.display.shading
 sh.color_type, sh.light = 'MATERIAL', 'STUDIO'
