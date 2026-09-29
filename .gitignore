@@ -23,3 +23,10 @@ mechanical/chassis-3deck-fascia.obj
 mechanical/plate1/
 mechanical/chassis-3deck-fascia.mtl
 mechanical/assembly-animation.mp4
+
+# Written by mechanical/animate-carrier.py - pure output.
+mechanical/carrier-animation.mp4
+mechanical/carrier-still-*.png
+
+# Python bytecode, from importing hardware/stm32-carrier.py
+__pycache__/
