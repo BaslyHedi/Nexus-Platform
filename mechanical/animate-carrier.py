@@ -224,10 +224,18 @@ def drop(o, sec, dz=30.0, keep=True):
     o.keyframe_insert("location", frame=f + DROP)
 
 
-def flip(root, a, b, back=False, lift=45.0):
-    """Turn a board over about its long axis, lifting it clear of the mat."""
+TURNED = {}                  # each root's angle so far: every flip adds half a turn
+
+
+def flip(root, a, b, lift=45.0):
+    """Turn a board over about its long axis, lifting it clear of the mat.
+
+    The angle only ever grows. Starting a flip back at 0 after the last one ended at
+    360 deg would make Blender spin the board through the half turn in between.
+    """
     fa, fb = S(a), S(b)
-    r0, r1 = (math.pi, 2 * math.pi) if back else (0.0, math.pi)
+    r0 = TURNED.get(root.name, 0.0)
+    r1 = TURNED[root.name] = r0 + math.pi
     base = root.location.copy()
     root.rotation_euler = (r0, 0, 0)
     root.keyframe_insert("rotation_euler", frame=fa)
@@ -573,11 +581,11 @@ for group, (a, z) in ((c_sp, C_SPINES), (c_ot, C_WIRES)):
         wire(f'c-wire-{net}-{i}', [ch(c, r) for c, r in pts], net, kind, cr, a + i * step)
 
 flip(car, *FLIP1)
-flip(car, *FLIP1B, back=True)
+flip(car, *FLIP1B)
 flip(car, *FLIP2)
-flip(car, *FLIP2B, back=True)
+flip(car, *FLIP2B)
 flip(cr, *C_FLIP, lift=35)
-flip(cr, *C_FLIPB, back=True, lift=35)
+flip(cr, *C_FLIPB, lift=35)
 
 # ---------------------------------------------------------------- camera
 cam = bpy.data.objects.new("cam", bpy.data.cameras.new("cam"))
@@ -600,8 +608,8 @@ KEYS = [(0, (-20, 250, 250), (-15, 0, 0)),
         (19.4, (-22, 150, 140), (-15, 32, 12)),
         (21.2, (-25, 170, 160), (-15, 38, 0)),
         (31.8, (-25, 170, 160), (-15, 38, 0)),
-        (34.6, (-18, 128, 132), (-15, 31, 0)),
-        (56.0, (-18, 128, 132), (-15, 31, 0)),
+        (34.6, (-18, 135, 132), (-15, 37, 0)),
+        (56.0, (-18, 135, 132), (-15, 37, 0)),
         (58.6, (-125, 170, 115), (-15, 36, 6)),
         (66.8, (-125, 170, 115), (-15, 36, 6)),
         (68.0, (CC[0] - 4, CC[1] + 62, 125), (CC[0], CC[1] + 4, 0)),
