@@ -2,62 +2,113 @@
 <rect width="1720" height="1300" fill="#fbfaf8"/>
 <text x="40.0" y="30.0" font-size="18" fill="#1a1a1a" font-weight="700">NEXUS - STM32 carrier and 5 V split board: soldering and wiring</text>
 <text x="40.0" y="49.0" font-size="10.5" fill="#666">Kit perfboards (BOM 5.11), 2.54 grid · Boards A and B, both 5×7 cm (18 × 24 holes), under P1 and P2, 5.9 mm apart · Board C 3×7 cm (10 × 24), the 5 V split · MEC-08 / MEC-15 / HW-19</text>
-<text x="40.0" y="66.0" font-size="9.5" fill="#b45309">Hole names: board + column letter + ROW NUMBER. On A and B the row number is the header row, so row n carries pins 2n-1 and 2n; row 25 (pins 49/50, GND) has no hole. P1 odd pins sit OUTBOARD (col i), P2 odd pins sit INBOARD (col g) - UM1472 Fig. 10.</text>
-<text x="40.0" y="80.0" font-size="9.5" fill="#b45309">Parts on the component side, every wire on the solder side. Bare tinned links only where drawn bare; everything else is insulated, soldered at both ends, so crossings are fine. Nothing on the Discovery footprint stands taller than a resistor.</text>
+<text x="40.0" y="66.0" font-size="9.5" fill="#b45309">Hole names: board·hole, as PRINTED on the kit board - letters A-X along the 70 mm side, numbers across (1-18 on A and B, 1-10 on C), A1 bottom-left with the print readable, as every view shows it.</text>
+<text x="40.0" y="80.0" font-size="9.5" fill="#b45309">Header row n (pins 2n-1, 2n) is letter X for row 1 back to A for row 24 · P1 odd pins A·A10-X10 (outboard), even A·A9-X9 · P2 odd B·A12-X12 (inboard), even B·A11-X11 (UM1472 Fig. 10) · fixings are F1-F6, never hole names.</text>
+<text x="40.0" y="93.0" font-size="9.5" fill="#b45309">Parts on the component side, every wire on the solder side. Bare tinned links only where drawn bare; everything else is insulated, soldered at both ends, so crossings are fine. Nothing on the Discovery footprint stands taller than a resistor.</text>
 <text x="30.0" y="108.0" font-size="12" fill="#1a1a1a" font-weight="700">A + B  COMPONENT SIDE  (from above, front LEFT)</text>
 <text x="30.0" y="123.0" font-size="8.5" fill="#64748b">P1 on the vehicle right (top), P2 on the vehicle left (bottom) - chassis-layout convention</text>
 <text x="560.0" y="108.0" font-size="12" fill="#1a1a1a" font-weight="700">A + B  SOLDER SIDE  (turned over about the long axis)</text>
 <text x="560.0" y="123.0" font-size="8.5" fill="#64748b">front still LEFT, so P2 is now on TOP and every column reads upside down</text>
-<text x="365.4" y="144.0" font-size="6.5" fill="#64748b" text-anchor="middle">1</text>
-<text x="353.7" y="144.0" font-size="6.5" fill="#64748b" text-anchor="middle">2</text>
-<text x="342.0" y="144.0" font-size="6.5" fill="#64748b" text-anchor="middle">3</text>
-<text x="330.3" y="144.0" font-size="6.5" fill="#64748b" text-anchor="middle">4</text>
-<text x="318.6" y="144.0" font-size="6.5" fill="#64748b" text-anchor="middle">5</text>
-<text x="306.9" y="144.0" font-size="6.5" fill="#64748b" text-anchor="middle">6</text>
-<text x="295.3" y="144.0" font-size="6.5" fill="#64748b" text-anchor="middle">7</text>
-<text x="283.6" y="144.0" font-size="6.5" fill="#64748b" text-anchor="middle">8</text>
-<text x="271.9" y="144.0" font-size="6.5" fill="#64748b" text-anchor="middle">9</text>
-<text x="260.2" y="144.0" font-size="6.5" fill="#64748b" text-anchor="middle">10</text>
-<text x="248.5" y="144.0" font-size="6.5" fill="#64748b" text-anchor="middle">11</text>
-<text x="236.8" y="144.0" font-size="6.5" fill="#64748b" text-anchor="middle">12</text>
-<text x="225.2" y="144.0" font-size="6.5" fill="#64748b" text-anchor="middle">13</text>
-<text x="213.5" y="144.0" font-size="6.5" fill="#64748b" text-anchor="middle">14</text>
-<text x="201.8" y="144.0" font-size="6.5" fill="#64748b" text-anchor="middle">15</text>
-<text x="190.1" y="144.0" font-size="6.5" fill="#64748b" text-anchor="middle">16</text>
-<text x="178.4" y="144.0" font-size="6.5" fill="#64748b" text-anchor="middle">17</text>
-<text x="166.7" y="144.0" font-size="6.5" fill="#64748b" text-anchor="middle">18</text>
-<text x="155.1" y="144.0" font-size="6.5" fill="#64748b" text-anchor="middle">19</text>
-<text x="143.4" y="144.0" font-size="6.5" fill="#64748b" text-anchor="middle">20</text>
-<text x="131.7" y="144.0" font-size="6.5" fill="#64748b" text-anchor="middle">21</text>
-<text x="120.0" y="144.0" font-size="6.5" fill="#64748b" text-anchor="middle">22</text>
-<text x="108.3" y="144.0" font-size="6.5" fill="#64748b" text-anchor="middle">23</text>
-<text x="96.6" y="144.0" font-size="6.5" fill="#64748b" text-anchor="middle">24</text>
-<text x="84.9" y="144.0" font-size="6.5" fill="#94a3b8" text-anchor="middle" font-style="italic">25</text>
-<text x="885.4" y="144.0" font-size="6.5" fill="#64748b" text-anchor="middle">1</text>
-<text x="873.7" y="144.0" font-size="6.5" fill="#64748b" text-anchor="middle">2</text>
-<text x="862.0" y="144.0" font-size="6.5" fill="#64748b" text-anchor="middle">3</text>
-<text x="850.3" y="144.0" font-size="6.5" fill="#64748b" text-anchor="middle">4</text>
-<text x="838.6" y="144.0" font-size="6.5" fill="#64748b" text-anchor="middle">5</text>
-<text x="826.9" y="144.0" font-size="6.5" fill="#64748b" text-anchor="middle">6</text>
-<text x="815.3" y="144.0" font-size="6.5" fill="#64748b" text-anchor="middle">7</text>
-<text x="803.6" y="144.0" font-size="6.5" fill="#64748b" text-anchor="middle">8</text>
-<text x="791.9" y="144.0" font-size="6.5" fill="#64748b" text-anchor="middle">9</text>
-<text x="780.2" y="144.0" font-size="6.5" fill="#64748b" text-anchor="middle">10</text>
-<text x="768.5" y="144.0" font-size="6.5" fill="#64748b" text-anchor="middle">11</text>
-<text x="756.8" y="144.0" font-size="6.5" fill="#64748b" text-anchor="middle">12</text>
-<text x="745.2" y="144.0" font-size="6.5" fill="#64748b" text-anchor="middle">13</text>
-<text x="733.5" y="144.0" font-size="6.5" fill="#64748b" text-anchor="middle">14</text>
-<text x="721.8" y="144.0" font-size="6.5" fill="#64748b" text-anchor="middle">15</text>
-<text x="710.1" y="144.0" font-size="6.5" fill="#64748b" text-anchor="middle">16</text>
-<text x="698.4" y="144.0" font-size="6.5" fill="#64748b" text-anchor="middle">17</text>
-<text x="686.7" y="144.0" font-size="6.5" fill="#64748b" text-anchor="middle">18</text>
-<text x="675.1" y="144.0" font-size="6.5" fill="#64748b" text-anchor="middle">19</text>
-<text x="663.4" y="144.0" font-size="6.5" fill="#64748b" text-anchor="middle">20</text>
-<text x="651.7" y="144.0" font-size="6.5" fill="#64748b" text-anchor="middle">21</text>
-<text x="640.0" y="144.0" font-size="6.5" fill="#64748b" text-anchor="middle">22</text>
-<text x="628.3" y="144.0" font-size="6.5" fill="#64748b" text-anchor="middle">23</text>
-<text x="616.6" y="144.0" font-size="6.5" fill="#64748b" text-anchor="middle">24</text>
-<text x="604.9" y="144.0" font-size="6.5" fill="#94a3b8" text-anchor="middle" font-style="italic">25</text>
+<text x="365.4" y="144.0" font-size="7" fill="#15803d" font-weight="700" text-anchor="middle">X</text>
+<text x="365.4" y="134.0" font-size="6" fill="#64748b" text-anchor="middle">1</text>
+<text x="353.7" y="144.0" font-size="7" fill="#15803d" font-weight="700" text-anchor="middle">W</text>
+<text x="353.7" y="134.0" font-size="6" fill="#64748b" text-anchor="middle">2</text>
+<text x="342.0" y="144.0" font-size="7" fill="#15803d" font-weight="700" text-anchor="middle">V</text>
+<text x="342.0" y="134.0" font-size="6" fill="#64748b" text-anchor="middle">3</text>
+<text x="330.3" y="144.0" font-size="7" fill="#15803d" font-weight="700" text-anchor="middle">U</text>
+<text x="330.3" y="134.0" font-size="6" fill="#64748b" text-anchor="middle">4</text>
+<text x="318.6" y="144.0" font-size="7" fill="#15803d" font-weight="700" text-anchor="middle">T</text>
+<text x="318.6" y="134.0" font-size="6" fill="#64748b" text-anchor="middle">5</text>
+<text x="306.9" y="144.0" font-size="7" fill="#15803d" font-weight="700" text-anchor="middle">S</text>
+<text x="306.9" y="134.0" font-size="6" fill="#64748b" text-anchor="middle">6</text>
+<text x="295.3" y="144.0" font-size="7" fill="#15803d" font-weight="700" text-anchor="middle">R</text>
+<text x="295.3" y="134.0" font-size="6" fill="#64748b" text-anchor="middle">7</text>
+<text x="283.6" y="144.0" font-size="7" fill="#15803d" font-weight="700" text-anchor="middle">Q</text>
+<text x="283.6" y="134.0" font-size="6" fill="#64748b" text-anchor="middle">8</text>
+<text x="271.9" y="144.0" font-size="7" fill="#15803d" font-weight="700" text-anchor="middle">P</text>
+<text x="271.9" y="134.0" font-size="6" fill="#64748b" text-anchor="middle">9</text>
+<text x="260.2" y="144.0" font-size="7" fill="#15803d" font-weight="700" text-anchor="middle">O</text>
+<text x="260.2" y="134.0" font-size="6" fill="#64748b" text-anchor="middle">10</text>
+<text x="248.5" y="144.0" font-size="7" fill="#15803d" font-weight="700" text-anchor="middle">N</text>
+<text x="248.5" y="134.0" font-size="6" fill="#64748b" text-anchor="middle">11</text>
+<text x="236.8" y="144.0" font-size="7" fill="#15803d" font-weight="700" text-anchor="middle">M</text>
+<text x="236.8" y="134.0" font-size="6" fill="#64748b" text-anchor="middle">12</text>
+<text x="225.2" y="144.0" font-size="7" fill="#15803d" font-weight="700" text-anchor="middle">L</text>
+<text x="225.2" y="134.0" font-size="6" fill="#64748b" text-anchor="middle">13</text>
+<text x="213.5" y="144.0" font-size="7" fill="#15803d" font-weight="700" text-anchor="middle">K</text>
+<text x="213.5" y="134.0" font-size="6" fill="#64748b" text-anchor="middle">14</text>
+<text x="201.8" y="144.0" font-size="7" fill="#15803d" font-weight="700" text-anchor="middle">J</text>
+<text x="201.8" y="134.0" font-size="6" fill="#64748b" text-anchor="middle">15</text>
+<text x="190.1" y="144.0" font-size="7" fill="#15803d" font-weight="700" text-anchor="middle">I</text>
+<text x="190.1" y="134.0" font-size="6" fill="#64748b" text-anchor="middle">16</text>
+<text x="178.4" y="144.0" font-size="7" fill="#15803d" font-weight="700" text-anchor="middle">H</text>
+<text x="178.4" y="134.0" font-size="6" fill="#64748b" text-anchor="middle">17</text>
+<text x="166.7" y="144.0" font-size="7" fill="#15803d" font-weight="700" text-anchor="middle">G</text>
+<text x="166.7" y="134.0" font-size="6" fill="#64748b" text-anchor="middle">18</text>
+<text x="155.1" y="144.0" font-size="7" fill="#15803d" font-weight="700" text-anchor="middle">F</text>
+<text x="155.1" y="134.0" font-size="6" fill="#64748b" text-anchor="middle">19</text>
+<text x="143.4" y="144.0" font-size="7" fill="#15803d" font-weight="700" text-anchor="middle">E</text>
+<text x="143.4" y="134.0" font-size="6" fill="#64748b" text-anchor="middle">20</text>
+<text x="131.7" y="144.0" font-size="7" fill="#15803d" font-weight="700" text-anchor="middle">D</text>
+<text x="131.7" y="134.0" font-size="6" fill="#64748b" text-anchor="middle">21</text>
+<text x="120.0" y="144.0" font-size="7" fill="#15803d" font-weight="700" text-anchor="middle">C</text>
+<text x="120.0" y="134.0" font-size="6" fill="#64748b" text-anchor="middle">22</text>
+<text x="108.3" y="144.0" font-size="7" fill="#15803d" font-weight="700" text-anchor="middle">B</text>
+<text x="108.3" y="134.0" font-size="6" fill="#64748b" text-anchor="middle">23</text>
+<text x="96.6" y="144.0" font-size="7" fill="#15803d" font-weight="700" text-anchor="middle">A</text>
+<text x="96.6" y="134.0" font-size="6" fill="#64748b" text-anchor="middle">24</text>
+<text x="84.9" y="144.0" font-size="7" fill="#15803d" font-weight="700" text-anchor="middle">·</text>
+<text x="84.9" y="134.0" font-size="6" fill="#94a3b8" text-anchor="middle" font-style="italic">25</text>
+<text x="885.4" y="144.0" font-size="7" fill="#15803d" font-weight="700" text-anchor="middle">X</text>
+<text x="885.4" y="134.0" font-size="6" fill="#64748b" text-anchor="middle">1</text>
+<text x="873.7" y="144.0" font-size="7" fill="#15803d" font-weight="700" text-anchor="middle">W</text>
+<text x="873.7" y="134.0" font-size="6" fill="#64748b" text-anchor="middle">2</text>
+<text x="862.0" y="144.0" font-size="7" fill="#15803d" font-weight="700" text-anchor="middle">V</text>
+<text x="862.0" y="134.0" font-size="6" fill="#64748b" text-anchor="middle">3</text>
+<text x="850.3" y="144.0" font-size="7" fill="#15803d" font-weight="700" text-anchor="middle">U</text>
+<text x="850.3" y="134.0" font-size="6" fill="#64748b" text-anchor="middle">4</text>
+<text x="838.6" y="144.0" font-size="7" fill="#15803d" font-weight="700" text-anchor="middle">T</text>
+<text x="838.6" y="134.0" font-size="6" fill="#64748b" text-anchor="middle">5</text>
+<text x="826.9" y="144.0" font-size="7" fill="#15803d" font-weight="700" text-anchor="middle">S</text>
+<text x="826.9" y="134.0" font-size="6" fill="#64748b" text-anchor="middle">6</text>
+<text x="815.3" y="144.0" font-size="7" fill="#15803d" font-weight="700" text-anchor="middle">R</text>
+<text x="815.3" y="134.0" font-size="6" fill="#64748b" text-anchor="middle">7</text>
+<text x="803.6" y="144.0" font-size="7" fill="#15803d" font-weight="700" text-anchor="middle">Q</text>
+<text x="803.6" y="134.0" font-size="6" fill="#64748b" text-anchor="middle">8</text>
+<text x="791.9" y="144.0" font-size="7" fill="#15803d" font-weight="700" text-anchor="middle">P</text>
+<text x="791.9" y="134.0" font-size="6" fill="#64748b" text-anchor="middle">9</text>
+<text x="780.2" y="144.0" font-size="7" fill="#15803d" font-weight="700" text-anchor="middle">O</text>
+<text x="780.2" y="134.0" font-size="6" fill="#64748b" text-anchor="middle">10</text>
+<text x="768.5" y="144.0" font-size="7" fill="#15803d" font-weight="700" text-anchor="middle">N</text>
+<text x="768.5" y="134.0" font-size="6" fill="#64748b" text-anchor="middle">11</text>
+<text x="756.8" y="144.0" font-size="7" fill="#15803d" font-weight="700" text-anchor="middle">M</text>
+<text x="756.8" y="134.0" font-size="6" fill="#64748b" text-anchor="middle">12</text>
+<text x="745.2" y="144.0" font-size="7" fill="#15803d" font-weight="700" text-anchor="middle">L</text>
+<text x="745.2" y="134.0" font-size="6" fill="#64748b" text-anchor="middle">13</text>
+<text x="733.5" y="144.0" font-size="7" fill="#15803d" font-weight="700" text-anchor="middle">K</text>
+<text x="733.5" y="134.0" font-size="6" fill="#64748b" text-anchor="middle">14</text>
+<text x="721.8" y="144.0" font-size="7" fill="#15803d" font-weight="700" text-anchor="middle">J</text>
+<text x="721.8" y="134.0" font-size="6" fill="#64748b" text-anchor="middle">15</text>
+<text x="710.1" y="144.0" font-size="7" fill="#15803d" font-weight="700" text-anchor="middle">I</text>
+<text x="710.1" y="134.0" font-size="6" fill="#64748b" text-anchor="middle">16</text>
+<text x="698.4" y="144.0" font-size="7" fill="#15803d" font-weight="700" text-anchor="middle">H</text>
+<text x="698.4" y="134.0" font-size="6" fill="#64748b" text-anchor="middle">17</text>
+<text x="686.7" y="144.0" font-size="7" fill="#15803d" font-weight="700" text-anchor="middle">G</text>
+<text x="686.7" y="134.0" font-size="6" fill="#64748b" text-anchor="middle">18</text>
+<text x="675.1" y="144.0" font-size="7" fill="#15803d" font-weight="700" text-anchor="middle">F</text>
+<text x="675.1" y="134.0" font-size="6" fill="#64748b" text-anchor="middle">19</text>
+<text x="663.4" y="144.0" font-size="7" fill="#15803d" font-weight="700" text-anchor="middle">E</text>
+<text x="663.4" y="134.0" font-size="6" fill="#64748b" text-anchor="middle">20</text>
+<text x="651.7" y="144.0" font-size="7" fill="#15803d" font-weight="700" text-anchor="middle">D</text>
+<text x="651.7" y="134.0" font-size="6" fill="#64748b" text-anchor="middle">21</text>
+<text x="640.0" y="144.0" font-size="7" fill="#15803d" font-weight="700" text-anchor="middle">C</text>
+<text x="640.0" y="134.0" font-size="6" fill="#64748b" text-anchor="middle">22</text>
+<text x="628.3" y="144.0" font-size="7" fill="#15803d" font-weight="700" text-anchor="middle">B</text>
+<text x="628.3" y="134.0" font-size="6" fill="#64748b" text-anchor="middle">23</text>
+<text x="616.6" y="144.0" font-size="7" fill="#15803d" font-weight="700" text-anchor="middle">A</text>
+<text x="616.6" y="134.0" font-size="6" fill="#64748b" text-anchor="middle">24</text>
+<text x="604.9" y="144.0" font-size="7" fill="#15803d" font-weight="700" text-anchor="middle">·</text>
+<text x="604.9" y="134.0" font-size="6" fill="#94a3b8" text-anchor="middle" font-style="italic">25</text>
 <text x="381.4" y="144.0" font-size="6.5" fill="#64748b">◀ header row  (rear ▶)</text>
 <rect x="70.0" y="150.0" width="322.0" height="230.0" rx="4" fill="#f0fdf4" stroke="#15803d" stroke-width="1.6"/>
 <circle cx="365.4" cy="165.7" r="2.1" fill="#fff" stroke="#a3b18a" stroke-width="0.7"/>
@@ -492,24 +543,24 @@
 <circle cx="120.0" cy="364.3" r="2.1" fill="#fff" stroke="#a3b18a" stroke-width="0.7"/>
 <circle cx="108.3" cy="364.3" r="2.1" fill="#fff" stroke="#a3b18a" stroke-width="0.7"/>
 <circle cx="96.6" cy="364.3" r="2.1" fill="#fff" stroke="#a3b18a" stroke-width="0.7"/>
-<text x="66.0" y="168.2" font-size="7" fill="#15803d" text-anchor="end">a</text>
-<text x="66.0" y="179.9" font-size="7" fill="#15803d" text-anchor="end">b</text>
-<text x="66.0" y="191.6" font-size="7" fill="#15803d" text-anchor="end">c</text>
-<text x="66.0" y="203.2" font-size="7" fill="#15803d" text-anchor="end">d</text>
-<text x="66.0" y="214.9" font-size="7" fill="#15803d" text-anchor="end">e</text>
-<text x="66.0" y="226.6" font-size="7" fill="#15803d" text-anchor="end">f</text>
-<text x="66.0" y="238.3" font-size="7" fill="#15803d" text-anchor="end">g</text>
-<text x="66.0" y="250.0" font-size="7" fill="#15803d" text-anchor="end">h</text>
-<text x="66.0" y="261.7" font-size="7" fill="#15803d" text-anchor="end">i</text>
-<text x="66.0" y="273.3" font-size="7" fill="#15803d" text-anchor="end">j</text>
-<text x="66.0" y="285.0" font-size="7" fill="#15803d" text-anchor="end">k</text>
-<text x="66.0" y="296.7" font-size="7" fill="#15803d" text-anchor="end">l</text>
-<text x="66.0" y="308.4" font-size="7" fill="#15803d" text-anchor="end">m</text>
-<text x="66.0" y="320.1" font-size="7" fill="#15803d" text-anchor="end">n</text>
-<text x="66.0" y="331.8" font-size="7" fill="#15803d" text-anchor="end">o</text>
-<text x="66.0" y="343.4" font-size="7" fill="#15803d" text-anchor="end">p</text>
-<text x="66.0" y="355.1" font-size="7" fill="#15803d" text-anchor="end">q</text>
-<text x="66.0" y="366.8" font-size="7" fill="#15803d" text-anchor="end">r</text>
+<text x="66.0" y="168.2" font-size="7" fill="#15803d" text-anchor="end">18</text>
+<text x="66.0" y="179.9" font-size="7" fill="#15803d" text-anchor="end">17</text>
+<text x="66.0" y="191.6" font-size="7" fill="#15803d" text-anchor="end">16</text>
+<text x="66.0" y="203.2" font-size="7" fill="#15803d" text-anchor="end">15</text>
+<text x="66.0" y="214.9" font-size="7" fill="#15803d" text-anchor="end">14</text>
+<text x="66.0" y="226.6" font-size="7" fill="#15803d" text-anchor="end">13</text>
+<text x="66.0" y="238.3" font-size="7" fill="#15803d" text-anchor="end">12</text>
+<text x="66.0" y="250.0" font-size="7" fill="#15803d" text-anchor="end">11</text>
+<text x="66.0" y="261.7" font-size="7" fill="#15803d" text-anchor="end">10</text>
+<text x="66.0" y="273.3" font-size="7" fill="#15803d" text-anchor="end">9</text>
+<text x="66.0" y="285.0" font-size="7" fill="#15803d" text-anchor="end">8</text>
+<text x="66.0" y="296.7" font-size="7" fill="#15803d" text-anchor="end">7</text>
+<text x="66.0" y="308.4" font-size="7" fill="#15803d" text-anchor="end">6</text>
+<text x="66.0" y="320.1" font-size="7" fill="#15803d" text-anchor="end">5</text>
+<text x="66.0" y="331.8" font-size="7" fill="#15803d" text-anchor="end">4</text>
+<text x="66.0" y="343.4" font-size="7" fill="#15803d" text-anchor="end">3</text>
+<text x="66.0" y="355.1" font-size="7" fill="#15803d" text-anchor="end">2</text>
+<text x="66.0" y="366.8" font-size="7" fill="#15803d" text-anchor="end">1</text>
 <text transform="translate(54.0,265.0) rotate(-90)" font-size="10" font-weight="700" fill="#15803d" text-anchor="middle">Board A</text>
 <rect x="70.0" y="407.0" width="322.0" height="230.0" rx="4" fill="#f0fdf4" stroke="#15803d" stroke-width="1.6"/>
 <circle cx="365.4" cy="422.7" r="2.1" fill="#fff" stroke="#a3b18a" stroke-width="0.7"/>
@@ -944,24 +995,24 @@
 <circle cx="120.0" cy="621.4" r="2.1" fill="#fff" stroke="#a3b18a" stroke-width="0.7"/>
 <circle cx="108.3" cy="621.4" r="2.1" fill="#fff" stroke="#a3b18a" stroke-width="0.7"/>
 <circle cx="96.6" cy="621.4" r="2.1" fill="#fff" stroke="#a3b18a" stroke-width="0.7"/>
-<text x="66.0" y="425.2" font-size="7" fill="#15803d" text-anchor="end">a</text>
-<text x="66.0" y="436.9" font-size="7" fill="#15803d" text-anchor="end">b</text>
-<text x="66.0" y="448.6" font-size="7" fill="#15803d" text-anchor="end">c</text>
-<text x="66.0" y="460.3" font-size="7" fill="#15803d" text-anchor="end">d</text>
-<text x="66.0" y="472.0" font-size="7" fill="#15803d" text-anchor="end">e</text>
-<text x="66.0" y="483.7" font-size="7" fill="#15803d" text-anchor="end">f</text>
-<text x="66.0" y="495.3" font-size="7" fill="#15803d" text-anchor="end">g</text>
-<text x="66.0" y="507.0" font-size="7" fill="#15803d" text-anchor="end">h</text>
-<text x="66.0" y="518.7" font-size="7" fill="#15803d" text-anchor="end">i</text>
-<text x="66.0" y="530.4" font-size="7" fill="#15803d" text-anchor="end">j</text>
-<text x="66.0" y="542.1" font-size="7" fill="#15803d" text-anchor="end">k</text>
-<text x="66.0" y="553.8" font-size="7" fill="#15803d" text-anchor="end">l</text>
-<text x="66.0" y="565.4" font-size="7" fill="#15803d" text-anchor="end">m</text>
-<text x="66.0" y="577.1" font-size="7" fill="#15803d" text-anchor="end">n</text>
-<text x="66.0" y="588.8" font-size="7" fill="#15803d" text-anchor="end">o</text>
-<text x="66.0" y="600.5" font-size="7" fill="#15803d" text-anchor="end">p</text>
-<text x="66.0" y="612.2" font-size="7" fill="#15803d" text-anchor="end">q</text>
-<text x="66.0" y="623.9" font-size="7" fill="#15803d" text-anchor="end">r</text>
+<text x="66.0" y="425.2" font-size="7" fill="#15803d" text-anchor="end">18</text>
+<text x="66.0" y="436.9" font-size="7" fill="#15803d" text-anchor="end">17</text>
+<text x="66.0" y="448.6" font-size="7" fill="#15803d" text-anchor="end">16</text>
+<text x="66.0" y="460.3" font-size="7" fill="#15803d" text-anchor="end">15</text>
+<text x="66.0" y="472.0" font-size="7" fill="#15803d" text-anchor="end">14</text>
+<text x="66.0" y="483.7" font-size="7" fill="#15803d" text-anchor="end">13</text>
+<text x="66.0" y="495.3" font-size="7" fill="#15803d" text-anchor="end">12</text>
+<text x="66.0" y="507.0" font-size="7" fill="#15803d" text-anchor="end">11</text>
+<text x="66.0" y="518.7" font-size="7" fill="#15803d" text-anchor="end">10</text>
+<text x="66.0" y="530.4" font-size="7" fill="#15803d" text-anchor="end">9</text>
+<text x="66.0" y="542.1" font-size="7" fill="#15803d" text-anchor="end">8</text>
+<text x="66.0" y="553.8" font-size="7" fill="#15803d" text-anchor="end">7</text>
+<text x="66.0" y="565.4" font-size="7" fill="#15803d" text-anchor="end">6</text>
+<text x="66.0" y="577.1" font-size="7" fill="#15803d" text-anchor="end">5</text>
+<text x="66.0" y="588.8" font-size="7" fill="#15803d" text-anchor="end">4</text>
+<text x="66.0" y="600.5" font-size="7" fill="#15803d" text-anchor="end">3</text>
+<text x="66.0" y="612.2" font-size="7" fill="#15803d" text-anchor="end">2</text>
+<text x="66.0" y="623.9" font-size="7" fill="#15803d" text-anchor="end">1</text>
 <text transform="translate(54.0,522.0) rotate(-90)" font-size="10" font-weight="700" fill="#15803d" text-anchor="middle">Board B</text>
 <rect x="79.1" y="253.6" width="292.1" height="11.0" rx="1" fill="#0f766e" fill-opacity="0.22" stroke="#0f766e" stroke-width="0.9"/>
 <line x1="82.7" y1="257.0" x2="87.1" y2="261.4" stroke="#0f766e" stroke-width="1.1"/>
@@ -1032,26 +1083,26 @@
 <line x1="209.5" y1="235.8" x2="217.5" y2="235.8" stroke="#64748b" stroke-width="0.9"/>
 <line x1="213.5" y1="231.8" x2="213.5" y2="239.8" stroke="#64748b" stroke-width="0.9"/>
 <circle cx="213.5" cy="235.8" r="7.4" fill="none" stroke="#0f172a" stroke-width="1.3"/>
-<text x="203.7" y="227.0" font-size="7.5" fill="#0f172a" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="end">A1</text>
+<text x="203.7" y="227.0" font-size="7.5" fill="#0f172a" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="end">F1</text>
 <circle cx="213.5" cy="458.6" r="13.3" fill="#f1f5f9" fill-opacity="0.7" stroke="#64748b" stroke-width="1" stroke-dasharray="3 2"/>
 <line x1="209.5" y1="458.6" x2="217.5" y2="458.6" stroke="#64748b" stroke-width="0.9"/>
 <line x1="213.5" y1="454.6" x2="213.5" y2="462.6" stroke="#64748b" stroke-width="0.9"/>
 <circle cx="213.5" cy="458.6" r="7.4" fill="none" stroke="#0f172a" stroke-width="1.3"/>
-<text x="203.7" y="449.9" font-size="7.5" fill="#0f172a" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="end">B1</text>
+<text x="203.7" y="449.9" font-size="7.5" fill="#0f172a" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="end">F2</text>
 <circle cx="313.3" cy="192.0" r="13.3" fill="#f1f5f9" fill-opacity="0.7" stroke="#64748b" stroke-width="1" stroke-dasharray="3 2"/>
 <line x1="309.3" y1="192.0" x2="317.3" y2="192.0" stroke="#64748b" stroke-width="0.9"/>
 <line x1="313.3" y1="188.0" x2="313.3" y2="196.0" stroke="#64748b" stroke-width="0.9"/>
 <circle cx="313.3" cy="192.0" r="7.4" fill="none" stroke="#0f172a" stroke-width="1.3"/>
-<text x="303.6" y="183.2" font-size="7.5" fill="#0f172a" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="end">A2</text>
+<text x="303.6" y="183.2" font-size="7.5" fill="#0f172a" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="end">F3</text>
 <circle cx="313.3" cy="587.6" r="13.3" fill="#f1f5f9" fill-opacity="0.7" stroke="#64748b" stroke-width="1" stroke-dasharray="3 2"/>
 <line x1="309.3" y1="587.6" x2="317.3" y2="587.6" stroke="#64748b" stroke-width="0.9"/>
 <line x1="313.3" y1="583.6" x2="313.3" y2="591.6" stroke="#64748b" stroke-width="0.9"/>
 <circle cx="313.3" cy="587.6" r="7.4" fill="none" stroke="#0f172a" stroke-width="1.3"/>
-<text x="303.6" y="578.9" font-size="7.5" fill="#0f172a" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="end">B2</text>
+<text x="303.6" y="578.9" font-size="7.5" fill="#0f172a" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="end">F4</text>
 <rect x="74.7" y="230.0" width="446.2" height="303.6" rx="3" fill="#eef2ff" fill-opacity="0.35" stroke="#4338ca" stroke-width="1.2" stroke-dasharray="7 4"/>
 <text x="296.4" y="319.0" font-size="10" fill="#4338ca" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="middle">STM32F4DISCOVERY above</text>
 <text x="296.4" y="332.0" font-size="8" fill="#4338ca" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="middle">plugs into the four 1x25 sockets</text>
-<text x="84.9" y="243.5" font-size="6.5" fill="#0f766e" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="start">row 25: no hole</text>
+<text x="84.9" y="243.5" font-size="6.5" fill="#0f766e" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="start">header row 25: no hole</text>
 <text x="439.0" y="381.1" font-size="8" fill="#4338ca" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="middle">CN1 ST-LINK</text>
 <text x="439.0" y="392.1" font-size="7" fill="#4338ca" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="middle">overhangs the boards</text>
 <text x="439.0" y="402.1" font-size="7" fill="#4338ca" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="middle">28 mm to the rear</text>
@@ -1072,7 +1123,7 @@
 <text x="98.2" y="543.7" font-size="7" fill="#1e40af" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="end">R3 120R</text>
 <text x="195.9" y="555.9" font-size="6.5" fill="#047857" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="middle">module</text>
 <text x="195.9" y="563.9" font-size="6.5" fill="#047857" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="middle">envelope</text>
-<text x="195.9" y="571.9" font-size="6.5" fill="#047857" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="middle">rows 3-17</text>
+<text x="195.9" y="571.9" font-size="6.5" fill="#047857" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="middle">V to H</text>
 <rect x="590.0" y="407.0" width="322.0" height="230.0" rx="4" fill="#f0fdf4" stroke="#15803d" stroke-width="1.6"/>
 <circle cx="885.4" cy="621.4" r="2.1" fill="#fff" stroke="#a3b18a" stroke-width="0.7"/>
 <circle cx="873.7" cy="621.4" r="2.1" fill="#fff" stroke="#a3b18a" stroke-width="0.7"/>
@@ -1506,24 +1557,24 @@
 <circle cx="640.0" cy="422.7" r="2.1" fill="#fff" stroke="#a3b18a" stroke-width="0.7"/>
 <circle cx="628.3" cy="422.7" r="2.1" fill="#fff" stroke="#a3b18a" stroke-width="0.7"/>
 <circle cx="616.6" cy="422.7" r="2.1" fill="#fff" stroke="#a3b18a" stroke-width="0.7"/>
-<text x="586.0" y="623.9" font-size="7" fill="#15803d" text-anchor="end">a</text>
-<text x="586.0" y="612.2" font-size="7" fill="#15803d" text-anchor="end">b</text>
-<text x="586.0" y="600.5" font-size="7" fill="#15803d" text-anchor="end">c</text>
-<text x="586.0" y="588.8" font-size="7" fill="#15803d" text-anchor="end">d</text>
-<text x="586.0" y="577.1" font-size="7" fill="#15803d" text-anchor="end">e</text>
-<text x="586.0" y="565.4" font-size="7" fill="#15803d" text-anchor="end">f</text>
-<text x="586.0" y="553.8" font-size="7" fill="#15803d" text-anchor="end">g</text>
-<text x="586.0" y="542.1" font-size="7" fill="#15803d" text-anchor="end">h</text>
-<text x="586.0" y="530.4" font-size="7" fill="#15803d" text-anchor="end">i</text>
-<text x="586.0" y="518.7" font-size="7" fill="#15803d" text-anchor="end">j</text>
-<text x="586.0" y="507.0" font-size="7" fill="#15803d" text-anchor="end">k</text>
-<text x="586.0" y="495.3" font-size="7" fill="#15803d" text-anchor="end">l</text>
-<text x="586.0" y="483.7" font-size="7" fill="#15803d" text-anchor="end">m</text>
-<text x="586.0" y="472.0" font-size="7" fill="#15803d" text-anchor="end">n</text>
-<text x="586.0" y="460.3" font-size="7" fill="#15803d" text-anchor="end">o</text>
-<text x="586.0" y="448.6" font-size="7" fill="#15803d" text-anchor="end">p</text>
-<text x="586.0" y="436.9" font-size="7" fill="#15803d" text-anchor="end">q</text>
-<text x="586.0" y="425.2" font-size="7" fill="#15803d" text-anchor="end">r</text>
+<text x="586.0" y="623.9" font-size="7" fill="#15803d" text-anchor="end">18</text>
+<text x="586.0" y="612.2" font-size="7" fill="#15803d" text-anchor="end">17</text>
+<text x="586.0" y="600.5" font-size="7" fill="#15803d" text-anchor="end">16</text>
+<text x="586.0" y="588.8" font-size="7" fill="#15803d" text-anchor="end">15</text>
+<text x="586.0" y="577.1" font-size="7" fill="#15803d" text-anchor="end">14</text>
+<text x="586.0" y="565.4" font-size="7" fill="#15803d" text-anchor="end">13</text>
+<text x="586.0" y="553.8" font-size="7" fill="#15803d" text-anchor="end">12</text>
+<text x="586.0" y="542.1" font-size="7" fill="#15803d" text-anchor="end">11</text>
+<text x="586.0" y="530.4" font-size="7" fill="#15803d" text-anchor="end">10</text>
+<text x="586.0" y="518.7" font-size="7" fill="#15803d" text-anchor="end">9</text>
+<text x="586.0" y="507.0" font-size="7" fill="#15803d" text-anchor="end">8</text>
+<text x="586.0" y="495.3" font-size="7" fill="#15803d" text-anchor="end">7</text>
+<text x="586.0" y="483.7" font-size="7" fill="#15803d" text-anchor="end">6</text>
+<text x="586.0" y="472.0" font-size="7" fill="#15803d" text-anchor="end">5</text>
+<text x="586.0" y="460.3" font-size="7" fill="#15803d" text-anchor="end">4</text>
+<text x="586.0" y="448.6" font-size="7" fill="#15803d" text-anchor="end">3</text>
+<text x="586.0" y="436.9" font-size="7" fill="#15803d" text-anchor="end">2</text>
+<text x="586.0" y="425.2" font-size="7" fill="#15803d" text-anchor="end">1</text>
 <text transform="translate(574.0,522.0) rotate(-90)" font-size="10" font-weight="700" fill="#15803d" text-anchor="middle">Board A</text>
 <rect x="590.0" y="150.0" width="322.0" height="230.0" rx="4" fill="#f0fdf4" stroke="#15803d" stroke-width="1.6"/>
 <circle cx="885.4" cy="364.3" r="2.1" fill="#fff" stroke="#a3b18a" stroke-width="0.7"/>
@@ -1958,24 +2009,24 @@
 <circle cx="640.0" cy="165.7" r="2.1" fill="#fff" stroke="#a3b18a" stroke-width="0.7"/>
 <circle cx="628.3" cy="165.7" r="2.1" fill="#fff" stroke="#a3b18a" stroke-width="0.7"/>
 <circle cx="616.6" cy="165.7" r="2.1" fill="#fff" stroke="#a3b18a" stroke-width="0.7"/>
-<text x="586.0" y="366.8" font-size="7" fill="#15803d" text-anchor="end">a</text>
-<text x="586.0" y="355.1" font-size="7" fill="#15803d" text-anchor="end">b</text>
-<text x="586.0" y="343.4" font-size="7" fill="#15803d" text-anchor="end">c</text>
-<text x="586.0" y="331.8" font-size="7" fill="#15803d" text-anchor="end">d</text>
-<text x="586.0" y="320.1" font-size="7" fill="#15803d" text-anchor="end">e</text>
-<text x="586.0" y="308.4" font-size="7" fill="#15803d" text-anchor="end">f</text>
-<text x="586.0" y="296.7" font-size="7" fill="#15803d" text-anchor="end">g</text>
-<text x="586.0" y="285.0" font-size="7" fill="#15803d" text-anchor="end">h</text>
-<text x="586.0" y="273.3" font-size="7" fill="#15803d" text-anchor="end">i</text>
-<text x="586.0" y="261.7" font-size="7" fill="#15803d" text-anchor="end">j</text>
-<text x="586.0" y="250.0" font-size="7" fill="#15803d" text-anchor="end">k</text>
-<text x="586.0" y="238.3" font-size="7" fill="#15803d" text-anchor="end">l</text>
-<text x="586.0" y="226.6" font-size="7" fill="#15803d" text-anchor="end">m</text>
-<text x="586.0" y="214.9" font-size="7" fill="#15803d" text-anchor="end">n</text>
-<text x="586.0" y="203.2" font-size="7" fill="#15803d" text-anchor="end">o</text>
-<text x="586.0" y="191.6" font-size="7" fill="#15803d" text-anchor="end">p</text>
-<text x="586.0" y="179.9" font-size="7" fill="#15803d" text-anchor="end">q</text>
-<text x="586.0" y="168.2" font-size="7" fill="#15803d" text-anchor="end">r</text>
+<text x="586.0" y="366.8" font-size="7" fill="#15803d" text-anchor="end">18</text>
+<text x="586.0" y="355.1" font-size="7" fill="#15803d" text-anchor="end">17</text>
+<text x="586.0" y="343.4" font-size="7" fill="#15803d" text-anchor="end">16</text>
+<text x="586.0" y="331.8" font-size="7" fill="#15803d" text-anchor="end">15</text>
+<text x="586.0" y="320.1" font-size="7" fill="#15803d" text-anchor="end">14</text>
+<text x="586.0" y="308.4" font-size="7" fill="#15803d" text-anchor="end">13</text>
+<text x="586.0" y="296.7" font-size="7" fill="#15803d" text-anchor="end">12</text>
+<text x="586.0" y="285.0" font-size="7" fill="#15803d" text-anchor="end">11</text>
+<text x="586.0" y="273.3" font-size="7" fill="#15803d" text-anchor="end">10</text>
+<text x="586.0" y="261.7" font-size="7" fill="#15803d" text-anchor="end">9</text>
+<text x="586.0" y="250.0" font-size="7" fill="#15803d" text-anchor="end">8</text>
+<text x="586.0" y="238.3" font-size="7" fill="#15803d" text-anchor="end">7</text>
+<text x="586.0" y="226.6" font-size="7" fill="#15803d" text-anchor="end">6</text>
+<text x="586.0" y="214.9" font-size="7" fill="#15803d" text-anchor="end">5</text>
+<text x="586.0" y="203.2" font-size="7" fill="#15803d" text-anchor="end">4</text>
+<text x="586.0" y="191.6" font-size="7" fill="#15803d" text-anchor="end">3</text>
+<text x="586.0" y="179.9" font-size="7" fill="#15803d" text-anchor="end">2</text>
+<text x="586.0" y="168.2" font-size="7" fill="#15803d" text-anchor="end">1</text>
 <text transform="translate(574.0,265.0) rotate(-90)" font-size="10" font-weight="700" fill="#15803d" text-anchor="middle">Board B</text>
 <circle cx="885.4" cy="527.9" r="2.9" fill="#e2e8f0" stroke="#0f766e" stroke-width="1"/>
 <circle cx="873.7" cy="527.9" r="2.9" fill="#e2e8f0" stroke="#0f766e" stroke-width="1"/>
@@ -2114,22 +2165,22 @@
 <line x1="729.5" y1="551.3" x2="737.5" y2="551.3" stroke="#64748b" stroke-width="0.9"/>
 <line x1="733.5" y1="547.3" x2="733.5" y2="555.3" stroke="#64748b" stroke-width="0.9"/>
 <circle cx="733.5" cy="551.3" r="7.4" fill="none" stroke="#0f172a" stroke-width="1.3"/>
-<text x="723.7" y="542.5" font-size="7.5" fill="#0f172a" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="end">A1</text>
+<text x="723.7" y="542.5" font-size="7.5" fill="#0f172a" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="end">F1</text>
 <circle cx="733.5" cy="328.4" r="13.3" fill="#f1f5f9" fill-opacity="0.7" stroke="#64748b" stroke-width="1" stroke-dasharray="3 2"/>
 <line x1="729.5" y1="328.4" x2="737.5" y2="328.4" stroke="#64748b" stroke-width="0.9"/>
 <line x1="733.5" y1="324.4" x2="733.5" y2="332.4" stroke="#64748b" stroke-width="0.9"/>
 <circle cx="733.5" cy="328.4" r="7.4" fill="none" stroke="#0f172a" stroke-width="1.3"/>
-<text x="723.7" y="319.7" font-size="7.5" fill="#0f172a" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="end">B1</text>
+<text x="723.7" y="319.7" font-size="7.5" fill="#0f172a" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="end">F2</text>
 <circle cx="833.3" cy="595.1" r="13.3" fill="#f1f5f9" fill-opacity="0.7" stroke="#64748b" stroke-width="1" stroke-dasharray="3 2"/>
 <line x1="829.3" y1="595.1" x2="837.3" y2="595.1" stroke="#64748b" stroke-width="0.9"/>
 <line x1="833.3" y1="591.1" x2="833.3" y2="599.1" stroke="#64748b" stroke-width="0.9"/>
 <circle cx="833.3" cy="595.1" r="7.4" fill="none" stroke="#0f172a" stroke-width="1.3"/>
-<text x="823.6" y="586.3" font-size="7.5" fill="#0f172a" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="end">A2</text>
+<text x="823.6" y="586.3" font-size="7.5" fill="#0f172a" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="end">F3</text>
 <circle cx="833.3" cy="199.5" r="13.3" fill="#f1f5f9" fill-opacity="0.7" stroke="#64748b" stroke-width="1" stroke-dasharray="3 2"/>
 <line x1="829.3" y1="199.5" x2="837.3" y2="199.5" stroke="#64748b" stroke-width="0.9"/>
 <line x1="833.3" y1="195.5" x2="833.3" y2="203.5" stroke="#64748b" stroke-width="0.9"/>
 <circle cx="833.3" cy="199.5" r="7.4" fill="none" stroke="#0f172a" stroke-width="1.3"/>
-<text x="823.6" y="190.7" font-size="7.5" fill="#0f172a" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="end">B2</text>
+<text x="823.6" y="190.7" font-size="7.5" fill="#0f172a" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="end">F4</text>
 <polyline points="885.4,574.6 663.4,574.6" fill="none" stroke="#111827" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round"/>
 <polyline points="885.4,574.6 663.4,574.6" fill="none" stroke="#e5e7eb" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
 <circle cx="885.4" cy="574.6" r="2.3" fill="#111827" stroke="#fff" stroke-width="0.6"/>
@@ -2266,8 +2317,8 @@
 <line x1="885.4" y1="422.7" x2="885.4" y2="364.3" stroke="#e5e7eb" stroke-width="1.3" stroke-linecap="round"/>
 <line x1="862.0" y1="422.7" x2="862.0" y2="364.3" stroke="#db2777" stroke-width="4.2" stroke-linecap="round"/>
 <line x1="862.0" y1="422.7" x2="862.0" y2="364.3" stroke="#e5e7eb" stroke-width="1.3" stroke-linecap="round"/>
-<text x="921.0" y="391.5" font-size="7" fill="#111827" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke">GND bridge, row 1</text>
-<text x="921.0" y="401.5" font-size="7" fill="#db2777" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke">3V3 bridge, row 3</text>
+<text x="921.0" y="391.5" font-size="7" fill="#111827" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke">GND bridge along X</text>
+<text x="921.0" y="401.5" font-size="7" fill="#db2777" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke">3V3 bridge along V</text>
 <circle cx="862.0" cy="224.1" r="4.4" fill="none" stroke="#1d4ed8" stroke-width="1.4"/>
 <circle cx="862.0" cy="200.7" r="4.4" fill="none" stroke="#60a5fa" stroke-width="1.4"/>
 <line x1="698.4" y1="294.2" x2="698.4" y2="400.0" stroke="#b45309" stroke-width="0.8"/>
@@ -2289,23 +2340,23 @@
 <circle cx="873.7" cy="294.2" r="4.2" fill="none" stroke="#b45309" stroke-width="1.3"/>
 <circle cx="862.0" cy="294.2" r="4.2" fill="none" stroke="#b45309" stroke-width="1.3"/>
 <line x1="889.6" y1="294.2" x2="918.0" y2="294.2" stroke="#b45309" stroke-width="0.8"/>
-<text x="921.0" y="285.7" font-size="7" fill="#b45309" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke">g1  P2-1 GND</text>
-<text x="921.0" y="296.7" font-size="7" fill="#b45309" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke">g2  P2-3 5V</text>
-<text x="921.0" y="307.7" font-size="7" fill="#b45309" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke">g3  P2-5 3V</text>
+<text x="921.0" y="285.7" font-size="7" fill="#b45309" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke">X12  P2-1 GND</text>
+<text x="921.0" y="296.7" font-size="7" fill="#b45309" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke">W12  P2-3 5V</text>
+<text x="921.0" y="307.7" font-size="7" fill="#b45309" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke">V12  P2-5 3V</text>
 <circle cx="885.4" cy="527.9" r="4.2" fill="none" stroke="#0f766e" stroke-width="1.3"/>
 <line x1="889.6" y1="527.9" x2="918.0" y2="527.9" stroke="#0f766e" stroke-width="0.8"/>
-<text x="921.0" y="524.9" font-size="7" fill="#0f766e" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke">i1  P1-1 GND</text>
-<text x="921.0" y="535.9" font-size="7" fill="#0f766e" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke">j1  P1-2 GND</text>
-<text x="780.2" y="571.8" font-size="7" fill="#111827" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="middle">GND spine, col e</text>
-<text x="803.6" y="630.2" font-size="7" fill="#d97706" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="middle">6 V spine, col a</text>
-<text x="768.5" y="268.0" font-size="7" fill="#111827" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="middle">GND spine, col j</text>
-<text x="838.6" y="168.7" font-size="6.8" fill="#1d4ed8" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="middle">module H / L links in at m3, o3</text>
+<text x="921.0" y="524.9" font-size="7" fill="#0f766e" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke">X10  P1-1 GND</text>
+<text x="921.0" y="535.9" font-size="7" fill="#0f766e" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke">X9  P1-2 GND</text>
+<text x="780.2" y="571.8" font-size="7" fill="#111827" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="middle">GND spine along 14</text>
+<text x="803.6" y="630.2" font-size="7" fill="#d97706" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="middle">6 V spine along 18</text>
+<text x="768.5" y="268.0" font-size="7" fill="#111827" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="middle">GND spine along 9</text>
+<text x="838.6" y="168.7" font-size="6.8" fill="#1d4ed8" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="middle">module H / L links in at V6, V4</text>
 <text x="295.5" y="659.0" font-size="8.5" fill="#64748b" text-anchor="middle">front ◀  boards 70 mm + Discovery overhang = 98 mm  ▶ rear (fascia)</text>
-<text x="295.5" y="671.0" font-size="8.5" fill="#64748b" text-anchor="middle">overall width 106 mm · A1 B1 A2 B2: ⌀3.2 holes onto existing plate-2 holes, 10 mm M2.5 standoffs</text>
+<text x="295.5" y="671.0" font-size="8.5" fill="#64748b" text-anchor="middle">overall width 106 mm · F1-F4: ⌀3.2 holes onto existing plate-2 holes, 10 mm M2.5 standoffs</text>
 <text x="815.5" y="659.0" font-size="8.5" fill="#64748b" text-anchor="middle">front ◀  boards 70 mm + Discovery overhang = 98 mm  ▶ rear (fascia)</text>
-<text x="815.5" y="671.0" font-size="8.5" fill="#64748b" text-anchor="middle">overall width 106 mm · A1 B1 A2 B2: ⌀3.2 holes onto existing plate-2 holes, 10 mm M2.5 standoffs</text>
+<text x="815.5" y="671.0" font-size="8.5" fill="#64748b" text-anchor="middle">overall width 106 mm · F1-F4: ⌀3.2 holes onto existing plate-2 holes, 10 mm M2.5 standoffs</text>
 <text x="40.0" y="718.0" font-size="12" fill="#1a1a1a" font-weight="700">C  5 V SPLIT BOARD  (component side)</text>
-<text x="40.0" y="733.0" font-size="8.5" fill="#64748b">across the plate-2 waist, x 85.5-115.5: row 1 at the vehicle right, column a to the front · socket opening faces the vehicle right</text>
+<text x="40.0" y="733.0" font-size="8.5" fill="#64748b">across the plate-2 waist, x 85.5-115.5: letter A at the vehicle right, 10 to the front · socket opening faces the vehicle right</text>
 <text x="560.0" y="718.0" font-size="12" fill="#1a1a1a" font-weight="700">C  SOLDER SIDE  (turned over about the long axis)</text>
 <text x="560.0" y="733.0" font-size="8.5" fill="#64748b">spines in bare tinned 18 AWG, TO STM32 in 18 AWG (thick), the CC network in thin wire</text>
 <rect x="140.0" y="760.0" width="322.0" height="138.0" rx="4" fill="#f0fdf4" stroke="#15803d" stroke-width="1.6"/>
@@ -2549,40 +2600,40 @@
 <circle cx="412.0" cy="881.6" r="2.1" fill="#fff" stroke="#a3b18a" stroke-width="0.7"/>
 <circle cx="423.7" cy="881.6" r="2.1" fill="#fff" stroke="#a3b18a" stroke-width="0.7"/>
 <circle cx="435.4" cy="881.6" r="2.1" fill="#fff" stroke="#a3b18a" stroke-width="0.7"/>
-<text x="136.0" y="778.9" font-size="7" fill="#15803d" text-anchor="end">a</text>
-<text x="136.0" y="790.6" font-size="7" fill="#15803d" text-anchor="end">b</text>
-<text x="136.0" y="802.3" font-size="7" fill="#15803d" text-anchor="end">c</text>
-<text x="136.0" y="814.0" font-size="7" fill="#15803d" text-anchor="end">d</text>
-<text x="136.0" y="825.7" font-size="7" fill="#15803d" text-anchor="end">e</text>
-<text x="136.0" y="837.3" font-size="7" fill="#15803d" text-anchor="end">f</text>
-<text x="136.0" y="849.0" font-size="7" fill="#15803d" text-anchor="end">g</text>
-<text x="136.0" y="860.7" font-size="7" fill="#15803d" text-anchor="end">h</text>
-<text x="136.0" y="872.4" font-size="7" fill="#15803d" text-anchor="end">i</text>
-<text x="136.0" y="884.1" font-size="7" fill="#15803d" text-anchor="end">j</text>
-<text x="166.6" y="757.0" font-size="6.5" fill="#64748b" text-anchor="middle">1</text>
-<text x="178.3" y="757.0" font-size="6.5" fill="#64748b" text-anchor="middle">2</text>
-<text x="190.0" y="757.0" font-size="6.5" fill="#64748b" text-anchor="middle">3</text>
-<text x="201.7" y="757.0" font-size="6.5" fill="#64748b" text-anchor="middle">4</text>
-<text x="213.4" y="757.0" font-size="6.5" fill="#64748b" text-anchor="middle">5</text>
-<text x="225.1" y="757.0" font-size="6.5" fill="#64748b" text-anchor="middle">6</text>
-<text x="236.7" y="757.0" font-size="6.5" fill="#64748b" text-anchor="middle">7</text>
-<text x="248.4" y="757.0" font-size="6.5" fill="#64748b" text-anchor="middle">8</text>
-<text x="260.1" y="757.0" font-size="6.5" fill="#64748b" text-anchor="middle">9</text>
-<text x="271.8" y="757.0" font-size="6.5" fill="#64748b" text-anchor="middle">10</text>
-<text x="283.5" y="757.0" font-size="6.5" fill="#64748b" text-anchor="middle">11</text>
-<text x="295.2" y="757.0" font-size="6.5" fill="#64748b" text-anchor="middle">12</text>
-<text x="306.8" y="757.0" font-size="6.5" fill="#64748b" text-anchor="middle">13</text>
-<text x="318.5" y="757.0" font-size="6.5" fill="#64748b" text-anchor="middle">14</text>
-<text x="330.2" y="757.0" font-size="6.5" fill="#64748b" text-anchor="middle">15</text>
-<text x="341.9" y="757.0" font-size="6.5" fill="#64748b" text-anchor="middle">16</text>
-<text x="353.6" y="757.0" font-size="6.5" fill="#64748b" text-anchor="middle">17</text>
-<text x="365.3" y="757.0" font-size="6.5" fill="#64748b" text-anchor="middle">18</text>
-<text x="376.9" y="757.0" font-size="6.5" fill="#64748b" text-anchor="middle">19</text>
-<text x="388.6" y="757.0" font-size="6.5" fill="#64748b" text-anchor="middle">20</text>
-<text x="400.3" y="757.0" font-size="6.5" fill="#64748b" text-anchor="middle">21</text>
-<text x="412.0" y="757.0" font-size="6.5" fill="#64748b" text-anchor="middle">22</text>
-<text x="423.7" y="757.0" font-size="6.5" fill="#64748b" text-anchor="middle">23</text>
-<text x="435.4" y="757.0" font-size="6.5" fill="#64748b" text-anchor="middle">24</text>
+<text x="136.0" y="778.9" font-size="7" fill="#15803d" text-anchor="end">10</text>
+<text x="136.0" y="790.6" font-size="7" fill="#15803d" text-anchor="end">9</text>
+<text x="136.0" y="802.3" font-size="7" fill="#15803d" text-anchor="end">8</text>
+<text x="136.0" y="814.0" font-size="7" fill="#15803d" text-anchor="end">7</text>
+<text x="136.0" y="825.7" font-size="7" fill="#15803d" text-anchor="end">6</text>
+<text x="136.0" y="837.3" font-size="7" fill="#15803d" text-anchor="end">5</text>
+<text x="136.0" y="849.0" font-size="7" fill="#15803d" text-anchor="end">4</text>
+<text x="136.0" y="860.7" font-size="7" fill="#15803d" text-anchor="end">3</text>
+<text x="136.0" y="872.4" font-size="7" fill="#15803d" text-anchor="end">2</text>
+<text x="136.0" y="884.1" font-size="7" fill="#15803d" text-anchor="end">1</text>
+<text x="166.6" y="757.0" font-size="7" fill="#15803d" font-weight="700" text-anchor="middle">A</text>
+<text x="178.3" y="757.0" font-size="7" fill="#15803d" font-weight="700" text-anchor="middle">B</text>
+<text x="190.0" y="757.0" font-size="7" fill="#15803d" font-weight="700" text-anchor="middle">C</text>
+<text x="201.7" y="757.0" font-size="7" fill="#15803d" font-weight="700" text-anchor="middle">D</text>
+<text x="213.4" y="757.0" font-size="7" fill="#15803d" font-weight="700" text-anchor="middle">E</text>
+<text x="225.1" y="757.0" font-size="7" fill="#15803d" font-weight="700" text-anchor="middle">F</text>
+<text x="236.7" y="757.0" font-size="7" fill="#15803d" font-weight="700" text-anchor="middle">G</text>
+<text x="248.4" y="757.0" font-size="7" fill="#15803d" font-weight="700" text-anchor="middle">H</text>
+<text x="260.1" y="757.0" font-size="7" fill="#15803d" font-weight="700" text-anchor="middle">I</text>
+<text x="271.8" y="757.0" font-size="7" fill="#15803d" font-weight="700" text-anchor="middle">J</text>
+<text x="283.5" y="757.0" font-size="7" fill="#15803d" font-weight="700" text-anchor="middle">K</text>
+<text x="295.2" y="757.0" font-size="7" fill="#15803d" font-weight="700" text-anchor="middle">L</text>
+<text x="306.8" y="757.0" font-size="7" fill="#15803d" font-weight="700" text-anchor="middle">M</text>
+<text x="318.5" y="757.0" font-size="7" fill="#15803d" font-weight="700" text-anchor="middle">N</text>
+<text x="330.2" y="757.0" font-size="7" fill="#15803d" font-weight="700" text-anchor="middle">O</text>
+<text x="341.9" y="757.0" font-size="7" fill="#15803d" font-weight="700" text-anchor="middle">P</text>
+<text x="353.6" y="757.0" font-size="7" fill="#15803d" font-weight="700" text-anchor="middle">Q</text>
+<text x="365.3" y="757.0" font-size="7" fill="#15803d" font-weight="700" text-anchor="middle">R</text>
+<text x="376.9" y="757.0" font-size="7" fill="#15803d" font-weight="700" text-anchor="middle">S</text>
+<text x="388.6" y="757.0" font-size="7" fill="#15803d" font-weight="700" text-anchor="middle">T</text>
+<text x="400.3" y="757.0" font-size="7" fill="#15803d" font-weight="700" text-anchor="middle">U</text>
+<text x="412.0" y="757.0" font-size="7" fill="#15803d" font-weight="700" text-anchor="middle">V</text>
+<text x="423.7" y="757.0" font-size="7" fill="#15803d" font-weight="700" text-anchor="middle">W</text>
+<text x="435.4" y="757.0" font-size="7" fill="#15803d" font-weight="700" text-anchor="middle">X</text>
 <circle cx="201.7" cy="823.2" r="13.3" fill="#f1f5f9" fill-opacity="0.7" stroke="#64748b" stroke-width="1" stroke-dasharray="3 2"/>
 <circle cx="201.7" cy="823.2" r="7.4" fill="none" stroke="#0f172a" stroke-width="1.3"/>
 <circle cx="400.3" cy="823.2" r="13.3" fill="#f1f5f9" fill-opacity="0.7" stroke="#64748b" stroke-width="1" stroke-dasharray="3 2"/>
@@ -2628,7 +2679,7 @@
 <text x="125.3" y="817.0" font-size="8" fill="#1e40af" font-weight="700" text-anchor="end">USB-C SOCKET</text>
 <text x="125.3" y="827.0" font-size="6.5" fill="#64748b" text-anchor="end">opening out, C-to-C</text>
 <text x="125.3" y="836.0" font-size="6.5" fill="#64748b" text-anchor="end">cable to FRDM J1</text>
-<text x="125.3" y="847.0" font-size="6.5" fill="#64748b" text-anchor="end">zip ties at rows 2, 6</text>
+<text x="125.3" y="847.0" font-size="6.5" fill="#64748b" text-anchor="end">zip ties along B, F</text>
 <text x="125.3" y="856.0" font-size="6.5" fill="#64748b" text-anchor="end">D−/D+ cut, insulated</text>
 <circle cx="201.7" cy="823.2" r="10.3" fill="none" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="3 2"/>
 <line x1="248.4" y1="846.5" x2="295.2" y2="846.5" stroke="#94a3b8" stroke-width="1.4"/>
@@ -2649,9 +2700,9 @@
 <text x="295.2" y="791.1" font-size="8" fill="#a16207" font-weight="700" text-anchor="middle">C1</text>
 <text x="299.2" y="826.2" font-size="6.5" fill="#a16207" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="start">470µF</text>
 <line x1="201.7" y1="836.5" x2="201.7" y2="902.0" stroke="#64748b" stroke-width="0.7" stroke-dasharray="2 2"/>
-<text x="201.7" y="911.0" font-size="6.5" fill="#0f172a" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="middle">(99.24, 38.76) · e4</text>
+<text x="201.7" y="911.0" font-size="6.5" fill="#0f172a" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="middle">F5 at D6 · (99.24, 38.76)</text>
 <line x1="400.3" y1="836.5" x2="400.3" y2="902.0" stroke="#64748b" stroke-width="0.7" stroke-dasharray="2 2"/>
-<text x="400.3" y="911.0" font-size="6.5" fill="#0f172a" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="middle">(99.24, 81.76) · e21</text>
+<text x="400.3" y="911.0" font-size="6.5" fill="#0f172a" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="middle">F6 at U6 · (99.24, 81.76)</text>
 <rect x="660.0" y="760.0" width="322.0" height="138.0" rx="4" fill="#f0fdf4" stroke="#15803d" stroke-width="1.6"/>
 <circle cx="686.6" cy="881.6" r="2.1" fill="#fff" stroke="#a3b18a" stroke-width="0.7"/>
 <circle cx="698.3" cy="881.6" r="2.1" fill="#fff" stroke="#a3b18a" stroke-width="0.7"/>
@@ -2893,40 +2944,40 @@
 <circle cx="932.0" cy="776.4" r="2.1" fill="#fff" stroke="#a3b18a" stroke-width="0.7"/>
 <circle cx="943.7" cy="776.4" r="2.1" fill="#fff" stroke="#a3b18a" stroke-width="0.7"/>
 <circle cx="955.4" cy="776.4" r="2.1" fill="#fff" stroke="#a3b18a" stroke-width="0.7"/>
-<text x="656.0" y="884.1" font-size="7" fill="#15803d" text-anchor="end">a</text>
-<text x="656.0" y="872.4" font-size="7" fill="#15803d" text-anchor="end">b</text>
-<text x="656.0" y="860.7" font-size="7" fill="#15803d" text-anchor="end">c</text>
-<text x="656.0" y="849.0" font-size="7" fill="#15803d" text-anchor="end">d</text>
-<text x="656.0" y="837.3" font-size="7" fill="#15803d" text-anchor="end">e</text>
-<text x="656.0" y="825.7" font-size="7" fill="#15803d" text-anchor="end">f</text>
-<text x="656.0" y="814.0" font-size="7" fill="#15803d" text-anchor="end">g</text>
-<text x="656.0" y="802.3" font-size="7" fill="#15803d" text-anchor="end">h</text>
-<text x="656.0" y="790.6" font-size="7" fill="#15803d" text-anchor="end">i</text>
-<text x="656.0" y="778.9" font-size="7" fill="#15803d" text-anchor="end">j</text>
-<text x="686.6" y="757.0" font-size="6.5" fill="#64748b" text-anchor="middle">1</text>
-<text x="698.3" y="757.0" font-size="6.5" fill="#64748b" text-anchor="middle">2</text>
-<text x="710.0" y="757.0" font-size="6.5" fill="#64748b" text-anchor="middle">3</text>
-<text x="721.7" y="757.0" font-size="6.5" fill="#64748b" text-anchor="middle">4</text>
-<text x="733.4" y="757.0" font-size="6.5" fill="#64748b" text-anchor="middle">5</text>
-<text x="745.1" y="757.0" font-size="6.5" fill="#64748b" text-anchor="middle">6</text>
-<text x="756.7" y="757.0" font-size="6.5" fill="#64748b" text-anchor="middle">7</text>
-<text x="768.4" y="757.0" font-size="6.5" fill="#64748b" text-anchor="middle">8</text>
-<text x="780.1" y="757.0" font-size="6.5" fill="#64748b" text-anchor="middle">9</text>
-<text x="791.8" y="757.0" font-size="6.5" fill="#64748b" text-anchor="middle">10</text>
-<text x="803.5" y="757.0" font-size="6.5" fill="#64748b" text-anchor="middle">11</text>
-<text x="815.2" y="757.0" font-size="6.5" fill="#64748b" text-anchor="middle">12</text>
-<text x="826.8" y="757.0" font-size="6.5" fill="#64748b" text-anchor="middle">13</text>
-<text x="838.5" y="757.0" font-size="6.5" fill="#64748b" text-anchor="middle">14</text>
-<text x="850.2" y="757.0" font-size="6.5" fill="#64748b" text-anchor="middle">15</text>
-<text x="861.9" y="757.0" font-size="6.5" fill="#64748b" text-anchor="middle">16</text>
-<text x="873.6" y="757.0" font-size="6.5" fill="#64748b" text-anchor="middle">17</text>
-<text x="885.3" y="757.0" font-size="6.5" fill="#64748b" text-anchor="middle">18</text>
-<text x="896.9" y="757.0" font-size="6.5" fill="#64748b" text-anchor="middle">19</text>
-<text x="908.6" y="757.0" font-size="6.5" fill="#64748b" text-anchor="middle">20</text>
-<text x="920.3" y="757.0" font-size="6.5" fill="#64748b" text-anchor="middle">21</text>
-<text x="932.0" y="757.0" font-size="6.5" fill="#64748b" text-anchor="middle">22</text>
-<text x="943.7" y="757.0" font-size="6.5" fill="#64748b" text-anchor="middle">23</text>
-<text x="955.4" y="757.0" font-size="6.5" fill="#64748b" text-anchor="middle">24</text>
+<text x="656.0" y="884.1" font-size="7" fill="#15803d" text-anchor="end">10</text>
+<text x="656.0" y="872.4" font-size="7" fill="#15803d" text-anchor="end">9</text>
+<text x="656.0" y="860.7" font-size="7" fill="#15803d" text-anchor="end">8</text>
+<text x="656.0" y="849.0" font-size="7" fill="#15803d" text-anchor="end">7</text>
+<text x="656.0" y="837.3" font-size="7" fill="#15803d" text-anchor="end">6</text>
+<text x="656.0" y="825.7" font-size="7" fill="#15803d" text-anchor="end">5</text>
+<text x="656.0" y="814.0" font-size="7" fill="#15803d" text-anchor="end">4</text>
+<text x="656.0" y="802.3" font-size="7" fill="#15803d" text-anchor="end">3</text>
+<text x="656.0" y="790.6" font-size="7" fill="#15803d" text-anchor="end">2</text>
+<text x="656.0" y="778.9" font-size="7" fill="#15803d" text-anchor="end">1</text>
+<text x="686.6" y="757.0" font-size="7" fill="#15803d" font-weight="700" text-anchor="middle">A</text>
+<text x="698.3" y="757.0" font-size="7" fill="#15803d" font-weight="700" text-anchor="middle">B</text>
+<text x="710.0" y="757.0" font-size="7" fill="#15803d" font-weight="700" text-anchor="middle">C</text>
+<text x="721.7" y="757.0" font-size="7" fill="#15803d" font-weight="700" text-anchor="middle">D</text>
+<text x="733.4" y="757.0" font-size="7" fill="#15803d" font-weight="700" text-anchor="middle">E</text>
+<text x="745.1" y="757.0" font-size="7" fill="#15803d" font-weight="700" text-anchor="middle">F</text>
+<text x="756.7" y="757.0" font-size="7" fill="#15803d" font-weight="700" text-anchor="middle">G</text>
+<text x="768.4" y="757.0" font-size="7" fill="#15803d" font-weight="700" text-anchor="middle">H</text>
+<text x="780.1" y="757.0" font-size="7" fill="#15803d" font-weight="700" text-anchor="middle">I</text>
+<text x="791.8" y="757.0" font-size="7" fill="#15803d" font-weight="700" text-anchor="middle">J</text>
+<text x="803.5" y="757.0" font-size="7" fill="#15803d" font-weight="700" text-anchor="middle">K</text>
+<text x="815.2" y="757.0" font-size="7" fill="#15803d" font-weight="700" text-anchor="middle">L</text>
+<text x="826.8" y="757.0" font-size="7" fill="#15803d" font-weight="700" text-anchor="middle">M</text>
+<text x="838.5" y="757.0" font-size="7" fill="#15803d" font-weight="700" text-anchor="middle">N</text>
+<text x="850.2" y="757.0" font-size="7" fill="#15803d" font-weight="700" text-anchor="middle">O</text>
+<text x="861.9" y="757.0" font-size="7" fill="#15803d" font-weight="700" text-anchor="middle">P</text>
+<text x="873.6" y="757.0" font-size="7" fill="#15803d" font-weight="700" text-anchor="middle">Q</text>
+<text x="885.3" y="757.0" font-size="7" fill="#15803d" font-weight="700" text-anchor="middle">R</text>
+<text x="896.9" y="757.0" font-size="7" fill="#15803d" font-weight="700" text-anchor="middle">S</text>
+<text x="908.6" y="757.0" font-size="7" fill="#15803d" font-weight="700" text-anchor="middle">T</text>
+<text x="920.3" y="757.0" font-size="7" fill="#15803d" font-weight="700" text-anchor="middle">U</text>
+<text x="932.0" y="757.0" font-size="7" fill="#15803d" font-weight="700" text-anchor="middle">V</text>
+<text x="943.7" y="757.0" font-size="7" fill="#15803d" font-weight="700" text-anchor="middle">W</text>
+<text x="955.4" y="757.0" font-size="7" fill="#15803d" font-weight="700" text-anchor="middle">X</text>
 <circle cx="721.7" cy="834.8" r="13.3" fill="#f1f5f9" fill-opacity="0.7" stroke="#64748b" stroke-width="1" stroke-dasharray="3 2"/>
 <circle cx="721.7" cy="834.8" r="7.4" fill="none" stroke="#0f172a" stroke-width="1.3"/>
 <circle cx="920.3" cy="834.8" r="13.3" fill="#f1f5f9" fill-opacity="0.7" stroke="#64748b" stroke-width="1" stroke-dasharray="3 2"/>
@@ -2980,10 +3031,10 @@
 <polyline points="815.2,811.5 844.4,811.5 844.4,875.7 850.2,875.7 850.2,881.6" fill="none" stroke="#dc2626" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
 <circle cx="815.2" cy="811.5" r="2.3" fill="#dc2626" stroke="#fff" stroke-width="0.6"/>
 <circle cx="850.2" cy="881.6" r="2.3" fill="#dc2626" stroke="#fff" stroke-width="0.6"/>
-<text x="873.6" y="878.7" font-size="7" fill="#dc2626" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="middle">5 V spine, col a</text>
-<text x="875.6" y="868.4" font-size="7" fill="#111827" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="middle">GND spine, col c</text>
+<text x="873.6" y="878.7" font-size="7" fill="#dc2626" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="middle">5 V spine along 10</text>
+<text x="875.6" y="868.4" font-size="7" fill="#111827" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="middle">GND spine along 8</text>
 <text x="40.0" y="925.0" font-size="8.4" fill="#b45309">Socket first: meter CC1 and CC2 to V and to G, all four open - a socket with its own Rd (5.1k) or Rp cannot be the source.</text>
-<text x="40.0" y="939.0" font-size="8.4" fill="#b45309">Fit the e4 pan-head screw before the socket: the body rides 2.5 mm up on its flange, over the head. Ties through 3 mm holes at b2 / i2 and b6 / i6, the second one over the pigtail.</text>
+<text x="40.0" y="939.0" font-size="8.4" fill="#b45309">Fit the F5 pan-head screw (D6) before the socket: the body rides 2.5 mm up on its flange, over the head. Ties through 3 mm holes at B9 / B2 and F9 / F2, the second one over the pigtail.</text>
 <text x="1130.0" y="100.0" font-size="12" fill="#1a1a1a" font-weight="700">NETLIST</text>
 <line x1="1130" y1="108" x2="1680" y2="108" stroke="#e2e8f0"/>
 <rect x="1130" y="116" width="550" height="19" fill="#f1f5f9" stroke="#cbd5e1"/>
@@ -2994,12 +3045,12 @@
 <rect x="1133" y="140" width="4" height="9" fill="#dc2626"/>
 <text x="1142.0" y="148.0" font-size="8.4" fill="#1e293b" font-weight="700">5 V</text>
 <text x="1226.0" y="148.0" font-size="7.9" fill="#475569">C IN 5V</text>
-<text x="1320.0" y="148.0" font-size="7.9" fill="#475569">C TO STM32 → B 5V IN (q21) → P2-3 / P2-4 (g2 = h2)</text>
+<text x="1320.0" y="148.0" font-size="7.9" fill="#475569">C TO STM32 → B 5V IN (B·D2) → P2-3 / P2-4 (W12 = W11)</text>
 <rect x="1130" y="154" width="550" height="19" fill="#f8fafc" stroke="#e2e8f0"/>
 <rect x="1133" y="159" width="4" height="9" fill="#dc2626"/>
 <text x="1142.0" y="167.0" font-size="8.4" fill="#1e293b" font-weight="700">5 V FRDM</text>
 <text x="1226.0" y="167.0" font-size="7.9" fill="#475569">C IN 5V</text>
-<text x="1320.0" y="167.0" font-size="7.9" fill="#475569">socket red V (a7) · C1 + (a12) · R1 / R2 tops (g12 = i12 → a15)</text>
+<text x="1320.0" y="167.0" font-size="7.9" fill="#475569">socket red V (C·G10) · C1 + (L10) · R1 / R2 tops (L4 = L2 → O10)</text>
 <rect x="1130" y="173" width="550" height="19" fill="#ffffff" stroke="#e2e8f0"/>
 <rect x="1133" y="178" width="4" height="9" fill="#111827"/>
 <text x="1142.0" y="186.0" font-size="8.4" fill="#1e293b" font-weight="700">GND</text>
@@ -3008,58 +3059,58 @@
 <rect x="1130" y="192" width="550" height="19" fill="#f8fafc" stroke="#e2e8f0"/>
 <rect x="1133" y="197" width="4" height="9" fill="#111827"/>
 <text x="1142.0" y="205.0" font-size="8.4" fill="#1e293b" font-weight="700">GND (A)</text>
-<text x="1226.0" y="205.0" font-size="7.9" fill="#475569">B g1</text>
-<text x="1320.0" y="205.0" font-size="7.9" fill="#475569">bare row 1: B a1 → A r1 → j1 = i1 (P1-2, P1-1) · spine e → 6V IN, C2, SERVO, I2C</text>
+<text x="1226.0" y="205.0" font-size="7.9" fill="#475569">B·X12</text>
+<text x="1320.0" y="205.0" font-size="7.9" fill="#475569">bare along X: B·X18 → A·X1 → X9 = X10 (P1-2, P1-1) · spine 14 → 6V IN, C2, SERVO, I2C</text>
 <rect x="1130" y="211" width="550" height="19" fill="#ffffff" stroke="#e2e8f0"/>
 <rect x="1133" y="216" width="4" height="9" fill="#db2777"/>
 <text x="1142.0" y="224.0" font-size="8.4" fill="#1e293b" font-weight="700">3.3 V</text>
 <text x="1226.0" y="224.0" font-size="7.9" fill="#475569">P2-5 / P2-6</text>
-<text x="1320.0" y="224.0" font-size="7.9" fill="#475569">XCVR 3V3 (n13) · bare row 3: B a3 → A r3 → k3, never j3 · k3 → I2C-A VCC (c21)</text>
+<text x="1320.0" y="224.0" font-size="7.9" fill="#475569">XCVR 3V3 (B·L5) · bare along V: B·V18 → A·V1 → V8, never V9 · → I2C-A VCC (D16)</text>
 <rect x="1130" y="230" width="550" height="19" fill="#f8fafc" stroke="#e2e8f0"/>
 <rect x="1133" y="235" width="4" height="9" fill="#d97706"/>
 <text x="1142.0" y="243.0" font-size="8.4" fill="#1e293b" font-weight="700">Servo 6 V</text>
 <text x="1226.0" y="243.0" font-size="7.9" fill="#475569">A 6V IN +</text>
-<text x="1320.0" y="243.0" font-size="7.9" fill="#475569">C2 + (c10) · SERVO + (c13) - touches nothing else</text>
+<text x="1320.0" y="243.0" font-size="7.9" fill="#475569">C2 + (A·O16) · SERVO + (L16) - touches nothing else</text>
 <rect x="1130" y="249" width="550" height="19" fill="#ffffff" stroke="#e2e8f0"/>
 <rect x="1133" y="254" width="4" height="9" fill="#92400e"/>
 <text x="1142.0" y="262.0" font-size="8.4" fill="#1e293b" font-weight="700">Servo PWM</text>
 <text x="1226.0" y="262.0" font-size="7.9" fill="#475569">P1-27 PE9</text>
-<text x="1320.0" y="262.0" font-size="7.9" fill="#475569">R4 1k (h12-h8) → SERVO SIG (c14)</text>
+<text x="1320.0" y="262.0" font-size="7.9" fill="#475569">R4 1k (A·M11-Q11) → SERVO SIG (K16)</text>
 <rect x="1130" y="268" width="550" height="19" fill="#f8fafc" stroke="#e2e8f0"/>
 <rect x="1133" y="273" width="4" height="9" fill="#7c3aed"/>
 <text x="1142.0" y="281.0" font-size="8.4" fill="#1e293b" font-weight="700">I²C2 SCL</text>
 <text x="1226.0" y="281.0" font-size="7.9" fill="#475569">P1-34 PB10</text>
-<text x="1320.0" y="281.0" font-size="7.9" fill="#475569">I2C-B (c17) → I2C-A (c22)</text>
+<text x="1320.0" y="281.0" font-size="7.9" fill="#475569">I2C-B (A·H16) → I2C-A (C16)</text>
 <rect x="1130" y="287" width="550" height="19" fill="#ffffff" stroke="#e2e8f0"/>
 <rect x="1133" y="292" width="4" height="9" fill="#a855f7"/>
 <text x="1142.0" y="300.0" font-size="8.4" fill="#1e293b" font-weight="700">I²C2 SDA</text>
 <text x="1226.0" y="300.0" font-size="7.9" fill="#475569">P1-35 PB11</text>
-<text x="1320.0" y="300.0" font-size="7.9" fill="#475569">I2C-B (c18) → I2C-A (c23)</text>
+<text x="1320.0" y="300.0" font-size="7.9" fill="#475569">I2C-B (A·G16) → I2C-A (B16)</text>
 <rect x="1130" y="306" width="550" height="19" fill="#f8fafc" stroke="#e2e8f0"/>
 <rect x="1133" y="311" width="4" height="9" fill="#0891b2"/>
 <text x="1142.0" y="319.0" font-size="8.4" fill="#1e293b" font-weight="700">CAN1_TX</text>
 <text x="1226.0" y="319.0" font-size="7.9" fill="#475569">P2-33 PD1</text>
-<text x="1320.0" y="319.0" font-size="7.9" fill="#475569">XCVR CTX (q13) - straight, not crossed</text>
+<text x="1320.0" y="319.0" font-size="7.9" fill="#475569">XCVR CTX (B·L2) - straight, not crossed</text>
 <rect x="1130" y="325" width="550" height="19" fill="#ffffff" stroke="#e2e8f0"/>
 <rect x="1133" y="330" width="4" height="9" fill="#0e7490"/>
 <text x="1142.0" y="338.0" font-size="8.4" fill="#1e293b" font-weight="700">CAN1_RX</text>
 <text x="1226.0" y="338.0" font-size="7.9" fill="#475569">P2-36 PD0</text>
-<text x="1320.0" y="338.0" font-size="7.9" fill="#475569">XCVR CRX (p13)</text>
+<text x="1320.0" y="338.0" font-size="7.9" fill="#475569">XCVR CRX (B·L3)</text>
 <rect x="1130" y="344" width="550" height="19" fill="#f8fafc" stroke="#e2e8f0"/>
 <rect x="1133" y="349" width="4" height="9" fill="#1d4ed8"/>
 <text x="1142.0" y="357.0" font-size="8.4" fill="#1e293b" font-weight="700">CAN_H</text>
 <text x="1226.0" y="357.0" font-size="7.9" fill="#475569">module H</text>
-<text x="1320.0" y="357.0" font-size="7.9" fill="#475569">link → m3 → CAN H (m1) · R3 120R → TERM</text>
+<text x="1320.0" y="357.0" font-size="7.9" fill="#475569">link → B·V6 → CAN H (X6) · R3 120R → TERM</text>
 <rect x="1130" y="363" width="550" height="19" fill="#ffffff" stroke="#e2e8f0"/>
 <rect x="1133" y="368" width="4" height="9" fill="#60a5fa"/>
 <text x="1142.0" y="376.0" font-size="8.4" fill="#1e293b" font-weight="700">CAN_L</text>
 <text x="1226.0" y="376.0" font-size="7.9" fill="#475569">module L</text>
-<text x="1320.0" y="376.0" font-size="7.9" fill="#475569">link → o3 → CAN L (o1) · TERM</text>
+<text x="1320.0" y="376.0" font-size="7.9" fill="#475569">link → B·V4 → CAN L (X4) · TERM</text>
 <rect x="1130" y="382" width="550" height="19" fill="#f8fafc" stroke="#e2e8f0"/>
 <rect x="1133" y="387" width="4" height="9" fill="#059669"/>
 <text x="1142.0" y="395.0" font-size="8.4" fill="#1e293b" font-weight="700">USB-C CC</text>
 <text x="1226.0" y="395.0" font-size="7.9" fill="#475569">C socket</text>
-<text x="1320.0" y="395.0" font-size="7.9" fill="#475569">green CC1 (g7) → R1 10k → 5 V · yellow CC2 (i7) → R2 10k → 5 V (source Rp, HW-02)</text>
+<text x="1320.0" y="395.0" font-size="7.9" fill="#475569">green CC1 (C·G4) → R1 10k → 5 V · yellow CC2 (G2) → R2 10k → 5 V (source Rp, HW-02)</text>
 <text x="1130.0" y="427.0" font-size="12" fill="#1a1a1a" font-weight="700">WHAT PLUGS IN WHERE</text>
 <line x1="1130" y1="435" x2="1680" y2="435" stroke="#e2e8f0"/>
 <rect x="1130" y="443" width="550" height="19" fill="#f1f5f9" stroke="#cbd5e1"/>
@@ -3073,7 +3124,7 @@
 <text x="1226.0" y="494.0" font-size="7.9" fill="#475569">18 AWG pair to B 5V IN</text>
 <rect x="1130" y="500" width="550" height="19" fill="#ffffff" stroke="#e2e8f0"/>
 <text x="1142.0" y="513.0" font-size="8.4" fill="#1e293b" font-weight="700">C USB-C</text>
-<text x="1226.0" y="513.0" font-size="7.9" fill="#475569">socket on C, pigtail soldered: red a7, black c7, green g7, yellow i7 · C-to-C data cable to FRDM J1</text>
+<text x="1226.0" y="513.0" font-size="7.9" fill="#475569">socket on C, pigtail soldered: red G10, black G8, green G4, yellow G2 · C-to-C data cable to FRDM J1</text>
 <rect x="1130" y="519" width="550" height="19" fill="#f8fafc" stroke="#e2e8f0"/>
 <text x="1142.0" y="532.0" font-size="8.4" fill="#1e293b" font-weight="700">C D+ / D−</text>
 <text x="1226.0" y="532.0" font-size="7.9" fill="#475569">white and blue cut short, each insulated on its own - never twisted together</text>
@@ -3082,7 +3133,7 @@
 <text x="1226.0" y="551.0" font-size="7.9" fill="#475569">UBEC 6 V out, 18 AWG pair (HW-14)</text>
 <rect x="1130" y="557" width="550" height="19" fill="#f8fafc" stroke="#e2e8f0"/>
 <text x="1142.0" y="570.0" font-size="8.4" fill="#1e293b" font-weight="700">A SERVO</text>
-<text x="1226.0" y="570.0" font-size="7.9" fill="#475569">servo plug: signal to row 14 (rear), brown/black to row 12</text>
+<text x="1226.0" y="570.0" font-size="7.9" fill="#475569">servo plug: signal to A·K16 (rear), brown/black to M16</text>
 <rect x="1130" y="576" width="550" height="19" fill="#ffffff" stroke="#e2e8f0"/>
 <text x="1142.0" y="589.0" font-size="8.4" fill="#1e293b" font-weight="700">A I2C-A</text>
 <text x="1226.0" y="589.0" font-size="7.9" fill="#475569">INA226 GND, VCC, SCL, SDA - F-F leads, signal only</text>
@@ -3122,42 +3173,42 @@
 <text x="1192.0" y="863.0" font-size="8.5" fill="#334155" font-weight="700">Board hole</text>
 <text x="1300.0" y="863.0" font-size="8.5" fill="#334155" font-weight="700">Chassis hole</text>
 <rect x="1130" y="869" width="550" height="19" fill="#ffffff" stroke="#e2e8f0"/>
-<text x="1142.0" y="882.0" font-size="8.4" fill="#1e293b" font-weight="700">A1</text>
-<text x="1192.0" y="882.0" font-size="7.9" fill="#475569">A g14, on grid</text>
+<text x="1142.0" y="882.0" font-size="8.4" fill="#1e293b" font-weight="700">F1</text>
+<text x="1192.0" y="882.0" font-size="7.9" fill="#475569">A·K12, on grid</text>
 <text x="1300.0" y="882.0" font-size="7.9" fill="#475569">plate 2 M3 hole (148.18, 23.76), ⌀3.18</text>
 <rect x="1130" y="888" width="550" height="19" fill="#f8fafc" stroke="#e2e8f0"/>
-<text x="1142.0" y="901.0" font-size="8.4" fill="#1e293b" font-weight="700">B1</text>
-<text x="1192.0" y="901.0" font-size="7.9" fill="#475569">B d14, on grid</text>
+<text x="1142.0" y="901.0" font-size="8.4" fill="#1e293b" font-weight="700">F2</text>
+<text x="1192.0" y="901.0" font-size="7.9" fill="#475569">B·K15, on grid</text>
 <text x="1300.0" y="901.0" font-size="7.9" fill="#475569">plate 2 M2.5 hole (148.2, 72.2), ⌀2.71 - 0.18 mm</text>
 <rect x="1130" y="907" width="550" height="19" fill="#ffffff" stroke="#e2e8f0"/>
-<text x="1142.0" y="920.0" font-size="8.4" fill="#1e293b" font-weight="700">A2</text>
-<text x="1192.0" y="920.0" font-size="7.9" fill="#475569">A between c5 / d6</text>
+<text x="1142.0" y="920.0" font-size="8.4" fill="#1e293b" font-weight="700">F3</text>
+<text x="1192.0" y="920.0" font-size="7.9" fill="#475569">A, between T16 / S15</text>
 <text x="1300.0" y="920.0" font-size="7.9" fill="#475569">plate 2 M2.5 hole (169.88, 14.24) - mark from the plate</text>
 <rect x="1130" y="926" width="550" height="19" fill="#f8fafc" stroke="#e2e8f0"/>
-<text x="1142.0" y="939.0" font-size="8.4" fill="#1e293b" font-weight="700">B2</text>
-<text x="1192.0" y="939.0" font-size="7.9" fill="#475569">B between o5 / o6</text>
+<text x="1142.0" y="939.0" font-size="8.4" fill="#1e293b" font-weight="700">F4</text>
+<text x="1192.0" y="939.0" font-size="7.9" fill="#475569">B, between T4 / S4</text>
 <text x="1300.0" y="939.0" font-size="7.9" fill="#475569">plate 2 M2.5 hole (169.88, 100.24) - under the module</text>
 <rect x="1130" y="945" width="550" height="19" fill="#ffffff" stroke="#e2e8f0"/>
-<text x="1142.0" y="958.0" font-size="8.4" fill="#1e293b" font-weight="700">C e4</text>
-<text x="1192.0" y="958.0" font-size="7.9" fill="#475569">C e4, on grid</text>
-<text x="1300.0" y="958.0" font-size="7.9" fill="#475569">plate 2 M3 hole (99.24, 38.76), ⌀3.18</text>
+<text x="1142.0" y="958.0" font-size="8.4" fill="#1e293b" font-weight="700">F5</text>
+<text x="1192.0" y="958.0" font-size="7.9" fill="#475569">C·D6, on grid</text>
+<text x="1300.0" y="958.0" font-size="7.9" fill="#475569">plate 2 M3 hole (99.24, 38.76), ⌀3.18 - under the socket</text>
 <rect x="1130" y="964" width="550" height="19" fill="#f8fafc" stroke="#e2e8f0"/>
-<text x="1142.0" y="977.0" font-size="8.4" fill="#1e293b" font-weight="700">C e21</text>
-<text x="1192.0" y="977.0" font-size="7.9" fill="#475569">C e21, on grid</text>
-<text x="1300.0" y="977.0" font-size="7.9" fill="#475569">plate 2 M3 hole (99.24, 81.76) - 43.00 = 17 rows + 0.18</text>
+<text x="1142.0" y="977.0" font-size="8.4" fill="#1e293b" font-weight="700">F6</text>
+<text x="1192.0" y="977.0" font-size="7.9" fill="#475569">C·U6, on grid</text>
+<text x="1300.0" y="977.0" font-size="7.9" fill="#475569">plate 2 M3 hole (99.24, 81.76) - 43.00 = 17 pitches + 0.18</text>
 <text x="1130.0" y="999.0" font-size="8.4" fill="#475569">All six: ⌀3.2 in the board, M2.5 × 10 standoff, M2.5 screws, washer in the ⌀3.18 holes.</text>
 <text x="1130.0" y="1012.0" font-size="8.4" fill="#475569">Header row 1 at chassis x 181.20 · A outboard edge y 5.11 · B outboard edge y 110.99 · gap y 55.11-60.99.</text>
 <text x="40.0" y="985.0" font-size="12" fill="#1a1a1a" font-weight="700">CHECK BEFORE THE IRON IS HOT</text>
 <line x1="40" y1="993" x2="1100" y2="993" stroke="#e2e8f0"/>
 <text x="40.0" y="1011.0" font-size="9" fill="#475569">1  Count the holes: A and B need 18 × 24, C 10 × 24. The drawing assumes the usual kit counts; a board one row short moves everything.</text>
 <text x="40.0" y="1026.0" font-size="9" fill="#475569">2  Cut four 1×25 strips from the 40-pin female headers and snip the 25th tail of each flush with the body. Dry-fit them on the Discovery,</text>
-<text x="40.0" y="1041.0" font-size="9" fill="#475569">    boards A and B under them: pins on A i/j and B g/h, rows 1-24, and row 25 resting on the board margin with no hole under it.</text>
+<text x="40.0" y="1041.0" font-size="9" fill="#475569">    boards A and B under them: pins on A·A10-X10 / A9-X9 and B·A12-X12 / A11-X11, and header row 25 past A, on the margin with no hole under it.</text>
 <text x="40.0" y="1056.0" font-size="9" fill="#475569">3  Solder the sockets WITH THE DISCOVERY PLUGGED IN - it is the only thing that sets the 53.34 mm between A and B. Tack two corners, check, finish.</text>
 <text x="40.0" y="1071.0" font-size="9" fill="#475569">4  Measure the SN65HVD230 module: outline, pin order, and CANH-CANL unpowered. ~120 Ω means it carries its own terminator - remove it,</text>
 <text x="40.0" y="1086.0" font-size="9" fill="#475569">    so TERM alone decides. Pin order drawn is the BOM's (3V3, GND, CRX, CTX): wire the socket to what the module actually prints.</text>
 <text x="40.0" y="1101.0" font-size="9" fill="#475569">5  The kit terminals may be 5.0 mm, not 5.08: the 3p CAN block spans 10.0 vs 10.16 mm of holes. Push it in; do not drill.</text>
-<text x="40.0" y="1116.0" font-size="9" fill="#475569">6  Before the Discovery goes back in: 5 V to GND not shorted · 6 V rail isolated from 5 V and 3V3 · 5 V on g2/h2 only · nothing on g4 (PH0) · A j3 (P1-4 VDD) not on 3V3.</text>
-<text x="40.0" y="1131.0" font-size="9" fill="#475569">7  Fixings: drill A1, B1, C e4 and C e21 on the grid first. Screw A and B down with the Discovery in, then mark A2 and B2 from under the</text>
+<text x="40.0" y="1116.0" font-size="9" fill="#475569">6  Before the Discovery goes back in: 5 V to GND not shorted · 6 V rail isolated from 5 V and 3V3 · 5 V on B·W12 / W11 only · nothing on B·U12 (PH0) · A·V9 (P1-4 VDD) not on 3V3.</text>
+<text x="40.0" y="1131.0" font-size="9" fill="#475569">7  Fixings: drill F1, F2, F5 and F6 on the grid first. Screw A and B down with the Discovery in, then mark F3 and F4 from under the</text>
 <text x="40.0" y="1146.0" font-size="9" fill="#475569">    plate through its holes, lift the carrier and drill them. No standoff may touch a bare spine: check each one before the screw goes in.</text>
 <text x="40.0" y="1179.0" font-size="9.3" fill="#1e293b" font-weight="700">Why two 5×7 boards</text>
 <text x="40.0" y="1193.0" font-size="8.8" fill="#475569">The kit's 7×9 (24 × 30) takes all 100 pins, but the Discovery</text>

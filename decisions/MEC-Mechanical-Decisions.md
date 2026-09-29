@@ -798,6 +798,14 @@ cover a 22.4 hole with 1.2 mm to spare a side.
 
 ## MEC-15 · The carrier is two kit boards joined by the Discovery, not one board
 
+**Hole names changed 2026-09-29.** Holes are now named as **printed on the kit boards**: letters
+A-X along the 70 mm side, numbers across, A1 bottom-left with the print readable, written board·hole
+(A·K12). On A and B, header row n is letter X for row 1 back to A for row 24; P1 sits on A's
+columns 10 (odd) and 9, P2 on B's 12 (odd) and 11. The fixings are **F1-F6**, so no fixing name
+reads as a hole. The drawing computes every name from the geometry. Older text in this record uses
+the drawing's first scheme, column letter + header row: A g14 is A·K12, B d14 is B·K15, and on
+board C e4 is C·D6 and e21 is C·U6.
+
 **Revised 2026-09-29: board A is a second 5×7 board, and the sockets are 1×25.** A keeps its outboard
 edge and every hole name, and grows inward to 5.9 mm from B. The GND and 3V3 bridges are now bare wire
 soldered along rows 1 and 3, with 12.7 mm unsupported across the gap instead of about 50 mm of loose wire
@@ -847,14 +855,14 @@ a seam without adding anything the Discovery does not already provide.
 
   | Fix | Board hole | Chassis hole |
   |---|---|---|
-  | A1 | A g14, on grid | M3 ⌀3.18 (148.18, 23.76) |
-  | B1 | B d14, 0.18 mm | M2.5 ⌀2.71 (148.2, 72.2) |
-  | A2 | A between c5 and d6, off grid | M2.5 ⌀2.71 (169.88, 14.24) |
-  | B2 | B between o5 and o6, off grid, under the module | M2.5 ⌀2.71 (169.88, 100.24) |
+  | F1 (was A1) | A·K12, on grid | M3 ⌀3.18 (148.18, 23.76) |
+  | F2 (was B1) | B·K15, 0.18 mm | M2.5 ⌀2.71 (148.2, 72.2) |
+  | F3 (was A2) | A, between T16 and S15, off grid | M2.5 ⌀2.71 (169.88, 14.24) |
+  | F4 (was B2) | B, between T4 and S4, off grid, under the module | M2.5 ⌀2.71 (169.88, 100.24) |
 
   A 21.7 × 86 mm four-point pattern. ⌀3.2 in the board, **M2.5 on 10 mm standoffs**, a washer in
-  every ⌀3.18 hole, as for the FRDM (MEC-11). Drill A1 and B1 on the grid, screw the carrier down,
-  then mark A2 and B2 from under the plate. 10 mm keeps the solder side, bare spines included, well
+  every ⌀3.18 hole, as for the FRDM (MEC-11). Drill F1 and F2 on the grid, screw the carrier down,
+  then mark F3 and F4 from under the plate. 10 mm keeps the solder side, bare spines included, well
   off the aluminium, and the stack still clears plate 3: the Discovery's top is at about z 111
   against the FRDM's screw heads at z 119.4 under plate 3.
 - **Board C sits across the waist**, x 85.5-115.5 and y 25.2-95.2, between the Bauer and the
@@ -862,7 +870,7 @@ a seam without adding anything the Discovery does not already provide.
   plate edges, because there is no room at the front or rear for wires to enter. *Since
   2026-09-29 the row-1 end carries the USB-C socket instead, opening to the vehicle's right
   (HW-19). The plug stands about 20 mm past the plate edge there, which is still to be checked.* It is fixed at
-  **C e4 and C e21** to the M3 holes (99.24, 38.76) and (99.24, 81.76), which are 43.00 mm apart:
+  **F5 at C·D6 and F6 at C·U6** to the M3 holes (99.24, 38.76) and (99.24, 81.76), which are 43.00 mm apart:
   17 rows plus 0.18 mm. The Bauer's position is still a placeholder, and if it moves rearward it
   meets C.
 - **MEC-13's USB-C clearance question is closed.** The boards now end at x 187. Only the Discovery
@@ -878,7 +886,7 @@ a seam without adding anything the Discovery does not already provide.
 
 - The kit's hole counts. The drawing assumes the usual 18 × 24 for A and B and 10 × 24 for C.
 - The SN65HVD230 module's outline. B reserves rows 3-17 by columns k-r, about 36 × 21 mm, and the
-  module is socketed so that it can move within that. B2's screw sits under it, so the module comes
+  module is socketed so that it can move within that. F4's screw sits under it, so the module comes
   out to reach that screw.
 - That six 10 mm M2.5 standoffs are in the M2.5 kit. They are not in the BOM.
 - Clearance under the Discovery with it seated. The design only needs resistor height there.
@@ -890,8 +898,8 @@ a seam without adding anything the Discovery does not already provide.
   y 5.11, and the inboard edge is at y 55.11. B is unchanged, from y 60.99, so the boards are **5.88 mm
   apart**. That gap is not a choice: A holds P1 at cols i/j and B holds P2 at g/h, and the Discovery
   fixes the rest. Butting the boards would take a 0.8 mm gap, and B would lose its outer two columns.
-- **The bridges are bare wire along their rows.** GND runs from A j1 (P1-2) along row 1 to B g1 (P2-1).
-  3V3 runs from B g3 (P2-5) along row 3 to A k3, and **stops at k3**: A j3 is P1-4, which is VDD
+- **The bridges are bare wire along their rows.** GND runs from A·X9 (P1-2) along X to B·X12 (P2-1).
+  3V3 runs from B·V12 (P2-5) along V to A·V8, and **stops at V8**: A·V9 is P1-4, which is VDD
   behind JP1 and must never meet the 3 V rail (the carrier drawing's supply note). The only unsupported length of each bridge is
   12.7 mm, A r to B a. Both boards are screwed down, so nothing there can flex.
 - **1×25 sockets.** Cut four strips of 25 from the kit's 40-pin female headers and snip each 25th tail
@@ -980,7 +988,7 @@ return - goes up through it, between the buses. The rearward runs lie flat on pl
 - **Fuse lids facing down.** A holder is 30 mm tall that way, and changing a fuse needs about 20 mm
   more below the lid.
 - **Zip ties through plate 2's holes.** They fix a part only where a hole is, and two of the
-  carrier's screw heads (A2, B2) sit under plate 2 where the ties would go.
+  carrier's screw heads (F3, F4) sit under plate 2 where the ties would go.
 
 **Building it.**
 
@@ -1019,8 +1027,8 @@ return - goes up through it, between the buses. The rearward runs lie flat on pl
   and 18.6 × 18.4 for the 3-port.
 - The fuse holder body with calipers - 50 × 18 × 30 is scaled off the vendor photo.
 - The pack's height with its felt (modelled 21 + 3) and the driver's top height.
-- The screw heads under plate 2 - carrier A1, A2, B1, B2 and board C's two - against the taped parts.
-  A2 lands at the motor fuse's lid edge.
+- The screw heads under plate 2 - carrier F1-F4 and board C's F5, F6 - against the taped parts.
+  F3 lands at the motor fuse's lid edge.
 - The SW1 / SW2 tab layout, and which tab carries LED − (runs 13 and 14).
 - That the driver's VM socket can be reached from the right side under the motor fuse - about
   16 mm of height between the floor parts and the holder. If not, the VM tail needs about 12 cm to

@@ -37,6 +37,25 @@ COL = 'abcdefghijklmnopqr'
 def ci(letter):
     return COL.index(letter) + 1
 
+# ---------------------------------------------------------------- silkscreen names
+# The geometry above indexes holes by (column, header row). The kit boards print their own
+# names: letters A-X along the 70 mm side and numbers along the short side, A1 at the bottom
+# left with the print readable. Every view shows each board that way up (front left), so on
+# A and B header row 1 is letter X and row 24 is letter A; the numbers count up from the
+# bottom of the component view. Board C lies the other way round: its row 1 is letter A.
+LET = 'ABCDEFGHIJKLMNOPQRSTUVWX'
+
+
+def silk(b, col, row):
+    c = ci(col) if isinstance(col, str) else col
+    if b in 'AB':
+        return f'{LET[24 - row]}{19 - c}'
+    return f'{LET[row - 1]}{11 - c}'
+
+
+def N(b, col, row):
+    return f'{b}·{silk(b, col, row)}'
+
 # ---------------------------------------------------------------- colours
 NET = {
     '5V': '#dc2626', 'GND': '#111827', '3V3': '#db2777', '6V': '#d97706',
@@ -102,8 +121,8 @@ MALE = [
 RES = [('A', ('h', 8), ('h', 12), 'R4 1k'), ('B', ('k', 19), ('k', 23), 'R3 120R')]
 CAPS = [('A', ('c', 8), ('c', 10), 'C2')]          # (minus leg, plus leg)
 XCVR_SOCKET = ('B', [('n', 13, '3V3'), ('o', 13, 'GND'), ('p', 13, 'CRX'), ('q', 13, 'CTX')])
-FIX = [('A', 7.0, 14.0, 'A1', '(148.18, 23.76) ⌀3.18'), ('B', 4.07, 14.0, 'B1', '(148.2, 72.2) ⌀2.71'),
-       ('A', 3.25, 5.457, 'A2', '(169.88, 14.24) ⌀2.71'), ('B', 15.11, 5.457, 'B2', '(169.88, 100.24) ⌀2.71')]
+FIX = [('A', 7.0, 14.0, 'F1', '(148.18, 23.76) ⌀3.18'), ('B', 4.07, 14.0, 'F2', '(148.2, 72.2) ⌀2.71'),
+       ('A', 3.25, 5.457, 'F3', '(169.88, 14.24) ⌀2.71'), ('B', 15.11, 5.457, 'F4', '(169.88, 100.24) ⌀2.71')]
 
 # wires: (net, board, [(col,row)...], kind)  kind: 'ins' insulated, 'bare' tinned link
 WIRES = [
@@ -171,14 +190,16 @@ def draw_board(v, b, grid_labels=True):
         # column letters on the front (left) edge
         for c in range(1, cfg['cols'] + 1):
             x, y = v.px(BX[0], cy(b, c))
-            text(x - 4, y + 2.5, COL[c - 1], 7, '#15803d', anchor='end')
+            text(x - 4, y + 2.5, str(19 - c), 7, '#15803d', anchor='end')
         x, y = v.px(BX[0], (cfg['edge'][0] + cfg['edge'][1]) / 2)
         w(f'<text transform="translate({x - 16:.1f},{y:.1f}) rotate(-90)" font-size="10" font-weight="700" fill="#15803d" text-anchor="middle">Board {b}</text>')
 
 def row_labels(v, yline):
+    # the printed letter over each column of holes, and the header row it carries above it
     for r in range(1, 26):
         x, _ = v.px(RX(r), 0)
-        text(x, yline, str(r), 6.5, '#94a3b8' if r == 25 else '#64748b', anchor='middle', italic=r == 25)
+        text(x, yline, LET[24 - r] if r < 25 else '·', 7, '#15803d', '700', anchor='middle')
+        text(x, yline - 10, str(r), 6, '#94a3b8' if r == 25 else '#64748b', anchor='middle', italic=r == 25)
 
 def draw_discovery(v):
     v.rect(DISCO['x'][0], DISCO['x'][1], DISCO['y'][0], DISCO['y'][1], rx=3, fill='#eef2ff',
@@ -362,7 +383,7 @@ def carrier_labels_top(v, boxes):
     # Discovery
     label(v, -15, 13.0, 'STM32F4DISCOVERY above', '#4338ca', 10)
     label(v, -15, 13.0, 'plugs into the four 1x25 sockets', '#4338ca', 8, dy=13, weight=None)
-    label(v, RX(25), -3.4, 'row 25: no hole', '#0f766e', 6.5, anchor='start', weight=None)
+    label(v, RX(25), -3.4, 'header row 25: no hole', '#0f766e', 6.5, anchor='start', weight=None)
     label(v, 16, 26.5, 'CN1 ST-LINK', '#4338ca', 8, weight=None)
     label(v, 16, 26.5, 'overhangs the boards', '#4338ca', 7, dy=11, weight=None)
     label(v, 16, 26.5, '28 mm to the rear', '#4338ca', 7, dy=21, weight=None)
@@ -393,7 +414,7 @@ def carrier_labels_top(v, boxes):
     label(v, RX(23) - 2.2, cy('B', 11) + 0.9, 'R3 120R', '#1e40af', 7, anchor='end')
     label(v, RX(15.5), 64.5, 'module', '#047857', 6.5, weight=None)
     label(v, RX(15.5), 64.5, 'envelope', '#047857', 6.5, weight=None, dy=8)
-    label(v, RX(15.5), 64.5, 'rows 3-17', '#047857', 6.5, weight=None, dy=16)
+    label(v, RX(15.5), 64.5, f"{LET[24 - 3]} to {LET[24 - 17]}", '#047857', 6.5, weight=None, dy=16)
 
 PIN_LAB = {  # (board, col, row): (text, level, anchor) - B's in the gap, A's over A's inner columns
     ('B', 'g', 17): ('P2-33 PD1', 1, 'start'), ('B', 'h', 18): ('P2-36 PD0', 0, 'end'),
@@ -401,8 +422,8 @@ PIN_LAB = {  # (board, col, row): (text, level, anchor) - B's in the gap, A's ov
     ('A', 'j', 17): ('P1-34 PB10', 1, 'start'), ('A', 'i', 18): ('P1-35 PB11', 0, 'end'),
 }
 # rows 1-3 carry the bridges, so their pins are called out beyond the rear edge instead
-END_LAB = [('B', 'g', ['g1  P2-1 GND', 'g2  P2-3 5V', 'g3  P2-5 3V'], (1, 2, 3)),
-           ('A', 'i', ['i1  P1-1 GND', 'j1  P1-2 GND'], (1,))]
+END_LAB = [('B', 'g', [f"{silk('B', 'g', 1)}  P2-1 GND", f"{silk('B', 'g', 2)}  P2-3 5V", f"{silk('B', 'g', 3)}  P2-5 3V"], (1, 2, 3)),
+           ('A', 'i', [f"{silk('A', 'i', 1)}  P1-1 GND", f"{silk('A', 'j', 1)}  P1-2 GND"], (1,))]
 
 def carrier_labels_bottom(v):
     _, yb = v.px(0, BOARD['B']['edge'][0])      # B's inner edge (lower in this view)
@@ -436,8 +457,8 @@ def draw_bridges(v):
             w(f'<line x1="{xa:.1f}" y1="{ya:.1f}" x2="{xb:.1f}" y2="{yb:.1f}" stroke="{sc}" stroke-width="{sw}" stroke-linecap="round"/>')
     xe, _ = v.px(BX[1], 0)
     _, yg = v.px(0, (BOARD['A']['edge'][1] + BOARD['B']['edge'][0]) / 2)
-    text(xe + 9, yg - 2, 'GND bridge, row 1', 7, NET['GND'], '700', halo=True)
-    text(xe + 9, yg + 8, '3V3 bridge, row 3', 7, NET['3V3'], '700', halo=True)
+    text(xe + 9, yg - 2, f'GND bridge along {LET[23]}', 7, NET['GND'], '700', halo=True)
+    text(xe + 9, yg + 8, f'3V3 bridge along {LET[21]}', 7, NET['3V3'], '700', halo=True)
 
 def draw_links(v):
     for net, (b, c, r) in LINKS:
@@ -471,7 +492,7 @@ C_PIGTAIL = [('V', '#dc2626', 'a', 7, 7.2), ('G', '#111827', 'c', 7, 9.0),
              ('CC1', '#16a34a', 'g', 7, 13.8), ('CC2', '#eab308', 'i', 7, 15.6)]
 C_CUT = [('D-', '#e5e7eb', 10.8), ('D+', '#1e3a8a', 12.2)]  # cut short, each insulated alone
 C_TIES = [2, 6]              # zip ties at these rows, through 3 mm holes drilled at b and i
-C_FIX = [(5, 4, 'C1 fix', '(99.24, 38.76)'), (5, 21, 'C2 fix', '(99.24, 81.76)')]
+C_FIX = [(5, 4, 'F5', '(99.24, 38.76)'), (5, 21, 'F6', '(99.24, 81.76)')]
 C_WIRES = [
     ('5V', [(1, 1), (1, 24)], 'bare'),                        # 5 V spine, column a
     ('GND', [(3, 1), (3, 24)], 'bare'),                       # GND spine, column c
@@ -511,7 +532,7 @@ def draw_socket(v, top, hf):
         text(lx, ly - 12, 'USB-C SOCKET', 8, '#1e40af', '700', anchor='end')
         text(lx, ly - 2, 'opening out, C-to-C', 6.5, '#64748b', anchor='end')
         text(lx, ly + 7, 'cable to FRDM J1', 6.5, '#64748b', anchor='end')
-        text(lx, ly + 18, 'zip ties at rows 2, 6', 6.5, '#64748b', anchor='end')
+        text(lx, ly + 18, f"zip ties along {LET[C_TIES[0] - 1]}, {LET[C_TIES[1] - 1]}", 6.5, '#64748b', anchor='end')
         text(lx, ly + 27, 'D−/D+ cut, insulated', 6.5, '#64748b', anchor='end')
         x, y = hf(5, 4)                               # the e4 screw, under the body
         w(f'<circle cx="{x:.1f}" cy="{y:.1f}" r="{2.25 * v.s:.1f}" fill="none" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="3 2"/>')
@@ -533,10 +554,10 @@ def board_c(v, top):
             w(f'<circle cx="{x:.1f}" cy="{y:.1f}" r="2.1" fill="#fff" stroke="#a3b18a" stroke-width="0.7"/>')
     for c in range(1, C_COLS + 1):
         x, y = v.px(C_EDGE_X[0], (c - 1) * P)
-        text(x - 4, y + 2.5, COL[c - 1], 7, '#15803d', anchor='end')
+        text(x - 4, y + 2.5, str(11 - c), 7, '#15803d', anchor='end')
     for r in range(1, C_ROWS + 1):
         x, y = v.px((r - 1) * P, C_EDGE_Y[1] if v.flip else C_EDGE_Y[0])
-        text(x, y - 3, str(r), 6.5, '#64748b', anchor='middle')
+        text(x, y - 3, LET[r - 1], 7, '#15803d', '700', anchor='middle')
     for col, row, lab, ch in C_FIX:
         x, y = hf(col, row)
         w(f'<circle cx="{x:.1f}" cy="{y:.1f}" r="{2.9 * v.s:.1f}" fill="#f1f5f9" fill-opacity="0.7" stroke="#64748b" stroke-width="1" stroke-dasharray="3 2"/>')
@@ -581,14 +602,14 @@ def board_c(v, top):
         for col, row, lab, ch in C_FIX:                # below the board, clear of the socket
             x, y = hf(col, row)
             w(f'<line x1="{x:.1f}" y1="{y + 2.9 * v.s:.1f}" x2="{x:.1f}" y2="{yb + 4:.1f}" stroke="#64748b" stroke-width="0.7" stroke-dasharray="2 2"/>')
-            text(x, yb + 13, f'{ch} · e{row}', 6.5, '#0f172a', '700', anchor='middle', halo=True)
+            text(x, yb + 13, f"{lab} at {silk('C', col, row)} · {ch}", 6.5, '#0f172a', '700', anchor='middle', halo=True)
     else:
         for net, pts, kind in C_WIRES:
             draw_wire(v, net, 'C', pts, kind, hfun=hf)
         x, y = hf(1.5, 17)
-        text(x, y + 3, '5 V spine, col a', 7, '#dc2626', '700', anchor='middle', halo=True)
+        text(x, y + 3, f"5 V spine along {silk('C', 'a', 1)[1:]}", 7, '#dc2626', '700', anchor='middle', halo=True)
         x, y = hf(3.5, 17)
-        text(x + 2, y + 16, 'GND spine, col c', 7, '#111827', '700', anchor='middle', halo=True)
+        text(x + 2, y + 16, f"GND spine along {silk('C', 'c', 1)[1:]}", 7, '#111827', '700', anchor='middle', halo=True)
 
 # ---------------------------------------------------------------- sheet
 if __name__ == "__main__":
@@ -598,8 +619,10 @@ if __name__ == "__main__":
     w(f'<rect width="{W}" height="{H}" fill="#fbfaf8"/>')
     text(40, 30, 'NEXUS - STM32 carrier and 5 V split board: soldering and wiring', 18, '#1a1a1a', '700')
     text(40, 49, 'Kit perfboards (BOM 5.11), 2.54 grid · Boards A and B, both 5×7 cm (18 × 24 holes), under P1 and P2, 5.9 mm apart · Board C 3×7 cm (10 × 24), the 5 V split · MEC-08 / MEC-15 / HW-19', 10.5, '#666')
-    text(40, 66, 'Hole names: board + column letter + ROW NUMBER. On A and B the row number is the header row, so row n carries pins 2n-1 and 2n; row 25 (pins 49/50, GND) has no hole. P1 odd pins sit OUTBOARD (col i), P2 odd pins sit INBOARD (col g) - UM1472 Fig. 10.', 9.5, '#b45309')
-    text(40, 80, 'Parts on the component side, every wire on the solder side. Bare tinned links only where drawn bare; everything else is insulated, soldered at both ends, so crossings are fine. Nothing on the Discovery footprint stands taller than a resistor.', 9.5, '#b45309')
+    col_range = lambda b, c: f"{b}·A{silk(b, c, 24)[1:]}-X{silk(b, c, 1)[1:]}"
+    text(40, 66, 'Hole names: board·hole, as PRINTED on the kit board - letters A-X along the 70 mm side, numbers across (1-18 on A and B, 1-10 on C), A1 bottom-left with the print readable, as every view shows it.', 9.5, '#b45309')
+    text(40, 80, f"Header row n (pins 2n-1, 2n) is letter {LET[23]} for row 1 back to {LET[0]} for row 24 · P1 odd pins {col_range('A', 'i')} (outboard), even {col_range('A', 'j')} · P2 odd {col_range('B', 'g')} (inboard), even {col_range('B', 'h')} (UM1472 Fig. 10) · fixings are F1-F6, never hole names.", 9.5, '#b45309')
+    text(40, 93, 'Parts on the component side, every wire on the solder side. Bare tinned links only where drawn bare; everything else is insulated, soldered at both ends, so crossings are fine. Nothing on the Discovery footprint stands taller than a resistor.', 9.5, '#b45309')
 
     # views
     VX1, VX2, VY = 70, 590, 150
@@ -624,25 +647,25 @@ if __name__ == "__main__":
     carrier_labels_bottom(vb)
     # a few solder-side callouts
     x, y = hp(vb, 'A', 5.5, 10)
-    text(x, y + 3, 'GND spine, col e', 7, '#111827', '700', anchor='middle', halo=True)
+    text(x, y + 3, f"GND spine along {silk('A', 'e', 1)[1:]}", 7, '#111827', '700', anchor='middle', halo=True)
     x, y = hp(vb, 'A', 0.5, 8)
-    text(x, y + 3, '6 V spine, col a', 7, '#d97706', '700', anchor='middle', halo=True)
+    text(x, y + 3, f"6 V spine along {silk('A', 'a', 1)[1:]}", 7, '#d97706', '700', anchor='middle', halo=True)
     x, y = hp(vb, 'B', 9.5, 11)
-    text(x, y + 3, 'GND spine, col j', 7, '#111827', '700', anchor='middle', halo=True)
+    text(x, y + 3, f"GND spine along {silk('B', 'j', 1)[1:]}", 7, '#111827', '700', anchor='middle', halo=True)
     x, y = hp(vb, 'B', 18, 5)
-    text(x, y + 3, 'module H / L links in at m3, o3', 6.8, '#1d4ed8', '700', anchor='middle', halo=True)
+    text(x, y + 3, f"module H / L links in at {silk('B', 'm', 3)}, {silk('B', 'o', 3)}", 6.8, '#1d4ed8', '700', anchor='middle', halo=True)
 
     # front/rear footers under the views
     for v in (vt, vb):
         x0, y0 = v.px(XMIN, YMAX if not v.flip else YMIN)
         x1, _ = v.px(XMAX, 0)
         text((x0 + x1) / 2, y0 + 22, 'front ◀  boards 70 mm + Discovery overhang = 98 mm  ▶ rear (fascia)', 8.5, '#64748b', anchor='middle')
-        text((x0 + x1) / 2, y0 + 34, 'overall width 106 mm · A1 B1 A2 B2: ⌀3.2 holes onto existing plate-2 holes, 10 mm M2.5 standoffs', 8.5, '#64748b', anchor='middle')
+        text((x0 + x1) / 2, y0 + 34, 'overall width 106 mm · F1-F4: ⌀3.2 holes onto existing plate-2 holes, 10 mm M2.5 standoffs', 8.5, '#64748b', anchor='middle')
 
     # board C views
     CY = 760
     text(VX1 - 30, CY - 42, 'C  5 V SPLIT BOARD  (component side)', 12, '#1a1a1a', '700')
-    text(VX1 - 30, CY - 27, 'across the plate-2 waist, x 85.5-115.5: row 1 at the vehicle right, column a to the front · socket opening faces the vehicle right', 8.5, '#64748b')
+    text(VX1 - 30, CY - 27, 'across the plate-2 waist, x 85.5-115.5: letter A at the vehicle right, 10 to the front · socket opening faces the vehicle right', 8.5, '#64748b')
     text(VX2 - 30, CY - 42, 'C  SOLDER SIDE  (turned over about the long axis)', 12, '#1a1a1a', '700')
     text(VX2 - 30, CY - 27, 'spines in bare tinned 18 AWG, TO STM32 in 18 AWG (thick), the CC network in thin wire', 8.5, '#64748b')
     vc_t = View(VX1 + 70, CY, C_EDGE_X[0], C_EDGE_Y[0], C_EDGE_Y[1], flip=False, scale=4.6)
@@ -650,7 +673,7 @@ if __name__ == "__main__":
     board_c(vc_t, True)
     board_c(vc_b, False)
     text(VX1 - 30, CY + 165, 'Socket first: meter CC1 and CC2 to V and to G, all four open - a socket with its own Rd (5.1k) or Rp cannot be the source.', 8.4, '#b45309')
-    text(VX1 - 30, CY + 179, 'Fit the e4 pan-head screw before the socket: the body rides 2.5 mm up on its flange, over the head. Ties through 3 mm holes at b2 / i2 and b6 / i6, the second one over the pigtail.', 8.4, '#b45309')
+    text(VX1 - 30, CY + 179, f"Fit the F5 pan-head screw ({silk('C', 'e', 4)}) before the socket: the body rides 2.5 mm up on its flange, over the head. Ties through 3 mm holes at {silk('C', 'b', 2)} / {silk('C', 'i', 2)} and {silk('C', 'b', 6)} / {silk('C', 'i', 6)}, the second one over the pigtail.", 8.4, '#b45309')
 
     # ---------------------------------------------------------------- right column
     RX0 = 1130
@@ -674,30 +697,30 @@ if __name__ == "__main__":
         return y
 
     net_rows = [
-        (NET['5V'], '5 V', 'C IN 5V', 'C TO STM32 → B 5V IN (q21) → P2-3 / P2-4 (g2 = h2)'),
-        (NET['5V'], '5 V FRDM', 'C IN 5V', 'socket red V (a7) · C1 + (a12) · R1 / R2 tops (g12 = i12 → a15)'),
+        (NET['5V'], '5 V', 'C IN 5V', f"C TO STM32 → B 5V IN ({N('B', 'q', 21)}) → P2-3 / P2-4 ({silk('B', 'g', 2)} = {silk('B', 'h', 2)})"),
+        (NET['5V'], '5 V FRDM', 'C IN 5V', f"socket red V ({N('C', 'a', 7)}) · C1 + ({silk('C', 'a', 12)}) · R1 / R2 tops ({silk('C', 'g', 12)} = {silk('C', 'i', 12)} → {silk('C', 'a', 15)})"),
         (NET['GND'], 'GND', 'C IN GND', 'C spine c → B 5V IN GND → spine j → P2-1/2 · CAN GND · XCVR GND'),
-        (NET['GND'], 'GND (A)', 'B g1', 'bare row 1: B a1 → A r1 → j1 = i1 (P1-2, P1-1) · spine e → 6V IN, C2, SERVO, I2C'),
-        (NET['3V3'], '3.3 V', 'P2-5 / P2-6', 'XCVR 3V3 (n13) · bare row 3: B a3 → A r3 → k3, never j3 · k3 → I2C-A VCC (c21)'),
-        (NET['6V'], 'Servo 6 V', 'A 6V IN +', 'C2 + (c10) · SERVO + (c13) - touches nothing else'),
-        (NET['PWM'], 'Servo PWM', 'P1-27 PE9', 'R4 1k (h12-h8) → SERVO SIG (c14)'),
-        (NET['SCL'], 'I²C2 SCL', 'P1-34 PB10', 'I2C-B (c17) → I2C-A (c22)'),
-        (NET['SDA'], 'I²C2 SDA', 'P1-35 PB11', 'I2C-B (c18) → I2C-A (c23)'),
-        (NET['CTX'], 'CAN1_TX', 'P2-33 PD1', 'XCVR CTX (q13) - straight, not crossed'),
-        (NET['CRX'], 'CAN1_RX', 'P2-36 PD0', 'XCVR CRX (p13)'),
-        (NET['CANH'], 'CAN_H', 'module H', 'link → m3 → CAN H (m1) · R3 120R → TERM'),
-        (NET['CANL'], 'CAN_L', 'module L', 'link → o3 → CAN L (o1) · TERM'),
-        (NET['CC'], 'USB-C CC', 'C socket', 'green CC1 (g7) → R1 10k → 5 V · yellow CC2 (i7) → R2 10k → 5 V (source Rp, HW-02)'),
+        (NET['GND'], 'GND (A)', N('B', 'g', 1), f"bare along {LET[23]}: {N('B', 'a', 1)} → {N('A', 'r', 1)} → {silk('A', 'j', 1)} = {silk('A', 'i', 1)} (P1-2, P1-1) · spine {silk('A', 'e', 1)[1:]} → 6V IN, C2, SERVO, I2C"),
+        (NET['3V3'], '3.3 V', 'P2-5 / P2-6', f"XCVR 3V3 ({N('B', 'n', 13)}) · bare along {LET[21]}: {N('B', 'a', 3)} → {N('A', 'r', 3)} → {silk('A', 'k', 3)}, never {silk('A', 'j', 3)} · → I2C-A VCC ({silk('A', 'c', 21)})"),
+        (NET['6V'], 'Servo 6 V', 'A 6V IN +', f"C2 + ({N('A', 'c', 10)}) · SERVO + ({silk('A', 'c', 13)}) - touches nothing else"),
+        (NET['PWM'], 'Servo PWM', 'P1-27 PE9', f"R4 1k ({N('A', 'h', 12)}-{silk('A', 'h', 8)}) → SERVO SIG ({silk('A', 'c', 14)})"),
+        (NET['SCL'], 'I²C2 SCL', 'P1-34 PB10', f"I2C-B ({N('A', 'c', 17)}) → I2C-A ({silk('A', 'c', 22)})"),
+        (NET['SDA'], 'I²C2 SDA', 'P1-35 PB11', f"I2C-B ({N('A', 'c', 18)}) → I2C-A ({silk('A', 'c', 23)})"),
+        (NET['CTX'], 'CAN1_TX', 'P2-33 PD1', f"XCVR CTX ({N('B', 'q', 13)}) - straight, not crossed"),
+        (NET['CRX'], 'CAN1_RX', 'P2-36 PD0', f"XCVR CRX ({N('B', 'p', 13)})"),
+        (NET['CANH'], 'CAN_H', 'module H', f"link → {N('B', 'm', 3)} → CAN H ({silk('B', 'm', 1)}) · R3 120R → TERM"),
+        (NET['CANL'], 'CAN_L', 'module L', f"link → {N('B', 'o', 3)} → CAN L ({silk('B', 'o', 1)}) · TERM"),
+        (NET['CC'], 'USB-C CC', 'C socket', f"green CC1 ({N('C', 'g', 7)}) → R1 10k → 5 V · yellow CC2 ({silk('C', 'i', 7)}) → R2 10k → 5 V (source Rp, HW-02)"),
     ]
     y = table(100, 'NETLIST', ['Net', 'From', 'To'], net_rows, [12, 96, 190])
 
     ext_rows = [
         (None, 'C IN 5V', 'Bauer 50 W via SW2, 18 AWG pair (HW-17)'),
         (None, 'C TO STM32', '18 AWG pair to B 5V IN'),
-        (None, 'C USB-C', 'socket on C, pigtail soldered: red a7, black c7, green g7, yellow i7 · C-to-C data cable to FRDM J1'),
+        (None, 'C USB-C', f"socket on C, pigtail soldered: red {silk('C', 'a', 7)}, black {silk('C', 'c', 7)}, green {silk('C', 'g', 7)}, yellow {silk('C', 'i', 7)} · C-to-C data cable to FRDM J1"),
         (None, 'C D+ / D−', 'white and blue cut short, each insulated on its own - never twisted together'),
         (None, 'A 6V IN', 'UBEC 6 V out, 18 AWG pair (HW-14)'),
-        (None, 'A SERVO', 'servo plug: signal to row 14 (rear), brown/black to row 12'),
+        (None, 'A SERVO', f"servo plug: signal to {N('A', 'c', 14)} (rear), brown/black to {silk('A', 'c', 12)}"),
         (None, 'A I2C-A', 'INA226 GND, VCC, SCL, SDA - F-F leads, signal only'),
         (None, 'A I2C-B', 'motor module SCL / SDA / GND - never its 5 V pin'),
         (None, 'B CAN', 'twisted H, L + GND to DE-9 stub and FRDM P12 (HW-09, HW-18)'),
@@ -715,12 +738,12 @@ if __name__ == "__main__":
     y = table(y + 26, 'PARTS', ['Board', 'Fitted'], parts, [12, 82])
 
     fix_rows = [
-        (None, 'A1', 'A g14, on grid', 'plate 2 M3 hole (148.18, 23.76), ⌀3.18'),
-        (None, 'B1', 'B d14, on grid', 'plate 2 M2.5 hole (148.2, 72.2), ⌀2.71 - 0.18 mm'),
-        (None, 'A2', 'A between c5 / d6', 'plate 2 M2.5 hole (169.88, 14.24) - mark from the plate'),
-        (None, 'B2', 'B between o5 / o6', 'plate 2 M2.5 hole (169.88, 100.24) - under the module'),
-        (None, 'C e4', 'C e4, on grid', 'plate 2 M3 hole (99.24, 38.76), ⌀3.18'),
-        (None, 'C e21', 'C e21, on grid', 'plate 2 M3 hole (99.24, 81.76) - 43.00 = 17 rows + 0.18'),
+        (None, 'F1', f"{N('A', 'g', 14)}, on grid", 'plate 2 M3 hole (148.18, 23.76), ⌀3.18'),
+        (None, 'F2', f"{N('B', 'd', 14)}, on grid", 'plate 2 M2.5 hole (148.2, 72.2), ⌀2.71 - 0.18 mm'),
+        (None, 'F3', f"A, between {silk('A', 'c', 5)} / {silk('A', 'd', 6)}", 'plate 2 M2.5 hole (169.88, 14.24) - mark from the plate'),
+        (None, 'F4', f"B, between {silk('B', 'o', 5)} / {silk('B', 'o', 6)}", 'plate 2 M2.5 hole (169.88, 100.24) - under the module'),
+        (None, 'F5', f"{N('C', 'e', 4)}, on grid", 'plate 2 M3 hole (99.24, 38.76), ⌀3.18 - under the socket'),
+        (None, 'F6', f"{N('C', 'e', 21)}, on grid", 'plate 2 M3 hole (99.24, 81.76) - 43.00 = 17 pitches + 0.18'),
     ]
     y = table(y + 26, 'FIXINGS  (MEC-15)', ['Fix', 'Board hole', 'Chassis hole'], fix_rows, [12, 62, 170])
     text(RX0, y + 16, 'All six: ⌀3.2 in the board, M2.5 × 10 standoff, M2.5 screws, washer in the ⌀3.18 holes.', 8.4, '#475569')
@@ -733,13 +756,13 @@ if __name__ == "__main__":
     checks = [
         '1  Count the holes: A and B need 18 × 24, C 10 × 24. The drawing assumes the usual kit counts; a board one row short moves everything.',
         '2  Cut four 1×25 strips from the 40-pin female headers and snip the 25th tail of each flush with the body. Dry-fit them on the Discovery,',
-        '    boards A and B under them: pins on A i/j and B g/h, rows 1-24, and row 25 resting on the board margin with no hole under it.',
+        f"    boards A and B under them: pins on {col_range('A', 'i')} / {col_range('A', 'j')[2:]} and {col_range('B', 'g')} / {col_range('B', 'h')[2:]}, and header row 25 past A, on the margin with no hole under it.",
         '3  Solder the sockets WITH THE DISCOVERY PLUGGED IN - it is the only thing that sets the 53.34 mm between A and B. Tack two corners, check, finish.',
         '4  Measure the SN65HVD230 module: outline, pin order, and CANH-CANL unpowered. ~120 Ω means it carries its own terminator - remove it,',
         '    so TERM alone decides. Pin order drawn is the BOM\'s (3V3, GND, CRX, CTX): wire the socket to what the module actually prints.',
         '5  The kit terminals may be 5.0 mm, not 5.08: the 3p CAN block spans 10.0 vs 10.16 mm of holes. Push it in; do not drill.',
-        '6  Before the Discovery goes back in: 5 V to GND not shorted · 6 V rail isolated from 5 V and 3V3 · 5 V on g2/h2 only · nothing on g4 (PH0) · A j3 (P1-4 VDD) not on 3V3.',
-        '7  Fixings: drill A1, B1, C e4 and C e21 on the grid first. Screw A and B down with the Discovery in, then mark A2 and B2 from under the',
+        f"6  Before the Discovery goes back in: 5 V to GND not shorted · 6 V rail isolated from 5 V and 3V3 · 5 V on B·{silk('B', 'g', 2)} / {silk('B', 'h', 2)} only · nothing on B·{silk('B', 'g', 4)} (PH0) · {N('A', 'j', 3)} (P1-4 VDD) not on 3V3.",
+        '7  Fixings: drill F1, F2, F5 and F6 on the grid first. Screw A and B down with the Discovery in, then mark F3 and F4 from under the',
         '    plate through its holes, lift the carrier and drill them. No standoff may touch a bare spine: check each one before the screw goes in.',
     ]
     yy = NY + 26

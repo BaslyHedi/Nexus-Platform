@@ -66,7 +66,7 @@ GROW = S(0.9) - 1            # how long a wire takes to run
 
 CAPTIONS = [
     ((0, 4), "Boards A and B: two 5x7 kit boards, 18 x 24 holes, 5.9 mm apart - board C, the 5 V split, beside them"),
-    ((4, 8.2), "1  Four 1x25 female sockets: A i/j under P1, B g/h under P2 - row 25 sits on the margin, tail snipped"),
+    ((4, 8.2), f"1  Four 1x25 female sockets: A columns {C.silk('A', 'i', 1)[1:]} / {C.silk('A', 'j', 1)[1:]} under P1, B {C.silk('B', 'g', 1)[1:]} / {C.silk('B', 'h', 1)[1:]} under P2 - header row 25 on the margin, tail snipped"),
     ((8.2, 11), "2  The Discovery plugs in as the jig: it alone sets the 53.34 mm between the two headers"),
     ((11, 19.4), "3  Turn the stack over and solder the sockets - tack the four corners, check, then the rest"),
     ((19.4, 21.6), "   Lift the Discovery off"),
@@ -75,15 +75,15 @@ CAPTIONS = [
     ((27.2, 30.2), "6  R4 1k in the servo PWM, R3 120R to TERM, C2 470 uF across the servo supply"),
     ((30.2, 32), "7  A 1x4 socket for the SN65HVD230 module"),
     ((32, 37.2), "8  Turn it over: solder every part pin"),
-    ((37.2, 43.2), "9  Bare tinned spines: GND col e and 6 V col a on A, GND col j on B"),
+    ((37.2, 43.2), f"9  Bare tinned spines: GND along {C.silk('A', 'e', 1)[1:]} and 6 V along {C.silk('A', 'a', 1)[1:]} on A, GND along {C.silk('B', 'j', 1)[1:]} on B"),
     ((43.2, 51.4), "10  Insulated runs: 5 V, 3V3, servo PWM, I2C SCL / SDA, CAN TX / RX, CAN H / L"),
-    ((51.4, 56), "11  The bridges: GND along row 1, 3V3 along row 3 - the 3V3 stops at A k3, never j3 (P1-4 VDD)"),
+    ((51.4, 56), f"11  The bridges: GND along {C.LET[23]}, 3V3 along {C.LET[21]} - the 3V3 stops at {C.N('A', 'k', 3)}, never {C.silk('A', 'j', 3)} (P1-4 VDD)"),
     ((56, 58.8), "   Right way up again"),
-    ((58.8, 64), "12  Module in, H / L links to m3 / o3, TERM jumper on, four 10 mm M2.5 standoffs"),
+    ((58.8, 64), f"12  Module in, H / L links to {C.N('B', 'm', 3)} / {C.silk('B', 'o', 3)}, TERM jumper on, four 10 mm M2.5 standoffs"),
     ((64, 67.4), "13  The Discovery drops onto the carrier"),
     ((67.4, 70.5), "14  Board C, the 5 V split: IN 5V and TO STM32, R1 / R2 10k source Rp, C1 470 uF"),
-    ((70.5, 72.8), "    The e4 screw first, then the USB-C socket over it: pigtail into a7 / c7 / g7 / i7, two zip ties"),
-    ((72.8, 84), "15  Solder side: 5 V spine col a, GND spine col c, the TO STM32 pair in 18 AWG, the CC network"),
+    ((70.5, 72.8), f"    The F5 screw ({C.N('C', 'e', 4)}) first, then the USB-C socket over it: pigtail into {' / '.join(C.silk('C', c, r) for _, _, c, r, _ in C.C_PIGTAIL)}, two zip ties"),
+    ((72.8, 84), f"15  Solder side: 5 V spine along {C.silk('C', 'a', 1)[1:]}, GND spine along {C.silk('C', 'c', 1)[1:]}, the TO STM32 pair in 18 AWG, the CC network"),
     ((84, 95), "The carrier and the 5 V split, ready for plate 2 (MEC-15, HW-19) - the Discovery is a mock"),
 ]
 

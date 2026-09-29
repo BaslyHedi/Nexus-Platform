@@ -615,19 +615,19 @@ headers; Fig. 10 puts P2's odd pins **inboard**.
 **To confirm.** CANH-CANL on the module, unpowered, before it is fitted. If it reads about 120 Ω,
 remove that resistor.
 
-**Revision 2026-09-29 · the USB-C socket lives on board C.**
+**Revision 2026-09-29 · the USB-C socket lives on board C.** Hole names as printed on the kit board (MEC-15).
 
 - **Where.** At C's row-1 end, lying on its side with the flange flush at the board edge and the
   opening facing the vehicle's right. That end is the only free one: C's long sides have 1.5 mm to
   the Bauer and the carrier (MEC-15), and the row-24 end keeps IN 5V and TO STM32.
-- **Held by two zip ties** through 3 mm holes drilled at b2 / i2 and b6 / i6: one over the body,
-  one over the pigtail as strain relief. Both clear the e4 standoff underneath by about 0.9 mm.
-- **The e4 screw is under the body.** The flange is 10.3 mm tall and the body 5.3 mm, centred, so
+- **Held by two zip ties** through 3 mm holes drilled at C·B9 / B2 and C·F9 / F2: one over the body,
+  one over the pigtail as strain relief. Both clear the F5 standoff (C·D6) underneath by about 0.9 mm.
+- **The F5 screw is under the body.** The flange is 10.3 mm tall and the body 5.3 mm, centred, so
   the body rides 2.5 mm off the board and clears a pan-head M2.5. Fit that screw first.
-- **The pigtail is soldered, cut to about 20 mm:** red V into a7 on the 5 V spine, black G into
-  c7 on the GND spine, green CC1 into g7 and yellow CC2 into i7. Each CC landing is linked to its
-  resistor at g8 / i8. **R1 and R2 move to g8-g12 and i8-i12**, their tops joined at g12-i12 and
-  taken to the 5 V spine at a15. White D− and blue D+ are cut short and insulated one by one,
+- **The pigtail is soldered, cut to about 20 mm:** red V into C·G10 on the 5 V spine, black G
+  into G8 on the GND spine, green CC1 into G4 and yellow CC2 into G2. Each CC landing is linked to
+  its resistor at H4 / H2. **R1 and R2 move to H4-L4 and H2-L2**, their tops joined at L4-L2 and
+  taken to the 5 V spine at O10. White D− and blue D+ are cut short and insulated one by one,
   never twisted together.
 - **Why solder rather than terminals.** The pigtail is 24 AWG, which a 5.08 screw clamp holds
   poorly without ferrules, and two terminals and a loose socket become one tied-down part. It costs
