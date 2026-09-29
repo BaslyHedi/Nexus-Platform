@@ -38,8 +38,10 @@ S = lambda sec: int(round(sec * FPS)) + 1      # the timeline is written in seco
 PARTS = [("P1_bus-", 3.0), ("P1_fuse-main", 4.4), ("P1_fuse-motor", 5.6), ("P1_fuse-ubec", 6.8),
          ("P1_ina226", 8.2), ("P1_split-sw1", 9.6), ("P1_ubec", 11.0), ("P1_splice-s1", 12.4),
          ("P1_splice-s2", 13.4), ("P1_splice-s4", 14.2), ("P1_splice-s3", 15.2), ("P1_splice-s5", 16.0),
-         ("P1_splice-s6", 17.0), ("P1_splice-s7", 17.8), ("FASCIA_LOWER", 20.5), ("P1_sw1", 21.6),
-         ("P1_sw2", 21.6)]
+         ("FASCIA_LOWER", 20.5), ("P1_sw1", 21.6), ("P1_sw2", 21.6)]
+# S6 and S7 are on plate 2's TOP face, beside the Bauer, which faces the floor while
+# plate 2 lies open: a drop-in would push them through the plate. Like the Bauer and
+# the carrier, they are simply there from the start.
 DROP_IN = S(0.8) - 1         # how long a part takes to settle onto the face
 WIRES = (S(24), S(42))       # every run grows in this window, in run order
 GROW = S(1.2) - 1
@@ -198,6 +200,15 @@ CAPTIONS = [((0, 3), "Plate 2 upside down beside the chassis - pack and driver a
             ((44.5, 56.8), "4  Flip plate 2 and the panel over, lower onto the standoffs"),
             ((56.8, 60), "5  From the right side: driver VM plug, fuses in, SM-2P last"),
             ((60, 73), "6  Plate 3 and the upper panel close the stack (MEC-16)")]
+band_mat = bpy.data.materials.new("caption-band")
+band_mat.diffuse_color = (0.02, 0.02, 0.03, 0.72)
+bpy.ops.mesh.primitive_plane_add(size=1)
+band = bpy.context.active_object
+band.name = "caption-band"
+band.data.materials.append(band_mat)
+band.parent = cam
+band.location = (0, -5.62, -20.05)          # just behind the text, across the frame
+band.scale = (24, 1.25, 1)
 for (a, b), text in CAPTIONS:
     a, b = S(a), min(S(b), END + 1)
     cu = bpy.data.curves.new("cap", 'FONT')
