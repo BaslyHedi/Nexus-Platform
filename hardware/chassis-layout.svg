@@ -337,7 +337,7 @@
 
 <text x="300" y="300" font-size="8.5" fill="#7c3aed" text-anchor="middle">fascia upper panel clamps here - 2 × M3×8 driven down from the top (MEC-07)</text>
 <!-- STM32 carrier: kit boards A (P1) and B (P2), Discovery above, board C = 5 V split (MEC-15, HW-19) -->
-<rect x="258.9" y="398.4" width="119.0" height="51.0" rx="3" fill="#ecfdf5" fill-opacity="0.92" stroke="#047857" stroke-width="1.6"/>
+<rect x="258.9" y="398.7" width="119.0" height="85.0" rx="3" fill="#ecfdf5" fill-opacity="0.92" stroke="#047857" stroke-width="1.6"/>
 <rect x="258.9" y="493.7" width="119.0" height="85.0" rx="3" fill="#ecfdf5" fill-opacity="0.92" stroke="#047857" stroke-width="1.6"/>
 <rect x="266.6" y="436.9" width="103.6" height="8.6" rx="1.5" fill="#99f6e4" stroke="#0f766e" stroke-width="0.8"/>
 <rect x="266.6" y="523.2" width="103.6" height="8.6" rx="1.5" fill="#fed7aa" stroke="#b45309" stroke-width="0.8"/>
@@ -353,7 +353,7 @@
 <text x="354.2" y="556.7" font-size="7" fill="#047857" font-weight="700" text-anchor="start">B2</text>
 <circle cx="228.7" cy="455.9" r="4.2" fill="none" stroke="#047857" stroke-width="1.8"/><circle cx="228.7" cy="455.9" r="1.5" fill="#047857"/>
 <circle cx="228.7" cy="529.0" r="4.2" fill="none" stroke="#047857" stroke-width="1.8"/><circle cx="228.7" cy="529.0" r="1.5" fill="#047857"/>
-<text x="264.9" y="410.4" font-size="7.5" fill="#047857" font-weight="700" text-anchor="start">A · 3×7 · P1 side</text>
+<text x="264.9" y="410.4" font-size="7.5" fill="#047857" font-weight="700" text-anchor="start">A · 5×7 · P1 side</text>
 <text x="264.9" y="570.2" font-size="7.5" fill="#047857" font-weight="700" text-anchor="start">B · 5×7 · P2 side</text>
 <text x="343.1" y="478.4" font-size="8.2" fill="#4338ca" text-anchor="middle">STM32F4DISCOVERY 66 × 97</text>
 <text x="343.1" y="491.1" font-size="7" fill="#4338ca" text-anchor="middle">CN1 at the rear, x 215</text>

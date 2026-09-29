@@ -798,6 +798,12 @@ cover a 22.4 hole with 1.2 mm to spare a side.
 
 ## MEC-15 · The carrier is two kit boards joined by the Discovery, not one board
 
+**Revised 2026-09-29: board A is a second 5×7 board, and the sockets are 1×25.** A keeps its outboard
+edge and every hole name, and grows inward to 5.9 mm from B. The GND and 3V3 bridges are now bare wire
+soldered along rows 1 and 3, with 12.7 mm unsupported across the gap instead of about 50 mm of loose wire
+under the Discovery. Row 25 (pins 49/50, GND on both headers) is socketed: its tail is snipped and the
+socket rests on the board margin, which has no hole there. See "Revision 2026-09-29" at the end.
+
 **Decision (2026-09-28).** The carrier is built from the prototype kit that is in hand (BOM 5.11), as
 **two boards under the two headers**: **board A**, a 3×7 cm board (10 × 24 holes), under P1, and
 **board B**, a 5×7 cm board (18 × 24 holes), under P2. Each carries two 1×24 female sockets. The
@@ -807,14 +813,18 @@ capacitor go on a third board, C, which is HW-19's business. The build drawing i
 
 **Why.**
 
-- **Nothing in the kit spans the Discovery.** The kit holds 2×8, 3×7, 4×6 and 5×7 cm boards. The
-  outer header rows are 53.34 mm apart (UM1472 Fig. 10), which is 22 holes across, and a header is
-  25 rows long. The largest board is 18 × 24. MEC-08's "70 × 90 from the kit" was never in the kit.
+- **Nothing in the kit spans the Discovery and leaves room outboard.** *Corrected 2026-09-29:* the kit
+  holds 6 × 2×8, 6 × 3×7, 3 × 4×6, 3 × 5×7 and **one 7×9 cm board**. This record first said the 7×9 was
+  not in the kit; it is. The outer header rows are 53.34 mm apart (UM1472 Fig. 10), 22 holes across, and a
+  header is 25 rows long. The 7×9 (24 × 30) takes both headers, but the 66 mm Discovery covers its 70 mm
+  width, so every terminal, the 470 µF can and the module would have to sit under the board. Its five
+  spare rows can only stick out at the front, into board C and the plate's waist.
 - **The Discovery is a better jig than a ruler.** Soldering the four sockets with the board plugged in
   puts A and B exactly where the pins are, which a single large board would only do if its grid and
   the Discovery's agreed.
-- **24 rows are enough.** Row 25 is pins 49/50, GND on both headers. Every net the carrier uses is in
-  rows 1-18, and 96 of the 100 pins are still socketed for later I/O.
+- **24 rows of holes are enough.** Row 25 is pins 49/50, GND on both headers, and GND already enters
+  at row 1. Every net the carrier uses is in rows 1-18. *Since 2026-09-29* row 25 is still socketed, for
+  grip, without a hole (see the revision below).
 - **Tall parts go outboard.** Terminals, the servo and I²C headers, the capacitor and the SN65HVD230
   sit beyond the Discovery's edge, so the part of each board under it carries only wire and resistors.
   B needs the wider board because the transceiver module lives there.
@@ -856,19 +866,39 @@ a seam without adding anything the Discovery does not already provide.
 - **MEC-13's USB-C clearance question is closed.** The boards now end at x 187. Only the Discovery
   reaches x 215, and it does so at about z 101 or higher, above the bottom-row ports at z 90. A
   40 mm body behind the flange, which ends at x 220.3, still clears by 5.3 mm.
-- **The two boards meet only through the Discovery and two soldered bridges** (GND and 3V3). Tie
-  the bridges together; they are the only wires that cross between the boards.
+- **The two boards meet only through the Discovery and two soldered bridges** (GND and 3V3). *Since
+  2026-09-29* each bridge is one bare tinned wire along its row, soldered at every hole it crosses. They
+  are the only wires that cross between the boards.
 - **Hook-up wire is not in the BOM.** The Dupont leads are copper-clad aluminium (5.7) and are not
   used for anything soldered here.
 
 **To confirm.**
 
-- The kit's hole counts. The drawing assumes the usual 10 × 24 and 18 × 24.
+- The kit's hole counts. The drawing assumes the usual 18 × 24 for A and B and 10 × 24 for C.
 - The SN65HVD230 module's outline. B reserves rows 3-17 by columns k-r, about 36 × 21 mm, and the
   module is socketed so that it can move within that. B2's screw sits under it, so the module comes
   out to reach that screw.
 - That six 10 mm M2.5 standoffs are in the M2.5 kit. They are not in the BOM.
 - Clearance under the Discovery with it seated. The design only needs resistor height there.
+
+**Revision 2026-09-29 · two 5×7 boards, 1×25 sockets.**
+
+- **Board A is a 5×7 (18 × 24), not a 3×7.** Its col a keeps its place, so everything in cols a-j keeps
+  its hole name. Cols k-r are new and sit under the Discovery. The outboard edge moves 0.16 mm in, to
+  y 5.11, and the inboard edge is at y 55.11. B is unchanged, from y 60.99, so the boards are **5.88 mm
+  apart**. That gap is not a choice: A holds P1 at cols i/j and B holds P2 at g/h, and the Discovery
+  fixes the rest. Butting the boards would take a 0.8 mm gap, and B would lose its outer two columns.
+- **The bridges are bare wire along their rows.** GND runs from A j1 (P1-2) along row 1 to B g1 (P2-1).
+  3V3 runs from B g3 (P2-5) along row 3 to A k3, and **stops at k3**: A j3 is P1-4, which is VDD
+  behind JP1 and must never meet the 3 V rail (the carrier drawing's supply note). The only unsupported length of each bridge is
+  12.7 mm, A r to B a. Both boards are screwed down, so nothing there can flex.
+- **1×25 sockets.** Cut four strips of 25 from the kit's 40-pin female headers and snip each 25th tail
+  flush. Row 25 falls 3.25 mm from the board's end, on the bare margin, clear of the corner holes (the
+  sockets are mid-board). All 100 pins are held. Pins 49/50 carry no current through the carrier.
+- **Kept:** the fixings and their hole names, the 106 mm width, the placement on plate 2 and board C.
+  A now covers x 117-133, y 40-55 of plate 2's opening. The 6 V pair and the driver's I²C lead still
+  rise through it at x 114-117, in front of the boards, as MEC-16 routes them.
+- **Kit use:** 2 of the 3 5×7 boards (A, B) and 1 of the 6 3×7 boards (C).
 
 ---
 
