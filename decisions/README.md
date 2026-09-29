@@ -123,3 +123,5 @@ Questions that block a decision, or that a decision rests on and nobody has meas
 | Which USB-CAN adapter, and is its 120 Ω switchable? | HW-18 - must be OFF |
 | Does the Encoder Motor Module time out when I²C commands stop? | HW-17 - decides whether the HW-12 relay is needed before autonomy |
 | Which way do the Discovery's P1/P2 pins protrude? | MEC-08 - decides whether the carrier sits above or below the board |
+| Clip and fuse-holder outlines, battery and driver heights, screw heads under plate 2 | MEC-16 - the harness board's layout |
+| UBEC input lead gauge | HW-20 - it is what keeps the UBEC fuse on the list |

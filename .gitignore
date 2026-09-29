@@ -18,3 +18,8 @@ mechanical/chassis-3deck-fascia.obj
 # fascia-lower.stl and fascia-upper.stl are tracked on purpose: OpenSCAD output
 # shifts between versions, and these are the files that actually went to the
 # printer.
+
+# Written by mechanical/plate1.py and make-assembly.py - pure output, re-run them.
+mechanical/plate1/
+mechanical/chassis-3deck-fascia.mtl
+mechanical/assembly-animation.mp4

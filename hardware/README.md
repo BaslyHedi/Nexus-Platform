@@ -42,9 +42,22 @@ both rear holes anywhere along its length. What is still open:
   and 22 AWG, while the drive branch is 18 AWG behind a 5 A fuse and can see 4.6 A with both
   motors stalled. The adapter, and whether to double up through the 3-pin port, is open.
 - **The board sits 8.6 mm off the centreline** because the forward screw is at the end of its
-  slot. Fine as it is, but it pushed the UBEC off its pencilled spot at x 164-199, y 8-20, which
-  is now the driver's harness fan-out. The UBEC is redrawn at x 166-201, y 99-111; **that move is
-  a proposal, not a measurement**.
+  slot. Fine as it is; the UBEC it displaced no longer sits on the floor at all (MEC-16).
+
+### Plate 1 and the harness board - 2026-09-28
+
+The pack is fixed right behind the tie rod (x 85-162). Plate 1's floor carries only the pack and the
+driver; every clip, fuse, splice, the INA226 and the UBEC are taped to **plate 2's lower face**, and
+the drops to plate 1 fold down when plate 2 is lowered (MEC-16). The logic fuse is gone (HW-20). The
+drawing has plate 2's two faces as separate plans and the run table with cut lengths; the 3D model
+is [`../mechanical/plate1.py`](../mechanical/plate1.py). What it still rests on:
+
+- **Clip outlines**: 221-415, DOMAXWILL 3-port and 2-port, and which face the wires enter.
+- **Fuse holder body**, with calipers - 50 x 18 x 30 is scaled off a photo.
+- **Battery height with its felt, and the driver's top height** - they set the clear air under the
+  harness board.
+- **The carrier and board C screw heads under plate 2** against the taped parts.
+- **SW1 / SW2 tab layout** and the lengths of the SM-2P mating lead and the Bauer's own leads.
 
 ### Elsewhere
 
@@ -52,13 +65,10 @@ both rear holes anywhere along its length. What is still open:
   x 181.20, fixed at four existing plate-2 holes. Board C sits across the waist at x 85.5-115.5, on
   the M3 pair at x 99.24. Two of the carrier's holes are drilled off grid, marked from the plate.
   Still to check: six 10 mm M2.5 standoffs in stock, and the Bauer not moving rearward into C.
-- **The power stage still has no home.** Plate 1 is now full: servo, battery, motor driver,
-  WAGO column, INA226, UBEC. Decks 2 and 3 are allocated (carrier, FRDM), and the Bauer 50 W is
-  parked on plate 2 with a `?` on it because its 54 mm ear pitch matches no chassis rectangle.
-- **Battery straps are not bought and the kit ships none** (BOM 3.24). Two 20 mm hook-and-loop
-  straps and a non-slip pad; the pack is soft shrink wrap, so nothing narrow goes on it. Routes
-  are drawn: front through the 23.9 x 10.3 slots at x 56-80, rear through the 48.3 x 5.3 slots
-  at y 12.5 and 108.
+- **The Bauer 50 W is still parked** on plate 2 with a `?` on it, because its 54 mm ear pitch
+  matches no chassis rectangle.
+- **The pack is fixed** right behind the tie rod, on a felt pad under two felt strips and zip ties
+  (BOM 3.24, MEC-16). The hook-and-loop straps once planned were not needed.
 - **The pack's real capacity is unknown.** 63 x 77 x 20 with the leads on a 63 face is three
   21700s in a single row, so 3S1P and **4300-5000 mAh, not the 6000 on the label**. Measure it on
   the first full discharge through the INA226 - it is the denominator for coulomb counting.

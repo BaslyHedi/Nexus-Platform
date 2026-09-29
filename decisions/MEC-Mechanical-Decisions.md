@@ -23,6 +23,7 @@ Drawings: [chassis layout](../hardware/chassis-layout.svg). Geometry and build c
 | **MEC-13** | The debug ports mount from behind, in two horizontal rows |
 | **MEC-14** | The switch drawing closes the lower panel - and its holes open to 22.4 |
 | **MEC-15** | The carrier is two kit boards joined by the Discovery, not one board |
+| **MEC-16** | Plate 2's lower face is the harness board - plate 1 carries only the battery and the driver |
 
 ---
 
@@ -589,6 +590,8 @@ fitted, so the standoff sets card access, not just clearance.
 
 ## MEC-12 · Component allocation across the three plates
 
+**Updated by MEC-16:** plate 1's floor now carries only the battery (moved to x 85-162, behind the tie rod) and the driver. The buses, fuses, INA226, UBEC and splices are taped to plate 2's lower face, and the (−) B bus is gone.
+
 **Updated by MEC-15:** on plate 2 the carrier is x 117.0-215.0 (boards to x 187.0), and board C, the 5 V split, sits across the waist at x 85.5-115.5.
 
 **Decision (2026-09-21).** Parts sit where their function puts them, not where a rule puts them.
@@ -866,3 +869,132 @@ a seam without adding anything the Discovery does not already provide.
   out to reach that screw.
 - That six 10 mm M2.5 standoffs are in the M2.5 kit. They are not in the BOM.
 - Clearance under the Discovery with it seated. The design only needs resistor height there.
+
+---
+
+## MEC-16 · Plate 2's lower face is the harness board - plate 1 carries only the battery and the driver
+
+**Decision (2026-09-28).** Every clip, fuse, splice and the INA226 is stuck to the **lower face of
+plate 2** with 3M double-sided foam tape, and the harness is wired there with plate 2 upside down on
+the bench. The **lower fascia panel with SW1 and SW2 rides with plate 2** during the build, so the
+switches are wired there too. Plate 1's floor keeps only the battery and the motor driver. Plate 2
+and the panel go down onto plate 1 together, and **only two plugs cross between the decks** - the
+SM-2P and the driver's VM - both plugged from the vehicle's right side once it is closed. The
+harness closes like a sandwich.
+
+Positions, x from the front of plate 1 and y from its right edge, as modelled in
+[`../mechanical/plate1.py`](../mechanical/plate1.py) and checked there against Hiwonder's CAD:
+
+| Part | Where | On |
+|---|---|---|
+| **Battery** | x 85-162, y 30-93, lengthwise right behind the tie rod | plate 1, felt pad, felt straps and zip ties - fixed 2026-09-28 |
+| **Motor driver** | x 168-210, y 22.6-80.6 | plate 1, as mounted 21 Sep |
+| **(+) bus**, 221-415, 3 of 5 ports | x 88-107, y 40-70, entry face towards the opening | plate 2, levers down |
+| **(−) bus**, 221-415, 5 of 5 ports | x 134-153, y 40-70, entry face towards the opening | plate 2, levers down |
+| **Main fuse** 7.5 A | x 96-146, y 2-32, lid facing right | plate 2 |
+| **Motor fuse** 5 A | x 152-202, y 2-32, lid facing right | plate 2 |
+| **UBEC fuse** 5 A | x 152-202, y 88-118, lid facing left | plate 2 |
+| **INA226** | x 108-134, y 78-100, upside down, terminals facing the opening | plate 2 |
+| **SW1 split**, DOMAXWILL 3-port | x 178-197, y 51-69, over the driver | plate 2 |
+| **UBEC** | x 100-135, y 100-112 | plate 2 |
+| **S1** (SM-2P + to main fuse) | x 83-96, y 21-40 | plate 2 |
+| **S2 / S4** (driver VM + and −) | x 157-176, y 35-48, stacked | plate 2 |
+| **S3 / S5** (UBEC + and −) | x 139-157, y 104-117, stacked | plate 2 |
+| **S6 / S7** (Bauer + and −) | beside the Bauer | plate 2, top face |
+
+The two buses face each other across **plate 2's 22.7 × 35.4 opening** (x 110-133). Every wire that
+has to reach plate 2's top face - the UBEC's 6 V pair to carrier board A, the Bauer's feed and
+return - goes up through it, between the buses. The rearward runs lie flat on plate 2 in one
+**trunk** and cross over the motors, where there is 9 mm under plate 2 for wires but not for parts.
+
+**Why.**
+
+- **The clips and fuses were never on the drawing.** MEC-12 placed bare WAGO bodies and no fuse
+  holders. The holders are about 50 × 18 × 30 with 12-13 cm leads each side, and every clip needs
+  strip length and a bend in front of its face.
+- **The battery fixed the floor.** Hiwonder's CAD puts the steering linkage at x 47-85.5 - servo
+  bracket up to 38.5 mm high, the tie rod at 15-19 mm - so a 21 mm pack cannot sit forward of
+  x 85.5. The drawing's x 55-132 went through the tie rod. On the vehicle the pack went in right
+  behind it, which fills the old bus bay up to the plate cutout, and the floor has no room left for
+  a clip with its wires.
+- **Plate 2's lower face is the one large free surface.** Forward of the motors the tallest thing
+  on the floor is the driver at about 16 mm, so 34 mm is free under plate 2. Over the motors, which
+  Hiwonder's CAD puts at 40.8 mm, there is 9 mm: enough for wires lying flat, not for a part. The
+  first drafts of this entry assumed 16 mm there and hung the split and both SW1 fuses over them;
+  the 3D model showed the collision.
+- **A harness built flat on one board is built at a bench, not inside a 50 mm gap.** Every joint
+  is made with plate 2 upside down and in the open, and checked before it closes.
+- **Only two wires cross, and both end in a plug that already exists.** The pack lead's SM-2P
+  and the driver's VM connector are both at the vehicle's right side, below the harness board, so
+  they are plugged with the sandwich closed. The SM-2P last, because it is the disconnect.
+- **The switches ride with plate 2 because the lower panel already clamps to it** (MEC-07). Wired
+  on the bench, their leads never cross the decks. The first version of this entry had them as
+  drops with 6 cm spare, plugged with plate 2 held above; the 3D states showed that slack had
+  nowhere to go - over the motors there is 9 mm.
+- **Modelled open, lowering and closed.** `plate1.py` gives each crossing wire a fixed length and
+  recomputes its curve for each position of plate 2.
+- **Foam tape instead of zip ties.** The parts are small and light, the tape takes up the plate's
+  holes and slots, and it holds a part wherever it has to go rather than where a hole happens to be.
+- **The UBEC left plate 1** because its output never stays there: HW-19 routes the servo's 6 V
+  through carrier board A, so it climbs to plate 2 whatever happens.
+- **One (−) bus is enough.** With the two switch LED returns joined at the switches, the star has
+  exactly five returns: battery, driver, UBEC, Bauer and the LEDs.
+
+**Rejected.**
+
+- **Everything on plate 1's floor.** Four fuse holders alone need about 6000 mm²; once the pack was
+  in, the free floor was two strips about 25 mm wide beside it.
+- **Parts over the motors.** 9 mm under plate 2.
+- **Fuse lids facing down.** A holder is 30 mm tall that way, and changing a fuse needs about 20 mm
+  more below the lid.
+- **Zip ties through plate 2's holes.** They fix a part only where a hole is, and two of the
+  carrier's screw heads (A2, B2) sit under plate 2 where the ties would go.
+
+**Building it.**
+
+1. **Plate 2 off, upside down on the bench**, on two blocks so the carrier and the Bauer on its top
+   face hang free. Clean the face with isopropyl alcohol where each part goes.
+2. **Hold the lower fascia panel with SW1 and SW2 to plate 2** at its top pads - a temporary
+   M3 × 8 into each captive nut, replaced by the M3 × 12 when the upper panel goes on (MEC-07).
+3. **Tape the parts** in the positions above: buses levers-down, fuse holders flat with the lids to
+   the sides, the INA226 upside down, the splices beside their runs. Fuses out.
+4. **Wire everything**, switches included. Two tails stay loose: the SM-2P male (from S1 and the
+   (−) bus) and the driver's VM plug (from S2 and S4), about 3 and 7 cm.
+5. **Lower plate 2 and the panel together** onto the standoffs, the panel's bottom pads onto
+   plate 1, and fit the screws (panel bottom from under the vehicle). Check nothing is pinched
+   against the pack.
+6. **From the right side**, plug the driver's VM, fuses in, then the SM-2P last - the battery is
+   the disconnect (HW-08).
+7. The driver's I²C lead goes up to the carrier on plate 2's top face; route it with the 6 V pair
+   through plate 2's opening.
+
+**Consequences.**
+
+- **The (−) bus has no spare port.** A sixth return means bridging one of the three spare 221-415s
+  back in, which is the HW-16 arrangement.
+- **3M double-sided foam tape is a new BOM line**, and the hook-and-loop straps in BOM 3.24 were not
+  used: the pack is held by felt strips and zip ties.
+- **The fuse lids face the sides of the lower gap** and are changed from there without lifting
+  plate 2. The main fuse's front end reaches past the plate edge by about 4 mm at the waist.
+- **18 AWG needed is about 1.5 m red and 1.1 m black** against 2.5 m each bought. The clips come from stock: 2 × 221-415 (3 spare),
+  1 × 3-port and 7 × 2-port from the DOMAXWILL kit.
+- **The chassis layout drawing shows plate 1's floor only**; the harness board is this table and
+  the 3D model, where each part and each run is its own coloured group.
+
+**To confirm.**
+
+- The clip outlines and which face the wires enter: the model uses 30 × 18.6 × 8.5 for the 221-415
+  and 18.6 × 18.4 for the 3-port.
+- The fuse holder body with calipers - 50 × 18 × 30 is scaled off the vendor photo.
+- The pack's height with its felt (modelled 21 + 3) and the driver's top height.
+- The screw heads under plate 2 - carrier A1, A2, B1, B2 and board C's two - against the taped parts.
+  A2 lands at the motor fuse's lid edge.
+- The SW1 / SW2 tab layout, and which tab carries LED − (runs 13 and 14).
+- That the driver's VM socket can be reached from the right side under the motor fuse - about
+  16 mm of height between the floor parts and the holder. If not, the VM tail needs about 12 cm to
+  be plugged with plate 2 held above, and that slack has to be stowed.
+- The Bauer's own lead length, which sets S6 and S7.
+- The tires' outside diameter. The model uses about 68 mm, scaled off a photo - the CAD has the
+  rims only. At that size a rear tire's front edge is at about x 191 at fuse height, and the
+  motor and UBEC fuse lids end at x 190, so the lids are reached from the side just in front of
+  the rear tires.
