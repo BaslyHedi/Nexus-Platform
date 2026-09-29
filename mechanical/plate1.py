@@ -22,8 +22,8 @@ fascia clamp holes and both rear motors land where the drawing has them.
 
 Heights that matter, from the CAD: plate 2's underside is z 50, the rear motors top
 out at z 40.8 and the rear wheels at z 44.7. The motors leave 9 mm under plate 2, so
-nothing hangs over them; the harness to the switches runs through the 7 mm slot
-between the two encoders, on the centreline at y 57-63.
+nothing hangs over them; the harness to the switches lies flat on plate 2's lower face
+over them.
 """
 import math, os, struct
 
@@ -193,6 +193,8 @@ def tires():
 
 
 def build():
+    for lst in (PARTS, RUNS, DROPS):         # a second build in one process starts clean
+        lst.clear()
     tires()
     # battery as fixed on the vehicle 2026-09-28 (photos): lengthwise right behind the
     # tie rod, on a felt pad, held by two felt straps and zip ties. Leads leave the

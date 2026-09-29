@@ -67,10 +67,8 @@ is [`../mechanical/plate1.py`](../mechanical/plate1.py). What it still rests on:
   Still to check: six 10 mm M2.5 standoffs in stock, and the Bauer not moving rearward into C.
 - **The Bauer 50 W is still parked** on plate 2 with a `?` on it, because its 54 mm ear pitch
   matches no chassis rectangle.
-- **Battery straps are not bought and the kit ships none** (BOM 3.24). Two 20 mm hook-and-loop
-  straps and a non-slip pad; the pack is soft shrink wrap, so nothing narrow goes on it. Routes
-  are drawn: front through the 23.9 x 10.3 slots at x 56-80, rear through the 48.3 x 5.3 slots
-  at y 12.5 and 108.
+- **The pack is fixed** right behind the tie rod, on a felt pad under two felt strips and zip ties
+  (BOM 3.24, MEC-16). The hook-and-loop straps once planned were not needed.
 - **The pack's real capacity is unknown.** 63 x 77 x 20 with the leads on a 63 face is three
   21700s in a single row, so 3S1P and **4300-5000 mAh, not the 6000 on the label**. Measure it on
   the first full discharge through the INA226 - it is the denominator for coulomb counting.
