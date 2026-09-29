@@ -14,6 +14,7 @@ this folder owns the geometry, and the table below says which file is which.
 | `assembly.stl` | 69 MB | The same assembly as one mesh, for renders. **Generated and untracked** - delete it and re-run |
 | [`plate1.py`](plate1.py) | 20 kB | **Plate 1 stand-ins for an eye review** (MEC-16): every component and every wire run as its own STL in `plate1/`, at the assumed sizes. Not for building from |
 | `plate1/*.stl`, `plate1/states/`, `chassis-3deck-fascia.mtl` | 1 MB | **Generated and untracked** - the parts; the two wires that cross between the decks in the `raised` and `open` positions (plate 2 lowering, 60 mm up, or hinged over like a book); and the colours. Re-run the two scripts |
+| [`animate-assembly.py`](animate-assembly.py) | 8 kB | **Assembly animation** of the harness-board sandwich, in MEC-16's build order: parts onto the upturned plate 2, wires run by run, the flip, the lowering, the plugs, plate 3. `blender -b -P animate-assembly.py` writes `assembly-animation.mp4` (25 s, 720p, untracked); `-- --preview` renders a quick quarter-size version |
 | [`make-assembly.py`](make-assembly.py) | 8 kB | Rebuilds the assembly from the current STLs, fascia and plate 1, coloured through the `.mtl`. Run it after any fascia or plate 1 change |
 
 ## Building
