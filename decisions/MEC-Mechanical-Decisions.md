@@ -994,3 +994,7 @@ return - goes up through it, between the buses. The rearward runs lie flat on pl
   16 mm of height between the floor parts and the holder. If not, the VM tail needs about 12 cm to
   be plugged with plate 2 held above, and that slack has to be stowed.
 - The Bauer's own lead length, which sets S6 and S7.
+- The tires' outside diameter. The model uses about 68 mm, scaled off a photo - the CAD has the
+  rims only. At that size a rear tire's front edge is at about x 191 at fuse height, and the
+  motor and UBEC fuse lids end at x 190, so the lids are reached from the side just in front of
+  the rear tires.

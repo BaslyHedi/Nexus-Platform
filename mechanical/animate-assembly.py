@@ -27,7 +27,7 @@ PIVOT = Vector((-85.0, 0.0, 50.56))
 LIFT = 60.0
 
 # what stays on plate 1; everything else of ours rides on plate 2
-STAY = ("P1_battery", "P1_driver", "P1_run01a", "P1_run04a", "P1_sm2p-female", "P1_drop-")
+STAY = ("P1_battery", "P1_driver", "P1_tire", "P1_run01a", "P1_run04a", "P1_sm2p-female", "P1_drop-")
 PLATE2_CAD = ("obj36_", "obj146_", "obj147_", "obj148_", "obj149_", "FASCIA_LOWER")
 DECK3 = ("DECK3", "FASCIA_UPPER")
 

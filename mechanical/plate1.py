@@ -43,7 +43,7 @@ MATERIALS = {
     "tie":          (0.97, 0.97, 0.97, 1), "tape": (0.55, 0.55, 0.60, 1), "ubec":         (0.95, 0.80, 0.10, 1),
     "switch":       (0.75, 0.75, 0.78, 1), "bezel_red":    (0.85, 0.10, 0.10, 1),
     "bezel_green":  (0.10, 0.70, 0.20, 1), "placeholder":  (0.85, 0.20, 0.25, 0.55),
-    "pcb_carrier":  (0.10, 0.60, 0.30, 0.45),
+    "pcb_carrier":  (0.10, 0.60, 0.30, 0.45), "tire": (0.08, 0.08, 0.09, 1),
     "wire_red":     (0.90, 0.08, 0.08, 1), "wire_orange":  (1.00, 0.55, 0.00, 1),
     "wire_black":   (0.03, 0.03, 0.03, 1), "wire_teal":    (0.00, 0.62, 0.58, 1),
 }
@@ -112,6 +112,22 @@ def wire(pts, d):
     return t
 
 
+def revolve(profile, xc, zc, y0, n=72):
+    """Solid of revolution about a lateral axis (layout y) through (xc, zc).
+
+    profile: closed polygon of (w, r) - w across the width from y0, r the radius.
+    """
+    t = []
+    ring = lambda w, r, a: (xc + r * math.cos(a), y0 + w, zc + r * math.sin(a))
+    for i in range(n):
+        a0, a1 = 2 * math.pi * i / n, 2 * math.pi * (i + 1) / n
+        for (w0, r0), (w1, r1) in zip(profile, profile[1:] + profile[:1]):
+            p00, p01 = ring(w0, r0, a0), ring(w1, r1, a0)
+            p10, p11 = ring(w0, r0, a1), ring(w1, r1, a1)
+            t += [(p00, p01, p11), (p00, p11, p10)]
+    return t
+
+
 # ---------------------------------------------------------------- components
 PARTS = []            # (name, material, triangles)
 
@@ -155,7 +171,29 @@ def clip(name, x0, x1, y0, y1, z0, z1, ports_y, face_x, lever_z):
         part(name + "-levers", "lever", lv)
 
 
+# Tires. Hiwonder's CAD has the rims only: 58.7 across the lips, 29.4 wide, a well down
+# to r 25.2. The rubber is estimated from a photo of the kit, scaled on the 120.5 mm
+# plate: about 68 mm outside diameter and 30 wide - measure before trusting it.
+# Axles from the CAD, in layout coordinates: rear x 221.56, z 15.33; front x 50.02,
+# z 12.69 (the front axle sits 2.6 mm lower). Wheel spans across, y: rear -38.11..-8.70
+# and 129.27..158.67, front -38.95..-9.55 and 130.11..159.51.
+TIRE_R, TIRE_W = 34.0, 30.0
+WHEELS = [("tire-rear-right", 221.56, 15.33, -38.41), ("tire-rear-left", 221.56, 15.33, 128.97),
+          ("tire-front-right", 50.02, 12.69, -39.25), ("tire-front-left", 50.02, 12.69, 129.81)]
+
+
+def tires():
+    R, W = TIRE_R, TIRE_W
+    prof = [(0, 28.6), (0, 31.0), (1.0, 33.2), (3.0, R), (9.0, R), (9.6, R - 1.4), (10.8, R - 1.4),
+            (11.4, R), (18.6, R), (19.2, R - 1.4), (20.4, R - 1.4), (21.0, R), (27.0, R),
+            (W - 1.0, 33.2), (W, 31.0), (W, 28.6)]
+    prof = prof[::-1]                      # wound so the faces point outwards once mirrored
+    for name, xc, zc, y0 in WHEELS:
+        part(name, "tire", revolve(prof, xc, zc, y0))
+
+
 def build():
+    tires()
     # battery as fixed on the vehicle 2026-09-28 (photos): lengthwise right behind the
     # tie rod, on a felt pad, held by two felt straps and zip ties. Leads leave the
     # FRONT face: SM-2P lead at the front-right corner, charge lead at the front-left.
