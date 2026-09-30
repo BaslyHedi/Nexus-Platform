@@ -624,10 +624,10 @@ remove that resistor.
   one over the pigtail as strain relief. Both clear the F5 standoff (C·D6) underneath by about 0.9 mm.
 - **The F5 screw is under the body.** The flange is 10.3 mm tall and the body 5.3 mm, centred, so
   the body rides 2.5 mm off the board and clears a pan-head M2.5. Fit that screw first.
-- **The pigtail is soldered, cut to about 20 mm:** red V into C·G10 on the 5 V spine, black G
-  into G8 on the GND spine, green CC1 into G4 and yellow CC2 into G2. Each CC landing is linked to
-  its resistor at H4 / H2. **R1 and R2 move to H4-L4 and H2-L2**, their tops joined at L4-L2 and
-  taken to the 5 V spine at O10. White D− and blue D+ are cut short and insulated one by one,
+- **The pigtail is soldered, cut to about 20 mm:** red V into C·G10 and black G into G8, each the
+  end of an 18 AWG chain from IN 5V through C1 (X10 → L10 → G10 and X8 → L8 → G8, MEC-15's
+  2026-09-30 routing). Green CC1 goes into G4 and yellow CC2 into G2. **R1 and R2 sit at H4-L4 and
+  H2-L2**, their lower leads bent over to G4 / G2, and their tops fed from TO STM32 + (X4 → L4 → L2). White D− and blue D+ are cut short and insulated one by one,
   never twisted together.
 - **Why solder rather than terminals.** The pigtail is 24 AWG, which a 5.08 screw clamp holds
   poorly without ferrules, and two terminals and a loose socket become one tied-down part. It costs

@@ -75,15 +75,15 @@ CAPTIONS = [
     ((27.2, 30.2), "6  R4 1k in the servo PWM, R3 120R to TERM, C2 470 uF across the servo supply"),
     ((30.2, 32), "7  A 1x4 socket for the SN65HVD230 module"),
     ((32, 37.2), "8  Turn it over: solder every part pin"),
-    ((37.2, 43.2), f"9  Bare tinned spines: GND along {C.silk('A', 'e', 1)[1:]} and 6 V along {C.silk('A', 'a', 1)[1:]} on A, GND along {C.silk('B', 'j', 1)[1:]} on B"),
-    ((43.2, 51.4), "10  Insulated runs: 5 V, 3V3, servo PWM, I2C SCL / SDA, CAN TX / RX, CAN H / L"),
-    ((51.4, 56), f"11  The bridges: GND along {C.LET[23]}, 3V3 along {C.LET[21]} - the 3V3 stops at {C.N('A', 'k', 3)}, never {C.silk('A', 'j', 3)} (P1-4 VDD)"),
+    ((37.2, 43.2), "9  The servo loop in 18 AWG, outboard on A: 6V IN to C2 to SERVO, on + and on GND"),
+    ((43.2, 51.4), "10  22 AWG, pad to pad: the GND chain, 5 V, 3V3, servo PWM, I2C, CAN TX / RX, CAN H / L, TERM"),
+    ((51.4, 56), f"11  The bridges, one wire each: P2-1 to 6V IN - ({C.N('A', 'c', 3)}), P2-5 to I2C-A VCC ({C.N('A', 'c', 21)})"),
     ((56, 58.8), "   Right way up again"),
     ((58.8, 64), f"12  Module in, H / L links to {C.N('B', 'm', 3)} / {C.silk('B', 'o', 3)}, TERM jumper on, four 10 mm M2.5 standoffs"),
     ((64, 67.4), "13  The Discovery drops onto the carrier"),
     ((67.4, 70.5), "14  Board C, the 5 V split: IN 5V and TO STM32, R1 / R2 10k source Rp, C1 470 uF"),
     ((70.5, 72.8), f"    The F5 screw ({C.N('C', 'e', 4)}) first, then the USB-C socket over it: pigtail into {' / '.join(C.silk('C', c, r) for _, _, c, r, _ in C.C_PIGTAIL)}, two zip ties"),
-    ((72.8, 84), f"15  Solder side: 5 V spine along {C.silk('C', 'a', 1)[1:]}, GND spine along {C.silk('C', 'c', 1)[1:]}, the TO STM32 pair in 18 AWG, the CC network"),
+    ((72.8, 84), "15  Solder side: IN 5V to C1 to the socket on each rail in 18 AWG, R1 / R2 leads bent to the CC landings"),
     ((84, 95), "The carrier and the 5 V split, ready for plate 2 (MEC-15, HW-19) - the Discovery is a mock"),
 ]
 
@@ -252,7 +252,7 @@ def flip(root, a, b, lift=45.0):
 
 def wire(name, pts, net, kind, parent, sec, dur=None, z=None, colour=None):
     """A run on the solder side (z below the board), grown from its first point."""
-    r = {'bare': 0.5, 'ins': 0.55, 'pwr': 0.9}[kind]
+    r = {'ins': 0.55, 'pwr': 0.9, 'lead': 0.3}[kind]
     z = -1.6 - r if z is None else z
     cu = bpy.data.curves.new(name, 'CURVE')
     cu.dimensions = '3D'
@@ -264,7 +264,7 @@ def wire(name, pts, net, kind, parent, sec, dur=None, z=None, colour=None):
     sp.points.add(len(pts) - 1)
     for p, q in zip(sp.points, pts):
         p.co = mirror((q[0], q[1], q[2] if len(q) > 2 else z)) + (1,)
-    cu.materials.append(mat('wire' + colour, colour) if colour else MATS['bare' if kind == 'bare' else 'net_' + net])
+    cu.materials.append(mat('wire' + colour, colour) if colour else MATS['bare' if kind == 'lead' else 'net_' + net])
     o = bpy.data.objects.new(name, cu)
     sc.collection.objects.link(o)
     adopt(o, parent)
@@ -445,13 +445,8 @@ drop(m.make('xcvr-socket', car), PARTS_T['XCVR'])
 joints('joints-parts', PART_PINS, car, PART_J)
 
 # ---------------------------------------------------------------- solder side of A and B
-BRIDGE_RUNS = {('GND', 'A', ((9, 1), (18, 1))), ('3V3', 'A', ((11, 3), (18, 3))),
-               ('GND', 'B', ((1, 1), (8, 1))), ('3V3', 'B', ((1, 3), (8, 3)))}
-spines, insul, bridges = [], [], []
-for net, b, pts, kind in C.WIRES:
-    xy = [hole(b, c, r) for c, r in pts]
-    key = (net, b, tuple(pts))
-    (bridges if key in BRIDGE_RUNS else spines if kind == 'bare' else insul).append((net, b, pts, kind, xy))
+heavy = [(n, b, pts, k) for n, b, pts, k in C.WIRES if k == 'pwr']
+light = [(n, b, pts, k) for n, b, pts, k in C.WIRES if k != 'pwr']
 
 
 def wire_ends(pts, xy):
@@ -459,20 +454,20 @@ def wire_ends(pts, xy):
             if float(c).is_integer() and float(r).is_integer()]
 
 
-for group, (a, z) in ((spines, SPINES), (insul, INSUL)):
+# every wire is insulated and runs pad to pad; its two joints appear as it lands
+for group, (a, z) in ((heavy, SPINES), (light, INSUL)):
     step = (z - a) / max(1, len(group))
-    for i, (net, b, pts, kind, xy) in enumerate(group):
+    for i, (net, b, pts, kind) in enumerate(group):
         t = a + i * step
+        xy = [hole(b, c, r) for c, r in pts]
         wire(f'wire-{b}-{net}-{i}', xy, net, kind, car, t)
-        if kind != 'bare':
-            joints(f'wj-{b}-{net}-{i}', wire_ends(pts, xy), car, t + GROW / FPS)
-# the two bridges: along B's row, across the gap, along A's row - one wire each
-for i, (net, (ba, ca, ra), (bb, cb, rb)) in enumerate(C.BRIDGES):
-    run = [r for r in bridges if r[0] == net]
-    a_run = next(r for r in run if r[1] == 'A')
-    b_run = next(r for r in run if r[1] == 'B')
-    xy = list(reversed(b_run[4])) + list(reversed(a_run[4]))
-    wire(f'bridge-{net}', xy, net, 'bare', car, BRIDGE[0] + 1.8 * i, dur=S(1.6) - 1)
+        joints(f'wj-{b}-{net}-{i}', wire_ends(pts, xy), car, t + GROW / FPS)
+# the two bridges, one wire each from a P2 pin on B to the part it feeds on A
+for i, (net, pts, kind) in enumerate(C.XWIRES):
+    xy = [hole(b, c, r) for b, c, r in pts]
+    t = BRIDGE[0] + 1.8 * i
+    wire(f'bridge-{net}', xy, net, kind, car, t, dur=S(1.6) - 1)
+    joints(f'bj-{net}', [xy[0], xy[-1]], car, t + 1.6)
 
 # ---------------------------------------------------------------- module, links, jumper, standoffs
 mx0 = C.RX(13) - 1.5
@@ -615,12 +610,15 @@ for r in C.C_TIES:
     m.box(x - 1.6, x + 1.6, yi_ - 3.2, yi_ - 0.2, top, top + 1.6, 'captop')      # the lock
 drop(m.make('c-zip-ties', cr), C_PARTS['ties'], 15)
 joints('c-joints', C_PINS, cr, C_J)
-c_sp = [w_ for w_ in C.C_WIRES if w_[2] == 'bare']
-c_ot = [w_ for w_ in C.C_WIRES if w_[2] != 'bare']
+c_sp = [w_ for w_ in C.C_WIRES if w_[2] == 'pwr']
+c_ot = [w_ for w_ in C.C_WIRES if w_[2] != 'pwr']
 for group, (a, z) in ((c_sp, C_SPINES), (c_ot, C_WIRES)):
     step = (z - a) / max(1, len(group))
     for i, (net, pts, kind) in enumerate(group):
-        wire(f'c-wire-{net}-{i}', [ch(c, r) for c, r in pts], net, kind, cr, a + i * step)
+        xy = [ch(c, r) for c, r in pts]
+        wire(f'c-wire-{net}-{i}', xy, net, kind, cr, a + i * step)
+        if kind != 'lead':
+            joints(f'c-wj-{net}-{i}', [xy[0], xy[-1]], cr, a + i * step + GROW / FPS)
 
 flip(car, *FLIP1)
 flip(car, *FLIP1B)

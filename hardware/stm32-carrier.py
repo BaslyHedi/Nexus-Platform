@@ -124,58 +124,47 @@ XCVR_SOCKET = ('B', [('n', 13, '3V3'), ('o', 13, 'GND'), ('p', 13, 'CRX'), ('q',
 FIX = [('A', 7.0, 14.0, 'F1', '(148.18, 23.76) ⌀3.18'), ('B', 4.07, 14.0, 'F2', '(148.2, 72.2) ⌀2.71'),
        ('A', 3.25, 5.457, 'F3', '(169.88, 14.24) ⌀2.71'), ('B', 15.11, 5.457, 'F4', '(169.88, 100.24) ⌀2.71')]
 
-# wires: (net, board, [(col,row)...], kind)  kind: 'ins' insulated, 'bare' tinned link
+# Wires, all insulated and all pad to pad: nothing is joined to another wire except at a pad,
+# and no pad takes more than two wire ends. A net with several pins is a chain, part to part.
+# Points are (column, header row) and may sit between holes, in the channels the wire runs
+# along. kind: 'pwr' 18 AWG silicone copper (servo and FRDM current), 'ins' 22 AWG hook-up
+# wire, 'lead' a component's own lead bent over to the next pad on the solder side.
 WIRES = [
-    # ---- board A
-    ('GND', 'A', [(5, 1), (5, 20)], 'bare'),                  # GND spine, column e
-    ('GND', 'A', [(5, 1), (9, 1)], 'bare'),                   # spine to P1-1 (passes h1)
-    ('GND', 'A', [(3, 3), (5, 3)], 'bare'),
-    ('GND', 'A', [(3, 8), (5, 8)], 'bare'),
-    ('GND', 'A', [(3, 12), (5, 12)], 'bare'),
-    ('GND', 'A', [(3, 16), (5, 16)], 'bare'),
-    ('GND', 'A', [(3, 20), (5, 20)], 'bare'),
-    ('6V', 'A', [(1, 1), (1, 13)], 'bare'),                   # 6 V spine, column a
-    ('6V', 'A', [(3, 1), (1, 1)], 'bare'),
-    ('6V', 'A', [(3, 10), (1, 10)], 'bare'),
-    ('6V', 'A', [(3, 13), (1, 13)], 'bare'),
-    ('PWM', 'A', [(9, 14), (8.5, 14), (8.5, 12), (8, 12)], 'ins'),
-    ('PWM', 'A', [(8, 8), (8, 7.5), (4.5, 7.5), (4.5, 14), (3, 14)], 'ins'),
-    ('SCL', 'A', [(10, 17), (10, 16.5), (3.5, 16.5), (3.5, 17), (3, 17)], 'ins'),
-    ('SCL', 'A', [(3, 17), (3.5, 17), (3.5, 22), (3, 22)], 'ins'),
-    ('SDA', 'A', [(9, 18), (9, 18.5), (2.5, 18.5), (2.5, 18), (3, 18)], 'ins'),
-    ('SDA', 'A', [(3, 18), (2.5, 18), (2.5, 23), (3, 23)], 'ins'),
-    ('3V3', 'A', [(11, 3), (11, 2.5), (5.5, 2.5), (5.5, 21.5), (3.5, 21.5), (3.5, 21), (3, 21)], 'ins'),
-    ('GND', 'A', [(9, 1), (18, 1)], 'bare'),                  # GND bridge on A: j1 (P1-2) to r1
-    ('3V3', 'A', [(11, 3), (18, 3)], 'bare'),                 # 3V3 bridge on A: k3 to r3, never j3 (P1-4 VDD)
-    # ---- board B
-    ('GND', 'B', [(1, 1), (8, 1)], 'bare'),                   # GND bridge on B: a1 to g1-h1 (P2-1, P2-2)
-    ('GND', 'B', [(8, 1), (10, 1)], 'bare'),
-    ('GND', 'B', [(10, 1), (10, 24)], 'bare'),                # GND spine, column j
-    ('5V', 'B', [(7, 2), (8, 2)], 'bare'),                    # P2-3 = P2-4
-    ('3V3', 'B', [(1, 3), (8, 3)], 'bare'),                   # 3V3 bridge on B: a3 to g3-h3 (P2-5, P2-6)
-    ('GND', 'B', [(17, 1), (17, 0.5), (10, 0.5), (10, 1)], 'ins'),          # CAN GND
-    ('GND', 'B', [(15, 13), (15, 12.5), (10, 12.5), (10, 12)], 'ins'),                # XCVR GND
-    ('GND', 'B', [(17, 23), (17, 24), (10, 24)], 'ins'),                    # 5V IN GND
-    ('5V', 'B', [(17, 21), (17, 21.5), (9.5, 21.5), (9.5, 2.5), (8, 2.5), (8, 2)], 'ins'),
-    ('3V3', 'B', [(8, 3), (8, 3.5), (11.5, 3.5), (11.5, 13.5), (14, 13.5), (14, 13)], 'ins'),
-    ('CTX', 'B', [(7, 17), (7.5, 17), (7.5, 16.5), (16.5, 16.5), (16.5, 13), (17, 13)], 'ins'),
-    ('CRX', 'B', [(8, 18), (8.5, 18), (8.5, 15.5), (16, 15.5), (16, 13)], 'ins'),
-    ('CANH', 'B', [(13, 3), (13, 1)], 'bare'),                # m3-m2-m1
-    ('CANL', 'B', [(15, 3), (15, 1)], 'bare'),                # o3-o2-o1
-    ('CANH', 'B', [(13, 3), (12.5, 3), (12.5, 18.5), (11, 18.5), (11, 19)], 'ins'),
-    ('CANL', 'B', [(15, 3), (15, 3.5), (13.5, 3.5), (13.5, 22), (13, 22)], 'ins'),
-    ('TERM', 'B', [(11, 23), (13, 23)], 'bare'),              # R3 to TERM, k23-l23-m23 (own node)
+    # ---- board A: the servo loop outboard in 18 AWG, then the GND chain on to the I2C headers
+    ('6V', 'A', [(3, 1), (0.5, 1), (0.5, 10), (3, 10)], 'pwr'),                  # 6V IN + to C2 +
+    ('6V', 'A', [(3, 10), (3.5, 10), (3.5, 13), (3, 13)], 'pwr'),                # C2 + to SERVO +
+    ('GND', 'A', [(3, 3), (1.5, 3), (1.5, 7.5), (3, 7.5), (3, 8)], 'pwr'),       # 6V IN - to C2 -
+    ('GND', 'A', [(3, 8), (2.5, 8), (2.5, 12), (3, 12)], 'pwr'),                 # C2 - to SERVO GND
+    ('GND', 'A', [(3, 12), (2.5, 12.5), (1.5, 12.5), (1.5, 15.5), (3, 16)], 'ins'),   # to I2C-B GND
+    ('GND', 'A', [(3, 16), (2.5, 16.5), (1.5, 16.5), (1.5, 19.5), (3, 20)], 'ins'),   # to I2C-A GND
+    ('PWM', 'A', [(9, 14), (8.5, 13.5), (8.5, 12.5), (8, 12)], 'ins'),           # PE9 to R4
+    ('PWM', 'A', [(8, 8), (7.5, 7.5), (4.5, 7.5), (4.5, 14), (3, 14)], 'ins'),   # R4 to SERVO SIG
+    ('SCL', 'A', [(10, 17), (9.5, 16.5), (3.5, 16.5), (3, 17)], 'ins'),          # PB10 to I2C-B
+    ('SCL', 'A', [(3, 17), (3.5, 17.5), (3.5, 21.5), (3, 22)], 'ins'),           # I2C-B to I2C-A
+    ('SDA', 'A', [(9, 18), (8.5, 18.5), (4, 18.5), (3, 18)], 'ins'),             # PB11 to I2C-B
+    ('SDA', 'A', [(3, 18), (2.5, 18.5), (2.5, 22.5), (3, 23)], 'ins'),           # I2C-B to I2C-A
+    # ---- board B: each header pin feeds one thing, so no pin carries more than two wires
+    ('5V', 'B', [(17, 21), (17, 21.5), (9.5, 21.5), (9.5, 2.5), (8, 2)], 'ins'),                # 5V IN + to P2-4
+    ('GND', 'B', [(17, 23), (17.5, 23.5), (17.5, 24.5), (10.5, 24.5), (10.5, 1.5), (8, 1)], 'ins'),  # 5V IN - to P2-2
+    ('GND', 'B', [(7, 1), (7.5, 0.5), (16.5, 0.5), (17, 1)], 'ins'),             # P2-1 to CAN GND
+    ('GND', 'B', [(17, 1), (17.5, 1.5), (17.5, 12.5), (15.5, 12.5), (15, 13)], 'ins'),   # CAN GND to XCVR GND
+    ('3V3', 'B', [(8, 3), (8.5, 3.5), (11.5, 3.5), (11.5, 12.5), (14, 12.5), (14, 13)], 'ins'),  # P2-6 to XCVR 3V3
+    ('CTX', 'B', [(7, 17), (7.5, 16.5), (16.5, 16.5), (16.5, 13.5), (17, 13)], 'ins'),   # PD1 to CTX
+    ('CRX', 'B', [(8, 18), (8.5, 17.5), (15.5, 17.5), (15.5, 13.5), (16, 13)], 'ins'),   # PD0 to CRX
+    ('CANH', 'B', [(13, 3), (12.5, 2.5), (12.5, 1.5), (13, 1)], 'ins'),          # module H to CAN H
+    ('CANH', 'B', [(13, 1), (13.5, 1.5), (13.5, 18.5), (11.5, 18.5), (11, 19)], 'ins'),  # CAN H to R3
+    ('CANL', 'B', [(15, 3), (15.5, 2.5), (15.5, 1.5), (15, 1)], 'ins'),          # module L to CAN L
+    ('CANL', 'B', [(15, 1), (14.5, 1.5), (14.5, 3.5), (12.5, 3.5), (12.5, 22.5), (13, 22)], 'ins'),  # CAN L to TERM
+    ('TERM', 'B', [(11, 23), (11.5, 23.5), (12.5, 23.5), (13, 23)], 'ins'),      # R3 to TERM
 ]
-BRIDGES = [('GND', ('A', 18, 1), ('B', 1, 1)), ('3V3', ('A', 18, 3), ('B', 1, 3))]   # the 5.9 mm gap
+# The two bridges, each one wire from a P2 pin on B to the part it feeds on A, across the gap
+XWIRES = [
+    ('GND', [('B', 7, 1), ('B', 6.5, 0.5), ('B', 1, 0.5), ('A', 18, 0.5), ('A', 3.5, 0.5),
+             ('A', 3.5, 2.5), ('A', 3, 3)], 'ins'),                              # P2-1 to 6V IN -
+    ('3V3', [('B', 7, 3), ('B', 6.5, 2.5), ('B', 1, 2.5), ('A', 17.5, 2.5), ('A', 17.5, 20.5),
+             ('A', 4, 20.5), ('A', 3, 21)], 'ins'),                              # P2-5 to I2C-A VCC
+]
 LINKS = [('CANH', ('B', 13, 3)), ('CANL', ('B', 15, 3))]      # module terminal -> board
-
-# header pins that carry a net, for labels
-PINS = [
-    ('A', 'i', 1, 'P1-1 GND'), ('A', 'i', 14, 'P1-27 PE9'),
-    ('A', 'j', 17, 'P1-34 PB10'), ('A', 'i', 18, 'P1-35 PB11'),
-    ('B', 'g', 1, 'P2-1 GND'), ('B', 'g', 2, 'P2-3 5V'), ('B', 'g', 3, 'P2-5 3V'),
-    ('B', 'g', 17, 'P2-33 PD1'), ('B', 'h', 18, 'P2-36 PD0'),
-]
 
 # ---------------------------------------------------------------- drawing helpers
 def draw_board(v, b, grid_labels=True):
@@ -307,11 +296,12 @@ def draw_wire(v, net, b, pts, kind, hfun=None):
     xy = [hfun(c, r) for c, r in pts]
     d = ' '.join(f'{x:.1f},{y:.1f}' for x, y in xy)
     colr = NET[net]
-    if kind == 'bare':
-        w(f'<polyline points="{d}" fill="none" stroke="{colr}" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round"/>')
-        w(f'<polyline points="{d}" fill="none" stroke="#e5e7eb" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>')
+    if kind == 'lead':                        # a part's own lead, bent to the next pad
+        w(f'<polyline points="{d}" fill="none" stroke="#64748b" stroke-width="2.4" stroke-linecap="round"/>')
+        w(f'<polyline points="{d}" fill="none" stroke="#e5e7eb" stroke-width="1.0" stroke-linecap="round"/>')
+        colr = '#64748b'
     else:
-        w(f'<polyline points="{d}" fill="none" stroke="{colr}" stroke-width="{2.6 if kind == "pwr" else 1.8}" stroke-linecap="round" stroke-linejoin="round"/>')
+        w(f'<polyline points="{d}" fill="none" stroke="{colr}" stroke-width="{3.2 if kind == "pwr" else 1.8}" stroke-linecap="round" stroke-linejoin="round"/>')
     for (c, r), (x, y) in ((pts[0], xy[0]), (pts[-1], xy[-1])):
         if float(c).is_integer() and float(r).is_integer():
             w(f'<circle cx="{x:.1f}" cy="{y:.1f}" r="2.3" fill="{colr}" stroke="#fff" stroke-width="0.6"/>')
@@ -421,9 +411,8 @@ PIN_LAB = {  # (board, col, row): (text, level, anchor) - B's in the gap, A's ov
     ('A', 'i', 14): ('P1-27 PE9', 0, 'start'),
     ('A', 'j', 17): ('P1-34 PB10', 1, 'start'), ('A', 'i', 18): ('P1-35 PB11', 0, 'end'),
 }
-# rows 1-3 carry the bridges, so their pins are called out beyond the rear edge instead
-END_LAB = [('B', 'g', [f"{silk('B', 'g', 1)}  P2-1 GND", f"{silk('B', 'g', 2)}  P2-3 5V", f"{silk('B', 'g', 3)}  P2-5 3V"], (1, 2, 3)),
-           ('A', 'i', [f"{silk('A', 'i', 1)}  P1-1 GND", f"{silk('A', 'j', 1)}  P1-2 GND"], (1,))]
+# the P2 supply pins at the rear end, called out beyond the rear edge
+END_LAB = [('B', [('g', 1, 'P2-1 GND'), ('h', 1, 'P2-2 GND'), ('h', 2, 'P2-4 5V'), ('g', 3, 'P2-5 3V'), ('h', 3, 'P2-6 3V')])]
 
 def carrier_labels_bottom(v):
     _, yb = v.px(0, BOARD['B']['edge'][0])      # B's inner edge (lower in this view)
@@ -436,29 +425,30 @@ def carrier_labels_bottom(v):
         w(f'<circle cx="{x:.1f}" cy="{y:.1f}" r="4.2" fill="none" stroke="{colr}" stroke-width="1.3"/>')
         text(x + (3 if anc == 'start' else -3), ty + 3, t, 7, colr, '700', anchor=anc, halo=True)
     xe, _ = v.px(BX[1], 0)
-    for b, col, lines, rows in END_LAB:
+    for b, pins in END_LAB:
         colr = '#0f766e' if b == 'A' else '#b45309'
-        for r in rows:
+        for col, r, t in pins:
             x, y = hp(v, b, ci(col), r)
             w(f'<circle cx="{x:.1f}" cy="{y:.1f}" r="4.2" fill="none" stroke="{colr}" stroke-width="1.3"/>')
-        x, y = hp(v, b, ci(col), 1)
+        x, y = hp(v, b, ci(pins[0][0]), 1)
         w(f'<line x1="{x + 4.2:.1f}" y1="{y:.1f}" x2="{xe + 6:.1f}" y2="{y:.1f}" stroke="{colr}" stroke-width="0.8"/>')
-        y0 = y - (len(lines) - 1) * 5.5 + 2.5
-        for i, t in enumerate(lines):
-            text(xe + 9, y0 + i * 11, t, 7, colr, '700', halo=True)
+        y0 = y - (len(pins) - 1) * 5.5 + 2.5
+        for i, (col, r, t) in enumerate(pins):
+            text(xe + 9, y0 + i * 11, f'{silk(b, col, r)}  {t}', 7, colr, '700', halo=True)
 
 def draw_bridges(v):
-    # the one unsupported span of each bridge: A r -> B a, 12.7 mm across the 5.9 mm gap
-    for net, (ba, ca, ra), (bb, cb, rb) in BRIDGES:
-        xa, ya = hp(v, ba, ca, ra)
-        xb, yb = hp(v, bb, cb, rb)
-        colr = NET[net]
-        for sw, sc in ((4.2, colr), (1.3, '#e5e7eb')):
-            w(f'<line x1="{xa:.1f}" y1="{ya:.1f}" x2="{xb:.1f}" y2="{yb:.1f}" stroke="{sc}" stroke-width="{sw}" stroke-linecap="round"/>')
+    """The two wires that cross the 5.9 mm gap, drawn whole."""
+    for net, pts, kind in XWIRES:
+        xy = [hp(v, b, c, r) for b, c, r in pts]
+        d = ' '.join(f'{x:.1f},{y:.1f}' for x, y in xy)
+        w(f'<polyline points="{d}" fill="none" stroke="{NET[net]}" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>')
+        for x, y in (xy[0], xy[-1]):
+            w(f'<circle cx="{x:.1f}" cy="{y:.1f}" r="2.3" fill="{NET[net]}" stroke="#fff" stroke-width="0.6"/>')
     xe, _ = v.px(BX[1], 0)
     _, yg = v.px(0, (BOARD['A']['edge'][1] + BOARD['B']['edge'][0]) / 2)
-    text(xe + 9, yg - 2, f'GND bridge along {LET[23]}', 7, NET['GND'], '700', halo=True)
-    text(xe + 9, yg + 8, f'3V3 bridge along {LET[21]}', 7, NET['3V3'], '700', halo=True)
+    for k, (net, pts, kind) in enumerate(XWIRES):
+        (b0, c0, r0), (b1, c1, r1) = pts[0], pts[-1]
+        text(xe + 9, yg - 2 + 10 * k, f'{net} bridge {N(b0, c0, r0)} → {N(b1, c1, r1)}', 7, NET[net], '700', halo=True)
 
 def draw_links(v):
     for net, (b, c, r) in LINKS:
@@ -493,15 +483,17 @@ C_PIGTAIL = [('V', '#dc2626', 'a', 7, 7.2), ('G', '#111827', 'c', 7, 9.0),
 C_CUT = [('D-', '#e5e7eb', 10.8), ('D+', '#1e3a8a', 12.2)]  # cut short, each insulated alone
 C_TIES = [2, 6]              # zip ties at these rows, through 3 mm holes drilled at b and i
 C_FIX = [(5, 4, 'F5', '(99.24, 38.76)'), (5, 21, 'F6', '(99.24, 81.76)')]
-C_WIRES = [
-    ('5V', [(1, 1), (1, 24)], 'bare'),                        # 5 V spine, column a
-    ('GND', [(3, 1), (3, 24)], 'bare'),                       # GND spine, column c
-    ('5V', [(7, 24), (7, 23.5), (1, 23.5), (1, 24)], 'pwr'),  # TO STM32 +
-    ('GND', [(9, 24), (9, 24.5), (3, 24.5), (3, 24)], 'pwr'), # TO STM32 -
-    ('CC', [(7, 7), (7, 8)], 'bare'),                         # CC1 landing g7 to R1, g8
-    ('CC', [(9, 7), (9, 8)], 'bare'),                         # CC2 landing i7 to R2, i8
-    ('5V', [(7, 12), (9, 12)], 'bare'),                       # R1 / R2 tops
-    ('5V', [(7, 12), (7, 14.5), (1.5, 14.5), (1.5, 15), (1, 15)], 'ins'),   # tops to the 5 V spine
+C_WIRES = [   # the FRDM's current in 18 AWG, IN 5V -> C1 -> socket on each rail
+    ('5V', [(1, 24), (0.5, 23.5), (0.5, 12.5), (1, 12)], 'pwr'),              # IN 5V + to C1 +
+    ('5V', [(1, 12), (1.5, 11.5), (1.5, 7.5), (1, 7)], 'pwr'),                # C1 + to socket red
+    ('5V', [(1, 24), (1.5, 23.5), (6.5, 23.5), (7, 24)], 'pwr'),              # IN 5V + to TO STM32 +
+    ('5V', [(7, 24), (7.5, 23.5), (7.5, 12.5), (7, 12)], 'ins'),              # TO STM32 + to R1 top
+    ('5V', [(7, 12), (7.5, 11.5), (8.5, 11.5), (9, 12)], 'ins'),              # R1 top to R2 top
+    ('GND', [(3, 24), (2.5, 24.5), (2.5, 12.5), (3, 12)], 'pwr'),             # IN 5V - to C1 -
+    ('GND', [(3, 12), (2.5, 11.5), (2.5, 7.5), (3, 7)], 'pwr'),               # C1 - to socket black
+    ('GND', [(3, 24), (3.5, 24.5), (8.5, 24.5), (9, 24)], 'pwr'),             # IN 5V - to TO STM32 -
+    ('CC', [(7, 8), (7, 7)], 'lead'),                                         # R1's lower lead to CC1
+    ('CC', [(9, 8), (9, 7)], 'lead'),                                         # R2's lower lead to CC2
 ]
 
 def draw_socket(v, top, hf):
@@ -606,10 +598,8 @@ def board_c(v, top):
     else:
         for net, pts, kind in C_WIRES:
             draw_wire(v, net, 'C', pts, kind, hfun=hf)
-        x, y = hf(1.5, 17)
-        text(x, y + 3, f"5 V spine along {silk('C', 'a', 1)[1:]}", 7, '#dc2626', '700', anchor='middle', halo=True)
-        x, y = hf(3.5, 17)
-        text(x + 2, y + 16, f"GND spine along {silk('C', 'c', 1)[1:]}", 7, '#111827', '700', anchor='middle', halo=True)
+        x, y = hf(8, 5.5)
+        text(x, y + 3, f"R1 / R2 leads bent to {silk('C', 'g', 7)} / {silk('C', 'i', 7)}", 6.5, '#475569', '700', anchor='middle', halo=True)
 
 # ---------------------------------------------------------------- sheet
 if __name__ == "__main__":
@@ -622,7 +612,7 @@ if __name__ == "__main__":
     col_range = lambda b, c: f"{b}·A{silk(b, c, 24)[1:]}-X{silk(b, c, 1)[1:]}"
     text(40, 66, 'Hole names: board·hole, as PRINTED on the kit board - letters A-X along the 70 mm side, numbers across (1-18 on A and B, 1-10 on C), A1 bottom-left with the print readable, as every view shows it.', 9.5, '#b45309')
     text(40, 80, f"Header row n (pins 2n-1, 2n) is letter {LET[23]} for row 1 back to {LET[0]} for row 24 · P1 odd pins {col_range('A', 'i')} (outboard), even {col_range('A', 'j')} · P2 odd {col_range('B', 'g')} (inboard), even {col_range('B', 'h')} (UM1472 Fig. 10) · fixings are F1-F6, never hole names.", 9.5, '#b45309')
-    text(40, 93, 'Parts on the component side, every wire on the solder side. Bare tinned links only where drawn bare; everything else is insulated, soldered at both ends, so crossings are fine. Nothing on the Discovery footprint stands taller than a resistor.', 9.5, '#b45309')
+    text(40, 93, 'Wires on the solder side, ALL INSULATED, PAD TO PAD: they meet only at pads, two wire ends per pad at most. Thick 18 AWG (3.11), thin 22 AWG, grey = a part lead bent over.', 9.5, '#b45309')
 
     # views
     VX1, VX2, VY = 70, 590, 150
@@ -646,12 +636,6 @@ if __name__ == "__main__":
     draw_links(vb)
     carrier_labels_bottom(vb)
     # a few solder-side callouts
-    x, y = hp(vb, 'A', 5.5, 10)
-    text(x, y + 3, f"GND spine along {silk('A', 'e', 1)[1:]}", 7, '#111827', '700', anchor='middle', halo=True)
-    x, y = hp(vb, 'A', 0.5, 8)
-    text(x, y + 3, f"6 V spine along {silk('A', 'a', 1)[1:]}", 7, '#d97706', '700', anchor='middle', halo=True)
-    x, y = hp(vb, 'B', 9.5, 11)
-    text(x, y + 3, f"GND spine along {silk('B', 'j', 1)[1:]}", 7, '#111827', '700', anchor='middle', halo=True)
     x, y = hp(vb, 'B', 18, 5)
     text(x, y + 3, f"module H / L links in at {silk('B', 'm', 3)}, {silk('B', 'o', 3)}", 6.8, '#1d4ed8', '700', anchor='middle', halo=True)
 
@@ -667,7 +651,7 @@ if __name__ == "__main__":
     text(VX1 - 30, CY - 42, 'C  5 V SPLIT BOARD  (component side)', 12, '#1a1a1a', '700')
     text(VX1 - 30, CY - 27, 'across the plate-2 waist, x 85.5-115.5: letter A at the vehicle right, 10 to the front · socket opening faces the vehicle right', 8.5, '#64748b')
     text(VX2 - 30, CY - 42, 'C  SOLDER SIDE  (turned over about the long axis)', 12, '#1a1a1a', '700')
-    text(VX2 - 30, CY - 27, 'spines in bare tinned 18 AWG, TO STM32 in 18 AWG (thick), the CC network in thin wire', 8.5, '#64748b')
+    text(VX2 - 30, CY - 27, 'the FRDM current in 18 AWG (thick), each rail a chain IN 5V → C1 → socket; the Rp tops in 22 AWG', 8.5, '#64748b')
     vc_t = View(VX1 + 70, CY, C_EDGE_X[0], C_EDGE_Y[0], C_EDGE_Y[1], flip=False, scale=4.6)
     vc_b = View(VX2 + 70, CY, C_EDGE_X[0], C_EDGE_Y[0], C_EDGE_Y[1], flip=True, scale=4.6)
     board_c(vc_t, True)
@@ -697,20 +681,24 @@ if __name__ == "__main__":
         return y
 
     net_rows = [
-        (NET['5V'], '5 V', 'C IN 5V', f"C TO STM32 → B 5V IN ({N('B', 'q', 21)}) → P2-3 / P2-4 ({silk('B', 'g', 2)} = {silk('B', 'h', 2)})"),
-        (NET['5V'], '5 V FRDM', 'C IN 5V', f"socket red V ({N('C', 'a', 7)}) · C1 + ({silk('C', 'a', 12)}) · R1 / R2 tops ({silk('C', 'g', 12)} = {silk('C', 'i', 12)} → {silk('C', 'a', 15)})"),
-        (NET['GND'], 'GND', 'C IN GND', 'C spine c → B 5V IN GND → spine j → P2-1/2 · CAN GND · XCVR GND'),
-        (NET['GND'], 'GND (A)', N('B', 'g', 1), f"bare along {LET[23]}: {N('B', 'a', 1)} → {N('A', 'r', 1)} → {silk('A', 'j', 1)} = {silk('A', 'i', 1)} (P1-2, P1-1) · spine {silk('A', 'e', 1)[1:]} → 6V IN, C2, SERVO, I2C"),
-        (NET['3V3'], '3.3 V', 'P2-5 / P2-6', f"XCVR 3V3 ({N('B', 'n', 13)}) · bare along {LET[21]}: {N('B', 'a', 3)} → {N('A', 'r', 3)} → {silk('A', 'k', 3)}, never {silk('A', 'j', 3)} · → I2C-A VCC ({silk('A', 'c', 21)})"),
-        (NET['6V'], 'Servo 6 V', 'A 6V IN +', f"C2 + ({N('A', 'c', 10)}) · SERVO + ({silk('A', 'c', 13)}) - touches nothing else"),
+        (NET['5V'], '5 V', 'C TO STM32', f"B 5V IN ({N('B', 'q', 21)}) → P2-4 ({silk('B', 'h', 2)})"),
+        (NET['5V'], '5 V FRDM', 'C IN 5V', f"{N('C', 'a', 24)} → C1 + ({silk('C', 'a', 12)}) → socket red ({silk('C', 'a', 7)}), 18 AWG"),
+        (NET['5V'], '5 V Rp', 'C IN 5V', f"TO STM32 + ({N('C', 'g', 24)}) → R1 top ({silk('C', 'g', 12)}) → R2 top ({silk('C', 'i', 12)})"),
+        (NET['GND'], 'GND FRDM', 'C IN GND', f"{N('C', 'c', 24)} → C1 − ({silk('C', 'c', 12)}) → socket black ({silk('C', 'c', 7)}), 18 AWG"),
+        (NET['GND'], 'GND STM32', 'C IN GND', f"TO STM32 − → B 5V IN − ({N('B', 'q', 23)}) → P2-2 ({silk('B', 'h', 1)})"),
+        (NET['GND'], 'GND CAN', f"P2-1 {N('B', 'g', 1)}", f"CAN GND ({silk('B', 'q', 1)}) → XCVR GND ({silk('B', 'o', 13)})"),
+        (NET['GND'], 'GND (A)', 'P2-1', f"bridge → 6V IN − ({N('A', 'c', 3)}) → C2 − → SERVO → I2C-B → I2C-A"),
+        (NET['3V3'], '3.3 V', 'P2-5 / P2-6', f"P2-6 ({N('B', 'h', 3)}) → XCVR ({silk('B', 'n', 13)}) · P2-5 → bridge → I2C-A VCC ({N('A', 'c', 21)})"),
+        (NET['6V'], 'Servo 6 V', 'A 6V IN +', f"{N('A', 'c', 1)} → C2 + ({silk('A', 'c', 10)}) → SERVO + ({silk('A', 'c', 13)}), 18 AWG"),
         (NET['PWM'], 'Servo PWM', 'P1-27 PE9', f"R4 1k ({N('A', 'h', 12)}-{silk('A', 'h', 8)}) → SERVO SIG ({silk('A', 'c', 14)})"),
         (NET['SCL'], 'I²C2 SCL', 'P1-34 PB10', f"I2C-B ({N('A', 'c', 17)}) → I2C-A ({silk('A', 'c', 22)})"),
         (NET['SDA'], 'I²C2 SDA', 'P1-35 PB11', f"I2C-B ({N('A', 'c', 18)}) → I2C-A ({silk('A', 'c', 23)})"),
         (NET['CTX'], 'CAN1_TX', 'P2-33 PD1', f"XCVR CTX ({N('B', 'q', 13)}) - straight, not crossed"),
         (NET['CRX'], 'CAN1_RX', 'P2-36 PD0', f"XCVR CRX ({N('B', 'p', 13)})"),
-        (NET['CANH'], 'CAN_H', 'module H', f"link → {N('B', 'm', 3)} → CAN H ({silk('B', 'm', 1)}) · R3 120R → TERM"),
-        (NET['CANL'], 'CAN_L', 'module L', f"link → {N('B', 'o', 3)} → CAN L ({silk('B', 'o', 1)}) · TERM"),
-        (NET['CC'], 'USB-C CC', 'C socket', f"green CC1 ({N('C', 'g', 7)}) → R1 10k → 5 V · yellow CC2 ({silk('C', 'i', 7)}) → R2 10k → 5 V (source Rp, HW-02)"),
+        (NET['CANH'], 'CAN_H', 'module H', f"link → {N('B', 'm', 3)} → CAN H ({silk('B', 'm', 1)}) → R3 ({silk('B', 'k', 19)})"),
+        (NET['CANL'], 'CAN_L', 'module L', f"link → {N('B', 'o', 3)} → CAN L ({silk('B', 'o', 1)}) → TERM ({silk('B', 'm', 22)})"),
+        (NET['TERM'], 'TERM', 'R3', f"{N('B', 'k', 23)} → TERM ({silk('B', 'm', 23)}) - jumper on = 120 Ω across H / L"),
+        (NET['CC'], 'USB-C CC', 'C socket', f"green CC1 ({N('C', 'g', 7)}) ← R1 lead · yellow CC2 ({silk('C', 'i', 7)}) ← R2 lead (Rp, HW-02)"),
     ]
     y = table(100, 'NETLIST', ['Net', 'From', 'To'], net_rows, [12, 96, 190])
 
@@ -733,7 +721,7 @@ if __name__ == "__main__":
         (None, 'Board B', '5×7 board · 2 × 1×25 + 1 × 1×4 female · 3p + 2p terminal · 1×2 male + jumper cap · R3 120Ω'),
         (None, 'Board C', '3×7 board · 2 × 2p terminal · USB-C socket (5.1), 2 zip ties · C1 470µF · R1, R2 10k'),
         (None, 'From stock', 'caps: 2 of the 5 in 3.14 · resistors: 3.21 · module: 4.1 · headers, terminals: 5.11'),
-        (None, 'Not in BOM', 'thin copper hook-up wire, 22-26 AWG, and bare tinned copper for the spines and bridges - not the CCA Dupont leads (5.7)'),
+        (None, 'Wire', '22 AWG insulated copper hook-up wire (not in BOM) · 18 AWG silicone copper (3.11) for the thick runs · not the CCA Dupont leads (5.7)'),
     ]
     y = table(y + 26, 'PARTS', ['Board', 'Fitted'], parts, [12, 82])
 
@@ -763,7 +751,7 @@ if __name__ == "__main__":
         '5  The kit terminals may be 5.0 mm, not 5.08: the 3p CAN block spans 10.0 vs 10.16 mm of holes. Push it in; do not drill.',
         f"6  Before the Discovery goes back in: 5 V to GND not shorted · 6 V rail isolated from 5 V and 3V3 · 5 V on B·{silk('B', 'g', 2)} / {silk('B', 'h', 2)} only · nothing on B·{silk('B', 'g', 4)} (PH0) · {N('A', 'j', 3)} (P1-4 VDD) not on 3V3.",
         '7  Fixings: drill F1, F2, F5 and F6 on the grid first. Screw A and B down with the Discovery in, then mark F3 and F4 from under the',
-        '    plate through its holes, lift the carrier and drill them. No standoff may touch a bare spine: check each one before the screw goes in.',
+        '    plate through its holes, lift the carrier and drill them. No wire may pass under a standoff: check each one before the screw goes in.',
     ]
     yy = NY + 26
     for c in checks:
@@ -774,8 +762,8 @@ if __name__ == "__main__":
         ('Why two 5×7 boards', [
             'The kit\'s 7×9 (24 × 30) takes all 100 pins, but the Discovery',
             'covers it, so no terminal or cap would have anywhere to go. Two 5×7s',
-            'leave them outboard and meet 5.9 mm apart: each bridge is bare wire',
-            'soldered along its row, 12.7 mm unsupported. Row 25 is GND only.',
+            'leave them outboard and meet 5.9 mm apart: each bridge is one',
+            'insulated wire, P2 pin to the part it feeds. Row 25 is GND only.',
         ]),
         ('What moved off the WAGOs', [
             'Both 470 µF caps and every resistor are now on a board. C2 sits at',

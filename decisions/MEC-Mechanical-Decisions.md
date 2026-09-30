@@ -806,10 +806,13 @@ reads as a hole. The drawing computes every name from the geometry. Older text i
 the drawing's first scheme, column letter + header row: A g14 is A·K12, B d14 is B·K15, and on
 board C e4 is C·D6 and e21 is C·U6.
 
+**Rerouted 2026-09-30: every wire is insulated and runs pad to pad.** Wires meet only at pads,
+no pad takes more than two wire ends, and the bare spines and bridges are gone. See "Revision
+2026-09-30" at the end.
+
 **Revised 2026-09-29: board A is a second 5×7 board, and the sockets are 1×25.** A keeps its outboard
-edge and every hole name, and grows inward to 5.9 mm from B. The GND and 3V3 bridges are now bare wire
-soldered along rows 1 and 3, with 12.7 mm unsupported across the gap instead of about 50 mm of loose wire
-under the Discovery. Row 25 (pins 49/50, GND on both headers) is socketed: its tail is snipped and the
+edge and every hole name, and grows inward to 5.9 mm from B. The GND and 3V3 bridges now cross a
+5.9 mm gap instead of about 50 mm of open air under the Discovery. Row 25 (pins 49/50, GND on both headers) is socketed: its tail is snipped and the
 socket rests on the board margin, which has no hole there. See "Revision 2026-09-29" at the end.
 
 **Decision (2026-09-28).** The carrier is built from the prototype kit that is in hand (BOM 5.11), as
@@ -862,7 +865,7 @@ a seam without adding anything the Discovery does not already provide.
 
   A 21.7 × 86 mm four-point pattern. ⌀3.2 in the board, **M2.5 on 10 mm standoffs**, a washer in
   every ⌀3.18 hole, as for the FRDM (MEC-11). Drill F1 and F2 on the grid, screw the carrier down,
-  then mark F3 and F4 from under the plate. 10 mm keeps the solder side, bare spines included, well
+  then mark F3 and F4 from under the plate. 10 mm keeps the solder side, wires included, well
   off the aluminium, and the stack still clears plate 3: the Discovery's top is at about z 111
   against the FRDM's screw heads at z 119.4 under plate 3.
 - **Board C sits across the waist**, x 85.5-115.5 and y 25.2-95.2, between the Bauer and the
@@ -877,7 +880,7 @@ a seam without adding anything the Discovery does not already provide.
   reaches x 215, and it does so at about z 101 or higher, above the bottom-row ports at z 90. A
   40 mm body behind the flange, which ends at x 220.3, still clears by 5.3 mm.
 - **The two boards meet only through the Discovery and two soldered bridges** (GND and 3V3). *Since
-  2026-09-29* each bridge is one bare tinned wire along its row, soldered at every hole it crosses. They
+  2026-09-30* each bridge is one insulated wire, from a P2 pin to the part it feeds on A. They
   are the only wires that cross between the boards.
 - **Hook-up wire is not in the BOM.** The Dupont leads are copper-clad aluminium (5.7) and are not
   used for anything soldered here.
@@ -898,10 +901,10 @@ a seam without adding anything the Discovery does not already provide.
   y 5.11, and the inboard edge is at y 55.11. B is unchanged, from y 60.99, so the boards are **5.88 mm
   apart**. That gap is not a choice: A holds P1 at cols i/j and B holds P2 at g/h, and the Discovery
   fixes the rest. Butting the boards would take a 0.8 mm gap, and B would lose its outer two columns.
-- **The bridges are bare wire along their rows.** GND runs from A·X9 (P1-2) along X to B·X12 (P2-1).
-  3V3 runs from B·V12 (P2-5) along V to A·V8, and **stops at V8**: A·V9 is P1-4, which is VDD
-  behind JP1 and must never meet the 3 V rail (the carrier drawing's supply note). The only unsupported length of each bridge is
-  12.7 mm, A r to B a. Both boards are screwed down, so nothing there can flex.
+- **The bridges** *(as rerouted 2026-09-30)* are one insulated wire each: GND from B·X12 (P2-1) to
+  A·V16 (6V IN −), 3V3 from B·V12 (P2-5) straight to A·D16 (I2C-A VCC). Nothing lands in A's V column,
+  so A·V9, which is P1-4 (VDD behind JP1), stays clear of the 3 V rail. Both boards are screwed down,
+  so the short span across the gap cannot flex.
 - **1×25 sockets.** Cut four strips of 25 from the kit's 40-pin female headers and snip each 25th tail
   flush. Row 25 falls 3.25 mm from the board's end, on the bare margin, clear of the corner holes (the
   sockets are mid-board). All 100 pins are held. Pins 49/50 carry no current through the carrier.
@@ -909,6 +912,28 @@ a seam without adding anything the Discovery does not already provide.
   A now covers x 117-133, y 40-55 of plate 2's opening. The 6 V pair and the driver's I²C lead still
   rise through it at x 114-117, in front of the boards, as MEC-16 routes them.
 - **Kit use:** 2 of the 3 5×7 boards (A, B) and 1 of the 6 3×7 boards (C).
+
+**Revision 2026-09-30 · insulated wire, pad to pad.** The build uses insulated wire throughout, and
+insulated wire can only be joined at a pad. The routing is redone to suit.
+
+- **Every wire runs pad to pad on the solder side.** A wire meets another only at a pad, and no pad
+  takes more than two wire ends. A pigtail or link arriving through the hole counts as one of them.
+  Crossings are fine; running along another wire, or under a standoff, is not.
+- **Nets with several pins are chains, part to part.** On A, GND runs 6V IN − → C2 − → SERVO →
+  I2C-B → I2C-A, and 6 V runs 6V IN + → C2 + → SERVO +. On B, each P2 supply pin feeds one thing:
+  P2-1 the CAN GND and the GND bridge, P2-2 the 5V IN return, P2-4 the 5V IN feed, P2-5 the 3V3
+  bridge, P2-6 the transceiver. The Discovery ties each pair internally, which is what makes that
+  legitimate.
+- **Wire.** The servo current on A and the FRDM current on C run in **18 AWG silicone copper** (BOM
+  3.11). Everything else is **22 AWG insulated copper hook-up wire**, still not in the BOM, and not
+  the CCA Dupont leads (5.7). On C, R1 and R2's lower leads are bent over to the CC landings instead
+  of a wire.
+- **A's P1 GND pins are no longer wired.** A's ground arrives through the GND bridge, and with the
+  Discovery in, through its ground plane as well.
+- **The drawing's routing is checked by a script**, [`../tools/check-carrier-routing.py`](../tools/check-carrier-routing.py).
+  It checks every net end to end through the Discovery's own pin ties, looks for shorts, and counts
+  wire ends per pad. It also checks standoff clearance, overlaps, and wires lying over another net's
+  joint. Run it after any change to the carrier.
 
 ---
 
