@@ -1,5 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1720" height="1300" viewBox="0 0 1720 1300" font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif">
-<rect width="1720" height="1300" fill="#fbfaf8"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="1720" height="1400" viewBox="0 0 1720 1400" font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif">
+<rect width="1720" height="1400" fill="#fbfaf8"/>
 <text x="40.0" y="30.0" font-size="18" fill="#1a1a1a" font-weight="700">NEXUS - STM32 carrier and 5 V split board: soldering and wiring</text>
 <text x="40.0" y="49.0" font-size="10.5" fill="#666">Kit perfboards (BOM 5.11), 2.54 grid · Boards A and B, both 5×7 cm (18 × 24 holes), under P1 and P2, 5.9 mm apart · Board C 3×7 cm (10 × 24), the 5 V split · MEC-08 / MEC-15 / HW-19</text>
 <text x="40.0" y="66.0" font-size="9.5" fill="#b45309">Hole names: board·hole, as PRINTED on the kit board - letters A-X along the 70 mm side, numbers across (1-18 on A and B, 1-10 on C), A1 bottom-left with the print readable, as every view shows it.</text>
@@ -1014,6 +1014,10 @@
 <text x="66.0" y="612.2" font-size="7" fill="#15803d" text-anchor="end">2</text>
 <text x="66.0" y="623.9" font-size="7" fill="#15803d" text-anchor="end">1</text>
 <text transform="translate(54.0,522.0) rotate(-90)" font-size="10" font-weight="700" fill="#15803d" text-anchor="middle">Board B</text>
+<polygon points="70.0,380.0 97.6,380.0 70.0,352.4" fill="#e11d48" fill-opacity="0.9"/>
+<text x="78.3" y="374.2" font-size="5.5" fill="#fff" font-weight="700" text-anchor="middle">A1</text>
+<polygon points="70.0,637.0 97.6,637.0 70.0,609.4" fill="#e11d48" fill-opacity="0.9"/>
+<text x="78.3" y="631.3" font-size="5.5" fill="#fff" font-weight="700" text-anchor="middle">A1</text>
 <rect x="79.1" y="253.6" width="292.1" height="11.0" rx="1" fill="#0f766e" fill-opacity="0.22" stroke="#0f766e" stroke-width="0.9"/>
 <line x1="82.7" y1="257.0" x2="87.1" y2="261.4" stroke="#0f766e" stroke-width="1.1"/>
 <line x1="82.7" y1="261.4" x2="87.1" y2="257.0" stroke="#0f766e" stroke-width="1.1"/>
@@ -1100,6 +1104,7 @@
 <circle cx="313.3" cy="587.6" r="7.4" fill="none" stroke="#0f172a" stroke-width="1.3"/>
 <text x="303.6" y="578.9" font-size="7.5" fill="#0f172a" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="end">F4</text>
 <rect x="74.7" y="230.0" width="446.2" height="303.6" rx="3" fill="#eef2ff" fill-opacity="0.35" stroke="#4338ca" stroke-width="1.2" stroke-dasharray="7 4"/>
+<rect x="488.7" y="363.9" width="36.8" height="35.9" rx="1" fill="#cbd5e1" stroke="#4338ca" stroke-width="1"/>
 <text x="296.4" y="319.0" font-size="10" fill="#4338ca" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="middle">STM32F4DISCOVERY above</text>
 <text x="296.4" y="332.0" font-size="8" fill="#4338ca" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="middle">plugs into the four 1x25 sockets</text>
 <text x="84.9" y="243.5" font-size="6.5" fill="#0f766e" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="start">header row 25: no hole</text>
@@ -2028,6 +2033,10 @@
 <text x="586.0" y="179.9" font-size="7" fill="#15803d" text-anchor="end">2</text>
 <text x="586.0" y="168.2" font-size="7" fill="#15803d" text-anchor="end">1</text>
 <text transform="translate(574.0,265.0) rotate(-90)" font-size="10" font-weight="700" fill="#15803d" text-anchor="middle">Board B</text>
+<polygon points="590.0,407.0 617.6,407.0 590.0,434.6" fill="#e11d48" fill-opacity="0.9"/>
+<text x="598.3" y="417.8" font-size="5.5" fill="#fff" font-weight="700" text-anchor="middle">A1</text>
+<polygon points="590.0,150.0 617.6,150.0 590.0,177.6" fill="#e11d48" fill-opacity="0.9"/>
+<text x="598.3" y="160.8" font-size="5.5" fill="#fff" font-weight="700" text-anchor="middle">A1</text>
 <circle cx="885.4" cy="527.9" r="2.9" fill="#e2e8f0" stroke="#0f766e" stroke-width="1"/>
 <circle cx="873.7" cy="527.9" r="2.9" fill="#e2e8f0" stroke="#0f766e" stroke-width="1"/>
 <circle cx="862.0" cy="527.9" r="2.9" fill="#e2e8f0" stroke="#0f766e" stroke-width="1"/>
@@ -2299,6 +2308,8 @@
 <text x="560.0" y="718.0" font-size="12" fill="#1a1a1a" font-weight="700">C  SOLDER SIDE  (turned over about the long axis)</text>
 <text x="560.0" y="733.0" font-size="8.5" fill="#64748b">the FRDM current in 18 AWG (thick), each rail a chain IN 5V → C1 → socket; the Rp tops in 22 AWG</text>
 <rect x="140.0" y="760.0" width="322.0" height="138.0" rx="4" fill="#f0fdf4" stroke="#15803d" stroke-width="1.6"/>
+<polygon points="140.0,898.0 167.6,898.0 140.0,870.4" fill="#e11d48" fill-opacity="0.9"/>
+<text x="148.3" y="892.2" font-size="5.5" fill="#fff" font-weight="700" text-anchor="middle">A1</text>
 <circle cx="166.6" cy="776.4" r="2.1" fill="#fff" stroke="#a3b18a" stroke-width="0.7"/>
 <circle cx="178.3" cy="776.4" r="2.1" fill="#fff" stroke="#a3b18a" stroke-width="0.7"/>
 <circle cx="190.0" cy="776.4" r="2.1" fill="#fff" stroke="#a3b18a" stroke-width="0.7"/>
@@ -2643,6 +2654,8 @@
 <line x1="400.3" y1="836.5" x2="400.3" y2="902.0" stroke="#64748b" stroke-width="0.7" stroke-dasharray="2 2"/>
 <text x="400.3" y="911.0" font-size="6.5" fill="#0f172a" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="middle">F6 at U6 · (99.24, 81.76)</text>
 <rect x="660.0" y="760.0" width="322.0" height="138.0" rx="4" fill="#f0fdf4" stroke="#15803d" stroke-width="1.6"/>
+<polygon points="660.0,760.0 687.6,760.0 660.0,787.6" fill="#e11d48" fill-opacity="0.9"/>
+<text x="668.3" y="770.8" font-size="5.5" fill="#fff" font-weight="700" text-anchor="middle">A1</text>
 <circle cx="686.6" cy="881.6" r="2.1" fill="#fff" stroke="#a3b18a" stroke-width="0.7"/>
 <circle cx="698.3" cy="881.6" r="2.1" fill="#fff" stroke="#a3b18a" stroke-width="0.7"/>
 <circle cx="710.0" cy="881.6" r="2.1" fill="#fff" stroke="#a3b18a" stroke-width="0.7"/>
@@ -3159,6 +3172,40 @@
 <text x="1300.0" y="1053.0" font-size="7.9" fill="#475569">plate 2 M3 hole (99.24, 81.76) - 43.00 = 17 pitches + 0.18</text>
 <text x="1130.0" y="1075.0" font-size="8.4" fill="#475569">All six: ⌀3.2 in the board, M2.5 × 10 standoff, M2.5 screws, washer in the ⌀3.18 holes.</text>
 <text x="1130.0" y="1088.0" font-size="8.4" fill="#475569">Header row 1 at chassis x 181.20 · A outboard edge y 5.11 · B outboard edge y 110.99 · gap y 55.11-60.99.</text>
+<text x="1130.0" y="1117.0" font-size="12" fill="#1a1a1a" font-weight="700">ORIENTATION - where A and B sit under the Discovery</text>
+<line x1="1130" y1="1125" x2="1680" y2="1125" stroke="#e2e8f0"/>
+<rect x="1172.0" y="1149.0" width="108.5" height="77.5" rx="2" fill="#dcfce7" stroke="#15803d" stroke-width="1.2"/>
+<polygon points="1172.0,1226.5 1186.0,1226.5 1172.0,1212.5" fill="#e11d48" fill-opacity="0.9"/>
+<text x="1176.2" y="1224.8" font-size="5.5" fill="#fff" font-weight="700" text-anchor="middle">A1</text>
+<text x="1248.3" y="1166.5" font-size="10" fill="#15803d" font-weight="700" text-anchor="middle">board A</text>
+<rect x="1172.0" y="1235.6" width="108.5" height="77.5" rx="2" fill="#dcfce7" stroke="#15803d" stroke-width="1.2"/>
+<polygon points="1172.0,1313.1 1186.0,1313.1 1172.0,1299.2" fill="#e11d48" fill-opacity="0.9"/>
+<text x="1176.2" y="1311.4" font-size="5.5" fill="#fff" font-weight="700" text-anchor="middle">A1</text>
+<text x="1248.3" y="1299.7" font-size="10" fill="#15803d" font-weight="700" text-anchor="middle">board B</text>
+<rect x="1173.6" y="1176.0" width="150.4" height="102.3" rx="2" fill="none" stroke="#4338ca" stroke-width="1.4" stroke-dasharray="5 3"/>
+<text x="1228.1" y="1234.0" font-size="7.5" fill="#4338ca" font-weight="700" text-anchor="middle">Discovery, above</text>
+<rect x="1175.1" y="1183.8" width="98.4" height="7.9" fill="#1f2937"/>
+<circle cx="1271.5" cy="1185.8" r="2.4" fill="#fbbf24"/>
+<text x="1224.3" y="1198.2" font-size="8" fill="#4338ca" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="middle">P1</text>
+<rect x="1175.1" y="1262.6" width="98.4" height="7.9" fill="#1f2937"/>
+<circle cx="1271.5" cy="1264.5" r="2.4" fill="#fbbf24"/>
+<text x="1224.3" y="1275.9" font-size="8" fill="#4338ca" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="middle">P2</text>
+<rect x="1313.1" y="1221.1" width="12.4" height="12.1" rx="1" fill="#94a3b8" stroke="#334155" stroke-width="0.8"/>
+<text x="1312.3" y="1230.1" font-size="7" fill="#334155" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="end">CN1</text>
+<text x="1248.0" y="1144.0" font-size="7" fill="#64748b" text-anchor="middle">vehicle RIGHT</text>
+<text x="1248.0" y="1324.1" font-size="7" fill="#64748b" text-anchor="middle">vehicle LEFT</text>
+<text x="1168.0" y="1231.1" font-size="7" fill="#64748b" font-weight="700" text-anchor="end">FRONT</text>
+<text x="1327.9" y="1231.1" font-size="7" fill="#64748b" font-weight="700" text-anchor="start">REAR</text>
+<text x="1363.9" y="1151.0" font-size="8.2" fill="#1e293b" font-weight="700">Discovery from above, components up, as in every view.</text>
+<text x="1363.9" y="1163.5" font-size="8.2" fill="#475569">CN1, the ST-LINK mini-USB, points to the REAR (fascia).</text>
+<text x="1363.9" y="1176.0" font-size="8.2" fill="#475569">P1 is the header on the vehicle RIGHT: board A goes under it.</text>
+<text x="1363.9" y="1188.5" font-size="8.2" fill="#475569">P2 is the header on the vehicle LEFT: board B goes under it.</text>
+<text x="1363.9" y="1201.0" font-size="8.2" fill="#475569">Both headers have pin 1 (yellow) at the CN1 end.</text>
+<text x="1363.9" y="1213.5" font-size="8.2" fill="#475569"></text>
+<text x="1363.9" y="1226.0" font-size="8.2" fill="#1e293b" font-weight="700">Red triangle = the corner at printed hole A1.</text>
+<text x="1363.9" y="1238.5" font-size="8.2" fill="#475569">On A and on B: the FRONT corner on the vehicle-LEFT edge.</text>
+<text x="1363.9" y="1251.0" font-size="8.2" fill="#475569">Mark that corner on both faces with a pen before soldering:</text>
+<text x="1363.9" y="1263.5" font-size="8.2" fill="#475569">both boards then read the same way up, print legible.</text>
 <text x="40.0" y="985.0" font-size="12" fill="#1a1a1a" font-weight="700">CHECK BEFORE THE IRON IS HOT</text>
 <line x1="40" y1="993" x2="1100" y2="993" stroke="#e2e8f0"/>
 <text x="40.0" y="1011.0" font-size="9" fill="#475569">1  Count the holes: A and B need 18 × 24, C 10 × 24. The drawing assumes the usual kit counts; a board one row short moves everything.</text>
@@ -3187,7 +3234,7 @@
 <text x="740.0" y="1218.0" font-size="8.8" fill="#475569">(HW-11). 3V3 comes from P2-5/6, never P1 VDD (JP1): 100 mA ceiling,</text>
 <text x="740.0" y="1230.5" font-size="8.8" fill="#475569">the transceiver and INA226 logic only. R4 guards PE9 if the servo</text>
 <text x="740.0" y="1243.0" font-size="8.8" fill="#475569">plug goes on one pin off.</text>
-<line x1="40" y1="1252" x2="1680" y2="1252" stroke="#e2e8f0"/>
-<text x="40.0" y="1268.0" font-size="8.4" fill="#94a3b8">Geometry: UM1472 Fig. 10 (board 66 × 97, outer rows 53.34 apart, 6.33 in from each edge, first row 33.82 from the CN1 edge) · Pins: UM1472 Table 5 and the P1/P2 schematic · P2-3/4 = 5V, P2-5/6 = 3V, P2-7 = PH0</text>
-<text x="40.0" y="1282.0" font-size="8.4" fill="#94a3b8">Decisions: MEC-08 (carrier) · MEC-15 (kit boards) · HW-19 (5 V split board, selectable termination) · HW-06 · HW-09 · HW-11 · HW-18 · SVG is the master - PDFs are generated once the design is frozen.</text>
+<line x1="40" y1="1352" x2="1680" y2="1352" stroke="#e2e8f0"/>
+<text x="40.0" y="1368.0" font-size="8.4" fill="#94a3b8">Geometry: UM1472 Fig. 10 (board 66 × 97, outer rows 53.34 apart, 6.33 in from each edge, first row 33.82 from the CN1 edge) · Pins: UM1472 Table 5 and the P1/P2 schematic · P2-3/4 = 5V, P2-5/6 = 3V, P2-7 = PH0</text>
+<text x="40.0" y="1382.0" font-size="8.4" fill="#94a3b8">Decisions: MEC-08 (carrier) · MEC-15 (kit boards) · HW-19 (5 V split board, selectable termination) · HW-06 · HW-09 · HW-11 · HW-18 · SVG is the master - PDFs are generated once the design is frozen.</text>
 </svg>

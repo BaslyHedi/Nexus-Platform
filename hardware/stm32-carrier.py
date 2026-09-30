@@ -183,6 +183,25 @@ def draw_board(v, b, grid_labels=True):
         x, y = v.px(BX[0], (cfg['edge'][0] + cfg['edge'][1]) / 2)
         w(f'<text transform="translate({x - 16:.1f},{y:.1f}) rotate(-90)" font-size="10" font-weight="700" fill="#15803d" text-anchor="middle">Board {b}</text>')
 
+A1_RED = '#e11d48'
+
+
+def a1_marker(v, corner, dx, dy, leg=6.0):
+    """A red triangle in the board corner nearest printed hole A1, legs along the two edges.
+    dx, dy point from the corner into the board (+1 / -1), in board millimetres."""
+    X, Y = corner
+    pts = [v.px(X, Y), v.px(X + dx * leg, Y), v.px(X, Y + dy * leg)]
+    d = ' '.join(f'{x:.1f},{y:.1f}' for x, y in pts)
+    w(f'<polygon points="{d}" fill="{A1_RED}" fill-opacity="0.9"/>')
+    x, y = v.px(X + dx * leg * 0.3, Y + dy * leg * 0.3)
+    text(x, y + 2.5, 'A1', 5.5, '#fff', '700', anchor='middle')
+
+
+def board_a1(v, b, leg=6.0):
+    # A and B: A1 is header row 24 (front) at column r - the front edge, high-Y side
+    a1_marker(v, (BX[0], BOARD[b]['edge'][1]), +1, -1, leg)
+
+
 def row_labels(v, yline):
     # the printed letter over each column of holes, and the header row it carries above it
     for r in range(1, 26):
@@ -190,9 +209,14 @@ def row_labels(v, yline):
         text(x, yline, LET[24 - r] if r < 25 else '·', 7, '#15803d', '700', anchor='middle')
         text(x, yline - 10, str(r), 6, '#94a3b8' if r == 25 else '#64748b', anchor='middle', italic=r == 25)
 
+CN1_Y = 26.67                # CN1, the ST-LINK mini-USB, on the rear edge (placed centrally, by eye)
+
+
 def draw_discovery(v):
     v.rect(DISCO['x'][0], DISCO['x'][1], DISCO['y'][0], DISCO['y'][1], rx=3, fill='#eef2ff',
            fill_opacity='0.35', stroke='#4338ca', stroke_width=1.2, stroke_dasharray='7 4')
+    v.rect(DISCO['x'][1] - 7, DISCO['x'][1] + 1, CN1_Y - 3.9, CN1_Y + 3.9, rx=1, fill='#cbd5e1',
+           stroke='#4338ca', stroke_width=1)
 
 def draw_sockets(v):
     for b, col, lab in SOCKETS:
@@ -324,6 +348,8 @@ def label(v, X, Y, t, colr, size=8, anchor='middle', dy=0, weight='700'):
 def carrier_view(v, top):
     draw_board(v, 'A')
     draw_board(v, 'B')
+    board_a1(v, 'A')
+    board_a1(v, 'B')
     if top:
         draw_sockets(v)
     # module envelope and assumed outline
@@ -540,6 +566,7 @@ def draw_socket(v, top, hf):
 def board_c(v, top):
     hf = lambda c, r: v.px(*c_hole(c, r))
     v.rect(C_EDGE_X[0], C_EDGE_X[1], C_EDGE_Y[0], C_EDGE_Y[1], rx=4, fill='#f0fdf4', stroke='#15803d', stroke_width=1.6)
+    a1_marker(v, (C_EDGE_X[0], C_EDGE_Y[1]), +1, -1)
     for c in range(1, C_COLS + 1):
         for r in range(1, C_ROWS + 1):
             x, y = hf(c, r)
@@ -601,10 +628,60 @@ def board_c(v, top):
         x, y = hf(8, 5.5)
         text(x, y + 3, f"R1 / R2 leads bent to {silk('C', 'g', 7)} / {silk('C', 'i', 7)}", 6.5, '#475569', '700', anchor='middle', halo=True)
 
+def orientation_inset(y0):
+    """Which board goes under which header: the Discovery from above, A and B beneath it."""
+    text(RX0, y0, 'ORIENTATION - where A and B sit under the Discovery', 12, '#1a1a1a', '700')
+    w(f'<line x1="{RX0}" y1="{y0 + 8}" x2="{W - 40}" y2="{y0 + 8}" stroke="#e2e8f0"/>')
+    v = View(RX0 + 42, y0 + 32, XMIN, YMIN, YMAX, flip=False, scale=1.55)
+    for b in ('A', 'B'):
+        v.rect(BX[0], BX[1], BOARD[b]['edge'][0], BOARD[b]['edge'][1], rx=2, fill='#dcfce7',
+               stroke='#15803d', stroke_width=1.2)
+        board_a1(v, b, leg=9.0)
+        # the label goes on the strip of each board outboard of the Discovery
+        yl = (BOARD[b]['edge'][0] + DISCO['y'][0]) / 2 if b == 'A' else (DISCO['y'][1] + BOARD[b]['edge'][1]) / 2
+        x, y = v.px(-15, yl)
+        text(x, y + 4, f'board {b}', 10, '#15803d', '700', anchor='middle')
+    v.rect(DISCO['x'][0], DISCO['x'][1], DISCO['y'][0], DISCO['y'][1], rx=2, fill='none',
+           stroke='#4338ca', stroke_width=1.4, stroke_dasharray='5 3')
+    x, y = v.px(-28, 29.2)
+    text(x, y + 3, 'Discovery, above', 7.5, '#4338ca', '700', anchor='middle')
+    for b, cols, lab in (('A', ('i', 'j'), 'P1'), ('B', ('g', 'h'), 'P2')):
+        ya, yb = cy(b, ci(cols[0])), cy(b, ci(cols[1]))
+        v.rect(RX(25) - 1.27, RX(1) + 1.27, min(ya, yb) - 1.27, max(ya, yb) + 1.27, fill='#1f2937')
+        x, y = v.px(RX(1), cy(b, ci(cols[0])))         # pin 1 (odd pins' column), at the CN1 end
+        w(f'<circle cx="{x:.1f}" cy="{y:.1f}" r="2.4" fill="#fbbf24"/>')
+        x, y = v.px(RX(13), max(ya, yb) + (5.5 if b == 'A' else 4.8))
+        text(x, y, lab, 8, '#4338ca', '700', anchor='middle', halo=True)
+    v.rect(DISCO['x'][1] - 7, DISCO['x'][1] + 1, CN1_Y - 3.9, CN1_Y + 3.9, rx=1, fill='#94a3b8', stroke='#334155', stroke_width=0.8)
+    x, y = v.px(DISCO['x'][1] - 3, CN1_Y)
+    text(x - 7, y + 3, 'CN1', 7, '#334155', '700', anchor='end', halo=True)
+    x0, ya_ = v.px(XMIN, YMIN)
+    x1, yb_ = v.px(XMAX, YMAX)
+    text((x0 + x1) / 2, ya_ - 5, 'vehicle RIGHT', 7, '#64748b', anchor='middle')
+    text((x0 + x1) / 2, yb_ + 11, 'vehicle LEFT', 7, '#64748b', anchor='middle')
+    text(x0 - 4, (ya_ + yb_) / 2, 'FRONT', 7, '#64748b', '700', anchor='end')
+    text(x1 + 4, (ya_ + yb_) / 2, 'REAR', 7, '#64748b', '700', anchor='start')
+    tx = x1 + 40
+    lines = [
+        ('Discovery from above, components up, as in every view.', True),
+        ('CN1, the ST-LINK mini-USB, points to the REAR (fascia).', False),
+        ('P1 is the header on the vehicle RIGHT: board A goes under it.', False),
+        ('P2 is the header on the vehicle LEFT: board B goes under it.', False),
+        ('Both headers have pin 1 (yellow) at the CN1 end.', False),
+        ('', False),
+        ('Red triangle = the corner at printed hole A1.', True),
+        ('On A and on B: the FRONT corner on the vehicle-LEFT edge.', False),
+        ('Mark that corner on both faces with a pen before soldering:', False),
+        ('both boards then read the same way up, print legible.', False),
+    ]
+    for i, (t, bold) in enumerate(lines):
+        text(tx, y0 + 34 + i * 12.5, t, 8.2, '#1e293b' if bold else '#475569', '700' if bold else None)
+
+
 # ---------------------------------------------------------------- sheet
 if __name__ == "__main__":
     OUT = sys.argv[1] if len(sys.argv) > 1 else os.path.join(os.path.dirname(os.path.abspath(__file__)), 'stm32-carrier.svg')
-    W, H = 1720, 1300
+    W, H = 1720, 1400
     w(f'<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewBox="0 0 {W} {H}" font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif">')
     w(f'<rect width="{W}" height="{H}" fill="#fbfaf8"/>')
     text(40, 30, 'NEXUS - STM32 carrier and 5 V split board: soldering and wiring', 18, '#1a1a1a', '700')
@@ -736,6 +813,7 @@ if __name__ == "__main__":
     y = table(y + 26, 'FIXINGS  (MEC-15)', ['Fix', 'Board hole', 'Chassis hole'], fix_rows, [12, 62, 170])
     text(RX0, y + 16, 'All six: ⌀3.2 in the board, M2.5 × 10 standoff, M2.5 screws, washer in the ⌀3.18 holes.', 8.4, '#475569')
     text(RX0, y + 29, 'Header row 1 at chassis x 181.20 · A outboard edge y 5.11 · B outboard edge y 110.99 · gap y 55.11-60.99.', 8.4, '#475569')
+    orientation_inset(y + 58)
 
     # ---------------------------------------------------------------- checks and notes (bottom band)
     NY = 985
