@@ -81,7 +81,7 @@ CAPTIONS = [
     ((43.2, 51.4), "10  22 AWG, pad to pad: the GND chain, 5 V, 3V3, servo PWM, I2C, CAN TX / RX, CAN H / L, TERM"),
     ((51.4, 56), f"11  The bridges, one wire each: P2-1 to 6V IN - ({C.N('A', 'c', 3)}), P2-5 to I2C-A VCC ({C.N('A', 'c', 21)})"),
     ((56, 58.8), "   Right way up again"),
-    ((58.8, 64), f"12  Module in, H / L links to {C.N('B', 'm', 3)} / {C.silk('B', 'o', 3)}, TERM jumper on, four 10 mm M2.5 standoffs"),
+    ((58.8, 64), f"12  Module in, flat (pins bent 90°), H / L links to {C.N('B', 'm', 3)} / {C.silk('B', 'o', 3)}, TERM jumper on, four 10 mm M2.5 standoffs"),
     ((64, 67.4), "13  The Discovery drops onto the carrier"),
     ((67.4, 70.5), "14  Board C, the 5 V split: IN 5V and TO STM32, R1 / R2 10k source Rp, C1 470 uF"),
     ((70.5, 72.8), f"    The F5 screw ({C.N('C', 'e', 4)}) first, then the USB-C socket over it: pigtail into {' / '.join(C.silk('C', c, r) for _, _, c, r, _ in C.C_PIGTAIL)}, two zip ties"),
@@ -474,22 +474,29 @@ for i, (net, pts, kind) in enumerate(C.XWIRES):
     joints(f'bj-{net}', [xy[0], xy[-1]], car, t + 1.6)
 
 # ---------------------------------------------------------------- module, links, jumper, standoffs
-mx0 = C.RX(13) - 1.5
+# the module lies flat, face up, its four pins bent 90 deg down into the 1x4 socket (BOM 4.1)
+X0, X1, Y0, Y1 = C.module_box()
+ZB = 9.8                                  # underside of the module's board
 m = Mesh()
-m.box(mx0, mx0 + 25, 60.85, 78.85, 11.0, 12.6, 'module')
+m.box(X0, X1, Y0, Y1, ZB, ZB + 1.6, 'module')
+m.box(X0, X0 + 2.5, Y0 + 0.3, Y1 - 0.3, ZB - 2.2, ZB, 'black')          # header spacer, now under the end
 for x, y in [hole('B', C.ci(c), r) for c, r, _ in C.XCVR_SOCKET[1]]:
-    m.box(x - 1.27, x + 1.27, y - 1.27, y + 1.27, 8.5, 11.0, 'black')
-    m.box(x - 0.32, x + 0.32, y - 0.32, y + 0.32, 3.0, 13.5, 'gold')
-m.box(mx0 + 8, mx0 + 13, 67.5, 72.2, 12.6, 14.1, 'chip')
-m.box(mx0 + 25 - 7.5, mx0 + 25, 63.0, 74.0, 12.6, 19.0, 'mterm')
-for y in (66.04, 71.12):
-    m.cyl((mx0 + 21.2, y, 19.0), (mx0 + 21.2, y, 19.3), 1.4, 'screw', 12)
-    m.box(mx0 + 24.95, mx0 + 25.05, y - 1.3, y + 1.3, 14, 17, 'hole')
-m.box(mx0 + 2, mx0 + 4, 62.5, 64.5, 12.6, 13.2, 'led_r')
+    m.box(x - 0.32, x + 0.32, y - 0.32, y + 0.32, 3.0, ZB + 0.3, 'gold')      # the bent-down leg
+    m.box(x - 0.32, x + 2.6, y - 0.32, y + 0.32, ZB + 0.3, ZB + 0.94, 'gold')  # and the bend into the board
+mid = (X0 + X1) / 2
+yc = (Y0 + Y1) / 2
+m.box(mid - 4.5, mid - 0.5, yc - 2.5, yc + 2.5, ZB + 1.6, ZB + 3.1, 'chip')
+tx0 = X1 - C.MODULE['terminal']
+m.box(tx0, X1, Y0 + 0.4, Y1 - 0.4, ZB + 1.6, ZB + 9.6, 'mterm')           # height assumed, BOM 4.1
+for y in (Y0 + 2.6, Y1 - 2.6):                                               # CANL, then CANH
+    m.cyl(((tx0 + X1) / 2, y, ZB + 9.6), ((tx0 + X1) / 2, y, ZB + 9.9), 1.3, 'screw', 12)
+    m.box(X1 - 0.05, X1 + 0.05, y - 1.2, y + 1.2, ZB + 3.5, ZB + 6.5, 'hole')
 drop(m.make('module-sn65hvd230', car), MODULE, 25)
+LINK_Y = {'CANL': Y0 + 2.6, 'CANH': Y1 - 2.6}
 for net, (b, c, r) in C.LINKS:
     x, y = hole(b, c, r)
-    wire('link-' + net, [(mx0 + 25, y, 15.5), (x, y, 15.5), (x, y, 5.0), (x, y, 0.0)], net, 'ins', car, LINKS)
+    ye = LINK_Y[net]
+    wire('link-' + net, [(X1, ye, ZB + 5.0), (X1 + 2.5, ye, ZB + 5.0), (x, y, 5.0), (x, y, 0.0)], net, 'ins', car, LINKS)
 x, y = hole('B', C.ci('m'), 22)              # TERM is m22 / m23, along X
 m = Mesh()
 m.box(C.RX(23) - 1.3, C.RX(22) + 1.3, y - 1.3, y + 1.3, 2.6, 8.8, 'jumper')

@@ -963,6 +963,23 @@ two 25-pin strips, the drawing follows the board.
   the Discovery anyway. The CN1 plug of the Mini-B extension (5.10) has 2.5 mm less room behind it.
   **Check on the vehicle that the plug and its cable still bend clear.**
 
+**Revision 2026-10-03 · the CAN module lies flat.** The SN65HVD230 module in hand (BOM 4.1,
+[`SPECS.md`](../bom/parts/4.1-SN65HVD230-Module/SPECS.md)) is **26.98 × 10.24 mm**, with a straight
+header in its own plane. Plugged upright into its socket it would reach about 50 mm above plate 2,
+and plate 3 is 40 mm up. The 25 × 18 mm flat module this record assumed was never the real part.
+
+- **It lies flat, component side up,** about 10 mm above board B. Its four pins are bent 90° at the
+  spacer, or its header is swapped for a right-angle one from the 5.11 kit. The screw terminal's
+  top is then about 21 mm above B, well under plate 3.
+- **Its socket moves from row 13 to row 16 (B·I5-I2)**, and the module points to the rear. Its
+  terminal ends 8.6 mm short of B's CAN terminal, which is room for the H / L links, whose wires
+  enter the terminal from the module's end. It stays clear of R3a / R3b and the TERM header in
+  front, and outboard of the Discovery.
+- **F4's screw head sits under the module's far end.** It is low enough; as before, the module
+  comes out to reach it.
+- **The four solder-side runs to the socket move with it** (3V3, GND, CAN TX, CAN RX). They are
+  shorter than before, and the routing check passes.
+
 ---
 
 ## MEC-16 · Plate 2's lower face is the harness board - plate 1 carries only the battery and the driver

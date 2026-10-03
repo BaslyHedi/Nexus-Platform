@@ -143,7 +143,19 @@ MALE = [
 RES = [('A', ('h', 8), ('h', 12), 'R4 1k'), ('B', ('k', 19), ('k', 23), 'R3a 100R'),
        ('B', ('k', 24), ('o', 24), 'R3b 20R')]
 CAPS = [('A', ('c', 8), ('c', 10), 'C2')]          # (minus leg, plus leg)
-XCVR_SOCKET = ('B', [('n', 13, '3V3'), ('o', 13, 'GND'), ('p', 13, 'CRX'), ('q', 13, 'CTX')])
+# The SN65HVD230 module (BOM 4.1, 26.98 x 10.24) lies FLAT, component side up: upright it would hit
+# plate 3. Its four pins are bent 90 deg (or a right-angle header) into a 1x4 socket on row
+# XCVR_ROW, and it points to the rear, its screw terminal 8.6 mm short of B's CAN terminal.
+XCVR_ROW = 16
+XCVR_SOCKET = ('B', [('n', XCVR_ROW, '3V3'), ('o', XCVR_ROW, 'GND'), ('p', XCVR_ROW, 'CRX'), ('q', XCVR_ROW, 'CTX')])
+MODULE = dict(length=26.98, width=10.24, terminal=3.74, pin_in=1.3)   # pin_in: pin row to header face
+
+
+def module_box():
+    """(X0, X1, Y0, Y1) of the flat module, and its terminal's X start."""
+    X0 = HX('B', XCVR_ROW) - MODULE['pin_in']
+    yc = cy('B', 15.5)                      # the middle of the four pins, n-q
+    return X0, X0 + MODULE['length'], yc - MODULE['width'] / 2, yc + MODULE['width'] / 2
 FIX = [('A', 7.0, 14.0, 'F1', '(148.18, 23.76) ⌀3.18'), ('B', 4.07, 15.0, 'F2', '(148.2, 72.2) ⌀2.71'),
        ('A', 3.25, 5.457, 'F3', '(169.88, 14.24) ⌀2.71'), ('B', 15.11, 6.457, 'F4', '(169.88, 100.24) ⌀2.71')]
 
@@ -170,10 +182,10 @@ WIRES = [
     ('5V', 'B', [(17, 21), (17, 21.5), (9.5, 21.5), (9.5, 2.5), (8, 2)], 'ins'),                # 5V IN + to P2-4
     ('GND', 'B', [(17, 23), (17.5, 23.5), (17.5, 24.5), (10.5, 24.5), (10.5, 1.5), (8, 1)], 'ins'),  # 5V IN - to P2-2
     ('GND', 'B', [(7, 1), (7.5, 0.5), (16.5, 0.5), (17, 1)], 'ins'),             # P2-1 to CAN GND
-    ('GND', 'B', [(17, 1), (17.5, 1.5), (17.5, 12.5), (15.5, 12.5), (15, 13)], 'ins'),   # CAN GND to XCVR GND
-    ('3V3', 'B', [(8, 3), (8.5, 3.5), (11.5, 3.5), (11.5, 12.5), (14, 12.5), (14, 13)], 'ins'),  # P2-6 to XCVR 3V3
-    ('CTX', 'B', [(7, 17), (7.5, 16.5), (16.5, 16.5), (16.5, 13.5), (17, 13)], 'ins'),   # PD1 to CTX
-    ('CRX', 'B', [(8, 18), (8.5, 17.5), (15.5, 17.5), (15.5, 13.5), (16, 13)], 'ins'),   # PD0 to CRX
+    ('GND', 'B', [(17, 1), (17.5, 1.5), (17.5, 15.5), (15.5, 15.5), (15, 16)], 'ins'),   # CAN GND to XCVR GND
+    ('3V3', 'B', [(8, 3), (8.5, 3.5), (11.5, 3.5), (11.5, 15.5), (14, 15.5), (14, 16)], 'ins'),  # P2-6 to XCVR 3V3
+    ('CTX', 'B', [(7, 17), (7.5, 16.5), (16.5, 16.5), (17, 16)], 'ins'),          # PD1 to CTX
+    ('CRX', 'B', [(8, 18), (8.5, 17.5), (16, 17.5), (16, 16)], 'ins'),            # PD0 to CRX
     ('CANH', 'B', [(13, 3), (12.5, 2.5), (12.5, 1.5), (13, 1)], 'ins'),          # module H to CAN H
     ('CANH', 'B', [(13, 1), (13.5, 1.5), (13.5, 18.5), (11.5, 18.5), (11, 19)], 'ins'),  # CAN H to R3
     ('CANL', 'B', [(15, 3), (15.5, 2.5), (15.5, 1.5), (15, 1)], 'ins'),          # module L to CAN L
@@ -384,16 +396,16 @@ def carrier_view(v, top):
         draw_sockets(v)
     # module envelope and assumed outline
     if top:
-        v.rect(RX(17) - 1.2, RX(3) - 1.3, cy('B', 11) - 1.0, cy('B', 18) + 1.4, rx=2, fill='none',
+        X0, X1, Y0, Y1 = module_box()
+        v.rect(X0 - 1.5, X1 + 1.5, Y0 - 1.5, Y1 + 1.5, rx=2, fill='none',
                stroke='#047857', stroke_width=1, stroke_dasharray='4 3')
-        # assumed 25 x 18 module, header at its front edge on row 13, terminal at the rear
-        mx0 = RX(13) - 1.5
-        v.rect(mx0, mx0 + 25, 60.85, 78.85, rx=2, fill='#ecfdf5', fill_opacity='0.85',
-               stroke='#047857', stroke_width=1.4)
-        v.rect(mx0 + 25 - 7.5, mx0 + 25, 63.0, 74.0, rx=1, fill='#dbeafe', stroke='#047857', stroke_width=1)
-        label(v, mx0 + 10.5, 65.2, 'SN65HVD230', '#047857', 7)
-        label(v, mx0 + 10.5, 65.2, 'face up, H/L at rear', '#047857', 6, dy=9, weight=None)
-        label(v, mx0 + 21.2, 76.9, 'H L', '#1d4ed8', 7, weight='700')
+        v.rect(X0, X1, Y0, Y1, rx=1.5, fill='#dbeafe', fill_opacity='0.85', stroke='#047857', stroke_width=1.4)
+        v.rect(X1 - MODULE['terminal'], X1, Y0 + 0.4, Y1 - 0.4, rx=1, fill='#1d4ed8', fill_opacity='0.35',
+               stroke='#047857', stroke_width=1)
+        label(v, (X0 + X1) / 2 - 1.5, (Y0 + Y1) / 2, 'SN65HVD230, flat', '#047857', 7)
+        label(v, (X0 + X1) / 2 - 1.5, (Y0 + Y1) / 2, 'pins bent 90°, face up', '#047857', 6, dy=9, weight=None)
+        label(v, X1 + 0.6, Y0 + 2.6, 'L', '#1d4ed8', 7, anchor='start')
+        label(v, X1 + 0.6, Y1 - 1.4, 'H', '#1d4ed8', 7, anchor='start')
     # sockets pads (solder side shows them as pads)
     if not top:
         for b, col, lab in SOCKETS:
@@ -414,7 +426,7 @@ def carrier_view(v, top):
     for b, m, p, lab in CAPS:
         draw_cap(v, b, m, p, lab, top)
     b, pins = XCVR_SOCKET
-    X0, X1 = RX(13) - 1.27, RX(13) + 1.27
+    X0, X1 = HX(b, XCVR_ROW) - 1.27, HX(b, XCVR_ROW) + 1.27
     if top:
         v.rect(X0, X1, cy(b, ci('n')) - 1.27, cy(b, ci('q')) + 1.27, rx=0.8, fill='#111827',
                fill_opacity='0.85', stroke='#047857', stroke_width=1)
@@ -464,9 +476,6 @@ def carrier_labels_top(v, boxes):
     text(x, y - 7, 'R4 1k', 7, '#1e40af', '700', anchor='middle', halo=True)
     label(v, HX('B', 23) - 2.2, cy('B', 11) + 0.9, 'R3a 100R', '#1e40af', 7, anchor='end')
     label(v, HX('B', 24) - 2.2, cy('B', 13) + 0.9, 'R3b 20R', '#1e40af', 7, anchor='end')
-    label(v, RX(15.5), 64.5, 'module', '#047857', 6.5, weight=None)
-    label(v, RX(15.5), 64.5, 'envelope', '#047857', 6.5, weight=None, dy=8)
-    label(v, RX(15.5), 64.5, f"{LET[24 - 3]} to {LET[24 - 17]}", '#047857', 6.5, weight=None, dy=16)
 
 PIN_LAB = {  # (board, col, row): (text, level, anchor) - B's in the gap, A's over A's inner columns
     ('B', 'g', 17): ('P2-33 PD1', 1, 'start'), ('B', 'h', 18): ('P2-36 PD0', 0, 'end'),
@@ -801,15 +810,15 @@ if __name__ == "__main__":
         (NET['5V'], '5 V Rp', 'C IN 5V', f"TO STM32 + ({N('C', 'g', 24)}) → R1 top ({silk('C', 'g', 12)}) → R2 top ({silk('C', 'i', 12)})"),
         (NET['GND'], 'GND FRDM', 'C IN GND', f"{N('C', 'c', 24)} → C1 − ({silk('C', 'c', 12)}) → socket black ({silk('C', 'c', 7)}), 18 AWG"),
         (NET['GND'], 'GND STM32', 'C IN GND', f"TO STM32 − → B 5V IN − ({N('B', 'q', 23)}) → P2-2 ({silk('B', 'h', 1)})"),
-        (NET['GND'], 'GND CAN', f"P2-1 {N('B', 'g', 1)}", f"CAN GND ({silk('B', 'q', 1)}) → XCVR GND ({silk('B', 'o', 13)})"),
+        (NET['GND'], 'GND CAN', f"P2-1 {N('B', 'g', 1)}", f"CAN GND ({silk('B', 'q', 1)}) → XCVR GND ({silk('B', 'o', XCVR_ROW)})"),
         (NET['GND'], 'GND (A)', 'P2-1', f"bridge → 6V IN − ({N('A', 'c', 3)}) → C2 − → SERVO → I2C-B → I2C-A"),
-        (NET['3V3'], '3.3 V', 'P2-5 / P2-6', f"P2-6 ({N('B', 'h', 3)}) → XCVR ({silk('B', 'n', 13)}) · P2-5 → bridge → I2C-A VCC ({N('A', 'c', 21)})"),
+        (NET['3V3'], '3.3 V', 'P2-5 / P2-6', f"P2-6 ({N('B', 'h', 3)}) → XCVR ({silk('B', 'n', XCVR_ROW)}) · P2-5 → bridge → I2C-A VCC ({N('A', 'c', 21)})"),
         (NET['6V'], 'Servo 6 V', 'A 6V IN +', f"{N('A', 'c', 1)} → C2 + ({silk('A', 'c', 10)}) → SERVO + ({silk('A', 'c', 13)}), 18 AWG"),
         (NET['PWM'], 'Servo PWM', 'P1-27 PE9', f"R4 1k ({N('A', 'h', 12)}-{silk('A', 'h', 8)}) → SERVO SIG ({silk('A', 'c', 14)})"),
         (NET['SCL'], 'I²C2 SCL', 'P1-34 PB10', f"I2C-B ({N('A', 'c', 17)}) → I2C-A ({silk('A', 'c', 22)})"),
         (NET['SDA'], 'I²C2 SDA', 'P1-35 PB11', f"I2C-B ({N('A', 'c', 18)}) → I2C-A ({silk('A', 'c', 23)})"),
-        (NET['CTX'], 'CAN1_TX', 'P2-33 PD1', f"XCVR CTX ({N('B', 'q', 13)}) - straight, not crossed"),
-        (NET['CRX'], 'CAN1_RX', 'P2-36 PD0', f"XCVR CRX ({N('B', 'p', 13)})"),
+        (NET['CTX'], 'CAN1_TX', 'P2-33 PD1', f"XCVR CTX ({N('B', 'q', XCVR_ROW)}) - straight, not crossed"),
+        (NET['CRX'], 'CAN1_RX', 'P2-36 PD0', f"XCVR CRX ({N('B', 'p', XCVR_ROW)})"),
         (NET['CANH'], 'CAN_H', 'module H', f"link → {N('B', 'm', 3)} → CAN H ({silk('B', 'm', 1)}) → R3 ({silk('B', 'k', 19)})"),
         (NET['CANL'], 'CAN_L', 'module L', f"link → {N('B', 'o', 3)} → CAN L ({silk('B', 'o', 1)}) → TERM ({silk('B', 'm', 22)})"),
         (NET['TERM'], 'TERM', 'R3a + R3b', f"100R {N('B', 'k', 19)}-{silk('B', 'k', 23)}, lead to {silk('B', 'k', 24)}, 20R to {silk('B', 'o', 24)} → TERM ({silk('B', 'm', 23)}) = 120 Ω"),
@@ -862,8 +871,8 @@ if __name__ == "__main__":
         '2  Cut four 1×25 strips from the 40-pin female headers and snip the 25th tail of each flush with the body. Dry-fit them on the Discovery,',
         f"    boards A and B under them: pins on {col_range('A', 'i')} / {col_range('A', 'j')[2:]} and {col_range('B', 'g')} / {col_range('B', 'h')[2:]}, and header row 25 past A, on the margin with no hole under it.",
         '3  Solder the sockets WITH THE DISCOVERY PLUGGED IN - it is the only thing that sets the 53.34 mm between A and B. Tack two corners, check, finish.',
-        '4  Measure the SN65HVD230 module: outline, pin order, and CANH-CANL unpowered. ~120 Ω means it carries its own terminator - remove it,',
-        '    so TERM alone decides. Pin order drawn is the BOM\'s (3V3, GND, CRX, CTX): wire the socket to what the module actually prints.',
+        '4  SN65HVD230 module: bend its 4 pins 90° at the spacer, component side up, so it lies flat pointing to the rear. Measure CANH-CANL',
+        f"    unpowered: ~120 Ω means an on-board terminator - remove it, so TERM alone decides. Socket {N('B', 'n', XCVR_ROW)}-{silk('B', 'q', XCVR_ROW)} = 3V3, GND, CRX, CTX.",
         '5  The kit terminals may be 5.0 mm, not 5.08: the 3p CAN block spans 10.0 vs 10.16 mm of holes. Push it in; do not drill.',
         f"6  Before the Discovery goes back in: 5 V to GND not shorted · 6 V rail isolated from 5 V and 3V3 · 5 V on B·{silk('B', 'g', 2)} / {silk('B', 'h', 2)} only · nothing on B·{silk('B', 'g', 4)} (PH0) · {N('A', 'j', 3)} (P1-4 VDD) not on 3V3.",
         '7  Fixings: drill F1, F2, F5 and F6 on the grid first. Screw A and B down with the Discovery in, then mark F3 and F4 from under the',

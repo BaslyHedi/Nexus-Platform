@@ -40,8 +40,9 @@ for col, row, net in [('c', 1, '6V'), ('c', 3, 'GND'), ('c', 8, 'GND'), ('c', 10
     put('A', col, row, net)
 for col, row, net in [('m', 1, 'CANH'), ('o', 1, 'CANL'), ('q', 1, 'GND'), ('q', 21, '5V'), ('q', 23, 'GND'),
                       ('m', 22, 'CANL'), ('m', 23, 'TERM'), ('k', 19, 'CANH'), ('k', 23, 'TERM1'), ('k', 24, 'TERM1'), ('o', 24, 'TERM'),
-                      ('n', 13, '3V3'), ('o', 13, 'GND'), ('p', 13, 'CRX'), ('q', 13, 'CTX'),
                       ('m', 3, 'CANH'), ('o', 3, 'CANL')]:
+    put('B', col, row, net)
+for col, row, net in C.XCVR_SOCKET[1]:            # the transceiver socket, wherever it sits
     put('B', col, row, net)
 for col, row, net in [('a', 24, '5V'), ('c', 24, 'GND'), ('g', 24, '5V'), ('i', 24, 'GND'), ('a', 12, '5V'),
                       ('c', 12, 'GND'), ('a', 7, '5V'), ('c', 7, 'GND'), ('g', 7, 'CC1'), ('i', 7, 'CC2'),
