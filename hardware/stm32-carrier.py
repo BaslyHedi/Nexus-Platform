@@ -24,9 +24,28 @@ BOARD = {
     'A': dict(cols=18, rows=24, y1=-20.32, edge=(-23.73, 26.27)),
     'B': dict(cols=18, rows=24, y1=35.56, edge=(32.15, 82.15)),
 }
-BX = (-64.21, 5.79)                  # both boards, 24 rows, 70 mm
+BX = (-64.21, 5.79)                  # a board whose hole 1 sits under header row 1, 70 mm
+# As built (2026-10-03): A's P1 sockets went in one hole toward the rear (CN1), so A's hole g
+# sits under Discovery header row g + 1 and A's whole grid is one pitch forward of B's.
+# P1 row 1 (pins 1/2) hangs past A's last hole; row 25 (pins 49/50) is soldered in hole A.
+SHIFT = {'A': 1, 'B': 0}
+SOCKET_NC = {'A': (1,), 'B': (25,)}   # header rows of each socket with no soldered tail
 DISCO = dict(x=(-63.18, 33.82), y=(-6.33, 59.67))
-XMIN, XMAX = -64.21, 33.82
+XMIN, XMAX = -64.21 - P, 33.82
+
+
+def HX(b, g):
+    """X of board b's hole row g, in the Discovery's frame."""
+    return RX(g + SHIFT[b])
+
+
+def bx(b):
+    return BX[0] - SHIFT[b] * P, BX[1] - SHIFT[b] * P
+
+
+def hdr_hole(b, n):
+    """The board hole row under Discovery header row n."""
+    return n - SHIFT[b]
 YMIN, YMAX = -23.73, 82.15
 
 def cy(board, col):
@@ -98,7 +117,7 @@ class View:
 
 # Carrier hole -> (X, Y); col may be fractional for routing channels
 def hole(board, col, row):
-    return RX(row), BOARD[board]['y1'] + (col - 1) * P
+    return HX(board, row), BOARD[board]['y1'] + (col - 1) * P
 
 # ---------------------------------------------------------------- component data
 # Boards A (P1 side) and B (P2 side) are both 5x7 kit boards, 18 x 24; col a of A is outboard.
@@ -121,8 +140,8 @@ MALE = [
 RES = [('A', ('h', 8), ('h', 12), 'R4 1k'), ('B', ('k', 19), ('k', 23), 'R3 120R')]
 CAPS = [('A', ('c', 8), ('c', 10), 'C2')]          # (minus leg, plus leg)
 XCVR_SOCKET = ('B', [('n', 13, '3V3'), ('o', 13, 'GND'), ('p', 13, 'CRX'), ('q', 13, 'CTX')])
-FIX = [('A', 7.0, 14.0, 'F1', '(148.18, 23.76) ⌀3.18'), ('B', 4.07, 14.0, 'F2', '(148.2, 72.2) ⌀2.71'),
-       ('A', 3.25, 5.457, 'F3', '(169.88, 14.24) ⌀2.71'), ('B', 15.11, 5.457, 'F4', '(169.88, 100.24) ⌀2.71')]
+FIX = [('A', 7.0, 14.0, 'F1', '(148.18, 23.76) ⌀3.18'), ('B', 4.07, 15.0, 'F2', '(148.2, 72.2) ⌀2.71'),
+       ('A', 3.25, 5.457, 'F3', '(169.88, 14.24) ⌀2.71'), ('B', 15.11, 6.457, 'F4', '(169.88, 100.24) ⌀2.71')]
 
 # Wires, all insulated and all pad to pad: nothing is joined to another wire except at a pad,
 # and no pad takes more than two wire ends. A net with several pins is a chain, part to part.
@@ -137,11 +156,11 @@ WIRES = [
     ('GND', 'A', [(3, 8), (2.5, 8), (2.5, 12), (3, 12)], 'pwr'),                 # C2 - to SERVO GND
     ('GND', 'A', [(3, 12), (2.5, 12.5), (1.5, 12.5), (1.5, 15.5), (3, 16)], 'ins'),   # to I2C-B GND
     ('GND', 'A', [(3, 16), (2.5, 16.5), (1.5, 16.5), (1.5, 19.5), (3, 20)], 'ins'),   # to I2C-A GND
-    ('PWM', 'A', [(9, 14), (8.5, 13.5), (8.5, 12.5), (8, 12)], 'ins'),           # PE9 to R4
+    ('PWM', 'A', [(9, 13), (8.5, 12.5), (8, 12)], 'ins'),                        # PE9 to R4
     ('PWM', 'A', [(8, 8), (7.5, 7.5), (4.5, 7.5), (4.5, 14), (3, 14)], 'ins'),   # R4 to SERVO SIG
-    ('SCL', 'A', [(10, 17), (9.5, 16.5), (3.5, 16.5), (3, 17)], 'ins'),          # PB10 to I2C-B
+    ('SCL', 'A', [(10, 16), (9.5, 16.5), (3.5, 16.5), (3, 17)], 'ins'),          # PB10 to I2C-B
     ('SCL', 'A', [(3, 17), (3.5, 17.5), (3.5, 21.5), (3, 22)], 'ins'),           # I2C-B to I2C-A
-    ('SDA', 'A', [(9, 18), (8.5, 18.5), (4, 18.5), (3, 18)], 'ins'),             # PB11 to I2C-B
+    ('SDA', 'A', [(9, 17), (8.5, 17.5), (8.5, 18.5), (4, 18.5), (3, 18)], 'ins'),   # PB11 to I2C-B
     ('SDA', 'A', [(3, 18), (2.5, 18.5), (2.5, 22.5), (3, 23)], 'ins'),           # I2C-B to I2C-A
     # ---- board B: each header pin feeds one thing, so no pin carries more than two wires
     ('5V', 'B', [(17, 21), (17, 21.5), (9.5, 21.5), (9.5, 2.5), (8, 2)], 'ins'),                # 5V IN + to P2-4
@@ -169,18 +188,24 @@ LINKS = [('CANH', ('B', 13, 3)), ('CANL', ('B', 15, 3))]      # module terminal 
 # ---------------------------------------------------------------- drawing helpers
 def draw_board(v, b, grid_labels=True):
     cfg = BOARD[b]
-    v.rect(BX[0], BX[1], cfg['edge'][0], cfg['edge'][1], rx=4, fill='#f0fdf4',
+    x0, x1 = bx(b)
+    v.rect(x0, x1, cfg['edge'][0], cfg['edge'][1], rx=4, fill='#f0fdf4',
            stroke='#15803d', stroke_width=1.6)
     for c in range(1, cfg['cols'] + 1):
         for r in range(1, cfg['rows'] + 1):
-            x, y = v.px(RX(r), cy(b, c))
+            x, y = v.px(HX(b, r), cy(b, c))
             w(f'<circle cx="{x:.1f}" cy="{y:.1f}" r="2.1" fill="#fff" stroke="#a3b18a" stroke-width="0.7"/>')
     if grid_labels:
         # column letters on the front (left) edge
         for c in range(1, cfg['cols'] + 1):
-            x, y = v.px(BX[0], cy(b, c))
+            x, y = v.px(x0, cy(b, c))
             text(x - 4, y + 2.5, str(19 - c), 7, '#15803d', anchor='end')
-        x, y = v.px(BX[0], (cfg['edge'][0] + cfg['edge'][1]) / 2)
+        # the printed letters, along whichever long edge is uppermost in this view
+        ye = cfg['edge'][1] if v.flip else cfg['edge'][0]
+        for r in range(1, cfg['rows'] + 1):
+            x, y = v.px(HX(b, r), ye)
+            text(x, y - 3, LET[24 - r], 6.5, '#15803d', '700', anchor='middle')
+        x, y = v.px(x0, (cfg['edge'][0] + cfg['edge'][1]) / 2)
         w(f'<text transform="translate({x - 16:.1f},{y:.1f}) rotate(-90)" font-size="10" font-weight="700" fill="#15803d" text-anchor="middle">Board {b}</text>')
 
 A1_RED = '#e11d48'
@@ -199,15 +224,14 @@ def a1_marker(v, corner, dx, dy, leg=6.0):
 
 def board_a1(v, b, leg=6.0):
     # A and B: A1 is header row 24 (front) at column r - the front edge, high-Y side
-    a1_marker(v, (BX[0], BOARD[b]['edge'][1]), +1, -1, leg)
+    a1_marker(v, (bx(b)[0], BOARD[b]['edge'][1]), +1, -1, leg)
 
 
 def row_labels(v, yline):
-    # the printed letter over each column of holes, and the header row it carries above it
+    # the Discovery's header rows; each board prints its own letters along its edge
     for r in range(1, 26):
         x, _ = v.px(RX(r), 0)
-        text(x, yline, LET[24 - r] if r < 25 else '·', 7, '#15803d', '700', anchor='middle')
-        text(x, yline - 10, str(r), 6, '#94a3b8' if r == 25 else '#64748b', anchor='middle', italic=r == 25)
+        text(x, yline, str(r), 6.5, '#64748b', anchor='middle')
 
 CN1_Y = 26.67                # CN1, the ST-LINK mini-USB, on the rear edge (placed centrally, by eye)
 
@@ -224,11 +248,12 @@ def draw_sockets(v):
         colr = '#0f766e' if b == 'A' else '#b45309'
         v.rect(RX(25) - 1.27, RX(1) + 1.27, cy(b, c) - 1.2, cy(b, c) + 1.2, rx=1,
                fill=colr, fill_opacity='0.22', stroke=colr, stroke_width=0.9)
-        snipped(v, b, c, colr)
+        for n in SOCKET_NC[b]:
+            snipped(v, b, c, colr, n)
 
-def snipped(v, b, c, colr):
-    # row 25: no hole under it, tail cut flush, the socket body rests on the margin
-    x, y = v.px(RX(25), cy(b, c))
+def snipped(v, b, c, colr, n=25):
+    # a socket position with no soldered tail: snipped, or past the board's last hole
+    x, y = v.px(RX(n), cy(b, c))
     w(f'<line x1="{x - 2.2:.1f}" y1="{y - 2.2:.1f}" x2="{x + 2.2:.1f}" y2="{y + 2.2:.1f}" stroke="{colr}" stroke-width="1.1"/>')
     w(f'<line x1="{x - 2.2:.1f}" y1="{y + 2.2:.1f}" x2="{x + 2.2:.1f}" y2="{y - 2.2:.1f}" stroke="{colr}" stroke-width="1.1"/>')
 
@@ -243,7 +268,7 @@ def pad(v, b, c, r, colr, rad=2.6):
 def draw_terminal(v, b, pins, entry, name, colr, top=True):
     cs = [ci(p[0]) for p in pins]
     rs = [p[1] for p in pins]
-    Xs = [RX(r) for r in rs]
+    Xs = [HX(b, r) for r in rs]
     Ys = [cy(b, c) for c in cs]
     if len(set(rs)) > 1:          # pins along X
         X0, X1 = min(Xs) - 2.5, max(Xs) + 2.5
@@ -272,7 +297,7 @@ def draw_terminal(v, b, pins, entry, name, colr, top=True):
 def draw_male(v, b, pins, name, top=True):
     cs = [ci(p[0]) for p in pins]
     rs = [p[1] for p in pins]
-    X0, X1 = RX(max(rs)) - 1.27, RX(min(rs)) + 1.27
+    X0, X1 = HX(b, max(rs)) - 1.27, HX(b, min(rs)) + 1.27
     Y0 = cy(b, min(cs)) - 1.27
     Y1 = cy(b, max(cs)) + 1.27
     if top:
@@ -361,17 +386,19 @@ def carrier_view(v, top):
         v.rect(mx0, mx0 + 25, 60.85, 78.85, rx=2, fill='#ecfdf5', fill_opacity='0.85',
                stroke='#047857', stroke_width=1.4)
         v.rect(mx0 + 25 - 7.5, mx0 + 25, 63.0, 74.0, rx=1, fill='#dbeafe', stroke='#047857', stroke_width=1)
-        label(v, mx0 + 10, 70.3, 'SN65HVD230', '#047857', 8)
-        label(v, mx0 + 10, 70.3, 'face up, H/L at rear', '#047857', 7, dy=10, weight=None)
+        label(v, mx0 + 10.5, 65.2, 'SN65HVD230', '#047857', 7)
+        label(v, mx0 + 10.5, 65.2, 'face up, H/L at rear', '#047857', 6, dy=9, weight=None)
         label(v, mx0 + 21.2, 76.9, 'H L', '#1d4ed8', 7, weight='700')
     # sockets pads (solder side shows them as pads)
     if not top:
         for b, col, lab in SOCKETS:
             colr = "#0f766e" if b == "A" else "#b45309"
-            for r in range(1, 25):
-                x, y = hp(v, b, ci(col), r)
+            for n in range(1, 26):
+                if n in SOCKET_NC[b]:
+                    snipped(v, b, ci(col), colr, n)
+                    continue
+                x, y = v.px(RX(n), cy(b, ci(col)))
                 w(f'<circle cx="{x:.1f}" cy="{y:.1f}" r="2.9" fill="#e2e8f0" stroke="{colr}" stroke-width="1"/>')
-            snipped(v, b, ci(col), colr)
     boxes = {}
     for b, pins, entry, name, colr in TERMS:
         boxes[name] = draw_terminal(v, b, pins, entry, name, colr, top)
@@ -399,7 +426,7 @@ def carrier_labels_top(v, boxes):
     # Discovery
     label(v, -15, 13.0, 'STM32F4DISCOVERY above', '#4338ca', 10)
     label(v, -15, 13.0, 'plugs into the four 1x25 sockets', '#4338ca', 8, dy=13, weight=None)
-    label(v, RX(25), -3.4, 'header row 25: no hole', '#0f766e', 6.5, anchor='start', weight=None)
+    label(v, RX(25), -3.4, '× = not connected: P1 row 1, past A·X (as built) · P2 row 25, tail snipped', '#0f766e', 6.5, anchor='start', weight=None)
     label(v, 16, 26.5, 'CN1 ST-LINK', '#4338ca', 8, weight=None)
     label(v, 16, 26.5, 'overhangs the boards', '#4338ca', 7, dy=11, weight=None)
     label(v, 16, 26.5, '28 mm to the rear', '#4338ca', 7, dy=21, weight=None)
@@ -409,7 +436,7 @@ def carrier_labels_top(v, boxes):
     # terminals and headers
     X0, X1, Y0, Y1 = boxes['6V IN']
     label(v, (X0 + X1) / 2, Y0 - 1.2, '6V IN', '#d97706', 8)
-    label(v, RX(1) + 2.2, cy('A', 9) + 0.9, 'pin 1', '#0f766e', 7, anchor='start')
+    label(v, RX(1) + 2.2, cy('A', 9) + 0.9, 'pin 1 (n.c.)', '#0f766e', 7, anchor='start')
     label(v, RX(1) + 2.2, cy('B', 7) + 0.9, 'pin 1', '#b45309', 7, anchor='start')
     X0, X1, Y0, Y1 = boxes['SERVO']
     label(v, (X0 + X1) / 2, Y0 - 1.6, 'SERVO', '#334155', 7.5)
@@ -427,8 +454,8 @@ def carrier_labels_top(v, boxes):
     label(v, (X0 + X1) / 2, Y1 + 3.6, '5V IN', '#dc2626', 8)
     X0, X1, Y0, Y1 = boxes['TERM']
     label(v, X0 - 0.8, Y0 + 5.2, 'TERM', '#1d4ed8', 7.5, anchor='end')
-    label(v, RX(8), -17.8, 'C2 470µF', '#a16207', 7)
-    x, y = v.px(RX(10), cy('A', 8))
+    label(v, HX('A', 8), -17.8, 'C2 470µF', '#a16207', 7)
+    x, y = v.px(HX('A', 10), cy('A', 8))
     text(x, y - 7, 'R4 1k', 7, '#1e40af', '700', anchor='middle', halo=True)
     label(v, RX(23) - 2.2, cy('B', 11) + 0.9, 'R3 120R', '#1e40af', 7, anchor='end')
     label(v, RX(15.5), 64.5, 'module', '#047857', 6.5, weight=None)
@@ -437,8 +464,8 @@ def carrier_labels_top(v, boxes):
 
 PIN_LAB = {  # (board, col, row): (text, level, anchor) - B's in the gap, A's over A's inner columns
     ('B', 'g', 17): ('P2-33 PD1', 1, 'start'), ('B', 'h', 18): ('P2-36 PD0', 0, 'end'),
-    ('A', 'i', 14): ('P1-27 PE9', 0, 'start'),
-    ('A', 'j', 17): ('P1-34 PB10', 1, 'start'), ('A', 'i', 18): ('P1-35 PB11', 0, 'end'),
+    ('A', 'i', hdr_hole('A', 14)): ('P1-27 PE9', 0, 'start'),
+    ('A', 'j', hdr_hole('A', 17)): ('P1-34 PB10', 1, 'start'), ('A', 'i', hdr_hole('A', 18)): ('P1-35 PB11', 0, 'end'),
 }
 # the P2 supply pins at the rear end, called out beyond the rear edge
 END_LAB = [('B', [('g', 1, 'P2-1 GND'), ('h', 1, 'P2-2 GND'), ('h', 2, 'P2-4 5V'), ('g', 3, 'P2-5 3V'), ('h', 3, 'P2-6 3V')])]
@@ -637,7 +664,7 @@ def orientation_inset(y0):
     w(f'<line x1="{RX0}" y1="{y0 + 8}" x2="{W - 40}" y2="{y0 + 8}" stroke="#e2e8f0"/>')
     v = View(RX0 + 42, y0 + 32, XMIN, YMIN, YMAX, flip=False, scale=1.55)
     for b in ('A', 'B'):
-        v.rect(BX[0], BX[1], BOARD[b]['edge'][0], BOARD[b]['edge'][1], rx=2, fill='#dcfce7',
+        v.rect(*bx(b), BOARD[b]['edge'][0], BOARD[b]['edge'][1], rx=2, fill='#dcfce7',
                stroke='#15803d', stroke_width=1.2)
         board_a1(v, b, leg=9.0)
         # the label goes on the strip of each board outboard of the Discovery
@@ -689,9 +716,11 @@ if __name__ == "__main__":
     w(f'<rect width="{W}" height="{H}" fill="#fbfaf8"/>')
     text(40, 30, 'NEXUS - STM32 carrier and 5 V split board: soldering and wiring', 18, '#1a1a1a', '700')
     text(40, 49, 'Kit perfboards (BOM 5.11), 2.54 grid · Boards A and B, both 5×7 cm (18 × 24 holes), under P1 and P2, 5.9 mm apart · Board C 3×7 cm (10 × 24), the 5 V split · MEC-08 / MEC-15 / HW-19', 10.5, '#666')
-    col_range = lambda b, c: f"{b}·A{silk(b, c, 24)[1:]}-X{silk(b, c, 1)[1:]}"
+    def col_range(b, c):           # the holes a socket column's soldered tails occupy
+        hs = [hdr_hole(b, n) for n in range(1, 26) if n not in SOCKET_NC[b] and 1 <= hdr_hole(b, n) <= 24]
+        return f"{b}·{silk(b, c, max(hs))}-{silk(b, c, min(hs))}"
     text(40, 66, 'Hole names: board·hole, as PRINTED on the kit board - letters A-X along the 70 mm side, numbers across (1-18 on A and B, 1-10 on C), A1 bottom-left with the print readable, as every view shows it.', 9.5, '#b45309')
-    text(40, 80, f"Header row n (pins 2n-1, 2n) is letter {LET[23]} for row 1 back to {LET[0]} for row 24 · P1 odd pins {col_range('A', 'i')} (outboard), even {col_range('A', 'j')} · P2 odd {col_range('B', 'g')} (inboard), even {col_range('B', 'h')} (UM1472 Fig. 10) · fixings are F1-F6, never hole names.", 9.5, '#b45309')
+    text(40, 80, f"B: header row n is letter X for row 1 back to A for row 24 · A, AS BUILT: one hole on, row 2 on X, row 1 off the board · P1 odd pins {col_range('A', 'i')}, even {col_range('A', 'j')[2:]} · P2 odd {col_range('B', 'g')}, even {col_range('B', 'h')[2:]} · fixings F1-F6.", 9.5, '#b45309')
     text(40, 93, 'Wires on the solder side, ALL INSULATED, PAD TO PAD: they meet only at pads, two wire ends per pad at most. Thick 18 AWG (3.11), thin 22 AWG, grey = a part lead bent over.', 9.5, '#b45309')
 
     # views
@@ -702,10 +731,10 @@ if __name__ == "__main__":
     text(VX1 - 40, 123, 'P1 on the vehicle right (top), P2 on the vehicle left (bottom) - chassis-layout convention', 8.5, '#64748b')
     text(VX2 - 30, 108, 'A + B  SOLDER SIDE  (turned over about the long axis)', 12, '#1a1a1a', '700')
     text(VX2 - 30, 123, 'front still LEFT, so P2 is now on TOP and every column reads upside down', 8.5, '#64748b')
-    row_labels(vt, VY - 6)
-    row_labels(vb, VY - 6)
+    row_labels(vt, VY - 15)
+    row_labels(vb, VY - 15)
     _, yb0 = vt.px(0, YMIN)
-    text(vt.px(RX(1), 0)[0] + 16, VY - 6, '◀ header row  (rear ▶)', 6.5, '#64748b')
+    text(vt.px(RX(1), 0)[0] + 16, VY - 15, '◀ Discovery header row  (rear ▶)', 6.5, '#64748b')
 
     boxes = carrier_view(vt, True)
     carrier_labels_top(vt, boxes)
@@ -723,7 +752,7 @@ if __name__ == "__main__":
     for v in (vt, vb):
         x0, y0 = v.px(XMIN, YMAX if not v.flip else YMIN)
         x1, _ = v.px(XMAX, 0)
-        text((x0 + x1) / 2, y0 + 22, 'front ◀  boards 70 mm + Discovery overhang = 98 mm  ▶ rear (fascia)', 8.5, '#64748b', anchor='middle')
+        text((x0 + x1) / 2, y0 + 22, 'front ◀  A sits one pitch ahead of B (as built) · A front to Discovery rear 100.6 mm  ▶ rear (fascia)', 8.5, '#64748b', anchor='middle')
         text((x0 + x1) / 2, y0 + 34, 'overall width 106 mm · F1-F4: ⌀3.2 holes onto existing plate-2 holes, 10 mm M2.5 standoffs', 8.5, '#64748b', anchor='middle')
 
     # board C views
@@ -807,15 +836,15 @@ if __name__ == "__main__":
 
     fix_rows = [
         (None, 'F1', f"{N('A', 'g', 14)}, on grid", 'plate 2 M3 hole (148.18, 23.76), ⌀3.18'),
-        (None, 'F2', f"{N('B', 'd', 14)}, on grid", 'plate 2 M2.5 hole (148.2, 72.2), ⌀2.71 - 0.18 mm'),
+        (None, 'F2', f"{N('B', 'd', 15)}, on grid", 'plate 2 M2.5 hole (148.2, 72.2), ⌀2.71 - 0.18 mm'),
         (None, 'F3', f"A, between {silk('A', 'c', 5)} / {silk('A', 'd', 6)}", 'plate 2 M2.5 hole (169.88, 14.24) - mark from the plate'),
-        (None, 'F4', f"B, between {silk('B', 'o', 5)} / {silk('B', 'o', 6)}", 'plate 2 M2.5 hole (169.88, 100.24) - under the module'),
+        (None, 'F4', f"B, between {silk('B', 'o', 6)} / {silk('B', 'o', 7)}", 'plate 2 M2.5 hole (169.88, 100.24) - under the module'),
         (None, 'F5', f"{N('C', 'e', 4)}, on grid", 'plate 2 M3 hole (99.24, 38.76), ⌀3.18 - under the socket'),
         (None, 'F6', f"{N('C', 'e', 21)}, on grid", 'plate 2 M3 hole (99.24, 81.76) - 43.00 = 17 pitches + 0.18'),
     ]
     y = table(y + 26, 'FIXINGS  (MEC-15)', ['Fix', 'Board hole', 'Chassis hole'], fix_rows, [12, 62, 170])
     text(RX0, y + 16, 'All six: ⌀3.2 in the board, M2.5 × 10 standoff, M2.5 screws, washer in the ⌀3.18 holes.', 8.4, '#475569')
-    text(RX0, y + 29, 'Header row 1 at chassis x 181.20 · A outboard edge y 5.11 · B outboard edge y 110.99 · gap y 55.11-60.99.', 8.4, '#475569')
+    text(RX0, y + 29, 'A·X.. at chassis x 181.20 · header row 1 and B·X.. at x 183.74 (B and the Discovery 2.54 mm back, as built) · A y 5.11, B y 110.99.', 8.4, '#475569')
     orientation_inset(y + 58)
 
     # ---------------------------------------------------------------- checks and notes (bottom band)

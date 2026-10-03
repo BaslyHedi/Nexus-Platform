@@ -806,6 +806,10 @@ reads as a hole. The drawing computes every name from the geometry. Older text i
 the drawing's first scheme, column letter + header row: A g14 is A·K12, B d14 is B·K15, and on
 board C e4 is C·D6 and e21 is C·U6.
 
+**As built 2026-10-03: A's P1 sockets went in one hole toward CN1.** Only A is affected; B's
+sockets are as drawn. A's grid now sits one pitch forward of B's, P1 pins 1/2 are not connected,
+and B and the Discovery sit 2.54 mm further back on plate 2. See "Revision 2026-10-03" at the end.
+
 **Rerouted 2026-09-30: every wire is insulated and runs pad to pad.** Wires meet only at pads,
 no pad takes more than two wire ends, and the bare spines and bridges are gone. See "Revision
 2026-09-30" at the end.
@@ -850,7 +854,8 @@ a seam without adding anything the Discovery does not already provide.
   overhang, and 106 mm across. It needs the full-width part of plate 2, which runs from x 114 and is
   about 115 mm wide there.
 - **Where it sits (2026-09-28).** Header row 1 at **chassis x 181.20**, boards from x 117.0 to 187.0,
-  the Discovery's rear edge at x 215.0. Board A's outboard edge at y 4.95, board B's at y 110.99. The
+  the Discovery's rear edge at x 215.0. *As built since 2026-10-03: B is x 119.54-189.54, header
+  row 1 at x 183.74, the Discovery's rear edge at x 217.54. A is unchanged.* Board A's outboard edge at y 4.95, board B's at y 110.99. The
   window was narrow: the front is held by the plate's full width starting at x 114, and the rear by
   the fascia port bodies near x 220 and the harness zone behind x 224.
 - **Fixings, all into holes plate 2 already has.** Only one M3 cross-line (x 148.2) and one M2.5 line
@@ -876,8 +881,8 @@ a seam without adding anything the Discovery does not already provide.
   **F5 at C·D6 and F6 at C·U6** to the M3 holes (99.24, 38.76) and (99.24, 81.76), which are 43.00 mm apart:
   17 rows plus 0.18 mm. The Bauer's position is still a placeholder, and if it moves rearward it
   meets C.
-- **MEC-13's USB-C clearance question is closed.** The boards now end at x 187. Only the Discovery
-  reaches x 215, and it does so at about z 101 or higher, above the bottom-row ports at z 90. A
+- **MEC-13's USB-C clearance question is closed.** The boards now end at x 187 (B at 189.54 as
+  built). Only the Discovery reaches x 215 (217.54 as built, 2.8 mm short of the body's end), and it does so at about z 101 or higher, above the bottom-row ports at z 90. A
   40 mm body behind the flange, which ends at x 220.3, still clears by 5.3 mm.
 - **The two boards meet only through the Discovery and two soldered bridges** (GND and 3V3). *Since
   2026-09-30* each bridge is one insulated wire, from a P2 pin to the part it feeds on A. They
@@ -934,6 +939,29 @@ insulated wire can only be joined at a pad. The routing is redone to suit.
   It checks every net end to end through the Discovery's own pin ties, looks for shorts, and counts
   wire ends per pad. It also checks standoff clearance, overlaps, and wires lying over another net's
   joint. Run it after any change to the carrier.
+
+**Revision 2026-10-03 · A's P1 sockets as built, one hole toward CN1.** The two P1 strips on
+board A were soldered one hole toward the ST-Link end. P2 on B is as drawn. Rather than desolder
+two 25-pin strips, the drawing follows the board.
+
+- **What it means on A.** Discovery header row n now sits over A's hole row n - 1. **P1 row 1
+  (pins 1/2, GND) hangs past A's last hole and is not connected.** Row 25 (pins 49/50) is soldered
+  in hole A·A, so P1's tails cover A·A-X in columns 10 (odd pins) and 9 (even pins). Nothing used
+  P1-1/2: A's ground comes over the GND bridge (B·X12 → A·V16). P1-49/50 at A·A10 / A·A9 are GND
+  and spare.
+- **Three wires move one hole:** PE9 from A·K10 to **A·L10**, PB10 from A·H9 to **A·I9**, PB11 from
+  A·G10 to **A·H10**. Every part on A keeps its holes. The routing check passes on the as-built map.
+- **Because the Discovery holds both headers, A's grid is one pitch forward of B's.** In the
+  chassis, A stays where it was: moving it forward would put its front edge 1 mm into board C,
+  which is fixed by F5 and F6. **B and the Discovery move 2.54 mm rearward instead.** B is now
+  x 119.54-189.54, header row 1 is at x 183.74, and the Discovery's rear edge is at x 217.54.
+- **Fixings.** F1 and F3 on A are unchanged. On B, the plate holes now fall one row further along:
+  **F2 at B·J15** (was K15), still on grid, and **F4 between S4 and R4** (was T4 / S4), marked from
+  the plate as before. If F2 is already drilled at B·K15, drill B·J15 as well; the plate hole decides.
+- **Clearances.** The Discovery's rear edge comes 2.54 mm closer to the fascia's port bodies. The
+  USB-C extension's 40 mm body, ending at x 220.3, still clears by 2.8 mm, and it sits lower than
+  the Discovery anyway. The CN1 plug of the Mini-B extension (5.10) has 2.5 mm less room behind it.
+  **Check on the vehicle that the plug and its cable still bend clear.**
 
 ---
 

@@ -21,10 +21,13 @@ ci = C.ci
 PAD = {}
 def put(b, col, row, net):
     PAD[(b, ci(col) if isinstance(col, str) else col, row)] = net
-for r in range(1, 25):                        # the four sockets: unused pins are their own nets
-    for b, col in (('A', 'i'), ('A', 'j'), ('B', 'g'), ('B', 'h')):
-        pin = 2 * r - 1 if col in 'ig' else 2 * r
-        put(b, col, r, f'{"P1" if b == "A" else "P2"}-{pin}')
+for g in range(1, 25):                        # the four sockets, as built: hole g carries
+    for b, col in (('A', 'i'), ('A', 'j'), ('B', 'g'), ('B', 'h')):   # header row g + SHIFT
+        n = g + C.SHIFT[b]
+        if n > 25 or n in C.SOCKET_NC[b]:
+            continue                          # no soldered tail: the hole is empty
+        pin = 2 * n - 1 if col in 'ig' else 2 * n
+        put(b, col, g, f'{"P1" if b == "A" else "P2"}-{pin}')
 DISCO = {'P1-1': 'GND', 'P1-2': 'GND', 'P2-1': 'GND', 'P2-2': 'GND', 'P2-3': '5V', 'P2-4': '5V',
          'P2-5': '3V3', 'P2-6': '3V3', 'P1-27': 'PWM_MCU', 'P1-34': 'SCL', 'P1-35': 'SDA',
          'P2-33': 'CTX', 'P2-36': 'CRX'}
@@ -50,7 +53,9 @@ ENTRY = {('B', 13, 3): 'module H link', ('B', 15, 3): 'module L link',
 WIRE_NET = {'PWM': ('PWM_MCU', 'PWM_SRV'), 'CC': ('CC1', 'CC2')}
 R = {'ins': 0.3, 'pwr': 0.39, 'lead': 0.12}         # wire radius, in pitches
 STANDOFF = 2.89 / 2.54
-FIX = {'A': [(7.0, 14.0), (3.25, 5.457)], 'B': [(4.07, 14.0), (15.11, 5.457)], 'C': [(5, 4), (5, 21)]}
+FIX = {'A': [], 'B': [], 'C': [(c, r) for c, r, _, _ in C.C_FIX]}
+for b, c, r, _, _ in C.FIX:
+    FIX[b].append((c, r))
 
 wires = [(n, [(b, c, r) for c, r in pts], k) for n, b, pts, k in C.WIRES]
 wires += [(n, pts, k) for n, pts, k in C.XWIRES]

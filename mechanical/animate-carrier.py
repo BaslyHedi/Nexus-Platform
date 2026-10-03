@@ -66,7 +66,7 @@ GROW = S(0.9) - 1            # how long a wire takes to run
 
 CAPTIONS = [
     ((0, 4), "Boards A and B: two 5x7 kit boards, 18 x 24 holes, 5.9 mm apart - board C, the 5 V split, beside them"),
-    ((4, 8.2), f"1  Four 1x25 female sockets: A columns {C.silk('A', 'i', 1)[1:]} / {C.silk('A', 'j', 1)[1:]} under P1, B {C.silk('B', 'g', 1)[1:]} / {C.silk('B', 'h', 1)[1:]} under P2 - header row 25 on the margin, tail snipped"),
+    ((4, 8.2), f"1  Four 1x25 sockets: A {C.silk('A', 'i', 1)[1:]} / {C.silk('A', 'j', 1)[1:]} under P1, one hole toward CN1 as built - B {C.silk('B', 'g', 1)[1:]} / {C.silk('B', 'h', 1)[1:]} under P2"),
     ((8.2, 11), "2  The Discovery plugs in as the jig: it alone sets the 53.34 mm between the two headers"),
     ((11, 19.4), "3  Turn the stack over and solder the sockets - tack the four corners, check, then the rest"),
     ((19.4, 21.6), "   Lift the Discovery off"),
@@ -323,12 +323,12 @@ def perfboard(name, edges_x, edges_y, holes, parent):
 
 for b in ('A', 'B'):
     cfg = C.BOARD[b]
-    perfboard('board-' + b, C.BX, cfg['edge'],
+    perfboard('board-' + b, C.bx(b), cfg['edge'],
               [hole(b, c, r) for c in range(1, cfg['cols'] + 1) for r in range(1, cfg['rows'] + 1)], car)
-label('A', C.BX[0] + 3.2, C.BOARD['A']['edge'][0] + 2.0, 0.06, 4, car)
-label('B', C.BX[0] + 3.2, C.BOARD['B']['edge'][1] - 5.0, 0.06, 4, car)
+label('A', C.bx('A')[0] + 3.2, C.BOARD['A']['edge'][0] + 2.0, 0.06, 4, car)
+label('B', C.bx('B')[0] + 3.2, C.BOARD['B']['edge'][1] - 5.0, 0.06, 4, car)
 
-# ---- the four 1x25 sockets, row 25 on the margin
+# ---- the four 1x25 sockets, as built: a tail only where SOCKET_NC has none missing
 SOCKET_XY = []
 for i, (b, col, lab) in enumerate(C.SOCKETS):
     y = C.cy(b, C.ci(col))
@@ -336,17 +336,19 @@ for i, (b, col, lab) in enumerate(C.SOCKETS):
     m.box(C.RX(25) - 1.27, C.RX(1) + 1.27, y - 1.25, y + 1.25, 0, 8.5, 'black')
     for r in range(1, 26):
         m.box(C.RX(r) - 0.5, C.RX(r) + 0.5, y - 0.5, y + 0.5, 8.5, 8.52, 'hole')
-        if r < 25:
+        if r not in C.SOCKET_NC[b]:
             m.cyl((C.RX(r), y, 0), (C.RX(r), y, -2.6), 0.3, 'screw', 6)
             SOCKET_XY.append((C.RX(r), y))
     drop(m.make('socket-' + col + b, car), SOCKETS_IN + 0.5 * i, 40)
 m = Mesh()
 for b, col, lab in C.SOCKETS:
     y = C.cy(b, C.ci(col))
-    m.cone((C.RX(25), y, 22), (C.RX(25), y, 12), 2.2, 0.2, 'mark', 12)
+    for r in C.SOCKET_NC[b]:
+        m.cone((C.RX(r), y, 22), (C.RX(r), y, 12), 2.2, 0.2, 'mark', 12)
 show(m.make('row25-marks', car), [(S(ROW25[0]), S(ROW25[1]))])
 
-corners = [(x, y) for x, y in SOCKET_XY if abs(x - C.RX(1)) < 0.1 or abs(x - C.RX(24)) < 0.1]
+xs = sorted({round(x, 2) for x, _ in SOCKET_XY})
+corners = [(x, y) for x, y in SOCKET_XY if round(x, 2) in (xs[0], xs[-1])]
 joints('joints-tack', corners, car, TACK)
 joints('joints-sockets', [p for p in SOCKET_XY if p not in corners], car, SOCK_J)
 
