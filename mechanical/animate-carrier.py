@@ -47,7 +47,7 @@ TACK, SOCK_J = 13.9, 15.3
 FLIP1B = (17.0, 19.4)        # back
 DISCO_OFF = (19.6, 21.2)
 PARTS_T = {'6V IN': 21.6, 'CAN': 22.4, '5V IN': 23.2, 'SERVO': 24.6, 'I2C-B': 25.1, 'I2C-A': 25.6,
-           'TERM': 26.3, 'R4 1k': 27.2, 'R3 120R': 27.8, 'C2': 28.6, 'XCVR': 30.2}
+           'TERM': 26.3, 'R4 1k': 27.2, 'R3a 100R': 27.8, 'R3b 20R': 28.2, 'C2': 28.6, 'XCVR': 30.2}
 FLIP2 = (32.0, 34.4)
 PART_J = 34.8
 SPINES = (37.2, 42.6)
@@ -72,7 +72,7 @@ CAPTIONS = [
     ((19.4, 21.6), "   Lift the Discovery off"),
     ((21.6, 24.6), "4  Screw terminals: 6V IN on A, CAN (3p) and 5V IN on B"),
     ((24.6, 27.2), "5  Male headers: SERVO, I2C-B and I2C-A on A, TERM on B"),
-    ((27.2, 30.2), "6  R4 1k in the servo PWM, R3 120R to TERM, C2 470 uF across the servo supply"),
+    ((27.2, 30.2), "6  R4 1k in the servo PWM, R3a 100R + R3b 20R (120R) to TERM, C2 470 uF across the servo supply"),
     ((30.2, 32), "7  A 1x4 socket for the SN65HVD230 module"),
     ((32, 37.2), "8  Turn it over: solder every part pin"),
     ((37.2, 43.2), "9  The servo loop in 18 AWG, outboard on A: 6V IN to C2 to SERVO, on + and on GND"),

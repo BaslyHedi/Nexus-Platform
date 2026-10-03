@@ -590,7 +590,10 @@ its pigtail is soldered straight into the board. See "Revision 2026-09-29" at th
 - **C2, the second 470 µF, sits on carrier board A across the servo header,** where the stall current
   is drawn.
 - **The carrier's end of the CAN bus is terminated by a jumper.** R3, 120 Ω, in series with a 2-pin
-  header across CAN_H/CAN_L on board B. Jumper on means terminated.
+  header across CAN_H/CAN_L on board B. Jumper on means terminated. *As built 2026-10-03: the kit
+  has no 120 Ω, so R3 is **R3a 100 Ω + R3b 20 Ω in series**, exactly 120 Ω. R3a sits where R3 was
+  (B·F8-B8), R3b along the front row (B·A8-A4), and R3a's own lead is bent from B·B8 to B·A8 to
+  join them. Each 1/4 W part carries under 30 mW.*
 - **R4, 1 kΩ, in series with the servo PWM** between PE9 and the servo header.
 
 **Why.**

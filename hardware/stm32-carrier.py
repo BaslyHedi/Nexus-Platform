@@ -80,6 +80,7 @@ NET = {
     '5V': '#dc2626', 'GND': '#111827', '3V3': '#db2777', '6V': '#d97706',
     'PWM': '#92400e', 'SCL': '#7c3aed', 'SDA': '#a855f7', 'CTX': '#0891b2',
     'CRX': '#0e7490', 'TERM': '#64748b', 'CANH': '#1d4ed8', 'CANL': '#60a5fa', 'CC': '#059669',
+    'TERM1': '#64748b',
 }
 
 out = []
@@ -137,7 +138,10 @@ MALE = [
     ('A', [('c', 20, 'GND'), ('c', 21, '3V3'), ('c', 22, 'SCL'), ('c', 23, 'SDA')], 'I2C-A'),
     ('B', [('m', 22, ''), ('m', 23, '')], 'TERM'),
 ]
-RES = [('A', ('h', 8), ('h', 12), 'R4 1k'), ('B', ('k', 19), ('k', 23), 'R3 120R')]
+# R3, the CAN terminator, is 100 + 20 in series (no 120 in the kit): R3a where R3 was, R3b along
+# the front row, their junction R3a's own lead bent from k23 over to k24
+RES = [('A', ('h', 8), ('h', 12), 'R4 1k'), ('B', ('k', 19), ('k', 23), 'R3a 100R'),
+       ('B', ('k', 24), ('o', 24), 'R3b 20R')]
 CAPS = [('A', ('c', 8), ('c', 10), 'C2')]          # (minus leg, plus leg)
 XCVR_SOCKET = ('B', [('n', 13, '3V3'), ('o', 13, 'GND'), ('p', 13, 'CRX'), ('q', 13, 'CTX')])
 FIX = [('A', 7.0, 14.0, 'F1', '(148.18, 23.76) ⌀3.18'), ('B', 4.07, 15.0, 'F2', '(148.2, 72.2) ⌀2.71'),
@@ -174,7 +178,8 @@ WIRES = [
     ('CANH', 'B', [(13, 1), (13.5, 1.5), (13.5, 18.5), (11.5, 18.5), (11, 19)], 'ins'),  # CAN H to R3
     ('CANL', 'B', [(15, 3), (15.5, 2.5), (15.5, 1.5), (15, 1)], 'ins'),          # module L to CAN L
     ('CANL', 'B', [(15, 1), (14.5, 1.5), (14.5, 3.5), (12.5, 3.5), (12.5, 22.5), (13, 22)], 'ins'),  # CAN L to TERM
-    ('TERM', 'B', [(11, 23), (11.5, 23.5), (12.5, 23.5), (13, 23)], 'ins'),      # R3 to TERM
+    ('TERM1', 'B', [(11, 23), (11, 24)], 'lead'),                                # R3a's lead to R3b
+    ('TERM', 'B', [(15, 24), (14.5, 23.5), (13.5, 23.5), (13, 23)], 'ins'),      # R3b to TERM
 ]
 # The two bridges, each one wire from a P2 pin on B to the part it feeds on A, across the gap
 XWIRES = [
@@ -457,7 +462,8 @@ def carrier_labels_top(v, boxes):
     label(v, HX('A', 8), -17.8, 'C2 470µF', '#a16207', 7)
     x, y = v.px(HX('A', 10), cy('A', 8))
     text(x, y - 7, 'R4 1k', 7, '#1e40af', '700', anchor='middle', halo=True)
-    label(v, RX(23) - 2.2, cy('B', 11) + 0.9, 'R3 120R', '#1e40af', 7, anchor='end')
+    label(v, HX('B', 23) - 2.2, cy('B', 11) + 0.9, 'R3a 100R', '#1e40af', 7, anchor='end')
+    label(v, HX('B', 24) - 2.2, cy('B', 13) + 0.9, 'R3b 20R', '#1e40af', 7, anchor='end')
     label(v, RX(15.5), 64.5, 'module', '#047857', 6.5, weight=None)
     label(v, RX(15.5), 64.5, 'envelope', '#047857', 6.5, weight=None, dy=8)
     label(v, RX(15.5), 64.5, f"{LET[24 - 3]} to {LET[24 - 17]}", '#047857', 6.5, weight=None, dy=16)
@@ -806,7 +812,7 @@ if __name__ == "__main__":
         (NET['CRX'], 'CAN1_RX', 'P2-36 PD0', f"XCVR CRX ({N('B', 'p', 13)})"),
         (NET['CANH'], 'CAN_H', 'module H', f"link → {N('B', 'm', 3)} → CAN H ({silk('B', 'm', 1)}) → R3 ({silk('B', 'k', 19)})"),
         (NET['CANL'], 'CAN_L', 'module L', f"link → {N('B', 'o', 3)} → CAN L ({silk('B', 'o', 1)}) → TERM ({silk('B', 'm', 22)})"),
-        (NET['TERM'], 'TERM', 'R3', f"{N('B', 'k', 23)} → TERM ({silk('B', 'm', 23)}) - jumper on = 120 Ω across H / L"),
+        (NET['TERM'], 'TERM', 'R3a + R3b', f"100R {N('B', 'k', 19)}-{silk('B', 'k', 23)}, lead to {silk('B', 'k', 24)}, 20R to {silk('B', 'o', 24)} → TERM ({silk('B', 'm', 23)}) = 120 Ω"),
         (NET['CC'], 'USB-C CC', 'C socket', f"green CC1 ({N('C', 'g', 7)}) ← R1 lead · yellow CC2 ({silk('C', 'i', 7)}) ← R2 lead (Rp, HW-02)"),
     ]
     y = table(100, 'NETLIST', ['Net', 'From', 'To'], net_rows, [12, 96, 190])
@@ -827,7 +833,7 @@ if __name__ == "__main__":
 
     parts = [
         (None, 'Board A', '5×7 board · 2 × 1×25 female · 1 × 2p terminal · 1×3 + 1×3 + 1×4 male · C2 470µF · R4 1k'),
-        (None, 'Board B', '5×7 board · 2 × 1×25 + 1 × 1×4 female · 3p + 2p terminal · 1×2 male + jumper cap · R3 120Ω'),
+        (None, 'Board B', '5×7 board · 2 × 1×25 + 1 × 1×4 female · 3p + 2p terminal · 1×2 male + jumper cap · R3a 100Ω + R3b 20Ω (120 Ω)'),
         (None, 'Board C', '3×7 board · 2 × 2p terminal · USB-C socket (5.1), 2 zip ties · C1 470µF · R1, R2 10k'),
         (None, 'From stock', 'caps: 2 of the 5 in 3.14 · resistors: 3.21 · module: 4.1 · headers, terminals: 5.11'),
         (None, 'Wire', '22 AWG insulated copper hook-up wire (not in BOM) · 18 AWG silicone copper (3.11) for the thick runs · not the CCA Dupont leads (5.7)'),
