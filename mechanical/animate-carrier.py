@@ -79,7 +79,7 @@ CAPTIONS = [
     ((32, 37.2), "8  Turn it over: solder every part pin"),
     ((37.2, 43.2), "9  The servo loop in 18 AWG, outboard on A: 6V IN to C2 to SERVO, on + and on GND"),
     ((43.2, 51.4), "10  22 AWG, pad to pad: the GND chain, 5 V, 3V3, servo PWM, I2C, CAN TX / RX, CAN H / L, TERM"),
-    ((51.4, 56), f"11  The bridges, one wire each: P2-1 to 6V IN - ({C.N('A', 'c', 3)}), P2-5 to I2C-A VCC ({C.N('A', 'c', 21)})"),
+    ((51.4, 56), f"11  The one bridge: P2-5 to I2C-A VCC ({C.N('A', 'c', 21)}); A's GND comes from its own P1-5"),
     ((56, 58.8), "   Right way up again"),
     ((58.8, 64), f"12  Module in face down, CANH / CANL into {C.N('B', 'o', C.CAN_ROW)} / {C.silk('B', 'p', C.CAN_ROW)}, TERM jumper on, four M2.5 standoffs"),
     ((64, 67.4), "13  The Discovery drops onto the carrier"),
@@ -468,7 +468,7 @@ for group, (a, z) in ((heavy, SPINES), (light, INSUL)):
         xy = [hole(b, c, r) for c, r in pts]
         wire(f'wire-{b}-{net}-{i}', xy, net, kind, car, t)
         joints(f'wj-{b}-{net}-{i}', wire_ends(pts, xy), car, t + WIRE_S)
-# the two bridges, one wire each from a P2 pin on B to the part it feeds on A
+# the bridge (3V3), one wire from a P2 pin on B to the part it feeds on A
 for i, (net, pts, kind) in enumerate(C.XWIRES):
     xy = [hole(b, c, r) for b, c, r in pts]
     t = BRIDGE[0] + 1.8 * i

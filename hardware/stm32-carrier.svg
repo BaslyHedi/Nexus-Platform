@@ -2255,6 +2255,9 @@
 <polyline points="780.2,598.0 780.2,592.2 745.2,592.2 745.2,598.0" fill="none" stroke="#d97706" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
 <circle cx="780.2" cy="598.0" r="2.3" fill="#d97706" stroke="#fff" stroke-width="0.6"/>
 <circle cx="745.2" cy="598.0" r="2.3" fill="#d97706" stroke="#fff" stroke-width="0.6"/>
+<polyline points="873.7,527.9 867.8,533.7 867.8,592.2 862.0,598.0" fill="none" stroke="#111827" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="873.7" cy="527.9" r="2.3" fill="#111827" stroke="#fff" stroke-width="0.6"/>
+<circle cx="862.0" cy="598.0" r="2.3" fill="#111827" stroke="#fff" stroke-width="0.6"/>
 <polyline points="862.0,598.0 862.0,615.5 809.4,615.5 809.4,598.0 803.6,598.0" fill="none" stroke="#111827" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
 <circle cx="862.0" cy="598.0" r="2.3" fill="#111827" stroke="#fff" stroke-width="0.6"/>
 <circle cx="803.6" cy="598.0" r="2.3" fill="#111827" stroke="#fff" stroke-width="0.6"/>
@@ -2325,14 +2328,10 @@
 <polyline points="628.3,200.7 634.2,206.6 634.2,218.3 640.0,224.1" fill="none" stroke="#64748b" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
 <circle cx="628.3" cy="200.7" r="2.3" fill="#64748b" stroke="#fff" stroke-width="0.6"/>
 <circle cx="640.0" cy="224.1" r="2.3" fill="#64748b" stroke="#fff" stroke-width="0.6"/>
-<polyline points="897.0,294.2 902.9,300.1 902.9,364.3 891.2,422.7 891.2,592.2 867.8,592.2 862.0,598.0" fill="none" stroke="#111827" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-<circle cx="897.0" cy="294.2" r="2.3" fill="#111827" stroke="#fff" stroke-width="0.6"/>
-<circle cx="862.0" cy="598.0" r="2.3" fill="#111827" stroke="#fff" stroke-width="0.6"/>
 <polyline points="873.7,294.2 879.5,300.1 879.5,364.3 867.8,428.6 657.5,428.6 657.5,586.3 651.7,598.0" fill="none" stroke="#db2777" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
 <circle cx="873.7" cy="294.2" r="2.3" fill="#db2777" stroke="#fff" stroke-width="0.6"/>
 <circle cx="651.7" cy="598.0" r="2.3" fill="#db2777" stroke="#fff" stroke-width="0.6"/>
-<text x="932.7" y="391.5" font-size="7" fill="#111827" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke">GND bridge B·X12 → A·V16</text>
-<text x="932.7" y="401.5" font-size="7" fill="#db2777" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke">3V3 bridge B·V12 → A·D16</text>
+<text x="932.7" y="391.5" font-size="7" fill="#db2777" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke">3V3 bridge B·V12 → A·D16</text>
 <line x1="710.1" y1="294.2" x2="710.1" y2="400.0" stroke="#b45309" stroke-width="0.8"/>
 <circle cx="710.1" cy="294.2" r="4.2" fill="none" stroke="#b45309" stroke-width="1.3"/>
 <text x="713.1" y="406.0" font-size="7" fill="#b45309" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="start">P2-33 PD1</text>
@@ -2342,6 +2341,9 @@
 <line x1="745.2" y1="527.9" x2="745.2" y2="495.8" stroke="#0f766e" stroke-width="0.8"/>
 <circle cx="745.2" cy="527.9" r="4.2" fill="none" stroke="#0f766e" stroke-width="1.3"/>
 <text x="748.2" y="495.8" font-size="7" fill="#0f766e" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="start">P1-27 PE9</text>
+<line x1="873.7" y1="527.9" x2="873.7" y2="495.8" stroke="#0f766e" stroke-width="0.8"/>
+<circle cx="873.7" cy="527.9" r="4.2" fill="none" stroke="#0f766e" stroke-width="1.3"/>
+<text x="870.7" y="495.8" font-size="7" fill="#0f766e" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="end">P1-5 GND</text>
 <line x1="710.1" y1="516.2" x2="710.1" y2="484.8" stroke="#0f766e" stroke-width="0.8"/>
 <circle cx="710.1" cy="516.2" r="4.2" fill="none" stroke="#0f766e" stroke-width="1.3"/>
 <text x="713.1" y="484.8" font-size="7" fill="#0f766e" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="start">P1-34 PB10</text>
@@ -3088,8 +3090,8 @@
 <rect x="1130" y="249" width="550" height="19" fill="#ffffff" stroke="#e2e8f0"/>
 <rect x="1133" y="254" width="4" height="9" fill="#111827"/>
 <text x="1142.0" y="262.0" font-size="8.4" fill="#1e293b" font-weight="700">GND (A)</text>
-<text x="1226.0" y="262.0" font-size="7.9" fill="#475569">P2-1</text>
-<text x="1320.0" y="262.0" font-size="7.9" fill="#475569">bridge → 6V IN − (A·V16) → C2 − → SERVO → I2C-B → I2C-A</text>
+<text x="1226.0" y="262.0" font-size="7.9" fill="#475569">P1-5 A·W10</text>
+<text x="1320.0" y="262.0" font-size="7.9" fill="#475569">→ 6V IN − (A·V16) → C2 − → SERVO → I2C-B → I2C-A</text>
 <rect x="1130" y="268" width="550" height="19" fill="#f8fafc" stroke="#e2e8f0"/>
 <rect x="1133" y="273" width="4" height="9" fill="#db2777"/>
 <text x="1142.0" y="281.0" font-size="8.4" fill="#1e293b" font-weight="700">3.3 V</text>
@@ -3281,8 +3283,8 @@
 <text x="40.0" y="1179.0" font-size="9.3" fill="#1e293b" font-weight="700">Why two 5×7 boards</text>
 <text x="40.0" y="1193.0" font-size="8.8" fill="#475569">The kit's 7×9 (24 × 30) takes all 100 pins, but the Discovery</text>
 <text x="40.0" y="1205.5" font-size="8.8" fill="#475569">covers it, so no terminal or cap would have anywhere to go. Two 5×7s</text>
-<text x="40.0" y="1218.0" font-size="8.8" fill="#475569">leave them outboard and meet 5.9 mm apart: each bridge is one</text>
-<text x="40.0" y="1230.5" font-size="8.8" fill="#475569">insulated wire, P2 pin to the part it feeds. Row 25 is GND only.</text>
+<text x="40.0" y="1218.0" font-size="8.8" fill="#475569">leave them outboard and meet 5.9 mm apart. One wire crosses, the</text>
+<text x="40.0" y="1230.5" font-size="8.8" fill="#475569">3V3 bridge; A takes its GND from its own P1-5.</text>
 <text x="390.0" y="1179.0" font-size="9.3" fill="#1e293b" font-weight="700">What moved off the WAGOs</text>
 <text x="390.0" y="1193.0" font-size="8.8" fill="#475569">Both 470 µF caps and every resistor are now on a board. C2 sits at</text>
 <text x="390.0" y="1205.5" font-size="8.8" fill="#475569">the servo header, where the stall current is. C1, R1 and R2 are on</text>

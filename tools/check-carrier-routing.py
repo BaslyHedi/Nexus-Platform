@@ -28,7 +28,7 @@ for g in range(1, 25):                        # the four sockets, as built: hole
             continue                          # no soldered tail: the hole is empty
         pin = 2 * n - 1 if col in 'ig' else 2 * n
         put(b, col, g, f'{"P1" if b == "A" else "P2"}-{pin}')
-DISCO = {'P1-1': 'GND', 'P1-2': 'GND', 'P2-1': 'GND', 'P2-2': 'GND', 'P2-3': '5V', 'P2-4': '5V',
+DISCO = {'P1-1': 'GND', 'P1-2': 'GND', 'P1-5': 'GND', 'P1-23': 'GND', 'P1-49': 'GND', 'P1-50': 'GND', 'P2-1': 'GND', 'P2-2': 'GND', 'P2-3': '5V', 'P2-4': '5V',
          'P2-5': '3V3', 'P2-6': '3V3', 'P1-27': 'PWM_MCU', 'P1-34': 'SCL', 'P1-35': 'SDA',
          'P2-33': 'CTX', 'P2-36': 'CRX'}
 for k, v in list(PAD.items()):

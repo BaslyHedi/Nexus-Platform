@@ -999,6 +999,12 @@ against the face-up revision above.
   10 mm terminal. If it touches, it is plastic and may rest on the board, but nothing may be
   soldered under it.
 
+**Revision 2026-10-03 · A takes its ground from its own P1-5.** The GND bridge (B·X12 → A·V16) is
+replaced by one wire on A, **A·W10 (P1-5, as built) → A·V16 (6V IN −)**, the head of A's ground
+chain. The Discovery ties all its GND pins together, so A's servo, I²C and INA226 grounds reach
+the STM32 through it, as on B. **One wire still crosses between the boards: the 3V3 bridge**
+(B·V12 → A·D16), built as a soldered end and a plug. Routing check passes.
+
 ---
 
 ## MEC-16 · Plate 2's lower face is the harness board - plate 1 carries only the battery and the driver

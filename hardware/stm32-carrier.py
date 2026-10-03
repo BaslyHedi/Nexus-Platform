@@ -176,6 +176,7 @@ WIRES = [
     # ---- board A: the servo loop outboard in 18 AWG, then the GND chain on to the I2C headers
     ('6V', 'A', [(3, 1), (0.5, 1), (0.5, 10), (3, 10)], 'pwr'),                  # 6V IN + to C2 +
     ('6V', 'A', [(3, 10), (3.5, 10), (3.5, 13), (3, 13)], 'pwr'),                # C2 + to SERVO +
+    ('GND', 'A', [(9, 2), (8.5, 2.5), (3.5, 2.5), (3, 3)], 'ins'),               # P1-5 (as built) to 6V IN -
     ('GND', 'A', [(3, 3), (1.5, 3), (1.5, 7.5), (3, 7.5), (3, 8)], 'pwr'),       # 6V IN - to C2 -
     ('GND', 'A', [(3, 8), (2.5, 8), (2.5, 12), (3, 12)], 'pwr'),                 # C2 - to SERVO GND
     ('GND', 'A', [(3, 12), (2.5, 12.5), (1.5, 12.5), (1.5, 15.5), (3, 16)], 'ins'),   # to I2C-B GND
@@ -201,10 +202,9 @@ WIRES = [
     ('TERM1', 'B', [(11, 23), (11, 24)], 'lead'),                                # R3a's lead to R3b
     ('TERM', 'B', [(15, 24), (14.5, 23.5), (13.5, 23.5), (13, 23)], 'ins'),      # R3b to TERM
 ]
-# The two bridges, each one wire from a P2 pin on B to the part it feeds on A, across the gap
+# The one bridge, a wire from a P2 pin on B to the part it feeds on A, across the gap. A's ground
+# no longer crosses: it comes from A's own P1-5 (2026-10-03), the Discovery tying all its GNDs.
 XWIRES = [
-    ('GND', [('B', 7, 1), ('B', 6.5, 0.5), ('B', 1, 0.5), ('A', 18, 0.5), ('A', 3.5, 0.5),
-             ('A', 3.5, 2.5), ('A', 3, 3)], 'ins'),                              # P2-1 to 6V IN -
     ('3V3', [('B', 7, 3), ('B', 6.5, 2.5), ('B', 1, 2.5), ('A', 17.5, 2.5), ('A', 17.5, 20.5),
              ('A', 4, 20.5), ('A', 3, 21)], 'ins'),                              # P2-5 to I2C-A VCC
 ]
@@ -494,7 +494,7 @@ def carrier_labels_top(v, boxes):
 
 PIN_LAB = {  # (board, col, row): (text, level, anchor) - B's in the gap, A's over A's inner columns
     ('B', 'g', 17): ('P2-33 PD1', 1, 'start'), ('B', 'h', 18): ('P2-36 PD0', 0, 'end'),
-    ('A', 'i', hdr_hole('A', 14)): ('P1-27 PE9', 0, 'start'),
+    ('A', 'i', hdr_hole('A', 14)): ('P1-27 PE9', 0, 'start'), ('A', 'i', hdr_hole('A', 3)): ('P1-5 GND', 0, 'end'),
     ('A', 'j', hdr_hole('A', 17)): ('P1-34 PB10', 1, 'start'), ('A', 'i', hdr_hole('A', 18)): ('P1-35 PB11', 0, 'end'),
 }
 # the P2 supply pins at the rear end, called out beyond the rear edge
@@ -824,7 +824,7 @@ if __name__ == "__main__":
         (NET['GND'], 'GND FRDM', 'C IN GND', f"{N('C', 'c', 24)} → C1 − ({silk('C', 'c', 12)}) → socket black ({silk('C', 'c', 7)}), 18 AWG"),
         (NET['GND'], 'GND STM32', 'C IN GND', f"TO STM32 − → B 5V IN − ({N('B', 'q', 23)}) → P2-2 ({silk('B', 'h', 1)})"),
         (NET['GND'], 'GND CAN', f"P2-1 {N('B', 'g', 1)}", f"CAN GND ({silk('B', 'q', 1)}) → XCVR GND ({silk('B', 'o', XCVR_ROW)})"),
-        (NET['GND'], 'GND (A)', 'P2-1', f"bridge → 6V IN − ({N('A', 'c', 3)}) → C2 − → SERVO → I2C-B → I2C-A"),
+        (NET['GND'], 'GND (A)', f"P1-5 {N('A', 'i', hdr_hole('A', 3))}", f"→ 6V IN − ({N('A', 'c', 3)}) → C2 − → SERVO → I2C-B → I2C-A"),
         (NET['3V3'], '3.3 V', 'P2-5 / P2-6', f"P2-6 ({N('B', 'h', 3)}) → XCVR ({silk('B', 'n', XCVR_ROW)}) · P2-5 → bridge → I2C-A VCC ({N('A', 'c', 21)})"),
         (NET['6V'], 'Servo 6 V', 'A 6V IN +', f"{N('A', 'c', 1)} → C2 + ({silk('A', 'c', 10)}) → SERVO + ({silk('A', 'c', 13)}), 18 AWG"),
         (NET['PWM'], 'Servo PWM', 'P1-27 PE9', f"R4 1k ({N('A', 'h', 12)}-{silk('A', 'h', 8)}) → SERVO SIG ({silk('A', 'c', 14)})"),
@@ -900,8 +900,8 @@ if __name__ == "__main__":
         ('Why two 5×7 boards', [
             'The kit\'s 7×9 (24 × 30) takes all 100 pins, but the Discovery',
             'covers it, so no terminal or cap would have anywhere to go. Two 5×7s',
-            'leave them outboard and meet 5.9 mm apart: each bridge is one',
-            'insulated wire, P2 pin to the part it feeds. Row 25 is GND only.',
+            'leave them outboard and meet 5.9 mm apart. One wire crosses, the',
+            '3V3 bridge; A takes its GND from its own P1-5.',
         ]),
         ('What moved off the WAGOs', [
             'Both 470 µF caps and every resistor are now on a board. C2 sits at',
