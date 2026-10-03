@@ -39,18 +39,16 @@ for col, row, net in [('c', 1, '6V'), ('c', 3, 'GND'), ('c', 8, 'GND'), ('c', 10
                       ('h', 8, 'PWM_SRV'), ('h', 12, 'PWM_MCU')]:
     put('A', col, row, net)
 for col, row, net in [('m', 1, 'CANH'), ('o', 1, 'CANL'), ('q', 1, 'GND'), ('q', 21, '5V'), ('q', 23, 'GND'),
-                      ('m', 22, 'CANL'), ('m', 23, 'TERM'), ('k', 19, 'CANH'), ('k', 23, 'TERM1'), ('k', 24, 'TERM1'), ('o', 24, 'TERM'),
-                      ('m', 3, 'CANH'), ('o', 3, 'CANL')]:
+                      ('m', 22, 'CANL'), ('m', 23, 'TERM'), ('k', 19, 'CANH'), ('k', 23, 'TERM1'), ('k', 24, 'TERM1'), ('o', 24, 'TERM')]:
     put('B', col, row, net)
-for col, row, net in C.XCVR_SOCKET[1]:            # the transceiver socket, wherever it sits
+for col, row, net in C.XCVR_SOCKET[1] + C.CAN_SOCKET[1]:   # the module's two sockets
     put('B', col, row, net)
 for col, row, net in [('a', 24, '5V'), ('c', 24, 'GND'), ('g', 24, '5V'), ('i', 24, 'GND'), ('a', 12, '5V'),
                       ('c', 12, 'GND'), ('a', 7, '5V'), ('c', 7, 'GND'), ('g', 7, 'CC1'), ('i', 7, 'CC2'),
                       ('g', 8, 'CC1'), ('i', 8, 'CC2'), ('g', 12, '5V'), ('i', 12, '5V')]:
     put('C', col, row, net)
 # conductors that arrive from the component side and count as a wire end at their pad
-ENTRY = {('B', 13, 3): 'module H link', ('B', 15, 3): 'module L link',
-         ('C', 1, 7): 'pigtail red', ('C', 3, 7): 'pigtail black', ('C', 7, 7): 'pigtail green', ('C', 9, 7): 'pigtail yellow'}
+ENTRY = {('C', 1, 7): 'pigtail red', ('C', 3, 7): 'pigtail black', ('C', 7, 7): 'pigtail green', ('C', 9, 7): 'pigtail yellow'}
 WIRE_NET = {'PWM': ('PWM_MCU', 'PWM_SRV'), 'CC': ('CC1', 'CC2')}
 R = {'ins': 0.3, 'pwr': 0.39, 'lead': 0.12}         # wire radius, in pitches
 STANDOFF = 2.89 / 2.54

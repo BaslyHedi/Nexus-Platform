@@ -980,6 +980,24 @@ and plate 3 is 40 mm up. The 25 × 18 mm flat module this record assumed was nev
 - **The four solder-side runs to the socket move with it** (3V3, GND, CAN TX, CAN RX). They are
   shorter than before, and the routing check passes.
 
+**Revision 2026-10-03, later · the CAN module is face down, and CAN H / L use its 2-pin header.**
+The module was bent toward its component side, so it lies **face down**. That changes four things
+against the face-up revision above.
+
+- **Pin order reverses across the socket.** The 1×4 socket now reads **CTX, CRX, GND, 3V3** from
+  column n to q. It moves to **row 19, B·F5-F2**: at row 16 or 18, the screw terminal that now hangs
+  under the module's far end would sit on F4's screw head. At row 19 it clears by 2.3 mm.
+- **CAN H / L come down through the module's own 2-pin header**, which now points at the board, into
+  a **1×2 socket at B·M4 (CANH) / B·M3 (CANL)**. That is seven holes behind the 4-pin row: the
+  module has 17.55 mm there, so the pin bend is set to land it. **No link wires, and the screw terminal
+  is unused.** The module plugs in and out as one part.
+- **On the solder side** CAN H chains CAN terminal → socket → R3a, and CAN L chains CAN terminal →
+  socket → TERM. The transceiver's GND now comes from the 5V IN return (B·B2), and its 3V3 runs
+  along B's outer edge to clear F4. Routing check passes.
+- **To measure:** the screw terminal's real height. 1.5 mm off the board is the estimate for a
+  10 mm terminal. If it touches, it is plastic and may rest on the board, but nothing may be
+  soldered under it.
+
 ---
 
 ## MEC-16 · Plate 2's lower face is the harness board - plate 1 carries only the battery and the driver

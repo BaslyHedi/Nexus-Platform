@@ -143,12 +143,20 @@ MALE = [
 RES = [('A', ('h', 8), ('h', 12), 'R4 1k'), ('B', ('k', 19), ('k', 23), 'R3a 100R'),
        ('B', ('k', 24), ('o', 24), 'R3b 20R')]
 CAPS = [('A', ('c', 8), ('c', 10), 'C2')]          # (minus leg, plus leg)
-# The SN65HVD230 module (BOM 4.1, 26.98 x 10.24) lies FLAT, component side up: upright it would hit
-# plate 3. Its four pins are bent 90 deg (or a right-angle header) into a 1x4 socket on row
-# XCVR_ROW, and it points to the rear, its screw terminal 8.6 mm short of B's CAN terminal.
-XCVR_ROW = 16
-XCVR_SOCKET = ('B', [('n', XCVR_ROW, '3V3'), ('o', XCVR_ROW, 'GND'), ('p', XCVR_ROW, 'CRX'), ('q', XCVR_ROW, 'CTX')])
-MODULE = dict(length=26.98, width=10.24, terminal=3.74, pin_in=1.3)   # pin_in: pin row to header face
+# The SN65HVD230 module (BOM 4.1, 26.98 x 10.24) lies FLAT and, as bent (2026-10-03), FACE DOWN:
+# upright it would hit plate 3. Its pins are bent 90 deg toward its component side into a 1x4
+# socket on row XCVR_ROW, it points to the rear, and its screw terminal hangs under its far end.
+# Face down reverses the header across the socket: CTX, CRX, GND, 3V3 from column n to q.
+# CAN H / L leave by the module's own 2-pin header, which points down when face down, into a
+# 1x2 socket seven holes behind the 4-pin row; the screw terminal is not used. Row 19 keeps the
+# hanging terminal 2.3 mm clear of F4's screw head.
+XCVR_ROW = 19
+XCVR_SOCKET = ('B', [('n', XCVR_ROW, 'CTX'), ('o', XCVR_ROW, 'CRX'), ('p', XCVR_ROW, 'GND'), ('q', XCVR_ROW, '3V3')])
+CAN_ROW = XCVR_ROW - 7                     # 17.55 mm on the module, 17.78 on the grid
+CAN_SOCKET = ('B', [('o', CAN_ROW, 'CANH'), ('p', CAN_ROW, 'CANL')])
+MODULE = dict(length=26.98, width=10.24, terminal=3.74, pin_in=-0.3, canhl=17.25)
+# pin_in: header face to the bent pins (negative: the bent legs stand just outside the face);
+# canhl: header face to the 2-pin CANH / CANL header (BOM 4.1)
 
 
 def module_box():
@@ -182,14 +190,14 @@ WIRES = [
     ('5V', 'B', [(17, 21), (17, 21.5), (9.5, 21.5), (9.5, 2.5), (8, 2)], 'ins'),                # 5V IN + to P2-4
     ('GND', 'B', [(17, 23), (17.5, 23.5), (17.5, 24.5), (10.5, 24.5), (10.5, 1.5), (8, 1)], 'ins'),  # 5V IN - to P2-2
     ('GND', 'B', [(7, 1), (7.5, 0.5), (16.5, 0.5), (17, 1)], 'ins'),             # P2-1 to CAN GND
-    ('GND', 'B', [(17, 1), (17.5, 1.5), (17.5, 15.5), (15.5, 15.5), (15, 16)], 'ins'),   # CAN GND to XCVR GND
-    ('3V3', 'B', [(8, 3), (8.5, 3.5), (11.5, 3.5), (11.5, 15.5), (14, 15.5), (14, 16)], 'ins'),  # P2-6 to XCVR 3V3
-    ('CTX', 'B', [(7, 17), (7.5, 16.5), (16.5, 16.5), (17, 16)], 'ins'),          # PD1 to CTX
-    ('CRX', 'B', [(8, 18), (8.5, 17.5), (16, 17.5), (16, 16)], 'ins'),            # PD0 to CRX
-    ('CANH', 'B', [(13, 3), (12.5, 2.5), (12.5, 1.5), (13, 1)], 'ins'),          # module H to CAN H
-    ('CANH', 'B', [(13, 1), (13.5, 1.5), (13.5, 18.5), (11.5, 18.5), (11, 19)], 'ins'),  # CAN H to R3
-    ('CANL', 'B', [(15, 3), (15.5, 2.5), (15.5, 1.5), (15, 1)], 'ins'),          # module L to CAN L
-    ('CANL', 'B', [(15, 1), (14.5, 1.5), (14.5, 3.5), (12.5, 3.5), (12.5, 22.5), (13, 22)], 'ins'),  # CAN L to TERM
+    ('GND', 'B', [(17, 23), (16.5, 22.5), (16.5, 19.5), (16, 19)], 'ins'),       # 5V IN - to XCVR GND
+    ('3V3', 'B', [(8, 3), (8.5, 3.5), (11.5, 3.5), (11.5, 9.5), (18.5, 9.5), (18.5, 18.5), (17, 19)], 'ins'),  # P2-6 to XCVR 3V3
+    ('CTX', 'B', [(7, 17), (7.5, 17.5), (13.5, 17.5), (14, 18), (14, 19)], 'ins'),   # PD1 to CTX
+    ('CRX', 'B', [(8, 18), (8.5, 18.5), (14.5, 18.5), (15, 19)], 'ins'),            # PD0 to CRX
+    ('CANH', 'B', [(13, 1), (13.5, 1.5), (13.5, 11.5), (14.5, 11.5), (15, 12)], 'ins'),    # CAN H to module H
+    ('CANH', 'B', [(15, 12), (14.5, 12.5), (12.5, 12.5), (12.5, 19.5), (11.5, 19.5), (11, 19)], 'ins'),  # module H to R3a
+    ('CANL', 'B', [(15, 1), (15.5, 1.5), (17.5, 1.5), (17.5, 11.5), (16.5, 11.5), (16, 12)], 'ins'),  # CAN L to module L
+    ('CANL', 'B', [(16, 12), (15.5, 12.5), (15.5, 20.5), (13.5, 20.5), (13, 22)], 'ins'),  # module L to TERM
     ('TERM1', 'B', [(11, 23), (11, 24)], 'lead'),                                # R3a's lead to R3b
     ('TERM', 'B', [(15, 24), (14.5, 23.5), (13.5, 23.5), (13, 23)], 'ins'),      # R3b to TERM
 ]
@@ -200,7 +208,7 @@ XWIRES = [
     ('3V3', [('B', 7, 3), ('B', 6.5, 2.5), ('B', 1, 2.5), ('A', 17.5, 2.5), ('A', 17.5, 20.5),
              ('A', 4, 20.5), ('A', 3, 21)], 'ins'),                              # P2-5 to I2C-A VCC
 ]
-LINKS = [('CANH', ('B', 13, 3)), ('CANL', ('B', 15, 3))]      # module terminal -> board
+LINKS = []                   # no links: CAN H / L reach the board through the module's 2-pin header
 
 # ---------------------------------------------------------------- drawing helpers
 def draw_board(v, b, grid_labels=True):
@@ -399,13 +407,16 @@ def carrier_view(v, top):
         X0, X1, Y0, Y1 = module_box()
         v.rect(X0 - 1.5, X1 + 1.5, Y0 - 1.5, Y1 + 1.5, rx=2, fill='none',
                stroke='#047857', stroke_width=1, stroke_dasharray='4 3')
-        v.rect(X0, X1, Y0, Y1, rx=1.5, fill='#dbeafe', fill_opacity='0.85', stroke='#047857', stroke_width=1.4)
-        v.rect(X1 - MODULE['terminal'], X1, Y0 + 0.4, Y1 - 0.4, rx=1, fill='#1d4ed8', fill_opacity='0.35',
-               stroke='#047857', stroke_width=1)
-        label(v, (X0 + X1) / 2 - 1.5, (Y0 + Y1) / 2, 'SN65HVD230, flat', '#047857', 7)
-        label(v, (X0 + X1) / 2 - 1.5, (Y0 + Y1) / 2, 'pins bent 90°, face up', '#047857', 6, dy=9, weight=None)
-        label(v, X1 + 0.6, Y0 + 2.6, 'L', '#1d4ed8', 7, anchor='start')
-        label(v, X1 + 0.6, Y1 - 1.4, 'H', '#1d4ed8', 7, anchor='start')
+        v.rect(X0, X1, Y0, Y1, rx=1.5, fill='#1e3a8a', fill_opacity='0.55', stroke='#047857', stroke_width=1.4)
+        v.rect(X1 - MODULE['terminal'], X1, Y0 + 0.4, Y1 - 0.4, rx=1, fill='none',
+               stroke='#bfdbfe', stroke_width=1, stroke_dasharray='2 2')      # the terminal, underneath
+        x, y = v.px(X0 + 7.5, (Y0 + Y1) / 2)            # plain white on the dark module, no halo
+        text(x, y - 1, 'SN65HVD230', 7, '#ffffff', '700', anchor='middle')
+        text(x, y + 8, 'FACE DOWN', 6, '#ffffff', anchor='middle')
+        for col, r, lab in CAN_SOCKET[1]:                 # the 2-pin header, down into its socket
+            X, Y = hole('B', ci(col), r)
+            x, y = v.px(X + 2.0, Y)
+            text(x, y + 2.5, lab[-1], 7, '#ffffff', '700', anchor='start')
     # sockets pads (solder side shows them as pads)
     if not top:
         for b, col, lab in SOCKETS:
@@ -430,7 +441,11 @@ def carrier_view(v, top):
     if top:
         v.rect(X0, X1, cy(b, ci('n')) - 1.27, cy(b, ci('q')) + 1.27, rx=0.8, fill='#111827',
                fill_opacity='0.85', stroke='#047857', stroke_width=1)
-    for col, r, lab in pins:
+    b2, pins2 = CAN_SOCKET
+    if top:
+        v.rect(HX(b2, CAN_ROW) - 1.27, HX(b2, CAN_ROW) + 1.27, cy(b2, ci('o')) - 1.27, cy(b2, ci('p')) + 1.27,
+               rx=0.8, fill='#111827', fill_opacity='0.85', stroke='#1d4ed8', stroke_width=1)
+    for col, r, lab in pins + pins2:
         x, y = hp(v, b, ci(col), r)
         w(f'<circle cx="{x:.1f}" cy="{y:.1f}" r="{2.2 if top else 3.1}" fill="{"#fff" if top else "#e2e8f0"}" stroke="#047857" stroke-width="1.1"/>')
     for b, c, r, lab, _ in FIX:
@@ -760,8 +775,6 @@ if __name__ == "__main__":
     draw_links(vb)
     carrier_labels_bottom(vb)
     # a few solder-side callouts
-    x, y = hp(vb, 'B', 18, 5)
-    text(x, y + 3, f"module H / L links in at {silk('B', 'm', 3)}, {silk('B', 'o', 3)}", 6.8, '#1d4ed8', '700', anchor='middle', halo=True)
 
     # front/rear footers under the views
     for v in (vt, vb):
@@ -819,8 +832,8 @@ if __name__ == "__main__":
         (NET['SDA'], 'I²C2 SDA', 'P1-35 PB11', f"I2C-B ({N('A', 'c', 18)}) → I2C-A ({silk('A', 'c', 23)})"),
         (NET['CTX'], 'CAN1_TX', 'P2-33 PD1', f"XCVR CTX ({N('B', 'q', XCVR_ROW)}) - straight, not crossed"),
         (NET['CRX'], 'CAN1_RX', 'P2-36 PD0', f"XCVR CRX ({N('B', 'p', XCVR_ROW)})"),
-        (NET['CANH'], 'CAN_H', 'module H', f"link → {N('B', 'm', 3)} → CAN H ({silk('B', 'm', 1)}) → R3 ({silk('B', 'k', 19)})"),
-        (NET['CANL'], 'CAN_L', 'module L', f"link → {N('B', 'o', 3)} → CAN L ({silk('B', 'o', 1)}) → TERM ({silk('B', 'm', 22)})"),
+        (NET['CANH'], 'CAN_H', 'module H pin', f"socket {N('B', 'o', CAN_ROW)} ← CAN H ({silk('B', 'm', 1)}) · → R3a ({silk('B', 'k', 19)})"),
+        (NET['CANL'], 'CAN_L', 'module L pin', f"socket {N('B', 'p', CAN_ROW)} ← CAN L ({silk('B', 'o', 1)}) · → TERM ({silk('B', 'm', 22)})"),
         (NET['TERM'], 'TERM', 'R3a + R3b', f"100R {N('B', 'k', 19)}-{silk('B', 'k', 23)}, lead to {silk('B', 'k', 24)}, 20R to {silk('B', 'o', 24)} → TERM ({silk('B', 'm', 23)}) = 120 Ω"),
         (NET['CC'], 'USB-C CC', 'C socket', f"green CC1 ({N('C', 'g', 7)}) ← R1 lead · yellow CC2 ({silk('C', 'i', 7)}) ← R2 lead (Rp, HW-02)"),
     ]
@@ -842,7 +855,7 @@ if __name__ == "__main__":
 
     parts = [
         (None, 'Board A', '5×7 board · 2 × 1×25 female · 1 × 2p terminal · 1×3 + 1×3 + 1×4 male · C2 470µF · R4 1k'),
-        (None, 'Board B', '5×7 board · 2 × 1×25 + 1 × 1×4 female · 3p + 2p terminal · 1×2 male + jumper cap · R3a 100Ω + R3b 20Ω (120 Ω)'),
+        (None, 'Board B', '5×7 board · 2 × 1×25 + 1 × 1×4 + 1 × 1×2 female · 3p + 2p terminal · 1×2 male + jumper cap · R3a 100Ω + R3b 20Ω (120 Ω)'),
         (None, 'Board C', '3×7 board · 2 × 2p terminal · USB-C socket (5.1), 2 zip ties · C1 470µF · R1, R2 10k'),
         (None, 'From stock', 'caps: 2 of the 5 in 3.14 · resistors: 3.21 · module: 4.1 · headers, terminals: 5.11'),
         (None, 'Wire', '22 AWG insulated copper hook-up wire (not in BOM) · 18 AWG silicone copper (3.11) for the thick runs · not the CCA Dupont leads (5.7)'),
@@ -871,8 +884,8 @@ if __name__ == "__main__":
         '2  Cut four 1×25 strips from the 40-pin female headers and snip the 25th tail of each flush with the body. Dry-fit them on the Discovery,',
         f"    boards A and B under them: pins on {col_range('A', 'i')} / {col_range('A', 'j')[2:]} and {col_range('B', 'g')} / {col_range('B', 'h')[2:]}, and header row 25 past A, on the margin with no hole under it.",
         '3  Solder the sockets WITH THE DISCOVERY PLUGGED IN - it is the only thing that sets the 53.34 mm between A and B. Tack two corners, check, finish.',
-        '4  SN65HVD230 module: bend its 4 pins 90° at the spacer, component side up, so it lies flat pointing to the rear. Measure CANH-CANL',
-        f"    unpowered: ~120 Ω means an on-board terminator - remove it, so TERM alone decides. Socket {N('B', 'n', XCVR_ROW)}-{silk('B', 'q', XCVR_ROW)} = 3V3, GND, CRX, CTX.",
+        f"4  SN65HVD230 FACE DOWN, pins bent 90° so its 2-pin CANH/CANL header lands 7 holes behind: sockets {N('B', 'n', XCVR_ROW)}-{silk('B', 'q', XCVR_ROW)} = CTX, CRX,",
+        f"    GND, 3V3 and {N('B', 'o', CAN_ROW)} / {silk('B', 'p', CAN_ROW)} = CANH / CANL. Its screw terminal is unused. Measure CANH-CANL unpowered: ~120 Ω = remove its terminator.",
         '5  The kit terminals may be 5.0 mm, not 5.08: the 3p CAN block spans 10.0 vs 10.16 mm of holes. Push it in; do not drill.',
         f"6  Before the Discovery goes back in: 5 V to GND not shorted · 6 V rail isolated from 5 V and 3V3 · 5 V on B·{silk('B', 'g', 2)} / {silk('B', 'h', 2)} only · nothing on B·{silk('B', 'g', 4)} (PH0) · {N('A', 'j', 3)} (P1-4 VDD) not on 3V3.",
         '7  Fixings: drill F1, F2, F5 and F6 on the grid first. Screw A and B down with the Discovery in, then mark F3 and F4 from under the',

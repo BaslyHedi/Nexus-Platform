@@ -75,13 +75,13 @@ CAPTIONS = [
     ((21.6, 24.6), "4  Screw terminals: 6V IN on A, CAN (3p) and 5V IN on B"),
     ((24.6, 27.2), "5  Male headers: SERVO, I2C-B and I2C-A on A, TERM on B"),
     ((27.2, 30.2), "6  R4 1k in the servo PWM, R3a 100R + R3b 20R (120R) to TERM, C2 470 uF across the servo supply"),
-    ((30.2, 32), "7  A 1x4 socket for the SN65HVD230 module"),
+    ((30.2, 32), "7  A 1x4 and a 1x2 socket for the SN65HVD230 module"),
     ((32, 37.2), "8  Turn it over: solder every part pin"),
     ((37.2, 43.2), "9  The servo loop in 18 AWG, outboard on A: 6V IN to C2 to SERVO, on + and on GND"),
     ((43.2, 51.4), "10  22 AWG, pad to pad: the GND chain, 5 V, 3V3, servo PWM, I2C, CAN TX / RX, CAN H / L, TERM"),
     ((51.4, 56), f"11  The bridges, one wire each: P2-1 to 6V IN - ({C.N('A', 'c', 3)}), P2-5 to I2C-A VCC ({C.N('A', 'c', 21)})"),
     ((56, 58.8), "   Right way up again"),
-    ((58.8, 64), f"12  Module in, flat (pins bent 90°), H / L links to {C.N('B', 'm', 3)} / {C.silk('B', 'o', 3)}, TERM jumper on, four 10 mm M2.5 standoffs"),
+    ((58.8, 64), f"12  Module in face down, CANH / CANL into {C.N('B', 'o', C.CAN_ROW)} / {C.silk('B', 'p', C.CAN_ROW)}, TERM jumper on, four M2.5 standoffs"),
     ((64, 67.4), "13  The Discovery drops onto the carrier"),
     ((67.4, 70.5), "14  Board C, the 5 V split: IN 5V and TO STM32, R1 / R2 10k source Rp, C1 470 uF"),
     ((70.5, 72.8), f"    The F5 screw ({C.N('C', 'e', 4)}) first, then the USB-C socket over it: pigtail into {' / '.join(C.silk('C', c, r) for _, _, c, r, _ in C.C_PIGTAIL)}, two zip ties"),
@@ -441,7 +441,9 @@ b, pins = C.XCVR_SOCKET
 xy = [hole(b, C.ci(c), r) for c, r, _ in pins]
 m = Mesh()
 m.box(xy[0][0] - 1.27, xy[0][0] + 1.27, xy[0][1] - 1.27, xy[-1][1] + 1.27, 0, 8.5, 'black')
-for x, y in xy:
+xy2 = [hole(C.CAN_SOCKET[0], C.ci(c), r) for c, r, _ in C.CAN_SOCKET[1]]
+m.box(xy2[0][0] - 1.27, xy2[0][0] + 1.27, xy2[0][1] - 1.27, xy2[-1][1] + 1.27, 0, 8.5, 'black')
+for x, y in xy + xy2:
     m.box(x - 0.5, x + 0.5, y - 0.5, y + 0.5, 8.5, 8.52, 'hole')
     PART_PINS.append((x, y))
 drop(m.make('xcvr-socket', car), PARTS_T['XCVR'])
@@ -474,29 +476,24 @@ for i, (net, pts, kind) in enumerate(C.XWIRES):
     joints(f'bj-{net}', [xy[0], xy[-1]], car, t + 1.6)
 
 # ---------------------------------------------------------------- module, links, jumper, standoffs
-# the module lies flat, face up, its four pins bent 90 deg down into the 1x4 socket (BOM 4.1)
+# the module lies flat and FACE DOWN, its pins bent 90 deg toward its components, into the 1x4
+# socket; its chip and screw terminal hang underneath (BOM 4.1, MEC-15 2026-10-03)
 X0, X1, Y0, Y1 = C.module_box()
-ZB = 9.8                                  # underside of the module's board
+ZB = 11.0                                 # underside of the module's board (its component side)
 m = Mesh()
 m.box(X0, X1, Y0, Y1, ZB, ZB + 1.6, 'module')
-m.box(X0, X0 + 2.5, Y0 + 0.3, Y1 - 0.3, ZB - 2.2, ZB, 'black')          # header spacer, now under the end
+m.box(X0, X0 + 2.5, Y0 + 0.3, Y1 - 0.3, ZB - 2.5, ZB, 'black')          # header spacer, on the socket
 for x, y in [hole('B', C.ci(c), r) for c, r, _ in C.XCVR_SOCKET[1]]:
-    m.box(x - 0.32, x + 0.32, y - 0.32, y + 0.32, 3.0, ZB + 0.3, 'gold')      # the bent-down leg
-    m.box(x - 0.32, x + 2.6, y - 0.32, y + 0.32, ZB + 0.3, ZB + 0.94, 'gold')  # and the bend into the board
+    m.box(x - 0.32, x + 0.32, y - 0.32, y + 0.32, 3.0, ZB, 'gold')
 mid = (X0 + X1) / 2
 yc = (Y0 + Y1) / 2
-m.box(mid - 4.5, mid - 0.5, yc - 2.5, yc + 2.5, ZB + 1.6, ZB + 3.1, 'chip')
+m.box(mid - 4.5, mid - 0.5, yc - 2.5, yc + 2.5, ZB - 1.5, ZB, 'chip')
 tx0 = X1 - C.MODULE['terminal']
-m.box(tx0, X1, Y0 + 0.4, Y1 - 0.4, ZB + 1.6, ZB + 9.6, 'mterm')           # height assumed, BOM 4.1
-for y in (Y0 + 2.6, Y1 - 2.6):                                               # CANL, then CANH
-    m.cyl(((tx0 + X1) / 2, y, ZB + 9.6), ((tx0 + X1) / 2, y, ZB + 9.9), 1.3, 'screw', 12)
-    m.box(X1 - 0.05, X1 + 0.05, y - 1.2, y + 1.2, ZB + 3.5, ZB + 6.5, 'hole')
+m.box(tx0, X1, Y0 + 0.4, Y1 - 0.4, ZB - 9.5, ZB, 'mterm')                # hangs to ~1.5 mm off B
+for x, y in [hole('B', C.ci(c), r) for c, r, _ in C.CAN_SOCKET[1]]:      # the 2-pin CANH / CANL header,
+    m.box(x - 1.27, x + 1.27, y - 1.27, y + 1.27, ZB - 2.5, ZB, 'black')     # pointing down into its socket
+    m.box(x - 0.32, x + 0.32, y - 0.32, y + 0.32, 3.0, ZB, 'gold')
 drop(m.make('module-sn65hvd230', car), MODULE, 25)
-LINK_Y = {'CANL': Y0 + 2.6, 'CANH': Y1 - 2.6}
-for net, (b, c, r) in C.LINKS:
-    x, y = hole(b, c, r)
-    ye = LINK_Y[net]
-    wire('link-' + net, [(X1, ye, ZB + 5.0), (X1 + 2.5, ye, ZB + 5.0), (x, y, 5.0), (x, y, 0.0)], net, 'ins', car, LINKS)
 x, y = hole('B', C.ci('m'), 22)              # TERM is m22 / m23, along X
 m = Mesh()
 m.box(C.RX(23) - 1.3, C.RX(22) + 1.3, y - 1.3, y + 1.3, 2.6, 8.8, 'jumper')
