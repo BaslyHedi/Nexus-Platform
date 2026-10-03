@@ -413,6 +413,9 @@ def carrier_labels_top(v, boxes):
     label(v, RX(1) + 2.2, cy('B', 7) + 0.9, 'pin 1', '#b45309', 7, anchor='start')
     X0, X1, Y0, Y1 = boxes['SERVO']
     label(v, (X0 + X1) / 2, Y0 - 1.6, 'SERVO', '#334155', 7.5)
+    for (col, row, _), (t, colr) in zip(MALE[0][1], (('blk', '#111827'), ('red', '#dc2626'), ('wht', '#64748b'))):
+        X, Y = hole('A', ci(col), row)
+        label(v, X, Y1 + 2.8, t, colr, 6, weight='700')     # the LD-1501MG lead, HW-21
     X0, X1, Y0, Y1 = boxes['I2C-B']
     label(v, (X0 + X1) / 2, Y0 - 1.6, 'I2C-B', '#7c3aed', 7.5)
     X0, X1, Y0, Y1 = boxes['I2C-A']
@@ -785,7 +788,7 @@ if __name__ == "__main__":
         (None, 'C USB-C', f"socket on C, pigtail soldered: red {silk('C', 'a', 7)}, black {silk('C', 'c', 7)}, green {silk('C', 'g', 7)}, yellow {silk('C', 'i', 7)} · C-to-C data cable to FRDM J1"),
         (None, 'C D+ / D−', 'white and blue cut short, each insulated on its own - never twisted together'),
         (None, 'A 6V IN', 'UBEC 6 V out, 18 AWG pair (HW-14)'),
-        (None, 'A SERVO', f"servo plug: signal to {N('A', 'c', 14)} (rear), brown/black to {silk('A', 'c', 12)}"),
+        (None, 'A SERVO', f"LD-1501MG plug: white (signal) {N('A', 'c', 14)} at the FRONT, red {silk('A', 'c', 13)}, black {silk('A', 'c', 12)} - HW-21"),
         (None, 'A I2C-A', 'INA226 GND, VCC, SCL, SDA - F-F leads, signal only'),
         (None, 'A I2C-B', 'motor module SCL / SDA / GND - never its 5 V pin'),
         (None, 'B CAN', 'twisted H, L + GND to DE-9 stub and FRDM P12 (HW-09, HW-18)'),

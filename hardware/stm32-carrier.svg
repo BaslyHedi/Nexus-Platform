@@ -1117,6 +1117,9 @@
 <text x="375.5" y="263.3" font-size="7" fill="#0f766e" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="start">pin 1</text>
 <text x="375.5" y="497.0" font-size="7" fill="#b45309" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="start">pin 1</text>
 <text x="225.2" y="175.9" font-size="7.5" fill="#334155" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="middle">SERVO</text>
+<text x="236.8" y="207.8" font-size="6" fill="#111827" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="middle">blk</text>
+<text x="225.2" y="207.8" font-size="6" fill="#dc2626" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="middle">red</text>
+<text x="213.5" y="207.8" font-size="6" fill="#64748b" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="middle">wht</text>
 <text x="178.4" y="175.9" font-size="7.5" fill="#7c3aed" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="middle">I2C-B</text>
 <text x="125.8" y="175.9" font-size="7.5" fill="#7c3aed" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="middle">I2C-A</text>
 <text x="388.4" y="586.3" font-size="8" fill="#1d4ed8" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="start">CAN</text>
@@ -3107,7 +3110,7 @@
 <text x="1226.0" y="627.0" font-size="7.9" fill="#475569">UBEC 6 V out, 18 AWG pair (HW-14)</text>
 <rect x="1130" y="633" width="550" height="19" fill="#f8fafc" stroke="#e2e8f0"/>
 <text x="1142.0" y="646.0" font-size="8.4" fill="#1e293b" font-weight="700">A SERVO</text>
-<text x="1226.0" y="646.0" font-size="7.9" fill="#475569">servo plug: signal to A·K16 (rear), brown/black to M16</text>
+<text x="1226.0" y="646.0" font-size="7.9" fill="#475569">LD-1501MG plug: white (signal) A·K16 at the FRONT, red L16, black M16 - HW-21</text>
 <rect x="1130" y="652" width="550" height="19" fill="#ffffff" stroke="#e2e8f0"/>
 <text x="1142.0" y="665.0" font-size="8.4" fill="#1e293b" font-weight="700">A I2C-A</text>
 <text x="1226.0" y="665.0" font-size="7.9" fill="#475569">INA226 GND, VCC, SCL, SDA - F-F leads, signal only</text>
