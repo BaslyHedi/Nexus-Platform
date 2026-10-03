@@ -1,6 +1,6 @@
 """Assembly animation of the STM32 carrier and the 5 V split board (MEC-15, HW-19), by Blender.
 
-    blender -b -P animate-carrier.py                   # -> carrier-animation.mp4, 94 s
+    blender -b -P animate-carrier.py                   # -> carrier-animation.mp4, 47 s
     blender -b -P animate-carrier.py -- --preview      # half size, every 4th frame
     blender -b -P animate-carrier.py -- --still 40     # one PNG at 40 s, for checking a moment
 
@@ -35,7 +35,8 @@ spec.loader.exec_module(C)
 P = C.P
 
 FPS = 24
-S = lambda sec: int(round(sec * FPS)) + 1      # the timeline is written in seconds
+SPEED = 2                    # the timeline is written in seconds and plays SPEED times faster
+S = lambda sec: int(round(sec * FPS / SPEED)) + 1
 END = S(94)
 
 # ---------------------------------------------------------------- timeline (seconds)
@@ -62,7 +63,8 @@ C_J, C_SPINES, C_WIRES = 75.3, (75.9, 77.5), (77.9, 80.4)
 C_FLIPB = (81.0, 83.2)
 ORBIT = 84.0
 DROP = S(0.7) - 1            # how long a part takes to settle
-GROW = S(0.9) - 1            # how long a wire takes to run
+WIRE_S = 0.9                 # how long a wire takes to run, in timeline seconds
+GROW = S(WIRE_S) - 1
 
 CAPTIONS = [
     ((0, 4), "Boards A and B: two 5x7 kit boards, 18 x 24 holes, 5.9 mm apart - board C, the 5 V split, beside them"),
@@ -463,7 +465,7 @@ for group, (a, z) in ((heavy, SPINES), (light, INSUL)):
         t = a + i * step
         xy = [hole(b, c, r) for c, r in pts]
         wire(f'wire-{b}-{net}-{i}', xy, net, kind, car, t)
-        joints(f'wj-{b}-{net}-{i}', wire_ends(pts, xy), car, t + GROW / FPS)
+        joints(f'wj-{b}-{net}-{i}', wire_ends(pts, xy), car, t + WIRE_S)
 # the two bridges, one wire each from a P2 pin on B to the part it feeds on A
 for i, (net, pts, kind) in enumerate(C.XWIRES):
     xy = [hole(b, c, r) for b, c, r in pts]
@@ -620,7 +622,7 @@ for group, (a, z) in ((c_sp, C_SPINES), (c_ot, C_WIRES)):
         xy = [ch(c, r) for c, r in pts]
         wire(f'c-wire-{net}-{i}', xy, net, kind, cr, a + i * step)
         if kind != 'lead':
-            joints(f'c-wj-{net}-{i}', [xy[0], xy[-1]], cr, a + i * step + GROW / FPS)
+            joints(f'c-wj-{net}-{i}', [xy[0], xy[-1]], cr, a + i * step + WIRE_S)
 
 flip(car, *FLIP1)
 flip(car, *FLIP1B)
