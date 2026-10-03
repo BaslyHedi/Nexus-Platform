@@ -24,6 +24,7 @@ Drawings: [chassis layout](../hardware/chassis-layout.svg). Geometry and build c
 | **MEC-14** | The switch drawing closes the lower panel - and its holes open to 22.4 |
 | **MEC-15** | The carrier is two kit boards joined by the Discovery, not one board |
 | **MEC-16** | Plate 2's lower face is the harness board - plate 1 carries only the battery and the driver |
+| **MEC-17** | *Proposed:* one tray carries boards A, B and C and bolts to plate 2 |
 
 ---
 
@@ -1126,3 +1127,45 @@ return - goes up through it, between the buses. The rearward runs lie flat on pl
   rims only. At that size a rear tire's front edge is at about x 191 at fuse height, and the
   motor and UBEC fuse lids end at x 190, so the lids are reached from the side just in front of
   the rear tires.
+
+---
+
+## MEC-17 · *Proposed:* one tray carries boards A, B and C and bolts to plate 2
+
+**Status (2026-10-03): proposed, not decided.** A brainstorm with Hedi, modelled so it can be
+judged. Source: [`../mechanical/carrier-tray.scad`](../mechanical/carrier-tray.scad).
+
+**The idea.** Instead of six separate fixings (F1-F6) drilled through the boards and screwed into
+plate 2, the three boards sit on one tray, using their own M2.5 corner holes and the nylon
+standoffs already fitted. Only the tray is screwed to plate 2.
+
+**Why it is attractive.**
+
+- **Nothing drilled into the built boards.** The kit boards' four corner holes are all free on A
+  and B (fitted with standoffs, 2026-10-03), and the tray follows the boards as built, A's one-pitch
+  offset included.
+- **Four screws through plate 2 instead of six, and none off-grid.** The tray reuses the plate holes
+  of F1, F2, F5 and F6. F3 and F4, which MEC-16 found landing on fuse lids under plate 2, are dropped.
+- **The electronics lift out as one unit** for bench work, and the tray can stand on its own.
+- **It carries the S6 / S7 splices too,** which sit under board C. Their wires climb through a
+  window over plate 2's wire opening, between C and A / B.
+
+**Two ways to make it, one file.**
+
+| | Best | Cheap |
+|---|---|---|
+| How | printed PETG, 4 mm, ~15 € | 3 mm plastic sheet (PVC foam, ABS or polycarbonate; not acrylic, MEC-02), cut and drilled by hand |
+| File | `carrier-tray.stl` | `carrier-tray-template.svg`, printed 1:1 and stuck on the sheet; a 50 mm bar checks the print scale |
+| Board screws | from below into the standoffs, in printed counterbores, so the tray sits flat | from below; the heads lift the sheet ~1.8 mm, accepted |
+| A / B height | 4 + 6 mm standoffs = 10 mm, as today | 3 + 1.8 + 6 = 10.8 mm |
+
+**Heights.** C stands on 10 mm standoffs on the tray, so it clears the 8.5 mm splices: 4 mm higher
+than today, within the 40 mm gap. A and B keep their height with 6 mm standoffs.
+
+**To measure or decide before making it.**
+
+- **The corner holes' inset** from the board edges. The model assumes 2.5 mm.
+- **The plate-2 wire opening's y extent.** The window is placed at y 40.4-75.8, assumed centred.
+- **MEC-16's check on the screw heads under plate 2** still applies to the four plate holes kept.
+- **Print or sheet.** The model serves both.
+
