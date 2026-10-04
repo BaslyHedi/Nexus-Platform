@@ -1,7 +1,7 @@
 """Assembly animation of the harness-board sandwich (MEC-16), rendered by Blender.
 
     python3 plate1.py && python3 make-assembly.py      # the model it animates
-    blender -b -P animate-assembly.py                   # -> assembly-animation.mp4, 36 s
+    blender -b -P animate-assembly.py                   # -> ../renders/assembly-animation.mp4, 36 s
     blender -b -P animate-assembly.py -- --preview      # quarter size, every 4th frame
 
 It follows MEC-16's build steps: plate 2 lies upside down beside the chassis, its parts
@@ -19,9 +19,10 @@ import bpy, math, os, sys
 from mathutils import Matrix, Vector
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-OBJ = os.path.join(HERE, "chassis-3deck-fascia.obj")
-STATES = os.path.join(HERE, "plate1", "states")
-OUT = os.path.join(HERE, "assembly-animation.mp4")
+CAD = os.path.join(HERE, "..", "cad")
+OBJ = os.path.join(CAD, "chassis-3deck-fascia.obj")
+STATES = os.path.join(CAD, "plate1", "states")
+OUT = os.path.join(HERE, "..", "renders", "assembly-animation.mp4")
 PREVIEW = "--preview" in sys.argv
 PIVOT = Vector((-85.0, 0.0, 50.56))
 LIFT = 60.0

@@ -11,7 +11,7 @@ SVG in a browser; to render, point headless Chrome at it.
 |---|---|
 | [chassis-layout.svg](chassis-layout.svg) | Where components sit on the **three** decks, to scale at 1.7 px/mm, plus the side elevation of the deck stack |
 | [wiring-schematic.svg](wiring-schematic.svg) | What connects to what - fuses, switches, wire gauges, 5 V rails, CAN, I²C, motor control |
-| [stm32-carrier.svg](stm32-carrier.svg) | Soldering and wiring for the three kit boards: A and B, which the Discovery drops onto, and C, the 5 V split. Component side and solder side, hole by hole, with netlist and pre-solder checks (MEC-08, MEC-15, HW-19). **Generated** by `python3 stm32-carrier.py`, which also feeds the 3D animation in [`../mechanical/animate-carrier.py`](../mechanical/animate-carrier.py) |
+| [stm32-carrier.svg](stm32-carrier.svg) | Soldering and wiring for the three kit boards: A and B, which the Discovery drops onto, and C, the 5 V split. Component side and solder side, hole by hole, with netlist and pre-solder checks (MEC-08, MEC-15, HW-19). **Generated** by `python3 stm32-carrier.py`, which also feeds the 3D animation in [`../mechanical/scripts/animate-carrier.py`](../mechanical/scripts/animate-carrier.py) |
 | [`../decisions/README.md`](../decisions/README.md) | **Why** the drawings look the way they do - HW, MEC, SYS and SW entries, each with its reasoning and consequences. Not in this folder any more |
 
 Part numbers, prices and status live in [`../bom/BOM.md`](../bom/BOM.md);
@@ -51,7 +51,7 @@ The pack is fixed right behind the tie rod (x 85-162). Plate 1's floor carries o
 driver; every clip, fuse, splice, the INA226 and the UBEC are taped to **plate 2's lower face**, and
 the drops to plate 1 fold down when plate 2 is lowered (MEC-16). The logic fuse is gone (HW-20). The
 drawing has plate 2's two faces as separate plans and the run table with cut lengths; the 3D model
-is [`../mechanical/plate1.py`](../mechanical/plate1.py). What it still rests on:
+is [`../mechanical/scripts/plate1.py`](../mechanical/scripts/plate1.py). What it still rests on:
 
 - **Clip outlines**: 221-415, DOMAXWILL 3-port and 2-port, and which face the wires enter.
 - **Fuse holder body**, with calipers - 50 x 18 x 30 is scaled off a photo.

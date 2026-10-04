@@ -1,31 +1,45 @@
-# Mechanical - rear fascia and the chassis it mounts to
+# Mechanical - the parts we make, the chassis model, and its renders
 
-Everything the rear fascia is built from. The **why** lives in the design decisions
-([`../decisions/README.md`](../decisions/README.md));
-this folder owns the geometry, and the table below says which file is which.
+Everything we build and model mechanically: the rear fascia, the proposed carrier tray, the
+plate-1 stand-ins and the whole-vehicle model. The **why** lives in the design decisions
+([`../decisions/README.md`](../decisions/README.md)); this folder owns the geometry.
+
+| Folder | Holds |
+|---|---|
+| [`cad/`](cad/) | Models and the files made from them: OpenSCAD sources, the print STLs, the drilling template, and (untracked) the whole-vehicle model and its parts |
+| [`scripts/`](scripts/) | The Python and Blender scripts that build the model and animate it |
+| `renders/` | Videos and stills. **Generated and untracked** - re-run the scripts |
+
+The scripts find everything relative to themselves, so they run from any directory.
 
 | File | Size | What it is |
 |---|---|---|
-| [`fascia.scad`](fascia.scad) | 18 kB | **Source of truth for both panels.** Every dimension, and why, in comments. Edit only here |
-| [`fascia-lower.stl`](fascia-lower.stl) | 1.3 MB | Print file - lower panel, 124.2 × 18.9 × **52** mm, 19.6 cm³ (~25 g in PETG) |
-| [`fascia-upper.stl`](fascia-upper.stl) | 2.2 MB | Print file - upper panel, 124.2 × 18.9 × **42** mm, 16.7 cm³ (~21 g in PETG) |
+| [`cad/fascia.scad`](cad/fascia.scad) | 18 kB | **Source of truth for both panels.** Every dimension, and why, in comments. Edit only here |
+| [`cad/fascia-lower.stl`](cad/fascia-lower.stl) | 1.3 MB | Print file - lower panel, 124.2 × 18.9 × **52** mm, 19.6 cm³ (~25 g in PETG) |
+| [`cad/fascia-upper.stl`](cad/fascia-upper.stl) | 2.2 MB | Print file - upper panel, 124.2 × 18.9 × **42** mm, 16.7 cm³ (~21 g in PETG) |
+| [`cad/carrier-tray.scad`](cad/carrier-tray.scad) | 8 kB | ***Proposed* carrier tray** (MEC-17): one plate under boards A, B and C, on their corner holes, bolted to plate 2 at four holes. `PART="tray"` → [`cad/carrier-tray.stl`](cad/carrier-tray.stl) to print; `PART="template"` → [`cad/carrier-tray-template.svg`](cad/carrier-tray-template.svg), 1:1 with a 50 mm check bar, to cut a plastic sheet by hand; `PART="preview"` with the boards ghosted. Output is mirrored once from the layout frame into the real world |
 | **Hiwonder** · *Ackermann Chassis (Single Layer)* `.3dm` | 186 MB | Hiwonder's own CAD, untouched. **Not in the repository** - it is theirs, not ours to redistribute, and it has to be fetched by hand on a fresh clone. Every chassis number in the project is measured from this, not from photos - see [`../bom/parts/2.1-Hiwonder-Ackermann-Chassis/SPECS.md`](../bom/parts/2.1-Hiwonder-Ackermann-Chassis/SPECS.md). It is the **single-plate** version |
-| `chassis-3deck-fascia.obj` | 65 MB | Whole-vehicle mock-up: Hiwonder's chassis + our deck 3 + the current panels. **Untracked, and a seed rather than output** - `make-assembly.py` reads it and rewrites it in place, so it cannot be rebuilt from this repository alone. It began as a Rhino export of the `.3dm`. Keep a local backup |
-| `assembly.stl` | 69 MB | The same assembly as one mesh, for renders. **Generated and untracked** - delete it and re-run |
-| [`plate1.py`](plate1.py) | 20 kB | **Plate 1 stand-ins for an eye review** (MEC-16): every component and every wire run as its own STL in `plate1/`, at the assumed sizes, plus the four tires the CAD leaves off (about 68 x 30, estimated from a photo). Not for building from |
-| `plate1/*.stl`, `plate1/states/`, `chassis-3deck-fascia.mtl` | 1 MB | **Generated and untracked** - the parts; the two wires that cross between the decks in the `raised` and `open` positions (plate 2 lowering, 60 mm up, or hinged over like a book); and the colours. Re-run the two scripts |
-| [`animate-assembly.py`](animate-assembly.py) | 8 kB | **Assembly animation** of the harness-board sandwich, in MEC-16's build order: parts onto the upturned plate 2, wires run by run, the flip, the lowering, the plugs, plate 3. `blender -b -P animate-assembly.py` writes `assembly-animation.mp4` (36 s at double speed, 720p, untracked; the timeline is in seconds at the top of the script); `-- --preview` renders a quick quarter-size version |
-| [`animate-carrier.py`](animate-carrier.py) | 30 kB | **Carrier assembly animation** (MEC-15, HW-19), in the drawing's build order: sockets with the Discovery as the jig, the parts, the solder side run by run, the bridges, the module and standoffs, then board C. Built entirely from [`../hardware/stm32-carrier.py`](../hardware/stm32-carrier.py), so it cannot drift from the drawing. The Discovery is a **mock**: outline and headers from UM1472, everything on it placed by eye. `blender -b -P animate-carrier.py` writes `carrier-animation.mp4` (47 s at double speed, 720p, untracked); `-- --preview` renders a quick half-size version, `-- --still 40` one frame at 40 s |
-| [`carrier-tray.scad`](carrier-tray.scad) | 8 kB | ***Proposed* carrier tray** (MEC-17): one plate under boards A, B and C, on their corner holes, bolted to plate 2 at four holes. `PART="tray"` → [`carrier-tray.stl`](carrier-tray.stl) to print; `PART="template"` → [`carrier-tray-template.svg`](carrier-tray-template.svg), 1:1 with a 50 mm check bar, to cut a plastic sheet by hand; `PART="preview"` with the boards ghosted. Output is mirrored once from the layout frame into the real world |
-| [`make-assembly.py`](make-assembly.py) | 8 kB | Rebuilds the assembly from the current STLs, fascia and plate 1, coloured through the `.mtl`. Run it after any fascia or plate 1 change |
+| `cad/chassis-3deck-fascia.obj` | 65 MB | Whole-vehicle mock-up: Hiwonder's chassis + our deck 3 + the current panels. **Untracked, and a seed rather than output** - `make-assembly.py` reads it and rewrites it in place, so it cannot be rebuilt from this repository alone. It began as a Rhino export of the `.3dm`. Keep a local backup |
+| `cad/assembly.stl` | 69 MB | The same assembly as one mesh, for renders. **Generated and untracked** - delete it and re-run |
+| `cad/plate1/*.stl`, `cad/plate1/states/`, `cad/chassis-3deck-fascia.mtl` | 1 MB | **Generated and untracked** - the plate 1 parts; the two wires that cross between the decks in the `raised` and `open` positions (plate 2 lowering, 60 mm up, or hinged over like a book); and the colours. Re-run the two scripts |
+| [`scripts/plate1.py`](scripts/plate1.py) | 20 kB | **Plate 1 stand-ins for an eye review** (MEC-16): every component and every wire run as its own STL in `cad/plate1/`, at the assumed sizes, plus the four tires the CAD leaves off (about 68 x 30, estimated from a photo). Not for building from |
+| [`scripts/make-assembly.py`](scripts/make-assembly.py) | 8 kB | Rebuilds the assembly in `cad/` from the current STLs, fascia and plate 1, coloured through the `.mtl`. Run it after any fascia or plate 1 change |
+| [`scripts/animate-assembly.py`](scripts/animate-assembly.py) | 10 kB | **Assembly animation** of the harness-board sandwich, in MEC-16's build order: parts onto the upturned plate 2, wires run by run, the flip, the lowering, the plugs, plate 3. `blender -b -P scripts/animate-assembly.py` writes `renders/assembly-animation.mp4` (36 s at double speed, 720p; the timeline is in seconds at the top of the script); `-- --preview` renders a quick quarter-size version |
+| [`scripts/animate-carrier.py`](scripts/animate-carrier.py) | 33 kB | **Carrier assembly animation** (MEC-15, HW-19), in the drawing's build order: sockets with the Discovery as the jig, the parts, the solder side run by run, the bridge, the module and standoffs, then board C. Built entirely from [`../hardware/stm32-carrier.py`](../hardware/stm32-carrier.py), so it cannot drift from the drawing. The Discovery is a **mock**: outline and headers from UM1472, everything on it placed by eye. `blender -b -P scripts/animate-carrier.py` writes `renders/carrier-animation.mp4` (47 s at double speed, 720p); `-- --preview` renders a quick half-size version, `-- --still 40` one frame at 40 s |
 
 ## Building
 
 ```bash
+cd cad
 openscad -D 'PART="lower"' -o fascia-lower.stl fascia.scad
 openscad -D 'PART="upper"' -o fascia-upper.stl fascia.scad
-python3 plate1.py
-python3 make-assembly.py
+openscad -D 'PART="tray"'     -o carrier-tray.stl          carrier-tray.scad
+openscad -D 'PART="template"' -o carrier-tray-template.svg carrier-tray.scad
+cd ..
+python3 scripts/plate1.py
+python3 scripts/make-assembly.py
+blender -b -P scripts/animate-assembly.py
+blender -b -P scripts/animate-carrier.py
 ```
 
 Open `chassis-3deck-fascia.obj` in a viewer that reads OBJ materials (Blender, MeshLab, f3d) to see
@@ -38,7 +52,7 @@ against the rear chassis, and **`clash`**, which intersects both panels with the
 standoffs. That one is the gate:
 
 ```bash
-openscad -D 'PART="clash"' -o /tmp/clash.stl fascia.scad   # must be zero volume
+openscad -D 'PART="clash"' -o /tmp/clash.stl cad/fascia.scad   # must be zero volume
 ```
 
 Zero volume - a few hundred triangles of coincident face - is a pass; those are the pad faces
@@ -50,7 +64,7 @@ connectors against the panel, the rear chassis and each other, and must also
 render zero volume (MEC-13):
 
 ```bash
-openscad -D 'PART="portclash"' -o /tmp/portclash.stl fascia.scad   # must be zero volume
+openscad -D 'PART="portclash"' -o /tmp/portclash.stl cad/fascia.scad   # must be zero volume
 ```
 
 ## Print settings

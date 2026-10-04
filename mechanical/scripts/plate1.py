@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Plate 1 stand-ins for an eye review - one STL per component and per wire run.
 
-    python3 plate1.py          # writes plate1/*.stl
-    python3 make-assembly.py   # adds them to chassis-3deck-fascia.obj, coloured
+    python3 plate1.py          # writes ../cad/plate1/*.stl
+    python3 make-assembly.py   # adds them to ../cad/chassis-3deck-fascia.obj, coloured
 
 Every part is a box, a cylinder or a tube at the ASSUMED size recorded in MEC-16.
 Nothing here is measured: it exists to see whether the parts and the harness fit
@@ -28,7 +28,7 @@ over them.
 import math, os, struct
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-OUT = os.path.join(HERE, "plate1")
+OUT = os.path.join(HERE, "..", "cad", "plate1")      # generated, untracked
 
 # ---------------------------------------------------------------- materials
 # name -> (r, g, b, alpha). make-assembly.py writes these into the .mtl.
@@ -480,7 +480,7 @@ def main():
             os.remove(os.path.join(OUT, old))
     for name, mat, tris in PARTS:
         write_stl(os.path.join(OUT, name + ".stl"), tris)
-    print(f"plate1/: {len(PARTS)} parts, {sum(len(t) for _, _, t in PARTS)} triangles")
+    print(f"cad/plate1/: {len(PARTS)} parts, {sum(len(t) for _, _, t in PARTS)} triangles")
     for st in ("raised", "open"):
         d = os.path.join(OUT, "states", st)
         os.makedirs(d, exist_ok=True)

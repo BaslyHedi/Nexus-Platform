@@ -62,8 +62,8 @@ face is z 123.12, not 133.12.
 
 **Status.** Unfrozen 2026-09-17 - the CAN connector is chosen (HW-18) and the reserved
 upper-gap cut-out is now defined. Source of truth:
-[`../mechanical/fascia.scad`](../mechanical/fascia.scad); visual check:
-`chassis-3deck-fascia.obj` in the same folder.
+[`../mechanical/cad/fascia.scad`](../mechanical/cad/fascia.scad); visual check:
+`chassis-3deck-fascia.obj` in the same folder (`mechanical/cad/`).
 
 **Decision.** Printed panels close the rear of the vehicle between deck 1 and deck 3
 (z 29.12 → 133.12, 104 mm). They follow the real rear taper of the plate - 88.5 mm at the rear
@@ -1018,7 +1018,7 @@ SM-2P and the driver's VM - both plugged from the vehicle's right side once it i
 harness closes like a sandwich.
 
 Positions, x from the front of plate 1 and y from its right edge, as modelled in
-[`../mechanical/plate1.py`](../mechanical/plate1.py) and checked there against Hiwonder's CAD:
+[`../mechanical/scripts/plate1.py`](../mechanical/scripts/plate1.py) and checked there against Hiwonder's CAD:
 
 | Part | Where | On |
 |---|---|---|
@@ -1139,7 +1139,7 @@ return - goes up through it, between the buses. The rearward runs lie flat on pl
 ## MEC-17 · *Proposed:* one tray carries boards A, B and C and bolts to plate 2
 
 **Status (2026-10-03): proposed, not decided.** A brainstorm with Hedi, modelled so it can be
-judged. Source: [`../mechanical/carrier-tray.scad`](../mechanical/carrier-tray.scad).
+judged. Source: [`../mechanical/cad/carrier-tray.scad`](../mechanical/cad/carrier-tray.scad).
 
 **The idea.** Instead of six separate fixings (F1-F6) drilled through the boards and screwed into
 plate 2, the three boards sit on one tray, using their own M2.5 corner holes and the nylon
