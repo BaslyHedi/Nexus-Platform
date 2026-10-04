@@ -17,7 +17,7 @@ The scripts find everything relative to themselves, so they run from any directo
 | [`cad/fascia.scad`](cad/fascia.scad) | 18 kB | **Source of truth for both panels.** Every dimension, and why, in comments. Edit only here |
 | [`cad/fascia-lower.stl`](cad/fascia-lower.stl) | 1.3 MB | Print file - lower panel, 124.2 × 18.9 × **52** mm, 19.6 cm³ (~25 g in PETG) |
 | [`cad/fascia-upper.stl`](cad/fascia-upper.stl) | 2.2 MB | Print file - upper panel, 124.2 × 18.9 × **42** mm, 16.7 cm³ (~21 g in PETG) |
-| [`cad/carrier-tray.scad`](cad/carrier-tray.scad) | 8 kB | ***Proposed* carrier tray** (MEC-17): one plate under boards A, B and C, on their corner holes, bolted to plate 2 at four holes. `PART="tray"` → [`cad/carrier-tray.stl`](cad/carrier-tray.stl) to print; `PART="template"` → [`cad/carrier-tray-template.svg`](cad/carrier-tray-template.svg), 1:1 with a 50 mm check bar, to cut a plastic sheet by hand; `PART="preview"` with the boards ghosted. Output is mirrored once from the layout frame into the real world |
+| [`cad/carrier-tray.scad`](cad/carrier-tray.scad) | 8 kB | ***Proposed* carrier tray** (MEC-17): one plate under boards A, B and C, on their corner holes, bolted to plate 2 at four holes. `PART="tray"` → [`cad/carrier-tray.stl`](cad/carrier-tray.stl) to print; `PART="template"` → a 1:1 SVG with a 50 mm check bar, to cut a plastic sheet by hand, generated when needed and not kept; `PART="preview"` with the boards ghosted. Output is mirrored once from the layout frame into the real world |
 | **Hiwonder** · *Ackermann Chassis (Single Layer)* `.3dm` | 186 MB | Hiwonder's own CAD, untouched. **Not in the repository** - it is theirs, not ours to redistribute, and it has to be fetched by hand on a fresh clone. Every chassis number in the project is measured from this, not from photos - see [`../bom/parts/2.1-Hiwonder-Ackermann-Chassis/SPECS.md`](../bom/parts/2.1-Hiwonder-Ackermann-Chassis/SPECS.md). It is the **single-plate** version |
 | `cad/chassis-3deck-fascia.obj` | 65 MB | Whole-vehicle mock-up: Hiwonder's chassis + our deck 3 + the current panels. **Untracked, and a seed rather than output** - `make-assembly.py` reads it and rewrites it in place, so it cannot be rebuilt from this repository alone. It began as a Rhino export of the `.3dm`. Keep a local backup |
 | `cad/assembly.stl` | 69 MB | The same assembly as one mesh, for renders. **Generated and untracked** - delete it and re-run |
@@ -34,7 +34,6 @@ cd cad
 openscad -D 'PART="lower"' -o fascia-lower.stl fascia.scad
 openscad -D 'PART="upper"' -o fascia-upper.stl fascia.scad
 openscad -D 'PART="tray"'     -o carrier-tray.stl          carrier-tray.scad
-openscad -D 'PART="template"' -o carrier-tray-template.svg carrier-tray.scad
 cd ..
 python3 scripts/plate1.py
 python3 scripts/make-assembly.py

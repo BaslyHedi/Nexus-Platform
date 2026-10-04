@@ -1,7 +1,7 @@
 // NEXUS carrier tray - one plate that carries boards A, B and C, bolted to plate 2 (MEC-17)
 //
 //   openscad -D 'PART="tray"'     -o carrier-tray.stl          carrier-tray.scad   // to print
-//   openscad -D 'PART="template"' -o carrier-tray-template.svg carrier-tray.scad   // 1:1, to cut a sheet by hand
+//   openscad -D 'PART="template"' -o /tmp/tray-template.svg   carrier-tray.scad   // 1:1, to cut a sheet by hand (not kept)
 //   openscad -D 'PART="preview"'  -o /tmp/tray-preview.png     carrier-tray.scad   // with the boards ghosted in
 //
 // STATUS 2026-10-03: PROPOSED, not built. Two ways to make it from this one file:
