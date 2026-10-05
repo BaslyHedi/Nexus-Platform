@@ -595,6 +595,8 @@ fitted, so the standoff sets card access, not just clearance.
 
 **Updated by MEC-15:** on plate 2 the carrier is x 117.0-215.0 (boards to x 187.0), and board C, the 5 V split, sits across the waist at x 85.5-115.5.
 
+**Updated by MEC-17:** the Bauer sits at x 11-75, screwed to the carrier tray through its own two holes, and the S6 / S7 splices are in two lanes either side of it; the carrier and board C ride on the same tray.
+
 **Decision (2026-09-21).** Parts sit where their function puts them, not where a rule puts them.
 
 | Plate | Carries |
@@ -1185,8 +1187,8 @@ the BOM's "54 mm matches no chassis rectangle" no longer matters.)
 - **Held to the plate** by F7 (24.82, 60.24) and F8 (52.82, 60.24), two more of the plate's M3 holes,
   under the Bauer.
 - **Cable passages:** the plate's two slots beside the Bauer (x 56-80, y 27-37 and 83-93) are open in the
-  tray too, so cables can drop to the harness board below. The window by C does the same for the
-  splices.
+  tray too, so cables can drop to the harness board below, and these are the wires to the splices. The window
+  by C is left for the 6 V pair and the driver's I2C lead.
 
 **The tray has the plate's holes.** Every plate-2 hole wholly under the tray is copied at the plate's
 own diameter, plus the plate's slots, so nothing open on the plate is blocked. Surveyed from the
@@ -1292,13 +1294,13 @@ which is why the second lane is the mirror of the first. The tray has a wing for
   3.4 mm for the M2.5 screws (0.45 mm of play each way, enough for +-0.5 mm of inset on both sides) and a round pad of r 4.6
   mm round each corner so the 6 mm counterbore never breaks the tray's edge. The pads stay inside plate 2 (0.6 mm to spare
   at board A's front corner). A hand-cut sheet should be drilled from the boards, not the template.
-- **Board C's corner holes,** once C is built. A's and B's are known to be free; C's terminals sit
-  near two of its corners. *C is built (2026-10-05) with a standoff in each of its four corners, so the tray's four board holes per board are right; their inset is not measured yet.*
+- **Board C's corner holes:** C is built (2026-10-05) with a standoff in each of its four corners, so the four board holes per
+  board are right; their inset is the estimate above.
 - **Board C's silkscreen is the other way round from A and B** (photo, 2026-10-05): numbers 1-24 along the long side, 1 at the USB-C end, letters A-J across. *Renamed the same day:* A1 is at the bottom left with components up and the USB-C socket on the left, so F5 is C·F4 and F6 is C·F21, in `stm32-carrier.py`, MEC-15, HW-19 and the BOM.
-- **Whether a 4.7 mm window is wide enough** for the 6 V pair, the Bauer feed and the driver's I2C lead, and how the 6 V pair then gets from the window to A's 6V IN, about 60 mm away under the 6 mm gap.
+- **Whether a 4.7 mm window is wide enough** for the 6 V pair and the driver's I2C lead, and how the 6 V pair then gets from the window to A's 6V IN, about 60 mm away under the 8 mm gap.
 - **Whether anything above plate 2 stands on (186.12, 9.71) and (186.12, 110.82).** The tray covers them: they are 2.5 mm from A's and B's rear corner holes.
 - **MEC-16's check on the screw heads under plate 2** still applies to the plate holes kept: see F5 above.
 - **Which side of the vehicle the Bauer's leads edge faces.** The photo fixes the leads and the holes to the same edge; putting it on the left is a routing choice.
-- **The Bauer's real height above its shelf, and the nut depth for M3,** before printing the ear pockets.
+- **The M3 nut's real depth and across-flats** (assumed 2.4 and 5.5 mm), before printing the Bauer's two pockets.
 - **Print or sheet.** The model serves both.
 

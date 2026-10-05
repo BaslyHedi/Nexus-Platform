@@ -98,7 +98,7 @@ def slot(view, x, y0, w, h):
     return rect(view, x, y0 + h if view.flip else y0, w, h, rx=f'{min(w, h) * SCALE / 2:.1f}', fill='#eef2f6', stroke='#b8c2cc', stroke_width=0.6)
 
 
-def hole(view, x, y, d, **kw):
+def hole(view, x, y, d):
     """A round hole of diameter d mm (the radius in px is d * scale / 2)."""
     return circle(view, x, y, f'{d * SCALE / 2:.1f}', fill='#eef2f6', stroke='#b8c2cc', stroke_width=0.6)
 

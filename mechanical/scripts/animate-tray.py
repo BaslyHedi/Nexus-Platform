@@ -13,7 +13,7 @@ onto its standoffs. The Bauer is held to the tray by two M3 screws through its o
 Read from disk: ../cad/carrier-tray.stl (the tray itself), ../../hardware/renders/chassis-layout.svg (plate 2's
 outline, holes and slots) and, through carrier_model.py, ../../hardware/scripts/stm32-carrier.py (the boards as
 built: every part and wire). Stand-ins: the harness parts under plate 2 (MEC-16 footprints), the Bauer (64 x 57 x
-22 mm; its ears are not modelled, they are not measured), the Discovery. The order of work is a PROPOSAL (MEC-17).
+22 mm; its shape and its two mounting holes are from the seller's drawing and Hedi's photo), the Discovery. The order of work is a PROPOSAL (MEC-17).
 
 Coordinates: plate 2's layout frame (x front to rear, y from the vehicle's right, mm, z up from plate 1's top).
 The layout's y runs the wrong way for a right-handed frame, so a point goes to Blender as (x, -y, z).
@@ -52,7 +52,7 @@ BOARDS = {'A': (117.00, 187.00, 5.11, 55.11, 8), 'B': (119.54, 189.54, 60.99, 11
           'C': (85.50, 115.50, 25.20, 95.20, 8)}          # plate-2 x0 x1 y0 y1, standoff height
 FIXINGS = {'F1': (148.18, 23.76, 3.18), 'F2': (148.18, 72.24, 2.71), 'F5': (99.24, 38.76, 3.18), 'F6': (99.24, 81.76, 3.18),
            'F7': (24.82, 60.24, 3.18), 'F8': (52.82, 60.24, 3.18)}
-EARS = [(16.0, 63.0), (70.0, 63.0)]            # the Bauer's two 6.8 mm holes: 5 and 59 mm from its front end, 26 mm from its leads edge (y 89)
+BAUER_HOLES = [(16.0, 63.0), (70.0, 63.0)]            # the Bauer's two 6.8 mm holes: 5 and 59 mm from its front end, 26 mm from its leads edge (y 89)
 SPLICES = [(42.0, 60.6, 96.0, 109.0), (42.0, 60.6, 11.5, 24.5)]     # S6 (+) left of the Bauer, S7 (-) its mirror on the right
 BAUER = (11.0, 75.0, 32.0, 89.0, 22.0)         # x0 x1 y0 y1 height: 10.5 mm clear of board C, for its cables
 BENCH_Y = 190.0                                # the jig stands this far to the vehicle's right (Blender +y)
@@ -60,7 +60,7 @@ BENCH_Y = 190.0                                # the jig stands this far to the 
 # ---------------------------------------------------------------- timeline (seconds)
 NUTS = [4.0 + 0.35 * i for i in range(8)]          # six M2.5 and two M3
 BAUER_T = 8.0
-EARSCREW_T = 9.2
+BAUER_HOLESCREW_T = 9.2
 BOARD_T = {'C': 10.5, 'AB': 12.0}
 SCREWS_T = 14.5                                # twelve board screws, 0.28 s apart
 SPLICE_T = [19.0, 19.6]
@@ -275,7 +275,7 @@ for r in RAILS:
 nuts = []
 for k, (x, y, d) in FIXINGS.items():
     nuts.append(hexa("nut-" + k, x, y, Z_TRAY - 2.4, Z_TRAY - 0.4, 5.0, 'nut', ROOT))
-for i, (x, y) in enumerate(EARS):                          # M3: 5.5 across flats, 2.4 thick
+for i, (x, y) in enumerate(BAUER_HOLES):                          # M3: 5.5 across flats, 2.4 thick
     nuts.append(hexa("nut-E%d" % (i + 1), x, y, Z_TRAY - 2.6, Z_TRAY - 0.2, 5.5, 'nut', ROOT))
 for o, t in zip(nuts, NUTS):
     drop(o, t, dz=28.0)
@@ -307,7 +307,7 @@ for (dx, dy) in [(5.0, 31.0), (59.0, 31.0)]:               # 26 mm from the lead
     m = Mesh(ID)
     m.cyl((x, y, Z_TRAY - 1), (x, y, Z_TRAY + 5), 3.4, 'bauer', 28)
     m.cyl((x, y, Z_TRAY + 2.5), (x, y, Z_TRAY + 5), 5.0, 'bauer', 32)
-    cutters.append(m.make("ear-cut"))
+    cutters.append(m.make("hole-cut"))
 bpy.ops.object.select_all(action='DESELECT')
 for c in cutters:
     c.select_set(True)
@@ -315,9 +315,9 @@ bpy.context.view_layer.objects.active = cutters[0]
 bpy.ops.object.join()
 cut = bpy.context.view_layer.objects.active
 bpy.context.view_layer.objects.active = shelf
-md = shelf.modifiers.new("ears", 'BOOLEAN')
+md = shelf.modifiers.new("holes", 'BOOLEAN')
 md.object, md.operation, md.solver = cut, 'DIFFERENCE', 'EXACT'
-bpy.ops.object.modifier_apply(modifier="ears")
+bpy.ops.object.modifier_apply(modifier="holes")
 bpy.data.objects.remove(cut)
 m = Mesh(ID)
 x0, y0 = bp(13.4, 0)
@@ -361,11 +361,11 @@ for col, dxl, path in LEADS:
     sc.collection.objects.link(lw)
     lw.parent = bau
 drop(bau, BAUER_T, dz=40.0)
-for i, (x, y) in enumerate(EARS):                          # M3 x 8 through each of the Bauer's own holes into its nut
+for i, (x, y) in enumerate(BAUER_HOLES):                          # M3 x 8 through each of the Bauer's own holes into its nut
     sh = empty("ear-screw", ROOT)
     cyl("head", x, y, Z_TRAY + 2.5, Z_TRAY + 4.5, 5.5, 'steel', sh, 20)
     cyl("shaft", x, y, Z_TRAY - 2.2, Z_TRAY + 2.5, 3.0, 'steel', sh, 12)
-    drop(sh, EARSCREW_T + 0.5 * i, dz=26.0, dur=0.7)
+    drop(sh, BAUER_HOLESCREW_T + 0.5 * i, dz=26.0, dur=0.7)
 
 # the boards, as built (carrier_model.py), each on four nylon standoffs
 asm = {'AB': empty("boards-AB", ROOT), 'C': empty("board-C", ROOT)}

@@ -97,14 +97,14 @@ PLATE_HOLES = [
 // and the pair beside the Bauer, x 56.2-80.1, y 26.9-37.2 and 83.2-93.5, where the plate takes cable ties
 PLATE_SLOTS = [ [[168.5, 37.7], [168.5, 82.9], 7.3], [[61.35, 32.09], [74.89, 32.09], 5.15], [[61.35, 88.33], [74.89, 88.33], 5.15] ];
 // the Bauer 50 W converter: body 64 x 57 x 22 mm (BOM 3.4a), where plate1.py parks it: x 20-84, y 32-89 (BAUER below says where it goes now).
-// Its drawing (the seller's, 2026-10-05): two 6.8 mm holes INSIDE the outline, 5 mm in from each end, 54 mm apart,
+// Its drawing (the seller's, 2026-10-05; the drawing calls them ears): two 6.8 mm holes INSIDE the outline, 5 mm in from each end, 54 mm apart,
 // 26 mm from one long edge. The photo (2026-10-05) shows that is the edge the four leads leave from, through the middle of the
 // plateau. That edge is put on the vehicle's LEFT (y 89), facing board C's 5 V terminals, with a 12 mm lane beside it.
 // They take M3 screws from above into nuts held in the tray: one pocket under each hole.
 BAUER = [11.0, 75.0, 32.0, 89.0];     // 9 mm ahead of where plate1.py parks it: that leaves 10.5 mm between its rear end and board C
                                       // for the leads and the 5 V cable to board C (the rim has no leg there)
-EARS = [[16.0, 63.0, 3.2], [70.0, 63.0, 3.2]];   // x, y, hole: BAUER[0] + 5 and + 59, BAUER[3] - 26
-EAR_NUT_AF = 5.7; EAR_NUT_DEPTH = 2.6;            // M3 nut, 5.5 across flats and 2.4 thick, as a printing fit
+BAUER_HOLES = [[16.0, 63.0, 3.2], [70.0, 63.0, 3.2]];   // x, y, hole: BAUER[0] + 5 and + 59, BAUER[3] - 26
+BAUER_NUT_AF = 5.7; BAUER_NUT_DEPTH = 2.6;            // M3 nut, 5.5 across flats and 2.4 thick, as a printing fit
 RIM_H = 3.0; RIM_W = 1.6; RIM_GAP = 0.6; RIM_LEG = 14;   // four corner brackets, so the leads and the air get out
 // the plate's wire opening, x 110.3-133.0, y 42.5-77.9, a stadium of radius 11.35
 PLATE_OPENING = [[121.65, 53.85], [121.65, 66.55], 11.35];
@@ -158,7 +158,7 @@ module word(p, t, h) translate(p) mirror([0, 1, 0]) text(t, size = h, halign = "
 module holes2d() {
     for (b = BOARDS) for (p = corners(b)) translate(p) circle(d = HOLE_D, $fn = 32);
     for (f = FIXINGS) translate(tray(f)) circle(d = FIX_D, $fn = 32);
-    for (e = EARS) translate(tray(e)) circle(d = e[2], $fn = 32);
+    for (e = BAUER_HOLES) translate(tray(e)) circle(d = e[2], $fn = 32);
     for (h = PLATE_HOLES) translate(tray(h)) circle(d = h[2], $fn = 32);
     for (sl = PLATE_SLOTS) stadium(sl);
     window2d();
@@ -185,7 +185,7 @@ module rim3d() {
 
 // a drilling cross through each board hole and fixing, for the hand-cut sheet
 module crosses2d()
-    for (p = concat([for (b = BOARDS) for (c = corners(b)) c], [for (f = FIXINGS) tray(f)]))
+    for (p = concat([for (b = BOARDS) for (c = corners(b)) c], [for (f = FIXINGS) tray(f)], [for (e = BAUER_HOLES) tray(e)]))
         translate(p) { square([7, 0.35], center = true); square([0.35, 7], center = true); }
 
 module trayBody() {
@@ -198,8 +198,8 @@ module trayBody() {
         for (f = FIXINGS) translate([tray(f)[0], tray(f)[1], T - NUT_DEPTH])
             cylinder(d = NUT_POCKET / cos(30), h = NUT_DEPTH + 0.01, $fn = 6);
         // and a larger one under each of the Bauer's two holes, for an M3 nut
-        for (e = EARS) translate([tray(e)[0], tray(e)[1], T - EAR_NUT_DEPTH])
-            cylinder(d = EAR_NUT_AF / cos(30), h = EAR_NUT_DEPTH + 0.01, $fn = 6);
+        for (e = BAUER_HOLES) translate([tray(e)[0], tray(e)[1], T - BAUER_NUT_DEPTH])
+            cylinder(d = BAUER_NUT_AF / cos(30), h = BAUER_NUT_DEPTH + 0.01, $fn = 6);
         // engraved board letters and the direction, 0.6 mm deep on top
         translate([0, 0, T - 0.6]) linear_extrude(1) labels2d();
         // where S6 / S7 go, a 0.4 mm outline on top
@@ -224,7 +224,7 @@ module ghost_boards(solid = false) {
     for (b = BOARDS) for (p = corners(b)) color("gold") translate([p[0], p[1], T + 8.1]) cylinder(d = 3, h = 1, $fn = 20);
     for (s = SPLICES) color("orange", 0.8) translate([tray([s[0], s[2]])[0], tray([s[0], s[2]])[1], T]) cube([s[1] - s[0], s[3] - s[2], 8.5]);
     for (f = FIXINGS) color("silver") translate([tray(f)[0], tray(f)[1], T - NUT_DEPTH]) cylinder(d = NUT_AF / cos(30), h = 2, $fn = 6);
-    for (e = EARS) color("gold") translate([tray(e)[0], tray(e)[1], T - 2.4]) cylinder(d = 5.5 / cos(30), h = 2.4, $fn = 6);
+    for (e = BAUER_HOLES) color("gold") translate([tray(e)[0], tray(e)[1], T - 2.4]) cylinder(d = 5.5 / cos(30), h = 2.4, $fn = 6);
     color("steelblue", 0.7) translate([tray([BAUER[0], BAUER[2]])[0], tray([BAUER[0], BAUER[2]])[1], T]) cube([BAUER[1] - BAUER[0], BAUER[3] - BAUER[2], 22]);
 }
 
