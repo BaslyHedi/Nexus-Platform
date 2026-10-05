@@ -1,9 +1,19 @@
 # Hardware
 
-Build drawings for NEXUS. The drawings are `.svg` files in [`renders/`](renders/), and for two of them
-that is the editable source and the only copy (`chassis-layout.svg` and `wiring-schematic.svg`: edited as text, no generator keeps in
-step with them; what survives of the early ones is in [`scripts/archive/`](scripts/archive/README.md)). The carrier's is the exception: [`scripts/stm32-carrier.py`](scripts/stm32-carrier.py)
-writes it, so edit the script, never the SVG.
+Build drawings for NEXUS. Each is an `.svg` in [`renders/`](renders/) **written by the script of the same name** in
+[`scripts/`](scripts/): `chassis-layout.py` writes `chassis-layout.svg`, `wiring-schematic.py` writes `wiring-schematic.svg`,
+`stm32-carrier.py` writes `stm32-carrier.svg`. Edit the script, never the SVG, then run it:
+
+```bash
+python3 hardware/scripts/chassis-layout.py        # -> hardware/renders/chassis-layout.svg
+python3 tools/check-drawings.py                  # fails if any SVG is not what its script writes
+```
+
+[`scripts/drawing.py`](scripts/drawing.py) holds the small SVG helpers the first two share. The chassis plate (outline, slots, holes,
+standoffs) is one table in millimetres drawn on all four plans; the wiring schematic's nets are one colour palette shared with its key.
+Both scripts were made on 2026-10-05 from the SVGs as they stood and reproduce them exactly (the layout without 24 stray blank
+lines), so nothing in a drawing changed when they took over. What survives of the early generators is in
+[`scripts/archive/`](scripts/archive/README.md).
 
 **No PDFs.** They are generated once, when the design is frozen. Until then the SVG is the
 truth and a stale PDF beside it is just a second thing to get wrong. To read one, open the

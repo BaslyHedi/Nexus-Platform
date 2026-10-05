@@ -65,3 +65,12 @@ when files move:
 ```bash
 python3 tools/check-links.py
 ```
+
+## Checking the drawings
+
+The three drawings in `hardware/renders/` are written by the scripts of the same name in `hardware/scripts/`. Edit the script, never
+the SVG; this fails if an SVG has drifted from its script:
+
+```bash
+python3 tools/check-drawings.py
+```
