@@ -20,8 +20,9 @@
 // WHAT THE TRAY HAS
 //   - every plate-2 hole that lies wholly under it, copied at the plate's own diameter, plus the plate's
 //     large slot (PLATE_SLOT), so nothing that is open on the plate is blocked by the tray;
-//   - four fixing holes that land on four of those plate holes (F1, F2, F5, F6), each with a hex pocket
-//     on top that captures an M2.5 nut, so the tray comes off with one screw per corner from BELOW;
+//   - six fixing holes that land on six of those plate holes (F1, F2, F5, F6 and F7, F8 under the Bauer), each with a hex pocket
+//     on top that captures an M2.5 nut, so the tray comes off with a screw per fixing from BELOW; plus two M3 pockets
+//     under the Bauer's two mounting holes;
 //   - twelve board holes, four per board (M2.5 clearance), with counterbores from below so the tray sits
 //     flat; boards go on the nylon standoffs already fitted;
 //   - the window over plate 2's wire opening, where the S6 / S7 and UBEC wires climb to the top face.
@@ -52,24 +53,26 @@ WALL         = 1.5;          // least tray left between a copied plate hole and 
 // ---- STEP 1: the boards on the tray (tray frame, mm) ------------------------------------------------
 // board = [u0, u1, v0, v1]. A and B as built 2026-10-03 (A one pitch ahead of B, 5.88 mm apart across
 // the tray); C across the waist, 1.5 mm from A.
-BOARD_A = [ 31.50, 101.50,   0.00,  50.00];
-BOARD_B = [ 34.04, 104.04,  55.88, 105.88];
-BOARD_C = [  0.00,  30.00,  20.09,  90.09];
+BOARD_A = [108.50, 178.50,   0.00,  50.00];
+BOARD_B = [111.04, 181.04,  55.88, 105.88];
+BOARD_C = [ 77.00, 107.00,  20.09,  90.09];
 BOARDS  = [BOARD_A, BOARD_B, BOARD_C];
 
 // ---- STEP 2: the tray on plate 2 ------------------------------------------------------------------------
-PLACE = [85.50, 5.11];       // plate-2 position of the tray frame's origin
+PLACE = [ 8.50, 5.11];       // plate-2 position of the tray frame's origin: the front edge of the Bauer's end
 
 // plate 2's holes under the tray, from the chassis layout (hardware/renders/chassis-layout.svg): [x, y, d].
-// Left out because the tray cannot hold them: (72.41, 52.65/67.88) and (99.24, 23.76/96.76),
-// (104.41, 19.59/100.94) are outside it; (86.94, 40.24/80.24) leave 0.1 mm to C's edge;
+// Left out because the tray cannot hold them: (99.24, 23.76/96.76), (104.41, 19.59/100.94) and
+// everything ahead of x 17.5 are outside it; (16.94, 32.24/88.24) and (17.82, 53.24/67.24) are on its front edge;
 // (186.12, 9.71/110.82) sit 2.5 mm from A's and B's rear corner holes; the long side slots
 // (x 109-158, y 10-15 and 105-111) run off the tray's front edge.
-FIXINGS = [ // the four the tray is screwed down with, and the name MEC-15 gave them
+FIXINGS = [ // the six the tray is screwed down with: F1, F2, F5, F6 as MEC-15 named them, F7 and F8 under the Bauer
     [148.18, 23.76, 3.18], // F1  M3 hole, M2.5 and a washer
     [148.18, 72.24, 2.71], // F2
     [ 99.24, 38.76, 3.18], // F5
     [ 99.24, 81.76, 3.18], // F6
+    [ 24.82, 60.24, 3.18], // F7  under the Bauer, on the plate's M3 line along y 60.24
+    [ 52.82, 60.24, 3.18], // F8
 ];
 PLATE_HOLES = [
     [ 96.71,  52.65, 2.71], [ 96.71,  67.88, 2.71], [102.18,  48.24, 2.71], [102.18,  72.24, 2.71],
@@ -78,9 +81,29 @@ PLATE_HOLES = [
     [162.06,  16.71, 2.47], [162.06, 103.82, 2.47],
     [169.88,  14.24, 2.71], [169.88,  20.24, 2.71], [169.88, 100.24, 2.71], [169.88, 106.24, 2.71],
     [ 92.65,  36.35, 4.30], [ 92.65,  84.25, 4.30],
+    // under the Bauer (x 8.5-87): the plate's M3 line along y 60.24 and its diamond, the M2.5 pairs, the 4.2 and 4.3 mm holes.
+    // Not copied: the two 9 mm holes (x 17.9 and 45.85, y 60.3), (10.82, 60.24) and (17.82, 53.24): they run into a nut
+    // pocket or the tray's front edge.
+    [ 38.82,  60.24, 3.18], [ 45.82,  53.24, 3.18], [ 45.82,  67.24, 3.18], [ 17.82,  67.24, 3.18],
+    [ 16.94,  32.24, 2.71], [ 16.94,  88.24, 2.71], [ 25.65,  52.65, 2.71], [ 25.65,  67.88, 2.71],
+    [ 49.00,  35.94, 2.71], [ 49.00,  84.53, 2.71], [ 72.41,  52.65, 2.71], [ 72.41,  67.88, 2.71],
+    [ 86.94,  40.24, 2.71], [ 86.94,  80.24, 2.71],
+    [ 12.65,  36.35, 4.29], [ 12.65,  84.25, 4.29],
+    [ 43.50,  36.33, 4.29], [ 43.50,  84.21, 4.29], [ 45.86,  44.27, 4.29], [ 45.86,  76.27, 4.29],
+    [ 36.09,  35.91, 4.18], [ 36.09,  84.56, 4.18],
 ];
-// the plate's large slot, x 161.2-175.8, y 30.4-90.2, as the two end-circle centres and the radius
-PLATE_SLOT = [[168.5, 37.7], [168.5, 82.9], 7.3];
+// the plate's slots, as the two end-circle centres and the radius: the large one at x 161.2-175.8, y 30.4-90.2,
+// and the pair beside the Bauer, x 56.2-80.1, y 26.9-37.2 and 83.2-93.5, where the plate takes cable ties
+PLATE_SLOTS = [ [[168.5, 37.7], [168.5, 82.9], 7.3], [[61.35, 32.09], [74.89, 32.09], 5.15], [[61.35, 88.33], [74.89, 88.33], 5.15] ];
+// the Bauer 50 W converter: body 64 x 57 x 22 mm (BOM 3.4a), where plate1.py parks it: x 20-84, y 32-89 (BAUER below says where it goes now).
+// Its drawing (the seller's, 2026-10-05): two 6.8 mm holes INSIDE the outline, 5 mm in from each end, 54 mm apart,
+// 26 mm from one long edge. Which edge is not known; the drawing's bottom edge is taken to face the vehicle's right (y 32).
+// They take M3 screws from above into nuts held in the tray: one pocket under each hole.
+BAUER = [11.0, 75.0, 32.0, 89.0];     // 9 mm ahead of where plate1.py parks it: that leaves 10.5 mm between its rear end and board C
+                                      // for the leads and the 5 V cable to board C (the rim has no leg there)
+EARS = [[16.0, 58.0, 3.2], [70.0, 58.0, 3.2]];   // x, y, hole: BAUER[0] + 5 and + 59, BAUER[2] + 26
+EAR_NUT_AF = 5.7; EAR_NUT_DEPTH = 2.6;            // M3 nut, 5.5 across flats and 2.4 thick, as a printing fit
+RIM_H = 3.0; RIM_W = 1.6; RIM_GAP = 0.6; RIM_LEG = 14;   // four corner brackets, so the leads and the air get out
 // the plate's wire opening, x 110.3-133.0, y 42.5-77.9, a stadium of radius 11.35
 PLATE_OPENING = [[121.65, 53.85], [121.65, 66.55], 11.35];
 // the window: the opening up to x 115, clear of A's front-inboard corner counterbore
@@ -89,6 +112,8 @@ WINDOW_X1 = 115.0;
 // the S6 / S7 splices, on the tray under C (plate1.py footprints, 18.6 x 13), plate-2 frame
 SPLICES = [[87.7, 106.3, 41.5, 54.5], [87.7, 106.3, 63.5, 76.5]];
 
+// the Bauer's end: from 2.5 mm ahead of the converter to 1.5 mm into board C's footprint, as wide as C
+EXT = [0.0, BOARD_C[0] + 1.5, BOARD_C[2], BOARD_C[3]];     // its front is narrowed in outline2d(): plate 2 narrows there
 function tray(p) = [p[0] - PLACE[0], p[1] - PLACE[1]];          // plate-2 frame -> tray frame
 function corners(b) = [[b[0] + CORNER_INSET, b[2] + CORNER_INSET], [b[1] - CORNER_INSET, b[2] + CORNER_INSET],
                        [b[0] + CORNER_INSET, b[3] - CORNER_INSET], [b[1] - CORNER_INSET, b[3] - CORNER_INSET]];
@@ -104,6 +129,10 @@ module outline2d()
     union() {
         for (b = BOARDS) rrect(b[0], b[1], b[2], b[3]);
         rrect(BOARD_C[1] - 3, BOARD_A[0] + 3, BOARD_C[2], BOARD_C[3]);
+        hull() {                                               // the Bauer's end of the tray, narrower at the front where plate 2 is
+            rrect(EXT[0], EXT[0] + 4, EXT[2] + 3.8, EXT[3] - 3.7, 1.0);
+            rrect(EXT[0] + 11.5, EXT[1], EXT[2], EXT[3]);
+        }
         translate([BOARD_B[0], BOARD_A[3] - 3]) square([BOARD_A[1] - BOARD_B[0], BOARD_B[2] - BOARD_A[3] + 6]);
     }
 
@@ -120,16 +149,29 @@ module word(p, t, h) translate(p) mirror([0, 1, 0]) text(t, size = h, halign = "
 module holes2d() {
     for (b = BOARDS) for (p = corners(b)) translate(p) circle(d = HOLE_D, $fn = 32);
     for (f = FIXINGS) translate(tray(f)) circle(d = FIX_D, $fn = 32);
+    for (e = EARS) translate(tray(e)) circle(d = e[2], $fn = 32);
     for (h = PLATE_HOLES) translate(tray(h)) circle(d = h[2], $fn = 32);
-    stadium(PLATE_SLOT);
+    for (sl = PLATE_SLOTS) stadium(sl);
     window2d();
 }
 
 module labels2d(h = 6) {
-    word([55, 12], "A", h);
-    word([55, 94], "B", h);
-    word([15, 55], "C", h);
-    word([60, 52.9], "REAR >", 3.5);
+    word([132, 12], "A", h);
+    word([132, 94], "B", h);
+    word([92, 55], "C", h);
+    word([137, 52.9], "REAR >", 3.5);
+    word([45, 12], "BAUER", 4);
+}
+
+// the Bauer's rim: four corner brackets round its footprint, 0.6 mm clear, 3 mm high
+module rim3d() {
+    a = tray([BAUER[0] - RIM_GAP, BAUER[2] - RIM_GAP]); b = tray([BAUER[1] + RIM_GAP, BAUER[3] + RIM_GAP]);
+    translate([0, 0, T]) linear_extrude(RIM_H) difference() {
+        translate([a[0] - RIM_W, a[1] - RIM_W]) square([b[0] - a[0] + 2 * RIM_W, b[1] - a[1] + 2 * RIM_W]);
+        translate(a) square([b[0] - a[0], b[1] - a[1]]);
+        translate([a[0] + RIM_LEG, a[1] - 5]) square([b[0] - a[0] - 2 * RIM_LEG, b[1] - a[1] + 10]);      // leave only
+        translate([a[0] - 5, a[1] + RIM_LEG]) square([b[0] - a[0] + 10, b[1] - a[1] - 2 * RIM_LEG]);      // the corners
+    }
 }
 
 // a drilling cross through each board hole and fixing, for the hand-cut sheet
@@ -138,6 +180,7 @@ module crosses2d()
         translate(p) { square([7, 0.35], center = true); square([0.35, 7], center = true); }
 
 module trayBody() {
+    union() {
     difference() {
         linear_extrude(T) difference() { outline2d(); holes2d(); }
         // counterbores from below for the board screws, so the tray sits flat on plate 2
@@ -145,11 +188,16 @@ module trayBody() {
         // a hex pocket on top at each fixing, holding the nut so the screw turns from below
         for (f = FIXINGS) translate([tray(f)[0], tray(f)[1], T - NUT_DEPTH])
             cylinder(d = NUT_POCKET / cos(30), h = NUT_DEPTH + 0.01, $fn = 6);
+        // and a larger one under each of the Bauer's two holes, for an M3 nut
+        for (e = EARS) translate([tray(e)[0], tray(e)[1], T - EAR_NUT_DEPTH])
+            cylinder(d = EAR_NUT_AF / cos(30), h = EAR_NUT_DEPTH + 0.01, $fn = 6);
         // engraved board letters and the direction, 0.6 mm deep on top
         translate([0, 0, T - 0.6]) linear_extrude(1) labels2d();
         // where S6 / S7 go, a 0.4 mm outline on top
         for (s = SPLICES) translate([0, 0, T - 0.4]) linear_extrude(1)
             difference() { translate(-PLACE) rrect(s[0], s[1], s[2], s[3], 0.5); offset(delta = -0.6) translate(-PLACE) rrect(s[0], s[1], s[2], s[3], 0.5); }
+    }
+    rim3d();
     }
 }
 
@@ -167,17 +215,19 @@ module ghost_boards(solid = false) {
     for (b = BOARDS) for (p = corners(b)) color("gold") translate([p[0], p[1], T + 6.1 + (b == BOARD_C ? 4 : 0)]) cylinder(d = 3, h = 1, $fn = 20);
     for (s = SPLICES) color("orange", 0.8) translate([tray([s[0], s[2]])[0], tray([s[0], s[2]])[1], T]) cube([s[1] - s[0], s[3] - s[2], 8.5]);
     for (f = FIXINGS) color("silver") translate([tray(f)[0], tray(f)[1], T - NUT_DEPTH]) cylinder(d = NUT_AF / cos(30), h = 2, $fn = 6);
+    for (e = EARS) color("gold") translate([tray(e)[0], tray(e)[1], T - 2.4]) cylinder(d = 5.5 / cos(30), h = 2.4, $fn = 6);
+    color("steelblue", 0.7) translate([tray([BAUER[0], BAUER[2]])[0], tray([BAUER[0], BAUER[2]])[1], T]) cube([BAUER[1] - BAUER[0], BAUER[3] - BAUER[2], 22]);
 }
 
 // plate 2 as a ghost slab 2 mm thick below z 0, drawn in the tray frame: its holes, slot and opening
 module ghost_plate() {
     color("slategray", 0.75) translate([0, 0, -2]) linear_extrude(2) difference() {
-        translate([-40, -20]) square([190, 160]);
+        translate([-20, -20]) square([240, 160]);
         for (h = PLATE_HOLES) translate(tray(h)) circle(d = h[2], $fn = 24);
         for (f = FIXINGS) translate(tray(f)) circle(d = f[2], $fn = 24);
         for (p = [[72.41, 52.65, 2.71], [72.41, 67.88, 2.71], [99.24, 23.76, 3.18], [99.24, 96.76, 3.18], [104.41, 19.59, 3.18], [104.41, 100.94, 3.18],
                   [86.94, 40.24, 2.71], [86.94, 80.24, 2.71], [186.12, 9.71, 3.18], [186.12, 110.82, 3.18]]) translate(tray(p)) circle(d = p[2], $fn = 24);
-        stadium(PLATE_SLOT);
+        for (sl = PLATE_SLOTS) stadium(sl);
         stadium(PLATE_OPENING);
     }
 }

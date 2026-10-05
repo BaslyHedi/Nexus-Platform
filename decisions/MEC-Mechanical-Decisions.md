@@ -1154,52 +1154,78 @@ judged. Source: [`../mechanical/cad/carrier-tray.scad`](../mechanical/cad/carrie
 **Placed in two steps (2026-10-05).** First the carrier on the tray, then the tray on plate 2.
 
 1. **Boards on the tray, in the tray's own frame** (u from the front, v from the right edge, origin at
-   the tray's front-right corner): A at u 31.50-101.50, v 0-50; B at u 34.04-104.04, v 55.88-105.88;
-   C at u 0-30, v 20.09-90.09. The tray is 104.04 x 105.88 mm. The Discovery fixes A against B
-   (5.88 mm apart, A one pitch ahead); C's 1.5 mm to A is a choice, since the tray no longer forces it.
-2. **Tray on plate 2** by one offset, `PLACE = (85.50, 5.11)` in the plate-2 layout frame. That puts
+   the tray's front-right corner): A at u 108.50-178.50, v 0-50; B at u 111.04-181.04, v 55.88-105.88;
+   C at u 77.00-107.00, v 20.09-90.09; the Bauer's end of the tray ahead of C. The tray is 182 x 106 mm.
+   The Discovery fixes A against B (5.88 mm apart, A one pitch ahead); C's 1.5 mm to A is a choice,
+   since the tray no longer forces it.
+2. **Tray on plate 2** by one offset, `PLACE = (8.50, 5.11)` in the plate-2 layout frame. That puts
    the boards exactly where MEC-15 has them: A at x 117.0-187.0, B at x 119.54-189.54, C at
    x 85.5-115.5.
 
-**The tray has the plate's holes.** Every plate-2 hole wholly under the tray is copied at the plate's
-own diameter (20 holes, plus the plate's 14.6 x 59.8 mm slot at x 161.2-175.8), so nothing open on the
-plate is blocked. Surveyed from the chassis layout. Not copied, with the reason in the .scad: ten
-holes outside the tray or too near its edge, and the two long side slots (x 109-158) that run off the
-tray's front edge. The slot cuts the A-B bridge at x 161-176; the tray stays one piece through the
-front part and the 20-25 mm bands beside the slot.
+**The tray also carries the Bauer 50 W (2026-10-05).** Its front end reaches x 8.5, which is as far as
+plate 2's narrowing front allows (the front is tapered to stay 1.5 mm inside the plate edge). The Bauer
+is screwed to the tray **through its own two mounting holes**, so it needs no cable ties and no plate hole
+of its own. From the seller's drawing: 64 x 57 x 22 mm, corners chamfered about 8 x 6.5, two 6.8 mm
+holes **inside the outline**, 5 mm in from each end (54 mm apart) and 26 mm from one long edge, a fin
+bank along each long side, the potted module in a cavity under a top deck. (This record had taken the
+holes for ears outside the body; the BOM's "54 mm matches no chassis rectangle" no longer matters.)
 
-**Fixings.** Four of those holes take the tray down: F1 (148.18, 23.76), F2 (148.18, 72.24),
-F5 (99.24, 38.76), F6 (99.24, 81.76), M2.5 from below, as before. Each has a hex pocket on the top
-that captures the nut. This matters: the nut sits under a board, so without a captive pocket the
-tray could not be unscrewed without taking the boards off first. A hand-cut sheet cannot have the
-pocket. The board holes are separate (four per board, M2.5, counterbored from below) and no longer
-have to match anything on the plate.
+- **Where it sits:** x 11-75, y 32-89. That is 9 mm ahead of where `plate1.py` parks it, to leave
+  **10.5 mm between its rear end and board C for its cables**: the four flying leads and the 5 V cable to
+  C's IN terminal run in that lane, then under C's front edge (C stands 10 mm above the tray) to the
+  splices. The rim has no leg there. Which end the leads leave is not known; the rear is assumed.
+- **Holding it:** two M3 x 8 screws from above through its holes into M3 nuts held in hex pockets in the
+  tray (E1 at (16, 58), E2 at (70, 58)), a low rim of four corner legs 0.6 mm clear of the body to
+  locate it. Which long edge the 26 mm is measured from is not known; the drawing's bottom edge is
+  taken to face the vehicle's right, so mirror E1 / E2 to y 63 if it is the other way.
+- **Held to the plate** by F7 (24.82, 60.24) and F8 (52.82, 60.24), two more of the plate's M3 holes,
+  under the Bauer.
+- **Cable passages:** the plate's two slots beside the Bauer (x 56-80, y 27-37 and 83-93) are open in the
+  tray too, so cables can drop to the harness board below. The window by C does the same for the
+  splices.
+
+**The tray has the plate's holes.** Every plate-2 hole wholly under the tray is copied at the plate's
+own diameter, plus the plate's slots, so nothing open on the plate is blocked. Surveyed from the
+chassis layout. Not copied, with the reason in the .scad: the holes outside the tray or too near its
+edge, those that would run into a nut pocket (the two 9 mm holes among them), and the two long side
+slots (x 109-158) that run off the tray's edge. The large slot at x 161-176 cuts the A-B bridge; the
+tray stays one piece through the front part and the 20-25 mm bands beside the slot.
+
+**Fixings.** Six of those holes take the tray down, M2.5 from below: F1 (148.18, 23.76), F2
+(148.18, 72.24), F5 (99.24, 38.76), F6 (99.24, 81.76), and F7, F8 under the Bauer. Each has a hex pocket
+on the top that captures the nut. This matters: the nut sits under a board or the Bauer, so without a
+captive pocket the tray could not be unscrewed without taking them off first. A hand-cut sheet cannot
+have the pocket. The board holes are separate (four per board, M2.5, counterbored from below) and no
+longer have to match anything on the plate.
 
 **Assembly order (proposed), animated in
 [`../mechanical/scripts/animate-tray.py`](../mechanical/scripts/animate-tray.py).** The tray goes on after
 plate 2's harness is built and plate 2 is the right way up, because its screws come from below and
 its boards would be in the way while plate 2 lies upside down (MEC-16).
 
-1. At the bench, with the tray on two bars clear of the board screws: an M2.5 nut pressed into each of
-   the four pockets.
-2. Boards A, B and C lowered onto the tray, their nylon standoffs on the tray's board holes.
+1. At the bench, with the tray on three posts clear of every screw: a nut pressed into each of the eight
+   pockets (six M2.5, two M3).
+2. The Bauer into its rim, two M3 screws through its holes. Boards C, then A and B, lowered onto the
+   tray, their nylon standoffs on the tray's board holes.
 3. Twelve M2.5 screws from below into the standoffs.
 4. The S6 and S7 splices into their outlines under C.
-5. The unit is lifted across onto plate 2 (raised on trestles, as in MEC-16's lowering), its holes over
+5. The unit is lifted across onto plate 2 (raised on blocks, as in MEC-16's lowering), its holes over
    the plate's, the Bauer feed pulled up through the window.
-6. F1, F2, F5, F6: an M2.5 screw from below into each nut pocket, a washer in the three M3 holes.
-7. Plate 2 comes off the trestles and lowers onto the chassis standoffs; the Discovery plugs on last.
+6. F1, F2, F5, F6, F7, F8: an M2.5 screw from below into each nut pocket, a washer in the M3 holes.
+7. Plate 2 comes off the blocks and lowers onto the chassis standoffs; the Discovery plugs on last.
 
 This differs from the MEC-16 animation, which has the carrier on plate 2 from the start. The tray lifts
-out again as one unit, four screws from below.
+out again as one unit, six screws from below. The video builds the boards from `stm32-carrier.py`, so
+they are the boards as built; the harness parts under plate 2 and the Discovery are stand-ins.
 
-**Screw heads under plate 2, checked against `plate1.py` (2026-10-05).** The four heads are the
-tray's one clash with the harness board, MEC-16's open check, now with numbers (M2.5 head r 2.3, washer r 3.0):
+**Screw heads under plate 2, checked against `plate1.py` (2026-10-05).** The heads are the tray's one
+clash with the harness board, MEC-16's open check, now with numbers (M2.5 head r 2.3, washer r 3.0):
 F5 (99.24, 38.76) is 1.24 mm from the (+) bus's edge at y 40, so the head overlaps it by 1.1 mm and
 the washer by 1.8 mm; F2 (148.18, 72.24) is 2.24 mm from the (-) bus's edge at y 70, so the head clears
 by 0.06 mm and its washer is not needed (the hole is M2.5); F1 clears the motor fuse (x 152) by 1.5 mm
-without its washer, 0.8 mm with. F6 is clear. Either move the (+) bus about 2 mm in y, or use a low
-button head and no washer at F5, or take F5 from another hole. Open.
+without its washer, 0.8 mm with. F6, F7 and F8 are clear (nothing is taped under plate 2 ahead of
+x 83). Either move the (+) bus about 2 mm in y, or use a low button head and no washer at F5, or take F5
+from another hole. Open.
 
 **The window** is now the plate's real opening (x 110.3-133.0, y 42.5-77.9, measured on the layout,
 where this record had assumed y 40.4-75.8) cut off at x 115.0, so it stays 1.7 mm clear of A's
@@ -1214,9 +1240,9 @@ standoffs already fitted. Only the tray is screwed to plate 2.
 - **Nothing drilled into the built boards.** The kit boards' four corner holes are all free on A
   and B (fitted with standoffs, 2026-10-03), and the tray follows the boards as built, A's one-pitch
   offset included.
-- **Four screws through plate 2 instead of six, and none off-grid.** The tray reuses the plate holes
-  of F1, F2, F5 and F6. F3, which MEC-16 found landing on the motor fuse's lid under plate 2, and
-  F4 are dropped.
+- **Six screws through plate 2, none off-grid and none new.** The tray reuses the plate holes of F1,
+  F2, F5 and F6, and two M3 holes under the Bauer. F3, which MEC-16 found landing on the motor
+  fuse's lid under plate 2, and F4 are dropped.
 - **The electronics lift out as one unit** for bench work, and the tray can stand on its own.
 - **It carries the S6 / S7 splices too,** which sit under board C. Their wires climb through a
   window over plate 2's wire opening, between C and A / B.
@@ -1240,6 +1266,8 @@ than today, within the 40 mm gap. A and B keep their height with 6 mm standoffs.
   near two of its corners.
 - **Whether a 4.7 mm window is wide enough** for the 6 V pair, the Bauer feed and the driver's I2C lead, and how the 6 V pair then gets from the window to A's 6V IN, about 60 mm away under the 6 mm gap.
 - **Whether anything above plate 2 stands on (186.12, 9.71) and (186.12, 110.82).** The tray covers them: they are 2.5 mm from A's and B's rear corner holes.
-- **MEC-16's check on the screw heads under plate 2** still applies to the four plate holes kept.
+- **MEC-16's check on the screw heads under plate 2** still applies to the plate holes kept: see F5 above.
+- **Which end the Bauer's leads leave, and which long edge its 26 mm is measured from.** Both are assumed.
+- **The Bauer's real height above its shelf, and the nut depth for M3,** before printing the ear pockets.
 - **Print or sheet.** The model serves both.
 
