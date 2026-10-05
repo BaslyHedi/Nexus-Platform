@@ -12,11 +12,14 @@ get their own repository as they are written; they consume this one.
 
 | Folder | Owns |
 |---|---|
-| [`system/README.md`](system/README.md) | What NEXUS must **do** - the top-down functional decomposition and the `Nexus-SubSys-DNN` IDs |
+| [`system/README.md`](system/README.md) | What NEXUS must **do** - the top-down functional decomposition and the `Nexus-SubSys-DNN` IDs; its diagram is in `renders/` |
 | [`decisions/README.md`](decisions/README.md) | Every settled decision and the reasoning behind it, split **HW / MEC / SYS / SW**. Its README owns the numbering rules |
-| [`hardware/README.md`](hardware/README.md) | Build drawings, to scale - chassis layout, wiring schematic, STM32 carrier |
+| [`hardware/README.md`](hardware/README.md) | Build drawings, to scale - chassis layout, wiring schematic, STM32 carrier - the SVGs in `renders/`, the script that writes the carrier's in `scripts/` |
 | [`mechanical/README.md`](mechanical/README.md) | The parts we make, in `cad/` (`fascia.scad` is the source of truth, plus the print files and the proposed carrier tray), the scripts that build and animate the model in `scripts/`, and their output in `renders/` |
 | [`bom/README.md`](bom/README.md) | What it is made of - [`bom/BOM.md`](bom/BOM.md) for status, price and sourcing; `parts/<item>/SPECS.md` for measured numbers |
+
+Every folder that draws or renders something follows one pattern: **`scripts/`** holds what makes
+it and **`renders/`** holds what comes out (SVGs, images, videos).
 
 ## How the code repositories will use this
 
@@ -61,4 +64,13 @@ when files move:
 
 ```bash
 python3 tools/check-links.py
+```
+
+## Checking the drawings
+
+The three drawings in `hardware/renders/` are written by the scripts of the same name in `hardware/scripts/`. Edit the script, never
+the SVG; this fails if an SVG has drifted from its script:
+
+```bash
+python3 tools/check-drawings.py
 ```

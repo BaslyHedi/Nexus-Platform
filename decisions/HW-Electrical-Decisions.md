@@ -4,7 +4,7 @@ Power, protection, grounding, wiring and on-vehicle networking. Each entry is se
 
 Numbering is `HW-nn`, unique across the project and never reused. Format, and how to add one: [README](README.md). Parts, prices and status: [`../bom/BOM.md`](../bom/BOM.md).
 
-Drawings: [wiring schematic](../hardware/wiring-schematic.svg) · [STM32 carrier](../hardware/stm32-carrier.svg).
+Drawings: [wiring schematic](../hardware/renders/wiring-schematic.svg) · [STM32 carrier](../hardware/renders/stm32-carrier.svg).
 
 | # | Decision |
 |---|---|
@@ -629,19 +629,20 @@ headers; Fig. 10 puts P2's odd pins **inboard**.
 remove that resistor.
 
 **Revision 2026-09-29 · the USB-C socket lives on board C.** Hole names as printed on the kit board (MEC-15).
+*Renamed 2026-10-05: C's print runs the other way round from A and B (numbers 1-24 along the long side from the USB-C end, letters A-J up the short side from the bottom, components up and the socket on the left). Every C name below was swapped to match; the old names were letter = row, number = 11 - column.*
 
 - **Where.** At C's row-1 end, lying on its side with the flange flush at the board edge and the
   opening facing the vehicle's right. That end is the only free one: C's long sides have 1.5 mm to
   the Bauer and the carrier (MEC-15), and the row-24 end keeps IN 5V and TO STM32.
-- **Held by two zip ties** through 3 mm holes drilled at C·B9 / B2 and C·F9 / F2: one over the body,
-  one over the pigtail as strain relief. Both clear the F5 standoff (C·D6) underneath by about 0.9 mm.
+- **Held by two zip ties** through 3 mm holes drilled at C·I2 / B2 and C·I6 / B6: one over the body,
+  one over the pigtail as strain relief. Both clear the F5 standoff (C·F4) underneath by about 0.9 mm.
 - **The F5 screw is under the body.** The flange is 10.3 mm tall and the body 5.3 mm, centred, so
   the body rides 2.5 mm off the board and clears a pan-head M2.5. Fit that screw first.
-- **The pigtail is soldered, cut to about 20 mm:** red V into C·G10 and black G into G8, each the
-  end of an 18 AWG chain from IN 5V through C1 (X10 → L10 → G10 and X8 → L8 → G8, MEC-15's
-  2026-09-30 routing). Green CC1 goes into G4 and yellow CC2 into G2. **R1 and R2 sit at H4-L4 and
-  H2-L2**, their lower leads bent over to G4 / G2, and their tops fed from TO STM32 + (X4 → L4 →
-  L2). White D− and blue D+ are cut short and insulated one by one, never twisted together.
+- **The pigtail is soldered, cut to about 20 mm:** red V into C·J7 and black G into H7, each the
+  end of an 18 AWG chain from IN 5V through C1 (J24 → J12 → J7 and H24 → H12 → H7, MEC-15's
+  2026-09-30 routing). Green CC1 goes into D7 and yellow CC2 into B7. **R1 and R2 sit at D8-D12 and
+  B8-B12**, their lower leads bent over to D7 / B7, and their tops fed from TO STM32 + (D24 → D12 →
+  B12). White D− and blue D+ are cut short and insulated one by one, never twisted together.
 - **Why solder rather than terminals.** The pigtail is 24 AWG, which a 5.08 screw clamp holds
   poorly without ferrules, and two terminals and a loose socket become one tied-down part. It costs
   unplugging: to free the socket, cut the ties and desolder four wires.

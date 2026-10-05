@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """The STM32 carrier's geometry, and the drawing made from it (MEC-15, HW-19).
 
-    python3 stm32-carrier.py            # -> stm32-carrier.svg beside this file
+    python3 stm32-carrier.py            # -> ../renders/stm32-carrier.svg
 
 Everything above the sheet section is data and helpers with no side effects, so
 ../mechanical/scripts/animate-carrier.py imports it and builds the 3D assembly from the same
@@ -61,7 +61,11 @@ def ci(letter):
 # names: letters A-X along the 70 mm side and numbers along the short side, A1 at the bottom
 # left with the print readable. Every view shows each board that way up (front left), so on
 # A and B header row 1 is letter X and row 24 is letter A; the numbers count up from the
-# bottom of the component view. Board C lies the other way round: its row 1 is letter A.
+# bottom of the component view.
+# Board C's print is the other way round (Hedi, 2026-10-05, from the board): numbers 1-24 along the 70 mm side,
+# letters A-J across the 30 mm side, A1 at the bottom left with components up and the USB-C socket on the left.
+# That is how C is drawn here (row 1 on the left, column 1 at the top), so the letter counts up from the bottom
+# row (column 10 = A, column 1 = J) and the number is the row.
 LET = 'ABCDEFGHIJKLMNOPQRSTUVWX'
 
 
@@ -69,7 +73,7 @@ def silk(b, col, row):
     c = ci(col) if isinstance(col, str) else col
     if b in 'AB':
         return f'{LET[24 - row]}{19 - c}'
-    return f'{LET[row - 1]}{11 - c}'
+    return f'{LET[10 - c]}{row}'
 
 
 def N(b, col, row):
@@ -746,7 +750,7 @@ def orientation_inset(y0):
 
 # ---------------------------------------------------------------- sheet
 if __name__ == "__main__":
-    OUT = sys.argv[1] if len(sys.argv) > 1 else os.path.join(os.path.dirname(os.path.abspath(__file__)), 'stm32-carrier.svg')
+    OUT = sys.argv[1] if len(sys.argv) > 1 else os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'renders', 'stm32-carrier.svg')
     W, H = 1720, 1400
     w(f'<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewBox="0 0 {W} {H}" font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif">')
     w(f'<rect width="{W}" height="{H}" fill="#fbfaf8"/>')

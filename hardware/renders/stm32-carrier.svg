@@ -2712,9 +2712,9 @@
 <text x="295.2" y="791.1" font-size="8" fill="#a16207" font-weight="700" text-anchor="middle">C1</text>
 <text x="299.2" y="826.2" font-size="6.5" fill="#a16207" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="start">470µF</text>
 <line x1="201.7" y1="836.5" x2="201.7" y2="902.0" stroke="#64748b" stroke-width="0.7" stroke-dasharray="2 2"/>
-<text x="201.7" y="911.0" font-size="6.5" fill="#0f172a" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="middle">F5 at D6 · (99.24, 38.76)</text>
+<text x="201.7" y="911.0" font-size="6.5" fill="#0f172a" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="middle">F5 at F4 · (99.24, 38.76)</text>
 <line x1="400.3" y1="836.5" x2="400.3" y2="902.0" stroke="#64748b" stroke-width="0.7" stroke-dasharray="2 2"/>
-<text x="400.3" y="911.0" font-size="6.5" fill="#0f172a" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="middle">F6 at U6 · (99.24, 81.76)</text>
+<text x="400.3" y="911.0" font-size="6.5" fill="#0f172a" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="middle">F6 at F21 · (99.24, 81.76)</text>
 <rect x="660.0" y="760.0" width="322.0" height="138.0" rx="4" fill="#f0fdf4" stroke="#15803d" stroke-width="1.6"/>
 <polygon points="660.0,760.0 687.6,760.0 660.0,787.6" fill="#e11d48" fill-opacity="0.9"/>
 <text x="668.3" y="770.8" font-size="5.5" fill="#fff" font-weight="700" text-anchor="middle">A1</text>
@@ -3048,9 +3048,9 @@
 <polyline points="768.4,788.1 756.7,788.1" fill="none" stroke="#e5e7eb" stroke-width="1.0" stroke-linecap="round"/>
 <circle cx="768.4" cy="788.1" r="2.3" fill="#64748b" stroke="#fff" stroke-width="0.6"/>
 <circle cx="756.7" cy="788.1" r="2.3" fill="#64748b" stroke="#fff" stroke-width="0.6"/>
-<text x="739.2" y="802.8" font-size="6.5" fill="#475569" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="middle">R1 / R2 leads bent to G4 / G2</text>
+<text x="739.2" y="802.8" font-size="6.5" fill="#475569" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="middle">R1 / R2 leads bent to D7 / B7</text>
 <text x="40.0" y="925.0" font-size="8.4" fill="#b45309">Socket first: meter CC1 and CC2 to V and to G, all four open - a socket with its own Rd (5.1k) or Rp cannot be the source.</text>
-<text x="40.0" y="939.0" font-size="8.4" fill="#b45309">Fit the F5 pan-head screw (D6) before the socket: the body rides 2.5 mm up on its flange, over the head. Ties through 3 mm holes at B9 / B2 and F9 / F2, the second one over the pigtail.</text>
+<text x="40.0" y="939.0" font-size="8.4" fill="#b45309">Fit the F5 pan-head screw (F4) before the socket: the body rides 2.5 mm up on its flange, over the head. Ties through 3 mm holes at I2 / B2 and I6 / B6, the second one over the pigtail.</text>
 <text x="1130.0" y="100.0" font-size="12" fill="#1a1a1a" font-weight="700">NETLIST</text>
 <line x1="1130" y1="108" x2="1680" y2="108" stroke="#e2e8f0"/>
 <rect x="1130" y="116" width="550" height="19" fill="#f1f5f9" stroke="#cbd5e1"/>
@@ -3066,17 +3066,17 @@
 <rect x="1133" y="159" width="4" height="9" fill="#dc2626"/>
 <text x="1142.0" y="167.0" font-size="8.4" fill="#1e293b" font-weight="700">5 V FRDM</text>
 <text x="1226.0" y="167.0" font-size="7.9" fill="#475569">C IN 5V</text>
-<text x="1320.0" y="167.0" font-size="7.9" fill="#475569">C·X10 → C1 + (L10) → socket red (G10), 18 AWG</text>
+<text x="1320.0" y="167.0" font-size="7.9" fill="#475569">C·J24 → C1 + (J12) → socket red (J7), 18 AWG</text>
 <rect x="1130" y="173" width="550" height="19" fill="#ffffff" stroke="#e2e8f0"/>
 <rect x="1133" y="178" width="4" height="9" fill="#dc2626"/>
 <text x="1142.0" y="186.0" font-size="8.4" fill="#1e293b" font-weight="700">5 V Rp</text>
 <text x="1226.0" y="186.0" font-size="7.9" fill="#475569">C IN 5V</text>
-<text x="1320.0" y="186.0" font-size="7.9" fill="#475569">TO STM32 + (C·X4) → R1 top (L4) → R2 top (L2)</text>
+<text x="1320.0" y="186.0" font-size="7.9" fill="#475569">TO STM32 + (C·D24) → R1 top (D12) → R2 top (B12)</text>
 <rect x="1130" y="192" width="550" height="19" fill="#f8fafc" stroke="#e2e8f0"/>
 <rect x="1133" y="197" width="4" height="9" fill="#111827"/>
 <text x="1142.0" y="205.0" font-size="8.4" fill="#1e293b" font-weight="700">GND FRDM</text>
 <text x="1226.0" y="205.0" font-size="7.9" fill="#475569">C IN GND</text>
-<text x="1320.0" y="205.0" font-size="7.9" fill="#475569">C·X8 → C1 − (L8) → socket black (G8), 18 AWG</text>
+<text x="1320.0" y="205.0" font-size="7.9" fill="#475569">C·H24 → C1 − (H12) → socket black (H7), 18 AWG</text>
 <rect x="1130" y="211" width="550" height="19" fill="#ffffff" stroke="#e2e8f0"/>
 <rect x="1133" y="216" width="4" height="9" fill="#111827"/>
 <text x="1142.0" y="224.0" font-size="8.4" fill="#1e293b" font-weight="700">GND STM32</text>
@@ -3146,7 +3146,7 @@
 <rect x="1133" y="463" width="4" height="9" fill="#059669"/>
 <text x="1142.0" y="471.0" font-size="8.4" fill="#1e293b" font-weight="700">USB-C CC</text>
 <text x="1226.0" y="471.0" font-size="7.9" fill="#475569">C socket</text>
-<text x="1320.0" y="471.0" font-size="7.9" fill="#475569">green CC1 (C·G4) ← R1 lead · yellow CC2 (G2) ← R2 lead (Rp, HW-02)</text>
+<text x="1320.0" y="471.0" font-size="7.9" fill="#475569">green CC1 (C·D7) ← R1 lead · yellow CC2 (B7) ← R2 lead (Rp, HW-02)</text>
 <text x="1130.0" y="503.0" font-size="12" fill="#1a1a1a" font-weight="700">WHAT PLUGS IN WHERE</text>
 <line x1="1130" y1="511" x2="1680" y2="511" stroke="#e2e8f0"/>
 <rect x="1130" y="519" width="550" height="19" fill="#f1f5f9" stroke="#cbd5e1"/>
@@ -3160,7 +3160,7 @@
 <text x="1226.0" y="570.0" font-size="7.9" fill="#475569">18 AWG pair to B 5V IN</text>
 <rect x="1130" y="576" width="550" height="19" fill="#ffffff" stroke="#e2e8f0"/>
 <text x="1142.0" y="589.0" font-size="8.4" fill="#1e293b" font-weight="700">C USB-C</text>
-<text x="1226.0" y="589.0" font-size="7.9" fill="#475569">socket on C, pigtail soldered: red G10, black G8, green G4, yellow G2 · C-to-C data cable to FRDM J1</text>
+<text x="1226.0" y="589.0" font-size="7.9" fill="#475569">socket on C, pigtail soldered: red J7, black H7, green D7, yellow B7 · C-to-C data cable to FRDM J1</text>
 <rect x="1130" y="595" width="550" height="19" fill="#f8fafc" stroke="#e2e8f0"/>
 <text x="1142.0" y="608.0" font-size="8.4" fill="#1e293b" font-weight="700">C D+ / D−</text>
 <text x="1226.0" y="608.0" font-size="7.9" fill="#475569">white and blue cut short, each insulated on its own - never twisted together</text>
@@ -3226,11 +3226,11 @@
 <text x="1300.0" y="1015.0" font-size="7.9" fill="#475569">plate 2 M2.5 hole (169.88, 100.24) - under the module</text>
 <rect x="1130" y="1021" width="550" height="19" fill="#ffffff" stroke="#e2e8f0"/>
 <text x="1142.0" y="1034.0" font-size="8.4" fill="#1e293b" font-weight="700">F5</text>
-<text x="1192.0" y="1034.0" font-size="7.9" fill="#475569">C·D6, on grid</text>
+<text x="1192.0" y="1034.0" font-size="7.9" fill="#475569">C·F4, on grid</text>
 <text x="1300.0" y="1034.0" font-size="7.9" fill="#475569">plate 2 M3 hole (99.24, 38.76), ⌀3.18 - under the socket</text>
 <rect x="1130" y="1040" width="550" height="19" fill="#f8fafc" stroke="#e2e8f0"/>
 <text x="1142.0" y="1053.0" font-size="8.4" fill="#1e293b" font-weight="700">F6</text>
-<text x="1192.0" y="1053.0" font-size="7.9" fill="#475569">C·U6, on grid</text>
+<text x="1192.0" y="1053.0" font-size="7.9" fill="#475569">C·F21, on grid</text>
 <text x="1300.0" y="1053.0" font-size="7.9" fill="#475569">plate 2 M3 hole (99.24, 81.76) - 43.00 = 17 pitches + 0.18</text>
 <text x="1130.0" y="1075.0" font-size="8.4" fill="#475569">All six: ⌀3.2 in the board, M2.5 × 10 standoff, M2.5 screws, washer in the ⌀3.18 holes.</text>
 <text x="1130.0" y="1088.0" font-size="8.4" fill="#475569">A·X.. at chassis x 181.20 · header row 1 and B·X.. at x 183.74 (B and the Discovery 2.54 mm back, as built) · A y 5.11, B y 110.99.</text>

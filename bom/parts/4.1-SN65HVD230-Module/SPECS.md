@@ -32,7 +32,7 @@ socket, to CTX, CRX, GND, 3V3. The 2-pin CANH / CANL header then points straight
 a 1×2 socket, seven holes behind the 4-pin row (17.55 mm on the module, 17.78 mm on the grid: set the
 bend to suit). **The screw terminal is not used**, and it hangs about 1.5 mm off the board. Where it
 all sits on board B is MEC-15's business
-(revision 2026-10-03), drawn in [`../../../hardware/stm32-carrier.svg`](../../../hardware/stm32-carrier.svg).
+(revision 2026-10-03), drawn in [`../../../hardware/renders/stm32-carrier.svg`](../../../hardware/renders/stm32-carrier.svg).
 
 **Still to measure:** the screw terminal's height, and CANH-CANL unpowered (HW-09: ~120 Ω means an on-board
 terminator that has to come off, so the carrier's TERM jumper alone decides).

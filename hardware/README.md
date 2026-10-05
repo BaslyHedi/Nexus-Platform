@@ -1,7 +1,19 @@
 # Hardware
 
-Build drawings for NEXUS. Each is an `.svg` - the editable source and the only copy, except the
-carrier's, which [`stm32-carrier.py`](stm32-carrier.py) writes: edit the script, never the SVG.
+Build drawings for NEXUS. Each is an `.svg` in [`renders/`](renders/) **written by the script of the same name** in
+[`scripts/`](scripts/): `chassis-layout.py` writes `chassis-layout.svg`, `wiring-schematic.py` writes `wiring-schematic.svg`,
+`stm32-carrier.py` writes `stm32-carrier.svg`. Edit the script, never the SVG, then run it:
+
+```bash
+python3 hardware/scripts/chassis-layout.py        # -> hardware/renders/chassis-layout.svg
+python3 tools/check-drawings.py                  # fails if any SVG is not what its script writes
+```
+
+[`scripts/drawing.py`](scripts/drawing.py) holds the small SVG helpers the first two share. The chassis plate (outline, slots, holes,
+standoffs) is one table in millimetres drawn on all four plans; the wiring schematic's nets are one colour palette shared with its key.
+Both scripts were made on 2026-10-05 from the SVGs as they stood and reproduce them exactly (the layout without 24 stray blank
+lines), so nothing in a drawing changed when they took over. The plate outline in `chassis-layout.py` was traced from Hiwonder's CAD
+export; the early scripts that did it were not kept (they can still be read in the commits of PR #6).
 
 **No PDFs.** They are generated once, when the design is frozen. Until then the SVG is the
 truth and a stale PDF beside it is just a second thing to get wrong. To read one, open the
@@ -9,9 +21,9 @@ SVG in a browser; to render, point headless Chrome at it.
 
 | Drawing | Owns |
 |---|---|
-| [chassis-layout.svg](chassis-layout.svg) | Where components sit on the **three** decks, to scale at 1.7 px/mm, plus the side elevation of the deck stack |
-| [wiring-schematic.svg](wiring-schematic.svg) | What connects to what - fuses, switches, wire gauges, 5 V rails, CAN, I²C, motor control |
-| [stm32-carrier.svg](stm32-carrier.svg) | Soldering and wiring for the three kit boards: A and B, which the Discovery drops onto, and C, the 5 V split. Component side and solder side, hole by hole, with netlist and pre-solder checks (MEC-08, MEC-15, HW-19). **Generated** by `python3 stm32-carrier.py`, which also feeds the 3D animation in [`../mechanical/scripts/animate-carrier.py`](../mechanical/scripts/animate-carrier.py) |
+| [chassis-layout.svg](renders/chassis-layout.svg) | Where components sit on the **three** decks, to scale at 1.7 px/mm, plus the side elevation of the deck stack |
+| [wiring-schematic.svg](renders/wiring-schematic.svg) | What connects to what - fuses, switches, wire gauges, 5 V rails, CAN, I²C, motor control |
+| [stm32-carrier.svg](renders/stm32-carrier.svg) | Soldering and wiring for the three kit boards: A and B, which the Discovery drops onto, and C, the 5 V split. Component side and solder side, hole by hole, with netlist and pre-solder checks (MEC-08, MEC-15, HW-19). **Generated** by `python3 stm32-carrier.py`, which also feeds the 3D animation in [`../mechanical/scripts/animate-carrier.py`](../mechanical/scripts/animate-carrier.py) |
 | [`../decisions/README.md`](../decisions/README.md) | **Why** the drawings look the way they do - HW, MEC, SYS and SW entries, each with its reasoning and consequences. Not in this folder any more |
 
 Part numbers, prices and status live in [`../bom/BOM.md`](../bom/BOM.md);
