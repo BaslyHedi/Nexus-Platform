@@ -1267,7 +1267,7 @@ standoffs already fitted. Only the tray is screwed to plate 2.
 14.07 € shipping for laser-cut acrylic (which cannot make the pockets and is excluded by MEC-02 anyway; no milling price was
 looked at). So the sheet is the way to try next, and the printed tray's features are cut to what can be done with a saw and a drill.
 [`carrier-tray-hand.py`](../mechanical/scripts/carrier-tray-hand.py) writes a 1:1 A4 template (SVG; print at 100 %, the 100 mm bar
-must measure 100 mm) with the cut line, true-size holes, the boards and the Bauer in dashed outline, and the hole table.
+must measure 100 mm; the PDF is stored as [`carrier-tray-hand-template.pdf`](../mechanical/cad/carrier-tray-hand-template.pdf)) with the cut line, true-size holes, the boards and the Bauer in dashed outline, and the hole table.
 
 - **Outline:** twelve straight cuts, all right angles, 182.5 x 109.4 mm, the closest point 1.1 mm inside plate 2. It needs a sheet
   of at least 189 x 116 mm. The printed tray's tapered front, curved corner pads, splice wings and rim are gone.
