@@ -25,12 +25,12 @@
 //     under the Bauer's two mounting holes;
 //   - twelve board holes, four per board (M2.5 clearance), with counterbores from below so the tray sits
 //     flat; boards go on the nylon standoffs already fitted;
-//   - the window over plate 2's wire opening, where the S6 / S7 and UBEC wires climb to the top face.
-//   The S6 / S7 splices (plate1.py) sit on the tray under board C.
+//   - the window over plate 2's wire opening, where the UBEC's 6 V pair climbs to the top face; the S6 / S7 wires come up
+//     the plate's two tie slots beside the Bauer.
+//   The S6 / S7 splices sit on the tray in a lane either side of the Bauer.
 //
 // HEIGHTS. All three boards keep the 8 mm standoffs already fitted (Hedi, 2026-10-05; not measured with a gauge), so they
-// stand 12 mm above plate 2: 4 mm tray + 8 mm. The 8.5 mm S6 / S7 splices do NOT fit under C at that height (MEC-17 says what
-// to do about it). Check the Discovery's top against the FRDM's screw heads under plate 3.
+// stand 12 mm above plate 2: 4 mm tray + 8 mm. The 8.5 mm S6 / S7 splices do not fit under C at that height, so they sit beside the Bauer. Check the Discovery's top against the FRDM's screw heads under plate 3.
 //
 // TO MEASURE before printing (the defaults are guesses):
 //   CORNER_INSET  - a board's corner hole centre from each edge
@@ -88,7 +88,7 @@ PLATE_HOLES = [
     [ 16.94,  32.24, 2.71], [ 16.94,  88.24, 2.71], [ 25.65,  52.65, 2.71], [ 25.65,  67.88, 2.71],
     [ 49.00,  35.94, 2.71], [ 49.00,  84.53, 2.71], [ 72.41,  52.65, 2.71],
     [ 86.94,  40.24, 2.71], [ 86.94,  80.24, 2.71],
-    [ 12.65,  36.35, 4.29], [ 12.65,  84.25, 4.29],
+    [ 12.65,  36.35, 4.29], [ 12.65,  84.25, 4.29], [ 27.35,  98.35, 4.29], [ 27.35,  22.15, 4.29],
     [ 43.50,  36.33, 4.29], [ 43.50,  84.21, 4.29], [ 45.86,  44.27, 4.29], [ 45.86,  76.27, 4.29],
     [ 36.09,  35.91, 4.18], [ 36.09,  84.56, 4.18],
 ];
@@ -110,8 +110,13 @@ PLATE_OPENING = [[121.65, 53.85], [121.65, 66.55], 11.35];
 // the window: the opening up to x 115, clear of A's front-inboard corner counterbore
 WINDOW_X1 = 115.0;
 
-// the S6 / S7 splices, on the tray under C (plate1.py footprints, 18.6 x 13), plate-2 frame
-SPLICES = [[87.7, 106.3, 41.5, 54.5], [87.7, 106.3, 63.5, 76.5]];
+// the S6 / S7 splices (Bauer + and -), 18.6 x 13 x 8.5, plate-2 frame. They do not fit under C on 8 mm standoffs, so they sit
+// in two lanes either side of the Bauer, beside the plate's two tie slots, which bring up the wires from SW2 and the bus.
+// The Bauer's leads leave on the left (y 89): + goes to S6 there, - runs round the Bauer's rear to S7. Plate 2 is symmetric
+// about y 60.25, so the right lane is the left one mirrored.
+SPLICES = [[42.0, 60.6, 96.0, 109.0], [42.0, 60.6, 11.5, 24.5]];
+LANE_L = [[24, 100.9], [34, 107.0], [39.5, 110.0], [60.6, 110.0], [64, 106.0], [70, 100.5], [80, 100.5], [80, 89], [24, 89]];   // 1.5 mm inside the plate edge
+LANE_R = [for (p = LANE_L) [p[0], 120.5 - p[1]]];
 
 // the Bauer's end: from 2.5 mm ahead of the converter to 1.5 mm into board C's footprint, as wide as C
 EXT = [0.0, BOARD_C[0] + 1.5, BOARD_C[2], BOARD_C[3]];     // its front is narrowed in outline2d(): plate 2 narrows there
@@ -130,9 +135,10 @@ module outline2d()
     union() {
         for (b = BOARDS) rrect(b[0], b[1], b[2], b[3]);
         rrect(BOARD_C[1] - 3, BOARD_A[0] + 3, BOARD_C[2], BOARD_C[3]);
+        for (L = [LANE_L, LANE_R]) polygon([for (p = L) tray(p)]);       // the two splice lanes beside the Bauer
         hull() {                                               // the Bauer's end of the tray, narrower at the front where plate 2 is
             rrect(EXT[0], EXT[0] + 4, EXT[2] + 3.8, EXT[3] - 3.7, 1.0);
-            rrect(EXT[0] + 15.5, EXT[1], EXT[2], EXT[3] + 5.3);      // widened on the left for the Bauer's leads
+            rrect(EXT[0] + 15.5, EXT[1], EXT[2], EXT[3]);
         }
         translate([BOARD_B[0], BOARD_A[3] - 3]) square([BOARD_A[1] - BOARD_B[0], BOARD_B[2] - BOARD_A[3] + 6]);
     }

@@ -260,8 +260,10 @@ def build():
     clip("splice-s4-vm-minus", 157, 175.6, 35, 48, T1 - 18.5, T1 - 10, (38, 44), 157, (T1 - 20, T1 - 18.5))
     taped_clip("splice-s3-ubec-plus", 138.7, 157.3, 104, 117, (107, 113), 138.7)
     clip("splice-s5-ubec-minus", 138.7, 157.3, 104, 117, T1 - 18.5, T1 - 10, (110, 115), 138.7, (T1 - 20, T1 - 18.5))
-    clip("splice-s6-bauer-plus", 87.7, 106.3, 41.5, 54.5, PLATE2_TOP, PLATE2_TOP + 8.5, (48, 52), 87.7, (60.5, 62))
-    clip("splice-s7-bauer-minus", 87.7, 106.3, 63.5, 76.5, PLATE2_TOP, PLATE2_TOP + 8.5, (68, 74), 87.7, (60.5, 62))
+    # S6 / S7 sit on the carrier tray (MEC-17), 4 mm above plate 2, either side of the Bauer, each beside one of the plate's two
+    # tie slots: they would not fit under board C on 8 mm standoffs, and out here their levers have room to open
+    clip("splice-s6-bauer-plus", 42, 60.6, 96, 109, PLATE2_TOP + 4, PLATE2_TOP + 12.5, (99.5, 105.5), 60.6, (64.5, 66))
+    clip("splice-s7-bauer-minus", 42, 60.6, 11.5, 24.5, PLATE2_TOP + 4, PLATE2_TOP + 12.5, (15, 21), 60.6, (64.5, 66))
 
     # SM-2P, the battery disconnect: the female half stays on the pack lead (plate 1),
     # the male half is on a drop from plate 2 and is plugged in last (DROPS)
@@ -356,12 +358,14 @@ def build():
     W("run14b-led-plus-sw2", "wire_orange", AWG18, [(248.3, 35.8, 27.5), (246.5, 38.3, 25), (248.3, 40.8, 22.5)])
     W("run15a-sw2-no-to-s6", "wire_orange", AWG18,
       [(248.3, 40.8, 22.5), (243, 42, 30), (240, 59, F - 2.4), (203, 59, F - 2.4), (200, 73, F), (126, 73, F),
-       (126, 60, F), (126, 60, 56), (110, 44, 56), (86, 42, 56), (86, 48, 56.25), (87.7, 48, 56.25)])
-    W("run15b-bauer-plus-lead", "wire_orange", AWG18, [(84, 55, 56), (86, 52, 56.25), (87.7, 52, 56.25)])
-    W("run16a-bauer-minus-lead", "wire_black", AWG18, [(84, 62, 56), (86, 68, 56.25), (87.7, 68, 56.25)])
+       (100, 81, F), (66, 88, F), (66, 90, F), (66, 90, 58), (64, 97, 60.5), (60.6, 99.5, 60.5)])
+    # the Bauer's red lead into S6, its black lead round the Bauer's rear (the 10.5 mm lane before board C) into S7
+    W("run15b-bauer-plus-lead", "wire_orange", AWG18, [(50, 91.6, 65.5), (50, 94.0, 64), (56, 102, 60.5), (60.6, 105.5, 60.5)])
+    W("run16a-bauer-minus-lead", "wire_black", AWG18,
+      [(46, 91.6, 65.5), (46, 93.5, 62), (78, 94, 57), (81, 92, 57), (81, 20, 57), (64, 15, 60.5), (60.6, 15, 60.5)])
     W("run16b-s7-to-minus-bus", "wire_black", AWG18,
-      [(87.7, 74, 56.25), (86, 74, 56), (86, 80, 56), (123, 66, 56), (123, 66, 46), (128, 44, 45),
-       (128, 43, pz), M(43)])
+      [(60.6, 21, 60.5), (64, 27.5, 60), (66, 31, 58), (66, 31, F), (70, 33, F), (70, 75, F), (123, 75, F), (123, 66, 46),
+       (128, 44, 45), (128, 43, pz), M(43)])
 
 
 RUNS = []             # (name, material, diameter, polyline) - lengths come from these

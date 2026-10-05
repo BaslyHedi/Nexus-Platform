@@ -53,7 +53,7 @@ BOARDS = {'A': (117.00, 187.00, 5.11, 55.11, 8), 'B': (119.54, 189.54, 60.99, 11
 FIXINGS = {'F1': (148.18, 23.76, 3.18), 'F2': (148.18, 72.24, 2.71), 'F5': (99.24, 38.76, 3.18), 'F6': (99.24, 81.76, 3.18),
            'F7': (24.82, 60.24, 3.18), 'F8': (52.82, 60.24, 3.18)}
 EARS = [(16.0, 63.0), (70.0, 63.0)]            # the Bauer's two 6.8 mm holes: 5 and 59 mm from its front end, 26 mm from its leads edge (y 89)
-SPLICES = [(87.7, 106.3, 41.5, 54.5), (87.7, 106.3, 63.5, 76.5)]
+SPLICES = [(42.0, 60.6, 96.0, 109.0), (42.0, 60.6, 11.5, 24.5)]     # S6 (+) left of the Bauer, S7 (-) its mirror on the right
 BAUER = (11.0, 75.0, 32.0, 89.0, 22.0)         # x0 x1 y0 y1 height: 10.5 mm clear of board C, for its cables
 BENCH_Y = 190.0                                # the jig stands this far to the vehicle's right (Blender +y)
 
@@ -79,9 +79,9 @@ CAPTIONS = [
     ((7.4, 10.3), "2  The Bauer drops into its rim, two M3 screws through its own holes; its leads get a clear lane"),
     ((10.3, 14.4), "3  Boards C, then A and B, lower on their nylon standoffs onto the tray's board holes"),
     ((14.4, 19), "4  Twelve M2.5 screws from below, one into each standoff; the heads sit in the counterbores"),
-    ((19, 22.5), "5  The S6 and S7 splices go into their outlines under board C"),
+    ((19, 22.5), "5  The S6 and S7 splices go beside the Bauer, one each side, where their levers can open"),
     ((22.5, 29.5), "Step 2. The unit lifts onto plate 2: every tray hole lands on a plate hole, the window on the wire opening"),
-    ((29.5, 32.5), "6  The Bauer's 12 V feed comes up through the window to the splices"),
+    ((29.5, 32.5), "6  The 12 V wires come up the plate's two slots to the splices"),
     ((32.5, 37), "7  F1, F2, F5, F6, F7, F8: a screw from below into each pocket (a washer in the M3 holes)"),
     ((37, 41.5), "Section through one fixing: plate 2, the tray with its captive nut, the screw, the Bauer above"),
     ((41.5, 48), "8  Plate 2 comes off its blocks and lowers onto the chassis standoffs"),
@@ -341,15 +341,18 @@ m.cyl((x, y, Z_TRAY + 20), (x, y, Z_TRAY + 21.3), 1.9, 'bauerfin', 16)          
 gx, gy = bp(24.0, 57.0)
 m.box(gx, gx + 18.0, gy, gy + 2.6, Z_TRAY + 6, Z_TRAY + 13, 'lead_k')
 m.make("bauer-body", bau)
-LEADS = [('lead_y', 27.0), ('lead_k', 31.0), ('lead_k', 35.0), ('lead_r', 39.0)]
-for i, (col, dxl) in enumerate(LEADS):
+LEADS = [  # colour, dx of the grommet hole, path after the grommet (plate-2 x, y, height above the tray)
+    ('lead_y', 27.0, lambda x: [(x, 92.2, 9.5), (x + 2.0, 93.2, 5.0), (x + 8.0, 93.2, 3.3), (60.0, 93.2, 3.3), (84.0, 93.2, 3.3)]),          # OUT+ to board C
+    ('lead_k', 31.0, lambda x: [(x, 92.2, 9.0), (x + 2.0, 94.4, 4.5), (x + 8.0, 94.4, 2.0), (60.0, 94.4, 2.0), (84.0, 94.4, 2.0)]),      # OUT- to board C
+    ('lead_k', 35.0, lambda x: [(x, 92.2, 9.0), (x, 92.8, 5.0), (x + 4.0, 92.0, 2.0), (80.0, 92.0, 2.0), (81.0, 90.0, 2.0), (81.0, 24.0, 2.0),
+                                 (74.0, 21.0, 4.0), (60.6, 21.0, 4.5)]),                                                                  # IN-: round the rear, into S7
+    ('lead_r', 39.0, lambda x: [(x, 92.2, 9.5), (x, 92.8, 6.5), (x + 5.0, 92.4, 4.0), (63.0, 92.8, 4.5), (64.0, 103.0, 4.5), (60.6, 105.5, 4.5)]),  # IN+ into S6
+]
+for col, dxl, path in LEADS:
     cu = bpy.data.curves.new("lead", 'CURVE')
     cu.dimensions, cu.bevel_depth, cu.bevel_resolution, cu.use_fill_caps = '3D', 1.1, 3, True
     sp = cu.splines.new('POLY')
-    xl = bx0 + dxl
-    yl = 93.5 + i * 1.9                                    # fanned across the 12 mm lane beside the Bauer
-    pts = [(xl, by1 + 2.6, Z_TRAY + 9.5), (xl, by1 + 4.5, Z_TRAY + 8.5), (xl + 3.0, yl, Z_TRAY + 4.0), (xl + 9.0, yl + 1.0, Z_TRAY + 1.3),
-           (xl + 24.0, yl + 1.0, Z_TRAY + 1.3), (84.0, yl + 1.0, Z_TRAY + 1.3)]
+    pts = [(bx0 + dxl, by1 + 0.6, Z_TRAY + 9.0)] + [(x, y, Z_TRAY + z) for x, y, z in path(bx0 + dxl)]
     sp.points.add(len(pts) - 1)
     for p_, co in zip(sp.points, pts):
         p_.co = B(*co) + (1,)
@@ -402,12 +405,13 @@ move(ROOT, [(0, (0, BENCH_Y, LIFT)), (CARRY[0], (0, BENCH_Y, LIFT)), (CARRY[0] +
 move(P2, [(0, (0, 0, LIFT)), (LOWER[0], (0, 0, LIFT)), (LOWER[1], (0, 0, 0))])
 
 # ---------------------------------------------------------------- plate-2 side: wires, screws (children of PLATE2)
-for i, (col, ya) in enumerate([('red', 49.0), ('blk', 64.0)]):
+# the 12 V wires from below, up the plate's two slots: SW2 (+) into S6 on the left, the (-) bus into S7 on the right
+for i, (col, pts) in enumerate([
+        ('red', [(80.0, 75.0, ZP_BOT - 2.7), (66.0, 88.0, ZP_BOT - 2.7), (66.0, 90.0, Z_TRAY + 2.0), (64.0, 97.0, Z_TRAY + 4.5), (60.6, 99.5, Z_TRAY + 4.5)]),
+        ('blk', [(70.0, 60.0, ZP_BOT - 2.7), (70.0, 33.0, ZP_BOT - 2.7), (66.0, 31.0, Z_TRAY + 2.0), (64.0, 27.5, Z_TRAY + 4.0), (60.6, 21.0, Z_TRAY + 4.5)])]):
     cu = bpy.data.curves.new("w", 'CURVE')
     cu.dimensions, cu.bevel_depth, cu.bevel_resolution, cu.use_fill_caps = '3D', 1.0, 3, True
     sp = cu.splines.new('POLY')
-    pts = [(112.4, ya, ZP_BOT - 16.0), (112.4, ya, ZP_BOT + 2.0), (112.4, ya, Z_TRAY + 3.0), (109.5, ya - 1.0, Z_TRAY + 9.0),
-           (104.0, SPLICES[i][2] + 6.5, Z_TRAY + 11.0), (104.0, SPLICES[i][2] + 6.5, Z_TRAY + 4.5)]
     sp.points.add(len(pts) - 1)
     for p, co in zip(sp.points, pts):
         p.co = B(*co) + (1,)

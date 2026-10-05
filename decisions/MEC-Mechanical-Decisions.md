@@ -1174,12 +1174,11 @@ grommet in the middle of that long edge. (This record had taken the holes for ea
 the BOM's "54 mm matches no chassis rectangle" no longer matters.)
 
 - **Where it sits:** x 11-75, y 32-89, 9 mm ahead of where `plate1.py` parks it, with its **leads edge on
-  the vehicle's left** (y 89), the side board C's 5 V terminals face. **Cable lanes:** 12 mm of tray beside
-  that edge (the tray is widened there, to y 100.5, 1.5 mm inside the plate edge) and 10.5 mm behind the
-  Bauer before board C. The leads run along the left lane to C's IN terminal; the 12 V pair goes on
-  under C's front edge (C stands 10 mm above the tray) to the splices. The rim has legs at the corners
-  only, so nothing closes the lanes. Putting the leads edge on the right instead is possible but
-  C's terminals are all on the left.
+  the vehicle's left** (y 89), the side board C's 5 V terminals face. **Cable room:** a lane of tray beside
+  that edge (5 mm clear before the S6 splice, wider where the plate allows), 10.5 mm behind the Bauer before
+  board C, and a mirror lane on the right. The two output leads (yellow, black) run along the left lane and the
+  rear lane to C's IN terminal. The rim has legs at the corners only, so nothing closes the lanes. The S6 / S7
+  splices and their wiring are under "Where the splices go" below.
 - **Holding it:** two M3 x 8 screws from above through its holes into M3 nuts held in hex pockets in the
   tray (E1 at (16, 63), E2 at (70, 63)), and a low rim of four corner legs 0.6 mm clear of the body to
   locate it.
@@ -1213,9 +1212,9 @@ its boards would be in the way while plate 2 lies upside down (MEC-16).
 2. The Bauer into its rim, two M3 screws through its holes. Boards C, then A and B, lowered onto the
    tray, their nylon standoffs on the tray's board holes.
 3. Twelve M2.5 screws from below into the standoffs.
-4. The S6 and S7 splices into their outlines under C.
+4. The S6 and S7 splices into their outlines, either side of the Bauer.
 5. The unit is lifted across onto plate 2 (raised on blocks, as in MEC-16's lowering), its holes over
-   the plate's, the Bauer feed pulled up through the window.
+   the plate's, the Bauer's 12 V wires pulled up the two slots to the splices.
 6. F1, F2, F5, F6, F7, F8: an M2.5 screw from below into each nut pocket, a washer in the M3 holes.
 7. Plate 2 comes off the blocks and lowers onto the chassis standoffs; the Discovery plugs on last.
 
@@ -1249,8 +1248,8 @@ standoffs already fitted. Only the tray is screwed to plate 2.
   F2, F5 and F6, and two M3 holes under the Bauer. F3, which MEC-16 found landing on the motor
   fuse's lid under plate 2, and F4 are dropped.
 - **The electronics lift out as one unit** for bench work, and the tray can stand on its own.
-- **It carries the S6 / S7 splices too,** which sit under board C. Their wires climb through a
-  window over plate 2's wire opening, between C and A / B.
+- **It carries the S6 / S7 splices too,** in lanes either side of the Bauer (see "Where the splices go"), where
+  their levers can open and the plate's two slots bring up their wires.
 
 **Two ways to make it, one file.**
 
@@ -1267,12 +1266,22 @@ they stand 12 mm above plate 2, 2 mm higher than with direct fixing on 10 mm sta
 to the FRDM above it: MEC-15 put its top at about z 111 against the FRDM's screw heads at z 119.4 under plate 3,
 which leaves about 6 mm.
 
-**Open: the S6 / S7 splices do not fit under C.** They are 8.5 mm tall (`plate1.py`) and C's underside is
-8 mm above the tray, before counting the solder joints and wires that hang 1-3 mm below it. Options: (1) move
-the two splices to the left of the Bauer, in a tray lane widened to about 24 mm (plate 2 allows it there),
-where the Bauer's 12 V leads leave and the plate's slot (x 56-80, y 83-93) brings up the wires from SW2 and the
-bus. This also frees the window from the Bauer feed. (2) Put 12 mm standoffs under C only; this needs the part.
-(3) Recess the splices into the tray: 4 mm of tray does not leave enough after the joints. Recommended: (1).
+**Where the splices go (decided 2026-10-05).** S6 and S7 (the Bauer's 12 V + and -) are 8.5 mm tall (`plate1.py`)
+and C's underside is only 8 mm above the tray, before the solder joints and wires that hang 1-3 mm lower, and a
+lever splice needs room above it to open. So they are not under C. S6 (+) sits at x 42-60.6, y 96-109, left of the
+Bauer, beside the plate's left slot (x 56-80, y 83-93); S7 (-) is its mirror at y 11.5-24.5, right of the Bauer, beside
+the right slot. Plate 2 narrows behind x 62, so two splices do not fit in one lane; it is symmetric about y 60.25,
+which is why the second lane is the mirror of the first. The tray has a wing for each (1.5 mm inside the plate edge).
+
+- **Wiring:** SW2's wire comes up the left slot into S6, the (-) bus wire up the right slot into S7. The Bauer's red
+  lead goes into S6; its black input lead runs round the Bauer's rear, through the 10.5 mm lane before C, to S7
+  (about 135 mm, so the Bauer's leads must be at least that long: **to measure**). The window no longer carries the
+  Bauer feed.
+- **Harness changes** (`plate1.py`, the cut table in `chassis-layout.svg`): run 15 (SW2 to S6) is 32 cm, was 31;
+  run 16 (S7 to the (-) bus) is 22 cm, was 13. Both go under plate 2 along y 73-88 and y 75, clear of the buses
+  and the INA226.
+- **Rejected:** 12 mm standoffs under C only (a part that is not in the BOM, splices buried under a board with
+  about 1.7 mm of margin and no room for the levers); recessing them into the tray (4 mm is too thin).
 
 **To measure or decide before making it.**
 
