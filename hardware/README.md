@@ -12,8 +12,8 @@ python3 tools/check-drawings.py                  # fails if any SVG is not what 
 [`scripts/drawing.py`](scripts/drawing.py) holds the small SVG helpers the first two share. The chassis plate (outline, slots, holes,
 standoffs) is one table in millimetres drawn on all four plans; the wiring schematic's nets are one colour palette shared with its key.
 Both scripts were made on 2026-10-05 from the SVGs as they stood and reproduce them exactly (the layout without 24 stray blank
-lines), so nothing in a drawing changed when they took over. What survives of the early generators is in
-[`scripts/archive/`](scripts/archive/README.md).
+lines), so nothing in a drawing changed when they took over. The plate outline in `chassis-layout.py` was traced from Hiwonder's CAD
+export; the early scripts that did it were not kept (they are in the git history of this branch's PR, #6).
 
 **No PDFs.** They are generated once, when the design is frozen. Until then the SVG is the
 truth and a stale PDF beside it is just a second thing to get wrong. To read one, open the

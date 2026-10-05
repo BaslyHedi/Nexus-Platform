@@ -29,7 +29,7 @@ P2 = plan('plate 2, top face', 390.0)
 P1 = plan('plate 1', 971.0)
 PB = plan('plate 2, lower face', 871.15, flip=True)
 
-OUTLINE = [   # the plate, mm: x from the front, y from the vehicle's right (Hiwonder's CAD, see archive/extract-plate-outline.py)
+OUTLINE = [   # the plate, mm: x from the front, y from the vehicle's right (traced from Hiwonder's CAD)
     (0, 33.35), (0.53, 32), (1.53, 31.06), (40, 8.29), (47, 0.99),
     (48, 0.41), (50, 0), (52, 0.41), (53.53, 1.48), (68.53, 17.42),
     (70, 18.05), (87.53, 17.95), (113, 2.83), (114.53, 2.47), (251.53, 0.89),
