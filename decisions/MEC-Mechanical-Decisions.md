@@ -1285,7 +1285,13 @@ which is why the second lane is the mirror of the first. The tray has a wing for
 
 **To measure or decide before making it.**
 
-- **The corner holes' inset** from the board edges. The model assumes 2.5 mm.
+- **The corner holes' inset** from the board edges is **estimated, not measured: 2.5 mm, give or take 0.5**. The basis is
+  Hedi's photo of board C (2026-10-05): the 5.8 mm-across-corners standoff hexes sit almost flush with the board edges,
+  so their centres are close to the edge, and the holes are separate from the 2.54 mm grid (its first hole is 3.6 mm from the
+  long edge and 5.8 mm from the end). Hedi cannot measure them. So the tray is built to tolerate the error: board holes of
+  3.4 mm for the M2.5 screws (0.45 mm of play each way, enough for +-0.5 mm of inset on both sides) and a round pad of r 4.6
+  mm round each corner so the 6 mm counterbore never breaks the tray's edge. The pads stay inside plate 2 (0.6 mm to spare
+  at board A's front corner). A hand-cut sheet should be drilled from the boards, not the template.
 - **Board C's corner holes,** once C is built. A's and B's are known to be free; C's terminals sit
   near two of its corners. *C is built (2026-10-05) with a standoff in each of its four corners, so the tray's four board holes per board are right; their inset is not measured yet.*
 - **Board C's silkscreen is the other way round from A and B** (photo, 2026-10-05): numbers 1-24 along the long side, 1 at the USB-C end, letters A-J across. *Renamed the same day:* A1 is at the bottom left with components up and the USB-C socket on the left, so F5 is C·F4 and F6 is C·F21, in `stm32-carrier.py`, MEC-15, HW-19 and the BOM.

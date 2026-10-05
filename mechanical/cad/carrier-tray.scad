@@ -33,15 +33,16 @@
 // stand 12 mm above plate 2: 4 mm tray + 8 mm. The 8.5 mm S6 / S7 splices do not fit under C at that height, so they sit beside the Bauer. Check the Discovery's top against the FRDM's screw heads under plate 3.
 //
 // TO MEASURE before printing (the defaults are guesses):
-//   CORNER_INSET  - a board's corner hole centre from each edge
+//   CORNER_INSET  - a board's corner hole centre from each edge (estimated 2.5 mm; the loose holes and the corner pads cover +-0.5)
 //   board C's holes once it is built
 
 PART = "step2";              // "tray" | "template" | "step1" | "step2"
 
 T            = 4.0;          // tray thickness
-CORNER_INSET = 2.5;          // MEASURE: board corner hole centre from each edge
-HOLE_D       = 2.8;          // M2.5 clearance
-CB_D         = 5.6;          // counterbore for an M2.5 nylon screw head, from below
+CORNER_INSET = 2.5;          // ESTIMATED, not measured (+-0.5): board corner hole centre from each edge; see MEC-17
+HOLE_D       = 3.4;          // M2.5 screw in a deliberately loose hole: +-0.45 mm, to absorb the estimate above
+CB_D         = 6.0;          // counterbore for an M2.5 nylon screw head, from below
+BOSS_R       = 4.6;          // a round pad round each board corner, so the counterbore never breaks the tray's edge
 CB_DEPTH     = 2.0;
 FIX_D        = 2.8;          // tray-to-plate-2 screws, M2.5 from below
 NUT_AF       = 5.0;          // M2.5 nut across flats
@@ -134,6 +135,7 @@ module stadium(s) hull() { translate(tray(s[0])) circle(r = s[2], $fn = 64); tra
 module outline2d()
     union() {
         for (b = BOARDS) rrect(b[0], b[1], b[2], b[3]);
+        for (b = BOARDS) for (p = corners(b)) translate(p) circle(r = BOSS_R, $fn = 48);       // corner pads
         rrect(BOARD_C[1] - 3, BOARD_A[0] + 3, BOARD_C[2], BOARD_C[3]);
         for (L = [LANE_L, LANE_R]) polygon([for (p = L) tray(p)]);       // the two splice lanes beside the Bauer
         hull() {                                               // the Bauer's end of the tray, narrower at the front where plate 2 is
