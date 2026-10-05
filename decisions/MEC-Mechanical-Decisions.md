@@ -805,7 +805,8 @@ A-X along the 70 mm side, numbers across, A1 bottom-left with the print readable
 columns 10 (odd) and 9, P2 on B's 12 (odd) and 11. The fixings are **F1-F6**, so no fixing name
 reads as a hole. The drawing computes every name from the geometry. Older text in this record uses
 the drawing's first scheme, column letter + header row: A g14 is A·K12, B d14 is B·K15, and on
-board C e4 is C·D6 and e21 is C·U6.
+board C e4 is C·F4 and e21 is C·F21 (they were C·D6 and C·U6 until 2026-10-05, when C's print
+was found to run the other way round: numbers along the long side, letters across).
 
 **As built 2026-10-03: the CAN module lies face down, and A takes its ground from its own P1-5.**
 The module's 1×4 socket is at B·F5-F2 (CTX, CRX, GND, 3V3) and its CAN H / L come down through a
@@ -884,7 +885,7 @@ a seam without adding anything the Discovery does not already provide.
   plate edges, because there is no room at the front or rear for wires to enter. *Since
   2026-09-29 the row-1 end carries the USB-C socket instead, opening to the vehicle's right
   (HW-19). The plug stands about 20 mm past the plate edge there, which is still to be checked.* It is fixed at
-  **F5 at C·D6 and F6 at C·U6** to the M3 holes (99.24, 38.76) and (99.24, 81.76), which are 43.00 mm apart:
+  **F5 at C·F4 and F6 at C·F21** to the M3 holes (99.24, 38.76) and (99.24, 81.76), which are 43.00 mm apart:
   17 rows plus 0.18 mm. The Bauer's position is still a placeholder, and if it moves rearward it
   meets C.
 - **MEC-13's USB-C clearance question is closed.** The boards now end at x 187 (B at 189.54 as
@@ -1258,17 +1259,20 @@ standoffs already fitted. Only the tray is screwed to plate 2.
 | How | printed PETG, 4 mm, ~15 € | 3 mm plastic sheet (PVC foam, ABS or polycarbonate; not acrylic, MEC-02), cut and drilled by hand |
 | File | `carrier-tray.stl` | a 1:1 template, generated when needed with `PART="template"` (not kept in the repo), printed and stuck on the sheet; a 50 mm bar checks the print scale |
 | Board screws | from below into the standoffs, in printed counterbores, so the tray sits flat | from below; the heads lift the sheet ~1.8 mm, accepted |
-| A / B height | 4 + 6 mm standoffs = 10 mm, as today | 3 + 1.8 + 6 = 10.8 mm |
+| Board height | 4 + 10 mm standoffs = 14 mm | 3 + 1.8 + 10 = 14.8 mm |
 
-**Heights.** C stands on 10 mm standoffs on the tray, so it clears the 8.5 mm splices: 4 mm higher
-than today, within the 40 mm gap. A and B keep their height with 6 mm standoffs.
+**Heights.** All three boards stay on the 10 mm standoffs already fitted (Hedi, 2026-10-05: C has the same as A and B;
+the corner holes were widened by hand with scissors to take them), so they stand 14 mm above plate 2, 4 mm
+higher than with direct fixing. C clears the 8.5 mm splices by 1.5 mm. **To check:** the Discovery is 4 mm closer to the
+FRDM above it. MEC-15 put its top at about z 111 against the FRDM's screw heads at z 119.4 under plate 3, which now
+leaves about 4 mm. The standoff length itself is taken from the plan, not measured.
 
 **To measure or decide before making it.**
 
 - **The corner holes' inset** from the board edges. The model assumes 2.5 mm.
 - **Board C's corner holes,** once C is built. A's and B's are known to be free; C's terminals sit
   near two of its corners. *C is built (2026-10-05) with a standoff in each of its four corners, so the tray's four board holes per board are right; their inset is not measured yet.*
-- **Board C's silkscreen is the other way round from A and B** (photo, 2026-10-05): numbers 1-24 along the long side, 1 at the USB-C end, letters A-J across. The hole names for C in MEC-15 and HW-19 (C·D6 for F5 and the like) and in `stm32-carrier.py` still use the old assumption and are to be renamed once Hedi says which end letter A is.
+- **Board C's silkscreen is the other way round from A and B** (photo, 2026-10-05): numbers 1-24 along the long side, 1 at the USB-C end, letters A-J across. *Renamed the same day:* A1 is at the bottom left with components up and the USB-C socket on the left, so F5 is C·F4 and F6 is C·F21, in `stm32-carrier.py`, MEC-15, HW-19 and the BOM.
 - **Whether a 4.7 mm window is wide enough** for the 6 V pair, the Bauer feed and the driver's I2C lead, and how the 6 V pair then gets from the window to A's 6V IN, about 60 mm away under the 6 mm gap.
 - **Whether anything above plate 2 stands on (186.12, 9.71) and (186.12, 110.82).** The tray covers them: they are 2.5 mm from A's and B's rear corner holes.
 - **MEC-16's check on the screw heads under plate 2** still applies to the plate holes kept: see F5 above.

@@ -61,7 +61,11 @@ def ci(letter):
 # names: letters A-X along the 70 mm side and numbers along the short side, A1 at the bottom
 # left with the print readable. Every view shows each board that way up (front left), so on
 # A and B header row 1 is letter X and row 24 is letter A; the numbers count up from the
-# bottom of the component view. Board C lies the other way round: its row 1 is letter A.
+# bottom of the component view.
+# Board C's print is the other way round (Hedi, 2026-10-05, from the board): numbers 1-24 along the 70 mm side,
+# letters A-J across the 30 mm side, A1 at the bottom left with components up and the USB-C socket on the left.
+# That is how C is drawn here (row 1 on the left, column 1 at the top), so the letter counts up from the bottom
+# row (column 10 = A, column 1 = J) and the number is the row.
 LET = 'ABCDEFGHIJKLMNOPQRSTUVWX'
 
 
@@ -69,7 +73,7 @@ def silk(b, col, row):
     c = ci(col) if isinstance(col, str) else col
     if b in 'AB':
         return f'{LET[24 - row]}{19 - c}'
-    return f'{LET[row - 1]}{11 - c}'
+    return f'{LET[10 - c]}{row}'
 
 
 def N(b, col, row):

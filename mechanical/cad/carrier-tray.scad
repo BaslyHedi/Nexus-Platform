@@ -28,9 +28,9 @@
 //   - the window over plate 2's wire opening, where the S6 / S7 and UBEC wires climb to the top face.
 //   The S6 / S7 splices (plate1.py) sit on the tray under board C.
 //
-// HEIGHTS. A and B stand 10 mm above plate 2: 4 mm tray + 6 mm standoffs. C stands on 10 mm standoffs
-// to clear the 8.5 mm splices, so it is 4 mm higher than it was, which its 13 mm capacitor and the
-// 40 mm gap allow.
+// HEIGHTS. All three boards keep the 10 mm standoffs already fitted (Hedi, 2026-10-05: C has the same as A and B), so
+// they stand 14 mm above plate 2: 4 mm tray + 10 mm. That is 4 mm higher than with direct fixing; the 8.5 mm splices
+// under C clear by 1.5 mm. Check the Discovery's top against the FRDM's screw heads under plate 3 (MEC-17).
 //
 // TO MEASURE before printing (the defaults are guesses):
 //   CORNER_INSET  - a board's corner hole centre from each edge
@@ -211,9 +211,9 @@ module board_ghost(b, z, solid) {
     }
 }
 module ghost_boards(solid = false) {
-    for (b = [BOARD_A, BOARD_B]) color("seagreen") board_ghost(b, T + 6, solid);
+    for (b = [BOARD_A, BOARD_B]) color("seagreen") board_ghost(b, T + 10, solid);
     color("seagreen") board_ghost(BOARD_C, T + 10, solid);
-    for (b = BOARDS) for (p = corners(b)) color("gold") translate([p[0], p[1], T + 6.1 + (b == BOARD_C ? 4 : 0)]) cylinder(d = 3, h = 1, $fn = 20);
+    for (b = BOARDS) for (p = corners(b)) color("gold") translate([p[0], p[1], T + 10.1]) cylinder(d = 3, h = 1, $fn = 20);
     for (s = SPLICES) color("orange", 0.8) translate([tray([s[0], s[2]])[0], tray([s[0], s[2]])[1], T]) cube([s[1] - s[0], s[3] - s[2], 8.5]);
     for (f = FIXINGS) color("silver") translate([tray(f)[0], tray(f)[1], T - NUT_DEPTH]) cylinder(d = NUT_AF / cos(30), h = 2, $fn = 6);
     for (e = EARS) color("gold") translate([tray(e)[0], tray(e)[1], T - 2.4]) cylinder(d = 5.5 / cos(30), h = 2.4, $fn = 6);
