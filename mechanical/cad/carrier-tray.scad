@@ -82,11 +82,11 @@ PLATE_HOLES = [
     [169.88,  14.24, 2.71], [169.88,  20.24, 2.71], [169.88, 100.24, 2.71], [169.88, 106.24, 2.71],
     [ 92.65,  36.35, 4.30], [ 92.65,  84.25, 4.30],
     // under the Bauer (x 8.5-87): the plate's M3 line along y 60.24 and its diamond, the M2.5 pairs, the 4.2 and 4.3 mm holes.
-    // Not copied: the two 9 mm holes (x 17.9 and 45.85, y 60.3), (10.82, 60.24) and (17.82, 53.24): they run into a nut
-    // pocket or the tray's front edge.
-    [ 38.82,  60.24, 3.18], [ 45.82,  53.24, 3.18], [ 45.82,  67.24, 3.18], [ 17.82,  67.24, 3.18],
+    // Not copied: the two 9 mm holes (x 17.9 and 45.85, y 60.3), (10.82, 60.24), (17.82, 53.24 and 67.24) and (72.41, 67.88):
+    // they run into a nut pocket or the tray's front edge.
+    [ 38.82,  60.24, 3.18], [ 45.82,  53.24, 3.18], [ 45.82,  67.24, 3.18], 
     [ 16.94,  32.24, 2.71], [ 16.94,  88.24, 2.71], [ 25.65,  52.65, 2.71], [ 25.65,  67.88, 2.71],
-    [ 49.00,  35.94, 2.71], [ 49.00,  84.53, 2.71], [ 72.41,  52.65, 2.71], [ 72.41,  67.88, 2.71],
+    [ 49.00,  35.94, 2.71], [ 49.00,  84.53, 2.71], [ 72.41,  52.65, 2.71],
     [ 86.94,  40.24, 2.71], [ 86.94,  80.24, 2.71],
     [ 12.65,  36.35, 4.29], [ 12.65,  84.25, 4.29],
     [ 43.50,  36.33, 4.29], [ 43.50,  84.21, 4.29], [ 45.86,  44.27, 4.29], [ 45.86,  76.27, 4.29],
@@ -97,11 +97,12 @@ PLATE_HOLES = [
 PLATE_SLOTS = [ [[168.5, 37.7], [168.5, 82.9], 7.3], [[61.35, 32.09], [74.89, 32.09], 5.15], [[61.35, 88.33], [74.89, 88.33], 5.15] ];
 // the Bauer 50 W converter: body 64 x 57 x 22 mm (BOM 3.4a), where plate1.py parks it: x 20-84, y 32-89 (BAUER below says where it goes now).
 // Its drawing (the seller's, 2026-10-05): two 6.8 mm holes INSIDE the outline, 5 mm in from each end, 54 mm apart,
-// 26 mm from one long edge. Which edge is not known; the drawing's bottom edge is taken to face the vehicle's right (y 32).
+// 26 mm from one long edge. The photo (2026-10-05) shows that is the edge the four leads leave from, through the middle of the
+// plateau. That edge is put on the vehicle's LEFT (y 89), facing board C's 5 V terminals, with a 12 mm lane beside it.
 // They take M3 screws from above into nuts held in the tray: one pocket under each hole.
 BAUER = [11.0, 75.0, 32.0, 89.0];     // 9 mm ahead of where plate1.py parks it: that leaves 10.5 mm between its rear end and board C
                                       // for the leads and the 5 V cable to board C (the rim has no leg there)
-EARS = [[16.0, 58.0, 3.2], [70.0, 58.0, 3.2]];   // x, y, hole: BAUER[0] + 5 and + 59, BAUER[2] + 26
+EARS = [[16.0, 63.0, 3.2], [70.0, 63.0, 3.2]];   // x, y, hole: BAUER[0] + 5 and + 59, BAUER[3] - 26
 EAR_NUT_AF = 5.7; EAR_NUT_DEPTH = 2.6;            // M3 nut, 5.5 across flats and 2.4 thick, as a printing fit
 RIM_H = 3.0; RIM_W = 1.6; RIM_GAP = 0.6; RIM_LEG = 14;   // four corner brackets, so the leads and the air get out
 // the plate's wire opening, x 110.3-133.0, y 42.5-77.9, a stadium of radius 11.35
@@ -131,7 +132,7 @@ module outline2d()
         rrect(BOARD_C[1] - 3, BOARD_A[0] + 3, BOARD_C[2], BOARD_C[3]);
         hull() {                                               // the Bauer's end of the tray, narrower at the front where plate 2 is
             rrect(EXT[0], EXT[0] + 4, EXT[2] + 3.8, EXT[3] - 3.7, 1.0);
-            rrect(EXT[0] + 11.5, EXT[1], EXT[2], EXT[3]);
+            rrect(EXT[0] + 15.5, EXT[1], EXT[2], EXT[3] + 5.3);      // widened on the left for the Bauer's leads
         }
         translate([BOARD_B[0], BOARD_A[3] - 3]) square([BOARD_A[1] - BOARD_B[0], BOARD_B[2] - BOARD_A[3] + 6]);
     }

@@ -52,7 +52,7 @@ BOARDS = {'A': (117.00, 187.00, 5.11, 55.11, 6), 'B': (119.54, 189.54, 60.99, 11
           'C': (85.50, 115.50, 25.20, 95.20, 10)}          # plate-2 x0 x1 y0 y1, standoff height
 FIXINGS = {'F1': (148.18, 23.76, 3.18), 'F2': (148.18, 72.24, 2.71), 'F5': (99.24, 38.76, 3.18), 'F6': (99.24, 81.76, 3.18),
            'F7': (24.82, 60.24, 3.18), 'F8': (52.82, 60.24, 3.18)}
-EARS = [(16.0, 58.0), (70.0, 58.0)]            # the Bauer's two 6.8 mm holes: 5 and 59 mm from its front end, 26 mm from its right edge
+EARS = [(16.0, 63.0), (70.0, 63.0)]            # the Bauer's two 6.8 mm holes: 5 and 59 mm from its front end, 26 mm from its leads edge (y 89)
 SPLICES = [(87.7, 106.3, 41.5, 54.5), (87.7, 106.3, 63.5, 76.5)]
 BAUER = (11.0, 75.0, 32.0, 89.0, 22.0)         # x0 x1 y0 y1 height: 10.5 mm clear of board C, for its cables
 BENCH_Y = 190.0                                # the jig stands this far to the vehicle's right (Blender +y)
@@ -76,7 +76,7 @@ DROP = S(0.7) - 1
 CAPTIONS = [
     ((0, 4), "The carrier tray: 182 x 106 mm, 4 mm PETG. Plate 2's holes are repeated in it; eight have a nut pocket"),
     ((4, 7.4), "1  A nut into each hex pocket: six M2.5 for plate 2, two M3 under the Bauer's holes"),
-    ((7.4, 10.3), "2  The Bauer drops into its rim; two M3 screws through its own holes. 10 mm stays free behind it"),
+    ((7.4, 10.3), "2  The Bauer drops into its rim, two M3 screws through its own holes; its leads get a clear lane"),
     ((10.3, 14.4), "3  Boards C, then A and B, lower on their nylon standoffs onto the tray's board holes"),
     ((14.4, 19), "4  Twelve M2.5 screws from below, one into each standoff; the heads sit in the counterbores"),
     ((19, 22.5), "5  The S6 and S7 splices go into their outlines under board C"),
@@ -280,9 +280,10 @@ for i, (x, y) in enumerate(EARS):                          # M3: 5.5 across flat
 for o, t in zip(nuts, NUTS):
     drop(o, t, dz=28.0)
 
-# the Bauer 50 W, from the seller's drawing (2026-10-05): 64 x 57 x 22 mm, corners chamfered 8 x 6.5, two 6.8 mm holes inside the
-# outline (5 mm from each end, 26 mm from the right edge), a fin bank along each long side, the potted module in a cavity under a
-# top deck. Drawing coordinates (dx along the vehicle, dy from the right edge) -> plate 2 by adding the body's corner.
+# the Bauer 50 W, from the seller's drawing and the photo (2026-10-05): 64 x 57 x 22 mm, corners chamfered 8 x 6.5, two 6.8 mm holes
+# INSIDE the outline (5 mm from each end, 26 mm from the leads edge), a raised central plateau with three ridges, two fins each side
+# of it running the full length with round bosses on the outer ones, and the four leads leaving through the middle of one long edge.
+# The leads edge is put on the vehicle's left (plate y 89). Body coordinates: dx along the vehicle, dy from the right edge (y 32).
 bx0, bx1, by0, by1, bh = BAUER
 CHX, CHY = 8.0, 6.5
 
@@ -301,7 +302,7 @@ outline = [bp(CHX, 0), bp(64 - CHX, 0), bp(64, CHY), bp(64, 57 - CHY), bp(64 - C
 SHELF = 4.0
 shelf = prism("bauer-shelf", outline, Z_TRAY, Z_TRAY + SHELF, 'bauer', bau)
 cutters = []
-for (dx, dy) in [(5.0, 26.0), (59.0, 26.0)]:
+for (dx, dy) in [(5.0, 31.0), (59.0, 31.0)]:               # 26 mm from the leads edge = 31 mm from the right edge
     x, y = bp(dx, dy)
     m = Mesh(ID)
     m.cyl((x, y, Z_TRAY - 1), (x, y, Z_TRAY + 5), 3.4, 'bauer', 28)
@@ -319,36 +320,36 @@ md.object, md.operation, md.solver = cut, 'DIFFERENCE', 'EXACT'
 bpy.ops.object.modifier_apply(modifier="ears")
 bpy.data.objects.remove(cut)
 m = Mesh(ID)
-FINS = [0.8, 3.7, 6.5, 9.4, 12.5]
-for dy in FINS + [57.0 - f for f in FINS]:                 # a bank along each long side: plates standing 22 mm, full length
+x0, y0 = bp(13.4, 0)
+m.box(x0, bx0 + 50.6, y0, by0 + 57, Z_TRAY, Z_TRAY + 19, 'bauer')                          # the central plateau, full width
+for dy in (0.8, 56.2):                                                                      # a thin wall along each edge of it
+    x0, y0 = bp(7.0, dy - 0.8)
+    m.box(x0, bx0 + 57.0, y0, y0 + 1.6, Z_TRAY, Z_TRAY + 22, 'bauerfin')
+for dy in (6.5, 13.3, 43.7, 50.5):                                                          # two fins each side, full length
     i = ins(dy)
-    x0, y0 = bp(i, dy - 0.8)
-    m.box(x0, bx0 + 64 - i, y0, y0 + 1.6, Z_TRAY, Z_TRAY + 22, 'bauerfin')
-x0, y0 = bp(13.4, 13.3)
-m.box(x0, bx0 + 50.6, y0, by0 + 43.7, Z_TRAY + 17, Z_TRAY + 22, 'bauer')                # the top deck between the banks
-for dy in (20.6, 28.1, 35.6):                                                             # three thin ridges on it
-    x0, y0 = bp(17.5, dy - 0.4)
-    m.box(x0, bx0 + 46.5, y0, y0 + 0.8, Z_TRAY + 22, Z_TRAY + 22.8, 'bauerfin')
-for (dx, dy) in [(20.7, 6.5), (43.1, 6.5), (20.7, 50.5), (43.1, 50.5)]:                   # round bosses on the outer fins
+    x0, y0 = bp(i, dy - 0.9)
+    m.box(x0, bx0 + 64 - i, y0, y0 + 1.8, Z_TRAY + SHELF, Z_TRAY + 22, 'bauerfin')
+for dy in (20.6, 28.1, 35.6):                                                               # three thin ridges on the plateau
+    x0, y0 = bp(17.0, dy - 0.4)
+    m.box(x0, bx0 + 47.0, y0, y0 + 0.8, Z_TRAY + 19, Z_TRAY + 20, 'bauerfin')
+for (dx, dy) in [(20.7, 6.5), (43.1, 6.5), (20.7, 50.5), (43.1, 50.5)]:                     # round bosses on the outer fins
     x, y = bp(dx, dy)
-    m.cyl((x, y, Z_TRAY + 22), (x, y, Z_TRAY + 23.4), 1.8, 'bauerfin', 16)
+    m.cyl((x, y, Z_TRAY + 22), (x, y, Z_TRAY + 23.3), 1.9, 'bauerfin', 16)
 x, y = bp(31.9, 28.0)
-m.cyl((x, y, Z_TRAY + 22.8), (x, y, Z_TRAY + 24.2), 1.8, 'bauerfin', 16)
-x0, y0 = bp(19.5, 13.3)
-m.box(x0, bx0 + 44.5, y0, by0 + 43.7, Z_TRAY, Z_TRAY + 10, 'lead_k')                      # the potted module, in its cavity
-# the leads leave through a black grommet in the rear end face, into the lane between the Bauer and board C
-gx, gy = bp(64, 22.0)
-m.box(gx, gx + 3.0, gy, gy + 12.0, Z_TRAY + 5, Z_TRAY + 12, 'lead_k')
+m.cyl((x, y, Z_TRAY + 20), (x, y, Z_TRAY + 21.3), 1.9, 'bauerfin', 16)                      # and one on the middle ridge
+# a black grommet in the leads edge, middle of the plateau; four leads: yellow, black, black, red
+gx, gy = bp(24.0, 57.0)
+m.box(gx, gx + 18.0, gy, gy + 2.6, Z_TRAY + 6, Z_TRAY + 13, 'lead_k')
 m.make("bauer-body", bau)
-LEADS = [('lead_r', 0), ('lead_k', 1), ('lead_y', 2), ('lead_k', 3)]                       # IN+, IN-, OUT+, OUT-
-for col, i in LEADS:
+LEADS = [('lead_y', 27.0), ('lead_k', 31.0), ('lead_k', 35.0), ('lead_r', 39.0)]
+for i, (col, dxl) in enumerate(LEADS):
     cu = bpy.data.curves.new("lead", 'CURVE')
     cu.dimensions, cu.bevel_depth, cu.bevel_resolution, cu.use_fill_caps = '3D', 1.1, 3, True
     sp = cu.splines.new('POLY')
-    yy = gy + 2.0 + i * 2.7
-    xl = 77.8 + i * 1.7                                    # fanned across the 10.5 mm lane
-    pts = [(gx + 3.0, yy, Z_TRAY + 8.5), (gx + 5.5, yy, Z_TRAY + 6.5), (xl, yy + 4.0, Z_TRAY + 3.0), (xl, yy + 14.0, Z_TRAY + 1.2),
-           (xl, yy + 30.0, Z_TRAY + 1.2)]
+    xl = bx0 + dxl
+    yl = 93.5 + i * 1.9                                    # fanned across the 12 mm lane beside the Bauer
+    pts = [(xl, by1 + 2.6, Z_TRAY + 9.5), (xl, by1 + 4.5, Z_TRAY + 8.5), (xl + 3.0, yl, Z_TRAY + 4.0), (xl + 9.0, yl + 1.0, Z_TRAY + 1.3),
+           (xl + 24.0, yl + 1.0, Z_TRAY + 1.3), (84.0, yl + 1.0, Z_TRAY + 1.3)]
     sp.points.add(len(pts) - 1)
     for p_, co in zip(sp.points, pts):
         p_.co = B(*co) + (1,)
@@ -523,8 +524,8 @@ SECC = (SEC_AT[0] - 9.0, -SEC_AT[1], SEC_AT[2] + 3.0)   # a little to the right 
 KEYS = [(0.0, (-60.0, BENCH_Y + 150.0, LIFT + 250.0), JIG),
         (4.0, (60.0, BENCH_Y + 175.0, LIFT + 230.0), JIG),
         (7.2, (60.0, BENCH_Y + 175.0, LIFT + 230.0), JIG),
-        (7.9, (-15.0, BENCH_Y + 105.0, LIFT + 135.0), (50.0, BENCH_Y - 62.0, LIFT + 66.0)),
-        (10.2, (-15.0, BENCH_Y + 105.0, LIFT + 135.0), (50.0, BENCH_Y - 62.0, LIFT + 66.0)),
+        (7.9, (-25.0, 5.0, LIFT + 130.0), (50.0, BENCH_Y - 62.0, LIFT + 66.0)),
+        (10.2, (-25.0, 5.0, LIFT + 130.0), (50.0, BENCH_Y - 62.0, LIFT + 66.0)),
         (10.9, (60.0, BENCH_Y + 175.0, LIFT + 230.0), JIG),
         (13.5, (60.0, BENCH_Y + 175.0, LIFT + 230.0), JIG),
         (14.2, (100.0, BENCH_Y + 150.0, LIFT - 60.0), JIG_U),

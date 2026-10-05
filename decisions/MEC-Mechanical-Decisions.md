@@ -1165,19 +1165,23 @@ judged. Source: [`../mechanical/cad/carrier-tray.scad`](../mechanical/cad/carrie
 **The tray also carries the Bauer 50 W (2026-10-05).** Its front end reaches x 8.5, which is as far as
 plate 2's narrowing front allows (the front is tapered to stay 1.5 mm inside the plate edge). The Bauer
 is screwed to the tray **through its own two mounting holes**, so it needs no cable ties and no plate hole
-of its own. From the seller's drawing: 64 x 57 x 22 mm, corners chamfered about 8 x 6.5, two 6.8 mm
-holes **inside the outline**, 5 mm in from each end (54 mm apart) and 26 mm from one long edge, a fin
-bank along each long side, the potted module in a cavity under a top deck. (This record had taken the
-holes for ears outside the body; the BOM's "54 mm matches no chassis rectangle" no longer matters.)
+of its own. From the seller's drawing and Hedi's photo (2026-10-05): 64 x 57 x 22 mm, corners chamfered
+about 8 x 6.5, two 6.8 mm holes **inside the outline**, 5 mm in from each end (54 mm apart) and 26 mm
+from the edge the leads leave by, a raised central plateau with three ridges, two fins each side of it
+(round bosses on the outer ones), and the four leads (yellow, black, black, red) leaving through a
+grommet in the middle of that long edge. (This record had taken the holes for ears outside the body;
+the BOM's "54 mm matches no chassis rectangle" no longer matters.)
 
-- **Where it sits:** x 11-75, y 32-89. That is 9 mm ahead of where `plate1.py` parks it, to leave
-  **10.5 mm between its rear end and board C for its cables**: the four flying leads and the 5 V cable to
-  C's IN terminal run in that lane, then under C's front edge (C stands 10 mm above the tray) to the
-  splices. The rim has no leg there. Which end the leads leave is not known; the rear is assumed.
+- **Where it sits:** x 11-75, y 32-89, 9 mm ahead of where `plate1.py` parks it, with its **leads edge on
+  the vehicle's left** (y 89), the side board C's 5 V terminals face. **Cable lanes:** 12 mm of tray beside
+  that edge (the tray is widened there, to y 100.5, 1.5 mm inside the plate edge) and 10.5 mm behind the
+  Bauer before board C. The leads run along the left lane to C's IN terminal; the 12 V pair goes on
+  under C's front edge (C stands 10 mm above the tray) to the splices. The rim has legs at the corners
+  only, so nothing closes the lanes. Putting the leads edge on the right instead is possible but
+  C's terminals are all on the left.
 - **Holding it:** two M3 x 8 screws from above through its holes into M3 nuts held in hex pockets in the
-  tray (E1 at (16, 58), E2 at (70, 58)), a low rim of four corner legs 0.6 mm clear of the body to
-  locate it. Which long edge the 26 mm is measured from is not known; the drawing's bottom edge is
-  taken to face the vehicle's right, so mirror E1 / E2 to y 63 if it is the other way.
+  tray (E1 at (16, 63), E2 at (70, 63)), and a low rim of four corner legs 0.6 mm clear of the body to
+  locate it.
 - **Held to the plate** by F7 (24.82, 60.24) and F8 (52.82, 60.24), two more of the plate's M3 holes,
   under the Bauer.
 - **Cable passages:** the plate's two slots beside the Bauer (x 56-80, y 27-37 and 83-93) are open in the
@@ -1267,7 +1271,7 @@ than today, within the 40 mm gap. A and B keep their height with 6 mm standoffs.
 - **Whether a 4.7 mm window is wide enough** for the 6 V pair, the Bauer feed and the driver's I2C lead, and how the 6 V pair then gets from the window to A's 6V IN, about 60 mm away under the 6 mm gap.
 - **Whether anything above plate 2 stands on (186.12, 9.71) and (186.12, 110.82).** The tray covers them: they are 2.5 mm from A's and B's rear corner holes.
 - **MEC-16's check on the screw heads under plate 2** still applies to the plate holes kept: see F5 above.
-- **Which end the Bauer's leads leave, and which long edge its 26 mm is measured from.** Both are assumed.
+- **Which side of the vehicle the Bauer's leads edge faces.** The photo fixes the leads and the holes to the same edge; putting it on the left is a routing choice.
 - **The Bauer's real height above its shelf, and the nut depth for M3,** before printing the ear pockets.
 - **Print or sheet.** The model serves both.
 
