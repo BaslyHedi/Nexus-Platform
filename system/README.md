@@ -12,7 +12,7 @@ render, point headless Chrome at it. Same rule as [`../hardware/README.md`](../h
 
 | Drawing | Owns |
 |---|---|
-| [Nexus-Platform-System-Layout](Nexus-Platform-System-Layout.svg) | The sub-system decomposition - every `Nexus-SubSys-DNN` ID, its name, phase and key flows |
+| [Nexus-Platform-System-Layout](renders/Nexus-Platform-System-Layout.svg) | The sub-system decomposition - every `Nexus-SubSys-DNN` ID, its name, phase and key flows |
 
 The layout owns the list of sub-systems. Do not restate it here; link to it.
 

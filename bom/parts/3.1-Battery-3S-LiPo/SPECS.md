@@ -2,7 +2,7 @@
 
 Supplied with the Hiwonder advanced bundle. Label reads *lithium battery · 11.1V · 6000mAh ·
 Hiwonder*. Physical facts below are from the pack in hand, photographed 2026-09-21; the
-footprint was measured 2026-09-20 and `hardware/chassis-layout.svg` draws it at
+footprint was measured 2026-09-20 and `hardware/renders/chassis-layout.svg` draws it at
 that size, **77 mm along the vehicle**.
 
 | Parameter | Value |
@@ -23,7 +23,7 @@ that size, **77 mm along the vehicle**.
 
 The 2026-09-21 photographs show heat-shrink over bare cylindrical cells, with the wrap folded
 and creased at the edges. The earlier "hard-cased" note in the BOM was wrong. Consequences, all
-of which feed `hardware/chassis-layout.svg`:
+of which feed `hardware/renders/chassis-layout.svg`:
 
 - **No cable ties directly on the pack.** A 3 mm tie tensioned on shrink wrap cuts it, and a cut
   wrap on a cell pack is a short circuit waiting for vibration.

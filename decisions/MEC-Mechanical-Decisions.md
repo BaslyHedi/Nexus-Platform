@@ -4,7 +4,7 @@ Packaging, the deck stack, printed parts and how things are fixed to the vehicle
 
 Numbering is `MEC-nn`, unique across the project and never reused. Format, and how to add one: [README](README.md). Parts, prices and status: [`../bom/BOM.md`](../bom/BOM.md).
 
-Drawings: [chassis layout](../hardware/chassis-layout.svg). Geometry and build commands: [`../mechanical/README.md`](../mechanical/README.md).
+Drawings: [chassis layout](../hardware/renders/chassis-layout.svg). Geometry and build commands: [`../mechanical/README.md`](../mechanical/README.md).
 
 | # | Decision |
 |---|---|
@@ -830,7 +830,7 @@ socket rests on the board margin, which has no hole there. See "Revision 2026-09
 **board B**, a 5×7 cm board (18 × 24 holes), under P2. Each carries two 1×24 female sockets. The
 Discovery plugs into both and is what holds them 53.34 mm apart. The USB-C pull-ups and the 5 V bulk
 capacitor go on a third board, C, which is HW-19's business. The build drawing is
-[`stm32-carrier.svg`](../hardware/stm32-carrier.svg).
+[`stm32-carrier.svg`](../hardware/renders/stm32-carrier.svg).
 
 **Why.**
 

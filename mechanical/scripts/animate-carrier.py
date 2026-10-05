@@ -4,7 +4,7 @@
     blender -b -P animate-carrier.py -- --preview      # half size, every 4th frame
     blender -b -P animate-carrier.py -- --still 40     # one PNG at 40 s, for checking a moment
 
-Nothing is read from disk but ../../hardware/stm32-carrier.py, which owns every hole, part and
+Nothing is read from disk but ../../hardware/scripts/stm32-carrier.py, which owns every hole, part and
 wire; this script only gives them bodies. It follows the drawing's build order: the sockets
 go in with the Discovery plugged in as the jig, the stack turns over for their joints, the
 parts go in, the solder side is wired spine by spine and run by run, the module, jumper and
@@ -30,7 +30,7 @@ ARGS = sys.argv[sys.argv.index("--") + 1:] if "--" in sys.argv else []
 PREVIEW = "--preview" in ARGS
 STILL = float(ARGS[ARGS.index("--still") + 1]) if "--still" in ARGS else None
 
-spec = importlib.util.spec_from_file_location("carrier", os.path.join(HERE, "..", "..", "hardware", "stm32-carrier.py"))
+spec = importlib.util.spec_from_file_location("carrier", os.path.join(HERE, "..", "..", "hardware", "scripts", "stm32-carrier.py"))
 C = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(C)
 P = C.P

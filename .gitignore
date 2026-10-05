@@ -26,5 +26,5 @@ mechanical/cad/chassis-3deck-fascia.mtl
 # Videos and stills, written by mechanical/scripts/animate-*.py - pure output.
 mechanical/renders/
 
-# Python bytecode, from importing hardware/stm32-carrier.py
+# Python bytecode, from importing hardware/scripts/stm32-carrier.py
 __pycache__/

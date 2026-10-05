@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """The STM32 carrier's geometry, and the drawing made from it (MEC-15, HW-19).
 
-    python3 stm32-carrier.py            # -> stm32-carrier.svg beside this file
+    python3 stm32-carrier.py            # -> ../renders/stm32-carrier.svg
 
 Everything above the sheet section is data and helpers with no side effects, so
 ../mechanical/scripts/animate-carrier.py imports it and builds the 3D assembly from the same
@@ -746,7 +746,7 @@ def orientation_inset(y0):
 
 # ---------------------------------------------------------------- sheet
 if __name__ == "__main__":
-    OUT = sys.argv[1] if len(sys.argv) > 1 else os.path.join(os.path.dirname(os.path.abspath(__file__)), 'stm32-carrier.svg')
+    OUT = sys.argv[1] if len(sys.argv) > 1 else os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'renders', 'stm32-carrier.svg')
     W, H = 1720, 1400
     w(f'<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewBox="0 0 {W} {H}" font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif">')
     w(f'<rect width="{W}" height="{H}" fill="#fbfaf8"/>')

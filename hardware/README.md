@@ -1,7 +1,8 @@
 # Hardware
 
-Build drawings for NEXUS. Each is an `.svg` - the editable source and the only copy, except the
-carrier's, which [`stm32-carrier.py`](stm32-carrier.py) writes: edit the script, never the SVG.
+Build drawings for NEXUS. The drawings are `.svg` files in [`renders/`](renders/), and for two of them
+that is the editable source and the only copy. The carrier's is the exception: [`scripts/stm32-carrier.py`](scripts/stm32-carrier.py)
+writes it, so edit the script, never the SVG.
 
 **No PDFs.** They are generated once, when the design is frozen. Until then the SVG is the
 truth and a stale PDF beside it is just a second thing to get wrong. To read one, open the
@@ -9,9 +10,9 @@ SVG in a browser; to render, point headless Chrome at it.
 
 | Drawing | Owns |
 |---|---|
-| [chassis-layout.svg](chassis-layout.svg) | Where components sit on the **three** decks, to scale at 1.7 px/mm, plus the side elevation of the deck stack |
-| [wiring-schematic.svg](wiring-schematic.svg) | What connects to what - fuses, switches, wire gauges, 5 V rails, CAN, I²C, motor control |
-| [stm32-carrier.svg](stm32-carrier.svg) | Soldering and wiring for the three kit boards: A and B, which the Discovery drops onto, and C, the 5 V split. Component side and solder side, hole by hole, with netlist and pre-solder checks (MEC-08, MEC-15, HW-19). **Generated** by `python3 stm32-carrier.py`, which also feeds the 3D animation in [`../mechanical/scripts/animate-carrier.py`](../mechanical/scripts/animate-carrier.py) |
+| [chassis-layout.svg](renders/chassis-layout.svg) | Where components sit on the **three** decks, to scale at 1.7 px/mm, plus the side elevation of the deck stack |
+| [wiring-schematic.svg](renders/wiring-schematic.svg) | What connects to what - fuses, switches, wire gauges, 5 V rails, CAN, I²C, motor control |
+| [stm32-carrier.svg](renders/stm32-carrier.svg) | Soldering and wiring for the three kit boards: A and B, which the Discovery drops onto, and C, the 5 V split. Component side and solder side, hole by hole, with netlist and pre-solder checks (MEC-08, MEC-15, HW-19). **Generated** by `python3 stm32-carrier.py`, which also feeds the 3D animation in [`../mechanical/scripts/animate-carrier.py`](../mechanical/scripts/animate-carrier.py) |
 | [`../decisions/README.md`](../decisions/README.md) | **Why** the drawings look the way they do - HW, MEC, SYS and SW entries, each with its reasoning and consequences. Not in this folder any more |
 
 Part numbers, prices and status live in [`../bom/BOM.md`](../bom/BOM.md);

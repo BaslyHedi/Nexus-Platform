@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Check the STM32 carrier's routing in hardware/stm32-carrier.py (MEC-15, 2026-09-30).
+"""Check the STM32 carrier's routing in hardware/scripts/stm32-carrier.py (MEC-15, 2026-09-30).
 
     python3 tools/check-carrier-routing.py        # exits 1 and lists the problems, if any
 
@@ -13,7 +13,7 @@ import sys
 sys.dont_write_bytecode = True             # a stale cached module once hid a real overlap
 import importlib.util as u, math, itertools, os
 HERE = os.path.dirname(os.path.abspath(__file__))
-s = u.spec_from_file_location('carrier', os.path.join(HERE, '..', 'hardware', 'stm32-carrier.py'))
+s = u.spec_from_file_location('carrier', os.path.join(HERE, '..', 'hardware', 'scripts', 'stm32-carrier.py'))
 C = u.module_from_spec(s); s.loader.exec_module(C)
 ci = C.ci
 
