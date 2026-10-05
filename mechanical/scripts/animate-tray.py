@@ -50,8 +50,8 @@ LIFT = 60.0                                   # plate 2 is worked on this far ab
 Z_TRAY = ZP_TOP + T                           # the tray's top face
 BOARDS = {'A': (117.00, 187.00, 5.11, 55.11, 8), 'B': (119.54, 189.54, 60.99, 110.99, 8),
           'C': (85.50, 115.50, 25.20, 95.20, 8)}          # plate-2 x0 x1 y0 y1, standoff height
-FIXINGS = {'F1': (148.18, 23.76, 3.18), 'F2': (148.18, 72.24, 2.71), 'F5': (99.24, 38.76, 3.18), 'F6': (99.24, 81.76, 3.18),
-           'F7': (24.82, 60.24, 3.18), 'F8': (52.82, 60.24, 3.18)}
+FIXINGS = {'T1': (24.82, 60.24, 3.18), 'T2': (52.82, 60.24, 3.18), 'T3': (99.24, 81.76, 3.18),
+           'T4': (120.06, 35.94, 2.71), 'T5': (148.18, 81.76, 3.18), 'T6': (148.18, 96.76, 3.18)}
 BAUER_HOLES = [(16.0, 63.0), (70.0, 63.0)]            # the Bauer's two 6.8 mm holes: 5 and 59 mm from its front end, 26 mm from its leads edge (y 89)
 SPLICES = [(42.0, 60.6, 96.0, 109.0), (42.0, 60.6, 11.5, 24.5)]     # S6 (+) left of the Bauer, S7 (-) its mirror on the right
 BAUER = (11.0, 75.0, 32.0, 89.0, 22.0)         # x0 x1 y0 y1 height: 10.5 mm clear of board C, for its cables
@@ -82,7 +82,7 @@ CAPTIONS = [
     ((19, 22.5), "5  The S6 and S7 splices go beside the Bauer, one each side, where their levers can open"),
     ((22.5, 29.5), "Step 2. The unit lifts onto plate 2: every tray hole lands on a plate hole, the window on the wire opening"),
     ((29.5, 32.5), "6  The 12 V wires come up the plate's two slots to the splices"),
-    ((32.5, 37), "7  F1, F2, F5, F6, F7, F8: a screw from below into each pocket (a washer in the M3 holes)"),
+    ((32.5, 37), "7  T1 to T6: an M2.5 screw from below into each pocket (a washer in the M3 holes)"),
     ((37, 41.5), "Section through one fixing: plate 2, the tray with its captive nut, the screw, the Bauer above"),
     ((41.5, 48), "8  Plate 2 comes off its blocks and lowers onto the chassis standoffs"),
     ((48, 51), "9  The Discovery plugs onto the sockets of A and B"),

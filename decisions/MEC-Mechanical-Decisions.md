@@ -1134,7 +1134,7 @@ return - goes up through it, between the buses. The rearward runs lie flat on pl
   and 18.6 × 18.4 for the 3-port.
 - The fuse holder body with calipers - 50 × 18 × 30 is scaled off the vendor photo.
 - The pack's height with its felt (modelled 21 + 3) and the driver's top height.
-- The screw heads under plate 2 - carrier F1-F4 and board C's F5, F6 - against the taped parts.
+- The screw heads under plate 2 - carrier F1-F4 and board C's F5, F6 - against the taped parts. *Done for the tray's own six fixings in MEC-17 (2026-10-05); the direct-fixing scheme it replaces would have clashed.*
   F3 lands at the motor fuse's lid edge.
 - The SW1 / SW2 tab layout, and which tab carries LED − (runs 13 and 14).
 - That the driver's VM socket can be reached from the right side under the motor fuse - about
@@ -1184,8 +1184,7 @@ the BOM's "54 mm matches no chassis rectangle" no longer matters.)
 - **Holding it:** two M3 x 8 screws from above through its holes into M3 nuts held in hex pockets in the
   tray (E1 at (16, 63), E2 at (70, 63)), and a low rim of four corner legs 0.6 mm clear of the body to
   locate it.
-- **Held to the plate** by F7 (24.82, 60.24) and F8 (52.82, 60.24), two more of the plate's M3 holes,
-  under the Bauer.
+- **Held to the plate** by T1 (24.82, 60.24) and T2 (52.82, 60.24), two of the plate's M3 holes under the Bauer.
 - **Cable passages:** the plate's two slots beside the Bauer (x 56-80, y 27-37 and 83-93) are open in the
   tray too, so cables can drop to the harness board below, and these are the wires to the splices. The window
   by C is left for the 6 V pair and the driver's I2C lead.
@@ -1197,12 +1196,12 @@ edge, those that would run into a nut pocket (the two 9 mm holes among them), an
 slots (x 109-158) that run off the tray's edge. The large slot at x 161-176 cuts the A-B bridge; the
 tray stays one piece through the front part and the 20-25 mm bands beside the slot.
 
-**Fixings.** Six of those holes take the tray down, M2.5 from below: F1 (148.18, 23.76), F2
-(148.18, 72.24), F5 (99.24, 38.76), F6 (99.24, 81.76), and F7, F8 under the Bauer. Each has a hex pocket
-on the top that captures the nut. This matters: the nut sits under a board or the Bauer, so without a
-captive pocket the tray could not be unscrewed without taking them off first. A hand-cut sheet cannot
-have the pocket. The board holes are separate (four per board, M2.5, counterbored from below) and no
-longer have to match anything on the plate.
+**Fixings (T1-T6).** Six of those holes take the tray down, M2.5 from below: T1 (24.82, 60.24) and T2 (52.82, 60.24) under
+the Bauer, T3 (99.24, 81.76) under board C, T4 (120.06, 35.94) under A, T5 (148.18, 81.76) and T6 (148.18, 96.76) under B. They
+are named T so they do not collide with MEC-15's F1-F6, the direct-fixing scheme this replaces. Each has a hex pocket on the top
+that captures the nut. This matters: the nut sits under a board or the Bauer, so without a captive pocket the tray could not
+be unscrewed without taking them off first. A hand-cut sheet cannot have the pocket. The board holes are separate (four per
+board, M2.5, counterbored from below) and no longer have to match anything on the plate.
 
 **Assembly order (proposed), animated in
 [`../mechanical/scripts/animate-tray.py`](../mechanical/scripts/animate-tray.py).** The tray goes on after
@@ -1217,21 +1216,20 @@ its boards would be in the way while plate 2 lies upside down (MEC-16).
 4. The S6 and S7 splices into their outlines, either side of the Bauer.
 5. The unit is lifted across onto plate 2 (raised on blocks, as in MEC-16's lowering), its holes over
    the plate's, the Bauer's 12 V wires pulled up the two slots to the splices.
-6. F1, F2, F5, F6, F7, F8: an M2.5 screw from below into each nut pocket, a washer in the M3 holes.
+6. T1 to T6: an M2.5 screw from below into each nut pocket, a washer in the M3 holes.
 7. Plate 2 comes off the blocks and lowers onto the chassis standoffs; the Discovery plugs on last.
 
 This differs from the MEC-16 animation, which has the carrier on plate 2 from the start. The tray lifts
 out again as one unit, six screws from below. The video builds the boards from `stm32-carrier.py`, so
 they are the boards as built; the harness parts under plate 2 and the Discovery are stand-ins.
 
-**Screw heads under plate 2, checked against `plate1.py` (2026-10-05).** The heads are the tray's one
-clash with the harness board, MEC-16's open check, now with numbers (M2.5 head r 2.3, washer r 3.0):
-F5 (99.24, 38.76) is 1.24 mm from the (+) bus's edge at y 40, so the head overlaps it by 1.1 mm and
-the washer by 1.8 mm; F2 (148.18, 72.24) is 2.24 mm from the (-) bus's edge at y 70, so the head clears
-by 0.06 mm and its washer is not needed (the hole is M2.5); F1 clears the motor fuse (x 152) by 1.5 mm
-without its washer, 0.8 mm with. F6, F7 and F8 are clear (nothing is taped under plate 2 ahead of
-x 83). Either move the (+) bus about 2 mm in y, or use a low button head and no washer at F5, or take F5
-from another hole. Open.
+**Screw heads under plate 2, checked against `plate1.py` (2026-10-05).** This was MEC-16's open check, and it decided which holes
+the tray uses. Against the taped parts (head r 2.3, washer r 3.0, distance from the hole centre to the part's edge), the
+direct-fixing holes clash: F1 (148.18, 23.76) is 2.2 mm from the main fuse holder, F2 (148.18, 72.24) 2.2 mm from the (-) bus, F5
+(99.24, 38.76) only 1.2 mm from the (+) bus. The tray does not need those holes, because it can use any plate hole under
+it, so it takes six that are clear: T3 8.8 mm from the nearest part (the INA226), T5 7.3 (the UBEC fuse), T4 3.9 (the main
+fuse), T6 3.8 (the UBEC fuse, 0.8 mm clear of a washer), and T1, T2 under the Bauer, where nothing is taped. That
+rejects the alternative of moving the buses. The wire runs still have to be routed round the heads.
 
 **The window** is now the plate's real opening (x 110.3-133.0, y 42.5-77.9, measured on the layout,
 where this record had assumed y 40.4-75.8) cut off at x 115.0, so it stays 1.7 mm clear of A's
@@ -1246,9 +1244,9 @@ standoffs already fitted. Only the tray is screwed to plate 2.
 - **Nothing drilled into the built boards.** The kit boards' four corner holes are all free on A
   and B (fitted with standoffs, 2026-10-03), and the tray follows the boards as built, A's one-pitch
   offset included.
-- **Six screws through plate 2, none off-grid and none new.** The tray reuses the plate holes of F1,
-  F2, F5 and F6, and two M3 holes under the Bauer. F3, which MEC-16 found landing on the motor
-  fuse's lid under plate 2, and F4 are dropped.
+- **Six screws through plate 2, none off-grid and none new.** The tray uses six existing plate holes
+  chosen to be clear of the taped parts (see "Fixings"), so MEC-15's F1-F6, three of which clash with a fuse holder or a bus
+  under plate 2, are all dropped.
 - **The electronics lift out as one unit** for bench work, and the tray can stand on its own.
 - **It carries the S6 / S7 splices too,** in lanes either side of the Bauer (see "Where the splices go"), where
   their levers can open and the plate's two slots bring up their wires.
@@ -1299,7 +1297,6 @@ which is why the second lane is the mirror of the first. The tray has a wing for
 - **Board C's silkscreen is the other way round from A and B** (photo, 2026-10-05): numbers 1-24 along the long side, 1 at the USB-C end, letters A-J across. *Renamed the same day:* A1 is at the bottom left with components up and the USB-C socket on the left, so F5 is C·F4 and F6 is C·F21, in `stm32-carrier.py`, MEC-15, HW-19 and the BOM.
 - **Whether a 4.7 mm window is wide enough** for the 6 V pair and the driver's I2C lead, and how the 6 V pair then gets from the window to A's 6V IN, about 60 mm away under the 8 mm gap.
 - **Whether anything above plate 2 stands on (186.12, 9.71) and (186.12, 110.82).** The tray covers them: they are 2.5 mm from A's and B's rear corner holes.
-- **MEC-16's check on the screw heads under plate 2** still applies to the plate holes kept: see F5 above.
 - **Which side of the vehicle the Bauer's leads edge faces.** The photo fixes the leads and the holes to the same edge; putting it on the left is a routing choice.
 - **The M3 nut's real depth and across-flats** (assumed 2.4 and 5.5 mm), before printing the Bauer's two pockets.
 - **Print or sheet.** The model serves both.

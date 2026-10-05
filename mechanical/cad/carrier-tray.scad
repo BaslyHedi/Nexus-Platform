@@ -20,7 +20,7 @@
 // WHAT THE TRAY HAS
 //   - every plate-2 hole that lies wholly under it, copied at the plate's own diameter, plus the plate's
 //     large slot (PLATE_SLOT), so nothing that is open on the plate is blocked by the tray;
-//   - six fixing holes that land on six of those plate holes (F1, F2, F5, F6 and F7, F8 under the Bauer), each with a hex pocket
+//   - six fixing holes that land on six of those plate holes (T1-T6), each with a hex pocket
 //     on top that captures an M2.5 nut, so the tray comes off with a screw per fixing from BELOW; plus two M3 pockets
 //     under the Bauer's two mounting holes;
 //   - twelve board holes, four per board (M2.5 clearance), with counterbores from below so the tray sits
@@ -67,18 +67,21 @@ PLACE = [ 8.50, 5.11];       // plate-2 position of the tray frame's origin: the
 // everything ahead of x 17.5 are outside it; (16.94, 32.24/88.24) and (17.82, 53.24/67.24) are on its front edge;
 // (186.12, 9.71/110.82) sit 2.5 mm from A's and B's rear corner holes; the long side slots
 // (x 109-158, y 10-15 and 105-111) run off the tray's front edge.
-FIXINGS = [ // the six the tray is screwed down with: F1, F2, F5, F6 as MEC-15 named them, F7 and F8 under the Bauer
-    [148.18, 23.76, 3.18], // F1  M3 hole, M2.5 and a washer
-    [148.18, 72.24, 2.71], // F2
-    [ 99.24, 38.76, 3.18], // F5
-    [ 99.24, 81.76, 3.18], // F6
-    [ 24.82, 60.24, 3.18], // F7  under the Bauer, on the plate's M3 line along y 60.24
-    [ 52.82, 60.24, 3.18], // F8
+// The six plate holes the tray is screwed down with, T1-T6 (MEC-15's F1-F6 were the direct-fixing scheme this replaces). Chosen
+// because their screw heads, with a washer in the M3 holes, are at least 0.8 mm clear of every part taped under plate 2 (MEC-17);
+// the holes the old scheme used (148.18, 23.76), (148.18, 72.24) and (99.24, 38.76) are 2.2, 2.2 and 1.2 mm from a fuse holder or a bus.
+FIXINGS = [
+    [ 24.82, 60.24, 3.18], // T1  under the Bauer, on the plate's M3 line along y 60.24; M3 hole, M2.5 screw and a washer
+    [ 52.82, 60.24, 3.18], // T2  under the Bauer
+    [ 99.24, 81.76, 3.18], // T3  under board C (MEC-15's F6)
+    [120.06, 35.94, 2.71], // T4  under board A; M2.5 hole, no washer
+    [148.18, 81.76, 3.18], // T5  under board B
+    [148.18, 96.76, 3.18], // T6  under board B, near its rear-left corner
 ];
 PLATE_HOLES = [
     [ 96.71,  52.65, 2.71], [ 96.71,  67.88, 2.71], [102.18,  48.24, 2.71], [102.18,  72.24, 2.71],
-    [120.06,  35.94, 2.71], [120.06,  84.53, 2.71], [143.47,  52.65, 2.71], [143.47,  67.88, 2.71],
-    [148.18,  38.76, 3.18], [148.18,  48.24, 2.71], [148.18,  81.76, 3.18], [148.18,  96.76, 3.18],
+    [120.06,  84.53, 2.71], [143.47,  52.65, 2.71], [143.47,  67.88, 2.71],
+    [148.18,  23.76, 3.18], [148.18,  38.76, 3.18], [148.18,  48.24, 2.71], [148.18,  72.24, 2.71], [ 99.24,  38.76, 3.18],
     [162.06,  16.71, 2.47], [162.06, 103.82, 2.47],
     [169.88,  14.24, 2.71], [169.88,  20.24, 2.71], [169.88, 100.24, 2.71], [169.88, 106.24, 2.71],
     [ 92.65,  36.35, 4.30], [ 92.65,  84.25, 4.30],
