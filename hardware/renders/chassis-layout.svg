@@ -335,35 +335,42 @@
 <text x="312.0" y="242.1" font-size="7.8" fill="#4338ca" text-anchor="middle">µSD on the UNDERSIDE</text>
 <text x="300" y="288" font-size="7.8" fill="#64748b" text-anchor="middle">pattern 49.00 × 58.00 from NXP drill T11 - 0.06 mm out in x · dashed = its other 2 holes</text>
 <text x="300" y="300" font-size="8.5" fill="#7c3aed" text-anchor="middle">fascia upper panel clamps here - 2 × M3×8 driven down from the top (MEC-07)</text>
-<!-- STM32 carrier: kit boards A (P1) and B (P2), Discovery above, board C = 5 V split (MEC-15, HW-19) -->
+<!-- Carrier tray (MEC-17): boards A and B (P1, P2 sides), the Discovery above, board C = 5 V split, the Bauer and S6 / S7 all sit on it -->
+<path d="M374.7 395.2 L376.6 395.7 L377.6 396.2 L378.4 396.7 L379.9 398.2 L380.9 399.9 L381.5 402.9 L381.2 405.0 L380.4 406.8 L379.2 408.5 L377.9 409.5 L377.9 472.9 L379.2 473.9 L380.4 475.5 L381.2 477.4 L381.5 479.4 L381.2 481.5 L380.4 483.3 L379.2 485.0 L377.9 486.0 L377.9 490.1 L379.0 490.2 L381.0 490.7 L382.7 491.7 L383.5 492.4 L384.2 493.2 L385.2 494.9 L385.8 497.9 L385.5 500.0 L384.7 501.8 L383.5 503.5 L382.2 504.5 L382.2 567.9 L383.5 568.9 L384.7 570.5 L385.5 572.4 L385.8 574.4 L385.2 577.4 L384.2 579.2 L382.7 580.6 L381.0 581.7 L378.0 582.3 L375.9 582.0 L375.0 581.7 L373.2 580.6 L371.4 578.7 L274.0 578.7 L272.2 580.6 L270.5 581.7 L267.5 582.3 L265.4 582.0 L264.5 581.7 L262.7 580.6 L261.3 579.2 L260.2 577.4 L259.7 575.5 L259.7 573.4 L260.2 571.4 L261.3 569.7 L263.2 567.9 L263.2 550.1 L262.7 551.1 L260.6 551.8 L258.6 551.8 L256.9 553.8 L255.1 554.8 L252.1 555.4 L250.1 555.1 L248.2 554.4 L246.6 553.1 L245.6 551.8 L216.1 551.8 L215.1 553.1 L213.5 554.4 L211.6 555.1 L209.6 555.4 L207.6 555.1 L205.7 554.4 L204.1 553.1 L203.1 551.8 L196.0 551.8 L196.0 560.9 L179.0 560.9 L168.8 570.2 L163.0 577.0 L127.1 577.0 L117.8 571.9 L100.8 561.5 L100.8 551.1 L76.2 545.5 L74.5 543.9 L74.5 441.0 L76.2 439.3 L100.8 433.6 L100.8 423.3 L117.8 412.9 L127.1 407.9 L163.0 407.9 L168.8 414.6 L179.0 424.0 L196.0 424.0 L196.0 432.8 L203.1 432.8 L204.1 431.6 L205.7 430.3 L207.6 429.5 L209.6 429.3 L211.6 429.5 L213.5 430.3 L215.1 431.6 L216.1 432.8 L245.6 432.8 L246.6 431.6 L248.2 430.3 L250.1 429.5 L252.1 429.3 L254.1 429.5 L256.0 430.3 L257.6 431.6 L258.6 432.8 L258.9 432.8 L258.9 409.5 L257.6 408.5 L256.4 406.8 L255.6 405.0 L255.3 402.9 L255.9 399.9 L256.9 398.2 L258.4 396.7 L260.2 395.7 L261.1 395.4 L263.1 395.1 L266.1 395.7 L267.9 396.7 L269.7 398.7 L367.1 398.7 L368.9 396.7 L370.7 395.7 L372.6 395.2 Z" fill="#0f766e" fill-opacity="0.09" stroke="#0f766e" stroke-width="1.3" stroke-dasharray="6 3"/>
 <rect x="258.9" y="398.7" width="119.0" height="85.0" rx="3" fill="#ecfdf5" fill-opacity="0.92" stroke="#047857" stroke-width="1.6"/>
 <rect x="263.2" y="493.7" width="119.0" height="85.0" rx="3" fill="#ecfdf5" fill-opacity="0.92" stroke="#047857" stroke-width="1.6"/>
 <rect x="270.9" y="436.9" width="103.6" height="8.6" rx="1.5" fill="#99f6e4" stroke="#0f766e" stroke-width="0.8"/>
 <rect x="270.9" y="523.2" width="103.6" height="8.6" rx="1.5" fill="#fed7aa" stroke="#b45309" stroke-width="0.8"/>
 <rect x="264.9" y="428.3" width="164.9" height="112.2" rx="3" fill="#eef2ff" fill-opacity="0.55" stroke="#4338ca" stroke-width="1.3" stroke-dasharray="5 3"/>
 <rect x="205.4" y="432.8" width="51.0" height="119.0" rx="3" fill="#ecfdf5" fill-opacity="0.92" stroke="#047857" stroke-width="1.6"/>
-<circle cx="311.9" cy="430.4" r="4.2" fill="none" stroke="#047857" stroke-width="1.8"/><circle cx="311.9" cy="430.4" r="1.5" fill="#047857"/>
-<text x="317.3" y="426.7" font-size="7" fill="#047857" font-weight="700" text-anchor="start">F1</text>
-<circle cx="311.9" cy="512.7" r="4.2" fill="none" stroke="#047857" stroke-width="1.8"/><circle cx="311.9" cy="512.7" r="1.5" fill="#047857"/>
-<text x="317.4" y="509.0" font-size="7" fill="#047857" font-weight="700" text-anchor="start">F2</text>
-<circle cx="348.8" cy="414.2" r="4.2" fill="none" stroke="#047857" stroke-width="1.8"/><circle cx="348.8" cy="414.2" r="1.5" fill="#047857"/>
-<text x="354.2" y="410.5" font-size="7" fill="#047857" font-weight="700" text-anchor="start">F3</text>
-<circle cx="348.8" cy="560.4" r="4.2" fill="none" stroke="#047857" stroke-width="1.8"/><circle cx="348.8" cy="560.4" r="1.5" fill="#047857"/>
-<text x="354.2" y="556.7" font-size="7" fill="#047857" font-weight="700" text-anchor="start">F4</text>
-<circle cx="228.7" cy="455.9" r="4.2" fill="none" stroke="#047857" stroke-width="1.8"/><circle cx="228.7" cy="455.9" r="1.5" fill="#047857"/>
-<circle cx="228.7" cy="529.0" r="4.2" fill="none" stroke="#047857" stroke-width="1.8"/><circle cx="228.7" cy="529.0" r="1.5" fill="#047857"/>
 <text x="264.9" y="410.4" font-size="7.5" fill="#047857" font-weight="700" text-anchor="start">A · 5×7 · P1 side</text>
 <text x="264.9" y="570.2" font-size="7.5" fill="#047857" font-weight="700" text-anchor="start">B · 5×7 · P2 side</text>
 <text x="343.1" y="478.4" font-size="8.2" fill="#4338ca" text-anchor="middle">STM32F4DISCOVERY 66 × 97</text>
 <text x="343.1" y="491.1" font-size="7" fill="#4338ca" text-anchor="middle">CN1 at the rear, x 217.5</text>
 <text x="230.8" y="488.6" font-size="9" fill="#047857" font-weight="700" text-anchor="middle">C</text>
 <text x="230.8" y="498.8" font-size="6.5" fill="#047857" text-anchor="middle">5 V split</text>
-<text x="342.2" y="603.4" font-size="7.8" fill="#047857" text-anchor="middle">carrier 100.6 × 106: A·X.. at x 181.20, B and header row 1 at x 183.74 (as built) · 6 × M2.5 on 10 mm standoffs (MEC-15)</text>
-<rect x="94.0" y="444.4" width="108.8" height="96.9" rx="2.5" fill="#fff1f2" stroke="#be123c" stroke-width="1.4"/>
-<text x="149.2" y="470.0" font-size="9" font-weight="700" fill="#be123c" text-anchor="middle">BAUER 50 W</text>
-<text x="149.2" y="480.0" font-size="7" fill="#be123c" text-anchor="middle">64 x 57 x 22</text><text x="149.2" y="524.0" font-size="7" fill="#be123c" text-anchor="middle">2 x 6.8 ears, 54 mm apart</text>
-<rect x="94.0" y="444.4" width="108.8" height="96.9" rx="2.5" fill="none" stroke="#dc2626" stroke-width="2" stroke-dasharray="5 3"/><circle cx="196.0" cy="452.9" r="6" fill="#dc2626"/><text x="196.0" y="456.3" font-size="9" font-weight="700" fill="#ffffff" text-anchor="middle">?</text>
-<circle cx="102.5" cy="492.9" r="5.8" fill="none" stroke="#be123c" stroke-width="1.6"/><circle cx="102.5" cy="492.9" r="1.6" fill="#be123c"/><circle cx="194.3" cy="492.9" r="5.8" fill="none" stroke="#be123c" stroke-width="1.6"/><circle cx="194.3" cy="492.9" r="1.6" fill="#be123c"/><text x="473.1" y="454.6" font-size="7" fill="#7c3aed" text-anchor="middle">one M3×12 here</text>
+<text x="342.2" y="603.4" font-size="7.8" fill="#047857" text-anchor="middle">carrier 100.6 × 106: A·X.. at x 181.20, B and header row 1 at x 183.74 (as built) · 8 mm standoffs on the 4 mm tray, T1-T6 below (MEC-17)</text>
+<circle cx="102.2" cy="492.4" r="4.2" fill="none" stroke="#4338ca" stroke-width="1.8"/><line x1="95.7" y1="492.4" x2="108.7" y2="492.4" stroke="#4338ca" stroke-width="1.3"/><line x1="102.2" y1="485.9" x2="102.2" y2="498.9" stroke="#4338ca" stroke-width="1.3"/><text x="108.0" y="488.0" font-size="7" fill="#4338ca" font-weight="700" text-anchor="start">T1</text>
+<circle cx="149.8" cy="492.4" r="4.2" fill="none" stroke="#4338ca" stroke-width="1.8"/><line x1="143.3" y1="492.4" x2="156.3" y2="492.4" stroke="#4338ca" stroke-width="1.3"/><line x1="149.8" y1="485.9" x2="149.8" y2="498.9" stroke="#4338ca" stroke-width="1.3"/><text x="155.6" y="488.0" font-size="7" fill="#4338ca" font-weight="700" text-anchor="start">T2</text>
+<circle cx="228.7" cy="529.0" r="4.2" fill="none" stroke="#4338ca" stroke-width="1.8"/><line x1="222.2" y1="529.0" x2="235.2" y2="529.0" stroke="#4338ca" stroke-width="1.3"/><line x1="228.7" y1="522.5" x2="228.7" y2="535.5" stroke="#4338ca" stroke-width="1.3"/><text x="234.5" y="524.6" font-size="7" fill="#4338ca" font-weight="700" text-anchor="start">T3</text>
+<circle cx="264.1" cy="451.1" r="4.2" fill="none" stroke="#4338ca" stroke-width="1.8"/><line x1="257.6" y1="451.1" x2="270.6" y2="451.1" stroke="#4338ca" stroke-width="1.3"/><line x1="264.1" y1="444.6" x2="264.1" y2="457.6" stroke="#4338ca" stroke-width="1.3"/><text x="269.9" y="446.7" font-size="7" fill="#4338ca" font-weight="700" text-anchor="start">T4</text>
+<circle cx="311.9" cy="529.0" r="4.2" fill="none" stroke="#4338ca" stroke-width="1.8"/><line x1="305.4" y1="529.0" x2="318.4" y2="529.0" stroke="#4338ca" stroke-width="1.3"/><line x1="311.9" y1="522.5" x2="311.9" y2="535.5" stroke="#4338ca" stroke-width="1.3"/><text x="317.7" y="524.6" font-size="7" fill="#4338ca" font-weight="700" text-anchor="start">T5</text>
+<circle cx="311.9" cy="554.5" r="4.2" fill="none" stroke="#4338ca" stroke-width="1.8"/><line x1="305.4" y1="554.5" x2="318.4" y2="554.5" stroke="#4338ca" stroke-width="1.3"/><line x1="311.9" y1="548.0" x2="311.9" y2="561.0" stroke="#4338ca" stroke-width="1.3"/><text x="317.7" y="550.1" font-size="7" fill="#4338ca" font-weight="700" text-anchor="start">T6</text>
+<path d="M92.3 444.4 L173.9 444.4 L187.5 455.4 L187.5 530.2 L173.9 541.3 L92.3 541.3 L78.7 530.2 L78.7 455.4 Z" fill="#fff1f2" stroke="#be123c" stroke-width="1.4"/>
+<text x="133.1" y="470.0" font-size="9" font-weight="700" fill="#be123c" text-anchor="middle">BAUER 50 W</text>
+<text x="133.1" y="480.0" font-size="7" fill="#be123c" text-anchor="middle">64 x 57 x 22</text>
+<text x="133.1" y="512.4" font-size="7" fill="#be123c" text-anchor="middle">M3 through its own 2 holes</text>
+<circle cx="87.2" cy="497.1" r="5.8" fill="none" stroke="#be123c" stroke-width="1.6"/><circle cx="87.2" cy="497.1" r="1.6" fill="#be123c"/>
+<circle cx="179.0" cy="497.1" r="5.8" fill="none" stroke="#be123c" stroke-width="1.6"/><circle cx="179.0" cy="497.1" r="1.6" fill="#be123c"/>
+<line x1="124.6" y1="541.3" x2="124.6" y2="548.1" stroke="#eab308" stroke-width="2"/>
+<line x1="131.4" y1="541.3" x2="131.4" y2="548.1" stroke="#111827" stroke-width="2"/>
+<line x1="138.2" y1="541.3" x2="138.2" y2="548.1" stroke="#111827" stroke-width="2"/>
+<line x1="145.0" y1="541.3" x2="145.0" y2="548.1" stroke="#dc2626" stroke-width="2"/>
+<text x="133.1" y="534.5" font-size="6" fill="#be123c" text-anchor="middle">leads edge ▼</text>
+<text x="236.8" y="410.4" font-size="7" font-weight="700" fill="#0f766e" text-anchor="middle">carrier tray</text>
+<rect x="131.4" y="553.2" width="31.6" height="22.1" rx="1.5" fill="#fed7aa" stroke="#c2410c" stroke-width="1.2"/><text x="147.2" y="567.1" font-size="7" font-weight="700" fill="#c2410c" text-anchor="middle">S6</text>
+<rect x="131.4" y="409.6" width="31.6" height="22.1" rx="1.5" fill="#fed7aa" stroke="#c2410c" stroke-width="1.2"/><text x="147.2" y="423.5" font-size="7" font-weight="700" fill="#c2410c" text-anchor="middle">S7</text>
+<text x="473.1" y="454.6" font-size="7" fill="#7c3aed" text-anchor="middle">one M3×12 here</text>
 <text x="473.1" y="463.9" font-size="7" fill="#7c3aed" text-anchor="middle">clamps BOTH</text>
 <text x="473.1" y="473.3" font-size="7" fill="#7c3aed" text-anchor="middle">fascia panels</text>
 <text x="473.1" y="482.6" font-size="7" fill="#7c3aed" text-anchor="middle">(MEC-07)</text>
@@ -601,7 +608,13 @@
 <text x="442.5" y="759.0" font-size="5.4" font-weight="400" fill="#475569" text-anchor="middle">trunk to SW1 / SW2</text>
 </g>
 <text x="66" y="893.3" font-size="8" fill="#b45309">Only two plugs cross to plate 1, both from the right side once closed: SM-2P at S1, driver VM at S2/S4. The switch panel rides with plate 2. Thick edge = fuse lid.</text>
-<text x="66" y="905.3" font-size="8" fill="#b45309">Nominal sizes (MEC-16 "To confirm"). Check the carrier and board C screw heads before taping - F3 lands at the motor fuse lid.</text>
+<text x="66" y="905.3" font-size="8" fill="#b45309">Nominal sizes (MEC-16 "To confirm"). The six tray screw heads T1-T6 are drawn; each is at least 0.8 mm clear of the taped parts (MEC-17).</text>
+<circle cx="102.2" cy="768.7" r="3.9" fill="#ffffff" stroke="#4338ca" stroke-width="1.6"/><circle cx="102.2" cy="768.7" r="1.4" fill="#4338ca"/><text x="108.0" y="764.7" font-size="6" font-weight="700" fill="#4338ca" text-anchor="start">T1</text>
+<circle cx="149.8" cy="768.7" r="3.9" fill="#ffffff" stroke="#4338ca" stroke-width="1.6"/><circle cx="149.8" cy="768.7" r="1.4" fill="#4338ca"/><text x="155.6" y="764.7" font-size="6" font-weight="700" fill="#4338ca" text-anchor="start">T2</text>
+<circle cx="228.7" cy="732.2" r="3.9" fill="#ffffff" stroke="#4338ca" stroke-width="1.6"/><circle cx="228.7" cy="732.2" r="1.4" fill="#4338ca"/><text x="234.5" y="728.1" font-size="6" font-weight="700" fill="#4338ca" text-anchor="start">T3</text>
+<circle cx="264.1" cy="810.1" r="3.9" fill="#ffffff" stroke="#4338ca" stroke-width="1.6"/><circle cx="264.1" cy="810.1" r="1.4" fill="#4338ca"/><text x="269.9" y="806.0" font-size="6" font-weight="700" fill="#4338ca" text-anchor="start">T4</text>
+<circle cx="311.9" cy="732.2" r="3.9" fill="#ffffff" stroke="#4338ca" stroke-width="1.6"/><circle cx="311.9" cy="732.2" r="1.4" fill="#4338ca"/><text x="317.7" y="728.1" font-size="6" font-weight="700" fill="#4338ca" text-anchor="start">T5</text>
+<circle cx="311.9" cy="706.7" r="3.9" fill="#ffffff" stroke="#4338ca" stroke-width="1.6"/><circle cx="311.9" cy="706.7" r="1.4" fill="#4338ca"/><text x="317.7" y="702.6" font-size="6" font-weight="700" fill="#4338ca" text-anchor="start">T6</text>
 <text x="600" y="110" font-size="13" font-weight="700" fill="#1a1a1a">DECK STACK - side elevation</text>
 <line x1="600" y1="118" x2="1280" y2="118" stroke="#e2e8f0"/>
 <rect x="600" y="156.0" width="300" height="4.7" fill="#cbd5e1" stroke="#94a3b8"/>

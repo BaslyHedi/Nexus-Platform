@@ -178,42 +178,97 @@ def frdm():
     return o
 
 
+TRAY = [   # the carrier tray's outline on plate 2, mm (mechanical/cad/carrier-tray.scad, PART="outline"; MEC-17)
+    (185.1, 3.05), (186.26, 3.36), (186.8, 3.63), (187.3, 3.96), (188.15, 4.81),
+    (188.75, 5.85), (189.1, 7.61), (188.94, 8.8), (188.48, 9.91), (187.75, 10.86),
+    (187, 11.46), (187, 48.76), (187.75, 49.36), (188.48, 50.31), (188.94, 51.42),
+    (189.1, 52.61), (188.94, 53.8), (188.48, 54.91), (187.75, 55.86), (187, 56.46),
+    (187, 58.89), (187.64, 58.93), (188.8, 59.24), (189.84, 59.84), (190.29, 60.24),
+    (190.69, 60.69), (191.29, 61.73), (191.64, 63.49), (191.48, 64.68), (191.02, 65.79),
+    (190.29, 66.74), (189.54, 67.34), (189.54, 104.64), (190.29, 105.24), (191.02, 106.19),
+    (191.48, 107.3), (191.64, 108.49), (191.29, 110.25), (190.69, 111.29), (189.84, 112.14),
+    (188.8, 112.74), (187.04, 113.09), (185.85, 112.93), (185.28, 112.74), (184.24, 112.14),
+    (183.19, 110.99), (125.89, 110.99), (124.84, 112.14), (123.8, 112.74), (122.04, 113.09),
+    (120.85, 112.93), (120.28, 112.74), (119.24, 112.14), (118.39, 111.29), (117.79, 110.25),
+    (117.48, 109.09), (117.48, 107.89), (117.79, 106.73), (118.39, 105.69), (119.54, 104.64),
+    (119.54, 94.16), (119.25, 94.76), (118, 95.2), (116.85, 95.2), (115.8, 96.35),
+    (114.76, 96.95), (113, 97.3), (111.81, 97.14), (110.7, 96.68), (109.75, 95.95),
+    (109.15, 95.2), (91.85, 95.2), (91.25, 95.95), (90.3, 96.68), (89.19, 97.14),
+    (88, 97.3), (86.81, 97.14), (85.7, 96.68), (84.75, 95.95), (84.15, 95.2),
+    (80, 95.2), (80, 100.5), (70, 100.5), (64, 106), (60.6, 110),
+    (39.5, 110), (34, 107), (24, 100.9), (24, 94.75), (9.5, 91.5),
+    (8.5, 90.5), (8.5, 30), (9.5, 29), (24, 25.66), (24, 19.6),
+    (34, 13.5), (39.5, 10.5), (60.6, 10.5), (64, 14.5), (70, 20),
+    (80, 20), (80, 25.2), (84.15, 25.2), (84.75, 24.45), (85.7, 23.72),
+    (86.81, 23.26), (88, 23.1), (89.19, 23.26), (90.3, 23.72), (91.25, 24.45),
+    (91.85, 25.2), (109.15, 25.2), (109.75, 24.45), (110.7, 23.72), (111.81, 23.26),
+    (113, 23.1), (114.19, 23.26), (115.3, 23.72), (116.25, 24.45), (116.85, 25.2),
+    (117, 25.2), (117, 11.46), (116.25, 10.86), (115.52, 9.91), (115.06, 8.8),
+    (114.9, 7.61), (115.25, 5.85), (115.85, 4.81), (116.7, 3.96), (117.74, 3.36),
+    (118.31, 3.17), (119.5, 3.01), (121.26, 3.36), (122.3, 3.96), (123.35, 5.11),
+    (180.65, 5.11), (181.7, 3.96), (182.74, 3.36), (183.9, 3.05),
+]
+
+# the tray's six fixings to plate 2 (MEC-17): screw from below into a nut held in the tray; the heads are under plate 2
+FIXINGS = [('T1', 24.82, 60.24), ('T2', 52.82, 60.24), ('T3', 99.24, 81.76), ('T4', 120.06, 35.94), ('T5', 148.18, 81.76), ('T6', 148.18, 96.76)]
+
+# the S6 / S7 splices (Bauer 12 V + and -) in a lane either side of the Bauer, 18.6 x 13 mm
+SPLICES = [('S6', 42.0, 96.0), ('S7', 42.0, 11.5)]
+
+# the Bauer 50 W (BOM 3.4a, seller's drawing): body 64 x 57, corners cut 8 x 6.5; its two mounting holes are 5 mm in from each end and
+# 26 mm from the edge the four leads leave by (here y 89, the vehicle's left), 54 mm apart
+BAUER = (11.0, 32.0, 64.0, 57.0)
+BAUER_LEADS = [(38.0, '#eab308'), (42.0, '#111827'), (46.0, '#111827'), (50.0, '#dc2626')]   # x on the leads edge: OUT+, OUT-, IN-, IN+
+BAUER_HOLES = [(16.0, 63.0), (70.0, 63.0)]
+
+
+def bauer_outline(x0, y0, w, h, cx=8.0, cy=6.5):
+    return [(x0 + cx, y0), (x0 + w - cx, y0), (x0 + w, y0 + cy), (x0 + w, y0 + h - cy), (x0 + w - cx, y0 + h), (x0 + cx, y0 + h),
+            (x0, y0 + h - cy), (x0, y0 + cy)]
+
+
+def screw_mark(view, x, y, label, colour='#4338ca'):
+    """An M2.5 screw into a chassis hole (the legend's cross), with its name."""
+    return (circle(view, x, y, 4.2, fill='none', stroke=colour, stroke_width=1.8) + line(view, x - 3.82, y, x + 3.82, y, stroke=colour, stroke_width=1.3)
+            + line(view, x, y - 3.82, x, y + 3.82, stroke=colour, stroke_width=1.3) + text(view, x + 3.4, y - 2.6, label, font_size=7, fill=colour, font_weight=700, text_anchor='start'))
+
+
 def carrier_and_bauer():
-    """Plate 2 top face: the STM32 carrier (boards A, B, C) and the Bauer placeholder."""
+    """Plate 2 top face: the carrier tray with boards A, B, C, the Bauer 50 W and the two splices (MEC-15, MEC-17)."""
     o = []
     w = o.append
-    w(comment('STM32 carrier: kit boards A (P1) and B (P2), Discovery above, board C = 5 V split (MEC-15, HW-19)'))
-    # kit boards A and B (5x7), the Discovery outline above them, board C (MEC-15); the six fixings F1-F6 follow
+    w(comment('Carrier tray (MEC-17): boards A and B (P1, P2 sides), the Discovery above, board C = 5 V split, the Bauer and S6 / S7 all sit on it'))
+    w(outline(P2, TRAY, fill='#0f766e', fill_opacity=0.09, stroke='#0f766e', stroke_width=1.3, stroke_dasharray='6 3'))
     w(rect(P2, 117, 5.12, 70, 50, rx=3, fill='#ecfdf5', fill_opacity=0.92, stroke='#047857', stroke_width=1.6))
     w(rect(P2, 119.53, 61, 70, 50, rx=3, fill='#ecfdf5', fill_opacity=0.92, stroke='#047857', stroke_width=1.6))
     w(rect(P2, 124.06, 27.59, 60.94, 5.06, rx=1.5, fill='#99f6e4', stroke='#0f766e', stroke_width=0.8))
     w(rect(P2, 124.06, 78.35, 60.94, 5.06, rx=1.5, fill='#fed7aa', stroke='#b45309', stroke_width=0.8))
     w(rect(P2, 120.53, 22.53, 97, 66, rx=3, fill='#eef2ff', fill_opacity=0.55, stroke='#4338ca', stroke_width=1.3, stroke_dasharray='5 3'))
     w(rect(P2, 85.53, 25.18, 30, 70, rx=3, fill='#ecfdf5', fill_opacity=0.92, stroke='#047857', stroke_width=1.6))
-    w(circle(P2, 148.18, 23.76, 4.2, fill='none', stroke='#047857', stroke_width=1.8) + circle(P2, 148.18, 23.76, 1.5, fill='#047857'))
-    w(text(P2, 151.35, 21.59, 'F1', font_size=7, fill='#047857', font_weight=700, text_anchor='start'))
-    w(circle(P2, 148.18, 72.18, 4.2, fill='none', stroke='#047857', stroke_width=1.8) + circle(P2, 148.18, 72.18, 1.5, fill='#047857'))
-    w(text(P2, 151.41, 70, 'F2', font_size=7, fill='#047857', font_weight=700, text_anchor='start'))
-    w(circle(P2, 169.88, 14.24, 4.2, fill='none', stroke='#047857', stroke_width=1.8) + circle(P2, 169.88, 14.24, 1.5, fill='#047857'))
-    w(text(P2, 173.06, 12.06, 'F3', font_size=7, fill='#047857', font_weight=700, text_anchor='start'))
-    w(circle(P2, 169.88, 100.24, 4.2, fill='none', stroke='#047857', stroke_width=1.8) + circle(P2, 169.88, 100.24, 1.5, fill='#047857'))
-    w(text(P2, 173.06, 98.06, 'F4', font_size=7, fill='#047857', font_weight=700, text_anchor='start'))
-    w(circle(P2, 99.24, 38.76, 4.2, fill='none', stroke='#047857', stroke_width=1.8) + circle(P2, 99.24, 38.76, 1.5, fill='#047857'))
-    w(circle(P2, 99.24, 81.76, 4.2, fill='none', stroke='#047857', stroke_width=1.8) + circle(P2, 99.24, 81.76, 1.5, fill='#047857'))
     w(text(P2, 120.53, 12, 'A · 5×7 · P1 side', font_size=7.5, fill='#047857', font_weight=700, text_anchor='start'))
     w(text(P2, 120.53, 106, 'B · 5×7 · P2 side', font_size=7.5, fill='#047857', font_weight=700, text_anchor='start'))
     w(text(P2, 166.53, 52, 'STM32F4DISCOVERY 66 × 97', font_size=8.2, fill='#4338ca', text_anchor='middle'))
     w(text(P2, 166.53, 59.47, 'CN1 at the rear, x 217.5', font_size=7, fill='#4338ca', text_anchor='middle'))
     w(text(P2, 100.47, 58, 'C', font_size=9, fill='#047857', font_weight=700, text_anchor='middle'))
     w(text(P2, 100.47, 64, '5 V split', font_size=6.5, fill='#047857', text_anchor='middle'))
-    w(text(PX, 342.2, 603.4, 'carrier 100.6 × 106: A·X.. at x 181.20, B and header row 1 at x 183.74 (as built) · 6 × M2.5 on 10 mm standoffs (MEC-15)', font_size=7.8, fill='#047857', text_anchor='middle'))
-    # the Bauer 50 W, parked at x 20-84 (a placeholder: MEC-17 moves it onto the carrier tray)
-    w(rect(P2, 20, 32, 64, 57, rx=2.5, fill='#fff1f2', stroke='#be123c', stroke_width=1.4))
-    w(text(P2, 52.47, 47.06, 'BAUER 50 W', font_size=9, font_weight=700, fill='#be123c', text_anchor='middle'))
-    w(text(P2, 52.47, 52.94, '64 x 57 x 22', font_size=7, fill='#be123c', text_anchor='middle') + text(P2, 52.47, 78.82, '2 x 6.8 ears, 54 mm apart', font_size=7, fill='#be123c', text_anchor='middle'))
-    w(rect(P2, 20, 32, 64, 57, rx=2.5, fill='none', stroke='#dc2626', stroke_width=2, stroke_dasharray='5 3') + circle(P2, 80, 37, 6, fill='#dc2626') + text(P2, 80, 39, '?', font_size=9, font_weight=700, fill='#ffffff', text_anchor='middle'))
-    # its two mounting ears, 54 mm apart, and the note column at the right
-    w(circle(P2, 25, 60.53, 5.8, fill='none', stroke='#be123c', stroke_width=1.6) + circle(P2, 25, 60.53, 1.6, fill='#be123c') + circle(P2, 79, 60.53, 5.8, fill='none', stroke='#be123c', stroke_width=1.6) + circle(P2, 79, 60.53, 1.6, fill='#be123c') + text(P2, 243, 38, 'one M3×12 here', font_size=7, fill='#7c3aed', text_anchor='middle'))
+    w(text(PX, 342.2, 603.4, 'carrier 100.6 × 106: A·X.. at x 181.20, B and header row 1 at x 183.74 (as built) · 8 mm standoffs on the 4 mm tray, T1-T6 below (MEC-17)', font_size=7.8, fill='#047857', text_anchor='middle'))
+    for name, x, y in FIXINGS:
+        w(screw_mark(P2, x, y, name))
+    # the Bauer on the tray, with its leads edge on the vehicle's left
+    w(outline(P2, bauer_outline(*BAUER), fill='#fff1f2', stroke='#be123c', stroke_width=1.4))
+    w(text(P2, 43, 47.06, 'BAUER 50 W', font_size=9, font_weight=700, fill='#be123c', text_anchor='middle'))
+    w(text(P2, 43, 52.94, '64 x 57 x 22', font_size=7, fill='#be123c', text_anchor='middle'))
+    w(text(P2, 43, 72, 'M3 through its own 2 holes', font_size=7, fill='#be123c', text_anchor='middle'))
+    for x, y in BAUER_HOLES:
+        w(circle(P2, x, y, 5.8, fill='none', stroke='#be123c', stroke_width=1.6) + circle(P2, x, y, 1.6, fill='#be123c'))
+    for x, colour in BAUER_LEADS:
+        w(line(P2, x, 89, x, 93, stroke=colour, stroke_width=2))
+    w(text(P2, 43, 85, 'leads edge ▼', font_size=6, fill='#be123c', text_anchor='middle'))
+    w(text(P2, 104, 12, 'carrier tray', font_size=7, font_weight=700, fill='#0f766e', text_anchor='middle'))
+    for name, x, y in SPLICES:
+        w(rect(P2, x, y, 18.6, 13, rx=1.5, fill='#fed7aa', stroke='#c2410c', stroke_width=1.2) + text(P2, x + 9.3, y + 8.2, name, font_size=7, font_weight=700, fill='#c2410c', text_anchor='middle'))
+    # the note column at the right
+    w(text(P2, 243, 38, 'one M3×12 here', font_size=7, fill='#7c3aed', text_anchor='middle'))
     w(text(P2, 243, 43.47, 'clamps BOTH', font_size=7, fill='#7c3aed', text_anchor='middle'))
     w(text(P2, 243, 49, 'fascia panels', font_size=7, fill='#7c3aed', text_anchor='middle'))
     w(text(P2, 243, 54.47, '(MEC-07)', font_size=7, fill='#7c3aed', text_anchor='middle'))
@@ -221,6 +276,15 @@ def carrier_and_bauer():
     w(text(P2, 243, 73.53, '3 debug ports', font_size=7, fill='#b45309', text_anchor='middle'))
     w(text(P2, 243, 79, 'gap BELOW: the', font_size=7, fill='#b45309', text_anchor='middle'))
     w(text(P2, 243, 84.47, 'switch bodies', font_size=7, fill='#b45309', text_anchor='middle'))
+    return o
+
+
+def tray_heads():
+    """The tray's six screw heads under plate 2, seen from below (they sit among the taped parts, MEC-17)."""
+    o = []
+    for name, x, y in FIXINGS:
+        o.append(circle(PB, x, y, 3.9, fill='#ffffff', stroke='#4338ca', stroke_width=1.6) + circle(PB, x, y, 1.4, fill='#4338ca')
+                 + text(PB, x + 3.4, y + 2.4, name, font_size=6, font_weight=700, fill='#4338ca', text_anchor='start'))
     return o
 
 
@@ -383,7 +447,7 @@ def harness_board():
     w(text(PB, 225, 65.97, 'trunk to SW1 / SW2', font_size=5.4, font_weight=400, fill='#475569', text_anchor='middle'))
     w(GCLOSE)
     w(text(PX, 66, 893.3, 'Only two plugs cross to plate 1, both from the right side once closed: SM-2P at S1, driver VM at S2/S4. The switch panel rides with plate 2. Thick edge = fuse lid.', font_size=8, fill='#b45309'))
-    w(text(PX, 66, 905.3, 'Nominal sizes (MEC-16 "To confirm"). Check the carrier and board C screw heads before taping - F3 lands at the motor fuse lid.', font_size=8, fill='#b45309'))
+    w(text(PX, 66, 905.3, 'Nominal sizes (MEC-16 "To confirm"). The six tray screw heads T1-T6 are drawn; each is at least 0.8 mm clear of the taped parts (MEC-17).', font_size=8, fill='#b45309'))
     return o
 
 
@@ -479,6 +543,7 @@ def build():
     o += plate1_notes()
     o += lower_face_heading() + plate(PB, **SOLID)
     o += harness_board()
+    o += tray_heads()
     o += stack_elevation()
     o += run_table()
     o += legend()

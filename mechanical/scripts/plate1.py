@@ -280,11 +280,12 @@ def build():
         part(nm + "-tabs", "switch", tabs)
 
     # plate 2 context: Bauer placeholder, carrier boards A, B and board C (translucent)
-    part("p2-bauer-placeholder", "placeholder", box(20, 84, 32, 89, PLATE2_TOP, PLATE2_TOP + 22))
-    part("p2-carrier-board-a", "pcb_carrier", box(117, 187, 5.11, 55.11, 62, 63.6))
-    part("p2-carrier-board-b", "pcb_carrier", box(119.54, 189.54, 60.99, 110.99, 62, 63.6))   # as built, MEC-15
-    part("p2-board-c", "pcb_carrier", box(85.5, 115.5, 25.2, 95.2, 62, 63.6))
-    part("p2-board-a-6v-in", "terminal", box(143, 153, 6, 13, 63.6, 71))
+    # all of it sits on the 4 mm carrier tray (MEC-17): the Bauer at x 11-75 (placeholder block), the boards on 8 mm standoffs
+    part("p2-bauer-placeholder", "placeholder", box(11, 75, 32, 89, PLATE2_TOP + 4, PLATE2_TOP + 26))
+    part("p2-carrier-board-a", "pcb_carrier", box(117, 187, 5.11, 55.11, PLATE2_TOP + 12, PLATE2_TOP + 13.6))
+    part("p2-carrier-board-b", "pcb_carrier", box(119.54, 189.54, 60.99, 110.99, PLATE2_TOP + 12, PLATE2_TOP + 13.6))   # as built, MEC-15
+    part("p2-board-c", "pcb_carrier", box(85.5, 115.5, 25.2, 95.2, PLATE2_TOP + 12, PLATE2_TOP + 13.6))
+    part("p2-board-a-6v-in", "terminal", box(143, 153, 6, 13, PLATE2_TOP + 13.6, PLATE2_TOP + 21))
 
     zc = Z2 - 10                             # fuse wire axis
     F = 47.3                                 # wires lying flat on plate 2's lower face

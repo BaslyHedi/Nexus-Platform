@@ -1154,11 +1154,14 @@ return - goes up through it, between the buses. The rearward runs lie flat on pl
 judged. Source: [`../mechanical/cad/carrier-tray.scad`](../mechanical/cad/carrier-tray.scad).
 **Recommendation: print it** (PETG, 4 mm), for the reasons in "Two ways to make it" below.
 
+The layout drawing ([`chassis-layout.svg`](../hardware/renders/chassis-layout.svg)) shows the tray, the Bauer, the splices and the six
+fixings on plate 2's top face, and the six screw heads among the taped parts on its lower face.
+
 **Placed in two steps (2026-10-05).** First the carrier on the tray, then the tray on plate 2.
 
 1. **Boards on the tray, in the tray's own frame** (u from the front, v from the right edge, origin at
    the tray's front-right corner): A at u 108.50-178.50, v 0-50; B at u 111.04-181.04, v 55.88-105.88;
-   C at u 77.00-107.00, v 20.09-90.09; the Bauer's end of the tray ahead of C. The tray is 182 x 106 mm.
+   C at u 77.00-107.00, v 20.09-90.09; the Bauer's end of the tray ahead of C. The tray is 183 x 110 mm with its corner pads.
    The Discovery fixes A against B (5.88 mm apart, A one pitch ahead); C's 1.5 mm to A is a choice,
    since the tray no longer forces it.
 2. **Tray on plate 2** by one offset, `PLACE = (8.50, 5.11)` in the plate-2 layout frame. That puts

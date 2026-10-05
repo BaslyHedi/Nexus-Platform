@@ -74,7 +74,7 @@ ORBIT = 51.0
 DROP = S(0.7) - 1
 
 CAPTIONS = [
-    ((0, 4), "The carrier tray: 182 x 106 mm, 4 mm PETG. Plate 2's holes are repeated in it; eight have a nut pocket"),
+    ((0, 4), "The carrier tray: 183 x 110 mm, 4 mm PETG. Plate 2's holes are repeated in it; eight have a nut pocket"),
     ((4, 7.4), "1  A nut into each hex pocket: six M2.5 for plate 2, two M3 under the Bauer's holes"),
     ((7.4, 10.3), "2  The Bauer drops into its rim, two M3 screws through its own holes; its leads get a clear lane"),
     ((10.3, 14.4), "3  Boards C, then A and B, lower on their nylon standoffs onto the tray's board holes"),

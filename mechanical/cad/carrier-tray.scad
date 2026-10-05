@@ -36,7 +36,7 @@
 //   CORNER_INSET  - a board's corner hole centre from each edge (estimated 2.5 mm; the loose holes and the corner pads cover +-0.5)
 //   board C's holes once it is built
 
-PART = "step2";              // "tray" | "template" | "step1" | "step2"
+PART = "step2";              // "tray" | "template" | "step1" | "step2" | "outline"
 
 T            = 4.0;          // tray thickness
 CORNER_INSET = 2.5;          // ESTIMATED, not measured (+-0.5): board corner hole centre from each edge; see MEC-17
@@ -254,6 +254,8 @@ else if (PART == "template") real() {
     }
 }
 // step 1: the tray alone in its own frame, the boards on it
+// the tray's outline alone, in the layout frame (plate 2's x, y after adding PLACE), for the layout drawing
+else if (PART == "outline") outline2d();
 else if (PART == "step1") real() { color("lightgrey") trayBody(); ghost_boards(); }
 // step 2: the same, set down on plate 2 over the plate's holes
 else if (PART == "step2") real() { color("lightgrey") trayBody(); ghost_boards(); ghost_plate(); }
