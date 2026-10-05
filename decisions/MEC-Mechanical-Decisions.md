@@ -1275,7 +1275,7 @@ which is why the second lane is the mirror of the first. The tray has a wing for
 
 - **Wiring:** SW2's wire comes up the left slot into S6, the (-) bus wire up the right slot into S7. The Bauer's red
   lead goes into S6; its black input lead runs round the Bauer's rear, through the 10.5 mm lane before C, to S7
-  (about 135 mm, so the Bauer's leads must be at least that long: **to measure**). The window no longer carries the
+  (about 135 mm of the lead's roughly 150 mm, measured by Hedi on 2026-10-05, so about 15 mm to spare). The window no longer carries the
   Bauer feed.
 - **Harness changes** (`plate1.py`, the cut table in `chassis-layout.svg`): run 15 (SW2 to S6) is 32 cm, was 31;
   run 16 (S7 to the (-) bus) is 22 cm, was 13. Both go under plate 2 along y 73-88 and y 75, clear of the buses
