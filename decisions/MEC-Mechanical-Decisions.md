@@ -1267,7 +1267,8 @@ than today, within the 40 mm gap. A and B keep their height with 6 mm standoffs.
 
 - **The corner holes' inset** from the board edges. The model assumes 2.5 mm.
 - **Board C's corner holes,** once C is built. A's and B's are known to be free; C's terminals sit
-  near two of its corners. *C is built (2026-10-05); its holes are not measured yet.*
+  near two of its corners. *C is built (2026-10-05) with a standoff in each of its four corners, so the tray's four board holes per board are right; their inset is not measured yet.*
+- **Board C's silkscreen is the other way round from A and B** (photo, 2026-10-05): numbers 1-24 along the long side, 1 at the USB-C end, letters A-J across. The hole names for C in MEC-15 and HW-19 (C·D6 for F5 and the like) and in `stm32-carrier.py` still use the old assumption and are to be renamed once Hedi says which end letter A is.
 - **Whether a 4.7 mm window is wide enough** for the 6 V pair, the Bauer feed and the driver's I2C lead, and how the 6 V pair then gets from the window to A's 6V IN, about 60 mm away under the 6 mm gap.
 - **Whether anything above plate 2 stands on (186.12, 9.71) and (186.12, 110.82).** The tray covers them: they are 2.5 mm from A's and B's rear corner holes.
 - **MEC-16's check on the screw heads under plate 2** still applies to the plate holes kept: see F5 above.
