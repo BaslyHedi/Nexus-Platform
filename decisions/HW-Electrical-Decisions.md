@@ -28,6 +28,7 @@ Drawings: [wiring schematic](../hardware/wiring-schematic.svg) · [STM32 carrier
 | **HW-18** | CAN debug port - DE-9 on the fascia, PC as an unterminated third node |
 | **HW-19** | The 5 V split, its bulk capacitor and the USB-C Rp move onto a board; CAN termination is a jumper |
 | **HW-20** | Three fuses - the logic branch runs on the main fuse |
+| **HW-21** | Servo PWM on PE9 (TIM1_CH1); the servo lead is black / red / white |
 
 ---
 
@@ -238,7 +239,16 @@ off this bus as an **unterminated stub** - it does not change these two ends.
 **Decision.** INA226 on I²C2 - PB10 SCL, PB11 SDA.
 
 **Why.** PB6/PB9 carry the audio codec's I²C on this board (`Audio_SDA` confirmed in the
-UM1472 schematic pages). PB10/PB11 are unallocated and on header P1.
+UM1472 schematic pages). PB10/PB11 are on header P1.
+
+**Corrected 2026-10-03: PB10 is not unallocated.** It also drives the clock input of the
+Discovery's MEMS microphone, the MP45DT02: CLK_IN on PB10, PDM_OUT on PC3 (UM1472). PB11 has no
+on-board load that could be found. **The decision stands.** The microphone's CLK_IN is an input,
+so it adds a few pF to SCL and nothing else. While SCL toggles, the microphone clocks out data onto
+PC3, which nothing reads. I²C2 on PB10/PB11 is a common working setup on this board.
+**Consequence for firmware:** the on-board microphone cannot be used, and nothing may enable I2S2 or
+any other function on PB10. The I²C pull-ups must be strong enough for the extra capacitance;
+4.7 kΩ is fine at 100 and 400 kHz.
 
 ---
 
@@ -566,16 +576,24 @@ about 10 ns, four orders of magnitude below anything that matters.
 
 ## HW-19 · The 5 V split, its bulk capacitor and the USB-C Rp move onto a board; CAN termination is a jumper
 
+**Revised 2026-09-29: the USB-C socket itself sits on board C.** The FRDM PWR and FRDM CC
+terminals are gone. The KUOQIY socket (BOM 5.1) is zip-tied flat at C's row-1 end, opening out, and
+its pigtail is soldered straight into the board. See "Revision 2026-09-29" at the end.
+
 **Decision (2026-09-28).** No passive part is left hanging in a lever connector or on its own legs.
 
 - **Board C, the 5 V split.** A 3×7 cm kit board takes the Bauer's 5 V and splits it in two, one
   output to the STM32 carrier and one to the USB-C pigtail that feeds the FRDM's J1. It carries **C1,
   470 µF**, and **R1/R2, 10 kΩ from CC1 and CC2 to 5 V**, the source Rp that HW-02 calls for. Four
-  2-pin screw terminals: IN 5V, TO STM32, FRDM PWR (VBUS/GND), FRDM CC.
+  2-pin screw terminals: IN 5V, TO STM32, FRDM PWR (VBUS/GND), FRDM CC. *Since 2026-09-29:
+  two terminals, and the USB-C socket soldered in place of the FRDM pair (see the revision below).*
 - **C2, the second 470 µF, sits on carrier board A across the servo header,** where the stall current
   is drawn.
 - **The carrier's end of the CAN bus is terminated by a jumper.** R3, 120 Ω, in series with a 2-pin
-  header across CAN_H/CAN_L on board B. Jumper on means terminated.
+  header across CAN_H/CAN_L on board B. Jumper on means terminated. *As built 2026-10-03: the kit
+  has no 120 Ω, so R3 is **R3a 100 Ω + R3b 20 Ω in series**, exactly 120 Ω. R3a sits where R3 was
+  (B·F8-B8), R3b along the front row (B·A8-A4), and R3a's own lead is bent from B·B8 to B·A8 to
+  join them. Each 1/4 W part carries under 30 mW.*
 - **R4, 1 kΩ, in series with the servo PWM** between PE9 and the servo header.
 
 **Why.**
@@ -609,6 +627,30 @@ headers; Fig. 10 puts P2's odd pins **inboard**.
 
 **To confirm.** CANH-CANL on the module, unpowered, before it is fitted. If it reads about 120 Ω,
 remove that resistor.
+
+**Revision 2026-09-29 · the USB-C socket lives on board C.** Hole names as printed on the kit board (MEC-15).
+
+- **Where.** At C's row-1 end, lying on its side with the flange flush at the board edge and the
+  opening facing the vehicle's right. That end is the only free one: C's long sides have 1.5 mm to
+  the Bauer and the carrier (MEC-15), and the row-24 end keeps IN 5V and TO STM32.
+- **Held by two zip ties** through 3 mm holes drilled at C·B9 / B2 and C·F9 / F2: one over the body,
+  one over the pigtail as strain relief. Both clear the F5 standoff (C·D6) underneath by about 0.9 mm.
+- **The F5 screw is under the body.** The flange is 10.3 mm tall and the body 5.3 mm, centred, so
+  the body rides 2.5 mm off the board and clears a pan-head M2.5. Fit that screw first.
+- **The pigtail is soldered, cut to about 20 mm:** red V into C·G10 and black G into G8, each the
+  end of an 18 AWG chain from IN 5V through C1 (X10 → L10 → G10 and X8 → L8 → G8, MEC-15's
+  2026-09-30 routing). Green CC1 goes into G4 and yellow CC2 into G2. **R1 and R2 sit at H4-L4 and
+  H2-L2**, their lower leads bent over to G4 / G2, and their tops fed from TO STM32 + (X4 → L4 →
+  L2). White D− and blue D+ are cut short and insulated one by one, never twisted together.
+- **Why solder rather than terminals.** The pigtail is 24 AWG, which a 5.08 screw clamp holds
+  poorly without ferrules, and two terminals and a loose socket become one tied-down part. It costs
+  unplugging: to free the socket, cut the ties and desolder four wires.
+- **Check first:** CC1 and CC2 to V and to G, all four open (BOM 5.1). A socket with its own
+  Rd or Rp cannot be the source.
+- **To confirm on the vehicle.** The socket's face is at C's edge, and plate 2 is only about 80 mm
+  wide at the waist, so the C-to-C plug stands about 20 mm past the plate edge at plate-2 height.
+  Check nothing outboard is in its way, and that the 20 cm cable reaches J1 on plate 3.
+  J1's position on the FRDM is not recorded in this repository.
 
 ---
 
@@ -645,3 +687,53 @@ battery + ─ 7.5 A ─ shunt ─ (+) bus ─┬─ SW1 ─┬─ 5 A ─ Encode
 - The BOM fuse table and the wiring schematic drop the logic fuse.
 
 **To confirm.** The UBEC's input lead gauge, which is what keeps its fuse on the list.
+
+---
+
+## HW-21 · Servo PWM on PE9 (TIM1_CH1); the servo lead is black / red / white
+
+**Decision (2026-10-03).** The steering servo's signal comes from **PE9, P1-27**, as
+**TIM1_CH1** (alternate function AF1), through R4 (1 kΩ, HW-19) to the SERVO header on carrier
+board A. The LD-1501MG's lead, checked on the part in hand, is **black = GND, red = +6 V,
+white = signal**. It lands white on **A·K16**, red on **A·L16** and black on **A·M16**,
+**white toward the front**. Header rows count from the CN1 end, so K16, the signal pin, is the
+frontmost of the three. The drawing's plug table said "signal at the rear" until 2026-10-03, which
+was wrong; the pins themselves were always right.
+
+**Why PE9.**
+
+- **It is a hardware timer channel.** PE9 carries TIM1_CH1 as alternate function AF1, so the
+  pulse comes from the timer, with no CPU jitter. The NuttX board support for this Discovery uses the
+  same pin as a TIM1 PWM output.
+- **Nothing on the Discovery uses it**, as far as UM1472 and the NuttX board support show. It is
+  on header P1, and NuttX drives it as a free TIM1 output. Check it against UM1472 Table 5
+  before the first power-up, as for every pin on the carrier.
+- **The servo takes 500-2500 µs pulses** (2.3 SPECS), at the usual 50 Hz frame. TIM1 runs off APB2 at 168 MHz. Prescaler
+  167 gives a 1 µs tick, ARR 19999 a 20 ms period, and CCR1 500-2500 sets the pulse directly in µs.
+- **TIM1 is an advanced-control timer**: its outputs stay off until MOE in TIM1_BDTR is set. This
+  is the usual reason a first TIM1 PWM shows nothing on the pin.
+
+**Why the lead order matters, and what R4 covers.** The header is three plain pins with no key,
+so the plug can go on reversed or one pin off.
+
+- **Reversed** (black on K16, white on M16). Red stays on the centre pin, so +6 V still reaches
+  the servo's + lead. The servo's ground then returns only through R4 into PE9's clamp diode, about
+  (6 - 3.3 - 0.6) V / 1 kΩ, roughly 2 mA. That is within the pin's injection limit, and the servo
+  simply does not move.
+- **One pin off toward the front** (white hanging, red on K16, black on L16) puts the servo across
+  +6 V backwards, with R4 in series: again about 2 mA into PE9's clamp. This is the case HW-19's R4
+  was added for.
+- **One pin off toward the rear** (white on L16, red on M16, black hanging) leaves the servo
+  unpowered with 6 V on its signal input. PE9 is not involved.
+- None of the three damages the STM32.
+- **So mark the header:** a white paint dot on the board beside A·K16, the signal pin, and the
+  plug's white wire goes to the dot.
+
+**To confirm on the bench.**
+
+- **3.3 V drive.** The LD-1501MG runs at 6-8.4 V but takes a logic-level pulse. A 3.3 V high is
+  normally enough for this class of servo, but it is not in the listing. If the servo jitters or
+  ignores the pulse, the fix is a single-transistor or 74AHCT buffer to 5 V, not a different pin.
+- **R4 against the servo's input.** 1 kΩ in series with a servo input of tens of kΩ costs
+  nothing at 50 Hz. Check the edge on a scope once, at the header.
+

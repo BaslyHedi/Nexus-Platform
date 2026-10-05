@@ -3,6 +3,7 @@
 
     python3 make-assembly.py
 
+Works in ../cad, beside the files it reads and writes.
 Reads  : chassis-3deck-fascia.obj  (Hiwonder's .3dm export + our duplicated deck 3)
          fascia-lower.stl, fascia-upper.stl  (current panels, local z 0..52)
          plate1/*.stl              (plate 1 stand-ins and wire runs, from plate1.py)
@@ -34,8 +35,8 @@ OBJ = "chassis-3deck-fascia.obj"
 MTL = "chassis-3deck-fascia.mtl"
 PANELS = [("FASCIA_LOWER", "fascia-lower.stl", 29.12), ("FASCIA_UPPER", "fascia-upper.stl", 81.12)]
 
-os.chdir(os.path.dirname(os.path.abspath(__file__)))
-sys.path.insert(0, ".")
+os.chdir(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "cad"))   # every file it reads and writes
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))   # plate1.py sits beside this script
 sys.dont_write_bytecode = True
 import plate1  # noqa: E402
 

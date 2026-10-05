@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Plate 1 stand-ins for an eye review - one STL per component and per wire run.
 
-    python3 plate1.py          # writes plate1/*.stl
-    python3 make-assembly.py   # adds them to chassis-3deck-fascia.obj, coloured
+    python3 plate1.py          # writes ../cad/plate1/*.stl
+    python3 make-assembly.py   # adds them to ../cad/chassis-3deck-fascia.obj, coloured
 
 Every part is a box, a cylinder or a tube at the ASSUMED size recorded in MEC-16.
 Nothing here is measured: it exists to see whether the parts and the harness fit
@@ -28,7 +28,7 @@ over them.
 import math, os, struct
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-OUT = os.path.join(HERE, "plate1")
+OUT = os.path.join(HERE, "..", "cad", "plate1")      # generated, untracked
 
 # ---------------------------------------------------------------- materials
 # name -> (r, g, b, alpha). make-assembly.py writes these into the .mtl.
@@ -279,8 +279,8 @@ def build():
 
     # plate 2 context: Bauer placeholder, carrier boards A, B and board C (translucent)
     part("p2-bauer-placeholder", "placeholder", box(20, 84, 32, 89, PLATE2_TOP, PLATE2_TOP + 22))
-    part("p2-carrier-board-a", "pcb_carrier", box(117, 187, 4.95, 34.95, 62, 63.6))
-    part("p2-carrier-board-b", "pcb_carrier", box(117, 187, 60.99, 110.99, 62, 63.6))
+    part("p2-carrier-board-a", "pcb_carrier", box(117, 187, 5.11, 55.11, 62, 63.6))
+    part("p2-carrier-board-b", "pcb_carrier", box(119.54, 189.54, 60.99, 110.99, 62, 63.6))   # as built, MEC-15
     part("p2-board-c", "pcb_carrier", box(85.5, 115.5, 25.2, 95.2, 62, 63.6))
     part("p2-board-a-6v-in", "terminal", box(143, 153, 6, 13, 63.6, 71))
 
@@ -480,7 +480,7 @@ def main():
             os.remove(os.path.join(OUT, old))
     for name, mat, tris in PARTS:
         write_stl(os.path.join(OUT, name + ".stl"), tris)
-    print(f"plate1/: {len(PARTS)} parts, {sum(len(t) for _, _, t in PARTS)} triangles")
+    print(f"cad/plate1/: {len(PARTS)} parts, {sum(len(t) for _, _, t in PARTS)} triangles")
     for st in ("raised", "open"):
         d = os.path.join(OUT, "states", st)
         os.makedirs(d, exist_ok=True)

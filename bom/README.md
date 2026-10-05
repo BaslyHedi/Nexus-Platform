@@ -27,6 +27,7 @@ position, which is why `SPECS.md` is often the only thing there.
 | `3.8-Geloo-Fuse-Block` | none published | `SPECS.md` | Includes why FULARR was rejected |
 | `3.9-INA226` | **Texas Instruments** · *INA226*, SBOS547C, Aug 2026 | `SPECS.md` | Verify the module's shunt is 2 mΩ |
 | `3.10-LiPo-Alarm` | none published | `SPECS.md` | Set to 3.3–3.5 V/cell |
+| `4.1-SN65HVD230-Module` | **GERUI** · *SN65HVD230 CAN Bus Module 3.3V CAN Transceiver* (dimensioned listing image) | `SPECS.md` | **26.98 × 10.24 mm**; too tall to stand upright under plate 3, so it lies flat |
 
 ## Audit - 2026-09-13
 

@@ -5,21 +5,26 @@
 # are absent and have to be fetched by hand.
 /vendor/
 
-# Written by mechanical/make-assembly.py, which chdir's to its own directory,
-# so both files have to sit beside it rather than under vendor/. Ignored for
+# Written by mechanical/scripts/make-assembly.py, which works inside mechanical/cad/,
+# so both files sit there rather than under vendor/. Ignored for
 # size and churn, not for copyright.
 #   assembly.stl              pure output - delete it and re-run
 #   chassis-3deck-fascia.obj  a SEED the script rewrites in place. It is not
 #                             reproducible from the script alone; it started as
 #                             a Rhino export of the .3dm. Back it up locally.
-mechanical/assembly.stl
-mechanical/chassis-3deck-fascia.obj
+mechanical/cad/assembly.stl
+mechanical/cad/chassis-3deck-fascia.obj
 
 # fascia-lower.stl and fascia-upper.stl are tracked on purpose: OpenSCAD output
 # shifts between versions, and these are the files that actually went to the
 # printer.
 
-# Written by mechanical/plate1.py and make-assembly.py - pure output, re-run them.
-mechanical/plate1/
-mechanical/chassis-3deck-fascia.mtl
-mechanical/assembly-animation.mp4
+# Written by mechanical/scripts/plate1.py and make-assembly.py - pure output, re-run them.
+mechanical/cad/plate1/
+mechanical/cad/chassis-3deck-fascia.mtl
+
+# Videos and stills, written by mechanical/scripts/animate-*.py - pure output.
+mechanical/renders/
+
+# Python bytecode, from importing hardware/stm32-carrier.py
+__pycache__/

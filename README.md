@@ -15,7 +15,7 @@ get their own repository as they are written; they consume this one.
 | [`system/README.md`](system/README.md) | What NEXUS must **do** - the top-down functional decomposition and the `Nexus-SubSys-DNN` IDs |
 | [`decisions/README.md`](decisions/README.md) | Every settled decision and the reasoning behind it, split **HW / MEC / SYS / SW**. Its README owns the numbering rules |
 | [`hardware/README.md`](hardware/README.md) | Build drawings, to scale - chassis layout, wiring schematic, STM32 carrier |
-| [`mechanical/README.md`](mechanical/README.md) | The parts we make - `fascia.scad` is the source of truth, plus the print files and the assembly script |
+| [`mechanical/README.md`](mechanical/README.md) | The parts we make, in `cad/` (`fascia.scad` is the source of truth, plus the print files and the proposed carrier tray), the scripts that build and animate the model in `scripts/`, and their output in `renders/` |
 | [`bom/README.md`](bom/README.md) | What it is made of - [`bom/BOM.md`](bom/BOM.md) for status, price and sourcing; `parts/<item>/SPECS.md` for measured numbers |
 
 ## How the code repositories will use this
@@ -49,7 +49,7 @@ vendor and title are enough to search for; `bom/README.md` also lists which ones
 already known to be stale and which have never been found at all. On this machine they
 live in an untracked `vendor/` beside these folders.
 
-Two generated meshes are ignored in `mechanical/` for a different reason - size and
+Two generated meshes are ignored in `mechanical/cad/` for a different reason - size and
 churn. One of them, `chassis-3deck-fascia.obj`, is a **seed the script rewrites in place**
 rather than pure output, so it cannot be rebuilt from the repository alone. Keep a local
 backup.
