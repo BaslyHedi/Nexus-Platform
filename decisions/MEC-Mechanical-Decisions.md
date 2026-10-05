@@ -1175,6 +1175,32 @@ tray could not be unscrewed without taking the boards off first. A hand-cut shee
 pocket. The board holes are separate (four per board, M2.5, counterbored from below) and no longer
 have to match anything on the plate.
 
+**Assembly order (proposed), animated in
+[`../mechanical/scripts/animate-tray.py`](../mechanical/scripts/animate-tray.py).** The tray goes on after
+plate 2's harness is built and plate 2 is the right way up, because its screws come from below and
+its boards would be in the way while plate 2 lies upside down (MEC-16).
+
+1. At the bench, with the tray on two bars clear of the board screws: an M2.5 nut pressed into each of
+   the four pockets.
+2. Boards A, B and C lowered onto the tray, their nylon standoffs on the tray's board holes.
+3. Twelve M2.5 screws from below into the standoffs.
+4. The S6 and S7 splices into their outlines under C.
+5. The unit is lifted across onto plate 2 (raised on trestles, as in MEC-16's lowering), its holes over
+   the plate's, the Bauer feed pulled up through the window.
+6. F1, F2, F5, F6: an M2.5 screw from below into each nut pocket, a washer in the three M3 holes.
+7. Plate 2 comes off the trestles and lowers onto the chassis standoffs; the Discovery plugs on last.
+
+This differs from the MEC-16 animation, which has the carrier on plate 2 from the start. The tray lifts
+out again as one unit, four screws from below.
+
+**Screw heads under plate 2, checked against `plate1.py` (2026-10-05).** The four heads are the
+tray's one clash with the harness board, MEC-16's open check, now with numbers (M2.5 head r 2.3, washer r 3.0):
+F5 (99.24, 38.76) is 1.24 mm from the (+) bus's edge at y 40, so the head overlaps it by 1.1 mm and
+the washer by 1.8 mm; F2 (148.18, 72.24) is 2.24 mm from the (-) bus's edge at y 70, so the head clears
+by 0.06 mm and its washer is not needed (the hole is M2.5); F1 clears the motor fuse (x 152) by 1.5 mm
+without its washer, 0.8 mm with. F6 is clear. Either move the (+) bus about 2 mm in y, or use a low
+button head and no washer at F5, or take F5 from another hole. Open.
+
 **The window** is now the plate's real opening (x 110.3-133.0, y 42.5-77.9, measured on the layout,
 where this record had assumed y 40.4-75.8) cut off at x 115.0, so it stays 1.7 mm clear of A's
 front-inboard corner counterbore. It is 4.7 mm wide.
