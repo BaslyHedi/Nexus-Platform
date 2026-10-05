@@ -640,8 +640,8 @@ remove that resistor.
 - **The pigtail is soldered, cut to about 20 mm:** red V into C·G10 and black G into G8, each the
   end of an 18 AWG chain from IN 5V through C1 (X10 → L10 → G10 and X8 → L8 → G8, MEC-15's
   2026-09-30 routing). Green CC1 goes into G4 and yellow CC2 into G2. **R1 and R2 sit at H4-L4 and
-  H2-L2**, their lower leads bent over to G4 / G2, and their tops fed from TO STM32 + (X4 → L4 → L2). White D− and blue D+ are cut short and insulated one by one,
-  never twisted together.
+  H2-L2**, their lower leads bent over to G4 / G2, and their tops fed from TO STM32 + (X4 → L4 →
+  L2). White D− and blue D+ are cut short and insulated one by one, never twisted together.
 - **Why solder rather than terminals.** The pigtail is 24 AWG, which a 5.08 screw clamp holds
   poorly without ferrules, and two terminals and a loose socket become one tied-down part. It costs
   unplugging: to free the socket, cut the ties and desolder four wires.

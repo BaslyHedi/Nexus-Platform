@@ -807,6 +807,11 @@ reads as a hole. The drawing computes every name from the geometry. Older text i
 the drawing's first scheme, column letter + header row: A g14 is A·K12, B d14 is B·K15, and on
 board C e4 is C·D6 and e21 is C·U6.
 
+**As built 2026-10-03: the CAN module lies face down, and A takes its ground from its own P1-5.**
+The module's 1×4 socket is at B·F5-F2 (CTX, CRX, GND, 3V3) and its CAN H / L come down through a
+1×2 socket at B·M4 / M3. Only the 3V3 bridge crosses between the boards. See the last three
+revisions at the end.
+
 **As built 2026-10-03: A's P1 sockets went in one hole toward CN1.** Only A is affected; B's
 sockets are as drawn. A's grid now sits one pitch forward of B's, P1 pins 1/2 are not connected,
 and B and the Discovery sit 2.54 mm further back on plate 2. See "Revision 2026-10-03" at the end.
@@ -856,7 +861,7 @@ a seam without adding anything the Discovery does not already provide.
   about 115 mm wide there.
 - **Where it sits (2026-09-28).** Header row 1 at **chassis x 181.20**, boards from x 117.0 to 187.0,
   the Discovery's rear edge at x 215.0. *As built since 2026-10-03: B is x 119.54-189.54, header
-  row 1 at x 183.74, the Discovery's rear edge at x 217.54. A is unchanged.* Board A's outboard edge at y 4.95, board B's at y 110.99. The
+  row 1 at x 183.74, the Discovery's rear edge at x 217.54. A is unchanged.* Board A's outboard edge at y 4.95 (5.11 since 2026-09-29), board B's at y 110.99. The
   window was narrow: the front is held by the plate's full width starting at x 114, and the rear by
   the fascia port bodies near x 220 and the harness zone behind x 224.
 - **Fixings, all into holes plate 2 already has.** Only one M3 cross-line (x 148.2) and one M2.5 line
@@ -886,8 +891,8 @@ a seam without adding anything the Discovery does not already provide.
   built). Only the Discovery reaches x 215 (217.54 as built, 2.8 mm short of the body's end), and it does so at about z 101 or higher, above the bottom-row ports at z 90. A
   40 mm body behind the flange, which ends at x 220.3, still clears by 5.3 mm.
 - **The two boards meet only through the Discovery and two soldered bridges** (GND and 3V3). *Since
-  2026-09-30* each bridge is one insulated wire, from a P2 pin to the part it feeds on A. They
-  are the only wires that cross between the boards.
+  2026-09-30* each bridge is one insulated wire, from a P2 pin to the part it feeds on A. *Since
+  2026-10-03 only the 3V3 bridge is left*: A takes its ground from its own P1-5.
 - **Hook-up wire is not in the BOM.** The Dupont leads are copper-clad aluminium (5.7) and are not
   used for anything soldered here.
 
@@ -907,8 +912,9 @@ a seam without adding anything the Discovery does not already provide.
   y 5.11, and the inboard edge is at y 55.11. B is unchanged, from y 60.99, so the boards are **5.88 mm
   apart**. That gap is not a choice: A holds P1 at cols i/j and B holds P2 at g/h, and the Discovery
   fixes the rest. Butting the boards would take a 0.8 mm gap, and B would lose its outer two columns.
-- **The bridges** *(as rerouted 2026-09-30)* are one insulated wire each: GND from B·X12 (P2-1) to
-  A·V16 (6V IN −), 3V3 from B·V12 (P2-5) straight to A·D16 (I2C-A VCC). Nothing lands in A's V column,
+- **The bridges** *(as rerouted 2026-09-30; the GND one was replaced on 2026-10-03 by A's own
+  P1-5)* are one insulated wire each: GND from B·X12 (P2-1) to A·V16 (6V IN −), 3V3 from B·V12
+  (P2-5) straight to A·D16 (I2C-A VCC). Nothing lands in A's V column,
   so A·V9, which is P1-4 (VDD behind JP1), stays clear of the 3 V rail. Both boards are screwed down,
   so the short span across the gap cannot flex.
 - **1×25 sockets.** Cut four strips of 25 from the kit's 40-pin female headers and snip each 25th tail
@@ -935,7 +941,8 @@ insulated wire can only be joined at a pad. The routing is redone to suit.
   the CCA Dupont leads (5.7). On C, R1 and R2's lower leads are bent over to the CC landings instead
   of a wire.
 - **A's P1 GND pins are no longer wired.** A's ground arrives through the GND bridge, and with the
-  Discovery in, through its ground plane as well.
+  Discovery in, through its ground plane as well. *Reversed on 2026-10-03: the bridge is gone, and
+  A's ground comes from its own P1-5 (last revision).*
 - **The drawing's routing is checked by a script**, [`../tools/check-carrier-routing.py`](../tools/check-carrier-routing.py).
   It checks every net end to end through the Discovery's own pin ties, looks for shorts, and counts
   wire ends per pad. It also checks standoff clearance, overlaps, and wires lying over another net's
@@ -948,7 +955,8 @@ two 25-pin strips, the drawing follows the board.
 - **What it means on A.** Discovery header row n now sits over A's hole row n - 1. **P1 row 1
   (pins 1/2, GND) hangs past A's last hole and is not connected.** Row 25 (pins 49/50) is soldered
   in hole A·A, so P1's tails cover A·A-X in columns 10 (odd pins) and 9 (even pins). Nothing used
-  P1-1/2: A's ground comes over the GND bridge (B·X12 → A·V16). P1-49/50 at A·A10 / A·A9 are GND
+  P1-1/2: A's ground came over the GND bridge (B·X12 → A·V16), and since the last revision comes
+  from P1-5. P1-49/50 at A·A10 / A·A9 are GND
   and spare.
 - **Three wires move one hole:** PE9 from A·K10 to **A·L10**, PB10 from A·H9 to **A·I9**, PB11 from
   A·G10 to **A·H10**. Every part on A keeps its holes. The routing check passes on the as-built map.
@@ -964,7 +972,8 @@ two 25-pin strips, the drawing follows the board.
   the Discovery anyway. The CN1 plug of the Mini-B extension (5.10) has 2.5 mm less room behind it.
   **Check on the vehicle that the plug and its cable still bend clear.**
 
-**Revision 2026-10-03 · the CAN module lies flat.** The SN65HVD230 module in hand (BOM 4.1,
+**Revision 2026-10-03 · the CAN module lies flat.** *(Face up and row 16 below were superseded the
+same day: it went in face down, at row 19; see the next revision.)* The SN65HVD230 module in hand (BOM 4.1,
 [`SPECS.md`](../bom/parts/4.1-SN65HVD230-Module/SPECS.md)) is **26.98 × 10.24 mm**, with a straight
 header in its own plane. Plugged upright into its socket it would reach about 50 mm above plate 2,
 and plate 3 is 40 mm up. The 25 × 18 mm flat module this record assumed was never the real part.
@@ -1151,7 +1160,8 @@ standoffs already fitted. Only the tray is screwed to plate 2.
   and B (fitted with standoffs, 2026-10-03), and the tray follows the boards as built, A's one-pitch
   offset included.
 - **Four screws through plate 2 instead of six, and none off-grid.** The tray reuses the plate holes
-  of F1, F2, F5 and F6. F3 and F4, which MEC-16 found landing on fuse lids under plate 2, are dropped.
+  of F1, F2, F5 and F6. F3, which MEC-16 found landing on the motor fuse's lid under plate 2, and
+  F4 are dropped.
 - **The electronics lift out as one unit** for bench work, and the tray can stand on its own.
 - **It carries the S6 / S7 splices too,** which sit under board C. Their wires climb through a
   window over plate 2's wire opening, between C and A / B.
@@ -1171,6 +1181,8 @@ than today, within the 40 mm gap. A and B keep their height with 6 mm standoffs.
 **To measure or decide before making it.**
 
 - **The corner holes' inset** from the board edges. The model assumes 2.5 mm.
+- **Board C's corner holes,** once C is built. A's and B's are known to be free; C's terminals sit
+  near two of its corners.
 - **The plate-2 wire opening's y extent.** The window is placed at y 40.4-75.8, assumed centred.
 - **MEC-16's check on the screw heads under plate 2** still applies to the four plate holes kept.
 - **Print or sheet.** The model serves both.

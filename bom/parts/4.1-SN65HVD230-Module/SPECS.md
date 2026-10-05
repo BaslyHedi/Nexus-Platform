@@ -23,9 +23,8 @@ Module 3.3V CAN Transceiver*) and from photos of the part. The image is the sell
 The header pins point **along** the board, so a module plugged into an upright female socket
 stands vertical. Upright on carrier board B it would reach about 50 mm above plate 2: 11.6 mm of
 standoff and board, 8.5 mm of socket, 2.5 mm of header spacer and 27 mm of module. Plate 3 is
-only **40 mm** above plate 2. So the module lies **flat, component side up**, either with its four
-pins bent 90° at the spacer or with its header swapped for a right-angle one from the 5.11 kit.
-Both give the same position.
+only **40 mm** above plate 2. So the module lies **flat**, either with its four pins bent 90° at
+the spacer or with its header swapped for a right-angle one from the 5.11 kit.
 
 **As bent (2026-10-03) it is face DOWN**: the pins were bent toward the component side, so the chip,
 the screw terminal and the 2-pin header all point at board B. That reverses the header across the
@@ -35,5 +34,5 @@ bend to suit). **The screw terminal is not used**, and it hangs about 1.5 mm off
 all sits on board B is MEC-15's business
 (revision 2026-10-03), drawn in [`../../../hardware/stm32-carrier.svg`](../../../hardware/stm32-carrier.svg).
 
-**Still to measure on arrival:** CANH-CANL unpowered (HW-09: ~120 Ω means an on-board
+**Still to measure:** the screw terminal's height, and CANH-CANL unpowered (HW-09: ~120 Ω means an on-board
 terminator that has to come off, so the carrier's TERM jumper alone decides).

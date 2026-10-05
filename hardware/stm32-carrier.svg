@@ -3081,12 +3081,12 @@
 <rect x="1133" y="216" width="4" height="9" fill="#111827"/>
 <text x="1142.0" y="224.0" font-size="8.4" fill="#1e293b" font-weight="700">GND STM32</text>
 <text x="1226.0" y="224.0" font-size="7.9" fill="#475569">C IN GND</text>
-<text x="1320.0" y="224.0" font-size="7.9" fill="#475569">TO STM32 − → B 5V IN − (B·B2) → P2-2 (X11)</text>
+<text x="1320.0" y="224.0" font-size="7.9" fill="#475569">TO STM32 − → B 5V IN − (B·B2) → P2-2 (X11) · → XCVR GND (F3)</text>
 <rect x="1130" y="230" width="550" height="19" fill="#f8fafc" stroke="#e2e8f0"/>
 <rect x="1133" y="235" width="4" height="9" fill="#111827"/>
 <text x="1142.0" y="243.0" font-size="8.4" fill="#1e293b" font-weight="700">GND CAN</text>
 <text x="1226.0" y="243.0" font-size="7.9" fill="#475569">P2-1 B·X12</text>
-<text x="1320.0" y="243.0" font-size="7.9" fill="#475569">CAN GND (X2) → XCVR GND (F4)</text>
+<text x="1320.0" y="243.0" font-size="7.9" fill="#475569">CAN GND (X2)</text>
 <rect x="1130" y="249" width="550" height="19" fill="#ffffff" stroke="#e2e8f0"/>
 <rect x="1133" y="254" width="4" height="9" fill="#111827"/>
 <text x="1142.0" y="262.0" font-size="8.4" fill="#1e293b" font-weight="700">GND (A)</text>
@@ -3096,7 +3096,7 @@
 <rect x="1133" y="273" width="4" height="9" fill="#db2777"/>
 <text x="1142.0" y="281.0" font-size="8.4" fill="#1e293b" font-weight="700">3.3 V</text>
 <text x="1226.0" y="281.0" font-size="7.9" fill="#475569">P2-5 / P2-6</text>
-<text x="1320.0" y="281.0" font-size="7.9" fill="#475569">P2-6 (B·V11) → XCVR (F5) · P2-5 → bridge → I2C-A VCC (A·D16)</text>
+<text x="1320.0" y="281.0" font-size="7.9" fill="#475569">P2-6 (B·V11) → XCVR 3V3 (F2) · P2-5 → bridge → I2C-A VCC (A·D16)</text>
 <rect x="1130" y="287" width="550" height="19" fill="#ffffff" stroke="#e2e8f0"/>
 <rect x="1133" y="292" width="4" height="9" fill="#d97706"/>
 <text x="1142.0" y="300.0" font-size="8.4" fill="#1e293b" font-weight="700">Servo 6 V</text>
@@ -3121,12 +3121,12 @@
 <rect x="1133" y="368" width="4" height="9" fill="#0891b2"/>
 <text x="1142.0" y="376.0" font-size="8.4" fill="#1e293b" font-weight="700">CAN1_TX</text>
 <text x="1226.0" y="376.0" font-size="7.9" fill="#475569">P2-33 PD1</text>
-<text x="1320.0" y="376.0" font-size="7.9" fill="#475569">XCVR CTX (B·F2) - straight, not crossed</text>
+<text x="1320.0" y="376.0" font-size="7.9" fill="#475569">XCVR CTX (B·F5) - straight, not crossed</text>
 <rect x="1130" y="382" width="550" height="19" fill="#f8fafc" stroke="#e2e8f0"/>
 <rect x="1133" y="387" width="4" height="9" fill="#0e7490"/>
 <text x="1142.0" y="395.0" font-size="8.4" fill="#1e293b" font-weight="700">CAN1_RX</text>
 <text x="1226.0" y="395.0" font-size="7.9" fill="#475569">P2-36 PD0</text>
-<text x="1320.0" y="395.0" font-size="7.9" fill="#475569">XCVR CRX (B·F3)</text>
+<text x="1320.0" y="395.0" font-size="7.9" fill="#475569">XCVR CRX (B·F4)</text>
 <rect x="1130" y="401" width="550" height="19" fill="#ffffff" stroke="#e2e8f0"/>
 <rect x="1133" y="406" width="4" height="9" fill="#1d4ed8"/>
 <text x="1142.0" y="414.0" font-size="8.4" fill="#1e293b" font-weight="700">CAN_H</text>

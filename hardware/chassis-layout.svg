@@ -339,7 +339,7 @@
 <!-- STM32 carrier: kit boards A (P1) and B (P2), Discovery above, board C = 5 V split (MEC-15, HW-19) -->
 <rect x="258.9" y="398.7" width="119.0" height="85.0" rx="3" fill="#ecfdf5" fill-opacity="0.92" stroke="#047857" stroke-width="1.6"/>
 <rect x="263.2" y="493.7" width="119.0" height="85.0" rx="3" fill="#ecfdf5" fill-opacity="0.92" stroke="#047857" stroke-width="1.6"/>
-<rect x="266.6" y="436.9" width="103.6" height="8.6" rx="1.5" fill="#99f6e4" stroke="#0f766e" stroke-width="0.8"/>
+<rect x="270.9" y="436.9" width="103.6" height="8.6" rx="1.5" fill="#99f6e4" stroke="#0f766e" stroke-width="0.8"/>
 <rect x="270.9" y="523.2" width="103.6" height="8.6" rx="1.5" fill="#fed7aa" stroke="#b45309" stroke-width="0.8"/>
 <rect x="264.9" y="428.3" width="164.9" height="112.2" rx="3" fill="#eef2ff" fill-opacity="0.55" stroke="#4338ca" stroke-width="1.3" stroke-dasharray="5 3"/>
 <rect x="205.4" y="432.8" width="51.0" height="119.0" rx="3" fill="#ecfdf5" fill-opacity="0.92" stroke="#047857" stroke-width="1.6"/>

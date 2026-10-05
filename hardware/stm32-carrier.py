@@ -159,6 +159,12 @@ MODULE = dict(length=26.98, width=10.24, terminal=3.74, pin_in=-0.3, canhl=17.25
 # canhl: header face to the 2-pin CANH / CANL header (BOM 4.1)
 
 
+def xc(lab):
+    """The printed name of the transceiver socket's pin carrying `lab` (CTX, CRX, GND, 3V3)."""
+    col = next(c for c, r, l in XCVR_SOCKET[1] if l == lab)
+    return silk('B', col, XCVR_ROW)
+
+
 def module_box():
     """(X0, X1, Y0, Y1) of the flat module, and its terminal's X start."""
     X0 = HX('B', XCVR_ROW) - MODULE['pin_in']
@@ -822,16 +828,16 @@ if __name__ == "__main__":
         (NET['5V'], '5 V FRDM', 'C IN 5V', f"{N('C', 'a', 24)} → C1 + ({silk('C', 'a', 12)}) → socket red ({silk('C', 'a', 7)}), 18 AWG"),
         (NET['5V'], '5 V Rp', 'C IN 5V', f"TO STM32 + ({N('C', 'g', 24)}) → R1 top ({silk('C', 'g', 12)}) → R2 top ({silk('C', 'i', 12)})"),
         (NET['GND'], 'GND FRDM', 'C IN GND', f"{N('C', 'c', 24)} → C1 − ({silk('C', 'c', 12)}) → socket black ({silk('C', 'c', 7)}), 18 AWG"),
-        (NET['GND'], 'GND STM32', 'C IN GND', f"TO STM32 − → B 5V IN − ({N('B', 'q', 23)}) → P2-2 ({silk('B', 'h', 1)})"),
-        (NET['GND'], 'GND CAN', f"P2-1 {N('B', 'g', 1)}", f"CAN GND ({silk('B', 'q', 1)}) → XCVR GND ({silk('B', 'o', XCVR_ROW)})"),
+        (NET['GND'], 'GND STM32', 'C IN GND', f"TO STM32 − → B 5V IN − ({N('B', 'q', 23)}) → P2-2 ({silk('B', 'h', 1)}) · → XCVR GND ({xc('GND')})"),
+        (NET['GND'], 'GND CAN', f"P2-1 {N('B', 'g', 1)}", f"CAN GND ({silk('B', 'q', 1)})"),
         (NET['GND'], 'GND (A)', f"P1-5 {N('A', 'i', hdr_hole('A', 3))}", f"→ 6V IN − ({N('A', 'c', 3)}) → C2 − → SERVO → I2C-B → I2C-A"),
-        (NET['3V3'], '3.3 V', 'P2-5 / P2-6', f"P2-6 ({N('B', 'h', 3)}) → XCVR ({silk('B', 'n', XCVR_ROW)}) · P2-5 → bridge → I2C-A VCC ({N('A', 'c', 21)})"),
+        (NET['3V3'], '3.3 V', 'P2-5 / P2-6', f"P2-6 ({N('B', 'h', 3)}) → XCVR 3V3 ({xc('3V3')}) · P2-5 → bridge → I2C-A VCC ({N('A', 'c', 21)})"),
         (NET['6V'], 'Servo 6 V', 'A 6V IN +', f"{N('A', 'c', 1)} → C2 + ({silk('A', 'c', 10)}) → SERVO + ({silk('A', 'c', 13)}), 18 AWG"),
         (NET['PWM'], 'Servo PWM', 'P1-27 PE9', f"R4 1k ({N('A', 'h', 12)}-{silk('A', 'h', 8)}) → SERVO SIG ({silk('A', 'c', 14)})"),
         (NET['SCL'], 'I²C2 SCL', 'P1-34 PB10', f"I2C-B ({N('A', 'c', 17)}) → I2C-A ({silk('A', 'c', 22)})"),
         (NET['SDA'], 'I²C2 SDA', 'P1-35 PB11', f"I2C-B ({N('A', 'c', 18)}) → I2C-A ({silk('A', 'c', 23)})"),
-        (NET['CTX'], 'CAN1_TX', 'P2-33 PD1', f"XCVR CTX ({N('B', 'q', XCVR_ROW)}) - straight, not crossed"),
-        (NET['CRX'], 'CAN1_RX', 'P2-36 PD0', f"XCVR CRX ({N('B', 'p', XCVR_ROW)})"),
+        (NET['CTX'], 'CAN1_TX', 'P2-33 PD1', f"XCVR CTX (B·{xc('CTX')}) - straight, not crossed"),
+        (NET['CRX'], 'CAN1_RX', 'P2-36 PD0', f"XCVR CRX (B·{xc('CRX')})"),
         (NET['CANH'], 'CAN_H', 'module H pin', f"socket {N('B', 'o', CAN_ROW)} ← CAN H ({silk('B', 'm', 1)}) · → R3a ({silk('B', 'k', 19)})"),
         (NET['CANL'], 'CAN_L', 'module L pin', f"socket {N('B', 'p', CAN_ROW)} ← CAN L ({silk('B', 'o', 1)}) · → TERM ({silk('B', 'm', 22)})"),
         (NET['TERM'], 'TERM', 'R3a + R3b', f"100R {N('B', 'k', 19)}-{silk('B', 'k', 23)}, lead to {silk('B', 'k', 24)}, 20R to {silk('B', 'o', 24)} → TERM ({silk('B', 'm', 23)}) = 120 Ω"),
@@ -884,8 +890,8 @@ if __name__ == "__main__":
         '2  Cut four 1×25 strips from the 40-pin female headers and snip the 25th tail of each flush with the body. Dry-fit them on the Discovery,',
         f"    boards A and B under them: pins on {col_range('A', 'i')} / {col_range('A', 'j')[2:]} and {col_range('B', 'g')} / {col_range('B', 'h')[2:]}, and header row 25 past A, on the margin with no hole under it.",
         '3  Solder the sockets WITH THE DISCOVERY PLUGGED IN - it is the only thing that sets the 53.34 mm between A and B. Tack two corners, check, finish.',
-        f"4  SN65HVD230 FACE DOWN, pins bent 90° so its 2-pin CANH/CANL header lands 7 holes behind: sockets {N('B', 'n', XCVR_ROW)}-{silk('B', 'q', XCVR_ROW)} = CTX, CRX,",
-        f"    GND, 3V3 and {N('B', 'o', CAN_ROW)} / {silk('B', 'p', CAN_ROW)} = CANH / CANL. Its screw terminal is unused. Measure CANH-CANL unpowered: ~120 Ω = remove its terminator.",
+        f"4  SN65HVD230 FACE DOWN, pins bent 90° so its 2-pin CANH/CANL header lands 7 holes behind: sockets {N('B', 'n', XCVR_ROW)}-{silk('B', 'q', XCVR_ROW)} = {', '.join(l for _, _, l in XCVR_SOCKET[1][:2])},",
+        f"    {', '.join(l for _, _, l in XCVR_SOCKET[1][2:])} and {N('B', 'o', CAN_ROW)} / {silk('B', 'p', CAN_ROW)} = CANH / CANL. Its screw terminal is unused. Measure CANH-CANL unpowered: ~120 Ω = remove its terminator.",
         '5  The kit terminals may be 5.0 mm, not 5.08: the 3p CAN block spans 10.0 vs 10.16 mm of holes. Push it in; do not drill.',
         f"6  Before the Discovery goes back in: 5 V to GND not shorted · 6 V rail isolated from 5 V and 3V3 · 5 V on B·{silk('B', 'g', 2)} / {silk('B', 'h', 2)} only · nothing on B·{silk('B', 'g', 4)} (PH0) · {N('A', 'j', 3)} (P1-4 VDD) not on 3V3.",
         '7  Fixings: drill F1, F2, F5 and F6 on the grid first. Screw A and B down with the Discovery in, then mark F3 and F4 from under the',
