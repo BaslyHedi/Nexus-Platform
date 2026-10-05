@@ -1259,13 +1259,20 @@ standoffs already fitted. Only the tray is screwed to plate 2.
 | How | printed PETG, 4 mm, ~15 € | 3 mm plastic sheet (PVC foam, ABS or polycarbonate; not acrylic, MEC-02), cut and drilled by hand |
 | File | `carrier-tray.stl` | a 1:1 template, generated when needed with `PART="template"` (not kept in the repo), printed and stuck on the sheet; a 50 mm bar checks the print scale |
 | Board screws | from below into the standoffs, in printed counterbores, so the tray sits flat | from below; the heads lift the sheet ~1.8 mm, accepted |
-| Board height | 4 + 10 mm standoffs = 14 mm | 3 + 1.8 + 10 = 14.8 mm |
+| Board height | 4 + 8 mm standoffs = 12 mm | 3 + 1.8 + 8 = 12.8 mm |
 
-**Heights.** All three boards stay on the 10 mm standoffs already fitted (Hedi, 2026-10-05: C has the same as A and B;
-the corner holes were widened by hand with scissors to take them), so they stand 14 mm above plate 2, 4 mm
-higher than with direct fixing. C clears the 8.5 mm splices by 1.5 mm. **To check:** the Discovery is 4 mm closer to the
-FRDM above it. MEC-15 put its top at about z 111 against the FRDM's screw heads at z 119.4 under plate 3, which now
-leaves about 4 mm. The standoff length itself is taken from the plan, not measured.
+**Heights.** All three boards stay on the 8 mm M2.5 standoffs already fitted (Hedi, 2026-10-05: the same on
+A, B and C, length not gauged; the corner holes were widened by hand with scissors to take them), so
+they stand 12 mm above plate 2, 2 mm higher than with direct fixing on 10 mm standoffs. The Discovery is 2 mm closer
+to the FRDM above it: MEC-15 put its top at about z 111 against the FRDM's screw heads at z 119.4 under plate 3,
+which leaves about 6 mm.
+
+**Open: the S6 / S7 splices do not fit under C.** They are 8.5 mm tall (`plate1.py`) and C's underside is
+8 mm above the tray, before counting the solder joints and wires that hang 1-3 mm below it. Options: (1) move
+the two splices to the left of the Bauer, in a tray lane widened to about 24 mm (plate 2 allows it there),
+where the Bauer's 12 V leads leave and the plate's slot (x 56-80, y 83-93) brings up the wires from SW2 and the
+bus. This also frees the window from the Bauer feed. (2) Put 12 mm standoffs under C only; this needs the part.
+(3) Recess the splices into the tray: 4 mm of tray does not leave enough after the joints. Recommended: (1).
 
 **To measure or decide before making it.**
 

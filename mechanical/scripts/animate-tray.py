@@ -48,8 +48,8 @@ CORNER_INSET = 2.5
 ZP_TOP, ZP_BOT = 52.0, 50.0
 LIFT = 60.0                                   # plate 2 is worked on this far above its standoffs
 Z_TRAY = ZP_TOP + T                           # the tray's top face
-BOARDS = {'A': (117.00, 187.00, 5.11, 55.11, 10), 'B': (119.54, 189.54, 60.99, 110.99, 10),
-          'C': (85.50, 115.50, 25.20, 95.20, 10)}          # plate-2 x0 x1 y0 y1, standoff height
+BOARDS = {'A': (117.00, 187.00, 5.11, 55.11, 8), 'B': (119.54, 189.54, 60.99, 110.99, 8),
+          'C': (85.50, 115.50, 25.20, 95.20, 8)}          # plate-2 x0 x1 y0 y1, standoff height
 FIXINGS = {'F1': (148.18, 23.76, 3.18), 'F2': (148.18, 72.24, 2.71), 'F5': (99.24, 38.76, 3.18), 'F6': (99.24, 81.76, 3.18),
            'F7': (24.82, 60.24, 3.18), 'F8': (52.82, 60.24, 3.18)}
 EARS = [(16.0, 63.0), (70.0, 63.0)]            # the Bauer's two 6.8 mm holes: 5 and 59 mm from its front end, 26 mm from its leads edge (y 89)
@@ -366,8 +366,8 @@ for i, (x, y) in enumerate(EARS):                          # M3 x 8 through each
 
 # the boards, as built (carrier_model.py), each on four nylon standoffs
 asm = {'AB': empty("boards-AB", ROOT), 'C': empty("board-C", ROOT)}
-zA = Z_TRAY + 10 + 1.6
-zC = Z_TRAY + 10 + 1.6
+zA = Z_TRAY + 8 + 1.6
+zC = Z_TRAY + 8 + 1.6
 CM.build_ab(asm['AB'], zA)
 CM.build_c(asm['C'], zC)
 screws_at = []
