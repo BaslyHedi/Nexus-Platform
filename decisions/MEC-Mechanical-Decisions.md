@@ -1147,8 +1147,37 @@ return - goes up through it, between the buses. The rearward runs lie flat on pl
 
 ## MEC-17 · *Proposed:* one tray carries boards A, B and C and bolts to plate 2
 
-**Status (2026-10-03): proposed, not decided.** A brainstorm with Hedi, modelled so it can be
+**Status (2026-10-05): proposed, not decided.** A brainstorm with Hedi, modelled so it can be
 judged. Source: [`../mechanical/cad/carrier-tray.scad`](../mechanical/cad/carrier-tray.scad).
+**Recommendation: print it** (PETG, 4 mm), for the reasons in "Two ways to make it" below.
+
+**Placed in two steps (2026-10-05).** First the carrier on the tray, then the tray on plate 2.
+
+1. **Boards on the tray, in the tray's own frame** (u from the front, v from the right edge, origin at
+   the tray's front-right corner): A at u 31.50-101.50, v 0-50; B at u 34.04-104.04, v 55.88-105.88;
+   C at u 0-30, v 20.09-90.09. The tray is 104.04 x 105.88 mm. The Discovery fixes A against B
+   (5.88 mm apart, A one pitch ahead); C's 1.5 mm to A is a choice, since the tray no longer forces it.
+2. **Tray on plate 2** by one offset, `PLACE = (85.50, 5.11)` in the plate-2 layout frame. That puts
+   the boards exactly where MEC-15 has them: A at x 117.0-187.0, B at x 119.54-189.54, C at
+   x 85.5-115.5.
+
+**The tray has the plate's holes.** Every plate-2 hole wholly under the tray is copied at the plate's
+own diameter (20 holes, plus the plate's 14.6 x 59.8 mm slot at x 161.2-175.8), so nothing open on the
+plate is blocked. Surveyed from the chassis layout. Not copied, with the reason in the .scad: ten
+holes outside the tray or too near its edge, and the two long side slots (x 109-158) that run off the
+tray's front edge. The slot cuts the A-B bridge at x 161-176; the tray stays one piece through the
+front part and the 20-25 mm bands beside the slot.
+
+**Fixings.** Four of those holes take the tray down: F1 (148.18, 23.76), F2 (148.18, 72.24),
+F5 (99.24, 38.76), F6 (99.24, 81.76), M2.5 from below, as before. Each has a hex pocket on the top
+that captures the nut. This matters: the nut sits under a board, so without a captive pocket the
+tray could not be unscrewed without taking the boards off first. A hand-cut sheet cannot have the
+pocket. The board holes are separate (four per board, M2.5, counterbored from below) and no longer
+have to match anything on the plate.
+
+**The window** is now the plate's real opening (x 110.3-133.0, y 42.5-77.9, measured on the layout,
+where this record had assumed y 40.4-75.8) cut off at x 115.0, so it stays 1.7 mm clear of A's
+front-inboard corner counterbore. It is 4.7 mm wide.
 
 **The idea.** Instead of six separate fixings (F1-F6) drilled through the boards and screwed into
 plate 2, the three boards sit on one tray, using their own M2.5 corner holes and the nylon
@@ -1183,7 +1212,8 @@ than today, within the 40 mm gap. A and B keep their height with 6 mm standoffs.
 - **The corner holes' inset** from the board edges. The model assumes 2.5 mm.
 - **Board C's corner holes,** once C is built. A's and B's are known to be free; C's terminals sit
   near two of its corners.
-- **The plate-2 wire opening's y extent.** The window is placed at y 40.4-75.8, assumed centred.
+- **Whether a 4.7 mm window is wide enough** for the 6 V pair, the Bauer feed and the driver's I2C lead, and how the 6 V pair then gets from the window to A's 6V IN, about 60 mm away under the 6 mm gap.
+- **Whether anything above plate 2 stands on (186.12, 9.71) and (186.12, 110.82).** The tray covers them: they are 2.5 mm from A's and B's rear corner holes.
 - **MEC-16's check on the screw heads under plate 2** still applies to the four plate holes kept.
 - **Print or sheet.** The model serves both.
 
