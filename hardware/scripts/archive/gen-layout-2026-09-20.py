@@ -24,13 +24,13 @@ o=[]
 o.append('<svg xmlns="http://www.w3.org/2000/svg" width="1320" height="920" viewBox="0 0 1320 920" font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif">')
 o.append('<defs><marker id="d" markerWidth="8" markerHeight="8" refX="1" refY="3" orient="auto"><path d="M6,0 L0,3 L6,6 z" fill="#64748b"/></marker><marker id="e" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#64748b"/></marker></defs>')
 o.append('<rect width="1320" height="920" fill="#fbfaf8"/>')
-o.append('<text x="40" y="32" font-size="18" font-weight="700" fill="#1a1a1a">NEXUS — chassis deck layout</text>')
+o.append('<text x="40" y="32" font-size="18" font-weight="700" fill="#1a1a1a">NEXUS - chassis deck layout</text>')
 o.append('<text x="40" y="52" font-size="11" fill="#666">Hiwonder Ackermann advanced kit · three identical plates, outline traced from Hiwonder\'s own CAD · 1.7 px/mm · front of vehicle to the LEFT</text>')
-o.append('<text x="40" y="68" font-size="11" font-weight="700" fill="#b45309">⚠ Deck spacing is NOT confirmed — the stack is drawn at the equal 50 mm gaps the CAD implies; the photos of the real kit suggest otherwise. Measure both standoffs.</text>')
+o.append('<text x="40" y="68" font-size="11" font-weight="700" fill="#b45309">⚠ Deck spacing is NOT confirmed - the stack is drawn at the equal 50 mm gaps the CAD implies; the photos of the real kit suggest otherwise. Measure both standoffs.</text>')
 
-decks=[(132,'UPPER DECK — plate 3','top face z 133.12 · NOT YET ALLOCATED','#94a3b8','7 4','#f8fafc'),
-       (390,'MIDDLE DECK — plate 2','top face z 81.12 · NOT YET ALLOCATED','#94a3b8','7 4','#f8fafc'),
-       (648,'LOWER DECK — plate 1','top face z 29.12 · DEFINED — motors already mounted','#334155','none','#ffffff')]
+decks=[(132,'UPPER DECK - plate 3','top face z 133.12 · NOT YET ALLOCATED','#94a3b8','7 4','#f8fafc'),
+       (390,'MIDDLE DECK - plate 2','top face z 81.12 · NOT YET ALLOCATED','#94a3b8','7 4','#f8fafc'),
+       (648,'LOWER DECK - plate 1','top face z 29.12 · DEFINED - motors already mounted','#334155','none','#ffffff')]
 for top,title,sub,stroke,dash,fill in decks:
     o.append(f'<text x="60" y="{top-22}" font-size="13" font-weight="700" fill="#1a1a1a">{title}</text>')
     o.append(f'<text x="60" y="{top-8}" font-size="9.5" fill="#64748b">{sub}</text>')
@@ -49,9 +49,9 @@ for top,title,sub,stroke,dash,fill in decks:
 # ---- plate 3 / 2 notes
 o.append('<text x="300" y="215" font-size="12" font-weight="700" fill="#94a3b8" text-anchor="middle">to be defined</text>')
 o.append('<text x="300" y="238" font-size="9" fill="#94a3b8" text-anchor="middle">candidates: Raspberry Pi 5 (BOM 6.1, later phase) · vision / sensors · camera mast</text>')
-o.append('<text x="300" y="262" font-size="8.5" fill="#7c3aed" text-anchor="middle">fascia upper panel clamps here — 2 × M3×8 driven down from the top (HD-26)</text>')
+o.append('<text x="300" y="262" font-size="8.5" fill="#7c3aed" text-anchor="middle">fascia upper panel clamps here - 2 × M3×8 driven down from the top (HD-26)</text>')
 o.append('<text x="300" y="470" font-size="12" font-weight="700" fill="#94a3b8" text-anchor="middle">to be defined</text>')
-o.append('<text x="300" y="493" font-size="9" fill="#94a3b8" text-anchor="middle">the obvious tenants are the compute boards and the power stage — not yet decided</text>')
+o.append('<text x="300" y="493" font-size="9" fill="#94a3b8" text-anchor="middle">the obvious tenants are the compute boards and the power stage - not yet decided</text>')
 o.append('<text x="300" y="517" font-size="8.5" fill="#7c3aed" text-anchor="middle">one M3×12 through this plate clamps BOTH fascia panels (HD-26)</text>')
 o.append('<text x="300" y="540" font-size="8.5" fill="#b45309" text-anchor="middle">gap ABOVE carries the 3 debug ports · gap BELOW has the switch bodies</text>')
 
@@ -71,8 +71,8 @@ for (x0,y0,x1,y1),lab in [((-63.7,64.8,-1.1,101.7),'MOTOR L'),((6.1,64.8,68.7,10
 bx,by,bw,bh=box(-30,-30,30,40,top)
 o.append(f'<rect x="{bx:.1f}" y="{by:.1f}" width="{bw:.1f}" height="{bh:.1f}" rx="3" fill="#fef2f2" stroke="#b91c1c" stroke-width="1.4" stroke-dasharray="5 3"/>')
 o.append(f'<text x="{bx+bw/2:.1f}" y="{by+bh/2-4:.1f}" font-size="9" font-weight="700" fill="#b91c1c" text-anchor="middle">3S LiPo 11.1 V</text>')
-o.append(f'<text x="{bx+bw/2:.1f}" y="{by+bh/2+8:.1f}" font-size="7.5" fill="#b91c1c" text-anchor="middle">PLACEHOLDER — real size still open</text>')
-o.append(f'<text x="480" y="{top+H+30:.0f}" font-size="8" fill="#b45309" text-anchor="middle">motors reach to 29.8 mm from the rear edge — the switch bodies stop ~8 mm short of them</text>')
+o.append(f'<text x="{bx+bw/2:.1f}" y="{by+bh/2+8:.1f}" font-size="7.5" fill="#b91c1c" text-anchor="middle">PLACEHOLDER - real size still open</text>')
+o.append(f'<text x="480" y="{top+H+30:.0f}" font-size="8" fill="#b45309" text-anchor="middle">motors reach to 29.8 mm from the rear edge - the switch bodies stop ~8 mm short of them</text>')
 
 o.append(f'<line x1="60" y1="{648+H+46:.0f}" x2="518" y2="{648+H+46:.0f}" stroke="#94a3b8" stroke-width="1" marker-start="url(#d)" marker-end="url(#e)"/>')
 o.append(f'<text x="289" y="{648+H+60:.0f}" font-size="9" fill="#64748b" text-anchor="middle">270 mm · widest 120.4 mm at the front axle, 84.7 mm at the waist, 97.3 mm across the rear face</text>')
@@ -80,30 +80,30 @@ o.append(f'<text x="63" y="{648+H+60:.0f}" font-size="9" fill="#64748b">◀ FRON
 o.append(f'<text x="515" y="{648+H+60:.0f}" font-size="9" fill="#64748b" text-anchor="end">REAR ▶</text>')
 
 # ---- side elevation
-o.append('<text x="600" y="110" font-size="13" font-weight="700" fill="#1a1a1a">DECK STACK — side elevation</text>')
+o.append('<text x="600" y="110" font-size="13" font-weight="700" fill="#1a1a1a">DECK STACK - side elevation</text>')
 o.append('<line x1="600" y1="118" x2="1280" y2="118" stroke="#e2e8f0"/>')
 rows=[(156,'plate 3  z 131.12–133.12'),(278,'plate 2  z 79.12–81.12'),(400,'plate 1  z 27.12–29.12')]
 for yy,lab in rows:
     o.append(f'<rect x="600" y="{yy}" width="300" height="4.7" fill="#cbd5e1" stroke="#94a3b8"/>')
     o.append(f'<text x="908" y="{yy+6}" font-size="9" font-weight="700" fill="#334155">{lab}</text>')
 o.append('<rect x="600" y="160.7" width="300" height="117.3" fill="#fffbeb" stroke="#f59e0b" stroke-dasharray="4 3"/>')
-o.append('<text x="750" y="212" font-size="8.5" fill="#92400e" text-anchor="middle">UPPER GAP — drawn 50 mm, UNVERIFIED</text>')
+o.append('<text x="750" y="212" font-size="8.5" fill="#92400e" text-anchor="middle">UPPER GAP - drawn 50 mm, UNVERIFIED</text>')
 o.append('<text x="750" y="226" font-size="8" fill="#92400e" text-anchor="middle">photos suggest ~45 mm · fascia upper panel: USB-C · DE-9 · Mini-B</text>')
 o.append('<rect x="600" y="282.7" width="300" height="117.3" fill="#fffbeb" stroke="#f59e0b" stroke-dasharray="4 3"/>')
-o.append('<text x="750" y="334" font-size="8.5" fill="#92400e" text-anchor="middle">LOWER GAP — drawn 50 mm, UNVERIFIED</text>')
+o.append('<text x="750" y="334" font-size="8.5" fill="#92400e" text-anchor="middle">LOWER GAP - drawn 50 mm, UNVERIFIED</text>')
 o.append('<text x="750" y="348" font-size="8" fill="#92400e" text-anchor="middle">photos suggest ~55 mm · fascia lower panel: DRIVE / LOGIC switches</text>')
-o.append('<text x="600" y="420" font-size="8.5" fill="#64748b">below plate 1: running gear, wheels, ground clearance — nothing mounted</text>')
+o.append('<text x="600" y="420" font-size="8.5" fill="#64748b">below plate 1: running gear, wheels, ground clearance - nothing mounted</text>')
 
 o.append('<text x="600" y="470" font-size="13" font-weight="700" fill="#1a1a1a">WHAT IS FIXED, AND WHAT IS NOT</text>')
 o.append('<line x1="600" y1="478" x2="1280" y2="478" stroke="#e2e8f0"/>')
-notes=[('#b45309','Deck spacing — the open question',[
+notes=[('#b45309','Deck spacing - the open question',[
     'The single-plate CAD gives one 50 mm standoff, and the 3-deck model simply repeats it. The photos of',
     'the built kit do not agree: the lower gap reads ~55 mm and the upper ~45 mm on a tape. Both fascia',
     'panels are cut to 52 mm tall, so this decides whether they fit at all. Measure each standoff.']),
- ('#1e293b','Plate 1 — fixed',[
+ ('#1e293b','Plate 1 - fixed',[
     'Motors are mounted and the battery goes here: the heaviest mass low and central. Each motor reaches',
     'from the centreline out past the plate edge to its wheel, 29.8–66.7 mm forward of the rear edge.']),
- ('#1e293b','Plate 2 / 3 — open',[
+ ('#1e293b','Plate 2 / 3 - open',[
     'Deliberately blank. Compute boards, power stage and the Pi 5 all want deck space; nothing is committed',
     'until the wiring and thermal picture settle.']),
  ('#1e293b','The fascia already constrains all three',[
@@ -111,7 +111,7 @@ notes=[('#b45309','Deck spacing — the open question',[
     'Yellow circles are the four standoffs. Plate 2\'s single M3×12 clamps both panels at once (HD-26).']),
  ('#1e293b','Keep clear of the rear on plate 1',[
     'Switch bodies protrude ~25 mm into the lower gap and the motors start 29.8 mm in, leaving about 8 mm',
-    'between them — confirm with the switches in hand before printing (HD-26).']),
+    'between them - confirm with the switches in hand before printing (HD-26).']),
  ('#1e293b','Battery and servo blocks are indicative',[
     'The servo box is traced from the CAD; the battery is a placeholder until the pack is measured (BOM).'])]
 yy=498
