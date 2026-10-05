@@ -1,7 +1,8 @@
 # Hardware
 
 Build drawings for NEXUS. The drawings are `.svg` files in [`renders/`](renders/), and for two of them
-that is the editable source and the only copy. The carrier's is the exception: [`scripts/stm32-carrier.py`](scripts/stm32-carrier.py)
+that is the editable source and the only copy (`chassis-layout.svg` and `wiring-schematic.svg`: edited as text, no generator keeps in
+step with them; what survives of the early ones is in [`scripts/archive/`](scripts/archive/README.md)). The carrier's is the exception: [`scripts/stm32-carrier.py`](scripts/stm32-carrier.py)
 writes it, so edit the script, never the SVG.
 
 **No PDFs.** They are generated once, when the design is frozen. Until then the SVG is the
