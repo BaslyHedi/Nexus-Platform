@@ -1185,8 +1185,7 @@ the BOM's "54 mm matches no chassis rectangle" no longer matters.)
   rear lane to C's IN terminal. The rim has legs at the corners only, so nothing closes the lanes. The S6 / S7
   splices and their wiring are under "Where the splices go" below.
 - **Holding it:** two M3 x 8 screws from above through its holes into M3 nuts held in hex pockets in the
-  tray (E1 at (16, 63), E2 at (70, 63)), and a low rim of four corner legs 1.2 mm clear of the body (was 0.6; the Bauer was measured from a drawing, and the screws locate it) to
-  locate it.
+  tray (E1 at (16, 63), E2 at (70, 63)) (the rim of four corner legs that located it is removed, see "Fit review before ordering", item 6).
 - **Held to the plate** by T1 (24.82, 60.24) and T2 (52.82, 60.24), two of the plate's M3 holes under the Bauer.
 - **Cable passages:** the plate's two slots beside the Bauer (x 56-80, y 27-37 and 83-93) are open in the
   tray too, so cables can drop to the harness board below, and these are the wires to the splices. The window
@@ -1328,10 +1327,20 @@ which is why the second lane is the mirror of the first. The tray has a wing for
    tenth), every fixing sits on a plate hole within 0.01 mm, the nut pockets are at least 1.9 mm from any other opening, and the counterbores 4.5 mm
    from any pocket. The screw heads under plate 2: T4 3.9 mm, T6 3.8, T3 8.8, T5 10.9 from the nearest taped part. T4 is the only clear hole
    under board A, so it stays.
-6. **Still not verifiable from here:** the corner-hole inset (now absorbed, not known), the nuts' real across-flats (M2.5 5.0, M3 5.5 assumed), the
-   M2.5 screw head's height (2.2 mm assumed at most), and the Bauer's hole position (26 mm from the leads edge, 5 mm from each end). Measure them
-   with callipers before ordering; the file tolerates each of them but not all of them being wrong together.
-7. **How it is printed matters:** flat, PETG, 0.2 mm layers, 3 perimeters, 20 % infill, a brim against warping (a 183 x 110 x 4 mm slab curls a
+6. **The Bauer, measured from Hedi's photo on 5 mm paper (2026-10-06; no callipers).** Scale from the grid (17.2 px/mm), corrected for the camera's
+   height (about 36 cm, so +1.7 % at the tab and +6 % at the fin tops). Holes **54 mm apart** (read 53.8, +-1) and about 5 mm from each tab end: the
+   critical dimension is confirmed. Bore about 6.9 mm. But the body is **about 64 wide across the holes' axis, not 57**: the side walls of the fin banks stand
+   3.5-4 mm outside the base, so the holes are about **30 mm from the leads wall and 34 from the other** (the drawing's 26 + 31 = 57 is the base). The fin
+   tips also reach about 5 mm past the tab at one end, the front once the leads are on the vehicle's left. Consequences, all handled in the file or below:
+   - the **rim would have collided** (its legs stood 1.2 mm off a 57 mm body, inside the real walls): removed, the two screws locate the Bauer alone;
+   - the body covers y 28.5-93 (was 32-89): **3.0 mm from S6, 4.0 from S7, 1.9 and 2.9 mm from the two chassis standoffs, 10.5 from board C**, all clear;
+   - it **covers most of the plate's two tie slots**, which run x 56-80: only the last 5 mm (x 75-80) is open for the S6 and S7 wires, enough for one
+     18 AWG wire each (2.4 mm), no more. Route them there;
+   - the Bauer's hole is 6.8 mm, wider than an M3 head (5.5), so each screw needs a **washer of 8 mm or more (M3 DIN 9021, 9 mm)** on top, not in the BOM. M3 x 8 suits a
+     tab 3-6 mm thick; try the stack on the real part first.
+7. **Still not verifiable from here:** the corner-hole inset (now absorbed, not known), the nuts' real across-flats (M2.5 5.0, M3 5.5 assumed) and the
+   M2.5 screw head's height (2.2 mm assumed at most). The file tolerates each of them, but not all three being wrong together.
+8. **How it is printed matters:** flat, PETG, 0.2 mm layers, 3 perimeters, 20 % infill, a brim against warping (a 183 x 110 x 4 mm slab curls a
    little at its corners). Order it as FDM and not as SLS or resin, whose small holes close up.
 
 **To measure or decide before making it.**

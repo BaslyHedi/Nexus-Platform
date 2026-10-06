@@ -112,11 +112,11 @@ STANDOFF_CLEAR_D  = 9.0;
 // 26 mm from one long edge. The photo (2026-10-05) shows that is the edge the four leads leave from, through the middle of the
 // plateau. That edge is put on the vehicle's LEFT (y 89), facing board C's 5 V terminals, with a 12 mm lane beside it.
 // They take M3 screws from above into nuts held in the tray: one pocket under each hole.
-BAUER = [11.0, 75.0, 32.0, 89.0];     // 9 mm ahead of where plate1.py parks it: that leaves 10.5 mm between its rear end and board C
-                                      // for the leads and the 5 V cable to board C (the rim has no leg there)
-BAUER_HOLES = [[16.0, 63.0, 3.2], [70.0, 63.0, 3.2]];   // x, y, hole: BAUER[0] + 5 and + 59, BAUER[3] - 26
+BAUER = [11.0, 75.0, 28.5, 93.0];     // from Hedi's photo on 5 mm paper (2026-10-06): the side walls stand 3.5-4 mm outside the 57 mm base, so ~64.5 wide, leads wall at y 93, not 89.
+                                      // Its fin tips reach ~5 mm further than the tabs at the FRONT end (x ~6). Holes unchanged: measured 54 mm apart, ~5 mm from each tab end.
+                                      // for the leads and the 5 V cable to board C
+BAUER_HOLES = [[16.0, 63.0, 3.2], [70.0, 63.0, 3.2]];   // x, y, hole: 54 apart, 5 from each tab end; 30 from the leads wall (the drawing's 26 is to the base)
 BAUER_NUT_AF = 5.9; BAUER_NUT_DEPTH = 2.6;            // M3 nut, 5.5 across flats and 2.4 thick, as a printing fit
-RIM_H = 3.0; RIM_W = 1.6; RIM_GAP = 1.2; RIM_LEG = 14;   // four corner brackets, so the leads and the air get out
 // the plate's wire opening, x 110.3-133.0, y 42.5-77.9, a stadium of radius 11.35
 PLATE_OPENING = [[121.65, 53.85], [121.65, 66.55], 11.35];
 // the window: the opening up to x 115, clear of A's front-inboard corner counterbore
@@ -190,17 +190,6 @@ module labels2d(h = 6) {
     word([45, 12], "BAUER", 4);
 }
 
-// the Bauer's rim: four corner brackets round its footprint, 0.6 mm clear, 3 mm high
-module rim3d() {
-    a = tray([BAUER[0] - RIM_GAP, BAUER[2] - RIM_GAP]); b = tray([BAUER[1] + RIM_GAP, BAUER[3] + RIM_GAP]);
-    translate([0, 0, T]) linear_extrude(RIM_H) difference() {
-        translate([a[0] - RIM_W, a[1] - RIM_W]) square([b[0] - a[0] + 2 * RIM_W, b[1] - a[1] + 2 * RIM_W]);
-        translate(a) square([b[0] - a[0], b[1] - a[1]]);
-        translate([a[0] + RIM_LEG, a[1] - 5]) square([b[0] - a[0] - 2 * RIM_LEG, b[1] - a[1] + 10]);      // leave only
-        translate([a[0] - 5, a[1] + RIM_LEG]) square([b[0] - a[0] + 10, b[1] - a[1] - 2 * RIM_LEG]);      // the corners
-    }
-}
-
 // a drilling cross through each board hole and fixing, for the hand-cut sheet
 module crosses2d()
     for (p = concat([for (b = BOARDS) for (c = corners(b)) c], [for (f = FIXINGS) tray(f)], [for (e = BAUER_HOLES) tray(e)]))
@@ -224,7 +213,6 @@ module trayBody() {
         for (s = SPLICES) translate([0, 0, T - 0.4]) linear_extrude(1)
             difference() { translate(-PLACE) rrect(s[0], s[1], s[2], s[3], 0.5); offset(delta = -0.6) translate(-PLACE) rrect(s[0], s[1], s[2], s[3], 0.5); }
     }
-    rim3d();
     }
 }
 
