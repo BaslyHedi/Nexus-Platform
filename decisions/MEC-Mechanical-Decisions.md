@@ -1377,12 +1377,11 @@ Made with Hedi the day the carrier tray (MEC-17) went to Craftcloud. Same patter
 
 **The FRDM end.** Where MEC-11 put it: x 95.74-200.74, y 20.26-85.26. It keeps its **four M2.5 screws from below**, up through plate 3's M3 grid holes,
 now also through the tray, into the standoffs on the board. Those four screws clamp the FRDM end of the tray; nothing else is needed there. Two of the
-board's six holes stay unused, as in MEC-11. The tray lifts the board 4 mm, so the screws want to be **M2.5 x 10, not x 6** (BOM 3.26).
+board's six holes stay unused, as in MEC-11. The board stands on its **6 mm metal standoffs** (Hedi, 2026-10-06), so its underside is 10 mm above plate 3 with the tray. The tray adds 4 mm to the screws' reach: **M2.5 x 10, not x 6** (BOM 3.26), which still leaves 4 mm in a 6 mm standoff.
 
 **The Pi end.** The Pi is 85 x 56 on a 58 x 49 pattern, M2.5, holes 3.5 mm in from the edges. It goes **ahead of the FRDM**, x 6-91, centred on the plate (y 32.25-88.25):
 the only free plate-3 area that holds it. It is **turned so its Ethernet / USB edge faces the nose**; the other way round, that edge would end 4.7 mm from the FRDM and
-nothing could be plugged in. Four printed bosses, 5 mm tall, carry it. Each has a hex pocket **open on top** for an M2.5 nut: the nut drops in, the Pi goes on and covers it,
-one M2.5 x 6 from above per corner. Turned that way the GPIO header is on the vehicle's left and the USB-C / micro-HDMI edge on its right.
+nothing could be plugged in. It stands on **four M2.5 standoffs, 8 or 10 mm, Hedi's choice** (Hedi has both; recommended **8**: the Pi's underside parts need about 2.5 mm, and 8 keeps it near the FRDM's 6). Each is held by an M2.5 x 6 from below, through a counterbore in the tray (6.4 x 2.4, so the tray sits flat on plate 3), and the Pi is screwed on top. No nuts and no printed bosses. Turned that way the GPIO header is on the vehicle's left and the USB-C / micro-HDMI edge on its right.
 
 **The pad on plate 3.** The Pi's holes land on no plate hole (the nearest pair, (49, 35.94) and (49, 84.53), is 0.4 mm out in y but 23 mm from the Pi's x), so the pad is held down by
 **four M3 screws from below** at plate 3's M3 holes (17.82 / 45.82, 53.24 / 67.24), each into a nut pocket flush in the tray's top, M3 x 8. A 28 x 14 rectangle, so the pad cannot rock. The two pads are
@@ -1396,9 +1395,9 @@ The two chassis standoffs at (27.35, 22.17) and (27.35, 98.36) are 10.1 mm clear
 
 **Open, before printing.**
 
-- **The FRDM's standoff length** (MEC-11 "to confirm"). It sets the microSD clearance under the board, now 4 mm higher.
+- **The microSD clearance under the FRDM:** 10 mm with the tray and the 6 mm standoffs (MEC-11 "to confirm" is now answered: 6 mm). Whether a card and its socket fit under is still to see.
 - **Where the FRDM's microSD socket and its J1 / J11 plugs sit.** No window is cut for them yet.
 - **The Pi 5's microSD.** Its socket is on the underside at the end that now faces the FRDM (4.7 mm away); the card leaves toward the FRDM. Plan on USB or NVMe boot, or move the Pi forward and cut a notch.
 - **Whether a plug on the Pi's nose edge is wanted over the nose.** The ports stand ~25 mm clear of the plate's front; there is no bumper yet.
-- **Standoffs for the Pi.** None in the BOM; the bosses replace them, so no M2.5 standoffs are needed, only nuts and screws.
+- **The Pi's standoffs:** assumed female-female (a screw from below into each). If they are male-female, the bottom screw is not needed and the counterbore is just a clearance hole.
 - **A HAT on the Pi's GPIO header (BOM 6.2)** has not been checked against the plate's left edge or the fascia panel.

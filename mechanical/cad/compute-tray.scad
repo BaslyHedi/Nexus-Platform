@@ -14,14 +14,14 @@
 //     up through plate 3's M3 grid holes (heads under the plate), now through the tray as well, into the standoffs on the
 //     board. Those four screws are also what clamps the FRDM end of the tray down. Two of the board's six holes are unused, as in MEC-11.
 //   - Pi pad ahead of it: the board's 85 x 56 footprint, turned so its Ethernet / USB edge faces the nose (the rear edge
-//     would end 4 mm from the FRDM). Four printed bosses carry it on its 58 x 49 pattern, each with a hex pocket
-//     open on top for an M2.5 nut: the nut drops in, the Pi goes on and covers it, one screw from above holds each corner.
+//     would end 4 mm from the FRDM). Four M2.5 standoffs (PI_STANDOFF, 8 or 10 mm) carry it on its 58 x 49 pattern: a screw from
+//     below through a counterbore in the tray into each standoff (the tray sits flat on plate 3), the Pi screwed on top.
 //   - four M3 fixings in the Pi pad on plate 3's M3 holes, each a nut pocket on top, screw from below. A 28 x 14 rectangle,
 //     so the pad cannot rock.
 //   - a bridge joining the two pads, and one window over plate 3's wire opening (a cable can still come up there).
 //
 // TO MEASURE before printing (the defaults are guesses)
-//   FRDM_STANDOFF - the length of the standoffs the FRDM carries; it sets the microSD clearance under the board (MEC-11 "to confirm")
+//   the Pi standoffs' thread (female-female assumed) and the M2.5 screw head height, for the counterbore
 //   SD_WINDOWS    - the FRDM's microSD socket and its J1 / J11 cable landing: no window is cut for them yet
 //   Pi 5 microSD  - its socket is on the underside at the board's end that now faces the FRDM, and the card leaves toward it
 
@@ -30,10 +30,11 @@ PART = "plan";               // "tray" | "plan"
 T            = 4.0;          // tray thickness, as the carrier tray
 R_CORNER     = 2.0;
 FIX_D        = 3.4;          // M2.5 through the tray at the FRDM's holes: loose, so the plate hole is the only guide
-PI_BOSS_H    = 5.0;          // Pi seat above the tray: clears the Pi's underside parts and the nut pocket's 2.4 floor
-PI_BOSS_D    = 8.0;
-PI_HOLE_D    = 2.9;          // through the boss, M2.5 end goes past the nut
-M25_NUT_AF   = 5.0;  M25_POCKET = 5.4;  M25_DEPTH = 2.4;     // as the carrier tray (MEC-17)
+FRDM_STANDOFF = 6.0;         // the metal standoffs the FRDM carries (Hedi, 2026-10-06)
+PI_STANDOFF  = 8.0;          // 8 or 10 mm, Hedi's choice; only the preview uses it
+PI_HOLE_D    = 3.4;          // M2.5 through the tray, loose like the FRDM's
+PI_CB_D      = 6.4;          // counterbore from below for an M2.5 head, as the carrier tray (MEC-17)
+PI_CB_DEPTH  = 2.4;          // 1.6 mm of floor remains
 M3_NUT_AF    = 5.5;  M3_POCKET  = 5.9;  M3_DEPTH  = 2.6;     // as the Bauer's nuts (MEC-17)
 FIX3_D       = 3.4;          // M3 through the tray, in a 3.18 plate hole
 
@@ -59,7 +60,7 @@ module stadium(s) hull() { translate(s[0]) circle(r = s[2], $fn = 64); translate
 module outline2d() union() {
     rrect(FRDM[0], FRDM[1], FRDM[2], FRDM[3]);
     rrect(PI_X0, PI_X0 + PI_L, PI_Y0, PI_Y0 + PI_W);
-    for (p = PI_HOLES) translate(p) circle(d = PI_BOSS_D + 0.4, $fn = 48);     // a pad round each boss, so the boss never overhangs
+    for (p = PI_HOLES) translate(p) circle(d = PI_CB_D + 2.2, $fn = 48);       // a pad round each counterbore, so it never breaks the edge
     translate([PI_X0 + PI_L - 4, 42]) square([FRDM[0] - PI_X0 - PI_L + 8, 36]);   // the bridge
 }
 
@@ -73,13 +74,9 @@ module holes2d() {
 module real() mirror([0, 1, 0]) children();
 
 module trayBody() difference() {
-    union() {
-        linear_extrude(T) difference() { outline2d(); holes2d(); }
-        for (p = PI_HOLES) translate([p[0], p[1], T - 0.01]) cylinder(d = PI_BOSS_D, h = PI_BOSS_H + 0.01, $fn = 48);
-    }
-    for (p = PI_HOLES) translate([p[0], p[1], 0]) cylinder(d = PI_HOLE_D, h = T + PI_BOSS_H + 1, $fn = 32);
-    // the Pi's nuts: pocket open on top of the boss, the board covers it
-    for (p = PI_HOLES) translate([p[0], p[1], T + PI_BOSS_H - M25_DEPTH]) cylinder(d = M25_POCKET / cos(30), h = M25_DEPTH + 0.01, $fn = 6);
+    linear_extrude(T) difference() { outline2d(); holes2d(); }
+    // counterbores from below for the Pi's screw heads, so the tray sits flat on plate 3
+    for (p = PI_HOLES) translate([p[0], p[1], -0.01]) cylinder(d = PI_CB_D, h = PI_CB_DEPTH, $fn = 32);
     // the pad's M3 nuts: pocket open on top, flush with the tray, screw from below
     for (p = PAD_FIX) translate([p[0], p[1], T - M3_DEPTH]) cylinder(d = M3_POCKET / cos(30), h = M3_DEPTH + 0.01, $fn = 6);
 }
@@ -89,6 +86,7 @@ module board_ghost(x0, x1, y0, y1, z, c) color(c, 0.55) translate([x0, y0, z]) c
 if (PART == "tray") real() trayBody();
 else if (PART == "plan") real() {
     color("lightgrey") trayBody();
-    board_ghost(FRDM[0], FRDM[1], FRDM[2], FRDM[3], T + 8, "royalblue");
-    board_ghost(PI_X0, PI_X0 + PI_L, PI_Y0, PI_Y0 + PI_W, T + PI_BOSS_H, "seagreen");
+    board_ghost(FRDM[0], FRDM[1], FRDM[2], FRDM[3], T + FRDM_STANDOFF, "royalblue");
+    board_ghost(PI_X0, PI_X0 + PI_L, PI_Y0, PI_Y0 + PI_W, T + PI_STANDOFF, "seagreen");
+    for (p = PI_HOLES) color("silver") translate([p[0], p[1], T]) cylinder(d = 5, h = PI_STANDOFF, $fn = 24);
 }
