@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""The carrier tray to make by hand (MEC-17): a 1:1 cutting and drilling template, and the hole table, for a sheet of 4 mm plastic.
+"""The carrier tray to make by hand (MEC-17): a 1:1 cutting and drilling template, and the hole table, for a sheet of 3 or 4 mm plastic (3 mm ABS is the one bought).
 
     python3 carrier-tray-hand.py [out.svg]        # -> ../renders/carrier-tray-hand-template.svg, A4 landscape, 1 unit = 1 mm
 
@@ -7,12 +7,12 @@ Print it at 100 % (no "fit to page"); the 100 mm bar must measure 100 mm. Tape i
 along the heavy outline (an all right-angle outline: twelve straight cuts, no curves).
 
 What the printed tray (carrier-tray.scad) has and this one does not, because they are hard to do by hand and not needed:
-  - plate 2's ~45 own holes and slots, copied; only one window for the 6 V pair is kept (the two slots for the Bauer's 12 V wires stay
-    open because the tray stops short of them);
+  - plate 2's ~45 own holes and slots, copied; three cable windows are kept (the outer 4 mm of each of the plate's two slots, which the Bauer's 12 V
+    wires use, stay open because the tray's edges at y 31 and y 89 do not cover them);
   - the hex nut pockets: the four fixing holes are tapped M2.5 (or take a nut glued on top), the Bauer's two M3;
   - the Bauer's rim, the lettering, the splice outlines and the splice wings (S6 and S7 go back on plate 2's top face, beside the tray);
   - the corner pads and the 6 mm counterbores: the 12 board holes are countersunk from below for flat-head M2.5 screws instead.
-The tray sits flat on plate 2 and is 4 mm thick like the printed one, so every height in MEC-17 is unchanged.
+The tray sits flat on plate 2. At 4 mm every height in MEC-17 is unchanged; at 3 mm the boards stand 11 mm above plate 2.
 
 Positions are plate 2's layout frame (x from the front, y from the vehicle's right), the same numbers as the printed tray; the table gives
 them again from the tray's own top left corner, for marking with a ruler. Mark the board holes through the real boards if you can: the
@@ -90,7 +90,7 @@ w = o.append
 w(f'<svg xmlns="http://www.w3.org/2000/svg" width="{PAGE_W}mm" height="{PAGE_H}mm" viewBox="0 0 {PAGE_W} {PAGE_H}" font-family="system-ui, Segoe UI, Roboto, sans-serif">')
 w(f'<rect width="{PAGE_W}" height="{PAGE_H}" fill="#ffffff"/>')
 w(f'<text x="10" y="11" font-size="5" font-weight="700">NEXUS carrier tray - hand-made - 1:1 template (MEC-17)</text>')
-w(f'<text x="10" y="17" font-size="2.7" fill="#444">4 mm sheet, at least {math.ceil(W) + 6} x {math.ceil(H) + 6} mm. Top view, front of the vehicle to the LEFT, vehicle right at the TOP. Print at 100 %, no fit-to-page: the bar below must measure 100 mm.</text>')
+w(f'<text x="10" y="17" font-size="2.7" fill="#444">3 or 4 mm sheet, at least {math.ceil(W) + 6} x {math.ceil(H) + 6} mm. Top view, front of the vehicle to the LEFT, vehicle right at the TOP. Print at 100 %, no fit-to-page: the bar below must measure 100 mm.</text>')
 w(f'<text x="10" y="21.5" font-size="2.7" fill="#444">Centre-punch every cross, drill, then saw along the heavy line (12 straight cuts), file the edges, tap or countersink as the table says.</text>')
 
 
@@ -136,7 +136,7 @@ w(f'<text x="10" y="{ty2}" font-size="3.2" font-weight="700">Outline corners, in
 corner_txt = "   ".join(f"({x - X0:.1f}, {y - Y0:.1f})" for x, y in OUTLINE)
 w(f'<text x="10" y="{ty2 + 4.5}" font-size="2.5" font-family="ui-monospace, Menlo, Consolas, monospace" xml:space="preserve">{corner_txt}</text>')
 w(f'<text x="10" y="{ty2 + 12.5}" font-size="2.5" fill="#b45309">Better for the board holes: set the real boards, with their standoffs fitted, on the sheet in their dashed outlines and mark through the standoffs - the 2.5 mm corner inset here is an estimate.</text>')
-w(f'<text x="10" y="{ty2 + 8.5}" font-size="2.5" fill="#444">Tray {W:.1f} x {H:.1f} mm. Tap M2.5 / M3 into the 4 mm sheet (or open to 2.8 / 3.2 and glue a nut on top). Board holes: 3.4 mm, countersunk 90 degrees from below for flat-head M2.5 x 8.</text>')
+w(f'<text x="10" y="{ty2 + 8.5}" font-size="2.5" fill="#444">Tray {W:.1f} x {H:.1f} mm. Tap M2.5 / M3 into the sheet (or open to 2.8 / 3.2 and glue a nut on top). Board holes: 3.4 mm, countersunk 90 degrees from below for flat-head M2.5 x 8.</text>')
 w('</svg>')
 with open(OUT, "w", encoding="utf-8") as f:
     f.write("\n".join(o) + "\n")
