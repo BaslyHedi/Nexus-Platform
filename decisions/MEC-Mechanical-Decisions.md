@@ -25,7 +25,7 @@ Drawings: [chassis layout](../hardware/renders/chassis-layout.svg). Geometry and
 | **MEC-15** | The carrier is two kit boards joined by the Discovery, not one board |
 | **MEC-16** | Plate 2's lower face is the harness board - plate 1 carries only the battery and the driver |
 | **MEC-17** | *Proposed:* one tray carries boards A, B and C and bolts to plate 2 |
-| **MEC-18** | *Proposed:* one tray on plate 3 - a spare nose, the FRDM, and a Raspberry Pi 5 behind |
+| **MEC-18** | *Proposed:* one wide tray on plate 3 - a spare nose, the Pi 5, a plug gap, the FRDM, all turned across |
 
 ---
 
@@ -1367,48 +1367,46 @@ which is why the second lane is the mirror of the first. The tray has a wing for
 
 ---
 
-## MEC-18 · *Proposed:* one tray on plate 3 - a spare nose, the FRDM, and a Raspberry Pi 5 behind
+## MEC-18 · *Proposed:* one wide tray on plate 3 - a spare nose, the Pi 5, a plug gap, the FRDM, all turned across
 
 **Status (2026-10-06): proposed, modelled, checked against the plate data, not printed.** Source: [`../mechanical/cad/compute-tray.scad`](../mechanical/cad/compute-tray.scad) -> `compute-tray.stl`;
 the renders come from [`../mechanical/cad/compute-tray-preview.scad`](../mechanical/cad/compute-tray-preview.scad) (plate 3's data is exported from the layout drawing by
 [`../mechanical/scripts/plate3-data.py`](../mechanical/scripts/plate3-data.py)). Made with Hedi the day the carrier tray (MEC-17) went to Craftcloud. PETG, 4 mm, flat, no supports.
 It follows MEC-12 (the FRDM on plate 3). Hedi will add it to the next print order.
 
-**What changed, and why (2026-10-06).** The first proposal put the FRDM at MEC-11's place with the Pi ahead of it. Reading NXP's *FRDM-IMX91S Quick Start Guide*
-(figures 1 and 2: the top and bottom views) showed where the connectors really are, and that the nose is worth keeping free. The connectors, in the guide's top view with the
-40-pin header on the left (u along the long edge, v along the short; positions read off the photo at 10 px / mm, +-1 mm):
+**History of the layout (all 2026-10-06, all in git).** First: the FRDM at MEC-11's place, the Pi in the nose. Second: both boards across, the first guess. Third: the FRDM along the vehicle with a spare nose;
+that one was rejected because the FRDM's USB plugs need about 25 mm behind the board and the Pi pad sat there. **This one:** Hedi asked for both boards turned across the vehicle and the tray spread over more of plate 3.
+
+**The FRDM's connectors** (NXP *FRDM-IMX91S Quick Start Guide*, figures 1 and 2; read off the photo at 10 px / mm, +-1 mm; the board's frame has u along the long edge and v along the short one, 40-pin header at u 0):
 
 | Edge | What | Faces, as placed |
 |---|---|---|
-| left (u 0) | 40-pin expansion header | the **nose**: a ribbon reaches a Sense HAT up front |
-| right (u max) | USB-C DBG **J11**, USB-C, USB-A | the **rear**: the fascia's USB-C extension is short, and plate 3's slot at x 187.5-191.8 lets the cables climb to them |
-| bottom (v max) | audio jack, USB-C power **J1**, RJ45 Ethernet | the vehicle's **left**: J1's lead drops through the slot at y 105-110, the Ethernet reaches the Pi's |
-| top (v 0) | 30-pin FPC, 2x5 CAN header **J7**, buttons, and on the **underside** the microSD slot (opening to this edge) | the vehicle's **right**: the card comes out sideways, free |
+| u 0 | 40-pin expansion header | the vehicle's **right** |
+| u max | USB-C DBG **J11**, USB-C, USB-A (overhanging the edge by about 1.8 mm) | the vehicle's **left**; the plugs hang over plate 3's left edge |
+| v max | audio jack, USB-C power **J1**, RJ45 (overhanging by 2.5 mm) | the **nose**, toward the Pi: plugs need about 35 mm, and plate 3's big slot (x 161-176, y 30-90) lets the cables climb |
+| v 0 | 30-pin FPC, 2x5 CAN header **J7**, buttons; **microSD slot** on the underside, opening to this edge | the **rear**, where plate 3's cross-slot at x 260 is |
 
-**The board is about 95 mm long, not 105.** In the guide's photos the six mounting holes sit 49.0 mm apart, then 39.5, on a 58 mm spacing, and the outline is 95 x 65 at that scale.
-The repo's 105 is the *non-S* board's, from UM12262 and its design files (MEC-11 took its drill file from there; the first four holes still match, the other two do not).
-**Measure the board before ordering** (`FRDM_L` in the scad).
+**The board is about 95 x 65 mm, not 105 x 65.** In the guide's photos the six mounting holes sit 49.0 mm apart, then about 40, on a 58 mm spacing, and the outline is 95 x 65 at that scale. The 105 is the *non-S*
+board's (UM12262 and its design files; MEC-11 took its drill file from there, and its first four holes still match). Hedi measured **96 x 67** (2026-10-06), which is the PCB plus the RJ45 and USB-A that overhang
+it; the tray uses 95 x 65 for the PCB and shifts the pad 1 mm forward to keep clear of the chassis standoffs at either size. Hedi's measurement of the bare PCB would close this.
 
-**The layout** (plate 3 frame, x from the nose):
+**The layout** (plate 3 frame, x from the nose; one piece, **242.7 x 106.7 x 4 mm**):
 
-- **Nose pad, x 8-75:** plain 4 mm plate, 67 x 56, four fixings, nothing else. Drill it for whatever comes next. A Sense HAT is 65 x 56 on a 58 x 49 pattern.
-- **FRDM pad, x 72-167:** the board's footprint, 23.7 mm ahead of MEC-11's place. It stands on its 6 mm metal standoffs, **four** of them screwed from the tray's underside
-  (M2.5 x 6, head in a counterbore, so the tray sits flat on plate 3); the two rear ones just stand on the tray. The tray is held down by four M3 at plate 3's holes (99.24 and 148.18, 38.76 and 81.77).
-  It no longer lands on MEC-11's grid; the tray carries the difference.
-- **Plug gap, x 167-196:** only two 7 mm ribs, at the plate's edges, join the pads. A USB plug needs about 25 mm beyond the board edge; with the Pi directly behind there would be none (the first render showed it).
-- **Pi pad, x 196-252:** the Pi 5 turned across the vehicle, **ports to the left** (beside the FRDM's Ethernet), GPIO header to the rear. It stands on four M2.5 standoffs, **8 or 10 mm, Hedi's choice**
-  (recommended 8), each held by an M2.5 x 6 from below through a counterbore, the Pi screwed on top. Four fixings: M3 (245.88, 38.76 and 96.77), M2.5 (227.88, 20.23 and 100.23).
-  The Pi is a later-phase part (BOM 6.1); its pad is printed now so the tray is one piece and the holes are right when it arrives.
-- **One window**, over plate 3's wire opening (x 110.3-133.0, y 42.5-77.9), a cable route under the FRDM.
+- **Spare pad, x 8-93:** plate 3's own outline moved in 5 mm, plain plate, 14 mm clear of nothing but six fixings, two windows over plate 3's slots (x 56-80, y 27-37 and 83-93) and two notches round the chassis standoffs.
+  A Sense HAT is 65 x 56 on a 58 x 49 pattern. The FRDM's 40-pin ribbon reaches it from the right edge, about 30 cm.
+- **Pi pad, x 94-150:** the Pi 5 across the vehicle, **ports to the left** (toward the FRDM's Ethernet), GPIO header to the rear. Plate 3 is 84.5 mm wide at x 70-88, so the Pi (85 across) cannot go further forward.
+  Four M2.5 standoffs, **8 or 10 mm, Hedi's choice** (recommended 8), each held by an M2.5 x 6 from below through a counterbore, the Pi screwed on top.
+- **Plug gap, x 150-184:** two ribs 10 mm wide at the plate's edges and nothing between them.
+- **FRDM pad, x 184-249:** the board on its 6 mm metal standoffs, **four** screwed from the tray's underside (M2.5 x 6 in counterbores, the tray sits flat); the two on the far edge just stand on the tray.
+- **Fixings to plate 3**, 14, all on plate 3's own holes: M3 at (17.82, 53.24 and 67.24), (196.88 and 245.88, 38.76 and 81.77); M2.5 at (49, 35.94 and 84.53), (86.94, 40.23 and 80.23), (120.06, 35.94 and 84.53), (143.47, 52.65 and 67.88).
 
-**Checked (2026-10-06, against `hardware/scripts/chassis-layout.py`).** All twelve fixings land on a plate-3 hole of the right size. Every pad corner is inside the plate outline (the nearest 2.2 mm, the FRDM pad's
-front-right corner; the nose pad 4.3 mm). The fixings are 17.7 mm or more from every standoff hole and 14 mm or more from each other. The Pi pad ends 1.4 mm short of the rear chassis standoffs' hexagons. One solid, **244.7 x 88.4 x 4 mm**.
+**Checked (2026-10-06, every vertex of the STL against `hardware/scripts/chassis-layout.py`).** No vertex is outside plate 3, the nearest is 3.7 mm inside it (the Pi pad's front corners, where the plate narrows); the FRDM pad is 11 mm clear.
+All 14 fixings land on a plate hole of the right size, 10.6 mm or more from every counterbore. The FRDM pad's rear edge is 4.4 mm short of the chassis standoffs' hexagons (2.4 mm if the board is 67 wide).
 
 **Open, before ordering.**
 
-- **The FRDM's real length** (95 or 105), and whether its two rear holes are where the photo says. At 105 the board would reach x 177, leaving a 19 mm plug gap; say so and I move the pads.
-- **Print size.** 244.7 mm long: it needs a printer with a bed of 250 mm or more. If the service's bed is shorter, the ribs are the place to cut it into two pieces.
-- **The Pi's standoffs** assumed female-female (a screw from below). The Pi's real port block and GPIO position are indicative.
-- **The FRDM's connector boxes** are from a photo, +-1 mm and with the heights guessed; they judge placement, they do not build anything.
-- **Whether the Pi's cables may leave over the left side**, and how the Ethernet runs between the two boards.
-- **The Sense HAT's place** is not designed: the nose pad is there for it.
+- **The bare PCB's size** (95 x 65 or 96 x 67), and where its two far-edge holes are.
+- **Print size.** 242.7 mm long: it needs a bed of 250 mm or more. The ribs are the place to cut it into two pieces if the service's bed is shorter.
+- **The cables.** The HAT's ribbon (about 30 cm, from the right edge forward), J11's USB-C cable (its plug hangs over the left edge, then runs to the fascia), J7's CAN lead (to the cross-slot at x 260) and J1's power lead (through the big slot) are routed in theory only.
+- **The Pi's standoffs** assumed female-female; its port block and GPIO position are indicative. **The FRDM's connector boxes** are from a photo, heights guessed: they judge placement, they do not build anything.
+- **The Sense HAT's place** is not designed: the spare pad is there for it.

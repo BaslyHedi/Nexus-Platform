@@ -14,7 +14,7 @@ module and 256 MB QSPI NAND.
 
 ## Confirmed from the QSG
 
-- **105 × 65 mm**, 10-layer (dimension from UM12262, which is the *non-S* board). ⚠️ **The -S looks about 95 × 65 mm**: in the Quick Start Guide's top and bottom views (figures 1 and 2) the outline is 95 mm long at the scale where the six mounting holes sit 49.0 mm apart, then 39.5, on a 58 mm spacing. Photo, +-1 mm; **measure the board** (MEC-18)
+- **105 × 65 mm**, 10-layer (dimension from UM12262, which is the *non-S* board). ⚠️ **The -S looks about 95 × 65 mm**: in the Quick Start Guide's top and bottom views (figures 1 and 2) the outline is 95 mm long at the scale where the six mounting holes sit 49.0 mm apart, then 39.5, on a 58 mm spacing. Photo, +-1 mm. Hedi measured **96 x 67 over the connectors** (2026-10-06), which fits: the RJ45 overhangs the board edge by about 2.5 mm and the USB-A by about 1.8 mm. **Measure the bare PCB** (MEC-18)
 - i.MX 91, 1× Cortex-A55 · 512 MB LPDDR4 · 256 MB QSPI NAND (NAND boot) · microSD 3.0
 - IW610: Wi-Fi 6 + BLE 5.4 + 802.15.4 · 1 Gbps Ethernet · external RTC w/ coin cell
 - **Power: J1, USB-C only.** No barrel jack, no terminal block

@@ -6,7 +6,6 @@
 // The FRDM's connector boxes are read off NXP's Quick Start Guide top view (figure 1) at 10 px / mm, +-1 mm; their heights are the
 // parts' usual ones. They are for judging placement, not for building from. The Pi's blocks are indicative.
 include <compute-tray.scad>
-include <plate3-data.scad>
 PART = "lib";
 VIEW = "iso";
 EX = (VIEW == "explode") ? 45 : 0;
@@ -49,7 +48,7 @@ module frdm() {
     for (p = FRDM_SCREWS) { color("silver") translate([p[0], p[1], T + EX * 0.25]) cylinder(d = 5, h = FRDM_STANDOFF, $fn = 24);
                             color("gold") translate([p[0], p[1], T - PI_CB_DEPTH + 0.2 + EX * 0.25]) { cylinder(d = 2.5, h = FRDM_STANDOFF + 3, $fn = 16); translate([0, 0, -2]) cylinder(d = 4.4, h = 2, $fn = 16); } }
     for (p = FRDM_FREE) color("silver") translate([p[0], p[1], T + EX * 0.25]) cylinder(d = 5, h = FRDM_STANDOFF, $fn = 24);
-    translate([FRDM_X0, FRDM_Y0, EX * 0.6]) {
+    translate([0, 0, EX * 0.6]) multmatrix([[0, -1, 0, FRDM_X0 + FRDM_W], [1, 0, 0, FRDM_Y0], [0, 0, 1, 0], [0, 0, 0, 1]]) {   // the board in its own frame, turned by the tray's rule
         color("royalblue") translate([0, 0, z]) cube([FRDM_L, FRDM_W, 1.6]);
         for (c = FRDM_PARTS) color(c[5]) translate([c[0], c[1], z + 1.6]) cube([c[2], c[3], c[4]]);
         color("silver") translate([29.4, -1.0, z - 2.0]) cube([15.3, 15.7, 2.0]);       // microSD socket on the underside, opening to the top edge
@@ -74,10 +73,11 @@ module tray() color("lightgrey") translate([0, 0, EX * 0.25]) trayBody();
 real() {
     plate3(); chassis_bits(); tray(); frdm(); pi();
     if (LABELS) {
-        for (c = FRDM_PARTS) if (c[6] != "") lab([FRDM_X0 + c[0] + c[2] / 2, FRDM_Y0 + c[1] + c[3] / 2], c[6], 2.4, "white");
-        lab([FRDM_X0 + 47, FRDM_Y0 + 32], "FRDM-IMX91S", 4, "white");
+        for (c = FRDM_PARTS) if (c[6] != "") lab(frdm_at(c[0] + c[2] / 2, c[1] + c[3] / 2), c[6], 2.4, "white");
+        lab(frdm_at(47, 32), "FRDM-IMX91S", 4, "white");
         lab([PI_X0 + 28, PI_Y0 + 42], "Pi 5 (later)", 4, "white");
-        lab([40, 60], "SPARE", 5, "black"); lab([40, 53], "drill here", 3.2, "black");
+        lab([46, 60], "SPARE PAD", 5, "black"); lab([46, 52], "drill here", 3.4, "black");
         lab([4, 60], "NOSE", 3, "black");
+        lab([167, 60], "plug gap", 3.2, "black"); lab([167, 55], "(cables)", 2.6, "black");
     }
 }
