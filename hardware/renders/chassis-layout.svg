@@ -5,7 +5,7 @@
 <text x="40" y="52" font-size="11" fill="#666">Hiwonder Ackermann advanced kit · three identical plates, outline traced from Hiwonder's own CAD · 1.7 px/mm · front of vehicle to the LEFT · <tspan font-weight="700">viewed from above, so the vehicle's own LEFT is at the BOTTOM of each plan</tspan></text>
 <text x="40" y="68" font-size="11" fill="#166534">Deck gaps measured on the built kit 2026-09-20: <tspan font-weight="700">lower 50 mm, upper 40 mm</tspan> - two standoff lengths, not one. Fascia panels are 52 and 42 mm tall.</text>
 <text x="60" y="110" font-size="13" font-weight="700" fill="#1a1a1a">UPPER DECK - plate 3</text>
-<text x="60" y="124" font-size="9.5" fill="#64748b">top face z 123.12 · compute tray: FRDM-IMX91S, Pi 5 later</text>
+<text x="60" y="124" font-size="9.5" fill="#64748b">top face z 123.12 · FINAL 2026-10-06 · compute tray (MEC-18): FRDM-IMX91S, Pi 5 later, spare pad</text>
 <path d="M60.0 188.7 L60.9 186.4 L62.6 184.8 L128.0 146.1 L139.9 133.7 L141.6 132.7 L145.0 132.0 L148.4 132.7 L151.0 134.5 L176.5 161.6 L179.0 162.7 L208.8 162.5 L252.1 136.8 L254.7 136.2 L487.6 133.5 L491.0 134.7 L516.5 150.0 L518.2 151.8 L518.2 317.1 L516.5 318.9 L489.3 335.1 L253.8 332.6 L251.3 331.6 L208.8 306.4 L179.0 306.2 L176.5 307.3 L150.1 335.2 L146.7 336.7 L143.3 336.7 L139.1 334.4 L128.0 322.8 L62.6 284.1 L60.9 282.5 L60.0 280.2 Z" fill="#f8fafc" stroke="#94a3b8" stroke-width="1.8" stroke-dasharray="7 4"/>
 <rect x="334.0" y="183.7" width="24.8" height="101.6" rx="12.4" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
 <rect x="247.5" y="204.3" width="38.6" height="60.1" rx="19.3" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
@@ -110,7 +110,7 @@
 <circle cx="507.0" cy="159.9" r="4" fill="none" stroke="#7c3aed" stroke-width="1.5"/><circle cx="507.0" cy="159.9" r="1.5" fill="#7c3aed"/>
 <circle cx="507.0" cy="308.9" r="4" fill="none" stroke="#7c3aed" stroke-width="1.5"/><circle cx="507.0" cy="308.9" r="1.5" fill="#7c3aed"/>
 <text x="60" y="368" font-size="13" font-weight="700" fill="#1a1a1a">MIDDLE DECK - plate 2, TOP FACE</text>
-<text x="60" y="382" font-size="9.5" fill="#64748b">top face z 81.12 · STM32 carrier (boards A, B), 5 V split (board C) and the 5 V converter</text>
+<text x="60" y="382" font-size="9.5" fill="#64748b">top face z 81.12 · FINAL 2026-10-06 · carrier tray (MEC-17): boards A, B, C and the Bauer; rear pad (MEC-19)</text>
 <path d="M60.0 446.7 L60.9 444.4 L62.6 442.8 L128.0 404.1 L139.9 391.7 L141.6 390.7 L145.0 390.0 L148.4 390.7 L151.0 392.5 L176.5 419.6 L179.0 420.7 L208.8 420.5 L252.1 394.8 L254.7 394.2 L487.6 391.5 L491.0 392.7 L516.5 408.0 L518.2 409.8 L518.2 575.1 L516.5 576.9 L489.3 593.1 L253.8 590.6 L251.3 589.6 L208.8 564.4 L179.0 564.2 L176.5 565.3 L150.1 593.2 L146.7 594.7 L143.3 594.7 L139.1 592.4 L128.0 580.8 L62.6 542.1 L60.9 540.5 L60.0 538.2 Z" fill="#f8fafc" stroke="#94a3b8" stroke-width="1.8" stroke-dasharray="7 4"/>
 <rect x="334.0" y="441.7" width="24.8" height="101.6" rx="12.4" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
 <rect x="247.5" y="462.3" width="38.6" height="60.1" rx="19.3" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
@@ -319,6 +319,9 @@
 <circle cx="106.5" cy="1138.2" r="3.4" fill="#fde68a" stroke="#a16207" stroke-width="1.2"/>
 <circle cx="507.0" cy="998.9" r="4" fill="none" stroke="#7c3aed" stroke-width="1.5"/><circle cx="507.0" cy="998.9" r="1.5" fill="#7c3aed"/>
 <circle cx="507.0" cy="1147.9" r="4" fill="none" stroke="#7c3aed" stroke-width="1.5"/><circle cx="507.0" cy="1147.9" r="1.5" fill="#7c3aed"/>
+<path d="M313.7 305.9 L311.6 306.7 L226.6 306.7 L226.6 307.1 L225.9 306.7 L223.2 306.7 L220.5 305.4 L219.8 303.3 L219.8 303.0 L211.2 297.9 L177.2 297.7 L171.5 300.2 L149.9 323.0 L147.2 324.8 L143.9 325.1 L140.1 323.1 L133.3 316.1 L83.8 286.8 L83.8 249.2 L83.7 249.0 L83.4 248.2 L83.2 247.2 L83.2 246.3 L83.2 245.4 L83.4 244.5 L83.7 243.6 L83.8 243.4 L83.8 225.4 L83.7 225.2 L83.4 224.4 L83.2 223.4 L83.2 222.5 L83.2 221.6 L83.4 220.7 L83.7 219.8 L83.8 219.6 L83.8 182.1 L133.3 152.8 L140.1 145.8 L142.8 144.0 L146.1 143.7 L149.9 145.8 L171.5 168.7 L177.3 171.2 L211.2 171.0 L218.8 166.5 L218.8 166.3 L219.2 165.4 L219.6 164.6 L220.1 163.8 L220.7 163.1 L221.4 162.5 L222.2 161.9 L223.0 161.5 L223.9 161.2 L224.8 161.1 L225.8 161.0 L226.7 161.1 L227.6 161.2 L228.5 161.5 L229.3 161.9 L229.7 162.2 L305.1 162.2 L305.5 161.9 L306.3 161.5 L307.2 161.2 L308.1 161.1 L309.0 161.0 L310.0 161.1 L310.9 161.2 L311.8 161.5 L312.6 161.9 L313.0 162.2 L372.8 162.2 L372.8 154.7 L372.4 154.3 L371.8 153.4 L371.4 152.5 L371.0 151.5 L370.8 150.5 L370.8 149.4 L370.8 148.4 L371.0 147.4 L371.4 146.4 L371.8 145.4 L372.4 144.6 L373.1 143.8 L373.9 143.1 L374.8 142.5 L375.7 142.0 L376.7 141.7 L377.7 141.5 L378.8 141.4 L379.8 141.5 L380.8 141.7 L381.8 142.0 L382.7 142.5 L383.6 143.1 L384.1 143.5 L472.0 143.5 L472.5 143.1 L473.4 142.5 L474.3 142.0 L475.3 141.7 L476.3 141.5 L477.3 141.4 L478.4 141.5 L479.4 141.7 L480.4 142.0 L481.3 142.5 L482.2 143.1 L483.0 143.8 L483.7 144.6 L484.3 145.4 L484.7 146.4 L485.1 147.4 L485.3 148.4 L485.3 149.4 L485.3 150.5 L485.1 151.5 L484.7 152.5 L484.3 153.4 L483.7 154.3 L483.3 154.7 L483.3 193.1 L483.7 193.5 L484.2 194.3 L484.6 195.2 L484.9 196.0 L485.1 197.0 L485.1 197.9 L485.1 198.8 L484.9 199.7 L484.6 200.6 L484.2 201.5 L483.7 202.2 L483.3 202.7 L483.3 227.4 L483.7 227.9 L484.3 228.7 L484.7 229.7 L485.1 230.7 L485.3 231.7 L485.3 232.7 L485.3 233.8 L485.1 234.8 L484.7 235.8 L484.3 236.7 L483.7 237.6 L483.3 238.0 L483.3 266.2 L483.7 266.7 L484.2 267.4 L484.6 268.3 L484.9 269.2 L485.1 270.1 L485.1 271.0 L485.1 271.9 L484.9 272.9 L484.6 273.7 L484.2 274.6 L483.7 275.4 L483.3 275.8 L483.3 301.6 L482.0 304.2 L479.9 305.0 L314.2 305.0 Z M315.0 180.0 L315.0 262.8 L315.2 263.2 L315.6 264.0 L316.0 264.9 L316.1 265.8 L316.2 266.7 L316.1 267.7 L316.0 268.6 L315.6 269.5 L315.2 270.3 L315.0 270.7 L315.0 290.1 L372.8 290.1 L372.8 238.0 L372.4 237.6 L371.8 236.7 L371.4 235.8 L371.0 234.8 L370.8 233.8 L370.8 232.7 L370.8 231.7 L371.0 230.7 L371.4 229.7 L371.8 228.7 L372.4 227.9 L372.8 227.4 L372.8 180.0 Z" fill-rule="evenodd" fill="#0f766e" fill-opacity="0.09" stroke="#0f766e" stroke-width="1.3" stroke-dasharray="6 3"/>
+<rect x="155.5" y="177.8" width="40.6" height="17.5" rx="8.8" fill="#fbfaf8" stroke="#0f766e" stroke-width="0.9"/>
+<rect x="155.5" y="273.4" width="40.6" height="17.5" rx="8.8" fill="#fbfaf8" stroke="#0f766e" stroke-width="0.9"/>
 <rect x="372.8" y="143.5" width="110.5" height="161.5" rx="2" fill="#eef2ff" fill-opacity="0.92" stroke="#4338ca" stroke-width="1.8"/>
 <circle cx="477.3" cy="149.4" r="3.6" fill="none" stroke="#4338ca" stroke-width="1.4"/>
 <circle cx="378.8" cy="149.4" r="3.6" fill="none" stroke="#4338ca" stroke-width="1.4"/>
@@ -333,9 +336,25 @@
 <circle cx="225.8" cy="266.7" r="3.2" fill="none" stroke="#047857" stroke-width="1.4"/>
 <text x="267.4" y="227.2" font-size="9.5" font-weight="700" fill="#047857" text-anchor="middle">Pi 5 (later)</text>
 <text x="267.4" y="242.5" font-size="7.2" fill="#047857" text-anchor="middle">8 or 10 mm standoffs</text>
-<text x="155.2" y="237.4" font-size="9.5" font-weight="700" fill="#64748b" text-anchor="middle">spare pad (drill)</text>
-<text x="300" y="346" font-size="7.8" fill="#64748b" text-anchor="middle">compute tray (MEC-18): one 236.6 × 108 × 4 mm plate, x 14-250: spare pad · Pi 5 · plug gap · FRDM</text>
-<text x="300" y="358" font-size="8.0" fill="#7c3aed" text-anchor="middle">fascia upper panel clamps at the two purple holes - 2 × M3×8 driven down from the top (MEC-07)</text>
+<circle cx="90.3" cy="222.5" r="4.2" fill="none" stroke="#047857" stroke-width="1.8"/><circle cx="90.3" cy="222.5" r="1.5" fill="#047857"/><text x="97.4" y="217.4" font-size="6.5" fill="#047857" font-weight="700" text-anchor="start">U1</text>
+<circle cx="90.3" cy="246.3" r="4.2" fill="none" stroke="#047857" stroke-width="1.8"/><circle cx="90.3" cy="246.3" r="1.5" fill="#047857"/><text x="97.4" y="241.2" font-size="6.5" fill="#047857" font-weight="700" text-anchor="start">U2</text>
+<circle cx="143.3" cy="193.1" r="4.2" fill="none" stroke="#4338ca" stroke-width="1.8"/><line x1="136.8" y1="193.1" x2="149.8" y2="193.1" stroke="#4338ca" stroke-width="1.3"/><line x1="143.3" y1="186.6" x2="143.3" y2="199.6" stroke="#4338ca" stroke-width="1.3"/><text x="149.1" y="188.7" font-size="7" fill="#4338ca" font-weight="700" text-anchor="start">U3</text>
+<circle cx="143.3" cy="275.7" r="4.2" fill="none" stroke="#4338ca" stroke-width="1.8"/><line x1="136.8" y1="275.7" x2="149.8" y2="275.7" stroke="#4338ca" stroke-width="1.3"/><line x1="143.3" y1="269.2" x2="143.3" y2="282.2" stroke="#4338ca" stroke-width="1.3"/><text x="149.1" y="271.3" font-size="7" fill="#4338ca" font-weight="700" text-anchor="start">U4</text>
+<circle cx="207.8" cy="200.4" r="4.2" fill="none" stroke="#4338ca" stroke-width="1.8"/><line x1="201.3" y1="200.4" x2="214.3" y2="200.4" stroke="#4338ca" stroke-width="1.3"/><line x1="207.8" y1="193.9" x2="207.8" y2="206.9" stroke="#4338ca" stroke-width="1.3"/><text x="213.6" y="196.0" font-size="7" fill="#4338ca" font-weight="700" text-anchor="start">U5</text>
+<circle cx="207.8" cy="268.4" r="4.2" fill="none" stroke="#4338ca" stroke-width="1.8"/><line x1="201.3" y1="268.4" x2="214.3" y2="268.4" stroke="#4338ca" stroke-width="1.3"/><line x1="207.8" y1="261.9" x2="207.8" y2="274.9" stroke="#4338ca" stroke-width="1.3"/><text x="213.6" y="264.0" font-size="7" fill="#4338ca" font-weight="700" text-anchor="start">U6</text>
+<circle cx="264.1" cy="193.1" r="4.2" fill="none" stroke="#4338ca" stroke-width="1.8"/><line x1="257.6" y1="193.1" x2="270.6" y2="193.1" stroke="#4338ca" stroke-width="1.3"/><line x1="264.1" y1="186.6" x2="264.1" y2="199.6" stroke="#4338ca" stroke-width="1.3"/><text x="269.9" y="188.7" font-size="7" fill="#4338ca" font-weight="700" text-anchor="start">U7</text>
+<circle cx="264.1" cy="275.7" r="4.2" fill="none" stroke="#4338ca" stroke-width="1.8"/><line x1="257.6" y1="275.7" x2="270.6" y2="275.7" stroke="#4338ca" stroke-width="1.3"/><line x1="264.1" y1="269.2" x2="264.1" y2="282.2" stroke="#4338ca" stroke-width="1.3"/><text x="269.9" y="271.3" font-size="7" fill="#4338ca" font-weight="700" text-anchor="start">U8</text>
+<circle cx="303.9" cy="221.5" r="4.2" fill="none" stroke="#4338ca" stroke-width="1.8"/><line x1="297.4" y1="221.5" x2="310.4" y2="221.5" stroke="#4338ca" stroke-width="1.3"/><line x1="303.9" y1="215.0" x2="303.9" y2="228.0" stroke="#4338ca" stroke-width="1.3"/><text x="309.7" y="217.1" font-size="7" fill="#4338ca" font-weight="700" text-anchor="start">U9</text>
+<circle cx="303.9" cy="247.4" r="4.2" fill="none" stroke="#4338ca" stroke-width="1.8"/><line x1="297.4" y1="247.4" x2="310.4" y2="247.4" stroke="#4338ca" stroke-width="1.3"/><line x1="303.9" y1="240.9" x2="303.9" y2="253.9" stroke="#4338ca" stroke-width="1.3"/><text x="309.7" y="243.0" font-size="7" fill="#4338ca" font-weight="700" text-anchor="start">U10</text>
+<circle cx="394.7" cy="197.9" r="4.2" fill="none" stroke="#047857" stroke-width="1.8"/><circle cx="394.7" cy="197.9" r="1.5" fill="#047857"/><text x="401.8" y="192.8" font-size="6.5" fill="#047857" font-weight="700" text-anchor="start">U11</text>
+<circle cx="394.7" cy="271.0" r="4.2" fill="none" stroke="#047857" stroke-width="1.8"/><circle cx="394.7" cy="271.0" r="1.5" fill="#047857"/><text x="401.8" y="265.9" font-size="6.5" fill="#047857" font-weight="700" text-anchor="start">U12</text>
+<circle cx="478.0" cy="197.9" r="4.2" fill="none" stroke="#047857" stroke-width="1.8"/><circle cx="478.0" cy="197.9" r="1.5" fill="#047857"/><text x="485.1" y="192.8" font-size="6.5" fill="#047857" font-weight="700" text-anchor="start">U13</text>
+<circle cx="478.0" cy="271.0" r="4.2" fill="none" stroke="#047857" stroke-width="1.8"/><circle cx="478.0" cy="271.0" r="1.5" fill="#047857"/><text x="485.1" y="265.9" font-size="6.5" fill="#047857" font-weight="700" text-anchor="start">U14</text>
+<text x="155.2" y="230.6" font-size="9.5" font-weight="700" fill="#64748b" text-anchor="middle">spare pad</text>
+<text x="155.2" y="244.2" font-size="7.5" fill="#64748b" text-anchor="middle">(drill)</text>
+<text x="343.9" y="237.4" font-size="7.5" fill="#0f766e" text-anchor="middle">plug gap</text>
+<text x="60" y="346" font-size="7.8" fill="#0f766e" text-anchor="start">compute tray (MEC-18, final) · U1-U14 screw up from below</text>
+<text x="585" y="346" font-size="7.8" fill="#7c3aed" text-anchor="end">purple: fascia panel clamps (MEC-07)</text>
 <!-- Carrier tray (MEC-17): boards A and B (P1, P2 sides), the Discovery above, board C = 5 V split, the Bauer and S6 / S7 all sit on it -->
 <path d="M374.7 395.2 L376.6 395.7 L377.6 396.2 L378.4 396.7 L379.9 398.2 L380.9 399.9 L381.5 402.9 L381.2 405.0 L380.4 406.8 L379.2 408.5 L377.9 409.5 L377.9 472.9 L379.2 473.9 L380.4 475.5 L381.2 477.4 L381.5 479.4 L381.2 481.5 L380.4 483.3 L379.2 485.0 L377.9 486.0 L377.9 490.1 L379.0 490.2 L381.0 490.7 L382.7 491.7 L383.5 492.4 L384.2 493.2 L385.2 494.9 L385.8 497.9 L385.5 500.0 L384.7 501.8 L383.5 503.5 L382.2 504.5 L382.2 567.9 L383.5 568.9 L384.7 570.5 L385.5 572.4 L385.8 574.4 L385.2 577.4 L384.2 579.2 L382.7 580.6 L381.0 581.7 L378.0 582.3 L375.9 582.0 L375.0 581.7 L373.2 580.6 L371.4 578.7 L274.0 578.7 L272.2 580.6 L270.5 581.7 L267.5 582.3 L265.4 582.0 L264.5 581.7 L262.7 580.6 L261.3 579.2 L260.2 577.4 L259.7 575.5 L259.7 573.4 L260.2 571.4 L261.3 569.7 L263.2 567.9 L263.2 550.1 L262.7 551.1 L260.6 551.8 L258.6 551.8 L256.9 553.8 L255.1 554.8 L252.1 555.4 L250.1 555.1 L248.2 554.4 L246.6 553.1 L245.6 551.8 L216.1 551.8 L215.1 553.1 L213.5 554.4 L211.6 555.1 L209.6 555.4 L207.6 555.1 L205.7 554.4 L204.1 553.1 L203.1 551.8 L196.0 551.8 L196.0 560.9 L179.0 560.9 L168.8 570.2 L163.0 577.0 L127.1 577.0 L117.8 571.9 L100.8 561.5 L100.8 551.1 L76.2 545.5 L74.5 543.9 L74.5 441.0 L76.2 439.3 L100.8 433.6 L100.8 423.3 L117.8 412.9 L127.1 407.9 L163.0 407.9 L168.8 414.6 L179.0 424.0 L196.0 424.0 L196.0 432.8 L203.1 432.8 L204.1 431.6 L205.7 430.3 L207.6 429.5 L209.6 429.3 L211.6 429.5 L213.5 430.3 L215.1 431.6 L216.1 432.8 L245.6 432.8 L246.6 431.6 L248.2 430.3 L250.1 429.5 L252.1 429.3 L254.1 429.5 L256.0 430.3 L257.6 431.6 L258.6 432.8 L258.9 432.8 L258.9 409.5 L257.6 408.5 L256.4 406.8 L255.6 405.0 L255.3 402.9 L255.9 399.9 L256.9 398.2 L258.4 396.7 L260.2 395.7 L261.1 395.4 L263.1 395.1 L266.1 395.7 L267.9 396.7 L269.7 398.7 L367.1 398.7 L368.9 396.7 L370.7 395.7 L372.6 395.2 Z" fill="#0f766e" fill-opacity="0.09" stroke="#0f766e" stroke-width="1.3" stroke-dasharray="6 3"/>
 <rect x="258.9" y="398.7" width="119.0" height="85.0" rx="3" fill="#ecfdf5" fill-opacity="0.92" stroke="#047857" stroke-width="1.6"/>
@@ -371,14 +390,16 @@
 <text x="236.8" y="410.4" font-size="7" font-weight="700" fill="#0f766e" text-anchor="middle">carrier tray</text>
 <rect x="131.4" y="553.2" width="31.6" height="22.1" rx="1.5" fill="#fed7aa" stroke="#c2410c" stroke-width="1.2"/><text x="147.2" y="567.1" font-size="7" font-weight="700" fill="#c2410c" text-anchor="middle">S6</text>
 <rect x="131.4" y="409.6" width="31.6" height="22.1" rx="1.5" fill="#fed7aa" stroke="#c2410c" stroke-width="1.2"/><text x="147.2" y="423.5" font-size="7" font-weight="700" fill="#c2410c" text-anchor="middle">S7</text>
-<text x="473.1" y="454.6" font-size="7" fill="#7c3aed" text-anchor="middle">one M3×12 here</text>
-<text x="473.1" y="463.9" font-size="7" fill="#7c3aed" text-anchor="middle">clamps BOTH</text>
-<text x="473.1" y="473.3" font-size="7" fill="#7c3aed" text-anchor="middle">fascia panels</text>
-<text x="473.1" y="482.6" font-size="7" fill="#7c3aed" text-anchor="middle">(MEC-07)</text>
-<text x="473.1" y="505.6" font-size="7" fill="#b45309" text-anchor="middle">gap ABOVE: the</text>
-<text x="473.1" y="515.0" font-size="7" fill="#b45309" text-anchor="middle">3 debug ports</text>
-<text x="473.1" y="524.3" font-size="7" fill="#b45309" text-anchor="middle">gap BELOW: the</text>
-<text x="473.1" y="533.6" font-size="7" fill="#b45309" text-anchor="middle">switch bodies</text>
+<path d="M464.9 435.6 L465.8 435.8 L466.7 436.1 L467.5 436.5 L468.3 437.0 L469.0 437.6 L483.3 437.6 L486.3 438.6 L488.4 442.7 L488.4 503.9 L487.4 506.9 L483.3 509.0 L442.5 509.0 L439.5 508.0 L437.4 503.9 L437.4 442.7 L438.4 439.7 L442.5 437.6 L459.0 437.6 L459.6 437.0 L460.4 436.5 L461.2 436.1 L462.1 435.8 L463.0 435.6 L464.0 435.6 Z" fill="#0f766e" fill-opacity="0.09" stroke="#0f766e" stroke-width="1.3" stroke-dasharray="6 3"/>
+<circle cx="478.0" cy="455.9" r="4.2" fill="none" stroke="#047857" stroke-width="1.8"/><circle cx="478.0" cy="455.9" r="1.5" fill="#047857"/><text x="485.1" y="450.8" font-size="6.5" fill="#047857" font-weight="700" text-anchor="start">R1</text>
+<circle cx="464.0" cy="442.7" r="4.2" fill="none" stroke="#047857" stroke-width="1.8"/><circle cx="464.0" cy="442.7" r="1.5" fill="#047857"/><text x="471.1" y="437.6" font-size="6.5" fill="#047857" font-weight="700" text-anchor="start">R2</text>
+<circle cx="464.0" cy="492.0" r="4.2" fill="none" stroke="#047857" stroke-width="1.8"/><circle cx="464.0" cy="492.0" r="1.5" fill="#047857"/><text x="471.1" y="486.9" font-size="6.5" fill="#047857" font-weight="700" text-anchor="start">R3</text>
+<text x="462.9" y="471.6" font-size="8" font-weight="700" fill="#0f766e" text-anchor="middle">rear pad</text>
+<text x="462.9" y="481.8" font-size="7" fill="#0f766e" text-anchor="middle">(drill)</text>
+<text x="473.1" y="554.9" font-size="6.6" fill="#7c3aed" text-anchor="middle">one M3×12 here clamps BOTH</text>
+<text x="473.1" y="564.2" font-size="6.6" fill="#7c3aed" text-anchor="middle">fascia panels (MEC-07)</text>
+<text x="473.1" y="575.3" font-size="6.6" fill="#b45309" text-anchor="middle">gap ABOVE: the 3 debug ports</text>
+<text x="473.1" y="584.6" font-size="6.6" fill="#b45309" text-anchor="middle">gap BELOW: the switch bodies</text>
 <rect x="92.8" y="1039.5" width="49.0" height="68.0" rx="3" fill="#fff7ed" stroke="#c2410c" stroke-width="1.4"/>
 <text x="117.3" y="1070.5" font-size="8.5" font-weight="700" fill="#c2410c" text-anchor="middle">SERVO</text>
 <text x="117.3" y="1082.5" font-size="7.5" fill="#c2410c" text-anchor="middle">LD-1501MG</text>
@@ -460,8 +481,8 @@
 <text x="63" y="1236.0" font-size="9" fill="#64748b">◀ FRONT</text>
 <text x="515" y="1236.0" font-size="9" fill="#64748b" text-anchor="end">REAR ▶</text>
 <!-- MIDDLE DECK, LOWER FACE - the harness board (MEC-16). Seen from BELOW, as it lies upside down on the bench: mirrored, vehicle right at the bottom. Positions from mechanical/plate1.py -->
-<text x="60" y="614.3" font-size="13" font-weight="700" fill="#1a1a1a">MIDDLE DECK - plate 2, LOWER FACE: the harness board</text>
-<text x="60" y="628.3" font-size="9.5" fill="#64748b">seen from <tspan font-weight="700">below</tspan>, upside down on the bench - <tspan font-weight="700" fill="#be185d">mirrored: vehicle RIGHT at the BOTTOM</tspan> · 3M foam tape</text>
+<text x="60" y="626.3" font-size="13" font-weight="700" fill="#1a1a1a">MIDDLE DECK - plate 2, LOWER FACE: the harness board</text>
+<text x="60" y="640.3" font-size="9.5" fill="#64748b">seen from <tspan font-weight="700">below</tspan>, upside down on the bench - <tspan font-weight="700" fill="#be185d">mirrored: vehicle RIGHT at the BOTTOM</tspan> · 3M foam tape</text>
 <path d="M60.0 814.5 L60.9 816.8 L62.6 818.3 L128.0 857.1 L139.9 869.5 L141.6 870.5 L145.0 871.1 L148.4 870.5 L151.0 868.6 L176.5 841.5 L179.0 840.5 L208.8 840.6 L252.1 866.3 L254.7 867.0 L487.6 869.6 L491.0 868.5 L516.5 853.1 L518.2 851.3 L518.2 686.1 L516.5 684.3 L489.3 668.1 L253.8 670.5 L251.3 671.5 L208.8 696.8 L179.0 696.9 L176.5 695.8 L150.1 667.9 L146.7 666.4 L143.3 666.4 L139.1 668.8 L128.0 680.4 L62.6 719.1 L60.9 720.6 L60.0 722.9 Z" fill="#ffffff" stroke="#334155" stroke-width="1.8"/>
 <rect x="334.0" y="717.8" width="24.8" height="101.6" rx="12.4" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
 <rect x="247.5" y="738.8" width="38.6" height="60.1" rx="19.3" fill="#eef2f6" stroke="#b8c2cc" stroke-width="0.6"/>
@@ -608,8 +629,9 @@
 <text x="266.5" y="774.3" font-size="5.4" font-weight="400" fill="#be185d" text-anchor="middle">wires up</text>
 <text x="442.5" y="759.0" font-size="5.4" font-weight="400" fill="#475569" text-anchor="middle">trunk to SW1 / SW2</text>
 </g>
-<text x="66" y="893.3" font-size="8" fill="#b45309">Only two plugs cross to plate 1, both from the right side once closed: SM-2P at S1, driver VM at S2/S4. The switch panel rides with plate 2. Thick edge = fuse lid.</text>
-<text x="66" y="905.3" font-size="8" fill="#b45309">Nominal sizes (MEC-16 "To confirm"). The six tray screw heads T1-T6 are drawn; each is at least 0.8 mm clear of the taped parts (MEC-17).</text>
+<text x="66" y="893.3" font-size="8" fill="#b45309">Only two plugs cross to plate 1, both from the right side once closed: SM-2P at S1, driver VM at S2/S4.</text>
+<text x="66" y="905.3" font-size="8" fill="#b45309">The switch panel rides with plate 2. Thick edge = fuse lid. Nominal sizes (MEC-16 "To confirm").</text>
+<text x="66" y="917.3" font-size="8" fill="#b45309">The six carrier-tray screw heads T1-T6 are drawn; each is at least 0.8 mm clear of the taped parts (MEC-17).</text>
 <circle cx="102.2" cy="768.7" r="3.9" fill="#ffffff" stroke="#4338ca" stroke-width="1.6"/><circle cx="102.2" cy="768.7" r="1.4" fill="#4338ca"/><text x="108.0" y="764.7" font-size="6" font-weight="700" fill="#4338ca" text-anchor="start">T1</text>
 <circle cx="149.8" cy="768.7" r="3.9" fill="#ffffff" stroke="#4338ca" stroke-width="1.6"/><circle cx="149.8" cy="768.7" r="1.4" fill="#4338ca"/><text x="155.6" y="764.7" font-size="6" font-weight="700" fill="#4338ca" text-anchor="start">T2</text>
 <circle cx="228.7" cy="732.2" r="3.9" fill="#ffffff" stroke="#4338ca" stroke-width="1.6"/><circle cx="228.7" cy="732.2" r="1.4" fill="#4338ca"/><text x="234.5" y="728.1" font-size="6" font-weight="700" fill="#4338ca" text-anchor="start">T3</text>
@@ -618,19 +640,48 @@
 <circle cx="311.9" cy="706.7" r="3.9" fill="#ffffff" stroke="#4338ca" stroke-width="1.6"/><circle cx="311.9" cy="706.7" r="1.4" fill="#4338ca"/><text x="317.7" y="702.6" font-size="6" font-weight="700" fill="#4338ca" text-anchor="start">T6</text>
 <text x="600" y="110" font-size="13" font-weight="700" fill="#1a1a1a">DECK STACK - side elevation</text>
 <line x1="600" y1="118" x2="1280" y2="118" stroke="#e2e8f0"/>
-<rect x="600" y="156.0" width="300" height="4.7" fill="#cbd5e1" stroke="#94a3b8"/>
-<text x="908" y="161.7" font-size="9" font-weight="700" fill="#334155">plate 3  z 121.12–123.12</text>
-<rect x="600" y="254.7" width="300" height="4.7" fill="#cbd5e1" stroke="#94a3b8"/>
-<text x="908" y="260.4" font-size="9" font-weight="700" fill="#334155">plate 2  z 79.12–81.12</text>
-<rect x="600" y="376.9" width="300" height="4.7" fill="#cbd5e1" stroke="#94a3b8"/>
-<text x="908" y="382.6" font-size="9" font-weight="700" fill="#334155">plate 1  z 27.12–29.12</text>
-<rect x="600" y="160.7" width="300" height="94.0" fill="#f8fafc" stroke="#cbd5e1" stroke-dasharray="4 3"/>
-<text x="750" y="203.7" font-size="8.5" font-weight="700" fill="#334155" text-anchor="middle">UPPER GAP 40 mm - measured</text>
-<text x="750" y="216.7" font-size="8" fill="#64748b" text-anchor="middle">fascia upper panel, 42 mm tall: USB-C · DE-9 · Mini-B</text>
-<rect x="600" y="259.4" width="300" height="117.5" fill="#f8fafc" stroke="#cbd5e1" stroke-dasharray="4 3"/>
-<text x="750" y="314.1" font-size="8.5" font-weight="700" fill="#334155" text-anchor="middle">LOWER GAP 50 mm - measured</text>
-<text x="750" y="327.1" font-size="8" fill="#64748b" text-anchor="middle">fascia lower panel, 52 mm tall: DRIVE / LOGIC switches</text>
-<text x="600" y="395.6" font-size="8.5" fill="#64748b">below plate 1: running gear, wheels, ground clearance - nothing mounted</text>
+<rect x="600" y="200.0" width="300" height="4.7" fill="#cbd5e1" stroke="#94a3b8"/>
+<text x="908" y="205.7" font-size="9" font-weight="700" fill="#334155">plate 3  z 121.12–123.12</text>
+<rect x="600" y="298.7" width="300" height="4.7" fill="#cbd5e1" stroke="#94a3b8"/>
+<text x="908" y="304.4" font-size="9" font-weight="700" fill="#334155">plate 2  z 79.12–81.12</text>
+<rect x="600" y="420.9" width="300" height="4.7" fill="#cbd5e1" stroke="#94a3b8"/>
+<text x="908" y="426.59999999999997" font-size="9" font-weight="700" fill="#334155">plate 1  z 27.12–29.12</text>
+<rect x="600" y="204.7" width="300" height="94.0" fill="#f8fafc" stroke="#cbd5e1" stroke-dasharray="4 3"/>
+<rect x="600" y="303.4" width="300" height="117.5" fill="#f8fafc" stroke="#cbd5e1" stroke-dasharray="4 3"/>
+<text x="750" y="393.4" font-size="8.5" font-weight="700" fill="#334155" text-anchor="middle">LOWER GAP 50 mm - measured</text>
+<text x="750" y="406.4" font-size="8" fill="#64748b" text-anchor="middle">fascia lower panel, 52 mm tall: DRIVE / LOGIC switches</text>
+<text x="600" y="444.9" font-size="8.5" fill="#64748b">below plate 1: running gear, wheels, ground clearance - nothing mounted</text>
+<rect x="896.5" y="204.7" width="3.3" height="98.7" fill="#e0e7ff" stroke="#818cf8" stroke-width="0.8"/>
+<rect x="615.1" y="190.6" width="262.9" height="9.4" fill="#ccfbf1" stroke="#0f766e" stroke-width="1"/>
+<rect x="804.4" y="176.5" width="72.2" height="14.1" fill="#cbd5e1" stroke="#64748b" stroke-width="0.6"/>
+<rect x="804.4" y="172.7" width="72.2" height="3.8" fill="#c7d2fe" stroke="#4338ca" stroke-width="1"/>
+<rect x="802.2" y="141.1" width="25.6" height="31.7" fill="#e2e8f0" stroke="#64748b" stroke-width="0.7"/>
+<rect x="704.4" y="171.8" width="62.2" height="18.8" fill="#fde68a" stroke="#a16207" stroke-width="0.6"/>
+<rect x="704.4" y="168.0" width="62.2" height="3.8" fill="#bbf7d0" stroke="#047857" stroke-width="1" stroke-dasharray="4 2"/>
+<rect x="711.1" y="130.4" width="55.5" height="37.6" fill="#e2e8f0" stroke="#64748b" stroke-width="0.7" stroke-dasharray="4 2"/>
+<rect x="617.3" y="204.7" width="5" height="4.0" fill="#e5e7eb" stroke="#475569" stroke-width="0.7"/>
+<rect x="651.9" y="204.7" width="5" height="4.0" fill="#e5e7eb" stroke="#475569" stroke-width="0.7"/>
+<rect x="694.1" y="204.7" width="5" height="4.0" fill="#e5e7eb" stroke="#475569" stroke-width="0.7"/>
+<rect x="730.9" y="204.7" width="5" height="4.0" fill="#e5e7eb" stroke="#475569" stroke-width="0.7"/>
+<rect x="756.9" y="204.7" width="5" height="4.0" fill="#e5e7eb" stroke="#475569" stroke-width="0.7"/>
+<rect x="816.2" y="204.7" width="5" height="4.0" fill="#e5e7eb" stroke="#475569" stroke-width="0.7"/>
+<rect x="870.7" y="204.7" width="5" height="4.0" fill="#e5e7eb" stroke="#475569" stroke-width="0.7"/>
+<text x="615.554" y="186.6" font-size="7.5" fill="#0f766e">compute tray 4 mm</text>
+<text x="840.5315" y="137.06200000000004" font-size="7.5" fill="#4338ca" text-anchor="middle">FRDM on 6 mm standoffs</text>
+<text x="735.542" y="126.44" font-size="7.5" fill="#047857" text-anchor="middle">Pi 5 on 8 mm standoffs (later)</text>
+<text x="615.554" y="213.5" font-size="7" fill="#475569">fixing screws and washers, heads under plate 3</text>
+<rect x="609.4" y="289.3" width="203.4" height="9.4" fill="#ccfbf1" stroke="#0f766e" stroke-width="1"/>
+<rect x="612.2" y="237.6" width="71.1" height="51.7" fill="#fecdd3" stroke="#be123c" stroke-width="1"/>
+<rect x="695.0" y="265.8" width="33.3" height="23.5" fill="#fde68a" stroke="#a16207" stroke-width="0.6"/>
+<rect x="695.0" y="262.0" width="33.3" height="3.8" fill="#bbf7d0" stroke="#047857" stroke-width="1"/>
+<rect x="730.0" y="270.5" width="80.5" height="18.8" fill="#fde68a" stroke="#a16207" stroke-width="0.6"/>
+<rect x="730.0" y="266.7" width="80.5" height="3.8" fill="#bbf7d0" stroke="#047857" stroke-width="1"/>
+<rect x="733.9" y="228.5" width="107.8" height="32.9" fill="#c7d2fe" stroke="#4338ca" stroke-width="1" stroke-dasharray="4 2" fill-opacity="0.7"/>
+<rect x="846.6" y="289.3" width="33.3" height="9.4" fill="#ccfbf1" stroke="#0f766e" stroke-width="1"/>
+<text x="612.221" y="233.6" font-size="7.5" fill="#be123c">Bauer 22 mm</text>
+<text x="711.1" y="224.48200000000003" font-size="7.5" fill="#4338ca">Discovery top z 111: 7.6 mm under the screw heads</text>
+<text x="863.307" y="285.3" font-size="7.5" fill="#0f766e" text-anchor="middle">rear pad</text>
+<text x="609.4435" y="312.7" font-size="7.5" fill="#0f766e">carrier tray 4 mm (MEC-17)</text>
 <text x="600" y="470" font-size="13" font-weight="700" fill="#1a1a1a">WHAT IS FIXED, AND WHAT IS NOT</text>
 <line x1="600" y1="478" x2="1280" y2="478" stroke="#e2e8f0"/>
 <text x="600" y="498" font-size="9.5" font-weight="700" fill="#166534">Deck spacing - settled 2026-09-20</text>

@@ -21,6 +21,7 @@ The scripts find everything relative to themselves, so they run from any directo
 | [`cad/compute-tray.scad`](cad/compute-tray.scad) | 9 kB | **Compute tray** (MEC-18), final for the print order: one 236.6 x 108.0 x 4 mm plate on plate 3, both boards turned across the vehicle - a spare pad in the nose (plate 3's outline moved in 5 mm), the Pi 5 pad, a plug gap with two ribs, the FRDM pad. Standoff screws go in from the underside through counterbores; 14 fixings to plate 3's own holes. `PART="tray"` -> [`cad/compute-tray.stl`](cad/compute-tray.stl) to print |
 | [`cad/compute-tray-preview.scad`](cad/compute-tray-preview.scad) | 7 kB | The preview scene for MEC-18: plate 3, the tray, both boards on their standoffs (the FRDM's connectors from the NXP Quick Start Guide), the screws. `VIEW="top"`, `"iso"`, `"explode"` or `"side"`; the camera on the command line (see the file) |
 | [`cad/plate3-data.scad`](cad/plate3-data.scad) | 5 kB | **Generated** by [`scripts/plate3-data.py`](scripts/plate3-data.py) from the layout drawing: plate 3's outline, holes, slots, standoffs and clamp holes. Do not edit |
+| [`cad/plate2-rear-pad.scad`](cad/plate2-rear-pad.scad) | 4 kB | ***Proposed* rear pad** (MEC-19): a separate 30 x 43.2 x 4 mm plain plate on plate 2's rear (x 222-252, y 28-70), to drill; three M3 fixings on plate 2's own hole and slot, clear of the cross-slot and the J7 lane. `PART="tray"` -> [`cad/plate2-rear-pad.stl`](cad/plate2-rear-pad.stl) to print |
 | [`cad/carrier-tray-hand-template.pdf`](cad/carrier-tray-hand-template.pdf) | 61 kB | **Print-ready template for the hand-made tray** (MEC-17): A4 landscape, 1:1, print at 100 % and check the 100 mm bar. Written from `scripts/carrier-tray-hand.py`; regenerate it when the script changes |
 | **Hiwonder** · *Ackermann Chassis (Single Layer)* `.3dm` | 186 MB | Hiwonder's own CAD, untouched. **Not in the repository** - it is theirs, not ours to redistribute, and it has to be fetched by hand on a fresh clone. Every chassis number in the project is measured from this, not from photos - see [`../bom/parts/2.1-Hiwonder-Ackermann-Chassis/SPECS.md`](../bom/parts/2.1-Hiwonder-Ackermann-Chassis/SPECS.md). It is the **single-plate** version |
 | `cad/chassis-3deck-fascia.obj` | 65 MB | Whole-vehicle mock-up: Hiwonder's chassis + our deck 3 + the current panels. **Untracked, and a seed rather than output** - `make-assembly.py` reads it and rewrites it in place, so it cannot be rebuilt from this repository alone. It began as a Rhino export of the `.3dm`. Keep a local backup |
@@ -43,6 +44,7 @@ openscad -D 'PART="lower"' -o fascia-lower.stl fascia.scad
 openscad -D 'PART="upper"' -o fascia-upper.stl fascia.scad
 openscad -D 'PART="tray"'     -o carrier-tray.stl          carrier-tray.scad
 openscad -D 'PART="tray"'     -o compute-tray.stl          compute-tray.scad
+openscad -D 'PART="tray"'     -o plate2-rear-pad.stl       plate2-rear-pad.scad
 openscad -D 'PART="step1"' --camera=0,0,0,0,0,0,300 --projection=o --autocenter --viewall -o ../renders/tray-step1.png carrier-tray.scad   # and step2
 cd ..
 python3 scripts/plate1.py

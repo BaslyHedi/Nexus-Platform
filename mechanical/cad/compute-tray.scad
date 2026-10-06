@@ -24,7 +24,7 @@
 //   FRDM_L / FRDM_W - the bare PCB, 95 x 65 from the Quick Start Guide. Hedi's 96 x 67 includes the connectors that overhang; check the PCB alone
 //   the Pi standoffs' thread (female-female assumed) and the M2.5 screw head height, for the counterbore
 
-PART = "tray";               // "tray" | "plan" | "lib" (the preview file includes this one)
+PART = "tray";               // "tray" | "plan" | "outline" | "lib" (the preview file includes this one)
 
 T            = 4.0;          // tray thickness, as the carrier tray
 R_CORNER     = 2.0;
@@ -116,3 +116,4 @@ module trayBody() difference() {
 
 if (PART == "tray") real() trayBody();
 else if (PART == "plan") real() color("lightgrey") trayBody();
+else if (PART == "outline") outline2d();           // the outline alone, in the layout frame, for the layout drawing
