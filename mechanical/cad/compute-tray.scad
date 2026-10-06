@@ -44,7 +44,7 @@ include <plate3-data.scad>   // OUTLINE, HOLES, SLOTS, STANDOFFS, CLAMPS: genera
 // ---- the boards, plate 3 frame -----------------------------------------------------------------------
 // FRDM board frame: u along the long edge, v along the short one, as in the Quick Start Guide's top view (40-pin header at u 0, the
 // CAN header and microSD at v 0). Turned so u runs toward the vehicle's LEFT and v toward the NOSE: x = X0 + 65 - v, y = Y0 + u.
-FRDM_X0 = 184.0;  FRDM_Y0 = 12.75;
+FRDM_X0 = 184.0;  FRDM_Y0 = 6.75;      // 6 mm toward the 40-pin side (the right), so the USB plugs on the left have 16 mm of plate beside them
 FRDM_L  = 95.0;   FRDM_W  = 65.0;        // the bare PCB, from the Quick Start Guide photo (+-1). Hedi measured 96 x 67 over the connectors, which overhang the
                                           // edges by 1.8 mm (USB-A) and 2.5 mm (RJ45); the non-S board is 105 x 65
 function frdm_at(u, v) = [FRDM_X0 + FRDM_W - v, FRDM_Y0 + u];
@@ -90,7 +90,7 @@ module outline2d() union() {
     for (f = PAD_FIX) translate([f[0], f[1]]) circle(d = FIX_PAD_D, $fn = 48);
     // two ribs join the Pi pad to the FRDM pad along the plate's edges, clear of the big slot between them (y 30.4-90.2)
     translate([PI_BBOX[1] - 4, 17.75]) square([FRDM[0] - PI_BBOX[1] + 8, 10.5]);
-    translate([PI_BBOX[1] - 4, 93.0]) square([FRDM[0] - PI_BBOX[1] + 8, 9.75]);
+    translate([PI_BBOX[1] - 4, 93.0]) square([FRDM[0] - PI_BBOX[1] + 8, 8.75]);
 }
 
 module holes2d() {

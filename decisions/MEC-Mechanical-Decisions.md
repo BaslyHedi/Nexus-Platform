@@ -1397,10 +1397,10 @@ it; the tray uses 95 x 65 for the PCB and shifts the pad 1 mm forward to keep cl
 - **Pi pad, x 94-150:** the Pi 5 across the vehicle, **ports to the left** (toward the FRDM's Ethernet), GPIO header to the rear. Plate 3 is 84.5 mm wide at x 70-88, so the Pi (85 across) cannot go further forward.
   Four M2.5 standoffs, **8 or 10 mm, Hedi's choice** (recommended 8), each held by an M2.5 x 6 from below through a counterbore, the Pi screwed on top.
 - **Plug gap, x 150-184:** two ribs 10 mm wide at the plate's edges and nothing between them.
-- **FRDM pad, x 184-249:** the board on its 6 mm metal standoffs, **four** screwed from the tray's underside (M2.5 x 6 in counterbores, the tray sits flat); the two on the far edge just stand on the tray.
+- **FRDM pad, x 184-249, y 6.75-101.75:** moved 6 mm toward the 40-pin side (Hedi, 2026-10-06), which leaves **17 mm** of plate on the left for the J11 / USB plugs (10 mm before) and 5.1 mm on the right. The board on its 6 mm metal standoffs, **four** screwed from the tray's underside (M2.5 x 6 in counterbores, the tray sits flat); the two on the far edge just stand on the tray.
 - **Fixings to plate 3**, 14, all on plate 3's own holes: M3 at (17.82, 53.24 and 67.24), (196.88 and 245.88, 38.76 and 81.77); M2.5 at (49, 35.94 and 84.53), (86.94, 40.23 and 80.23), (120.06, 35.94 and 84.53), (143.47, 52.65 and 67.88).
 
-**Checked (2026-10-06, every vertex of the STL against `hardware/scripts/chassis-layout.py`).** No vertex is outside plate 3, the nearest is 3.7 mm inside it (the Pi pad's front corners, where the plate narrows); the FRDM pad is 11 mm clear.
+**Checked (2026-10-06, every vertex of the STL against `hardware/scripts/chassis-layout.py`).** No vertex is outside plate 3, the nearest is 3.7 mm inside it (the Pi pad's front corners, where the plate narrows); the FRDM pad is 5.1 mm clear on the right and 17 mm on the left.
 All 14 fixings land on a plate hole of the right size, 10.6 mm or more from every counterbore. The FRDM pad's rear edge is 4.4 mm short of the chassis standoffs' hexagons (2.4 mm if the board is 67 wide).
 
 **Open, before ordering.**
