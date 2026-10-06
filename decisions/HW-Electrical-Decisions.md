@@ -651,7 +651,7 @@ remove that resistor.
 - **To confirm on the vehicle.** The socket's face is at C's edge, and plate 2 is only about 80 mm
   wide at the waist, so the C-to-C plug stands about 20 mm past the plate edge at plate-2 height.
   Check nothing outboard is in its way, and that the 20 cm cable reaches J1 on plate 3.
-  J1's position on the FRDM is not recorded in this repository.
+  J1 is on the FRDM's v-max edge, u 31-41 (MEC-18, from the Quick Start Guide); the 20 cm cable fits (MEC-18 traces it).
 
 ---
 

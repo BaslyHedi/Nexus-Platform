@@ -131,7 +131,7 @@ def plate3_heading():
     o = []
     w = o.append
     w(text(PX, 60, 110, 'UPPER DECK - plate 3', font_size=13, font_weight=700, fill='#1a1a1a'))
-    w(text(PX, 60, 124, 'top face z 123.12 · FRDM-IMX91S', font_size=9.5, fill='#64748b'))
+    w(text(PX, 60, 124, 'top face z 123.12 · compute tray: FRDM-IMX91S, Pi 5 later', font_size=9.5, fill='#64748b'))
     return o
 
 
@@ -154,27 +154,27 @@ def plate1_heading():
 
 
 def frdm():
-    """The FRDM-IMX91S on plate 3 and the fascia clamp note."""
+    """The compute tray's boards on plate 3, and the fascia clamp note (MEC-18)."""
     o = []
     w = o.append
-    # FRDM-IMX91S on plate 3: 105 x 65, four M2.5 + washer on the M3 grid (49.00 x 58.00, NXP drill file T11, MEC-11); dashed = its other two holes
-    w(rect(P3, 95.76, 20.24, 105, 65, rx=3, fill='#eef2ff', fill_opacity=0.92, stroke='#4338ca', stroke_width=1.8))
-    w(circle(P3, 99.24, 23.76, 4.2, fill='none', stroke='#4338ca', stroke_width=1.8) + line(P3, 95.41, 23.76, 103.06, 23.76, stroke='#4338ca', stroke_width=1.3) + line(P3, 99.24, 19.94, 99.24, 27.59, stroke='#4338ca', stroke_width=1.3))
-    w(circle(P3, 99.24, 23.76, 1.5, fill='#4338ca'))
-    w(circle(P3, 99.24, 81.76, 4.2, fill='none', stroke='#4338ca', stroke_width=1.8) + line(P3, 95.41, 81.76, 103.06, 81.76, stroke='#4338ca', stroke_width=1.3) + line(P3, 99.24, 77.94, 99.24, 85.59, stroke='#4338ca', stroke_width=1.3))
-    w(circle(P3, 99.24, 81.76, 1.5, fill='#4338ca'))
-    w(circle(P3, 148.18, 23.76, 4.2, fill='none', stroke='#4338ca', stroke_width=1.8) + line(P3, 144.35, 23.76, 152, 23.76, stroke='#4338ca', stroke_width=1.3) + line(P3, 148.18, 19.94, 148.18, 27.59, stroke='#4338ca', stroke_width=1.3))
-    w(circle(P3, 148.18, 23.76, 1.5, fill='#4338ca'))
-    w(circle(P3, 148.18, 81.76, 4.2, fill='none', stroke='#4338ca', stroke_width=1.8) + line(P3, 144.35, 81.76, 152, 81.76, stroke='#4338ca', stroke_width=1.3) + line(P3, 148.18, 77.94, 148.18, 85.59, stroke='#4338ca', stroke_width=1.3))
-    w(circle(P3, 148.18, 81.76, 1.5, fill='#4338ca'))
-    w(circle(P3, 193.76, 39.76, 2.6, fill='none', stroke='#94a3b8', stroke_width=1.2, stroke_dasharray='2 2'))
-    w(circle(P3, 193.76, 78.24, 2.6, fill='none', stroke='#94a3b8', stroke_width=1.2, stroke_dasharray='2 2'))
-    w(text(P3, 148.24, 44.76, 'FRDM-IMX91S  105 × 65', font_size=10.5, font_weight=700, fill='#4338ca', text_anchor='middle'))
-    w(text(P3, 148.24, 54.76, '4 × M2.5 + washer - 48.94 × 58.00', font_size=8.2, font_weight=700, fill='#4338ca', text_anchor='middle'))
-    w(text(P3, 148.24, 64.76, 'µSD on the UNDERSIDE', font_size=7.8, fill='#4338ca', text_anchor='middle'))
-    w(text(PX, 300, 288, 'pattern 49.00 × 58.00 from NXP drill T11 - 0.06 mm out in x · dashed = its other 2 holes', font_size=7.8, fill='#64748b', text_anchor='middle'))
+    # FRDM-IMX91S: about 95 x 65, turned across the vehicle at x 184-249, y 6.75-101.75 (40-pin header to the right, USB to the left, CAN / microSD to the rear)
+    w(rect(P3, 184.0, 6.75, 65, 95, rx=2, fill='#eef2ff', fill_opacity=0.92, stroke='#4338ca', stroke_width=1.8))
+    for u in (3.5, 52.5):
+        for v in (3.5, 61.5):
+            w(circle(P3, 184 + 65 - v, 6.75 + u, 3.6, fill='none', stroke='#4338ca', stroke_width=1.4))
+    w(text(P3, 216.5, 52.0, 'FRDM-IMX91S  ~95 × 65', font_size=9.5, font_weight=700, fill='#4338ca', text_anchor='middle'))
+    w(text(P3, 216.5, 61.0, '6 mm standoffs', font_size=7.2, fill='#4338ca', text_anchor='middle'))
+    # Raspberry Pi 5 (later phase): across the vehicle at x 94-150, ports to the left
+    w(rect(P3, 94.0, 17.75, 56, 85, rx=3, fill='#ecfdf5', fill_opacity=0.92, stroke='#047857', stroke_width=1.6, stroke_dasharray='6 3'))
+    for a in (3.5, 61.5):
+        for b in (3.5, 52.5):
+            w(circle(P3, 94 + 56 - b, 17.75 + a, 3.2, fill='none', stroke='#047857', stroke_width=1.4))
+    w(text(P3, 122.0, 56.0, 'Pi 5 (later)', font_size=9.5, font_weight=700, fill='#047857', text_anchor='middle'))
+    w(text(P3, 122.0, 65.0, '8 or 10 mm standoffs', font_size=7.2, fill='#047857', text_anchor='middle'))
+    w(text(P3, 56.0, 62.0, 'spare pad (drill)', font_size=9.5, font_weight=700, fill='#64748b', text_anchor='middle'))
+    w(text(PX, 300, 346, 'compute tray (MEC-18): one 236.6 × 108 × 4 mm plate, x 14-250: spare pad · Pi 5 · plug gap · FRDM', font_size=7.8, fill='#64748b', text_anchor='middle'))
     # the fascia upper panel clamps here (MEC-07)
-    w(text(PX, 300, 300, 'fascia upper panel clamps here - 2 × M3×8 driven down from the top (MEC-07)', font_size=8.5, fill='#7c3aed', text_anchor='middle'))
+    w(text(PX, 300, 358, 'fascia upper panel clamps at the two purple holes - 2 × M3×8 driven down from the top (MEC-07)', font_size=8.0, fill='#7c3aed', text_anchor='middle'))
     return o
 
 

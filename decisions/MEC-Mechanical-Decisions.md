@@ -537,6 +537,8 @@ the transverse hypothesis above was wrong - it mounts fore-aft on the M3 grid.
 
 ## MEC-11 · The FRDM's mounting holes land on the Hiwonder grid - 0.06 mm out
 
+**Updated by MEC-18:** the board is about 95 x 65 mm, not 105 x 65 (the 105 is the non-S board's), and it now sits across the vehicle at x 184-249 on a tray; the 49.00 x 58.00 grid match below no longer applies to it.
+
 **Updated by MEC-15:** the carrier's 49.00 × 58.00 pattern is gone. The kit-board carrier fixes to (148.18, 23.76), (148.2, 72.2), (169.88, 14.24) and (169.88, 100.24).
 
 **Decision (2026-09-20).** The FRDM-IMX91 bolts **fore-aft to plate holes that already exist**, on
@@ -595,6 +597,8 @@ fitted, so the standoff sets card access, not just clearance.
 **Updated by MEC-16:** plate 1's floor now carries only the battery (moved to x 85-162, behind the tie rod) and the driver. The buses, fuses, INA226, UBEC and splices are taped to plate 2's lower face, and the (−) B bus is gone.
 
 **Updated by MEC-15:** on plate 2 the carrier is x 117.0-215.0 (boards to x 187.0), and board C, the 5 V split, sits across the waist at x 85.5-115.5.
+
+**Updated by MEC-18:** on plate 3 the FRDM and, later, the Raspberry Pi 5 ride on one compute tray, both across the vehicle, with a spare pad in the nose.
 
 **Updated by MEC-17:** the Bauer sits at x 11-75, screwed to the carrier tray through its own two holes, and the S6 / S7 splices are in two lanes either side of it; the carrier and board C ride on the same tray.
 
@@ -1371,7 +1375,7 @@ which is why the second lane is the mirror of the first. The tray has a wing for
 
 **Status (2026-10-06): final for the print order, with the checks below accepted.** Source: [`../mechanical/cad/compute-tray.scad`](../mechanical/cad/compute-tray.scad) -> `compute-tray.stl`;
 the renders come from [`../mechanical/cad/compute-tray-preview.scad`](../mechanical/cad/compute-tray-preview.scad) (plate 3's data is exported from the layout drawing by
-[`../mechanical/scripts/plate3-data.py`](../mechanical/scripts/plate3-data.py)). Ordered **together with the carrier tray (MEC-17)**: a print service charges less for one order with everything than for two.
+[`../mechanical/scripts/plate3-data.py`](../mechanical/scripts/plate3-data.py)). To be ordered **together with the carrier tray (MEC-17)**: a print service charges less for one order with everything than for two.
 PETG, 4 mm, flat, no supports, **236.6 x 108.0 x 4 mm** (needs a bed of 240 mm or more). It follows MEC-12 (the FRDM on plate 3).
 
 **History of the layout (all 2026-10-06, all in git).** First the FRDM at MEC-11's place with the Pi in the nose; then a spare nose with the FRDM along the vehicle (rejected: its USB plugs need about 25 mm behind the board and the Pi pad
@@ -1395,7 +1399,7 @@ FRDM screw holes are loose (4.2 mm, counterbore 7.2 mm) so the +-1 mm in the pho
 - **Spare pad, x 14-93:** plate 3's own outline moved in 5 mm, plain plate, six fixings, two windows over plate 3's slots (x 56-80, y 27-37 and 83-93), a notch round each chassis standoff. Drill it. (The Sense HAT idea is parked; its 40-pin ribbon is not in the BOM.)
 - **Pi pad, x 94-150:** the Pi 5 across the vehicle, **ports to the left**, GPIO header to the rear. Plate 3 is 84.5 mm wide at x 70-88, so the Pi (85 across) cannot go further forward. Four M2.5 standoffs, **8 or 10 mm, Hedi's choice**
   (recommended 8), each held by an M2.5 x 6 from below through a counterbore, the Pi screwed on top. Works the same if the standoffs turn out male-female (the bottom screw is then not needed).
-- **Plug gap, x 150-184:** two ribs 10 mm wide at the plate's edges and nothing between them.
+- **Plug gap, x 150-184:** two ribs, 10.5 and 8.75 mm wide, at the plate's edges and nothing between them.
 - **FRDM pad, x 184-249, y 6.75-101.75:** the board on its 6 mm metal standoffs, four screwed from the tray's underside (M2.5 x 6 in counterbores, the tray sits flat); the two on the far edge just stand on the tray.
   5.1 mm to the plate's right edge, 17 mm to its left.
 - **Fixings to plate 3**, 14, all on plate 3's own holes: M3 at (17.82, 53.24 and 67.24), (196.88 and 245.88, 38.76 and 81.77); M2.5 at (49, 35.94 and 84.53), (86.94, 40.23 and 80.23), (120.06, 35.94 and 84.53), (143.47, 52.65 and 67.88).
