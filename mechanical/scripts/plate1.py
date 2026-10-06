@@ -45,7 +45,7 @@ MATERIALS = {
     "bezel_green":  (0.10, 0.70, 0.20, 1), "placeholder":  (0.85, 0.20, 0.25, 0.55),
     "pcb_carrier":  (0.10, 0.60, 0.30, 0.45), "tire": (0.08, 0.08, 0.09, 1),
     "wire_red":     (0.90, 0.08, 0.08, 1), "wire_orange":  (1.00, 0.55, 0.00, 1),
-    "wire_black":   (0.03, 0.03, 0.03, 1), "wire_teal":    (0.00, 0.62, 0.58, 1),
+    "wire_black":   (0.03, 0.03, 0.03, 1), "wire_teal":    (0.00, 0.62, 0.58, 1), "wire_green": (0.10, 0.62, 0.25, 1),
 }
 
 AWG18, AWG16, AWG22 = 2.4, 2.9, 1.6          # silicone insulation OD, mm
@@ -258,11 +258,17 @@ def build():
     part("splice-s1-battery-plus-levers", "lever", box(84, 93, 25, 29, T1 - 10, T1 - 8.5) + box(84, 93, 31, 35, T1 - 10, T1 - 8.5))
     taped_clip("splice-s2-vm-plus", 157, 175.6, 35, 48, (38, 44), 157)
     clip("splice-s4-vm-minus", 157, 175.6, 35, 48, T1 - 18.5, T1 - 10, (38, 44), 157, (T1 - 20, T1 - 18.5))
-    taped_clip("splice-s3-ubec-plus", 138.7, 157.3, 104, 117, (107, 113), 138.7)
-    clip("splice-s5-ubec-minus", 138.7, 157.3, 104, 117, T1 - 18.5, T1 - 10, (110, 115), 138.7, (T1 - 20, T1 - 18.5))
+    # S5 is a 5-port clip: UBEC (-), the run to the (-) bus, and the two switch LED returns (MEC-16, 2026-10-06). It is taped to the plate
+    # and S3 hangs under it, so the stack is the other way round from S2 / S4
+    clip("splice-s3-ubec-plus", 138.7, 157.3, 104, 117, T1 - 18.5, T1 - 10, (107, 113), 138.7, (T1 - 20, T1 - 18.5))
+    taped_clip("splice-s5-ubec-minus", 138.7, 157.3, 87, 117, (90, 96, 102, 108, 114), 138.7)
+    # S8 feeds both switches from one (+) bus port; S9 joins SW1's output and its LED (+) before the split. 3-port clips, ports on the rear (S9)
+    # and front (S8) face; the run to the switches leaves the front of S8 and U-turns into the lane over the driver
+    taped_clip("splice-s8-switch-feed", 157, 175.6, 51, 69.4, (54, 60.2, 66.4), 157)
+    taped_clip("splice-s9-sw1-out", 178, 196.6, 32.4, 50.8, (35.5, 41.7, 47.9), 196.6)
     # S6 / S7 sit on the carrier tray (MEC-17), 4 mm above plate 2, either side of the Bauer, each beside one of the plate's two
     # tie slots: they would not fit under board C on 8 mm standoffs, and out here their levers have room to open
-    clip("splice-s6-bauer-plus", 42, 60.6, 96, 109, PLATE2_TOP + 4, PLATE2_TOP + 12.5, (99.5, 105.5), 60.6, (64.5, 66))
+    clip("splice-s6-bauer-plus", 42, 60.6, 96, 114.4, PLATE2_TOP + 4, PLATE2_TOP + 12.5, (99, 105.2, 111.4), 60.6, (64.5, 66))      # 3-port: SW2 out, SW2 LED (+), the Bauer's red lead
     clip("splice-s7-bauer-minus", 42, 60.6, 11.5, 24.5, PLATE2_TOP + 4, PLATE2_TOP + 12.5, (15, 21), 60.6, (64.5, 66))
 
     # SM-2P, the battery disconnect: the female half stays on the pack lead (plate 1),
@@ -306,13 +312,6 @@ def build():
       [(126, 78, T1 - 7), (126, 76, pz), (110, 74, F), (109, 43, F), (109, 43, pz), P(43)])
     W("run04b-battery-minus-to-bus", "wire_black", AWG18,
       [(95, 39, 44), (107, 39, F), (108, 66, F), (128, 67, F), (128, 67, pz), M(67)])
-    W("run05-plus-bus-to-sw1", "wire_red", AWG18,
-      [P(49), (109, 49, F), (109, 74, F), (200, 74, F), (203, 62, F), (240, 62, F), (244, 80, 30), (248.3, 79.8, 22.5)])
-    W("run06-plus-bus-to-sw2", "wire_red", AWG18,
-      [P(55), (109.5, 55, F - 2.4), (109.5, 75.5, F - 2.4), (200, 75.5, F - 2.4), (203, 60.5, F), (240, 60.5, F),
-       (244, 37, 30), (248.3, 35.8, 22.5)])
-    W("run07-sw1-no-to-split", "wire_orange", AWG18,
-      [(248.3, 84.8, 22.5), (243, 84, 30), (240, 63.5, F - 2.4), (203, 63.5, F - 2.4), (198, 60.2, pz), (196.6, 60.2, pz)])
     W("run08a-split-to-motor-fuse", "wire_orange", AWG16,
       [(196.6, 54, pz), (203, 50, 45), (204, 25, 42), mot_in + (zc,)])
     W("run08b-motor-fuse-to-s2", "wire_orange", AWG16,
@@ -321,9 +320,9 @@ def build():
     W("run09a-split-to-ubec-fuse", "wire_orange", AWG16,
       [(196.6, 66.4, pz), (203, 70, 45), (204, 95, 42), ub_in + (zc,)])
     W("run09b-ubec-fuse-to-s3", "wire_orange", AWG16,
-      [ub_out + (zc,), (137, 100, pz), (137, 107, pz), (138.7, 107, pz)])
+      [ub_out + (zc,), (137, 100, pz), (137, 107, T1 - 14.25), (138.7, 107, T1 - 14.25)])
     W("run09c-ubec-plus-lead", "wire_orange", AWG18,
-      [(135, 103, T1 - 2.5), (136, 112, pz), (138.7, 113, pz)])
+      [(135, 103, T1 - 2.5), (136, 112, T1 - 14.25), (138.7, 113, T1 - 14.25)])
     W("run10a-ubec-6v-plus-to-board-a", "wire_teal", AWG18,
       [(100, 103, T1 - 2.5), (97, 100, 46), (104, 78, 46), (112, 75, 44), (114, 72, 46), (114, 72, 58), (146, 20, 58),
        (146, 1, 62), (146, 1, 67), (146, 6, 67)])
@@ -331,9 +330,9 @@ def build():
       [(100, 109, T1 - 2.5), (95, 105, 46), (102, 79, 46), (116, 77, 44), (117, 75, 46), (117, 75, 58), (150, 22, 58),
        (150, 1, 62), (150, 1, 67), (150, 6, 67)])
     W("run11a-ubec-minus-lead", "wire_black", AWG18,
-      [(135, 109, T1 - 2.5), (136, 110, 36), (138.7, 110, T1 - 14.25)])
+      [(135, 109, T1 - 2.5), (136, 113, 44), (138.7, 114, pz)])
     W("run11b-s5-to-minus-bus", "wire_black", AWG18,
-      [(138.7, 115, T1 - 14.25), (137, 116, 36), (137, 76, 40), (130, 76, 42), (128, 61, 44), M(61)])
+      [(138.7, 108, pz), (137, 108, 44), (137, 76, 40), (130, 76, 42), (128, 61, 44), M(61)])
     W("run12a-vm-minus-pigtail", "wire_black", AWG18, [(155, 46, 36), (155, 44, T1 - 14.25), (157, 44, T1 - 14.25)])
     part("driver-vm-socket", "connector", box(176, 182, 19, 23, 7.6, 14))
 
@@ -351,17 +350,32 @@ def build():
       plug=None, plugged=("closed",), tail=(1, 0, 0))
     W("run12b-s4-to-minus-bus", "wire_black", AWG18,
       [(157, 38, T1 - 14.25), (155, 38, 37), (130, 38, 38), (128, 55, 44), M(55)])
-    W("run13a-led-minus-jumper", "wire_black", AWG18, [(248.3, 84.8, 27.5), (247, 62, 29), (248.3, 40.8, 27.5)])
-    W("run13b-led-minus-return", "wire_black", AWG18,
-      [(247, 62, 29), (242, 61.5, 40), (240, 61.5, F - 2.4), (203, 61.5, F - 2.4), (200, 77, F), (155, 77, F),
-       (153, 72, 46), (130, 72, 44), (130, 49, 44), M(49)])
-    W("run14a-led-plus-sw1", "wire_orange", AWG18, [(248.3, 79.8, 27.5), (246.5, 82.3, 25), (248.3, 84.8, 22.5)])
-    W("run14b-led-plus-sw2", "wire_orange", AWG18, [(248.3, 35.8, 27.5), (246.5, 38.3, 25), (248.3, 40.8, 22.5)])
-    W("run15a-sw2-no-to-s6", "wire_orange", AWG18,
-      [(248.3, 40.8, 22.5), (243, 42, 30), (240, 59, F - 2.4), (203, 59, F - 2.4), (200, 73, F), (126, 73, F),
-       (100, 81, F), (66, 88, F), (66, 90, F), (66, 90, 58), (64, 97, 60.5), (60.6, 99.5, 60.5)])
+    # --- the switches (MEC-16, 2026-10-06): each has four wires - two green for the contact, red LED (+), black LED (-). One (+) bus port
+    # feeds both contacts through S8; each switch's output and its LED (+) meet at S9 (SW1) or S6 (SW2); both LED (-) go to S5, the 5-port.
+    W("run05-plus-bus-to-s8", "wire_red", AWG18,
+      [P(49), (109, 49, F), (109, 72, F), (152, 72, F), (152, 66.4, pz), (157, 66.4, pz)])
+    W("run06a-s8-to-sw1-com", "wire_green", AWG18,
+      [(157, 60.2, pz), (153, 60.2, pz), (153, 74, F - 2.4), (200, 74, F - 2.4), (203, 62, F), (240, 62, F), (244, 80, 30), (248.3, 79.8, 22.5)])
+    W("run06b-s8-to-sw2-com", "wire_green", AWG18,
+      [(157, 54, pz), (151, 54, pz), (151, 76, F - 2.4), (200, 76, F - 2.4), (203, 60.5, F), (240, 60.5, F), (244, 37, 30), (248.3, 35.8, 22.5)])
+    W("run07a-sw1-green-to-s9", "wire_green", AWG18,
+      [(248.3, 84.8, 22.5), (243, 84, 30), (240, 64, F - 2.4), (207, 64, F - 2.4), (204, 48, F - 2.4), (199, 47.9, pz), (196.6, 47.9, pz)])
+    W("run07b-sw1-led-plus-to-s9", "wire_red", AWG22,
+      [(248.3, 79.8, 27.5), (244, 78, 32), (240, 65.6, F), (208, 65.6, F), (205, 42, F), (199, 41.7, pz), (196.6, 41.7, pz)])
+    W("run07c-s9-to-split", "wire_orange", AWG18,
+      [(196.6, 35.5, pz), (199.5, 36, pz), (199.5, 56, pz), (198, 60.2, pz), (196.6, 60.2, pz)])
+    W("run13a-sw1-led-minus-to-s5", "wire_black", AWG22,
+      [(248.3, 84.8, 27.5), (244, 86, 32), (240, 78.5, F), (204, 78.5, F), (160, 80, F), (137, 83, F), (137, 90, pz), (138.7, 90, pz)])
+    W("run13b-sw2-led-minus-to-s5", "wire_black", AWG22,
+      [(248.3, 40.8, 27.5), (244, 41, 32), (240, 58, F), (204, 58, F), (201, 79.2, F), (160, 81, F), (136, 84, F), (136, 96, pz), (138.7, 96, pz)])
+    W("run15a-sw2-green-to-s6", "wire_green", AWG18,
+      [(248.3, 40.8, 22.5), (243, 42, 30), (240, 59, F - 2.4), (203, 59, F - 2.4), (200, 73, F), (126, 73, F), (100, 81, F), (78, 88, F),
+       (78, 91, 58), (66, 97, 60.5), (60.6, 99, 60.5)])
+    W("run15c-sw2-led-plus-to-s6", "wire_red", AWG22,
+      [(248.3, 35.8, 27.5), (244, 35, 32), (240, 56.4, F), (204, 56.4, F), (201, 71.4, F), (128, 71.4, F), (102, 79.4, F), (80, 86.4, F),
+       (78, 91, 58), (66, 99, 60.5), (60.6, 105.2, 60.5)])
     # the Bauer's red lead into S6, its black lead round the Bauer's rear (the 10.5 mm lane before board C) into S7
-    W("run15b-bauer-plus-lead", "wire_orange", AWG18, [(50, 91.6, 65.5), (50, 94.0, 64), (56, 102, 60.5), (60.6, 105.5, 60.5)])
+    W("run15b-bauer-plus-lead", "wire_orange", AWG18, [(50, 91.6, 65.5), (50, 94.0, 64), (56, 102, 60.5), (60.6, 111.4, 60.5)])
     W("run16a-bauer-minus-lead", "wire_black", AWG18,
       [(46, 91.6, 65.5), (46, 93.5, 62), (78, 94, 57), (81, 92, 57), (81, 20, 57), (64, 15, 60.5), (60.6, 15, 60.5)])
     W("run16b-s7-to-minus-bus", "wire_black", AWG18,

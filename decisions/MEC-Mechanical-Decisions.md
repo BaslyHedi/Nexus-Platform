@@ -1049,11 +1049,13 @@ Positions, x from the front of plate 1 and y from its right edge, as modelled in
 | **UBEC fuse** 5 A | x 152-202, y 88-118, lid facing left | plate 2 |
 | **INA226** | x 108-134, y 78-100, upside down, terminals facing the opening | plate 2 |
 | **SW1 split**, DOMAXWILL 3-port | x 178-197, y 51-69, over the driver | plate 2 |
+| **S8** (switch feed), 3-port | x 157-176, y 51-69, ports on its front face | plate 2 |
+| **S9** (SW1 out + its LED +), 3-port | x 178-197, y 32-51, beside the split | plate 2 |
 | **UBEC** | x 100-135, y 100-112 | plate 2 |
 | **S1** (SM-2P + to main fuse) | x 83-96, y 21-40 | plate 2 |
 | **S2 / S4** (driver VM + and −) | x 157-176, y 35-48, stacked | plate 2 |
-| **S3 / S5** (UBEC + and −) | x 139-157, y 104-117, stacked | plate 2 |
-| **S6 / S7** (Bauer + and −) | beside the Bauer | plate 2, top face |
+| **S3 / S5** (UBEC + and −) | x 139-157; **S5 is a 5-port clip** (y 87-117, taped to the plate) with the 2-port S3 (y 104-117) hanging under it | plate 2 |
+| **S6 / S7** (Bauer + and −) | beside the Bauer; **S6 is a 3-port clip** (y 96-114) | plate 2, top face |
 
 The two buses face each other across **plate 2's 22.7 × 35.4 opening** (x 110-133). Every wire that
 has to reach plate 2's top face - the UBEC's 6 V pair to carrier board A, the Bauer's feed and
@@ -1090,8 +1092,7 @@ return - goes up through it, between the buses. The rearward runs lie flat on pl
   holes and slots, and it holds a part wherever it has to go rather than where a hole happens to be.
 - **The UBEC left plate 1** because its output never stays there: HW-19 routes the servo's 6 V
   through carrier board A, so it climbs to plate 2 whatever happens.
-- **One (−) bus is enough.** With the two switch LED returns joined at the switches, the star has
-  exactly five returns: battery, driver, UBEC, Bauer and the LEDs.
+- **One (−) bus is enough.** Since 2026-10-06 the two switch LED returns join the UBEC's return in S5, so the star has four returns: battery, driver, UBEC (with both LEDs) and Bauer. One port is spare.
 
 **Rejected.**
 
@@ -1140,18 +1141,20 @@ return - goes up through it, between the buses. The rearward runs lie flat on pl
   and 18.6 × 18.4 for the 3-port.
 - The fuse holder body with calipers - 50 × 18 × 30 is scaled off the vendor photo.
 - The pack's height with its felt (modelled 21 + 3) and the driver's top height.
-- **Joints with no clip (audit of `plate1.py`'s 30 runs, 2026-10-06).** Every other junction ends in a clip: the two WAGO 221-415 buses (3 and 5 ports), the DOMAXWILL 3-port split and the seven 2-port splices S1-S7, or in a screw terminal (INA226, carrier board A) or a plug (SM-2P, driver VM). Three do not:
-  1. **The LED (-) return** (run 13b) is tapped into the middle of the jumper between the two switches' LED (-) tabs (run 13a): three wire ends meet with nothing holding them. A DOMAXWILL 3-port clip beside the switches (30 of the 3-port are in the kit, 1 used) would take SW1's LED (-), SW2's LED (-) and the return, and run 13a would become two short wires.
-  2. **SW1's NO tab carries two wires** (run 07 to the split and the LED (+) tab jumper, run 14a), **and so does SW2's** (run 15a to S6 and run 14b). One flag receptacle takes one crimp: use a piggyback (double) receptacle, or the supplied socket harness if it has one.
-  3. The LED (+) jumpers are 18 AWG in the model. A 22-24 AWG wire is enough for an LED and crimps into a piggyback receptacle more easily.
-  The animation marks these three in magenta. Decide before the wires are cut; BOM 3.17 (the receptacles) is still only "check the crimp kit".
+- **The switch wiring (decided 2026-10-06).** Each switch has four wires: **two green** (the contact, no polarity), **red** (LED +) and **black** (LED −); the LED has its own resistor and runs on 12 V (tested). To light the LED only when the switch is on, **LED + is joined to the switched output, never to the (+) bus**. Every join ends in a clip, so no wire meets another without one:
+  - **S8** (3-port, toward the rear) takes **(+) bus port 2** and both switches' first green wires. One bus port feeds both switches, so the switch harness reaches (run 05, 06a, 06b). (+) bus port 3 is spare.
+  - **SW1's output** (second green) and **its red LED +** meet in **S9** (3-port), and one wire goes from S9 to the SW1 split (runs 07a-07c).
+  - **SW2's output** and **its red LED +** meet in **S6**, which becomes a **3-port** clip with the Bauer's red lead (runs 15a, 15c, 15b). Two wires pass up the left slot instead of one: 2.4 + 1.6 mm in an opening about 5 x 10 mm, so check it on the real tray.
+  - **Both black LED − wires** go into **S5**, which becomes a **5-port** clip: UBEC (−), the run to the (−) bus (port 4), and the two LED returns (runs 13a, 13b). The (−) bus is then **4 of 5** ports, one spare.
+  - S9's pigtail enters the split's second port. Nothing is crimped on the switch tabs: the supplied socket harness is used, so BOM 3.17 (flag receptacles) is not needed.
+  Clips used: **3-port x 4** (split, S8, S9, S6), **5-port x 1** (S5), **2-port x 5** (S1, S2, S3, S4, S7). The positions of S8, S9 and S5 are stand-ins in the model; what must hold is the height over the motors (9 mm: no clip there, 8.5 mm + 1 mm of tape).
 - The screw heads under plate 2 - carrier F1-F4 and board C's F5, F6 - against the taped parts. *Done for the tray's own six fixings in MEC-17 (2026-10-05); the direct-fixing scheme it replaces would have clashed.*
   F3 lands at the motor fuse's lid edge.
-- The SW1 / SW2 tab layout, and which tab carries LED − (runs 13 and 14).
+- The switch harness: wire length (the model assumes the leads reach S8 / S9 or are extended) and gauge of the contact wires, which carry up to about 6 A for SW1.
 - That the driver's VM socket can be reached from the right side under the motor fuse - about
   16 mm of height between the floor parts and the holder. If not, the VM tail needs about 12 cm to
   be plugged with plate 2 held above, and that slack has to be stowed.
-- The Bauer's own lead length, which sets S6 and S7.
+- The Bauer's own lead length, which sets S6 and S7. S6 is a 3-port clip since 2026-10-06 (y 96-114): check it fits on the tray before the splices are taped.
 - The tires' outside diameter. The model uses about 68 mm, scaled off a photo - the CAD has the
   rims only. At that size a rear tire's front edge is at about x 191 at fuse height, and the
   motor and UBEC fuse lids end at x 190, so the lids are reached from the side just in front of

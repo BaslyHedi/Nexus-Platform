@@ -461,7 +461,7 @@ every return ─ (−) bar ─ battery −
 
 *Formerly HD-19.*
 
-**Updated by MEC-16:** the (−) bus is **one** 221-415, five ports, with the two switch LED returns joined at the switches. The 221-500 carriers were already dropped; both buses are taped to plate 2's lower face with 3M foam tape.
+**Updated by MEC-16:** the (−) bus is **one** 221-415, five ports; since 2026-10-06 the two switch LED returns join the UBEC return in a 5-port clip (S5), so it uses four ports and one is spare. The (+) bus uses two (the INA226 and S8, the switch feed). The 221-500 carriers were already dropped; both buses are taped to plate 2's lower face with 3M foam tape.
 
 **Decision (2026-09-16).** Replace the LAOYE bus bars with **WAGO 221-415** lever connectors on
 **221-500** mounting carriers.

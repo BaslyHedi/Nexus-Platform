@@ -40,7 +40,7 @@ S = lambda sec: int(round(sec * FPS / SPEED)) + 1
 # when each part goes onto the upturned plate 2 (seconds), in MEC-16's order
 PARTS = [("P1_bus-", 3.0), ("P1_fuse-main", 4.4), ("P1_fuse-motor", 5.6), ("P1_fuse-ubec", 6.8),
          ("P1_ina226", 8.2), ("P1_split-sw1", 9.6), ("P1_ubec", 11.0), ("P1_splice-s1", 12.4),
-         ("P1_splice-s2", 13.4), ("P1_splice-s4", 14.2), ("P1_splice-s3", 15.2), ("P1_splice-s5", 16.0),
+         ("P1_splice-s2", 13.4), ("P1_splice-s4", 14.2), ("P1_splice-s3", 15.2), ("P1_splice-s5", 16.0), ("P1_splice-s8", 16.8), ("P1_splice-s9", 17.6),
          ("FASCIA_LOWER", 20.5), ("P1_sw1", 21.6), ("P1_sw2", 21.6)]
 # S6 and S7 are on plate 2's TOP face, beside the Bauer, which faces the floor while
 # plate 2 lies open: a drop-in would push them through the plate. Like the Bauer and
@@ -56,29 +56,31 @@ RUN_SEQ = [
     ("run02",  (125, 55), "Wire 3  main fuse  to  INA226 VIN+", "16 AWG red  -  ferrule, screw terminal"),
     ("run03",  (120, 60), "Wire 4  INA226 VIN-  to  (+) bus, port 1", "18 AWG red  -  ferrule at the module, WAGO 221-415 lever"),
     ("run04b", (115, 50), "Wire 5  SM-2P male (-)  to  (-) bus, port 5", "18 AWG black  -  WAGO 221-415 lever"),
-    ("run05",  (150, 60), "Wire 6  (+) bus, port 2  to  SW1 COM tab", "18 AWG red  -  WAGO lever, 4.8 mm flag receptacle"),
-    ("run06",  (150, 60), "Wire 7  (+) bus, port 3  to  SW2 COM tab", "18 AWG red  -  WAGO lever, 4.8 mm flag receptacle"),
-    ("run07",  (215, 65), "Wire 8  SW1 NO tab  to  the SW1 split", "18 AWG orange  -  flag receptacle, DOMAXWILL 3-port lever clip"),
-    ("run08a", (190, 45), "Wire 9  split  to  motor fuse (5 A)", "16 AWG orange  -  the holder's lead, 3-port clip"),
-    ("run08b", (170, 35), "Wire 10  motor fuse  to  splice S2", "16 AWG orange  -  DOMAXWILL 2-port lever clip"),
-    ("run08c", (160, 40), "Wire 11  driver VM (+) lead  to  S2", "18 AWG orange  -  second wire in the same 2-port clip"),
-    ("run12a", (160, 40), "Wire 12  driver VM (-) lead  to  splice S4", "18 AWG black  -  DOMAXWILL 2-port lever clip"),
-    ("run12b", (145, 45), "Wire 13  S4  to  (-) bus, port 3", "18 AWG black  -  WAGO 221-415 lever"),
-    ("run09a", (190, 85), "Wire 14  split  to  UBEC fuse (5 A)", "16 AWG orange  -  the holder's lead, 3-port clip"),
-    ("run09b", (150, 105), "Wire 15  UBEC fuse  to  splice S3", "16 AWG orange  -  DOMAXWILL 2-port lever clip"),
-    ("run09c", (140, 108), "Wire 16  UBEC (+) input lead  to  S3", "18 AWG orange  -  second wire in the same 2-port clip"),
-    ("run11a", (140, 108), "Wire 17  UBEC (-) input lead  to  splice S5", "18 AWG black  -  DOMAXWILL 2-port lever clip"),
-    ("run11b", (140, 85), "Wire 18  S5  to  (-) bus, port 4", "18 AWG black  -  WAGO 221-415 lever"),
-    ("run10a", (110, 80), "Wire 19  UBEC 6 V (+)  to  carrier board A", "18 AWG teal  -  up through plate 2's opening, screw terminal"),
-    ("run10b", (110, 80), "Wire 20  UBEC 6 V (-)  to  carrier board A", "18 AWG black  -  up through plate 2's opening, screw terminal"),
-    ("run14a", (245, 82), "Wire 21  SW1 LED (+) tab  to  SW1 NO tab", "18 AWG orange  -  OPEN POINT: two wires on one flag receptacle"),
-    ("run14b", (245, 38), "Wire 22  SW2 LED (+) tab  to  SW2 NO tab", "18 AWG orange  -  OPEN POINT: two wires on one flag receptacle"),
-    ("run13a", (245, 62), "Wire 23  SW1 LED (-) tab  to  SW2 LED (-) tab", "18 AWG black  -  jumper between the switches"),
-    ("run13b", (230, 62), "Wire 24  LED (-) return  to  (-) bus, port 2", "18 AWG black  -  OPEN POINT: tapped into wire 23, no clip"),
-    ("run15a", (150, 70), "Wire 25  SW2 NO tab  to  splice S6", "18 AWG orange  -  second wire on SW2's NO tab, then a 2-port clip"),
-    ("run15b", (60, 100), "Wire 26  Bauer red lead  to  S6", "18 AWG orange  -  second wire in the same 2-port clip"),
-    ("run16a", (60, 40), "Wire 27  Bauer black lead  to  splice S7", "18 AWG black  -  DOMAXWILL 2-port lever clip"),
-    ("run16b", (110, 40), "Wire 28  S7  to  (-) bus, port 1", "18 AWG black  -  WAGO 221-415 lever"),
+    ("run05",  (150, 62), "Wire 6  (+) bus, port 2  to  S8, the switch feed", "18 AWG red  -  WAGO lever, DOMAXWILL 3-port clip toward the rear"),
+    ("run06a", (170, 66), "Wire 7  S8  to  SW1 contact", "the switch's own green wire  -  3-port clip"),
+    ("run06b", (170, 66), "Wire 8  S8  to  SW2 contact", "the switch's own green wire  -  same 3-port clip"),
+    ("run07a", (205, 55), "Wire 9  SW1 contact out (green)  to  S9", "3-port clip beside the SW1 split"),
+    ("run07b", (205, 50), "Wire 10  SW1 LED (+) (red)  to  S9", "thin LED wire, same clip: it is live only when SW1 is on"),
+    ("run07c", (190, 50), "Wire 11  S9  to  the SW1 split", "18 AWG orange  -  into the split's second port"),
+    ("run08a", (190, 45), "Wire 12  split  to  motor fuse (5 A)", "16 AWG orange  -  the holder's lead, 3-port clip"),
+    ("run08b", (170, 35), "Wire 13  motor fuse  to  splice S2", "16 AWG orange  -  DOMAXWILL 2-port lever clip"),
+    ("run08c", (160, 40), "Wire 14  driver VM (+) lead  to  S2", "18 AWG orange  -  second wire in the same 2-port clip"),
+    ("run12a", (160, 40), "Wire 15  driver VM (-) lead  to  splice S4", "18 AWG black  -  DOMAXWILL 2-port lever clip"),
+    ("run12b", (145, 45), "Wire 16  S4  to  (-) bus, port 3", "18 AWG black  -  WAGO 221-415 lever"),
+    ("run09a", (190, 85), "Wire 17  split  to  UBEC fuse (5 A)", "16 AWG orange  -  the holder's lead, 3-port clip"),
+    ("run09b", (150, 105), "Wire 18  UBEC fuse  to  splice S3", "16 AWG orange  -  DOMAXWILL 2-port lever clip, under S5"),
+    ("run09c", (140, 108), "Wire 19  UBEC (+) input lead  to  S3", "18 AWG orange  -  second wire in the same 2-port clip"),
+    ("run11a", (140, 108), "Wire 20  UBEC (-) input lead  to  S5", "18 AWG black  -  DOMAXWILL 5-port clip"),
+    ("run11b", (140, 85), "Wire 21  S5  to  (-) bus, port 4", "18 AWG black  -  WAGO 221-415 lever"),
+    ("run13a", (150, 92), "Wire 22  SW1 LED (-) (black)  to  S5", "thin LED wire  -  the 5-port clip, with the UBEC return"),
+    ("run13b", (150, 92), "Wire 23  SW2 LED (-) (black)  to  S5", "thin LED wire  -  same clip: one more (-) bus port stays free"),
+    ("run10a", (110, 80), "Wire 24  UBEC 6 V (+)  to  carrier board A", "18 AWG teal  -  up through plate 2's opening, screw terminal"),
+    ("run10b", (110, 80), "Wire 25  UBEC 6 V (-)  to  carrier board A", "18 AWG black  -  up through plate 2's opening, screw terminal"),
+    ("run15a", (90, 85), "Wire 26  SW2 contact out (green)  to  S6", "to the tray: up the left slot, 3-port clip beside the Bauer"),
+    ("run15c", (80, 95), "Wire 27  SW2 LED (+) (red)  to  S6", "thin LED wire  -  same clip: live only when SW2 is on"),
+    ("run15b", (60, 100), "Wire 28  Bauer red lead  to  S6", "18 AWG orange  -  third wire in the 3-port clip"),
+    ("run16a", (60, 40), "Wire 29  Bauer black lead  to  splice S7", "18 AWG black  -  DOMAXWILL 2-port lever clip"),
+    ("run16b", (110, 40), "Wire 30  S7  to  (-) bus, port 1", "18 AWG black  -  WAGO 221-415 lever"),
 ]
 WIRE_SEC = 2.2               # time each run takes, script seconds
 W0 = 28.0                    # wiring starts
@@ -169,18 +171,6 @@ for i, (key, *_r) in enumerate(RUN_SEQ):
     mod.frame_start = S(W0 + i * WIRE_SEC)
     mod.frame_duration = GROW
 
-# ---- markers on the three joints the audit found with no clip (MEC-16 "To confirm"), in plate 2's frame
-mark = bpy.data.materials.new("open-point")
-mark.diffuse_color = (1.0, 0.1, 0.55, 1)
-for lx, ly, lz, key in ((247, 62, 29, "run13b"), (248.3, 84.8, 22.5, "run14a"), (248.3, 40.8, 22.5, "run14b")):
-    bpy.ops.mesh.primitive_uv_sphere_add(radius=4.5, location=(ly - 57.8, lx - 138.4, lz + 29.12))
-    m = bpy.context.active_object
-    m.data.materials.append(mark)
-    m.parent = hinge
-    m.matrix_parent_inverse = Matrix.Translation(-PIVOT)
-    i = [k for k, *_ in RUN_SEQ].index(key)
-    show(m, [(S(W0 + i * WIRE_SEC), FLIP[0])])
-
 # ---- the two crossing wires: tails while open, hanging while lowering, plugged when closed
 for o in meshes:
     if o.name.startswith("P1_drop-"):
@@ -255,7 +245,7 @@ white.diffuse_color = (0.95, 0.95, 0.95, 1)
 grey = bpy.data.materials.new("caption-detail")
 grey.diffuse_color = (0.72, 0.84, 1.0, 1)
 CAPTIONS = [((0, 3), "Plate 2 upside down beside the chassis", "pack and driver already on plate 1; the two buses, fuses and splices come from the BOM"),
-            ((3.0, 4.4), "1  Both WAGO 221-415 buses, levers down", "(+) bus uses 3 of 5 ports, (-) bus all 5 - the star ground (HW-06)"),
+            ((3.0, 4.4), "1  Both WAGO 221-415 buses, levers down", "(+) bus uses 2 of 5 ports, (-) bus 4 of 5 - the star ground (HW-06)"),
             ((4.4, 5.6), "2  Main fuse holder, 7.5 A", "flat on the face, lid to the side, 3M foam tape"),
             ((5.6, 6.8), "3  Motor fuse holder, 5 A", "its leads reach the driver's splice"),
             ((6.8, 8.2), "4  UBEC fuse holder, 5 A", "lid to the left side"),
@@ -266,13 +256,15 @@ CAPTIONS = [((0, 3), "Plate 2 upside down beside the chassis", "pack and driver 
             ((13.4, 14.2), "9  Splice S2: motor fuse to the driver's VM (+)", "DOMAXWILL 2-port lever clip"),
             ((14.2, 15.2), "10  Splice S4: driver VM (-)", "stacked under S2"),
             ((15.2, 16.0), "11  Splice S3: UBEC fuse to the UBEC (+) input", "DOMAXWILL 2-port lever clip"),
-            ((16.0, 20.5), "12  Splice S5: UBEC (-) input", "S6 and S7 for the Bauer already sit on the carrier tray (MEC-17), above plate 2"),
-            ((20.5, 23.5), "13  The lower rear panel, with SW1 and SW2, held to plate 2", "a temporary M3 x 8 into each captive nut (MEC-07)"),
-            ((23.5, W0), "14  Wire the whole harness on the bench", "28 runs; each one is followed by a clip, a terminal or a tab"),
-            ((T_FLIP - 0.5, T_FLIP + 7), "15  Flip plate 2 and the panel over", "nothing crosses the decks yet except the two plugs"),
-            ((T_FLIP + 7, T_PLUGS), "16  Lower onto the standoffs", "check nothing is pinched against the pack"),
-            ((T_PLUGS, T_DECK3), "17  From the right side: driver VM plug, fuses in, SM-2P last", "the battery connector is the disconnect (HW-08)"),
-            ((T_DECK3, T_DECK3 + 13), "18  Plate 3 and the upper panel close the stack", "MEC-16")]
+            ((16.0, 16.8), "12  Splice S5: a DOMAXWILL 5-port clip", "UBEC (-), the run to the (-) bus, and both switch LED returns; S3 hangs under it"),
+            ((16.8, 17.6), "13  Splice S8: a 3-port clip toward the rear", "one (+) bus port feeds both switches"),
+            ((17.6, 20.5), "14  Splice S9: a 3-port clip beside the SW1 split", "S6 (3-port) and S7 for the Bauer already sit on the carrier tray (MEC-17)"),
+            ((20.5, 23.5), "15  The lower rear panel, with SW1 and SW2, held to plate 2", "a temporary M3 x 8 into each captive nut (MEC-07)"),
+            ((23.5, W0), "16  Wire the whole harness on the bench", "30 runs; each one ends in a clip, a terminal or a plug - no wire is joined to another without one"),
+            ((T_FLIP - 0.5, T_FLIP + 7), "17  Flip plate 2 and the panel over", "nothing crosses the decks yet except the two plugs"),
+            ((T_FLIP + 7, T_PLUGS), "18  Lower onto the standoffs", "check nothing is pinched against the pack"),
+            ((T_PLUGS, T_DECK3), "19  From the right side: driver VM plug, fuses in, SM-2P last", "the battery connector is the disconnect (HW-08)"),
+            ((T_DECK3, T_DECK3 + 13), "20  Plate 3 and the upper panel close the stack", "MEC-16")]
 CAPTIONS += [((W0 + i * WIRE_SEC, W0 + (i + 1) * WIRE_SEC), l1, l2) for i, (_k, _xy, l1, l2) in enumerate(RUN_SEQ)]
 band_mat = bpy.data.materials.new("caption-band")
 band_mat.diffuse_color = (0.02, 0.02, 0.03, 0.88)
