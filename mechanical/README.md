@@ -18,6 +18,7 @@ The scripts find everything relative to themselves, so they run from any directo
 | [`cad/fascia-lower.stl`](cad/fascia-lower.stl) | 1.3 MB | Print file - lower panel, 124.2 × 18.9 × **52** mm, 19.6 cm³ (~25 g in PETG) |
 | [`cad/fascia-upper.stl`](cad/fascia-upper.stl) | 2.2 MB | Print file - upper panel, 124.2 × 18.9 × **42** mm, 16.7 cm³ (~21 g in PETG) |
 | [`cad/carrier-tray.scad`](cad/carrier-tray.scad) | 11 kB | ***Proposed* carrier tray** (MEC-17): one plate under boards A, B and C and the Bauer converter, in two steps - the boards placed on the tray in its own frame, then the tray placed on plate 2 by one `PLACE` offset. It copies the plate-2 holes under it and bolts down at six of them with nut pockets; the Bauer is screwed to it through its own two holes. `PART="tray"` → [`cad/carrier-tray.stl`](cad/carrier-tray.stl) to print; `PART="template"` → a 1:1 SVG with a 50 mm check bar (the hand-cut fallback); `PART="step1"` / `"step2"` → the two placement views in `renders/`. Output is mirrored once from the layout frame into the real world |
+| [`cad/compute-tray.scad`](cad/compute-tray.scad) | 5 kB | ***Proposed* compute tray** (MEC-18): one plate on plate 3 under the FRDM (at its MEC-11 place) and the Raspberry Pi 5 ahead of it, turned so its ports face the nose. FRDM fixed by its own four screws from below; Pi on four bosses with captive nuts; the pad bolted down at four M3 holes. `PART="tray"` -> [`cad/compute-tray.stl`](cad/compute-tray.stl) to print; `PART="plan"` -> a ghosted preview |
 | [`cad/carrier-tray-hand-template.pdf`](cad/carrier-tray-hand-template.pdf) | 61 kB | **Print-ready template for the hand-made tray** (MEC-17): A4 landscape, 1:1, print at 100 % and check the 100 mm bar. Written from `scripts/carrier-tray-hand.py`; regenerate it when the script changes |
 | **Hiwonder** · *Ackermann Chassis (Single Layer)* `.3dm` | 186 MB | Hiwonder's own CAD, untouched. **Not in the repository** - it is theirs, not ours to redistribute, and it has to be fetched by hand on a fresh clone. Every chassis number in the project is measured from this, not from photos - see [`../bom/parts/2.1-Hiwonder-Ackermann-Chassis/SPECS.md`](../bom/parts/2.1-Hiwonder-Ackermann-Chassis/SPECS.md). It is the **single-plate** version |
 | `cad/chassis-3deck-fascia.obj` | 65 MB | Whole-vehicle mock-up: Hiwonder's chassis + our deck 3 + the current panels. **Untracked, and a seed rather than output** - `make-assembly.py` reads it and rewrites it in place, so it cannot be rebuilt from this repository alone. It began as a Rhino export of the `.3dm`. Keep a local backup |
@@ -38,6 +39,7 @@ cd cad
 openscad -D 'PART="lower"' -o fascia-lower.stl fascia.scad
 openscad -D 'PART="upper"' -o fascia-upper.stl fascia.scad
 openscad -D 'PART="tray"'     -o carrier-tray.stl          carrier-tray.scad
+openscad -D 'PART="tray"'     -o compute-tray.stl          compute-tray.scad
 openscad -D 'PART="step1"' --camera=0,0,0,0,0,0,300 --projection=o --autocenter --viewall -o ../renders/tray-step1.png carrier-tray.scad   # and step2
 cd ..
 python3 scripts/plate1.py
@@ -96,6 +98,7 @@ ships two standoff lengths. So the panels are different parts and are **not** in
 | **MEC-09** | The measured gaps, and the panels being different parts |
 | **MEC-13** | The ports mounted from behind in pockets, in two horizontal rows; the USB-C grip limit; the upper panel's vents |
 | **MEC-14** | The switch holes (⌀22.4) and what the switch drawing settles |
+| **MEC-18** | *Proposed:* the compute tray on plate 3 - FRDM and Raspberry Pi 5 |
 
 ## Caveats worth knowing before you trust this geometry
 

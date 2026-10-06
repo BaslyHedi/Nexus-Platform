@@ -25,6 +25,7 @@ Drawings: [chassis layout](../hardware/renders/chassis-layout.svg). Geometry and
 | **MEC-15** | The carrier is two kit boards joined by the Discovery, not one board |
 | **MEC-16** | Plate 2's lower face is the harness board - plate 1 carries only the battery and the driver |
 | **MEC-17** | *Proposed:* one tray carries boards A, B and C and bolts to plate 2 |
+| **MEC-18** | *Proposed:* one tray on plate 3 carries the FRDM and the Raspberry Pi 5 |
 
 ---
 
@@ -1364,3 +1365,40 @@ which is why the second lane is the mirror of the first. The tray has a wing for
 - **The M3 nut's real depth and across-flats** (assumed 2.4 and 5.5 mm), before printing the Bauer's two pockets.
 - **Print or sheet.** The model serves both.
 
+---
+
+## MEC-18 · *Proposed:* one tray on plate 3 carries the FRDM and the Raspberry Pi 5
+
+**Status (2026-10-06): proposed, modelled, not printed.** Source: [`../mechanical/cad/compute-tray.scad`](../mechanical/cad/compute-tray.scad) -> `compute-tray.stl`.
+Made with Hedi the day the carrier tray (MEC-17) went to Craftcloud. Same pattern: PETG, 4 mm, flat, no supports.
+
+**Decision.** A single printed tray on **plate 3's top face** carries both compute boards. It follows MEC-12 (FRDM on plate 3) and MEC-11
+(the FRDM's place), and gives the Pi 5, a later-phase part (BOM 6.1), a place that does not move the FRDM.
+
+**The FRDM end.** Where MEC-11 put it: x 95.74-200.74, y 20.26-85.26. It keeps its **four M2.5 screws from below**, up through plate 3's M3 grid holes,
+now also through the tray, into the standoffs on the board. Those four screws clamp the FRDM end of the tray; nothing else is needed there. Two of the
+board's six holes stay unused, as in MEC-11. The tray lifts the board 4 mm, so the screws want to be **M2.5 x 10, not x 6** (BOM 3.26).
+
+**The Pi end.** The Pi is 85 x 56 on a 58 x 49 pattern, M2.5, holes 3.5 mm in from the edges. It goes **ahead of the FRDM**, x 6-91, centred on the plate (y 32.25-88.25):
+the only free plate-3 area that holds it. It is **turned so its Ethernet / USB edge faces the nose**; the other way round, that edge would end 4.7 mm from the FRDM and
+nothing could be plugged in. Four printed bosses, 5 mm tall, carry it. Each has a hex pocket **open on top** for an M2.5 nut: the nut drops in, the Pi goes on and covers it,
+one M2.5 x 6 from above per corner. Turned that way the GPIO header is on the vehicle's left and the USB-C / micro-HDMI edge on its right.
+
+**The pad on plate 3.** The Pi's holes land on no plate hole (the nearest pair, (49, 35.94) and (49, 84.53), is 0.4 mm out in y but 23 mm from the Pi's x), so the pad is held down by
+**four M3 screws from below** at plate 3's M3 holes (17.82 / 45.82, 53.24 / 67.24), each into a nut pocket flush in the tray's top, M3 x 8. A 28 x 14 rectangle, so the pad cannot rock. The two pads are
+joined by a 36 mm bridge. The tray is 195 x 69 mm and fits plate 3 with at least 3.3 mm to its outline.
+
+**Checked (2026-10-06, against `hardware/scripts/chassis-layout.py`).** All eight fixings land within 0.01 mm of a plate-3 M3 hole. The tray's corners and the bridge are inside the plate outline. The tray is one solid, z 0-9 mm.
+The two chassis standoffs at (27.35, 22.17) and (27.35, 98.36) are 10.1 mm clear of the Pi pad.
+
+**The window.** Plate 3's wire opening (x 110.3-133.0, y 42.5-77.9) is cut through the FRDM pad, so a cable can still come up there. Plate 3's large slot (x 161-176, y 30-90) is
+**not** copied: it would cut the pad in two.
+
+**Open, before printing.**
+
+- **The FRDM's standoff length** (MEC-11 "to confirm"). It sets the microSD clearance under the board, now 4 mm higher.
+- **Where the FRDM's microSD socket and its J1 / J11 plugs sit.** No window is cut for them yet.
+- **The Pi 5's microSD.** Its socket is on the underside at the end that now faces the FRDM (4.7 mm away); the card leaves toward the FRDM. Plan on USB or NVMe boot, or move the Pi forward and cut a notch.
+- **Whether a plug on the Pi's nose edge is wanted over the nose.** The ports stand ~25 mm clear of the plate's front; there is no bumper yet.
+- **Standoffs for the Pi.** None in the BOM; the bosses replace them, so no M2.5 standoffs are needed, only nuts and screws.
+- **A HAT on the Pi's GPIO header (BOM 6.2)** has not been checked against the plate's left edge or the fascia panel.
