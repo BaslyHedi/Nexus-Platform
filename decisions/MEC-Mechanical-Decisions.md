@@ -1258,7 +1258,7 @@ standoffs already fitted. Only the tray is screwed to plate 2.
 
 | | Best | Cheap |
 |---|---|---|
-| How | printed PETG, 4 mm, ~15 € | 3 mm plastic sheet (PVC foam, ABS or polycarbonate; not acrylic, MEC-02), cut and drilled by hand |
+| How | printed PETG, 4 mm, ~25 € (Craftcloud quote) | 3 mm plastic sheet (PVC foam, ABS or polycarbonate; not acrylic, MEC-02), cut and drilled by hand |
 | File | `carrier-tray.stl` | a 1:1 A4 template from [`carrier-tray-hand.py`](../mechanical/scripts/carrier-tray-hand.py), printed and taped to the sheet; a 100 mm bar checks the print scale. See "The hand-made tray" below |
 | Board screws | from below into the standoffs, in printed counterbores, so the tray sits flat | from below; the heads lift the sheet ~1.8 mm, accepted |
 | Board height | 4 + 8 mm standoffs = 12 mm | 3 + 1.8 + 8 = 12.8 mm |
