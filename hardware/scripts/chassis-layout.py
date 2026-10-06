@@ -217,7 +217,7 @@ SPLICES = [('S6', 42.0, 96.0), ('S7', 42.0, 11.5)]
 
 # the Bauer 50 W (BOM 3.4a, seller's drawing): body 64 x 57, corners cut 8 x 6.5; its two mounting holes are 5 mm in from each end and
 # 26 mm from the edge the four leads leave by (here y 89, the vehicle's left), 54 mm apart
-BAUER = (11.0, 32.0, 64.0, 57.0)
+BAUER = (11.0, 28.5, 64.0, 64.5)      # x, y, along x, across: the side walls stand outside the 57 mm base (photo, 2026-10-06; MEC-17)
 BAUER_LEADS = [(38.0, '#eab308'), (42.0, '#111827'), (46.0, '#111827'), (50.0, '#dc2626')]   # x on the leads edge: OUT+, OUT-, IN-, IN+
 BAUER_HOLES = [(16.0, 63.0), (70.0, 63.0)]
 
@@ -257,13 +257,13 @@ def carrier_and_bauer():
     # the Bauer on the tray, with its leads edge on the vehicle's left
     w(outline(P2, bauer_outline(*BAUER), fill='#fff1f2', stroke='#be123c', stroke_width=1.4))
     w(text(P2, 43, 47.06, 'BAUER 50 W', font_size=9, font_weight=700, fill='#be123c', text_anchor='middle'))
-    w(text(P2, 43, 52.94, '64 x 57 x 22', font_size=7, fill='#be123c', text_anchor='middle'))
+    w(text(P2, 43, 52.94, '64 x 64.5 x 22', font_size=7, fill='#be123c', text_anchor='middle'))
     w(text(P2, 43, 72, 'M3 through its own 2 holes', font_size=7, fill='#be123c', text_anchor='middle'))
     for x, y in BAUER_HOLES:
         w(circle(P2, x, y, 5.8, fill='none', stroke='#be123c', stroke_width=1.6) + circle(P2, x, y, 1.6, fill='#be123c'))
     for x, colour in BAUER_LEADS:
-        w(line(P2, x, 89, x, 93, stroke=colour, stroke_width=2))
-    w(text(P2, 43, 85, 'leads edge ▼', font_size=6, fill='#be123c', text_anchor='middle'))
+        w(line(P2, x, 93, x, 97, stroke=colour, stroke_width=2))
+    w(text(P2, 43, 89, 'leads wall ▼', font_size=6, fill='#be123c', text_anchor='middle'))
     w(text(P2, 104, 12, 'carrier tray', font_size=7, font_weight=700, fill='#0f766e', text_anchor='middle'))
     for name, x, y in SPLICES:
         w(rect(P2, x, y, 18.6, 13, rx=1.5, fill='#fed7aa', stroke='#c2410c', stroke_width=1.2) + text(P2, x + 9.3, y + 8.2, name, font_size=7, font_weight=700, fill='#c2410c', text_anchor='middle'))

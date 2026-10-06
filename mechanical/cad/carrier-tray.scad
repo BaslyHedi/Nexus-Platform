@@ -107,15 +107,14 @@ PLATE_SLOTS = [ [[168.5, 37.7], [168.5, 82.9], 7.3], [[61.35, 32.09], [74.89, 32
 // copies of the plate's holes at those two places are dropped from PLATE_HOLES: the notch replaces them.
 CHASSIS_STANDOFFS = [[27.35, 22.17], [27.35, 98.36]];       // from the chassis layout: x, y in the plate-2 frame
 STANDOFF_CLEAR_D  = 9.0;
-// the Bauer 50 W converter: body 64 x 57 x 22 mm (BOM 3.4a), where plate1.py parks it: x 20-84, y 32-89 (BAUER below says where it goes now).
+// the Bauer 50 W converter: base 64 x 57 x 22 mm (BOM 3.4a), the body about 64 x 64.5 with its side walls; plate1.py still parks it at x 20-84, y 32-89 (BAUER below says where it goes now).
 // Its drawing (the seller's, 2026-10-05; the drawing calls them ears): two 6.8 mm holes INSIDE the outline, 5 mm in from each end, 54 mm apart,
-// 26 mm from one long edge. The photo (2026-10-05) shows that is the edge the four leads leave from, through the middle of the
-// plateau. That edge is put on the vehicle's LEFT (y 89), facing board C's 5 V terminals, with a 12 mm lane beside it.
+// 26 mm from one long edge of the base (30 from the wall). The photo (2026-10-05) shows that is the edge the four leads leave from, through the middle of the
+// plateau. That edge is put on the vehicle's LEFT (wall at y 93), facing board C's 5 V terminals, with a 3 mm lane to the S6 splice.
 // They take M3 screws from above into nuts held in the tray: one pocket under each hole.
-BAUER = [11.0, 75.0, 28.5, 93.0];     // from Hedi's photo on 5 mm paper (2026-10-06): the side walls stand 3.5-4 mm outside the 57 mm base, so ~64.5 wide, leads wall at y 93, not 89.
+BAUER = [11.0, 75.0, 28.5, 93.0];     // 9 mm ahead of where plate1.py parks it: 10.5 mm between its rear end and board C, for the leads and the 5 V cable. From Hedi's photo on 5 mm paper (2026-10-06): the side walls stand 3.5-4 mm outside the 57 mm base, so ~64.5 wide, leads wall at y 93, not 89.
                                       // Its fin tips reach ~5 mm further than the tabs at the FRONT end (x ~6). Holes unchanged: measured 54 mm apart, ~5 mm from each tab end.
-                                      // for the leads and the 5 V cable to board C
-BAUER_HOLES = [[16.0, 63.0, 3.2], [70.0, 63.0, 3.2]];   // x, y, hole: 54 apart, 5 from each tab end; 30 from the leads wall (the drawing's 26 is to the base)
+                                      BAUER_HOLES = [[16.0, 63.0, 3.2], [70.0, 63.0, 3.2]];   // x, y, hole: 54 apart, 5 from each tab end; 30 from the leads wall (the drawing's 26 is to the base)
 BAUER_NUT_AF = 5.9; BAUER_NUT_DEPTH = 2.6;            // M3 nut, 5.5 across flats and 2.4 thick, as a printing fit
 // the plate's wire opening, x 110.3-133.0, y 42.5-77.9, a stadium of radius 11.35
 PLATE_OPENING = [[121.65, 53.85], [121.65, 66.55], 11.35];

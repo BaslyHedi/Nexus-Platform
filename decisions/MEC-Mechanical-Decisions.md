@@ -1178,17 +1178,17 @@ from the edge the leads leave by, a raised central plateau with three ridges, tw
 grommet in the middle of that long edge. (This record had taken the holes for ears outside the body;
 the BOM's "54 mm matches no chassis rectangle" no longer matters.)
 
-- **Where it sits:** x 11-75, y 32-89, 9 mm ahead of where `plate1.py` parks it, with its **leads edge on
-  the vehicle's left** (y 89), the side board C's 5 V terminals face. **Cable room:** a lane of tray beside
-  that edge (5 mm clear before the S6 splice, wider where the plate allows), 10.5 mm behind the Bauer before
+- **Where it sits:** x 11-75, y 28.5-93 (the body with its side walls, 2026-10-06; 32-89 was the base alone), 9 mm ahead of where `plate1.py` parks it, with its **leads wall on
+  the vehicle's left** (y 93), the side board C's 5 V terminals face. **Cable room:** a lane of tray beside
+  that wall (3 mm clear before the S6 splice, 4 mm on the right before S7), 10.5 mm behind the Bauer before
   board C, and a mirror lane on the right. The two output leads (yellow, black) run along the left lane and the
-  rear lane to C's IN terminal. The rim has legs at the corners only, so nothing closes the lanes. The S6 / S7
+  rear lane to C's IN terminal. Nothing closes the lanes (the rim is gone). The S6 / S7
   splices and their wiring are under "Where the splices go" below.
 - **Holding it:** two M3 x 8 screws from above through its holes into M3 nuts held in hex pockets in the
   tray (E1 at (16, 63), E2 at (70, 63)) (the rim of four corner legs that located it is removed, see "Fit review before ordering", item 6).
 - **Held to the plate** by T1 (24.82, 60.24) and T2 (52.82, 60.24), two of the plate's M3 holes under the Bauer.
 - **Cable passages:** the plate's two slots beside the Bauer (x 56-80, y 27-37 and 83-93) are open in the
-  tray too, so cables can drop to the harness board below, and these are the wires to the splices. The window
+  tray too, but the Bauer's body (to x 75) covers all except their last 5 mm (x 75-80); the wires to the splices come up there. The window
   by C is left for the 6 V pair and the driver's I2C lead.
 
 **The tray has the plate's holes.** Every plate-2 hole wholly under the tray is copied at the plate's
@@ -1212,7 +1212,7 @@ its boards would be in the way while plate 2 lies upside down (MEC-16).
 
 1. At the bench, with the tray on three posts clear of every screw: a nut pressed into each of the eight
    pockets (six M2.5, two M3).
-2. The Bauer into its rim, two M3 screws through its holes. Boards C, then A and B, lowered onto the
+2. The Bauer onto the tray, two M3 screws with 9 mm washers through its holes. Boards C, then A and B, lowered onto the
    tray, their nylon standoffs on the tray's board holes.
 3. Twelve M2.5 screws from below into the standoffs.
 4. The S6 and S7 splices into their outlines, either side of the Bauer.
