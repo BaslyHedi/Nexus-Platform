@@ -1156,7 +1156,7 @@ return - goes up through it, between the buses. The rearward runs lie flat on pl
 
 ## MEC-17 · *Proposed:* one tray carries boards A, B and C and bolts to plate 2
 
-**Status (2026-10-06): fit-reviewed for a single print; see "Fit review before ordering".** Proposed 2026-10-05. A brainstorm with Hedi, modelled so it can be
+**Status (2026-10-06): fit-reviewed for a single print; see "Fit review before ordering". Ordered 2026-10-06 (BOM 3.28), nothing printed yet.** Proposed 2026-10-05. A brainstorm with Hedi, modelled so it can be
 judged. Source: [`../mechanical/cad/carrier-tray.scad`](../mechanical/cad/carrier-tray.scad).
 **Recommendation: print it** (PETG, 4 mm), for the reasons in "Two ways to make it" below.
 
@@ -1374,9 +1374,9 @@ which is why the second lane is the mirror of the first. The tray has a wing for
 
 ## MEC-18 · One wide tray on plate 3 - a spare nose, the Pi 5, a plug gap, the FRDM, all turned across
 
-**Status (2026-10-06): final for the print order, with the checks below accepted.** Source: [`../mechanical/cad/compute-tray.scad`](../mechanical/cad/compute-tray.scad) -> `compute-tray.stl`;
+**Status (2026-10-06): ordered 2026-10-06 (BOM 3.28), with the checks below accepted; nothing printed or dry-fitted yet.** Source: [`../mechanical/cad/compute-tray.scad`](../mechanical/cad/compute-tray.scad) -> `compute-tray.stl`;
 the renders come from [`../mechanical/cad/compute-tray-preview.scad`](../mechanical/cad/compute-tray-preview.scad) (plate 3's data is exported from the layout drawing by
-[`../mechanical/scripts/plate3-data.py`](../mechanical/scripts/plate3-data.py)). To be ordered **together with the carrier tray (MEC-17)**: a print service charges less for one order with everything than for two.
+[`../mechanical/scripts/plate3-data.py`](../mechanical/scripts/plate3-data.py)). Ordered **together with the carrier tray (MEC-17) and the rear pad (MEC-19)** in one Craftcloud order (#516727254320): a print service charges less for one order with everything than for two.
 PETG, 4 mm, flat, no supports, **236.6 x 108.0 x 4 mm** (needs a bed of 240 mm or more). It follows MEC-12 (the FRDM on plate 3).
 
 **History of the layout (all 2026-10-06, all in git).** First the FRDM at MEC-11's place with the Pi in the nose; then a spare nose with the FRDM along the vehicle (rejected: its USB plugs need about 25 mm behind the board and the Pi pad
@@ -1426,7 +1426,7 @@ Nothing has been printed or dry-fitted; the carrier tray's fit review (MEC-17) i
 
 ## MEC-19 · A separate pad spread over plate 2's rear
 
-**Status (2026-10-06): proposed with Hedi, modelled, checked against the plate data, not printed.** Source: [`../mechanical/cad/plate2-rear-pad.scad`](../mechanical/cad/plate2-rear-pad.scad) -> `plate2-rear-pad.stl`.
+**Status (2026-10-06): ordered 2026-10-06 (BOM 3.28); modelled, checked against the plate data, not printed.** Source: [`../mechanical/cad/plate2-rear-pad.scad`](../mechanical/cad/plate2-rear-pad.scad) -> `plate2-rear-pad.stl`.
 A third part in the same print order as the carrier tray (MEC-17) and the compute tray (MEC-18). PETG, 4 mm, flat. **55 x 96 x 4 mm.**
 
 **Why a separate part, not a longer carrier tray.** Hedi asked whether the carrier tray should reach plate 2's rear. It should not: the carrier tray in the cart was already fit-reviewed (MEC-17), and a longer one meant a new STL, a new review and

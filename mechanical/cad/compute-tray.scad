@@ -3,7 +3,7 @@
 //   openscad -D 'PART="tray"' -o compute-tray.stl compute-tray.scad     // to print
 //   compute-tray-preview.scad draws it with the boards, plate 3 and the screws (the renders)
 //
-// STATUS 2026-10-06: PROPOSED, not printed, not ordered. Read "TO MEASURE" before ordering.
+// STATUS 2026-10-06: ORDERED (Craftcloud #516727254320, BOM 3.28), not printed or dry-fitted yet. "TO MEASURE" below is still worth doing on the real boards.
 //
 // FRAME. Plate 3's own: x from the front of the vehicle to the rear, y from the vehicle's RIGHT edge to its LEFT, mm
 // (the layout frame of MEC-11 / MEC-15 / hardware/scripts/chassis-layout.py). With z up it is a mirror image of the real

@@ -131,7 +131,7 @@ def plate3_heading():
     o = []
     w = o.append
     w(text(PX, 60, 110, 'UPPER DECK - plate 3', font_size=13, font_weight=700, fill='#1a1a1a'))
-    w(text(PX, 60, 124, 'top face z 123.12 · FINAL 2026-10-06 · compute tray (MEC-18): FRDM-IMX91S, Pi 5 later, spare pad', font_size=9.5, fill='#64748b'))
+    w(text(PX, 60, 124, 'top face z 123.12 · ORDERED 2026-10-06 · compute tray (MEC-18): FRDM-IMX91S, Pi 5 later, spare pad', font_size=9.5, fill='#64748b'))
     return o
 
 
@@ -140,7 +140,7 @@ def plate2_heading():
     o = []
     w = o.append
     w(text(PX, 60, 368, 'MIDDLE DECK - plate 2, TOP FACE', font_size=13, font_weight=700, fill='#1a1a1a'))
-    w(text(PX, 60, 382, 'top face z 81.12 · FINAL 2026-10-06 · carrier tray (MEC-17): boards A, B, C and the Bauer; rear pad (MEC-19)', font_size=9.5, fill='#64748b'))
+    w(text(PX, 60, 382, 'top face z 81.12 · ORDERED 2026-10-06 · carrier tray (MEC-17): boards A, B, C, the Bauer; rear pad (MEC-19)', font_size=9.5, fill='#64748b'))
     return o
 
 
@@ -182,7 +182,7 @@ def frdm():
     w(text(P3, 56.0, 66.0, '(drill)', font_size=7.5, fill='#64748b', text_anchor='middle'))
     w(text(P3, 167.0, 62.0, 'plug gap', font_size=7.5, fill='#0f766e', text_anchor='middle'))
     # the notes under the plate: the tray at the left, the fascia clamps at the right, on one row
-    w(text(PX, 60, 346, 'compute tray (MEC-18, final) · U1-U14 screw up from below', font_size=7.8, fill='#0f766e', text_anchor='start'))
+    w(text(PX, 60, 346, 'compute tray (MEC-18, ordered) · U1-U14 screw up from below', font_size=7.8, fill='#0f766e', text_anchor='start'))
     w(text(PX, 585, 346, 'purple: fascia panel clamps (MEC-07)', font_size=7.8, fill='#7c3aed', text_anchor='end'))
     return o
 
@@ -363,11 +363,14 @@ def carrier_and_bauer():
 
 
 def tray_heads():
-    """The tray's six screw heads under plate 2, seen from below (they sit among the taped parts, MEC-17)."""
+    """The carrier tray's six screw heads and the rear pad's six under plate 2, seen from below (the first sit among the taped parts, MEC-17)."""
     o = []
     for name, x, y in FIXINGS:
         o.append(circle(PB, x, y, 3.9, fill='#ffffff', stroke='#4338ca', stroke_width=1.6) + circle(PB, x, y, 1.4, fill='#4338ca')
                  + text(PB, x + 3.4, y + 2.4, name, font_size=6, font_weight=700, fill='#4338ca', text_anchor='start'))
+    for name, x, y, d in REAR_FIX:                       # the rear pad's six (MEC-19): clear of the taped parts, which stop at x 202
+        o.append(circle(PB, x, y, 3.9, fill='#ffffff', stroke='#0f766e', stroke_width=1.6) + circle(PB, x, y, 1.4, fill='#0f766e')
+                 + text(PB, x + 3.4, y + 2.4, name, font_size=6, font_weight=700, fill='#0f766e', text_anchor='start'))
     return o
 
 
@@ -563,9 +566,36 @@ def stack_elevation():
     w(text(PX, 908, Z2 + 4.7 + 117.5 + 5.7, 'plate 1  z 27.12–29.12', font_size=9, font_weight=700, fill='#334155'))
     w(rect(PX, 600, Z3 + 4.7, 300, 94.0, fill='#f8fafc', stroke='#cbd5e1', stroke_dasharray='4 3'))
     w(rect(PX, 600, Z2 + 4.7, 300, 117.5, fill='#f8fafc', stroke='#cbd5e1', stroke_dasharray='4 3'))
-    w(text(PX, 750, Z2 + 4.7 + 90, 'LOWER GAP 50 mm - measured', font_size=8.5, font_weight=700, fill='#334155', text_anchor='middle'))
-    w(text(PX, 750, Z2 + 4.7 + 103, 'fascia lower panel, 52 mm tall: DRIVE / LOGIC switches', font_size=8, fill='#64748b', text_anchor='middle'))
+    w(text(PX, 908, Z2 + 4.7 + 50, 'LOWER GAP 50 mm - measured', font_size=8.5, font_weight=700, fill='#334155'))
+    w(text(PX, 908, Z2 + 4.7 + 62, 'fascia lower panel, 52 mm tall:', font_size=8, fill='#64748b'))
+    w(text(PX, 908, Z2 + 4.7 + 73, 'DRIVE / LOGIC switches', font_size=8, fill='#64748b'))
+    w(text(PX, 908, Z3 + 4.7 + 38, 'UPPER GAP 40 mm - measured', font_size=8.5, font_weight=700, fill='#334155'))
+    w(text(PX, 908, Z3 + 4.7 + 50, 'fascia upper panel, 42 mm tall:', font_size=8, fill='#64748b'))
+    w(text(PX, 908, Z3 + 4.7 + 61, 'USB-C · DE-9 · Mini-B', font_size=8, fill='#64748b'))
     w(text(PX, 600, Z2 + 4.7 + 117.5 + 24, 'below plate 1: running gear, wheels, ground clearance - nothing mounted', font_size=8.5, fill='#64748b'))
+    # the lower gap (plate 1 to plate 2): what stands on plate 1 and what hangs from plate 2's lower face. Heights from mechanical/scripts/plate1.py
+    # (MEC-16, nominal), added to plate 1's top face z 29.12; the servo and the linkage are estimates (no height is recorded)
+    P1T = 29.12
+    w(bx(266.9, 269.9, 29.12, 79.12, fill='#e0e7ff', stroke='#818cf8', stroke_width=0.8))                    # the fascia lower panel's wall
+    w(bx(19.3, 48.1, P1T, P1T + 40.0, fill='#fff7ed', stroke='#c2410c', stroke_width=1, stroke_dasharray='4 2'))     # steering servo, height estimated
+    w(bx(46.9, 68.2, P1T, P1T + 20.0, fill='#e2e8f0', stroke='#64748b', stroke_width=0.8, stroke_dasharray='3 2'))   # steering linkage, height estimated
+    w(bx(85, 162, P1T, P1T + 3, fill='#d1d5db', stroke='#6b7280', stroke_width=0.6))                                 # felt pad
+    w(bx(85, 162, P1T + 3, P1T + 24, fill='#dbeafe', stroke='#2563eb', stroke_width=1))                              # 3S pack, 21 mm
+    for x in (172.8, 205.2):
+        w(bx(x - 3, x + 3, P1T, P1T + 6, fill='#cbd5e1', stroke='#64748b', stroke_width=0.5))                       # driver spacers, 6 mm
+    w(bx(168, 210, P1T + 6, P1T + 7.6, fill='#e9d5ff', stroke='#7e22ce', stroke_width=1))                           # driver PCB
+    w(bx(171, 200, P1T + 7.6, P1T + 16, fill='#d1d5db', stroke='#6b7280', stroke_width=0.8))                         # driver parts
+    w(bx(203.2, 240.1, 33.0, 69.9, fill='#e0e7ff', stroke='#4338ca', stroke_width=1))                                # the two rear motors, ⌀37
+    w(bx(248.3, 270.3, P1T + 25 - 10, P1T + 25 + 10, fill='#f1f5f9', stroke='#475569', stroke_width=1))               # SW1 / SW2 bodies
+    for x0, x1, h, fillc, strokec in [(88, 106.6, 8.5, '#fecaca', '#dc2626'), (134, 152.6, 8.5, '#e2e8f0', '#334155'), (96, 146, 15, '#fed7aa', '#c2410c'),
+                                       (152, 202, 15, '#fde68a', '#a16207'), (108, 134, 11.6, '#a5f3fc', '#0e7490'), (100, 135, 5, '#fef08a', '#a16207'), (178, 196.6, 8.5, '#fed7aa', '#c2410c')]:
+        w(bx(x0, x1, 78.12 - h, 78.12, fill=fillc, stroke=strokec, stroke_width=0.8, fill_opacity=0.55))             # the harness board's parts, taped under plate 2
+    w(text(PX, xp(24), zy(P1T + 40) - 4, 'servo (est.)', font_size=7, fill='#c2410c'))
+    w(text(PX, xp(123.5), zy(P1T + 12) + 3, '3S pack 21 mm', font_size=7, fill='#2563eb', text_anchor='middle'))
+    w(text(PX, xp(180), zy(P1T + 16) - 4, 'driver 10 mm', font_size=7, fill='#7e22ce', text_anchor='middle'))
+    w(text(PX, xp(221.7), zy(51.45) + 2, 'motors ⌀37', font_size=7, fill='#4338ca', text_anchor='middle'))
+    w(text(PX, xp(259), zy(P1T + 25) + 2, 'SW1 SW2', font_size=6.5, fill='#475569', text_anchor='middle'))
+    w(text(PX, xp(88), zy(57.5), 'harness taped under plate 2 (MEC-16)', font_size=7, fill='#be185d'))
     # the fascia upper panel's wall, at the rear
     w(bx(266.9, 269.9, 79.12, 121.12, fill='#e0e7ff', stroke='#818cf8', stroke_width=0.8))
     # plate 3: the compute tray (4 mm), the FRDM on 6 mm standoffs, the Pi 5 on 8 mm standoffs (a later phase), the screw heads under the plate
@@ -594,7 +624,7 @@ def stack_elevation():
     w(text(PX, xp(11), zy(107.12) - 4, 'Bauer 22 mm', font_size=7.5, fill='#be123c'))
     w(text(PX, xp(100), zy(111) - 4, 'Discovery top z 111: 7.6 mm under the screw heads', font_size=7.5, fill='#4338ca'))
     w(text(PX, xp(236), zy(85.12) - 4, 'rear pad', font_size=7.5, fill='#0f766e', text_anchor='middle'))
-    w(text(PX, xp(8.5), zy(81.12) + 14, 'carrier tray 4 mm (MEC-17)', font_size=7.5, fill='#0f766e'))
+    w(text(PX, xp(8.5), zy(81.12) + 11, 'carrier tray (MEC-17)', font_size=7, fill='#0f766e'))
     return o
 
 
@@ -609,7 +639,8 @@ def run_table():
     w(text(PX, 600, 512, 'Measured on the built kit: 50 mm below, 40 mm above. The kit ships two standoff lengths; the', font_size=9, fill='#475569'))
     w(text(PX, 600, 525, 'single-plate CAD only ever had the 50 and our 3-deck model repeated it for both gaps. The fascia', font_size=9, fill='#475569'))
     w(text(PX, 600, 538, 'panels are therefore 52 and 42 mm tall and are no longer one blank (MEC-09).', font_size=9, fill='#475569'))
-    w(text(PX, 600, 557, "Plate 1 wiring - every run, on plate 2's harness board, 2026-09-28 (MEC-16, HW-20)", font_size=9.5, font_weight=700, fill='#1e293b'))
+    w(text(PX, 600, 549, 'Plates 2 and 3 - settled and ordered 2026-10-06 (Craftcloud #516727254320, BOM 3.28): carrier tray MEC-17, compute tray MEC-18, rear pad MEC-19.', font_size=8.2, font_weight=700, fill='#0f766e'))
+    w(text(PX, 600, 561, "Plate 1 wiring - every run, on plate 2's harness board, 2026-09-28 (MEC-16, HW-20)", font_size=9.5, font_weight=700, fill='#1e293b'))
     w(gopen(font_size=7.6, font_weight=700, fill='#64748b') + text(PX, 600, 572, '#') + text(PX, 614, 572, 'Run') + text(PX, 772, 572, 'Wire') + text(PX, 862, 572, 'Cut, cm') + text(PX, 906, 572, 'Ends and clips') + GCLOSE)
     w(line(PX, 600, 576, 1280, 576, stroke='#e2e8f0'))
     for i, (n, run, wire, cut, ends) in enumerate(RUNS):
