@@ -42,7 +42,9 @@ HOLES += [("T1", 24.82, 60.24, DRILL_M25, "to plate 2, tap M2.5 (under the Bauer
           ("T5", 148.18, 81.76, DRILL_M25, "to plate 2, tap M2.5 (under board B)"),
           ("E1", 16.0, 63.0, DRILL_M3, "Bauer, tap M3"),
           ("E2", 70.0, 63.0, DRILL_M3, "Bauer, tap M3"),
-          ("W", 113.5, 60.0, WINDOW_D, "window for the 6 V pair and the I2C lead")]
+          ("W1", 114.5, 60.0, WINDOW_D, "cable window beside C (6 V pair)"),
+          ("W2", 127.0, 48.0, WINDOW_D, "cable window under board A (6 V pair, I2C lead)"),
+          ("W3", 127.0, 73.0, WINDOW_D, "cable window under board B")]
 
 X0, Y0 = min(p[0] for p in OUTLINE), min(p[1] for p in OUTLINE)          # the tray's top left corner on plate 2
 W = max(p[0] for p in OUTLINE) - X0
@@ -128,8 +130,8 @@ rows = [f"{n:<3} x {x - X0:6.2f}  y {y - Y0:6.2f}   drill {dia:>3.1f}   {what}" 
 half = (len(rows) + 1) // 2
 for col in range(2):
     for i, r in enumerate(rows[col * half:(col + 1) * half]):
-        w(f'<text x="{10 + col * 145}" y="{ty + 5 + i * 3.7:.1f}" font-size="2.5" font-family="ui-monospace, Menlo, Consolas, monospace" xml:space="preserve">{r}</text>')
-ty2 = ty + 5 + half * 3.7 + 3
+        w(f'<text x="{10 + col * 145}" y="{ty + 5 + i * 3.3:.1f}" font-size="2.5" font-family="ui-monospace, Menlo, Consolas, monospace" xml:space="preserve">{r}</text>')
+ty2 = ty + 5 + half * 3.3 + 2
 w(f'<text x="10" y="{ty2}" font-size="3.2" font-weight="700">Outline corners, in the same measure (saw straight between them)</text>')
 corner_txt = "   ".join(f"({x - X0:.1f}, {y - Y0:.1f})" for x, y in OUTLINE)
 w(f'<text x="10" y="{ty2 + 4.5}" font-size="2.5" font-family="ui-monospace, Menlo, Consolas, monospace" xml:space="preserve">{corner_txt}</text>')

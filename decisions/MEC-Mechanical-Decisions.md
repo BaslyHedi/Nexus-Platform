@@ -1271,8 +1271,8 @@ must measure 100 mm; the PDF is stored as [`carrier-tray-hand-template.pdf`](../
 
 - **Outline:** twelve straight cuts, all right angles, 182.5 x 109.4 mm, the closest point 1.1 mm inside plate 2. It needs a sheet
   of at least 189 x 116 mm. The printed tray's tapered front, curved corner pads, splice wings and rim are gone.
-- **19 holes, not about 70:** 12 board screws (3.4 mm), four fixings to plate 2 (T1, T3, T4, T5; T2 and T6 are left out, four spread
-  points are enough for a part that only has to stay down), the Bauer's two M3, and one 8 mm window for the 6 V pair. Plate 2's
+- **21 holes, not about 70:** 12 board screws (3.4 mm), four fixings to plate 2 (T1, T3, T4, T5; T2 and T6 are left out, four spread
+  points are enough for a part that only has to stay down), the Bauer's two M3, and three 8 mm cable windows (W1 by board C, W2 under A, W3 under B) spread over plate 2's opening (x 110.3-133.0, y 42.5-77.9), so the 6 V pair and the I2C lead can drop through next to where they end. Plate 2's
   own copied holes and slots are not needed.
 - **Nuts:** no pockets. Tap the fixing holes M2.5 (2.1 mm drill) and the Bauer's M3 (2.5 mm) in the 4 mm sheet, or open them to
   2.8 / 3.2 mm and glue a nut on the top. Tapping needs a material that takes a thread: nylon (PA6), acetal, ABS or polycarbonate,
