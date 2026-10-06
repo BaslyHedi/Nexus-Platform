@@ -1387,6 +1387,14 @@ nothing could be plugged in. It stands on **four M2.5 standoffs, 8 or 10 mm, Hed
 **four M3 screws from below** at plate 3's M3 holes (17.82 / 45.82, 53.24 / 67.24), each into a nut pocket flush in the tray's top, M3 x 8. A 28 x 14 rectangle, so the pad cannot rock. The two pads are
 joined by a 36 mm bridge. The tray is 195 x 69 mm and fits plate 3 with at least 3.3 mm to its outline.
 
+**Alternative: both boards turned 90 degrees (`ORIENT="across"`, 2026-10-06).** Asked for by Hedi to compare. The Pi goes at x 98-154 and the FRDM at x 158-223, both
+centred on the plate, long edges across the vehicle. **The whole nose, x 0-98, is free** (the LED front), and so is the rear for the fascia cables. The Pi's ports face the
+vehicle's right and its GPIO header the nose. The FRDM no longer lands on plate 3's grid (the grid is 49.00 x 58.00 the other way round), so all **six** of its standoffs are screwed
+to the tray from below through counterbores, as the Pi's are. The tray is held down by two M3 and two M2.5 nuts under the FRDM pad (196.88, 38.76 and 81.77; 169.88, 20.23 and 100.23)
+and two M3 under the Pi pad (99.24 and 148.18 at y 23.76 and 81.77), all on plate 3's own holes. 126.6 x 106.5 mm, one solid; at least 5.2 mm to the plate outline.
+Costs: the Pi's cables leave over the vehicle's side, the FRDM's ports point to a side nobody has chosen yet (its connector edges are unknown), and the tray is less tied to MEC-11's
+tested grid. `ORIENT="along"` stays the default until Hedi chooses.
+
 **Checked (2026-10-06, against `hardware/scripts/chassis-layout.py`).** All eight fixings land within 0.01 mm of a plate-3 M3 hole. The tray's corners and the bridge are inside the plate outline. The tray is one solid, z 0-9 mm.
 The two chassis standoffs at (27.35, 22.17) and (27.35, 98.36) are 10.1 mm clear of the Pi pad.
 

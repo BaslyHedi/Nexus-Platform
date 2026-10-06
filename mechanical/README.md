@@ -40,6 +40,7 @@ openscad -D 'PART="lower"' -o fascia-lower.stl fascia.scad
 openscad -D 'PART="upper"' -o fascia-upper.stl fascia.scad
 openscad -D 'PART="tray"'     -o carrier-tray.stl          carrier-tray.scad
 openscad -D 'PART="tray"'     -o compute-tray.stl          compute-tray.scad
+openscad -D 'ORIENT="across"' -D 'PART="tray"' -o compute-tray-across.stl compute-tray.scad   # the boards turned 90 degrees (MEC-18)
 openscad -D 'PART="step1"' --camera=0,0,0,0,0,0,300 --projection=o --autocenter --viewall -o ../renders/tray-step1.png carrier-tray.scad   # and step2
 cd ..
 python3 scripts/plate1.py
