@@ -70,14 +70,34 @@ module pi() {
 }
 module tray() color("lightgrey") translate([0, 0, EX * 0.25]) trayBody();
 
+// the BOM's cables to the FRDM (MEC-18), drawn on the top view: thick = above plate 3, thin = below it. Layout frame, [x, y] points.
+//   J1 power (5.1): board C's USB-C socket on plate 2 -> up through plate 3's right-hand slot (x 109-158, y 10-15) -> along the right edge -> J1 on the nose edge
+//   J11 console (5.9): the plug hangs over the left edge -> down outside it -> along the upper gap to the fascia USB-C's body end (x 225, y 41.3)
+//   J7 CAN (4.4): the 2x5 plug on the rear edge -> over the 10 mm to plate 3's cross-slot (x 260-265) -> down, forward to the carrier's transceiver on plate 2
+module seg(a, b, w, c) color(c) translate([0, 0, T + 40]) linear_extrude(0.4) hull() { translate(a) circle(d = w, $fn = 16); translate(b) circle(d = w, $fn = 16); }
+module cable(pts, w, c) for (i = [0 : len(pts) - 2]) seg(pts[i], pts[i + 1], w, c);
+module dot(p, c) color(c) translate([p[0], p[1], T + 40]) cylinder(d = 5, h = 0.6, $fn = 24);
+module routes() {
+    j1 = frdm_at(35.8, FRDM_W - 1);                          // J1's mouth on the nose edge
+    cable([[125, 12], [150, 12], [172, 28], j1], 2.4, "red");
+    dot([125, 12], "red");                                   // goes down here, plate 3's right-hand slot, to board C's socket on plate 2
+    j11 = frdm_at(FRDM_L + 20, 14.5);                        // J11's plug end, 20 mm past the left edge
+    cable([j11, [232, 122]], 2.4, "blue");
+    dot([232, 122], "blue");                                 // goes down outside the plate edge, then forward to the fascia USB-C's body end
+    j7 = frdm_at(67, 4.5);
+    cable([j7, [262.5, j7[1]]], 2.4, "green");
+    dot([262.5, j7[1]], "green");                            // goes down plate 3's rear cross-slot, then forward to board B's transceiver
+}
 real() {
     plate3(); chassis_bits(); tray(); frdm(); pi();
     if (LABELS) {
         for (c = FRDM_PARTS) if (c[6] != "") lab(frdm_at(c[0] + c[2] / 2, c[1] + c[3] / 2), c[6], 2.4, "white");
         lab(frdm_at(47, 32), "FRDM-IMX91S", 4, "white");
         lab([PI_X0 + 28, PI_Y0 + 42], "Pi 5 (later)", 4, "white");
-        lab([46, 60], "SPARE PAD", 5, "black"); lab([46, 52], "drill here", 3.4, "black");
+        lab([54, 60], "SPARE PAD", 5, "black"); lab([54, 52], "drill here", 3.4, "black");
         lab([4, 60], "NOSE", 3, "black");
         lab([167, 60], "plug gap", 3.2, "black"); lab([167, 55], "(cables)", 2.6, "black");
+        routes();
+        lab([132, 6], "J1 power: down to board C (plate 2)", 3, "red"); lab([210, 128], "J11 console: down, to the fascia USB-C", 3, "blue"); lab([245, 62], "J7 CAN: down the cross-slot, to board B", 2.6, "darkgreen");
     }
 }
