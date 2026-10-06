@@ -25,7 +25,6 @@ bpy.ops.wm.read_factory_settings(use_empty=True)
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 sys.dont_write_bytecode = True
-import carrier_model as CM                                     # noqa: E402
 from carrier_model import Mesh, Frame, MATS, mat, empty        # noqa: E402
 
 CAD = os.path.join(HERE, "..", "cad")
@@ -50,8 +49,7 @@ BENCH_Y = 190.0                                  # the bench stands this far to 
 FX0, FY0, FL, FW = 184.0, 6.75, 95.0, 65.0       # the FRDM: footprint x, y of its corner, long edge (along y), short edge
 FRDM_STANDOFF, PI_STANDOFF = 6.0, 8.0
 PX0, PY0, PL, PW = 94.0, 17.75, 85.0, 56.0       # the Pi 5
-CB_D, CB_DEPTH = 6.4, 2.4                        # counterbore for an M2.5 head, from below
-FRDM_CB_D = 7.2
+CB_DEPTH = 2.4                                   # counterbore for an M2.5 head, from below
 FIX = [(17.82, 53.24, 3.18), (17.82, 67.24, 3.18), (49.0, 35.94, 2.71), (49.0, 84.53, 2.71), (86.94, 40.23, 2.71), (86.94, 80.23, 2.71),
        (120.06, 35.94, 2.71), (120.06, 84.53, 2.71), (143.47, 52.65, 2.71), (143.47, 67.88, 2.71),
        (196.88, 38.76, 3.18), (196.88, 81.77, 3.18), (245.88, 38.76, 3.18), (245.88, 81.77, 3.18)]
@@ -66,7 +64,6 @@ def pi_at(a, b):
 
 
 FRDM_SCREWS = [frdm_at(u, v) for u in (3.5, 52.5) for v in (3.5, 61.5)]
-FRDM_FREE = [frdm_at(FL - 4.0, v) for v in (3.5, 61.5)]
 PI_HOLES = [pi_at(a, b) for a in (3.5, 61.5) for b in (3.5, 52.5)]
 
 # ---------------------------------------------------------------- timeline (seconds)
@@ -248,7 +245,6 @@ def screw(name, x, y, z_head, d, dir_up, shank, head_d, head_h, material='screwc
         zz += s * th
     m.cyl((x, y, zz), (x, y, zz - s * head_h), head_d / 2, material, 20)                       # head, away from the shank
     zt = zz - s * head_h
-    m.box(x - head_d * 0.36, x + head_d * 0.36, y - 0.22, y + 0.22, min(zt, zt - s * 0.0), zt - s * 0.001, 'recess') if False else None
     m.box(x - head_d * 0.34, x + head_d * 0.34, y - 0.2, y + 0.2, zt - s * 0.05 - 0.2, zt - s * 0.05 + 0.2, 'recess')
     m.box(x - 0.2, x + 0.2, y - head_d * 0.34, y + head_d * 0.34, zt - s * 0.05 - 0.2, zt - s * 0.05 + 0.2, 'recess')
     m.cyl((x, y, zz), (x, y, zz + s * shank), d / 2, material, 14)
@@ -409,9 +405,7 @@ m.cyl((19.5, FW + 2.0, top + 3.0), (19.5, FW + 2.4, top + 3.0), 2.4, 'metal_d', 
 # the underside: the microSD socket opening to the v-0 edge, with a card half in
 m.box(29.4, 44.7, -1.0, 14.7, zf - 2.0, zf, 'sdslot')
 m.box(31.0, 43.0, -2.0, 6.0, zf - 1.0, zf - 0.4, 'chip')
-for (u, v) in [(3.5, 3.5), (3.5, 61.5), (52.5, 3.5), (52.5, 61.5)] + [(FL - 4.0, 3.5), (FL - 4.0, 61.5)]:
-    pass
-fr_board = m.make("frdm-board", FB)
+m.make("frdm-board", FB)
 ms = Mesh(FR)                                                                       # the six standoffs, hex 5 across flats
 for (u, v) in [(3.5, 3.5), (3.5, 61.5), (52.5, 3.5), (52.5, 61.5), (FL - 4.0, 3.5), (FL - 4.0, 61.5)]:
     hexa(ms, u, v, ZT, zf, 5.0, 'steel')
@@ -465,8 +459,6 @@ for (a, b) in [(3.5, 3.5), (3.5, 52.5), (61.5, 3.5), (61.5, 52.5)]:
 ps_o = ps.make("pi-standoffs", ROOT)
 text("Raspberry Pi 5", (pi_at(30, 10)[0] - 6.0, -pi_at(30, 10)[1], tp + 0.2), 2.6, 'white', (0, 0, 0), PB)
 text("later phase", (pi_at(30, 10)[0] - 6.0, -pi_at(30, 10)[1] - 4.0, tp + 0.2), 2.0, 'white', (0, 0, 0), PB)
-for i, (x, y) in enumerate(PI_HOLES):
-    pass
 pscr_lo = [screw("pscrew-lo-%d" % (i + 1), x, y, Z3_TOP + CB_DEPTH, 2.5, True, 6.0, 4.4, 1.6, parent=ROOT) for i, (x, y) in enumerate(PI_HOLES)]
 pscr_hi = [screw("pscrew-hi-%d" % (i + 1), x, y, zp + 1.6, 2.5, False, 6.0, 4.4, 1.6, parent=ROOT) for i, (x, y) in enumerate(PI_HOLES)]
 drop(ps_o, T_PISTAND, dz=30.0, dur=1.0)
@@ -512,8 +504,6 @@ c3 = cable("cable-J7", [(190.0, 92.0, Z2_TOP + T + 8 + 1.6 + 2.0), (230.0, 80.0,
 grow(c1, T_J1, 4.0)
 grow(c2, T_J11, 4.0)
 grow(c3, T_J7, 4.0)
-for i, o in enumerate([c1, c2, c3]):
-    o.animation_data.action.fcurves  # noqa
 
 # ---------------------------------------------------------------- camera
 cam = bpy.data.objects.new("cam", bpy.data.cameras.new("cam"))
@@ -529,10 +519,6 @@ tc.track_axis = 'TRACK_NEGATIVE_Z'
 tc.up_axis = 'UP_Y'
 
 BEN = (132.0, BENCH_Y - 60.0, LIFT + 126.0)                        # the tray on the bench (Blender coordinates)
-BEN_U = (132.0, BENCH_Y - 60.0, LIFT + 118.0)
-VEH = (140.0, -60.0, 80.0)                                         # the vehicle
-P3C = (132.0, -60.0, LIFT + 126.0)                                 # plate 3, lifted
-FRC = (216.0, -54.0, LIFT + 132.0)                                 # the FRDM, lifted
 K = []
 K += [(0.0, (110.0, 470.0, 300.0), (135.0, 50.0, 125.0)), (5.5, (390.0, 400.0, 300.0), (135.0, 50.0, 125.0))]
 K += [(6.5, (60.0, BENCH_Y + 150.0, LIFT + 270.0), BEN), (13.5, (180.0, BENCH_Y + 140.0, LIFT + 250.0), BEN)]
