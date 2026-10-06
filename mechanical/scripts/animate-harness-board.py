@@ -1,8 +1,8 @@
 """Assembly animation of the harness-board sandwich (MEC-16), rendered by Blender.
 
     python3 plate1.py && python3 make-assembly.py      # the model it animates
-    blender -b -P animate-assembly.py                   # -> ../renders/assembly-animation.mp4, 36 s
-    blender -b -P animate-assembly.py -- --preview      # quarter size, every 4th frame
+    blender -b -P animate-harness-board.py                   # -> ../renders/harness-board-animation.mp4, 36 s
+    blender -b -P animate-harness-board.py -- --preview      # quarter size, every 4th frame
 
 It follows MEC-16's build steps: plate 2 lies upside down beside the chassis, its parts
 go on one by one and the wires grow run by run, the lower fascia panel with the
@@ -22,7 +22,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 CAD = os.path.join(HERE, "..", "cad")
 OBJ = os.path.join(CAD, "chassis-3deck-fascia.obj")
 STATES = os.path.join(CAD, "plate1", "states")
-OUT = os.path.join(HERE, "..", "renders", "assembly-animation.mp4")
+OUT = os.path.join(HERE, "..", "renders", "harness-board-animation.mp4")
 PREVIEW = "--preview" in sys.argv
 PIVOT = Vector((-85.0, 0.0, 50.56))
 LIFT = 60.0
@@ -229,6 +229,7 @@ sc.render.fps = FPS
 sc.render.engine = 'BLENDER_WORKBENCH'
 sh = sc.display.shading
 sh.color_type, sh.light = 'MATERIAL', 'STUDIO'
+sh.studio_light = 'paint.sl'                                  # lights the undersides too; the default studio light leaves them black
 sh.show_cavity = sh.show_object_outline = True
 sh.background_type = 'VIEWPORT'
 sh.background_color = (0.16, 0.17, 0.19)

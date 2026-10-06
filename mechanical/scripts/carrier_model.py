@@ -1,5 +1,5 @@
 """The finished STM32 carrier as Blender objects, static: boards A, B and C with every part and wire,
-and the Discovery mock. Shared by animate-tray.py; animate-carrier.py builds the same geometry step by step.
+and the Discovery mock. Shared by animate-carrier-tray.py; animate-stm32-carrier.py builds the same geometry step by step.
 
 Everything is read from ../../hardware/scripts/stm32-carrier.py (`C` below), which owns every hole, part and wire.
 This module only gives them bodies. Nothing is hidden or animated here; the caller moves the returned roots.

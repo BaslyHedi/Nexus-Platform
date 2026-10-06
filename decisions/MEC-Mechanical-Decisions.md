@@ -1212,7 +1212,7 @@ be unscrewed without taking them off first. A hand-cut sheet cannot have the poc
 board, M2.5, counterbored from below) and no longer have to match anything on the plate.
 
 **Assembly order (proposed), animated in
-[`../mechanical/scripts/animate-tray.py`](../mechanical/scripts/animate-tray.py).** The tray goes on after
+[`../mechanical/scripts/animate-carrier-tray.py`](../mechanical/scripts/animate-carrier-tray.py).** The tray goes on after
 plate 2's harness is built and plate 2 is the right way up, because its screws come from below and
 its boards would be in the way while plate 2 lies upside down (MEC-16).
 

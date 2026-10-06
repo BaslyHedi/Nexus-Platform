@@ -4,7 +4,7 @@
     python3 stm32-carrier.py            # -> ../renders/stm32-carrier.svg
 
 Everything above the sheet section is data and helpers with no side effects, so
-../mechanical/scripts/animate-carrier.py imports it and builds the 3D assembly from the same
+../mechanical/scripts/animate-stm32-carrier.py imports it and builds the 3D assembly from the same
 holes, parts and wires the drawing shows.
 """
 import os

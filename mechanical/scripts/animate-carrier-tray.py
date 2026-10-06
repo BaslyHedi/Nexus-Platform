@@ -1,9 +1,9 @@
 """Assembly animation of the carrier tray (MEC-17), rendered by Blender.
 
     openscad -D 'PART="tray"' -o ../cad/carrier-tray.stl ../cad/carrier-tray.scad   # the tray it animates
-    blender -b -P animate-tray.py                   # -> ../renders/tray-assembly.mp4
-    blender -b -P animate-tray.py -- --preview      # half size, every 4th frame
-    blender -b -P animate-tray.py -- --still 20     # one PNG at 20 s, for checking a moment
+    blender -b -P animate-carrier-tray.py                   # -> ../renders/carrier-tray-animation.mp4
+    blender -b -P animate-carrier-tray.py -- --preview      # half size, every 4th frame
+    blender -b -P animate-carrier-tray.py -- --still 20     # one PNG at 20 s, for checking a moment
 
 Two steps, as MEC-17 places it. First the carrier is built on the tray at a jig: nuts into the pockets, the
 boards A, B and C on their standoffs, the screws from below, the splices, the Bauer in its rim. Then the tray goes
@@ -32,14 +32,14 @@ from carrier_model import Mesh, Frame, MATS, mat, empty        # noqa: E402
 CAD = os.path.join(HERE, "..", "cad")
 RENDERS = os.path.join(HERE, "..", "renders")
 SVG = os.path.join(HERE, "..", "..", "hardware", "renders", "chassis-layout.svg")
-OUT = os.path.join(RENDERS, "tray-assembly.mp4")
+OUT = os.path.join(RENDERS, "carrier-tray-animation.mp4")
 ARGS = sys.argv[sys.argv.index("--") + 1:] if "--" in sys.argv else []
 PREVIEW = "--preview" in ARGS
 STILL = float(ARGS[ARGS.index("--still") + 1]) if "--still" in ARGS else None
 
 FPS = 24
 S = lambda sec: int(round(sec * FPS)) + 1
-END = S(58)
+END = S(67)
 
 # ---------------------------------------------------------------- the design (mirrors carrier-tray.scad)
 PLACE = (8.50, 5.11)
@@ -67,10 +67,13 @@ SPLICE_T = [19.0, 19.6]
 CARRY = (22.5, 28.5)                           # lift, across, set down
 WIRES_T = 29.5
 FIX_T = [32.5 + 0.6 * i for i in range(6)]
-SECTION = (37.0, 41.5)                         # the cutaway through one fixing
-LOWER = (42.5, 46.5)
-DISCO = (48.0, 50.5)
-ORBIT = 51.0
+SECTION = (46.0, 50.5)                         # the cutaway through one fixing
+LOWER = (51.5, 55.5)
+DISCO = (57.0, 59.5)
+ORBIT = 60.0
+PAD_NUTS = [37.4, 37.7, 38.0]                  # the rear pad (MEC-19): three M3 nuts, the pad, three screws from below
+PAD_T = 38.8
+PAD_SCREWS = [40.8, 41.4, 42.0]
 DROP = S(0.7) - 1
 
 CAPTIONS = [
@@ -83,10 +86,11 @@ CAPTIONS = [
     ((22.5, 29.5), "Step 2. The unit lifts onto plate 2: every tray hole lands on a plate hole, the window on the wire opening"),
     ((29.5, 32.5), "6  The 12 V wires come up the plate's two slots to the splices"),
     ((32.5, 37), "7  T1 to T6: an M2.5 screw from below into each pocket (a washer in the M3 holes)"),
-    ((37, 41.5), "Section through one fixing: plate 2, the tray with its captive nut, the screw, the Bauer above"),
-    ((41.5, 48), "8  Plate 2 comes off its blocks and lowers onto the chassis standoffs"),
-    ((48, 51), "9  The Discovery plugs onto the sockets of A and B"),
-    ((51, 58), "The tray lifts out as one unit: six screws from below. The Bauer comes off with two"),
+    ((37, 46), "8  The rear pad (MEC-19): three M3 nuts, the pad onto plate 2, three M3 from below"),
+    ((46, 50.5), "Section through one fixing: plate 2, the tray with its captive nut, the screw, the Bauer above"),
+    ((50.5, 57), "9  Plate 2 comes off its blocks and lowers onto the chassis standoffs"),
+    ((57, 60), "10  The Discovery plugs onto the sockets of A and B"),
+    ((60, 67), "The tray lifts out as one unit: six screws from below. The Bauer comes off with two. The rear pad lifts off by three"),
 ]
 
 # ---------------------------------------------------------------- scene
@@ -430,6 +434,27 @@ for (k, (x, y, d)), t in zip(FIXINGS.items(), FIX_T):
     drop(s, t, dz=-28.0, dur=0.7)
 
 
+# ---------------------------------------------------------------- the rear pad on plate 2 (MEC-19), a child of PLATE2
+PAD_FIX = [(245.88, 38.76), (237.62, 31.0), (237.62, 60.0)]
+bpy.ops.wm.stl_import(filepath=os.path.join(CAD, "plate2-rear-pad.stl"))
+pad = bpy.context.selected_objects[0]
+pad.name = "rear-pad"
+pad_root = empty("rear-pad-root", P2)                              # drop() moves this; the pad keeps its own height inside it
+pad.parent = pad_root
+pad.location = (0, 0, ZP_TOP)
+for p_ in pad.data.polygons:
+    p_.use_smooth = False
+pad.data.materials.append(MATS['tray'])
+drop(pad_root, PAD_T, dz=40.0, dur=1.3)
+for i, (x, y) in enumerate(PAD_FIX):
+    n_ = hexa("pad-nut-%d" % (i + 1), x, y, ZP_TOP + T - 2.6, ZP_TOP + T - 0.2, 5.5, 'nut', P2)       # M3: 5.5 across flats, 2.6 thick
+    drop(n_, PAD_NUTS[i], dz=22.0)
+    s_ = empty("pad-fix-%d" % (i + 1), P2)                                                           # M3 x 8 from below, a washer under the head
+    cyl("washer", x, y, ZP_BOT - 0.5, ZP_BOT, 7.0, 'steel', s_, 20)
+    cyl("head", x, y, ZP_BOT - 2.5, ZP_BOT - 0.5, 5.6, 'steel', s_, 16)
+    cyl("shaft", x, y, ZP_BOT, ZP_TOP + T - 0.9, 3.0, 'steel', s_, 12)
+    drop(s_, PAD_SCREWS[i], dz=-28.0, dur=0.7)
+
 # ---------------------------------------------------------------- the cutaway through one fixing (a separate model)
 SEC_AT = (-170.0, -60.0, 90.0)
 SEC = empty("section", loc=B(*SEC_AT))
@@ -542,11 +567,15 @@ KEYS = [(0.0, (-60.0, BENCH_Y + 150.0, LIFT + 250.0), JIG),
         (29.4, (100.0, -20.0, LIFT + 330.0), (105.0, -58.0, LIFT + 54.0)),
         (30.4, (85.0, 110.0, 20.0), (85.0, -53.0, 108.0)),
         (36.6, (85.0, 110.0, 20.0), (85.0, -53.0, 108.0)),
-        (37.0, (SECC[0] - 6.0, SECC[1] + 44.0, SECC[2] + 10.0), SECC),
-        (41.4, (SECC[0] - 6.0, SECC[1] + 44.0, SECC[2] + 10.0), SECC),
-        (42.2, (-20.0, 190.0, 190.0), (110.0, -58.0, 85.0)),
-        (46.4, (10.0, 205.0, 215.0), (115.0, -58.0, 62.0)),
-        (49.8, (10.0, 205.0, 215.0), (115.0, -58.0, 62.0))]
+        (37.2, (310.0, -118.0, LIFT + 120.0), (238.0, -52.0, LIFT + 56.0)),
+        (39.8, (310.0, -118.0, LIFT + 120.0), (238.0, -52.0, LIFT + 56.0)),
+        (40.4, (300.0, 110.0, 60.0), (238.0, -52.0, LIFT + 50.0)),
+        (44.6, (300.0, 110.0, 60.0), (238.0, -52.0, LIFT + 50.0)),
+        (46.0, (SECC[0] - 6.0, SECC[1] + 44.0, SECC[2] + 10.0), SECC),
+        (50.4, (SECC[0] - 6.0, SECC[1] + 44.0, SECC[2] + 10.0), SECC),
+        (51.2, (-20.0, 190.0, 190.0), (110.0, -58.0, 85.0)),
+        (55.4, (10.0, 205.0, 215.0), (115.0, -58.0, 62.0)),
+        (58.8, (10.0, 205.0, 215.0), (115.0, -58.0, 62.0))]
 for sec, c, t in KEYS:
     f = S(sec)
     cam.location, target.location = c, t
@@ -562,7 +591,7 @@ for i in range(0, 12):                                    # orbit the finished c
 
 # ---- captions: above the player's controls, scaled with the lens so they stay one size on screen
 holder = empty("caption-holder", cam)
-for sec, lens in [(29.6, 32.0), (30.4, 24.0), (36.6, 24.0), (37.0, 32.0)]:
+for sec, lens in [(29.6, 32.0), (30.4, 24.0), (36.6, 24.0), (37.0, 32.0), (45.6, 32.0)]:
     cam.data.lens = lens
     cam.data.keyframe_insert("lens", frame=S(sec))
     holder.scale = (32.0 / lens, 32.0 / lens, 1.0)
@@ -595,6 +624,7 @@ sc.render.fps = FPS
 sc.render.engine = 'BLENDER_WORKBENCH'
 sh = sc.display.shading
 sh.color_type, sh.light = 'MATERIAL', 'STUDIO'
+sh.studio_light = 'paint.sl'                                  # lights the undersides too; the default studio light leaves them black
 sh.show_cavity = False
 sh.show_object_outline = True
 sh.object_outline_color = (0.08, 0.09, 0.1)
@@ -608,7 +638,7 @@ sc.render.resolution_x, sc.render.resolution_y = 1280, 720
 if STILL is not None:
     sc.frame_set(S(STILL))
     sc.render.image_settings.file_format = 'PNG'
-    sc.render.filepath = os.path.join(RENDERS, f"tray-still-{STILL:g}.png")
+    sc.render.filepath = os.path.join(RENDERS, f"carrier-tray-still-{STILL:g}.png")
     bpy.ops.render.render(write_still=True)
     print("wrote", sc.render.filepath)
     sys.exit(0)

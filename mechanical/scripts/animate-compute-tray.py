@@ -1,7 +1,7 @@
 """Assembly animation of the compute tray (MEC-18), rendered by Blender.
 
     openscad -D 'PART="tray"' -o ../cad/compute-tray.stl ../cad/compute-tray.scad   # the tray it animates
-    blender -b -P animate-compute-tray.py                   # -> ../renders/compute-tray-assembly.mp4  (1080p)
+    blender -b -P animate-compute-tray.py                   # -> ../renders/compute-tray-animation.mp4  (1080p)
     blender -b -P animate-compute-tray.py -- --preview      # half size, every 4th frame
     blender -b -P animate-compute-tray.py -- --still 20     # one PNG at 20 s, for checking a moment
 
@@ -29,7 +29,7 @@ from carrier_model import Mesh, Frame, MATS, mat, empty        # noqa: E402
 
 CAD = os.path.join(HERE, "..", "cad")
 RENDERS = os.path.join(HERE, "..", "renders")
-OUT = os.path.join(RENDERS, "compute-tray-assembly.mp4")
+OUT = os.path.join(RENDERS, "compute-tray-animation.mp4")
 ARGS = sys.argv[sys.argv.index("--") + 1:] if "--" in sys.argv else []
 PREVIEW = "--preview" in ARGS
 STILL = float(ARGS[ARGS.index("--still") + 1]) if "--still" in ARGS else None
