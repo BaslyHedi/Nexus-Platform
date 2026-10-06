@@ -14,7 +14,7 @@ module and 256 MB QSPI NAND.
 
 ## Confirmed from the QSG
 
-- **105 × 65 mm**, 10-layer (dimension from UM12262)
+- **105 × 65 mm**, 10-layer (dimension from UM12262, which is the *non-S* board). ⚠️ **The -S looks about 95 × 65 mm**: in the Quick Start Guide's top and bottom views (figures 1 and 2) the outline is 95 mm long at the scale where the six mounting holes sit 49.0 mm apart, then 39.5, on a 58 mm spacing. Photo, +-1 mm; **measure the board** (MEC-18)
 - i.MX 91, 1× Cortex-A55 · 512 MB LPDDR4 · 256 MB QSPI NAND (NAND boot) · microSD 3.0
 - IW610: Wi-Fi 6 + BLE 5.4 + 802.15.4 · 1 Gbps Ethernet · external RTC w/ coin cell
 - **Power: J1, USB-C only.** No barrel jack, no terminal block
@@ -71,3 +71,15 @@ and are wrong here.
 **Are the CAN pins on the 2×5 connector already transceived, or raw TX/RX?**
 Neither the QSG nor UM12262 (non-S) settles it for this board. This decides whether the
 project buys one CAN transceiver or two - see BOM 4.1 / 4.2.
+
+## Connector positions (Quick Start Guide, figures 1 and 2, 2026-10-06)
+
+Top view with the 40-pin header on the left; u along the long edge, v along the short, mm, +-1, from the photo. Used by the compute tray's preview (MEC-18).
+
+| Edge | Connector | Where |
+|---|---|---|
+| left | 40-pin header | u 0.5-6, v 7-59 |
+| top | 30-pin FPC · 2x5 NXP custom header J7 (the CAN port) · USER / ONOFF / RESET | u 27-47 · u 60.5-73.5 · u 74-88, all v 1-7 |
+| right | USB-C DBG (J11) · USB-C (J5) · USB-A | v 10-19 · v 27-36 · v 43-56, at u 81-97 (overhanging the edge by about 1 mm) |
+| bottom | audio jack · USB-C power (J1) · RJ45 | u 16-23 · u 31-41 · u 60-77, v 54-67 (the RJ45 overhangs by 2.5 mm) |
+| underside | microSD slot | u 29-45, opening to the **top** edge |
