@@ -71,9 +71,9 @@ SECTION = (46.0, 50.5)                         # the cutaway through one fixing
 LOWER = (51.5, 55.5)
 DISCO = (57.0, 59.5)
 ORBIT = 60.0
-PAD_NUTS = [37.4, 37.7, 38.0]                  # the rear pad (MEC-19): three M3 nuts, the pad, three screws from below
-PAD_T = 38.8
-PAD_SCREWS = [40.8, 41.4, 42.0]
+PAD_NUTS = [37.2 + 0.25 * i for i in range(6)]  # the rear pad (MEC-19): six nuts, the pad, six screws from below
+PAD_T = 39.0
+PAD_SCREWS = [41.0 + 0.4 * i for i in range(6)]
 DROP = S(0.7) - 1
 
 CAPTIONS = [
@@ -86,7 +86,7 @@ CAPTIONS = [
     ((22.5, 29.5), "Step 2. The unit lifts onto plate 2: every tray hole lands on a plate hole, the window on the wire opening"),
     ((29.5, 32.5), "6  The 12 V wires come up the plate's two slots to the splices"),
     ((32.5, 37), "7  T1 to T6: an M2.5 screw from below into each pocket (a washer in the M3 holes)"),
-    ((37, 46), "8  The rear pad (MEC-19): three M3 nuts, the pad onto plate 2, three M3 from below"),
+    ((37, 46), "8  The rear pad (MEC-19): six nuts, the pad onto plate 2, six screws from below"),
     ((46, 50.5), "Section through one fixing: plate 2, the tray with its captive nut, the screw, the Bauer above"),
     ((50.5, 57), "9  Plate 2 comes off its blocks and lowers onto the chassis standoffs"),
     ((57, 60), "10  The Discovery plugs onto the sockets of A and B"),
@@ -435,7 +435,7 @@ for (k, (x, y, d)), t in zip(FIXINGS.items(), FIX_T):
 
 
 # ---------------------------------------------------------------- the rear pad on plate 2 (MEC-19), a child of PLATE2
-PAD_FIX = [(245.88, 38.76), (237.62, 31.0), (237.62, 60.0)]
+PAD_FIX = [(205.62, 40.0, 3.18), (205.62, 80.0, 3.18), (227.88, 20.23, 2.71), (227.88, 100.23, 2.71), (245.88, 38.76, 3.18), (245.88, 81.77, 3.18)]   # the slot, the M2.5 holes, the M3 holes
 bpy.ops.wm.stl_import(filepath=os.path.join(CAD, "plate2-rear-pad.stl"))
 pad = bpy.context.selected_objects[0]
 pad.name = "rear-pad"
@@ -446,13 +446,14 @@ for p_ in pad.data.polygons:
     p_.use_smooth = False
 pad.data.materials.append(MATS['tray'])
 drop(pad_root, PAD_T, dz=40.0, dur=1.3)
-for i, (x, y) in enumerate(PAD_FIX):
-    n_ = hexa("pad-nut-%d" % (i + 1), x, y, ZP_TOP + T - 2.6, ZP_TOP + T - 0.2, 5.5, 'nut', P2)       # M3: 5.5 across flats, 2.6 thick
+for i, (x, y, d) in enumerate(PAD_FIX):
+    af, th = (5.5, 2.6) if d > 3 else (5.0, 2.4)                                                        # M3 or M2.5 nut
+    n_ = hexa("pad-nut-%d" % (i + 1), x, y, ZP_TOP + T - th, ZP_TOP + T - 0.2, af, 'nut', P2)
     drop(n_, PAD_NUTS[i], dz=22.0)
-    s_ = empty("pad-fix-%d" % (i + 1), P2)                                                           # M3 x 8 from below, a washer under the head
-    cyl("washer", x, y, ZP_BOT - 0.5, ZP_BOT, 7.0, 'steel', s_, 20)
-    cyl("head", x, y, ZP_BOT - 2.5, ZP_BOT - 0.5, 5.6, 'steel', s_, 16)
-    cyl("shaft", x, y, ZP_BOT, ZP_TOP + T - 0.9, 3.0, 'steel', s_, 12)
+    s_ = empty("pad-fix-%d" % (i + 1), P2)                                                           # a screw from below, a washer under the head
+    cyl("washer", x, y, ZP_BOT - 0.5, ZP_BOT, 7.0 if d > 3 else 5.5, 'steel', s_, 20)
+    cyl("head", x, y, ZP_BOT - 2.5, ZP_BOT - 0.5, 5.6 if d > 3 else 4.6, 'steel', s_, 16)
+    cyl("shaft", x, y, ZP_BOT, ZP_TOP + T - 0.9, 3.0 if d > 3 else 2.5, 'steel', s_, 12)
     drop(s_, PAD_SCREWS[i], dz=-28.0, dur=0.7)
 
 # ---------------------------------------------------------------- the cutaway through one fixing (a separate model)
@@ -567,10 +568,10 @@ KEYS = [(0.0, (-60.0, BENCH_Y + 150.0, LIFT + 250.0), JIG),
         (29.4, (100.0, -20.0, LIFT + 330.0), (105.0, -58.0, LIFT + 54.0)),
         (30.4, (85.0, 110.0, 20.0), (85.0, -53.0, 108.0)),
         (36.6, (85.0, 110.0, 20.0), (85.0, -53.0, 108.0)),
-        (37.2, (310.0, -118.0, LIFT + 120.0), (238.0, -52.0, LIFT + 56.0)),
-        (39.8, (310.0, -118.0, LIFT + 120.0), (238.0, -52.0, LIFT + 56.0)),
-        (40.4, (300.0, 110.0, 60.0), (238.0, -52.0, LIFT + 50.0)),
-        (44.6, (300.0, 110.0, 60.0), (238.0, -52.0, LIFT + 50.0)),
+        (37.2, (340.0, -135.0, LIFT + 150.0), (224.0, -60.0, LIFT + 56.0)),
+        (40.0, (340.0, -135.0, LIFT + 150.0), (224.0, -60.0, LIFT + 56.0)),
+        (40.6, (330.0, 115.0, 62.0), (224.0, -60.0, LIFT + 50.0)),
+        (44.8, (330.0, 115.0, 62.0), (224.0, -60.0, LIFT + 50.0)),
         (46.0, (SECC[0] - 6.0, SECC[1] + 44.0, SECC[2] + 10.0), SECC),
         (50.4, (SECC[0] - 6.0, SECC[1] + 44.0, SECC[2] + 10.0), SECC),
         (51.2, (-20.0, 190.0, 190.0), (110.0, -58.0, 85.0)),

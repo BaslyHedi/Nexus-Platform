@@ -26,7 +26,7 @@ Drawings: [chassis layout](../hardware/renders/chassis-layout.svg). Geometry and
 | **MEC-16** | Plate 2's lower face is the harness board - plate 1 carries only the battery and the driver |
 | **MEC-17** | *Proposed:* one tray carries boards A, B and C and bolts to plate 2 |
 | **MEC-18** | One wide tray on plate 3 - a spare nose, the Pi 5, a plug gap, the FRDM, all turned across |
-| **MEC-19** | A separate small spare pad on plate 2's rear |
+| **MEC-19** | A separate pad spread over plate 2's rear |
 
 ---
 
@@ -1424,23 +1424,27 @@ Nothing has been printed or dry-fitted; the carrier tray's fit review (MEC-17) i
 
 ---
 
-## MEC-19 · A separate small spare pad on plate 2's rear
+## MEC-19 · A separate pad spread over plate 2's rear
 
 **Status (2026-10-06): proposed with Hedi, modelled, checked against the plate data, not printed.** Source: [`../mechanical/cad/plate2-rear-pad.scad`](../mechanical/cad/plate2-rear-pad.scad) -> `plate2-rear-pad.stl`.
-A third part in the same print order as the carrier tray (MEC-17) and the compute tray (MEC-18). PETG, 4 mm, flat. **30 x 43.2 x 4 mm.**
+A third part in the same print order as the carrier tray (MEC-17) and the compute tray (MEC-18). PETG, 4 mm, flat. **55 x 96 x 4 mm.**
 
-**Why a separate part, not a longer carrier tray.** Hedi asked whether the carrier tray should reach plate 2's rear. It should not: MEC-12 keeps the rear (x 224-266) empty for the harness to the fascia's three ports, the J7 CAN lead
-(MEC-18) comes down plate 3's cross-slot into it, and the carrier tray in the cart was already fit-reviewed (MEC-17). A longer tray would have meant a new STL, a new review and swapping the file. A small pad costs a few euros and changes nothing else.
+**Why a separate part, not a longer carrier tray.** Hedi asked whether the carrier tray should reach plate 2's rear. It should not: the carrier tray in the cart was already fit-reviewed (MEC-17), and a longer one meant a new STL, a new review and
+swapping the file. A separate pad changes nothing else. It was first drawn small (30 x 43 mm); Hedi then asked for it to be **spread over plate 2**, the way the compute tray spreads over plate 3, and this is that version.
 
-**Where.** x 222-252, y 28-70, on the right half of the rear. It stays clear of:
+**Where.** x 196-251, y 12-108, behind the carrier tray. It stays clear of:
 
+- the carrier tray: its rear corner pads end at x 191.6, 4.4 mm ahead;
+- the chassis standoffs at (256.82, 22.17 and 98.36): 2.3 mm to the nearest hexagon corner;
 - the cross-slot (x 260.3-265.7) and the fascia's pads and clamp holes (x 262.9);
-- the chassis standoffs at (256.82, 22.17 and 98.36): 4.1 mm from the nearest hexagon;
-- the **J7 lane**: the CAN lead comes down the cross-slot at about y 74 and runs forward to board B (y 92 at x 190). The pad ends at y 70;
 - the Discovery, which overhangs the carrier tray to x 217.5 at z 95 and above. The pad is 4 mm tall, so nothing meets it.
 
-**Fixed with three M3 from below** into nuts held in pockets on top, each on an opening plate 2 already has: the plate hole (245.88, 38.76) and two places along the long slot at x 235.47-239.77 ((237.62, 31) and (237.62, 60)). The slot is 4.29 mm wide, so the screw may slide along it with a washer under the head. Three points make a plane, so the pad does not rock. The harness taped under plate 2 stops at x 202, so the heads are free.
+**The J7 lane and the harness cross it.** The CAN lead (MEC-18) comes down the cross-slot at about y 74 and runs forward to board B (y 92 at x 190): a diagonal over the pad's top, where it lies like any wire. Keep that lane (about y 70-96) free of drilled parts, or tie the lead down.
+The harness to the fascia's ports (MEC-12) lies over the pad the same way. The pad has no windows, so plate 2's three long slots under it (x 203.5, 219.5, 235.5, y 26-94) are covered; nothing in the BOM passes through them.
 
-**Checked (2026-10-06, against `hardware/scripts/chassis-layout.py`).** The pad is inside plate 2 with 17.5 mm to its edge; the plate hole and the slot are where the fixings need them; both slot fixings are inside the slot with at least 2.15 mm to its ends. One solid. Drawn on the layout drawing (R1-R3).
+**Six fixings, from below** into nuts held in pockets on top, each on an opening plate 2 already has: two places along the long slot at x 203.47-207.77 ((205.62, 40) and (205.62, 80); the slot is 4.29 mm wide, so the screw may slide along it, a washer under the head, and the pad can be moved along y by hand before it is tightened),
+M2.5 into the holes at (227.88, 20.23 and 100.23), M3 into the holes at (245.88, 38.76 and 81.77). The harness taped under plate 2 stops at x 202, so the heads are free.
 
-**Open.** The M3 nut's real across-flats and thickness (assumed 5.5 and 2.4 mm). Nothing is planned for the pad yet; it is a drilling zone. Hardware: BOM 3.27.
+**Checked (2026-10-06, against `hardware/scripts/chassis-layout.py`).** The pad is inside plate 2 with 10.5 mm to its edge. All four plate holes exist at the sizes the fixings need; both slot fixings are inside the slot with at least 2.15 mm to its ends; the fixings are 25.8 mm or more apart and 5.1 mm or more from the pad's edge. One solid. Drawn on the layout drawing (R1-R6) and animated in `animate-carrier-tray.py` (step 8).
+
+**Open.** The M3 and M2.5 nuts' real across-flats and thickness (assumed 5.5 / 2.4 and 5.0 / 2.4 mm). Nothing is planned for the pad yet; it is a drilling zone. Hardware: BOM 3.27.

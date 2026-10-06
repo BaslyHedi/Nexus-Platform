@@ -263,11 +263,9 @@ COMPUTE_TRAY_GAP = [   # the plug gap inside it (the two ribs close the loop), a
     (183.77, 56.39), (184, 56.13), (184, 28.25),
 ]
 REAR_PAD = [   # the rear pad's outline on plate 2, mm (mechanical/cad/plate2-rear-pad.scad, PART="outline"; MEC-19)
-    (238.17, 26.84), (238.71, 26.94), (239.23, 27.12), (239.72, 27.36), (240.18, 27.67),
-    (240.56, 28), (249, 28), (250.76, 28.57), (252, 31), (252, 67),
-    (251.43, 68.76), (249, 70), (225, 70), (223.24, 69.43), (222, 67),
-    (222, 31), (222.57, 29.24), (225, 28), (234.69, 28), (235.06, 27.67),
-    (235.52, 27.36), (236.01, 27.12), (236.53, 26.94), (237.07, 26.84), (237.62, 26.8),
+    (249.76, 12.57), (251, 15), (251, 105), (250.43, 106.76), (248, 108),
+    (199, 108), (197.24, 107.43), (196, 105), (196, 15), (196.57, 13.24),
+    (199, 12), (248, 12),
 ]
 
 # the compute tray's 14 fixings to plate 3 (MEC-18): name, x, y, hole d (3.18 = M3, 2.71 = M2.5); screw from below into a nut held in the tray
@@ -276,8 +274,8 @@ COMPUTE_FIX = [('U1', 17.82, 53.24, 3.18), ('U2', 17.82, 67.24, 3.18), ('U3', 49
                ('U11', 196.88, 38.76, 3.18), ('U12', 196.88, 81.77, 3.18), ('U13', 245.88, 38.76, 3.18), ('U14', 245.88, 81.77, 3.18)]
 # its two windows over plate 3's slots in the spare pad: two end-circle centres and the radius
 COMPUTE_WINDOWS = [((61.33, 32.09), (74.93, 32.09), 5.15), ((61.33, 88.33), (74.93, 88.33), 5.15)]
-# the rear pad's three M3 fixings to plate 2 (MEC-19): one plate hole, two places along the long slot at x 235.5-239.8
-REAR_FIX = [('R1', 245.88, 38.76), ('R2', 237.62, 31.0), ('R3', 237.62, 60.0)]
+# the rear pad's six fixings to plate 2 (MEC-19): R1, R2 along the long slot at x 203.5-207.8 (4.29 mm: the screw may slide), then M2.5 and M3 plate holes
+REAR_FIX = [('R1', 205.62, 40.0, 4.3), ('R2', 205.62, 80.0, 4.3), ('R3', 227.88, 20.23, 2.71), ('R4', 227.88, 100.23, 2.71), ('R5', 245.88, 38.76, 3.18), ('R6', 245.88, 81.77, 3.18)]
 
 
 def outline_loops(view, loops, **kw):
@@ -350,17 +348,17 @@ def carrier_and_bauer():
     w(text(P2, 104, 12, 'carrier tray', font_size=7, font_weight=700, fill='#0f766e', text_anchor='middle'))
     for name, x, y in SPLICES:
         w(rect(P2, x, y, 18.6, 13, rx=1.5, fill='#fed7aa', stroke='#c2410c', stroke_width=1.2) + text(P2, x + 9.3, y + 8.2, name, font_size=7, font_weight=700, fill='#c2410c', text_anchor='middle'))
-    # the rear pad (MEC-19): plain 4 mm plate to drill, three M3 fixings, the cross-slot and the J7 lane kept clear
+    # the rear pad (MEC-19): plain 4 mm plate to drill over plate 2's rear, six fixings; the J7 CAN lead lies across it, the cross-slot behind it stays clear
     w(outline(P2, REAR_PAD, fill='#0f766e', fill_opacity=0.09, stroke='#0f766e', stroke_width=1.3, stroke_dasharray='6 3'))
-    for name, x, y in REAR_FIX:
-        w(m3_mark(P2, x, y, name))
-    w(text(P2, 237.0, 48.0, 'rear pad', font_size=8, font_weight=700, fill='#0f766e', text_anchor='middle'))
-    w(text(P2, 237.0, 54.0, '(drill)', font_size=7, fill='#0f766e', text_anchor='middle'))
-    # the note column at the right, below the pad and the J7 lane
-    w(text(P2, 243, 97, 'one M3×12 here clamps BOTH', font_size=6.6, fill='#7c3aed', text_anchor='middle'))
-    w(text(P2, 243, 102.5, 'fascia panels (MEC-07)', font_size=6.6, fill='#7c3aed', text_anchor='middle'))
-    w(text(P2, 243, 109, 'gap ABOVE: the 3 debug ports', font_size=6.6, fill='#b45309', text_anchor='middle'))
-    w(text(P2, 243, 114.5, 'gap BELOW: the switch bodies', font_size=6.6, fill='#b45309', text_anchor='middle'))
+    for name, x, y, d in REAR_FIX:
+        w(screw_mark(P2, x, y, name) if d < 3 else m3_mark(P2, x, y, name))
+    w(text(P2, 223.5, 60.0, 'rear pad', font_size=8.5, font_weight=700, fill='#0f766e', text_anchor='middle'))
+    w(text(P2, 223.5, 67.0, '(drill)', font_size=7, fill='#0f766e', text_anchor='middle'))
+    # the note column right of the pad: the fascia clamps and what the two gaps carry
+    w(text(P2, 252.5, 56, 'M3×12 here', font_size=6.2, fill='#7c3aed', text_anchor='start'))
+    w(text(P2, 252.5, 61.5, 'clamps BOTH', font_size=6.2, fill='#7c3aed', text_anchor='start'))
+    w(text(P2, 252.5, 67, 'fascia panels', font_size=6.2, fill='#7c3aed', text_anchor='start'))
+    w(text(P2, 252.5, 72.5, '(MEC-07)', font_size=6.2, fill='#7c3aed', text_anchor='start'))
     return o
 
 
@@ -592,10 +590,10 @@ def stack_elevation():
     w(bx(117, 189.5, 85.12, 93.12, fill='#fde68a', stroke='#a16207', stroke_width=0.6))
     w(bx(117, 189.5, 93.12, 94.72, fill='#bbf7d0', stroke='#047857', stroke_width=1))
     w(bx(120.5, 217.5, 97.0, 111.0, fill='#c7d2fe', stroke='#4338ca', stroke_width=1, stroke_dasharray='4 2', fill_opacity=0.7))
-    w(bx(222, 252, 81.12, 85.12, fill='#ccfbf1', stroke='#0f766e', stroke_width=1))
+    w(bx(196, 251, 81.12, 85.12, fill='#ccfbf1', stroke='#0f766e', stroke_width=1))
     w(text(PX, xp(11), zy(107.12) - 4, 'Bauer 22 mm', font_size=7.5, fill='#be123c'))
     w(text(PX, xp(100), zy(111) - 4, 'Discovery top z 111: 7.6 mm under the screw heads', font_size=7.5, fill='#4338ca'))
-    w(text(PX, xp(237), zy(85.12) - 4, 'rear pad', font_size=7.5, fill='#0f766e', text_anchor='middle'))
+    w(text(PX, xp(236), zy(85.12) - 4, 'rear pad', font_size=7.5, fill='#0f766e', text_anchor='middle'))
     w(text(PX, xp(8.5), zy(81.12) + 14, 'carrier tray 4 mm (MEC-17)', font_size=7.5, fill='#0f766e'))
     return o
 
