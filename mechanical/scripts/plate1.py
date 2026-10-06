@@ -137,11 +137,11 @@ def part(name, mat, tris):
 
 
 def holder(name, rating, o, a, n):
-    """ATC inline holder lying flat under plate 2, lid to one side.
+    """ATC inline holder, as the seller's photo shows it, lying flat under plate 2 with the cap to one side.
 
-    o: plan point where the wire axis enters (u = 0), a: unit along the wire axis,
-    n: unit towards the lid. 50 long with boots, body 18 x 18, lid 12 more, so
-    30 across in plan and 18 tall, hanging z 32-50. Nominal - scaled off a photo.
+    A wide base (u 8-42, 18 deep) with the wire boots at both ends and, on top of it, a narrower cap (u 12-38, 15 tall) that hinges on a
+    strap, so the cap lifts off to change the fuse. o: plan point where the wire axis enters (u = 0), a: unit along the wire axis,
+    n: unit towards the cap. About 28 across in plan and 18 tall, hanging z 32-50. Nominal - scaled off the seller's photo.
     """
     def P(u, v): return (o[0] + u * a[0] + v * n[0], o[1] + u * a[1] + v * n[1])
 
@@ -150,13 +150,15 @@ def holder(name, rating, o, a, n):
         return box(min(xa, xb), max(xa, xb), min(ya, yb), max(ya, yb), z0, z1)
 
     zc = Z2 - 10                     # 1 mm of foam tape between holder and plate 2
-    body = uvbox(7, 43, -9, 9, Z2 - 19, Z2 - 1) + uvbox(12, 38, 9, 21, Z2 - 19, Z2 - 1)
-    for u0, u1 in ((0, 7), (43, 50)):
+    body = uvbox(8, 42, -6, 6, Z2 - 19, Z2 - 1)                  # the base
+    cap = uvbox(12, 38, 6, 21, Z2 - 17.5, Z2 - 2.5)              # the cap, narrower, on the strap side
+    strap = uvbox(42, 49, 5, 9, zc - 1.5, zc + 1.5) + uvbox(44, 49, 9, 13, zc - 1.5, zc + 1.5)
+    for u0, u1 in ((0, 8), (42, 50)):                            # the boots the wire leaves through
         (xa, ya), (xb, yb) = P(u0, 0), P(u1, 0)
-        body += cyl((xa, ya, zc), (xb, yb, zc), 5)
-    part(name, "holder", body)
+        body += cyl((xa, ya, zc), (xb, yb, zc), 4)
+    part(name, "holder", body + cap + strap)
     part(name + "-rating", rating, uvbox(16, 34, 21, 21.6, zc - 5, zc + 5))
-    part(name + "-tape", "tape", uvbox(9, 41, -8, 8, Z2 - 1, Z2))       # 3M foam tape, 1 mm
+    part(name + "-tape", "tape", uvbox(9, 41, -5, 5, Z2 - 1, Z2))        # 3M foam tape, 1 mm
     return P(0, 0), P(50, 0)        # wire exits, (x, y) at z = zc
 
 
@@ -242,7 +244,7 @@ def build():
     # fuse holders flat on plate 2, lids to the open sides
     main_in, main_out = holder("fuse-main", "fuse_7_5", (96, 23), (1, 0), (0, -1))
     mot_in, mot_out = holder("fuse-motor", "fuse_5", (202, 23), (-1, 0), (0, -1))
-    ub_in, ub_out = holder("fuse-ubec", "fuse_5", (202, 97), (-1, 0), (0, 1))
+    ub_in, ub_out = holder("fuse-ubec", "fuse_5", (207, 97), (-1, 0), (0, 1))
 
     # INA226 upside down behind the opening, terminals facing it (y 78 edge)
     part("ina226-tape", "tape", box(109, 133, 79, 99, T1, Z2))
@@ -260,8 +262,8 @@ def build():
     clip("splice-s4-vm-minus", 157, 175.6, 35, 48, T1 - 18.5, T1 - 10, (38, 44), 157, (T1 - 20, T1 - 18.5))
     # S5 is a 5-port clip: UBEC (-), the run to the (-) bus, and the two switch LED returns (MEC-16, 2026-10-06). It is taped to the plate
     # and S3 hangs under it, so the stack is the other way round from S2 / S4
-    clip("splice-s3-ubec-plus", 138.7, 157.3, 104, 117, T1 - 18.5, T1 - 10, (107, 113), 138.7, (T1 - 20, T1 - 18.5))
-    taped_clip("splice-s5-ubec-minus", 138.7, 157.3, 87, 117, (90, 96, 102, 108, 114), 138.7)
+    clip("splice-s3-ubec-plus", 137.2, 155.8, 104, 117, T1 - 18.5, T1 - 10, (107, 113), 137.2, (T1 - 20, T1 - 18.5))
+    taped_clip("splice-s5-ubec-minus", 137.2, 155.8, 87, 117, (90, 96, 102, 108, 114), 137.2)
     # S8 feeds both switches from one (+) bus port; S9 joins SW1's output and its LED (+) before the split. 3-port clips, ports on the rear (S9)
     # and front (S8) face; the run to the switches leaves the front of S8 and U-turns into the lane over the driver
     taped_clip("splice-s8-switch-feed", 157, 175.6, 51, 69.4, (54, 60.2, 66.4), 157)
@@ -320,9 +322,9 @@ def build():
     W("run09a-split-to-ubec-fuse", "wire_orange", AWG16,
       [(196.6, 66.4, pz), (203, 70, 45), (204, 95, 42), ub_in + (zc,)])
     W("run09b-ubec-fuse-to-s3", "wire_orange", AWG16,
-      [ub_out + (zc,), (137, 100, pz), (137, 107, T1 - 14.25), (138.7, 107, T1 - 14.25)])
+      [ub_out + (zc,), (137, 100, pz), (137, 107, T1 - 14.25), (137.2, 107, T1 - 14.25)])
     W("run09c-ubec-plus-lead", "wire_orange", AWG18,
-      [(135, 103, T1 - 2.5), (136, 112, T1 - 14.25), (138.7, 113, T1 - 14.25)])
+      [(135, 103, T1 - 2.5), (136, 112, T1 - 14.25), (137.2, 113, T1 - 14.25)])
     W("run10a-ubec-6v-plus-to-board-a", "wire_teal", AWG18,
       [(100, 103, T1 - 2.5), (97, 100, 46), (104, 78, 46), (112, 75, 44), (114, 72, 46), (114, 72, 58), (146, 20, 58),
        (146, 1, 62), (146, 1, 67), (146, 6, 67)])
@@ -330,9 +332,9 @@ def build():
       [(100, 109, T1 - 2.5), (95, 105, 46), (102, 79, 46), (116, 77, 44), (117, 75, 46), (117, 75, 58), (150, 22, 58),
        (150, 1, 62), (150, 1, 67), (150, 6, 67)])
     W("run11a-ubec-minus-lead", "wire_black", AWG18,
-      [(135, 109, T1 - 2.5), (136, 113, 44), (138.7, 114, pz)])
+      [(135, 109, T1 - 2.5), (136, 113, 44), (137.2, 114, pz)])
     W("run11b-s5-to-minus-bus", "wire_black", AWG18,
-      [(138.7, 108, pz), (137, 108, 44), (137, 76, 40), (130, 76, 42), (128, 61, 44), M(61)])
+      [(137.2, 108, pz), (137, 108, 44), (137, 76, 40), (130, 76, 42), (128, 61, 44), M(61)])
     W("run12a-vm-minus-pigtail", "wire_black", AWG18, [(155, 46, 36), (155, 44, T1 - 14.25), (157, 44, T1 - 14.25)])
     part("driver-vm-socket", "connector", box(176, 182, 19, 23, 7.6, 14))
 
@@ -355,25 +357,25 @@ def build():
     W("run05-plus-bus-to-s8", "wire_red", AWG18,
       [P(49), (109, 49, F), (109, 72, F), (152, 72, F), (152, 66.4, pz), (157, 66.4, pz)])
     W("run06a-s8-to-sw1-com", "wire_green", AWG18,
-      [(157, 60.2, pz), (153, 60.2, pz), (153, 74, F - 2.4), (200, 74, F - 2.4), (203, 62, F), (240, 62, F), (244, 80, 30), (248.3, 79.8, 22.5)])
+      [(157, 60.2, pz), (153, 60.2, pz), (153, 74, F - 2.4), (200, 74, F - 2.4), (203, 62, F), (240, 62, F), (242.5, 79.8, 22.5), (248.3, 79.8, 22.5)])
     W("run06b-s8-to-sw2-com", "wire_green", AWG18,
-      [(157, 54, pz), (151, 54, pz), (151, 76, F - 2.4), (200, 76, F - 2.4), (203, 60.5, F), (240, 60.5, F), (244, 37, 30), (248.3, 35.8, 22.5)])
+      [(157, 54, pz), (151, 54, pz), (151, 76, F - 2.4), (200, 76, F - 2.4), (203, 60.5, F), (240, 60.5, F), (242.5, 35.8, 22.5), (248.3, 35.8, 22.5)])
     W("run07a-sw1-green-to-s9", "wire_green", AWG18,
-      [(248.3, 84.8, 22.5), (243, 84, 30), (240, 64, F - 2.4), (207, 64, F - 2.4), (204, 48, F - 2.4), (199, 47.9, pz), (196.6, 47.9, pz)])
+      [(248.3, 84.8, 22.5), (242.5, 84.8, 22.5), (240, 64, F - 2.4), (207, 64, F - 2.4), (204, 48, F - 2.4), (199, 47.9, pz), (196.6, 47.9, pz)])
     W("run07b-sw1-led-plus-to-s9", "wire_red", AWG22,
-      [(248.3, 79.8, 27.5), (244, 78, 32), (240, 65.6, F), (208, 65.6, F), (205, 42, F), (199, 41.7, pz), (196.6, 41.7, pz)])
+      [(248.3, 79.8, 27.5), (242.5, 79.8, 27.5), (240, 65.6, F), (208, 65.6, F), (205, 42, F), (199, 41.7, pz), (196.6, 41.7, pz)])
     W("run07c-s9-to-split", "wire_orange", AWG18,
       [(196.6, 35.5, pz), (199.5, 36, pz), (199.5, 56, pz), (198, 60.2, pz), (196.6, 60.2, pz)])
     W("run13a-sw1-led-minus-to-s5", "wire_black", AWG22,
-      [(248.3, 84.8, 27.5), (244, 86, 32), (240, 78.5, F), (204, 78.5, F), (160, 80, F), (137, 83, F), (137, 90, pz), (138.7, 90, pz)])
+      [(248.3, 84.8, 27.5), (242.5, 84.8, 27.5), (240, 78.5, F), (204, 78.5, F), (160, 80, F), (137, 83, F), (137, 90, pz), (137.2, 90, pz)])
     W("run13b-sw2-led-minus-to-s5", "wire_black", AWG22,
-      [(248.3, 40.8, 27.5), (244, 41, 32), (240, 58, F), (204, 58, F), (201, 79.2, F), (160, 81, F), (136, 84, F), (136, 96, pz), (138.7, 96, pz)])
+      [(248.3, 40.8, 27.5), (242.5, 40.8, 27.5), (240, 58, F), (204, 58, F), (201, 79.2, F), (160, 81, F), (136, 84, F), (136, 96, pz), (137.2, 96, pz)])
     W("run15a-sw2-green-to-s6", "wire_green", AWG18,
-      [(248.3, 40.8, 22.5), (243, 42, 30), (240, 59, F - 2.4), (203, 59, F - 2.4), (200, 73, F), (126, 73, F), (100, 81, F), (78, 88, F),
-       (78, 91, 58), (66, 97, 60.5), (60.6, 99, 60.5)])
+      [(248.3, 40.8, 22.5), (242.5, 40.8, 22.5), (240, 59, F - 2.4), (203, 59, F - 2.4), (200, 73, F), (126, 73, F), (100, 81, F), (78, 88, F),
+       (76.5, 92.5, 58), (66, 97, 60.5), (60.6, 99, 60.5)])
     W("run15c-sw2-led-plus-to-s6", "wire_red", AWG22,
-      [(248.3, 35.8, 27.5), (244, 35, 32), (240, 56.4, F), (204, 56.4, F), (201, 71.4, F), (128, 71.4, F), (102, 79.4, F), (80, 86.4, F),
-       (78, 91, 58), (66, 99, 60.5), (60.6, 105.2, 60.5)])
+      [(248.3, 35.8, 27.5), (242.5, 35.8, 27.5), (240, 56.4, F), (204, 56.4, F), (201, 71.4, F), (128, 71.4, F), (102, 79.4, F), (81, 86.4, F),
+       (80.5, 89.5, 58), (66, 99, 60.5), (60.6, 105.2, 60.5)])
     # the Bauer's red lead into S6, its black lead round the Bauer's rear (the 10.5 mm lane before board C) into S7
     W("run15b-bauer-plus-lead", "wire_orange", AWG18, [(50, 91.6, 65.5), (50, 94.0, 64), (56, 102, 60.5), (60.6, 111.4, 60.5)])
     W("run16a-bauer-minus-lead", "wire_black", AWG18,
@@ -381,14 +383,94 @@ def build():
     W("run16b-s7-to-minus-bus", "wire_black", AWG18,
       [(60.6, 21, 60.5), (64, 27.5, 60), (66, 31, 58), (66, 31, F), (70, 33, F), (70, 75, F), (123, 75, F), (123, 66, 46),
        (128, 44, 45), (128, 43, pz), M(43)])
+    finalize_runs()
 
 
 RUNS = []             # (name, material, diameter, polyline) - lengths come from these
 
 
 def W(name, mat, d, pts):
-    RUNS.append((name, mat, d, pts))
-    part(name, mat, wire(pts, d))
+    RUNS.append((name, mat, d, pts))          # the route as drawn; finalize_runs() separates it from its neighbours and builds the mesh
+
+
+def _dense(pts, step=3.0):
+    out = []
+    for a, b in zip(pts, pts[1:]):
+        k = max(1, int(round(math.dist(a, b) / step)))
+        for i in range(k):
+            out.append(tuple(a[j] + (b[j] - a[j]) * i / k for j in range(3)))
+    out.append(tuple(pts[-1]))
+    return out
+
+
+def finalize_runs(iters=1500):
+    """Push every run off its neighbours and off the parts, so no two wires or wire and clip share space.
+
+    Each run is resampled every 3 mm. The ends (the first and last 9 mm, where a wire meets its clip, terminal or tab) stay put; the rest
+    is pulled towards the route that was drawn, smoothed, and pushed apart wherever two wires, or a wire and a part, are closer than
+    their radii. Over the motors the wires stay in the 9 mm between the motor cans (z 41) and plate 2's face.
+    """
+    import numpy as np
+    obst = []
+    for n, m, t in PARTS:
+        if n.startswith(("bus-", "fuse-", "ina226", "split-", "ubec", "splice-", "p2-")) and not n.endswith(("-tape", "-levers", "-mark", "-rating", "-terminals", "-6v-in")):
+            xs = [v[0] for tri in t for v in tri]; ys = [v[1] for tri in t for v in tri]; zs = [v[2] for tri in t for v in tri]
+            obst.append((min(xs), max(xs), min(ys), max(ys), min(zs), max(zs)))
+    O = np.array(obst)
+    runs = []
+    for name, mat, d, pts in RUNS:
+        dn = np.array(_dense(pts))
+        runs.append(dict(name=name, mat=mat, d=d, r=d / 2, home=dn.copy(), p=dn.copy(),
+                         fixed=np.array([i < 3 or i >= len(dn) - 3 for i in range(len(dn))])))
+    for it in range(iters):
+        for R in runs:                                     # pull home, smooth
+            p, h, f = R["p"], R["home"], R["fixed"]
+            q = p.copy()
+            q[1:-1] += 0.5 * (0.5 * (p[:-2] + p[2:]) - p[1:-1])
+            q += 0.04 * (h - q)
+            q[f] = h[f]
+            R["p"] = q
+        allp = np.concatenate([R["p"] for R in runs])
+        owner = np.concatenate([[k] * len(R["p"]) for k, R in enumerate(runs)])
+        rad = np.concatenate([[R["r"]] * len(R["p"]) for R in runs])
+        fix = np.concatenate([R["fixed"] for R in runs])
+        push = np.zeros_like(allp)
+        for k in range(len(allp)):                         # wire against wire
+            dv = allp[k] - allp
+            dist = np.sqrt((dv ** 2).sum(1)) + 1e-9
+            need = rad[k] + rad + 1.1
+            hit = (dist < need) & (owner != owner[k])
+            if hit.any():
+                mv = (dv[hit] / dist[hit, None]) * ((need[hit] - dist[hit]) * 0.5)[:, None]
+                push[k] += mv.sum(0)
+        for k in range(len(allp)):                         # wire against parts
+            q, r = allp[k], rad[k] + 0.4
+            inside = (O[:, 0] - r < q[0]) & (q[0] < O[:, 1] + r) & (O[:, 2] - r < q[1]) & (q[1] < O[:, 3] + r) & (O[:, 4] - r < q[2]) & (q[2] < O[:, 5] + r)
+            for b in O[inside]:
+                gaps = [(q[0] - (b[0] - r)), ((b[1] + r) - q[0]), (q[1] - (b[2] - r)), ((b[3] + r) - q[1]), (q[2] - (b[4] - r)), ((b[5] + r) - q[2])]
+                a = int(np.argmin(gaps))
+                step = np.zeros(3)
+                step[a // 2] = -gaps[a] if a % 2 == 0 else gaps[a]
+                push[k] += step
+        push[fix] = 0
+        allp = allp + np.clip(push, -1.5, 1.5)
+        o = 0
+        for R in runs:                                     # limits, then write back
+            n = len(R["p"])
+            P = allp[o:o + n]
+            o += n
+            for i in range(n):
+                if R["fixed"][i]:
+                    continue
+                if R["home"][i][2] < 49.4 - R["r"]:        # a wire that lies under plate 2 stays under it
+                    over_motors = P[i][0] > 203 and R["home"][i][0] > 200
+                    P[i][2] = min(P[i][2], 49.4 - R["r"])
+                    P[i][2] = max(P[i][2], (41.3 + R["r"]) if over_motors else 12.0)
+            R["p"] = P
+    for R, (name, mat, d, pts) in zip(runs, list(RUNS)):
+        pts2 = [tuple(float(x) for x in q) for q in R["p"]]
+        RUNS[RUNS.index((name, mat, d, pts))] = (name, mat, d, pts2)
+        part(name, mat, wire(pts2, d))
 
 
 DROPS = []            # wires that cross between the decks, one curve per state

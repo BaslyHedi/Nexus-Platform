@@ -1044,9 +1044,9 @@ Positions, x from the front of plate 1 and y from its right edge, as modelled in
 | **Motor driver** | x 168-210, y 22.6-80.6 | plate 1, as mounted 21 Sep |
 | **(+) bus**, 221-415, 3 of 5 ports | x 88-107, y 40-70, entry face towards the opening | plate 2, levers down |
 | **(−) bus**, 221-415, 5 of 5 ports | x 134-153, y 40-70, entry face towards the opening | plate 2, levers down |
-| **Main fuse** 7.5 A | x 96-146, y 2-32, lid facing right | plate 2 |
-| **Motor fuse** 5 A | x 152-202, y 2-32, lid facing right | plate 2 |
-| **UBEC fuse** 5 A | x 152-202, y 88-118, lid facing left | plate 2 |
+| **Main fuse** 7.5 A | x 96-146, y 2-29: base 34 x 12 (x 104-138), cap 26 x 15 (x 108-134) toward the right | plate 2 |
+| **Motor fuse** 5 A | x 152-202, y 2-29, base x 160-194, cap x 164-190 toward the right | plate 2 |
+| **UBEC fuse** 5 A | x 157-207 (moved 5 mm rear, clear of S5), y 91-118, cap toward the left | plate 2 |
 | **INA226** | x 108-134, y 78-100, upside down, terminals facing the opening | plate 2 |
 | **SW1 split**, DOMAXWILL 3-port | x 178-197, y 51-69, over the driver | plate 2 |
 | **S8** (switch feed), 3-port | x 157-176, y 51-69, ports on its front face | plate 2 |
@@ -1065,7 +1065,7 @@ return - goes up through it, between the buses. The rearward runs lie flat on pl
 **Why.**
 
 - **The clips and fuses were never on the drawing.** MEC-12 placed bare WAGO bodies and no fuse
-  holders. The holders are about 50 × 18 × 30 with 12-13 cm leads each side, and every clip needs
+  holders. The holders are about 50 long and 28 across in plan, 18 deep (a 34 x 12 base with a narrower 26 x 15 cap on a strap, as the seller's photo shows) with 12-13 cm leads each side, and every clip needs
   strip length and a bend in front of its face.
 - **The battery fixed the floor.** Hiwonder's CAD puts the steering linkage at x 47-85.5 - servo
   bracket up to 38.5 mm high, the tie rod at 15-19 mm - so a 21 mm pack cannot sit forward of
@@ -1139,7 +1139,7 @@ return - goes up through it, between the buses. The rearward runs lie flat on pl
 
 - The clip outlines and which face the wires enter: the model uses 30 × 18.6 × 8.5 for the 221-415
   and 18.6 × 18.4 for the 3-port.
-- The fuse holder body with calipers - 50 × 18 × 30 is scaled off the vendor photo.
+- The fuse holder body with calipers - the base / cap shape is the seller's photo (2026-10-07), the sizes are scaled off it.
 - The pack's height with its felt (modelled 21 + 3) and the driver's top height.
 - **The switch wiring (decided 2026-10-06).** Each switch has four wires: **two green** (the contact, no polarity), **red** (LED +) and **black** (LED −); the LED has its own resistor and runs on 12 V (tested). To light the LED only when the switch is on, **LED + is joined to the switched output, never to the (+) bus**. Every join ends in a clip, so no wire meets another without one:
   - **S8** (3-port, toward the rear) takes **(+) bus port 2** and both switches' first green wires. One bus port feeds both switches, so the switch harness reaches (run 05, 06a, 06b). (+) bus port 3 is spare.

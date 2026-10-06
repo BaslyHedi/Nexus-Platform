@@ -76,7 +76,7 @@ replace the fuse block, and every fuse is inline (HW-16).
 | 50 W output 5 V → STM32 | - | **18 AWG** | - | Split from the FRDM feed on **board C** (HW-19), which replaced the WAGO 3-port |
 | INA226 I²C + supply | - | Dupont jumpers | - | signal only |
 
-**Holders.** 3 of the 5 RUNCCI-YUN holders in use - main, motors, UBEC (HW-20). **2 spare.** Each is about 50 × 18 mm, 30 mm tall with the lid, with 12-13 cm of 16 AWG each side - all three taped flat to plate 2's lower face, lids to the sides (MEC-16).
+**Holders.** 3 of the 5 RUNCCI-YUN holders in use - main, motors, UBEC (HW-20). **2 spare.** Each is about 50 mm long and 28 across in plan, 18 deep (a wide base with a narrower cap on a strap, per the seller's photo), with 12-13 cm of 16 AWG each side - all three taped flat to plate 2's lower face, lids to the sides (MEC-16).
 
 **Discrimination.** Main 7.5 A against the 5 A load fuses = **1.5×**. A fault on the short (+) bus →
 SW1 → split run is covered only by the main. Accepted: the lead cannot carry more (HW-13).

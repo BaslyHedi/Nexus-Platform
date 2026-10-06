@@ -298,7 +298,7 @@ sh.studio_light = 'paint.sl'                                  # lights the under
 sh.show_cavity = sh.show_object_outline = True
 sh.background_type = 'VIEWPORT'
 sh.background_color = (0.16, 0.17, 0.19)
-sc.render.resolution_x, sc.render.resolution_y = 1280, 720
+sc.render.resolution_x, sc.render.resolution_y = 1920, 1080
 if PREVIEW:
     sc.render.resolution_percentage = 50
     sc.frame_step = 4

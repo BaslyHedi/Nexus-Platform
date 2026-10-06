@@ -718,7 +718,7 @@ sh.background_type = 'VIEWPORT'
 sh.background_color = (0.16, 0.17, 0.19)
 sc.world = bpy.data.worlds.new("bench")      # the render reads the world, not the viewport
 sc.world.color = (0.16, 0.17, 0.19)
-sc.render.resolution_x, sc.render.resolution_y = 1280, 720
+sc.render.resolution_x, sc.render.resolution_y = 1920, 1080
 if STILL is not None:
     sc.frame_set(S(STILL))
     sc.render.image_settings.file_format = 'PNG'

@@ -676,7 +676,7 @@ battery + ─ 7.5 A ─ shunt ─ (+) bus ─┬─ SW1 ─┬─ 5 A ─ Encode
   FRDM and the STM32 dead either way. The STM32 is the safety controller, and HW-17 already names
   the drive running on without it as the risk. The main blowing, which cuts the wheels as well, is
   the safer outcome.
-- **The holders are large** (about 50 x 18 mm, 30 mm tall with the lid, 12-13 cm of 16 AWG each
+- **The holders are large** (about 50 mm long, 28 across and 18 deep: a base with a narrower strap-on cap, 12-13 cm of 16 AWG each
   side) and plate 1 could not take four of them (MEC-16). The logic holder was also the one that
   had to follow the longest run, from the (+) bus back to SW2 at the fascia.
 

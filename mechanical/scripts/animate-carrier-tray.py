@@ -53,7 +53,7 @@ BOARDS = {'A': (117.00, 187.00, 5.11, 55.11, 8), 'B': (119.54, 189.54, 60.99, 11
 FIXINGS = {'T1': (24.82, 60.24, 3.18), 'T2': (52.82, 60.24, 3.18), 'T3': (99.24, 81.76, 3.18),
            'T4': (120.06, 35.94, 2.71), 'T5': (148.18, 81.76, 3.18), 'T6': (148.18, 96.76, 3.18)}
 BAUER_HOLES = [(16.0, 63.0), (70.0, 63.0)]            # the Bauer's two 6.8 mm holes: 5 and 59 mm from its front end, 26 mm from its leads edge (y 89)
-SPLICES = [(42.0, 60.6, 96.0, 109.0), (42.0, 60.6, 11.5, 24.5)]     # S6 (+) left of the Bauer, S7 (-) its mirror on the right
+SPLICES = [(42.0, 60.6, 96.0, 114.4), (42.0, 60.6, 11.5, 24.5)]     # S6 (+, a 3-port clip since 2026-10-06) left of the Bauer, S7 (-) its mirror on the right
 BAUER = (11.0, 75.0, 32.0, 89.0, 22.0)         # x0 x1 y0 y1 height: 10.5 mm clear of board C, for its cables
 BENCH_Y = 190.0                                # the jig stands this far to the vehicle's right (Blender +y)
 
@@ -635,7 +635,7 @@ sh.background_type = 'VIEWPORT'
 sh.background_color = (0.17, 0.18, 0.2)
 sc.world = bpy.data.worlds.new("bench")
 sc.world.color = (0.17, 0.18, 0.2)
-sc.render.resolution_x, sc.render.resolution_y = 1280, 720
+sc.render.resolution_x, sc.render.resolution_y = 1920, 1080
 if STILL is not None:
     sc.frame_set(S(STILL))
     sc.render.image_settings.file_format = 'PNG'
