@@ -90,7 +90,7 @@ CAPTIONS = [
     ((46, 50.5), "Section through one fixing: plate 2, the tray with its captive nut, the screw, the Bauer above"),
     ((50.5, 57), "9  Plate 2 comes off its blocks and lowers onto the chassis standoffs"),
     ((57, 60), "10  The Discovery plugs onto the sockets of A and B"),
-    ((60, 67), "The tray lifts out as one unit: six screws from below. The Bauer comes off with two. The rear pad lifts off by three"),
+    ((60, 67), "The tray lifts out as one unit, six screws; the rear pad, six more"),
 ]
 
 # ---------------------------------------------------------------- scene
