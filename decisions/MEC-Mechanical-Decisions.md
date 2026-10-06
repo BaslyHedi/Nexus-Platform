@@ -1258,10 +1258,33 @@ standoffs already fitted. Only the tray is screwed to plate 2.
 
 | | Best | Cheap |
 |---|---|---|
-| How | printed PETG, 4 mm, ~15 € | 3 mm plastic sheet (PVC foam, ABS or polycarbonate; not acrylic, MEC-02), cut and drilled by hand |
-| File | `carrier-tray.stl` | a 1:1 template, generated when needed with `PART="template"` (not kept in the repo), printed and stuck on the sheet; a 50 mm bar checks the print scale |
+| How | printed PETG, 4 mm, ~25 € (Craftcloud quote) | 3 or 4 mm plastic sheet (PVC foam, ABS or polycarbonate; not acrylic, MEC-02), cut and drilled by hand |
+| File | `carrier-tray.stl` | a 1:1 A4 template from [`carrier-tray-hand.py`](../mechanical/scripts/carrier-tray-hand.py), printed and taped to the sheet; a 100 mm bar checks the print scale. See "The hand-made tray" below |
 | Board screws | from below into the standoffs, in printed counterbores, so the tray sits flat | from below; the heads lift the sheet ~1.8 mm, accepted |
 | Board height | 4 + 8 mm standoffs = 12 mm | 3 + 1.8 + 8 = 12.8 mm |
+
+**The hand-made tray (2026-10-05).** Printing was quoted at about 25 €, and the cheapest result under Craftcloud's CNC tab was 47.91 € plus
+14.07 € shipping for laser-cut acrylic (which cannot make the pockets and is excluded by MEC-02 anyway; no milling price was
+looked at). So the sheet is the way to try next, and the printed tray's features are cut to what can be done with a saw and a drill.
+[`carrier-tray-hand.py`](../mechanical/scripts/carrier-tray-hand.py) writes a 1:1 A4 template (SVG; print at 100 %, the 100 mm bar
+must measure 100 mm; the PDF is stored as [`carrier-tray-hand-template.pdf`](../mechanical/cad/carrier-tray-hand-template.pdf)) with the cut line, true-size holes, the boards and the Bauer in dashed outline, and the hole table.
+
+- **Outline:** twelve straight cuts, all right angles, 182.5 x 109.4 mm, the closest point 1.1 mm inside plate 2. It needs a sheet
+  of at least 189 x 116 mm. The printed tray's tapered front, curved corner pads, splice wings and rim are gone.
+- **21 holes, not about 70:** 12 board screws (3.4 mm), four fixings to plate 2 (T1, T3, T4, T5; T2 and T6 are left out, four spread
+  points are enough for a part that only has to stay down), the Bauer's two M3, and three 8 mm cable windows (W1 by board C, W2 under A, W3 under B) spread over plate 2's opening (x 110.3-133.0, y 42.5-77.9), so the 6 V pair and the I2C lead can drop through next to where they end. Plate 2's
+  own copied holes and slots are not needed.
+- **Nuts:** no pockets. Tap the fixing holes M2.5 (2.1 mm drill) and the Bauer's M3 (2.5 mm) in the sheet, or open them to
+  2.8 / 3.2 mm and glue a nut on the top. Tapping needs a material that takes a thread: nylon (PA6), acetal, ABS or polycarbonate,
+  not PVC foam.
+- **Board screws:** 3.4 mm holes countersunk 90 degrees from below for flat-head M2.5 x 8, so the tray lies flat on plate 2. If you
+  only have pan-head screws, drill a 6 mm x 2 mm counterbore instead (twelve of them, with a depth stop).
+- **Splices:** S6 and S7 go back on plate 2's top face at the same x, y (x 42-60.6, y 96-109 and 11.5-24.5), taped, beside the tray.
+  They were on the tray only because the tray had to carry them; the tray's edges at y 31 and y 89 leave the outer 4 mm of each of the plate's two slots (x 56-80) open,
+  so the Bauer's 12 V wires still come straight up beside them. Whether 4 mm is wide enough for both wires is checked at fitting.
+- **Mark from the boards if you can:** stand the boards, with their standoffs fitted, in their dashed outlines on the sheet and
+  mark the twelve holes through the standoffs. That makes the unmeasured corner inset irrelevant.
+- **Heights:** a 4 mm sheet leaves every height unchanged (boards 12 mm above plate 2). The 3 mm ABS sheet bought on 2026-10-06 puts them at 11 mm, which only adds clearance to the FRDM above; at 3 mm the 90 degree countersink leaves about 0.6 mm of sheet under the screw head, so cut it shallow.
 
 **Heights.** All three boards stay on the 8 mm M2.5 standoffs already fitted (Hedi, 2026-10-05: the same on
 A, B and C, length not gauged; the corner holes were widened by hand with scissors to take them), so
