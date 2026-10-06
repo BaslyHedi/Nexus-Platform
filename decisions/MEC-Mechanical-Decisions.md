@@ -1140,6 +1140,11 @@ return - goes up through it, between the buses. The rearward runs lie flat on pl
   and 18.6 × 18.4 for the 3-port.
 - The fuse holder body with calipers - 50 × 18 × 30 is scaled off the vendor photo.
 - The pack's height with its felt (modelled 21 + 3) and the driver's top height.
+- **Joints with no clip (audit of `plate1.py`'s 30 runs, 2026-10-06).** Every other junction ends in a clip: the two WAGO 221-415 buses (3 and 5 ports), the DOMAXWILL 3-port split and the seven 2-port splices S1-S7, or in a screw terminal (INA226, carrier board A) or a plug (SM-2P, driver VM). Three do not:
+  1. **The LED (-) return** (run 13b) is tapped into the middle of the jumper between the two switches' LED (-) tabs (run 13a): three wire ends meet with nothing holding them. A DOMAXWILL 3-port clip beside the switches (30 of the 3-port are in the kit, 1 used) would take SW1's LED (-), SW2's LED (-) and the return, and run 13a would become two short wires.
+  2. **SW1's NO tab carries two wires** (run 07 to the split and the LED (+) tab jumper, run 14a), **and so does SW2's** (run 15a to S6 and run 14b). One flag receptacle takes one crimp: use a piggyback (double) receptacle, or the supplied socket harness if it has one.
+  3. The LED (+) jumpers are 18 AWG in the model. A 22-24 AWG wire is enough for an LED and crimps into a piggyback receptacle more easily.
+  The animation marks these three in magenta. Decide before the wires are cut; BOM 3.17 (the receptacles) is still only "check the crimp kit".
 - The screw heads under plate 2 - carrier F1-F4 and board C's F5, F6 - against the taped parts. *Done for the tray's own six fixings in MEC-17 (2026-10-05); the direct-fixing scheme it replaces would have clashed.*
   F3 lands at the motor fuse's lid edge.
 - The SW1 / SW2 tab layout, and which tab carries LED − (runs 13 and 14).
