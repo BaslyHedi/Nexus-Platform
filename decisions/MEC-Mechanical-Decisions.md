@@ -1150,7 +1150,7 @@ return - goes up through it, between the buses. The rearward runs lie flat on pl
 
 ## MEC-17 · *Proposed:* one tray carries boards A, B and C and bolts to plate 2
 
-**Status (2026-10-05): proposed, not decided.** A brainstorm with Hedi, modelled so it can be
+**Status (2026-10-06): fit-reviewed for a single print; see "Fit review before ordering".** Proposed 2026-10-05. A brainstorm with Hedi, modelled so it can be
 judged. Source: [`../mechanical/cad/carrier-tray.scad`](../mechanical/cad/carrier-tray.scad).
 **Recommendation: print it** (PETG, 4 mm), for the reasons in "Two ways to make it" below.
 
@@ -1185,7 +1185,7 @@ the BOM's "54 mm matches no chassis rectangle" no longer matters.)
   rear lane to C's IN terminal. The rim has legs at the corners only, so nothing closes the lanes. The S6 / S7
   splices and their wiring are under "Where the splices go" below.
 - **Holding it:** two M3 x 8 screws from above through its holes into M3 nuts held in hex pockets in the
-  tray (E1 at (16, 63), E2 at (70, 63)), and a low rim of four corner legs 0.6 mm clear of the body to
+  tray (E1 at (16, 63), E2 at (70, 63)), and a low rim of four corner legs 1.2 mm clear of the body (was 0.6; the Bauer was measured from a drawing, and the screws locate it) to
   locate it.
 - **Held to the plate** by T1 (24.82, 60.24) and T2 (52.82, 60.24), two of the plate's M3 holes under the Bauer.
 - **Cable passages:** the plate's two slots beside the Bauer (x 56-80, y 27-37 and 83-93) are open in the
@@ -1309,14 +1309,39 @@ which is why the second lane is the mirror of the first. The tray has a wing for
 - **Rejected:** 12 mm standoffs under C only (a part that is not in the BOM, splices buried under a board with
   about 1.7 mm of margin and no room for the levers); recessing them into the tray (4 mm is too thin).
 
+**Fit review before ordering (2026-10-06).** One print, so every open point was checked against the real plate data
+(`chassis-layout.py`, the survey) and `plate1.py`, with shapely on the model's own outline. Findings, worst first:
+
+1. **The tray sat on two chassis standoffs (fixed).** The four chassis standoffs (6 mm hex, `STANDOFFS`) stand on plate 2's top face to carry plate 3.
+   Two of them, (27.35, 22.17) and (27.35, 98.36), are under the Bauer end's two lanes, and the tray was solid over both (22.8 mm2 of overlap each,
+   in either hex orientation): it would have rested on two hexes and not on the plate, and the model had copied the plate's 4.29 mm
+   hole there as if it were a free hole. Now a ⌀9.0 notch round each. The hand-cut sheet template starts at y 31 and never reached them.
+2. **The six fixings had no tolerance (fixed).** Tray hole 2.8 against an M2.5 screw left +-0.15 mm, and T4 sits on a 2.71 plate hole (+-0.10), so T4
+   tolerated +-0.26 mm in total, less than a printed part's error over 120 mm (0.3 % is 0.37 mm). Now the tray holes are 3.4, so the captive nut
+   locates the screw, the nut pockets are 5.4 across flats (nut 5.0; a printed hex comes out 0.1-0.2 small), and T4's hole and pocket are slots 1.0 mm long
+   along the tray, so its nut can sit 0.5 mm either way. The other five have +-0.34 from their 3.18 plate holes plus the nut's float.
+3. **The board holes had little margin (fixed).** The inset is an estimate (2.5 +-0.5), the standoffs were fitted into holes widened with scissors, and 3.4 mm held +-0.45.
+   Now 4.0 mm, with a 6.4 mm counterbore 2.4 mm deep (was 6.0 and 2.0) so a screw head up to 2.2 mm tall still leaves the tray flat on plate 2.
+4. **M3 nut pockets** for the Bauer widened from 5.7 to 5.9 across flats (nut 5.5).
+5. **Checked and fine:** the tray is one piece (one 2D region, no feature under 1.2 mm), 0.60 mm inside plate 2's edge at its closest (board A's front
+   corner pad, 6.8 mm of edge within 1 mm; the survey and the print each add about 0.3 mm, so it may touch the edge and cannot hang over by more than a
+   tenth), every fixing sits on a plate hole within 0.01 mm, the nut pockets are at least 1.9 mm from any other opening, and the counterbores 4.5 mm
+   from any pocket. The screw heads under plate 2: T4 3.9 mm, T6 3.8, T3 8.8, T5 10.9 from the nearest taped part. T4 is the only clear hole
+   under board A, so it stays.
+6. **Still not verifiable from here:** the corner-hole inset (now absorbed, not known), the nuts' real across-flats (M2.5 5.0, M3 5.5 assumed), the
+   M2.5 screw head's height (2.2 mm assumed at most), and the Bauer's hole position (26 mm from the leads edge, 5 mm from each end). Measure them
+   with callipers before ordering; the file tolerates each of them but not all of them being wrong together.
+7. **How it is printed matters:** flat, PETG, 0.2 mm layers, 3 perimeters, 20 % infill, a brim against warping (a 183 x 110 x 4 mm slab curls a
+   little at its corners). Order it as FDM and not as SLS or resin, whose small holes close up.
+
 **To measure or decide before making it.**
 
 - **The corner holes' inset** from the board edges is **estimated, not measured: 2.5 mm, give or take 0.5**. The basis is
   Hedi's photo of board C (2026-10-05): the 5.8 mm-across-corners standoff hexes sit almost flush with the board edges,
   so their centres are close to the edge, and the holes are separate from the 2.54 mm grid (its first hole is 3.6 mm from the
   long edge and 5.8 mm from the end). Hedi cannot measure them. So the tray is built to tolerate the error: board holes of
-  3.4 mm for the M2.5 screws (0.45 mm of play each way, enough for +-0.5 mm of inset on both sides) and a round pad of r 4.6
-  mm round each corner so the 6 mm counterbore never breaks the tray's edge. The pads stay inside plate 2 (0.6 mm to spare
+  4.0 mm for the M2.5 screws (0.75 mm of play each way, less about 0.1 a printed hole loses; changed from 3.4 on 2026-10-06) and a round pad of r 4.6
+  mm round each corner so the 6.4 mm counterbore, even 0.5 mm off centre, leaves a 0.9 mm wall at the tray's edge. The pads stay inside plate 2 (0.6 mm to spare
   at board A's front corner). A hand-cut sheet should be drilled from the boards, not the template.
 - **Board C's corner holes:** C is built (2026-10-05) with a standoff in each of its four corners, so the four board holes per
   board are right; their inset is the estimate above.

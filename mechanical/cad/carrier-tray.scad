@@ -5,7 +5,7 @@
 //   openscad -D 'PART="step1"'    -o ../renders/tray-step1-boards.png  carrier-tray.scad   // 1: boards placed on the tray
 //   openscad -D 'PART="step2"'    -o ../renders/tray-step2-plate2.png  carrier-tray.scad   // 2: the tray placed on plate 2
 //
-// STATUS 2026-10-05: PROPOSED, not built. Print it (PETG, 4 mm); a hand-cut sheet is the fallback.
+// STATUS 2026-10-06: fit-reviewed for one print (MEC-17, "Fit review before ordering"). Print it (PETG, 4 mm); a hand-cut sheet is the fallback.
 //
 // TWO STEPS, TWO FRAMES
 //   STEP 1 - the tray frame (u, v). Origin at the tray's front-right corner, u toward the rear, v toward
@@ -40,13 +40,14 @@ PART = "step2";              // "tray" | "template" | "step1" | "step2" | "outli
 
 T            = 4.0;          // tray thickness
 CORNER_INSET = 2.5;          // ESTIMATED, not measured (+-0.5): board corner hole centre from each edge; see MEC-17
-HOLE_D       = 3.4;          // M2.5 screw in a deliberately loose hole: +-0.45 mm, to absorb the estimate above
-CB_D         = 6.0;          // counterbore for an M2.5 nylon screw head, from below
+HOLE_D       = 4.0;          // M2.5 screw in a deliberately loose hole: +-0.75 mm, less ~0.1 mm a printed hole loses. Absorbs the inset
+                             // estimate above (+-0.5) and the hand-widened board holes; the standoff base (5 across flats) still bears on the tray
+CB_D         = 6.4;          // counterbore for an M2.5 nylon screw head, from below; a head 0.5 mm off centre still sits inside it
 BOSS_R       = 4.6;          // a round pad round each board corner, so the counterbore never breaks the tray's edge
-CB_DEPTH     = 2.0;
-FIX_D        = 2.8;          // tray-to-plate-2 screws, M2.5 from below
+CB_DEPTH     = 2.4;          // a head up to 2.2 mm tall leaves the tray flat on plate 2; 1.6 mm of floor remains
+FIX_D        = 3.4;          // tray-to-plate-2 screws, M2.5 from below; loose, so the NUT locates the screw and the plate hole is the only guide
 NUT_AF       = 5.0;          // M2.5 nut across flats
-NUT_POCKET   = 5.2;          // pocket across flats, a printing fit
+NUT_POCKET   = 5.4;          // pocket across flats: 0.4 mm over the nut, a printing fit (a printed hex comes out ~0.1-0.2 small)
 NUT_DEPTH    = 2.4;          // M2.5 nut is 2.0 thick
 R_CORNER     = 2.0;
 WALL         = 1.5;          // least tray left between a copied plate hole and the tray's edge
@@ -74,7 +75,8 @@ FIXINGS = [
     [ 24.82, 60.24, 3.18], // T1  under the Bauer, on the plate's M3 line along y 60.24; M3 hole, M2.5 screw and a washer
     [ 52.82, 60.24, 3.18], // T2  under the Bauer
     [ 99.24, 81.76, 3.18], // T3  under board C (MEC-15's F6)
-    [120.06, 35.94, 2.71], // T4  under board A; M2.5 hole, no washer
+    [120.06, 35.94, 2.71, 1.0], // T4  under board A; M2.5 hole, no washer. The plate hole is only 2.71 (+-0.1 slack), so the nut pocket and the
+                                //     hole are slotted 1.0 mm along the tray's length: the nut can sit 0.5 mm either way (a print scaling error acts along u)
     [148.18, 81.76, 3.18], // T5  under board B
     [148.18, 96.76, 3.18], // T6  under board B, near its rear-left corner
 ];
@@ -92,13 +94,19 @@ PLATE_HOLES = [
     [ 16.94,  32.24, 2.71], [ 16.94,  88.24, 2.71], [ 25.65,  52.65, 2.71], [ 25.65,  67.88, 2.71],
     [ 49.00,  35.94, 2.71], [ 49.00,  84.53, 2.71], [ 72.41,  52.65, 2.71],
     [ 86.94,  40.24, 2.71], [ 86.94,  80.24, 2.71],
-    [ 12.65,  36.35, 4.29], [ 12.65,  84.25, 4.29], [ 27.35,  98.35, 4.29], [ 27.35,  22.15, 4.29],
+    [ 12.65,  36.35, 4.29], [ 12.65,  84.25, 4.29], 
     [ 43.50,  36.33, 4.29], [ 43.50,  84.21, 4.29], [ 45.86,  44.27, 4.29], [ 45.86,  76.27, 4.29],
     [ 36.09,  35.91, 4.18], [ 36.09,  84.56, 4.18],
 ];
 // the plate's slots, as the two end-circle centres and the radius: the large one at x 161.2-175.8, y 30.4-90.2,
 // and the pair beside the Bauer, x 56.2-80.1, y 26.9-37.2 and 83.2-93.5, where the plate takes cable ties
 PLATE_SLOTS = [ [[168.5, 37.7], [168.5, 82.9], 7.3], [[61.35, 32.09], [74.89, 32.09], 5.15], [[61.35, 88.33], [74.89, 88.33], 5.15] ];
+// The four chassis standoffs stand on plate 2's top face (6.0 mm across flats, 40 mm up to plate 3), so the tray must stay clear of the two
+// under its Bauer end. Found 2026-10-06: the tray was solid over both (22.8 mm2 of overlap each, either hex orientation) and would have rested
+// on the two hexes instead of the plate. STANDOFF_CLEAR_D is the hex's corner-to-corner 6.93 plus 2.1 mm for the print and the survey (it also swallows the lane corner at (24, 100.9) cleanly: 8.4 left a zero-area sliver). The 4.29 mm
+// copies of the plate's holes at those two places are dropped from PLATE_HOLES: the notch replaces them.
+CHASSIS_STANDOFFS = [[27.35, 22.17], [27.35, 98.36]];       // from the chassis layout: x, y in the plate-2 frame
+STANDOFF_CLEAR_D  = 9.0;
 // the Bauer 50 W converter: body 64 x 57 x 22 mm (BOM 3.4a), where plate1.py parks it: x 20-84, y 32-89 (BAUER below says where it goes now).
 // Its drawing (the seller's, 2026-10-05; the drawing calls them ears): two 6.8 mm holes INSIDE the outline, 5 mm in from each end, 54 mm apart,
 // 26 mm from one long edge. The photo (2026-10-05) shows that is the edge the four leads leave from, through the middle of the
@@ -107,8 +115,8 @@ PLATE_SLOTS = [ [[168.5, 37.7], [168.5, 82.9], 7.3], [[61.35, 32.09], [74.89, 32
 BAUER = [11.0, 75.0, 32.0, 89.0];     // 9 mm ahead of where plate1.py parks it: that leaves 10.5 mm between its rear end and board C
                                       // for the leads and the 5 V cable to board C (the rim has no leg there)
 BAUER_HOLES = [[16.0, 63.0, 3.2], [70.0, 63.0, 3.2]];   // x, y, hole: BAUER[0] + 5 and + 59, BAUER[3] - 26
-BAUER_NUT_AF = 5.7; BAUER_NUT_DEPTH = 2.6;            // M3 nut, 5.5 across flats and 2.4 thick, as a printing fit
-RIM_H = 3.0; RIM_W = 1.6; RIM_GAP = 0.6; RIM_LEG = 14;   // four corner brackets, so the leads and the air get out
+BAUER_NUT_AF = 5.9; BAUER_NUT_DEPTH = 2.6;            // M3 nut, 5.5 across flats and 2.4 thick, as a printing fit
+RIM_H = 3.0; RIM_W = 1.6; RIM_GAP = 1.2; RIM_LEG = 14;   // four corner brackets, so the leads and the air get out
 // the plate's wire opening, x 110.3-133.0, y 42.5-77.9, a stadium of radius 11.35
 PLATE_OPENING = [[121.65, 53.85], [121.65, 66.55], 11.35];
 // the window: the opening up to x 115, clear of A's front-inboard corner counterbore
@@ -158,9 +166,16 @@ module window2d()
 module real() mirror([0, 1, 0]) children();
 module word(p, t, h) translate(p) mirror([0, 1, 0]) text(t, size = h, halign = "center", valign = "center");
 
+// a fixing's hole: round, or a slot f[3] mm long along the tray's length (u) when the entry has a fourth value
+module fixslot2d(f, d) {
+    sl = len(f) > 3 ? f[3] : 0;
+    hull() for (k = [-1, 1]) translate([k * sl / 2, 0]) circle(d = d, $fn = 32);
+}
+
 module holes2d() {
     for (b = BOARDS) for (p = corners(b)) translate(p) circle(d = HOLE_D, $fn = 32);
-    for (f = FIXINGS) translate(tray(f)) circle(d = FIX_D, $fn = 32);
+    for (f = FIXINGS) translate(tray(f)) fixslot2d(f, FIX_D);
+    for (s = CHASSIS_STANDOFFS) translate(tray(s)) circle(d = STANDOFF_CLEAR_D, $fn = 48);
     for (e = BAUER_HOLES) translate(tray(e)) circle(d = e[2], $fn = 32);
     for (h = PLATE_HOLES) translate(tray(h)) circle(d = h[2], $fn = 32);
     for (sl = PLATE_SLOTS) stadium(sl);
@@ -198,8 +213,8 @@ module trayBody() {
         // counterbores from below for the board screws, so the tray sits flat on plate 2
         for (b = BOARDS) for (p = corners(b)) translate([p[0], p[1], -0.01]) cylinder(d = CB_D, h = CB_DEPTH, $fn = 32);
         // a hex pocket on top at each fixing, holding the nut so the screw turns from below
-        for (f = FIXINGS) translate([tray(f)[0], tray(f)[1], T - NUT_DEPTH])
-            cylinder(d = NUT_POCKET / cos(30), h = NUT_DEPTH + 0.01, $fn = 6);
+        for (f = FIXINGS) translate([tray(f)[0], tray(f)[1], T - NUT_DEPTH]) linear_extrude(NUT_DEPTH + 0.01)
+            hull() for (k = [-1, 1]) translate([k * (len(f) > 3 ? f[3] : 0) / 2, 0]) circle(d = NUT_POCKET / cos(30), $fn = 6);
         // and a larger one under each of the Bauer's two holes, for an M3 nut
         for (e = BAUER_HOLES) translate([tray(e)[0], tray(e)[1], T - BAUER_NUT_DEPTH])
             cylinder(d = BAUER_NUT_AF / cos(30), h = BAUER_NUT_DEPTH + 0.01, $fn = 6);
