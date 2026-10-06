@@ -25,6 +25,8 @@ Drawings: [chassis layout](../hardware/renders/chassis-layout.svg). Geometry and
 | **MEC-15** | The carrier is two kit boards joined by the Discovery, not one board |
 | **MEC-16** | Plate 2's lower face is the harness board - plate 1 carries only the battery and the driver |
 | **MEC-17** | *Proposed:* one tray carries boards A, B and C and bolts to plate 2 |
+| **MEC-18** | One wide tray on plate 3 - a spare nose, the Pi 5, a plug gap, the FRDM, all turned across |
+| **MEC-19** | A separate pad spread over plate 2's rear |
 
 ---
 
@@ -536,6 +538,8 @@ the transverse hypothesis above was wrong - it mounts fore-aft on the M3 grid.
 
 ## MEC-11 · The FRDM's mounting holes land on the Hiwonder grid - 0.06 mm out
 
+**Updated by MEC-18:** the board is about 95 x 65 mm, not 105 x 65 (the 105 is the non-S board's), and it now sits across the vehicle at x 184-249 on a tray; the 49.00 x 58.00 grid match below no longer applies to it.
+
 **Updated by MEC-15:** the carrier's 49.00 × 58.00 pattern is gone. The kit-board carrier fixes to (148.18, 23.76), (148.2, 72.2), (169.88, 14.24) and (169.88, 100.24).
 
 **Decision (2026-09-20).** The FRDM-IMX91 bolts **fore-aft to plate holes that already exist**, on
@@ -594,6 +598,8 @@ fitted, so the standoff sets card access, not just clearance.
 **Updated by MEC-16:** plate 1's floor now carries only the battery (moved to x 85-162, behind the tie rod) and the driver. The buses, fuses, INA226, UBEC and splices are taped to plate 2's lower face, and the (−) B bus is gone.
 
 **Updated by MEC-15:** on plate 2 the carrier is x 117.0-215.0 (boards to x 187.0), and board C, the 5 V split, sits across the waist at x 85.5-115.5.
+
+**Updated by MEC-18:** on plate 3 the FRDM and, later, the Raspberry Pi 5 ride on one compute tray, both across the vehicle, with a spare pad in the nose.
 
 **Updated by MEC-17:** the Bauer sits at x 11-75, screwed to the carrier tray through its own two holes, and the S6 / S7 splices are in two lanes either side of it; the carrier and board C ride on the same tray.
 
@@ -1150,7 +1156,7 @@ return - goes up through it, between the buses. The rearward runs lie flat on pl
 
 ## MEC-17 · *Proposed:* one tray carries boards A, B and C and bolts to plate 2
 
-**Status (2026-10-06): fit-reviewed for a single print; see "Fit review before ordering".** Proposed 2026-10-05. A brainstorm with Hedi, modelled so it can be
+**Status (2026-10-06): fit-reviewed for a single print; see "Fit review before ordering". Ordered 2026-10-06 (BOM 3.28), nothing printed yet.** Proposed 2026-10-05. A brainstorm with Hedi, modelled so it can be
 judged. Source: [`../mechanical/cad/carrier-tray.scad`](../mechanical/cad/carrier-tray.scad).
 **Recommendation: print it** (PETG, 4 mm), for the reasons in "Two ways to make it" below.
 
@@ -1206,7 +1212,7 @@ be unscrewed without taking them off first. A hand-cut sheet cannot have the poc
 board, M2.5, counterbored from below) and no longer have to match anything on the plate.
 
 **Assembly order (proposed), animated in
-[`../mechanical/scripts/animate-tray.py`](../mechanical/scripts/animate-tray.py).** The tray goes on after
+[`../mechanical/scripts/animate-carrier-tray.py`](../mechanical/scripts/animate-carrier-tray.py).** The tray goes on after
 plate 2's harness is built and plate 2 is the right way up, because its screws come from below and
 its boards would be in the way while plate 2 lies upside down (MEC-16).
 
@@ -1364,3 +1370,81 @@ which is why the second lane is the mirror of the first. The tray has a wing for
 - **The M3 nut's real depth and across-flats** (assumed 2.4 and 5.5 mm), before printing the Bauer's two pockets.
 - **Print or sheet.** The model serves both.
 
+---
+
+## MEC-18 · One wide tray on plate 3 - a spare nose, the Pi 5, a plug gap, the FRDM, all turned across
+
+**Status (2026-10-06): ordered 2026-10-06 (BOM 3.28), with the checks below accepted; nothing printed or dry-fitted yet.** Source: [`../mechanical/cad/compute-tray.scad`](../mechanical/cad/compute-tray.scad) -> `compute-tray.stl`;
+the renders come from [`../mechanical/cad/compute-tray-preview.scad`](../mechanical/cad/compute-tray-preview.scad) (plate 3's data is exported from the layout drawing by
+[`../mechanical/scripts/plate3-data.py`](../mechanical/scripts/plate3-data.py)). Ordered **together with the carrier tray (MEC-17) and the rear pad (MEC-19)** in one Craftcloud order (#516727254320): a print service charges less for one order with everything than for two.
+PETG, 4 mm, flat, no supports, **236.6 x 108.0 x 4 mm** (needs a bed of 240 mm or more). It follows MEC-12 (the FRDM on plate 3).
+
+**History of the layout (all 2026-10-06, all in git).** First the FRDM at MEC-11's place with the Pi in the nose; then a spare nose with the FRDM along the vehicle (rejected: its USB plugs need about 25 mm behind the board and the Pi pad
+sat there). **This one:** Hedi asked for both boards turned across the vehicle and the tray spread over more of plate 3, then moved the FRDM 6 mm toward its 40-pin side to leave room for the debug cable.
+
+**The FRDM's connectors** (NXP *FRDM-IMX91S Quick Start Guide*, figures 1 and 2; read off the photo at 10 px / mm, +-1 mm; u along the long edge, v along the short one, 40-pin header at u 0, CAN header and microSD at v 0):
+
+| Edge | What | Faces, as placed |
+|---|---|---|
+| u 0 | 40-pin expansion header (nothing in the BOM uses it) | the vehicle's **right** |
+| u max | USB-C DBG **J11**, USB-C, USB-A (overhanging the edge by about 1.8 mm) | the vehicle's **left**; the plugs hang over plate 3's left edge, 17 mm of plate beside them |
+| v max | audio jack, USB-C power **J1**, RJ45 (overhanging by 2.5 mm) | the **nose**, toward the Pi: the plugs need about 35 mm, and plate 3's big slot (x 161-176, y 30-90) lets the cable climb |
+| v 0 | 30-pin FPC, 2x5 CAN header **J7**, buttons; **microSD slot** on the underside, opening to this edge | the **rear**, where plate 3's cross-slot at x 260 is |
+
+**The board is about 95 x 65 mm, not 105 x 65.** In the guide's photos the six mounting holes sit 49.0 mm apart, then about 40, on a 58 mm spacing, and the outline is 95 x 65 at that scale. The 105 is the *non-S* board's (UM12262 and its
+design files; MEC-11 took its drill file from there, and its first four holes still match). Hedi measured **96 x 67** over the connectors, which is the PCB plus the RJ45 and USB-A that overhang it. The tray uses 95 x 65 and its
+FRDM screw holes are loose (4.2 mm, counterbore 7.2 mm) so the +-1 mm in the photo does not matter.
+
+**The layout** (plate 3 frame, x from the nose):
+
+- **Spare pad, x 14-93:** plate 3's own outline moved in 5 mm, plain plate, six fixings, two windows over plate 3's slots (x 56-80, y 27-37 and 83-93), a notch round each chassis standoff. Drill it. (The Sense HAT idea is parked; its 40-pin ribbon is not in the BOM.)
+- **Pi pad, x 94-150:** the Pi 5 across the vehicle, **ports to the left**, GPIO header to the rear. Plate 3 is 84.5 mm wide at x 70-88, so the Pi (85 across) cannot go further forward. Four M2.5 standoffs, **8 or 10 mm, Hedi's choice**
+  (recommended 8), each held by an M2.5 x 6 from below through a counterbore, the Pi screwed on top. Works the same if the standoffs turn out male-female (the bottom screw is then not needed).
+- **Plug gap, x 150-184:** two ribs, 10.5 and 8.75 mm wide, at the plate's edges and nothing between them.
+- **FRDM pad, x 184-249, y 6.75-101.75:** the board on its 6 mm metal standoffs, four screwed from the tray's underside (M2.5 x 6 in counterbores, the tray sits flat); the two on the far edge just stand on the tray.
+  5.1 mm to the plate's right edge, 17 mm to its left.
+- **Fixings to plate 3**, 14, all on plate 3's own holes: M3 at (17.82, 53.24 and 67.24), (196.88 and 245.88, 38.76 and 81.77); M2.5 at (49, 35.94 and 84.53), (86.94, 40.23 and 80.23), (120.06, 35.94 and 84.53), (143.47, 52.65 and 67.88).
+
+**Wiring: only the BOM's parts (2026-10-06).** Three cables reach the FRDM. Figure: `renders/compute-tray-1-top-wiring.png` (untracked; regenerate from the preview file).
+
+| Cable (BOM) | Route | Length needed | Verdict |
+|---|---|---|---|
+| **J1 power**, C-to-C 20 cm (5.1), from board C's USB-C socket (plate 2, HW-19) | socket plug -> up through plate 3's right-hand slot (x 109-158, y 10-15) -> along the right edge, over the right rib -> J1 on the nose edge | about 13 cm | **fits**, about 3 cm to spare. The big slot in the plug gap is the second way up |
+| **J11 console**, USB-C extension 0.2 m (5.9), from the fascia's USB-C port | the port's body ends at x 225, y 41.3 (z 101) -> along the upper gap to the left edge (78 mm) -> up outside the plate edge (35 mm) -> J11's plug, 25 mm past the edge | about 14 cm | **fits**, the cable is 20 cm beyond the port's own 40 mm body. The slot at x 219.5 above the body's end is under the FRDM pad, which is why the route goes round the edge instead |
+| **J7 CAN**, 2x5 mating lead (4.4, not yet bought) to board B's transceiver (4.1), twisted pair, BOM 4.3 says about 30 cm | the plug on J7 -> 10 mm over the rear edge -> down plate 3's cross-slot (x 260-265, clear: the fascia's wall is at x 267-270) -> forward on plate 2 | about 15 cm | **fits** with a 30 cm lead |
+
+No other BOM item touches the FRDM (Ethernet, USB-A, audio and the 40-pin header are unused). Nothing here needs a change to the tray. **To confirm on the vehicle:** the J11 cable's bend behind the fascia, and the J1 plug's clearance
+over the right rib.
+
+**Checked (2026-10-06, every vertex of the STL against `hardware/scripts/chassis-layout.py`).** No vertex is outside plate 3, the nearest is 3.7 mm inside it (the Pi pad's front corners, where the plate narrows). All 14 fixings land on a plate
+hole of the right size, 10.6 mm or more from every counterbore. The FRDM pad's rear edge is 4.4 mm short of the chassis standoffs' hexagons. One solid.
+
+**Accepted risks.** The FRDM connector boxes are from a photo (+-1 mm, heights guessed), so they judge placement and build nothing; the tray's only dependence on them is the plug gap (generous) and the rear room (4.4 mm). The Pi's port block and GPIO position are indicative.
+Nothing has been printed or dry-fitted; the carrier tray's fit review (MEC-17) is the model for the first fit on the real boards.
+
+---
+
+## MEC-19 · A separate pad spread over plate 2's rear
+
+**Status (2026-10-06): ordered 2026-10-06 (BOM 3.28); modelled, checked against the plate data, not printed.** Source: [`../mechanical/cad/plate2-rear-pad.scad`](../mechanical/cad/plate2-rear-pad.scad) -> `plate2-rear-pad.stl`.
+A third part in the same print order as the carrier tray (MEC-17) and the compute tray (MEC-18). PETG, 4 mm, flat. **55 x 96 x 4 mm.**
+
+**Why a separate part, not a longer carrier tray.** Hedi asked whether the carrier tray should reach plate 2's rear. It should not: the carrier tray in the cart was already fit-reviewed (MEC-17), and a longer one meant a new STL, a new review and
+swapping the file. A separate pad changes nothing else. It was first drawn small (30 x 43 mm); Hedi then asked for it to be **spread over plate 2**, the way the compute tray spreads over plate 3, and this is that version.
+
+**Where.** x 196-251, y 12-108, behind the carrier tray. It stays clear of:
+
+- the carrier tray: its rear corner pads end at x 191.6, 4.4 mm ahead;
+- the chassis standoffs at (256.82, 22.17 and 98.36): 2.3 mm to the nearest hexagon corner;
+- the cross-slot (x 260.3-265.7) and the fascia's pads and clamp holes (x 262.9);
+- the Discovery, which overhangs the carrier tray to x 217.5 at z 95 and above. The pad is 4 mm tall, so nothing meets it.
+
+**The J7 lane and the harness cross it.** The CAN lead (MEC-18) comes down the cross-slot at about y 74 and runs forward to board B (y 92 at x 190): a diagonal over the pad's top, where it lies like any wire. Keep that lane (about y 70-96) free of drilled parts, or tie the lead down.
+The harness to the fascia's ports (MEC-12) lies over the pad the same way. The pad has no windows, so plate 2's three long slots under it (x 203.5, 219.5, 235.5, y 26-94) are covered; nothing in the BOM passes through them.
+
+**Six fixings, from below** into nuts held in pockets on top, each on an opening plate 2 already has: two places along the long slot at x 203.47-207.77 ((205.62, 40) and (205.62, 80); the slot is 4.29 mm wide, so the screw may slide along it, a washer under the head, and the pad can be moved along y by hand before it is tightened),
+M2.5 into the holes at (227.88, 20.23 and 100.23), M3 into the holes at (245.88, 38.76 and 81.77). The harness taped under plate 2 stops at x 202, so the heads are free.
+
+**Checked (2026-10-06, against `hardware/scripts/chassis-layout.py`).** The pad is inside plate 2 with 10.5 mm to its edge. All four plate holes exist at the sizes the fixings need; both slot fixings are inside the slot with at least 2.15 mm to its ends; the fixings are 25.8 mm or more apart and 5.1 mm or more from the pad's edge. One solid. Drawn on the layout drawing (R1-R6) and animated in `animate-carrier-tray.py` (step 8).
+
+**Open.** The M3 and M2.5 nuts' real across-flats and thickness (assumed 5.5 / 2.4 and 5.0 / 2.4 mm). Nothing is planned for the pad yet; it is a drilling zone. Hardware: BOM 3.27.

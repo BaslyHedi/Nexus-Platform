@@ -5,7 +5,7 @@
 //   openscad -D 'PART="step1"'    -o ../renders/tray-step1-boards.png  carrier-tray.scad   // 1: boards placed on the tray
 //   openscad -D 'PART="step2"'    -o ../renders/tray-step2-plate2.png  carrier-tray.scad   // 2: the tray placed on plate 2
 //
-// STATUS 2026-10-06: fit-reviewed for one print (MEC-17, "Fit review before ordering"). Print it (PETG, 4 mm); a hand-cut sheet is the fallback.
+// STATUS 2026-10-06: fit-reviewed for one print (MEC-17, "Fit review before ordering"). Print it (PETG, 4 mm); a hand-cut sheet is the fallback.  ORDERED 2026-10-06 (Craftcloud #516727254320, BOM 3.28), not printed yet.
 //
 // TWO STEPS, TWO FRAMES
 //   STEP 1 - the tray frame (u, v). Origin at the tray's front-right corner, u toward the rear, v toward

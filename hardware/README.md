@@ -23,7 +23,7 @@ SVG in a browser; to render, point headless Chrome at it.
 |---|---|
 | [chassis-layout.svg](renders/chassis-layout.svg) | Where components sit on the **three** decks, to scale at 1.7 px/mm, plus the side elevation of the deck stack |
 | [wiring-schematic.svg](renders/wiring-schematic.svg) | What connects to what - fuses, switches, wire gauges, 5 V rails, CAN, I²C, motor control |
-| [stm32-carrier.svg](renders/stm32-carrier.svg) | Soldering and wiring for the three kit boards: A and B, which the Discovery drops onto, and C, the 5 V split. Component side and solder side, hole by hole, with netlist and pre-solder checks (MEC-08, MEC-15, HW-19). **Generated** by `python3 stm32-carrier.py`, which also feeds the 3D animation in [`../mechanical/scripts/animate-carrier.py`](../mechanical/scripts/animate-carrier.py) |
+| [stm32-carrier.svg](renders/stm32-carrier.svg) | Soldering and wiring for the three kit boards: A and B, which the Discovery drops onto, and C, the 5 V split. Component side and solder side, hole by hole, with netlist and pre-solder checks (MEC-08, MEC-15, HW-19). **Generated** by `python3 stm32-carrier.py`, which also feeds the 3D animation in [`../mechanical/scripts/animate-stm32-carrier.py`](../mechanical/scripts/animate-stm32-carrier.py) |
 | [`../decisions/README.md`](../decisions/README.md) | **Why** the drawings look the way they do - HW, MEC, SYS and SW entries, each with its reasoning and consequences. Not in this folder any more |
 
 Part numbers, prices and status live in [`../bom/BOM.md`](../bom/BOM.md);

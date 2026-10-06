@@ -1,8 +1,8 @@
 """Assembly animation of the STM32 carrier and the 5 V split board (MEC-15, HW-19), by Blender.
 
-    blender -b -P animate-carrier.py                   # -> ../renders/carrier-animation.mp4, 47 s
-    blender -b -P animate-carrier.py -- --preview      # half size, every 4th frame
-    blender -b -P animate-carrier.py -- --still 40     # one PNG at 40 s, for checking a moment
+    blender -b -P animate-stm32-carrier.py                   # -> ../renders/stm32-carrier-animation.mp4, 47 s
+    blender -b -P animate-stm32-carrier.py -- --preview      # half size, every 4th frame
+    blender -b -P animate-stm32-carrier.py -- --still 40     # one PNG at 40 s, for checking a moment
 
 Nothing is read from disk but ../../hardware/scripts/stm32-carrier.py, which owns every hole, part and
 wire; this script only gives them bodies. It follows the drawing's build order: the sockets
@@ -25,7 +25,7 @@ from mathutils import Matrix, Vector
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 RENDERS = os.path.join(HERE, "..", "renders")
-OUT = os.path.join(RENDERS, "carrier-animation.mp4")
+OUT = os.path.join(RENDERS, "stm32-carrier-animation.mp4")
 ARGS = sys.argv[sys.argv.index("--") + 1:] if "--" in sys.argv else []
 PREVIEW = "--preview" in ARGS
 STILL = float(ARGS[ARGS.index("--still") + 1]) if "--still" in ARGS else None
@@ -706,6 +706,7 @@ sc.render.fps = FPS
 sc.render.engine = 'BLENDER_WORKBENCH'
 sh = sc.display.shading
 sh.color_type, sh.light = 'MATERIAL', 'STUDIO'
+sh.studio_light = 'paint.sl'                                  # lights the undersides too; the default studio light leaves them black
 sh.show_cavity = sh.show_object_outline = True
 sh.background_type = 'VIEWPORT'
 sh.background_color = (0.16, 0.17, 0.19)
@@ -715,7 +716,7 @@ sc.render.resolution_x, sc.render.resolution_y = 1280, 720
 if STILL is not None:
     sc.frame_set(S(STILL))
     sc.render.image_settings.file_format = 'PNG'
-    sc.render.filepath = os.path.join(RENDERS, f"carrier-still-{STILL:g}.png")
+    sc.render.filepath = os.path.join(RENDERS, f"stm32-carrier-still-{STILL:g}.png")
     bpy.ops.render.render(write_still=True)
     print("wrote", sc.render.filepath)
     sys.exit(0)
