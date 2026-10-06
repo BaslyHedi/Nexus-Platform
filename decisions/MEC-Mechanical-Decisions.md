@@ -1394,6 +1394,7 @@ sat there). **This one:** Hedi asked for both boards turned across the vehicle a
 **The board is about 95 x 65 mm, not 105 x 65.** In the guide's photos the six mounting holes sit 49.0 mm apart, then about 40, on a 58 mm spacing, and the outline is 95 x 65 at that scale. The 105 is the *non-S* board's (UM12262 and its
 design files; MEC-11 took its drill file from there, and its first four holes still match). Hedi measured **96 x 67** over the connectors, which is the PCB plus the RJ45 and USB-A that overhang it. The tray uses 95 x 65 and its
 FRDM screw holes are loose (4.2 mm, counterbore 7.2 mm) so the +-1 mm in the photo does not matter.
+**Confirmed 2026-10-06 against the -S's own design files** (board 95020 rev B, in `vendor/`): the Gerber outline is **95.0 x 65.0 mm**, the six mounting holes are plated ⌀3.175 at u 3.5 / 52.5 / 91.5 and v 3.5 / 61.5, exact, and every connector in the table above lands within 1 mm of where the photo put it (full table: `bom/parts/1.1-FRDM-IMX91S/NOTES.md`). The tray as ordered is right on all four screwed holes; the two far-edge standoffs it simply stands on sit at u 91.5, 0.5 mm further than the model's 91.0, which its pad covers with room to spare. The ordered `compute-tray.stl` does not change.
 
 **The layout** (plate 3 frame, x from the nose):
 
