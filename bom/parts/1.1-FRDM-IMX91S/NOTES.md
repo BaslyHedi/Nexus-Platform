@@ -118,3 +118,5 @@ Spacings 49.0 and 39.0 along u, 58.0 along v. The first two columns are what MEC
 **J7 pinout (the -S's netlist, replacing the "inferred for the -S" in BOM 4.2):** 1 VDD_3V3_EXT · 2 VDD_5V_EXT · 3 ADC_IN0 · 4 ADC_IN1 · 5 CLKO04_3V3 · **6 GND** · 7 I2C1_SCL · **8 CAN_H** · 9 I2C1_SDA · **10 CAN_L**.
 
 **CAN.** The -S has its own **TJA1051T/3** transceiver (U11) on CAN1, through a common-mode choke to J7 pins 8 and 10, with a split termination of 60.4 ohm resistors and a jumper **JP1** (schematic sheet with `CAN1_TX` / `CAN1_RX`). Which termination resistors are fitted on the real board is not stated in the text of the schematic: **read JP1 and the resistors on the desk board before wiring the bus**, since BOM 4.3 allows 120 ohm at the two ends only.
+
+Hedi's hand measurement of the desk board (2026-10-06) matches the Gerber outline, 95.0 x 65.0 mm.
