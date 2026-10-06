@@ -1338,9 +1338,12 @@ which is why the second lane is the mirror of the first. The tray has a wing for
      18 AWG wire each (2.4 mm), no more. Route them there;
    - the Bauer's hole is 6.8 mm, wider than an M3 head (5.5), so each screw needs a **washer of 8 mm or more (M3 DIN 9021, 9 mm)** on top, not in the BOM. M3 x 8 suits a
      tab 3-6 mm thick; try the stack on the real part first.
-7. **Still not verifiable from here:** the corner-hole inset (now absorbed, not known), the nuts' real across-flats (M2.5 5.0, M3 5.5 assumed) and the
-   M2.5 screw head's height (2.2 mm assumed at most). The file tolerates each of them, but not all three being wrong together.
-8. **How it is printed matters:** flat, PETG, 0.2 mm layers, 3 perimeters, 20 % infill, a brim against warping (a 183 x 110 x 4 mm slab curls a
+7. **Nuts.** The M2.5 nut was checked on 5 mm paper on 2026-10-06: **5.0 mm across flats**, matching the 5.4 mm pocket. The M3 nuts and screws are not bought yet:
+   buy **plain hex nuts** (ISO 4032 or DIN 934, 5.5 mm across flats, 2.4 thick; **not nyloc**, 4 mm tall, which would not sit in the 2.6 mm pocket), M3 x 8 screws with a
+   pan, cheese or socket head (not countersunk), and two DIN 9021 washers (9 mm).
+8. **Still not verifiable from here:** the corner-hole inset (now absorbed, not known). A socket-cap M2.5 head is 2.5 mm tall, 0.1 mm more than the 2.4 mm counterbore:
+   the tray would rest on the heads by 0.1 mm, harmless.
+9. **How it is printed matters:** flat, PETG, 0.2 mm layers, 3 perimeters, 20 % infill, a brim against warping (a 183 x 110 x 4 mm slab curls a
    little at its corners). Order it as FDM and not as SLS or resin, whose small holes close up.
 
 **To measure or decide before making it.**
