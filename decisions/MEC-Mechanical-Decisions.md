@@ -1150,7 +1150,7 @@ return - goes up through it, between the buses. The rearward runs lie flat on pl
 
 ## MEC-17 · *Proposed:* one tray carries boards A, B and C and bolts to plate 2
 
-**Status (2026-10-05): proposed, not decided.** A brainstorm with Hedi, modelled so it can be
+**Status (2026-10-06): fit-reviewed for a single print; see "Fit review before ordering".** Proposed 2026-10-05. A brainstorm with Hedi, modelled so it can be
 judged. Source: [`../mechanical/cad/carrier-tray.scad`](../mechanical/cad/carrier-tray.scad).
 **Recommendation: print it** (PETG, 4 mm), for the reasons in "Two ways to make it" below.
 
@@ -1178,18 +1178,17 @@ from the edge the leads leave by, a raised central plateau with three ridges, tw
 grommet in the middle of that long edge. (This record had taken the holes for ears outside the body;
 the BOM's "54 mm matches no chassis rectangle" no longer matters.)
 
-- **Where it sits:** x 11-75, y 32-89, 9 mm ahead of where `plate1.py` parks it, with its **leads edge on
-  the vehicle's left** (y 89), the side board C's 5 V terminals face. **Cable room:** a lane of tray beside
-  that edge (5 mm clear before the S6 splice, wider where the plate allows), 10.5 mm behind the Bauer before
+- **Where it sits:** x 11-75, y 28.5-93 (the body with its side walls, 2026-10-06; 32-89 was the base alone), 9 mm ahead of where `plate1.py` parks it, with its **leads wall on
+  the vehicle's left** (y 93), the side board C's 5 V terminals face. **Cable room:** a lane of tray beside
+  that wall (3 mm clear before the S6 splice, 4 mm on the right before S7), 10.5 mm behind the Bauer before
   board C, and a mirror lane on the right. The two output leads (yellow, black) run along the left lane and the
-  rear lane to C's IN terminal. The rim has legs at the corners only, so nothing closes the lanes. The S6 / S7
+  rear lane to C's IN terminal. Nothing closes the lanes (the rim is gone). The S6 / S7
   splices and their wiring are under "Where the splices go" below.
 - **Holding it:** two M3 x 8 screws from above through its holes into M3 nuts held in hex pockets in the
-  tray (E1 at (16, 63), E2 at (70, 63)), and a low rim of four corner legs 0.6 mm clear of the body to
-  locate it.
+  tray (E1 at (16, 63), E2 at (70, 63)) (the rim of four corner legs that located it is removed, see "Fit review before ordering", item 6).
 - **Held to the plate** by T1 (24.82, 60.24) and T2 (52.82, 60.24), two of the plate's M3 holes under the Bauer.
 - **Cable passages:** the plate's two slots beside the Bauer (x 56-80, y 27-37 and 83-93) are open in the
-  tray too, so cables can drop to the harness board below, and these are the wires to the splices. The window
+  tray too, but the Bauer's body (to x 75) covers all except their last 5 mm (x 75-80); the wires to the splices come up there. The window
   by C is left for the 6 V pair and the driver's I2C lead.
 
 **The tray has the plate's holes.** Every plate-2 hole wholly under the tray is copied at the plate's
@@ -1213,7 +1212,7 @@ its boards would be in the way while plate 2 lies upside down (MEC-16).
 
 1. At the bench, with the tray on three posts clear of every screw: a nut pressed into each of the eight
    pockets (six M2.5, two M3).
-2. The Bauer into its rim, two M3 screws through its holes. Boards C, then A and B, lowered onto the
+2. The Bauer onto the tray, two M3 screws with 9 mm washers through its holes. Boards C, then A and B, lowered onto the
    tray, their nylon standoffs on the tray's board holes.
 3. Twelve M2.5 screws from below into the standoffs.
 4. The S6 and S7 splices into their outlines, either side of the Bauer.
@@ -1309,14 +1308,52 @@ which is why the second lane is the mirror of the first. The tray has a wing for
 - **Rejected:** 12 mm standoffs under C only (a part that is not in the BOM, splices buried under a board with
   about 1.7 mm of margin and no room for the levers); recessing them into the tray (4 mm is too thin).
 
+**Fit review before ordering (2026-10-06).** One print, so every open point was checked against the real plate data
+(`chassis-layout.py`, the survey) and `plate1.py`, with shapely on the model's own outline. Findings, worst first:
+
+1. **The tray sat on two chassis standoffs (fixed).** The four chassis standoffs (6 mm hex, `STANDOFFS`) stand on plate 2's top face to carry plate 3.
+   Two of them, (27.35, 22.17) and (27.35, 98.36), are under the Bauer end's two lanes, and the tray was solid over both (22.8 mm2 of overlap each,
+   in either hex orientation): it would have rested on two hexes and not on the plate, and the model had copied the plate's 4.29 mm
+   hole there as if it were a free hole. Now a ⌀9.0 notch round each. The hand-cut sheet template starts at y 31 and never reached them.
+2. **The six fixings had no tolerance (fixed).** Tray hole 2.8 against an M2.5 screw left +-0.15 mm, and T4 sits on a 2.71 plate hole (+-0.10), so T4
+   tolerated +-0.26 mm in total, less than a printed part's error over 120 mm (0.3 % is 0.37 mm). Now the tray holes are 3.4, so the captive nut
+   locates the screw, the nut pockets are 5.4 across flats (nut 5.0; a printed hex comes out 0.1-0.2 small), and T4's hole and pocket are slots 1.0 mm long
+   along the tray, so its nut can sit 0.5 mm either way. The other five have +-0.34 from their 3.18 plate holes plus the nut's float.
+3. **The board holes had little margin (fixed).** The inset is an estimate (2.5 +-0.5), the standoffs were fitted into holes widened with scissors, and 3.4 mm held +-0.45.
+   Now 4.0 mm, with a 6.4 mm counterbore 2.4 mm deep (was 6.0 and 2.0) so a screw head up to 2.2 mm tall still leaves the tray flat on plate 2.
+4. **M3 nut pockets** for the Bauer widened from 5.7 to 5.9 across flats (nut 5.5).
+5. **Checked and fine:** the tray is one piece (one 2D region, no feature under 1.2 mm), 0.60 mm inside plate 2's edge at its closest (board A's front
+   corner pad, 6.8 mm of edge within 1 mm; the survey and the print each add about 0.3 mm, so it may touch the edge and cannot hang over by more than a
+   tenth), every fixing sits on a plate hole within 0.01 mm, the nut pockets are at least 1.9 mm from any other opening, and the counterbores 4.5 mm
+   from any pocket. The screw heads under plate 2: T4 3.9 mm, T6 3.8, T3 8.8, T5 10.9 from the nearest taped part. T4 is the only clear hole
+   under board A, so it stays.
+6. **The Bauer, measured from Hedi's photo on 5 mm paper (2026-10-06; no callipers).** Scale from the grid (17.2 px/mm), corrected for the camera's
+   height (about 36 cm, so +1.7 % at the tab and +6 % at the fin tops). Holes **54 mm apart** (read 53.8, +-1) and about 5 mm from each tab end: the
+   critical dimension is confirmed. Bore about 6.9 mm. But the body is **about 64 wide across the holes' axis, not 57**: the side walls of the fin banks stand
+   3.5-4 mm outside the base, so the holes are about **30 mm from the leads wall and 34 from the other** (the drawing's 26 + 31 = 57 is the base). The fin
+   tips also reach about 5 mm past the tab at one end, the front once the leads are on the vehicle's left. Consequences, all handled in the file or below:
+   - the **rim would have collided** (its legs stood 1.2 mm off a 57 mm body, inside the real walls): removed, the two screws locate the Bauer alone;
+   - the body covers y 28.5-93 (was 32-89): **3.0 mm from S6, 4.0 from S7, 1.9 and 2.9 mm from the two chassis standoffs, 10.5 from board C**, all clear;
+   - it **covers most of the plate's two tie slots**, which run x 56-80: only the last 5 mm (x 75-80) is open for the S6 and S7 wires, enough for one
+     18 AWG wire each (2.4 mm), no more. Route them there;
+   - the Bauer's hole is 6.8 mm, wider than an M3 head (5.5), so each screw needs a **washer of 8 mm or more (M3 DIN 9021, 9 mm)** on top, not in the BOM. M3 x 8 suits a
+     tab 3-6 mm thick; try the stack on the real part first.
+7. **Nuts.** The M2.5 nut was checked on 5 mm paper on 2026-10-06: **5.0 mm across flats**, matching the 5.4 mm pocket. The M3 nuts and screws are not bought yet:
+   buy **plain hex nuts** (ISO 4032 or DIN 934, 5.5 mm across flats, 2.4 thick; **not nyloc**, 4 mm tall, which would not sit in the 2.6 mm pocket), M3 x 8 screws with a
+   pan, cheese or socket head (not countersunk), and two DIN 9021 washers (9 mm).
+8. **Still not verifiable from here:** the corner-hole inset (now absorbed, not known). A socket-cap M2.5 head is 2.5 mm tall, 0.1 mm more than the 2.4 mm counterbore:
+   the tray would rest on the heads by 0.1 mm, harmless.
+9. **How it is printed matters:** flat, PETG, 0.2 mm layers, 3 perimeters, 20 % infill, a brim against warping (a 183 x 110 x 4 mm slab curls a
+   little at its corners). Order it as FDM and not as SLS or resin, whose small holes close up.
+
 **To measure or decide before making it.**
 
 - **The corner holes' inset** from the board edges is **estimated, not measured: 2.5 mm, give or take 0.5**. The basis is
   Hedi's photo of board C (2026-10-05): the 5.8 mm-across-corners standoff hexes sit almost flush with the board edges,
   so their centres are close to the edge, and the holes are separate from the 2.54 mm grid (its first hole is 3.6 mm from the
   long edge and 5.8 mm from the end). Hedi cannot measure them. So the tray is built to tolerate the error: board holes of
-  3.4 mm for the M2.5 screws (0.45 mm of play each way, enough for +-0.5 mm of inset on both sides) and a round pad of r 4.6
-  mm round each corner so the 6 mm counterbore never breaks the tray's edge. The pads stay inside plate 2 (0.6 mm to spare
+  4.0 mm for the M2.5 screws (0.75 mm of play each way, less about 0.1 a printed hole loses; changed from 3.4 on 2026-10-06) and a round pad of r 4.6
+  mm round each corner so the 6.4 mm counterbore, even 0.5 mm off centre, leaves a 0.9 mm wall at the tray's edge. The pads stay inside plate 2 (0.6 mm to spare
   at board A's front corner). A hand-cut sheet should be drilled from the boards, not the template.
 - **Board C's corner holes:** C is built (2026-10-05) with a standoff in each of its four corners, so the four board holes per
   board are right; their inset is the estimate above.
