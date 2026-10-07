@@ -44,12 +44,11 @@ for col, row, net in [('m', 1, 'CANH'), ('o', 1, 'CANL'), ('q', 1, 'GND'), ('q',
 for col, row, net in C.XCVR_SOCKET[1] + C.CAN_SOCKET[1]:   # the module's two sockets
     put('B', col, row, net)
 for col, row, net in [('a', 24, '5V'), ('c', 24, 'GND'), ('g', 24, '5V'), ('i', 24, 'GND'), ('a', 12, '5V'),
-                      ('c', 12, 'GND'), ('a', 7, '5V'), ('c', 7, 'GND'), ('g', 7, 'CC1'), ('i', 7, 'CC2'),
-                      ('g', 8, 'CC1'), ('i', 8, 'CC2'), ('g', 12, '5V'), ('i', 12, '5V')]:
+                      ('c', 12, 'GND'), ('a', 7, '5V'), ('c', 7, 'GND')]:
     put('C', col, row, net)
 # conductors that arrive from the component side and count as a wire end at their pad
-ENTRY = {('C', 1, 7): 'pigtail red', ('C', 3, 7): 'pigtail black', ('C', 7, 7): 'pigtail green', ('C', 9, 7): 'pigtail yellow'}
-WIRE_NET = {'PWM': ('PWM_MCU', 'PWM_SRV'), 'CC': ('CC1', 'CC2')}
+ENTRY = {('C', 1, 7): 'pigtail red', ('C', 3, 7): 'pigtail black'}
+WIRE_NET = {'PWM': ('PWM_MCU', 'PWM_SRV')}
 R = {'ins': 0.3, 'pwr': 0.39, 'lead': 0.12}         # wire radius, in pitches
 STANDOFF = 2.89 / 2.54            # a 5 mm hex nylon standoff: corner radius
 STANDOFF_FLAT = 2.5 / 2.54        # ... and flat radius

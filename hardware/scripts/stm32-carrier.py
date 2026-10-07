@@ -83,7 +83,7 @@ def N(b, col, row):
 NET = {
     '5V': '#dc2626', 'GND': '#111827', '3V3': '#db2777', '6V': '#d97706',
     'PWM': '#92400e', 'SCL': '#7c3aed', 'SDA': '#a855f7', 'CTX': '#0891b2',
-    'CRX': '#0e7490', 'TERM': '#64748b', 'CANH': '#1d4ed8', 'CANL': '#60a5fa', 'CC': '#059669',
+    'CRX': '#0e7490', 'TERM': '#64748b', 'CANH': '#1d4ed8', 'CANL': '#60a5fa',
     'TERM1': '#64748b',
 }
 
@@ -571,7 +571,7 @@ C_TERMS = [   # pins, entry (+X, the row-24 end), name, note
     ([('a', 24, '+5V'), ('c', 24, 'GND')], '+X', 'IN 5V', 'Bauer via SW2'),
     ([('g', 24, '+5V'), ('i', 24, 'GND')], '+X', 'TO STM32', 'to B 5V IN'),
 ]
-C_RES = [(('g', 8), ('g', 12), 'R1 10k'), (('i', 8), ('i', 12), 'R2 10k')]
+C_RES = []   # none: the FRDM boots from VBUS and GND alone, so no source Rp is fitted (HW-02, HW-19)
 
 # The KUOQIY 6-wire USB-C female socket (BOM 5.1), lying on its side with its flange flush
 # at the row-1 edge. The flange is 16.7 x 10.3 and the body 12.0 x 5.3, centred on it, so the
@@ -579,21 +579,17 @@ C_RES = [(('g', 8), ('g', 12), 'R1 10k'), (('i', 8), ('i', 12), 'R2 10k')]
 C_SOCKET = dict(y=11.43, flange=(-5.79, -3.79), flange_w=16.7, body=(-3.79, 10.21), body_w=12.0,
                 flange_h=10.3, body_h=5.3)
 # pigtail wire -> landing hole, cut to about 20 mm: (label, colour, col, row, exit Y on the body)
-C_PIGTAIL = [('V', '#dc2626', 'a', 7, 7.2), ('G', '#111827', 'c', 7, 9.0),
-             ('CC1', '#16a34a', 'g', 7, 13.8), ('CC2', '#eab308', 'i', 7, 15.6)]
-C_CUT = [('D-', '#e5e7eb', 10.8), ('D+', '#1e3a8a', 12.2)]  # cut short, each insulated alone
+C_PIGTAIL = [('V', '#dc2626', 'a', 7, 7.2), ('G', '#111827', 'c', 7, 9.0)]
+# D-, D+, CC1 and CC2 are cut short, each insulated alone (the socket's own 5.1k Rd stays on CC; the FRDM does not use CC)
+C_CUT = [('D-', '#e5e7eb', 10.8), ('D+', '#1e3a8a', 12.2), ('CC1', '#16a34a', 13.8), ('CC2', '#eab308', 15.6)]
 C_TIES = [2, 6]              # zip ties at these rows, through 3 mm holes drilled at b and i
 C_WIRES = [   # the FRDM's current in 18 AWG, IN 5V -> C1 -> socket on each rail
     ('5V', [(1, 24), (0.5, 23.5), (0.5, 12.5), (1, 12)], 'pwr'),              # IN 5V + to C1 +
     ('5V', [(1, 12), (1.5, 11.5), (1.5, 7.5), (1, 7)], 'pwr'),                # C1 + to socket red
     ('5V', [(1, 24), (1.5, 23.5), (6.5, 23.5), (7, 24)], 'pwr'),              # IN 5V + to TO STM32 +
-    ('5V', [(7, 24), (7.5, 23.5), (7.5, 12.5), (7, 12)], 'ins'),              # TO STM32 + to R1 top
-    ('5V', [(7, 12), (7.5, 11.5), (8.5, 11.5), (9, 12)], 'ins'),              # R1 top to R2 top
     ('GND', [(3, 24), (2.5, 24.5), (2.5, 12.5), (3, 12)], 'pwr'),             # IN 5V - to C1 -
     ('GND', [(3, 12), (2.5, 11.5), (2.5, 7.5), (3, 7)], 'pwr'),               # C1 - to socket black
     ('GND', [(3, 24), (3.5, 24.5), (8.5, 24.5), (9, 24)], 'pwr'),             # IN 5V - to TO STM32 -
-    ('CC', [(7, 8), (7, 7)], 'lead'),                                         # R1's lower lead to CC1
-    ('CC', [(9, 8), (9, 7)], 'lead'),                                         # R2's lower lead to CC2
 ]
 
 def draw_socket(v, top, hf):
@@ -625,7 +621,7 @@ def draw_socket(v, top, hf):
         text(lx, ly - 2, 'opening out, C-to-C', 6.5, '#64748b', anchor='end')
         text(lx, ly + 7, 'cable to FRDM J1', 6.5, '#64748b', anchor='end')
         text(lx, ly + 18, f"zip ties along {LET[C_TIES[0] - 1]}, {LET[C_TIES[1] - 1]}", 6.5, '#64748b', anchor='end')
-        text(lx, ly + 27, 'D−/D+ cut, insulated', 6.5, '#64748b', anchor='end')
+        text(lx, ly + 27, 'D−/D+/CC1/CC2 cut, insulated', 6.5, '#64748b', anchor='end')
     else:
         for lab, colr, col, row, ye in C_PIGTAIL:
             x, y = hf(ci(col), row)
@@ -692,8 +688,6 @@ def board_c(v, top):
     else:
         for net, pts, kind in C_WIRES:
             draw_wire(v, net, 'C', pts, kind, hfun=hf)
-        x, y = hf(8, 5.5)
-        text(x, y + 3, f"R1 / R2 leads bent to {silk('C', 'g', 7)} / {silk('C', 'i', 7)}", 6.5, '#475569', '700', anchor='middle', halo=True)
 
 def orientation_inset(y0):
     """Which board goes under which header: the Discovery from above, A and B beneath it."""
@@ -795,12 +789,12 @@ if __name__ == "__main__":
     text(VX1 - 30, CY - 42, 'C  5 V SPLIT BOARD  (component side)', 12, '#1a1a1a', '700')
     text(VX1 - 30, CY - 27, 'across the plate-2 waist, x 85.5-115.5: letter A at the vehicle right, 10 to the front · socket opening faces the vehicle right', 8.5, '#64748b')
     text(VX2 - 30, CY - 42, 'C  SOLDER SIDE  (turned over about the long axis)', 12, '#1a1a1a', '700')
-    text(VX2 - 30, CY - 27, 'the FRDM current in 18 AWG (thick), each rail a chain IN 5V → C1 → socket; the Rp tops in 22 AWG', 8.5, '#64748b')
+    text(VX2 - 30, CY - 27, 'the FRDM current in 18 AWG (thick), each rail a chain IN 5V → C1 → socket', 8.5, '#64748b')
     vc_t = View(VX1 + 70, CY, C_EDGE_X[0], C_EDGE_Y[0], C_EDGE_Y[1], flip=False, scale=4.6)
     vc_b = View(VX2 + 70, CY, C_EDGE_X[0], C_EDGE_Y[0], C_EDGE_Y[1], flip=True, scale=4.6)
     board_c(vc_t, True)
     board_c(vc_b, False)
-    text(VX1 - 30, CY + 165, 'Socket first: meter CC1 and CC2 to V and to G, all four open - a socket with its own Rd (5.1k) or Rp cannot be the source.', 8.4, '#b45309')
+    text(VX1 - 30, CY + 165, 'The socket carries its own 5.1k Rd on CC1 and CC2 (4.98k measured, 2026-10-07). Its CC wires are cut short and insulated: the FRDM boots on VBUS and GND alone.', 8.4, '#b45309')
     text(VX1 - 30, CY + 179, f"The USB-C body rides 2.5 mm up on its flange. Ties through 3 mm holes at {silk('C', 'b', 2)} / {silk('C', 'i', 2)} and {silk('C', 'b', 6)} / {silk('C', 'i', 6)}, the second one over the pigtail.", 8.4, '#b45309')
 
     # ---------------------------------------------------------------- right column
@@ -827,7 +821,6 @@ if __name__ == "__main__":
     net_rows = [
         (NET['5V'], '5 V', 'C TO STM32', f"B 5V IN ({N('B', 'q', 21)}) → P2-4 ({silk('B', 'h', 2)})"),
         (NET['5V'], '5 V FRDM', 'C IN 5V', f"{N('C', 'a', 24)} → C1 + ({silk('C', 'a', 12)}) → socket red ({silk('C', 'a', 7)}), 18 AWG"),
-        (NET['5V'], '5 V Rp', 'C IN 5V', f"TO STM32 + ({N('C', 'g', 24)}) → R1 top ({silk('C', 'g', 12)}) → R2 top ({silk('C', 'i', 12)})"),
         (NET['GND'], 'GND FRDM', 'C IN GND', f"{N('C', 'c', 24)} → C1 − ({silk('C', 'c', 12)}) → socket black ({silk('C', 'c', 7)}), 18 AWG"),
         (NET['GND'], 'GND STM32', 'C IN GND', f"TO STM32 − → B 5V IN − ({N('B', 'q', 23)}) → P2-2 ({silk('B', 'h', 1)}) · → XCVR GND ({xc('GND')})"),
         (NET['GND'], 'GND CAN', f"P2-1 {N('B', 'g', 1)}", f"CAN GND ({silk('B', 'q', 1)})"),
@@ -842,15 +835,14 @@ if __name__ == "__main__":
         (NET['CANH'], 'CAN_H', 'module H pin', f"socket {N('B', 'o', CAN_ROW)} ← CAN H ({silk('B', 'm', 1)}) · → R3a ({silk('B', 'k', 19)})"),
         (NET['CANL'], 'CAN_L', 'module L pin', f"socket {N('B', 'p', CAN_ROW)} ← CAN L ({silk('B', 'o', 1)}) · → TERM ({silk('B', 'm', 22)})"),
         (NET['TERM'], 'TERM', 'R3a + R3b', f"100R {N('B', 'k', 19)}-{silk('B', 'k', 23)}, lead to {silk('B', 'k', 24)}, 20R to {silk('B', 'o', 24)} → TERM ({silk('B', 'm', 23)}) = 120 Ω"),
-        (NET['CC'], 'USB-C CC', 'C socket', f"green CC1 ({N('C', 'g', 7)}) ← R1 lead · yellow CC2 ({silk('C', 'i', 7)}) ← R2 lead (Rp, HW-02)"),
     ]
     y = table(100, 'NETLIST', ['Net', 'From', 'To'], net_rows, [12, 96, 190])
 
     ext_rows = [
         (None, 'C IN 5V', 'Bauer 50 W via SW2, 18 AWG pair (HW-17)'),
         (None, 'C TO STM32', '18 AWG pair to B 5V IN'),
-        (None, 'C USB-C', f"socket on C, pigtail soldered: red {silk('C', 'a', 7)}, black {silk('C', 'c', 7)}, green {silk('C', 'g', 7)}, yellow {silk('C', 'i', 7)} · C-to-C data cable to FRDM J1"),
-        (None, 'C D+ / D−', 'white and blue cut short, each insulated on its own - never twisted together'),
+        (None, 'C USB-C', f"socket on C, pigtail soldered: red {silk('C', 'a', 7)}, black {silk('C', 'c', 7)} · C-to-C data cable to FRDM J1"),
+        (None, 'C D+ / D−', 'white, blue, green and yellow (D−, D+, CC1, CC2) cut short, each insulated on its own - never twisted together'),
         (None, 'A 6V IN', 'UBEC 6 V out, 18 AWG pair (HW-14)'),
         (None, 'A SERVO', f"LD-1501MG plug: white (signal) {N('A', 'c', 14)} at the FRONT, red {silk('A', 'c', 13)}, black {silk('A', 'c', 12)} - HW-21"),
         (None, 'A I2C-A', 'INA226 GND, VCC, SCL, SDA - F-F leads, signal only'),
@@ -863,7 +855,7 @@ if __name__ == "__main__":
     parts = [
         (None, 'Board A', '5×7 board · 2 × 1×25 female · 1 × 2p terminal · 1×3 + 1×3 + 1×4 male · C2 470µF · R4 1k'),
         (None, 'Board B', '5×7 board · 2 × 1×25 + 1 × 1×4 + 1 × 1×2 female · 3p + 2p terminal · 1×2 male + jumper cap · R3a 100Ω + R3b 20Ω (120 Ω)'),
-        (None, 'Board C', '3×7 board · 2 × 2p terminal · USB-C socket (5.1), 2 zip ties · C1 470µF · R1, R2 10k'),
+        (None, 'Board C', '3×7 board · 2 × 2p terminal · USB-C socket (5.1), 2 zip ties · C1 470µF'),
         (None, 'From stock', 'caps: 2 of the 5 in 3.14 · resistors: 3.21 · module: 4.1 · headers, terminals: 5.11'),
         (None, 'Wire', '22 AWG insulated copper hook-up wire (not in BOM) · 18 AWG silicone copper (3.11) for the thick runs · not the CCA Dupont leads (5.7)'),
     ]
@@ -909,9 +901,9 @@ if __name__ == "__main__":
         ]),
         ('What moved off the WAGOs', [
             'Both 470 µF caps and every resistor are now on a board. C2 sits at',
-            'the servo header, where the stall current is. C1, R1 and R2 are on',
-            'board C, which is the 5 V split: the FRDM\'s amps never cross the',
-            'STM32 carrier, and the Rp pair sits beside the pigtail it serves.',
+            'the servo header, where the stall current is. C1 is on board C,',
+            'which is the 5 V split: the FRDM\'s amps never cross the STM32',
+            'carrier. No Rp is fitted: the FRDM boots on plain 5 V (HW-02).',
         ]),
         ('Grounds and supplies', [
             'The carrier\'s one ground lead is B 5V IN GND, back through C to the',
