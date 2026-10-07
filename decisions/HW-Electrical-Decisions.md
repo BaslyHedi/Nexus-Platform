@@ -636,6 +636,7 @@ remove that resistor.
   the Bauer and the carrier (MEC-15), and the row-24 end keeps IN 5V and TO STM32.
 - **Held by two zip ties** through 3 mm holes drilled at C·I2 / B2 and C·I6 / B6: one over the body,
   one over the pigtail as strain relief. Both clear the F5 standoff (C·F4) underneath by about 0.9 mm.
+- **Superseded by MEC-17 (2026-10-05): F5 and F6 no longer exist.** The board stands on four corner holes and nylon standoffs on the carrier tray, and the drawing, the routing check and the animation follow. What follows is the 2026-09-29 reasoning.
 - **The F5 screw is under the body.** The flange is 10.3 mm tall and the body 5.3 mm, centred, so
   the body rides 2.5 mm off the board and clears a pan-head M2.5. Fit that screw first.
 - **The pigtail is soldered, cut to about 20 mm:** red V into C·J7 and black G into H7, each the

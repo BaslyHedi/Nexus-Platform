@@ -51,10 +51,17 @@ for col, row, net in [('a', 24, '5V'), ('c', 24, 'GND'), ('g', 24, '5V'), ('i', 
 ENTRY = {('C', 1, 7): 'pigtail red', ('C', 3, 7): 'pigtail black', ('C', 7, 7): 'pigtail green', ('C', 9, 7): 'pigtail yellow'}
 WIRE_NET = {'PWM': ('PWM_MCU', 'PWM_SRV'), 'CC': ('CC1', 'CC2')}
 R = {'ins': 0.3, 'pwr': 0.39, 'lead': 0.12}         # wire radius, in pitches
-STANDOFF = 2.89 / 2.54
-FIX = {'A': [], 'B': [], 'C': [(c, r) for c, r, _, _ in C.C_FIX]}
-for b, c, r, _, _ in C.FIX:
-    FIX[b].append((c, r))
+STANDOFF = 2.89 / 2.54            # a 5 mm hex nylon standoff: corner radius
+STANDOFF_FLAT = 2.5 / 2.54        # ... and flat radius
+# the standoffs now stand on each board's four corner holes (MEC-17), so a wire may not run under any of them. A corner hole is
+# off the grid; it is given as a fractional (column, header row) so the same distance test applies.
+FIX = {'A': [], 'B': [], 'C': []}
+for b in 'AB':
+    cfg = C.BOARD[b]
+    for X, Y in C.corner_holes(*C.bx(b), *cfg['edge']):
+        FIX[b].append(((Y - cfg['y1']) / C.P + 1, 1 - C.SHIFT[b] - X / C.P))
+for X, Y in C.corner_holes(C.C_EDGE_X[0], C.C_EDGE_X[1], C.C_EDGE_Y[0], C.C_EDGE_Y[1]):
+    FIX['C'].append((Y / C.P + 1, X / C.P + 1))
 
 wires = [(n, [(b, c, r) for c, r in pts], k) for n, b, pts, k in C.WIRES]
 wires += [(n, pts, k) for n, pts, k in C.XWIRES]
@@ -134,6 +141,10 @@ for i, (net, pts, kind) in enumerate(wires):
         for fx in FIX[bd]:
             d = seg_pt(a, b, fx)
             if d < STANDOFF + R[kind]:
+                # a wire's own end sits on a pad and leaves flat to the board, so there the standoff is its hex FLAT (5.0 across), not its corner
+                is_end = min(math.hypot(e[0] - fx[0], e[1] - fx[1]) for e in ((pts[0][1], pts[0][2]), (pts[-1][1], pts[-1][2]))) <= d + 1e-6
+                if is_end and d >= STANDOFF_FLAT + R[kind] - 0.05:
+                    continue
                 err.append(f'wire {i} {net}: {d * 2.54:.2f} mm from a standoff centre on {bd}')
         for pad in used:
             if pad[0] != bd or (bd, *map(int, a)) == pad and whole((bd, *a)):
