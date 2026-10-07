@@ -153,7 +153,7 @@ CAPS = [('A', ('c', 8), ('c', 10), 'C2')]          # (minus leg, plus leg)
 # Face down reverses the header across the socket: CTX, CRX, GND, 3V3 from column n to q.
 # CAN H / L leave by the module's own 2-pin header, which points down when face down, into a
 # 1x2 socket seven holes behind the 4-pin row; the screw terminal is not used. Row 19 keeps the
-# hanging terminal 2.3 mm clear of F4's screw head.
+# hanging terminal 2.3 mm clear of where the old F4 screw head was (MEC-15, replaced by the corner standoffs of MEC-17).
 XCVR_ROW = 19
 XCVR_SOCKET = ('B', [('n', XCVR_ROW, 'CTX'), ('o', XCVR_ROW, 'CRX'), ('p', XCVR_ROW, 'GND'), ('q', XCVR_ROW, '3V3')])
 CAN_ROW = XCVR_ROW - 7                     # 17.55 mm on the module, 17.78 on the grid
@@ -174,8 +174,14 @@ def module_box():
     X0 = HX('B', XCVR_ROW) - MODULE['pin_in']
     yc = cy('B', 15.5)                      # the middle of the four pins, n-q
     return X0, X0 + MODULE['length'], yc - MODULE['width'] / 2, yc + MODULE['width'] / 2
-FIX = [('A', 7.0, 14.0, 'F1', '(148.18, 23.76) ⌀3.18'), ('B', 4.07, 15.0, 'F2', '(148.2, 72.2) ⌀2.71'),
-       ('A', 3.25, 5.457, 'F3', '(169.88, 14.24) ⌀2.71'), ('B', 15.11, 6.457, 'F4', '(169.88, 100.24) ⌀2.71')]
+# MEC-17 (2026-10-05): the three boards stand on one tray on their own four corner holes and nylon standoffs, so nothing is drilled and the
+# old direct fixings F1-F6 (MEC-15) are gone. The kit boards' corner holes are CORNER_INSET in from the edges, as the tray is drawn.
+CORNER_INSET = 2.5
+
+
+def corner_holes(x0, x1, y0, y1):
+    """The four corner holes of a board whose edges are x0..x1 (along the vehicle) and y0..y1 (across), in the drawing frame."""
+    return [(x, y) for x in (x0 + CORNER_INSET, x1 - CORNER_INSET) for y in (y0 + CORNER_INSET, y1 - CORNER_INSET)]
 
 # Wires, all insulated and all pad to pad: nothing is joined to another wire except at a pad,
 # and no pad takes more than two wire ends. A net with several pins is a chain, part to part.
@@ -184,7 +190,7 @@ FIX = [('A', 7.0, 14.0, 'F1', '(148.18, 23.76) ⌀3.18'), ('B', 4.07, 15.0, 'F2'
 # wire, 'lead' a component's own lead bent over to the next pad on the solder side.
 WIRES = [
     # ---- board A: the servo loop outboard in 18 AWG, then the GND chain on to the I2C headers
-    ('6V', 'A', [(3, 1), (0.5, 1), (0.5, 10), (3, 10)], 'pwr'),                  # 6V IN + to C2 +
+    ('6V', 'A', [(3, 1), (1.5, 1.5), (0.5, 2.5), (0.5, 10), (3, 10)], 'pwr'),                  # 6V IN + to C2 +
     ('6V', 'A', [(3, 10), (3.5, 10), (3.5, 13), (3, 13)], 'pwr'),                # C2 + to SERVO +
     ('GND', 'A', [(9, 2), (8.5, 2.5), (3.5, 2.5), (3, 3)], 'ins'),               # P1-5 (as built) to 6V IN -
     ('GND', 'A', [(3, 3), (1.5, 3), (1.5, 7.5), (3, 7.5), (3, 8)], 'pwr'),       # 6V IN - to C2 -
@@ -199,7 +205,7 @@ WIRES = [
     ('SDA', 'A', [(3, 18), (2.5, 18.5), (2.5, 22.5), (3, 23)], 'ins'),           # I2C-B to I2C-A
     # ---- board B: each header pin feeds one thing, so no pin carries more than two wires
     ('5V', 'B', [(17, 21), (17, 21.5), (9.5, 21.5), (9.5, 2.5), (8, 2)], 'ins'),                # 5V IN + to P2-4
-    ('GND', 'B', [(17, 23), (17.5, 23.5), (17.5, 24.5), (10.5, 24.5), (10.5, 1.5), (8, 1)], 'ins'),  # 5V IN - to P2-2
+    ('GND', 'B', [(17, 23), (17.5, 23.5), (16.5, 24.5), (10.5, 24.5), (10.5, 1.5), (8, 1)], 'ins'),  # 5V IN - to P2-2
     ('GND', 'B', [(7, 1), (7.5, 0.5), (16.5, 0.5), (17, 1)], 'ins'),             # P2-1 to CAN GND
     ('GND', 'B', [(17, 23), (16.5, 22.5), (16.5, 19.5), (16, 19)], 'ins'),       # 5V IN - to XCVR GND
     ('3V3', 'B', [(8, 3), (8.5, 3.5), (11.5, 3.5), (11.5, 9.5), (18.5, 9.5), (18.5, 18.5), (17, 19)], 'ins'),  # P2-6 to XCVR 3V3
@@ -390,15 +396,13 @@ def draw_wire(v, net, b, pts, kind, hfun=None):
         if float(c).is_integer() and float(r).is_integer():
             w(f'<circle cx="{x:.1f}" cy="{y:.1f}" r="2.3" fill="{colr}" stroke="#fff" stroke-width="0.6"/>')
 
-def draw_fix(v, b, col, row, lab=None):
-    x, y = hp(v, b, col, row)
-    r = 2.9 * v.s
-    w(f'<circle cx="{x:.1f}" cy="{y:.1f}" r="{r:.1f}" fill="#f1f5f9" fill-opacity="0.7" stroke="#64748b" stroke-width="1" stroke-dasharray="3 2"/>')
+def draw_corner(v, x, y):
+    """A corner fixing: the board hole and the 8 mm nylon standoff it carries (MEC-17)."""
+    x, y = v.px(x, y)
+    w(f'<circle cx="{x:.1f}" cy="{y:.1f}" r="{2.9 * v.s:.1f}" fill="#f1f5f9" fill-opacity="0.7" stroke="#64748b" stroke-width="1" stroke-dasharray="3 2"/>')
     w(f'<line x1="{x - 4:.1f}" y1="{y:.1f}" x2="{x + 4:.1f}" y2="{y:.1f}" stroke="#64748b" stroke-width="0.9"/>')
     w(f'<line x1="{x:.1f}" y1="{y - 4:.1f}" x2="{x:.1f}" y2="{y + 4:.1f}" stroke="#64748b" stroke-width="0.9"/>')
     w(f'<circle cx="{x:.1f}" cy="{y:.1f}" r="{1.6 * v.s:.1f}" fill="none" stroke="#0f172a" stroke-width="1.3"/>')
-    if lab:
-        text(x - 1.9 * v.s - 1, y - 1.9 * v.s, lab, 7.5, '#0f172a', '700', anchor='end', halo=True)
 
 def label(v, X, Y, t, colr, size=8, anchor='middle', dy=0, weight='700'):
     x, y = v.px(X, Y)
@@ -458,8 +462,9 @@ def carrier_view(v, top):
     for col, r, lab in pins + pins2:
         x, y = hp(v, b, ci(col), r)
         w(f'<circle cx="{x:.1f}" cy="{y:.1f}" r="{2.2 if top else 3.1}" fill="{"#fff" if top else "#e2e8f0"}" stroke="#047857" stroke-width="1.1"/>')
-    for b, c, r, lab, _ in FIX:
-        draw_fix(v, b, c, r, lab)
+    for b in ('A', 'B'):
+        for x, y in corner_holes(*bx(b), *BOARD[b]['edge']):
+            draw_corner(v, x, y)
     if top:
         draw_discovery(v)
     return boxes
@@ -578,7 +583,6 @@ C_PIGTAIL = [('V', '#dc2626', 'a', 7, 7.2), ('G', '#111827', 'c', 7, 9.0),
              ('CC1', '#16a34a', 'g', 7, 13.8), ('CC2', '#eab308', 'i', 7, 15.6)]
 C_CUT = [('D-', '#e5e7eb', 10.8), ('D+', '#1e3a8a', 12.2)]  # cut short, each insulated alone
 C_TIES = [2, 6]              # zip ties at these rows, through 3 mm holes drilled at b and i
-C_FIX = [(5, 4, 'F5', '(99.24, 38.76)'), (5, 21, 'F6', '(99.24, 81.76)')]
 C_WIRES = [   # the FRDM's current in 18 AWG, IN 5V -> C1 -> socket on each rail
     ('5V', [(1, 24), (0.5, 23.5), (0.5, 12.5), (1, 12)], 'pwr'),              # IN 5V + to C1 +
     ('5V', [(1, 12), (1.5, 11.5), (1.5, 7.5), (1, 7)], 'pwr'),                # C1 + to socket red
@@ -622,8 +626,6 @@ def draw_socket(v, top, hf):
         text(lx, ly + 7, 'cable to FRDM J1', 6.5, '#64748b', anchor='end')
         text(lx, ly + 18, f"zip ties along {LET[C_TIES[0] - 1]}, {LET[C_TIES[1] - 1]}", 6.5, '#64748b', anchor='end')
         text(lx, ly + 27, 'D−/D+ cut, insulated', 6.5, '#64748b', anchor='end')
-        x, y = hf(5, 4)                               # the e4 screw, under the body
-        w(f'<circle cx="{x:.1f}" cy="{y:.1f}" r="{2.25 * v.s:.1f}" fill="none" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="3 2"/>')
     else:
         for lab, colr, col, row, ye in C_PIGTAIL:
             x, y = hf(ci(col), row)
@@ -647,10 +649,8 @@ def board_c(v, top):
     for r in range(1, C_ROWS + 1):
         x, y = v.px((r - 1) * P, C_EDGE_Y[1] if v.flip else C_EDGE_Y[0])
         text(x, y - 3, LET[r - 1], 7, '#15803d', '700', anchor='middle')
-    for col, row, lab, ch in C_FIX:
-        x, y = hf(col, row)
-        w(f'<circle cx="{x:.1f}" cy="{y:.1f}" r="{2.9 * v.s:.1f}" fill="#f1f5f9" fill-opacity="0.7" stroke="#64748b" stroke-width="1" stroke-dasharray="3 2"/>')
-        w(f'<circle cx="{x:.1f}" cy="{y:.1f}" r="{1.6 * v.s:.1f}" fill="none" stroke="#0f172a" stroke-width="1.3"/>')
+    for X, Y in corner_holes(C_EDGE_X[0], C_EDGE_X[1], C_EDGE_Y[0], C_EDGE_Y[1]):
+        draw_corner(v, X, Y)
     for pins, entry, name, note in C_TERMS:
         cs = [ci(p_[0]) for p_ in pins]
         Xc = (pins[0][1] - 1) * P
@@ -688,10 +688,7 @@ def board_c(v, top):
         x, y = hf(ci('e'), 12)
         text(x + 4, y + 3, '470µF', 6.5, '#a16207', '700', anchor='start', halo=True)
         _, yb = v.px(0, C_EDGE_Y[1])
-        for col, row, lab, ch in C_FIX:                # below the board, clear of the socket
-            x, y = hf(col, row)
-            w(f'<line x1="{x:.1f}" y1="{y + 2.9 * v.s:.1f}" x2="{x:.1f}" y2="{yb + 4:.1f}" stroke="#64748b" stroke-width="0.7" stroke-dasharray="2 2"/>')
-            text(x, yb + 13, f"{lab} at {silk('C', col, row)} · {ch}", 6.5, '#0f172a', '700', anchor='middle', halo=True)
+        text(v.px((C_EDGE_X[0] + C_EDGE_X[1]) / 2, 0)[0], yb + 13, 'four corner holes: M2.5 screw into an 8 mm nylon standoff, from below (MEC-17)', 6.5, '#0f172a', '700', anchor='middle', halo=True)
     else:
         for net, pts, kind in C_WIRES:
             draw_wire(v, net, 'C', pts, kind, hfun=hf)
@@ -760,7 +757,7 @@ if __name__ == "__main__":
         hs = [hdr_hole(b, n) for n in range(1, 26) if n not in SOCKET_NC[b] and 1 <= hdr_hole(b, n) <= 24]
         return f"{b}·{silk(b, c, max(hs))}-{silk(b, c, min(hs))}"
     text(40, 66, 'Hole names: board·hole, as PRINTED on the kit board - letters A-X along the 70 mm side, numbers across (1-18 on A and B, 1-10 on C), A1 bottom-left with the print readable, as every view shows it.', 9.5, '#b45309')
-    text(40, 80, f"B: header row n is letter X for row 1 back to A for row 24 · A, AS BUILT: one hole on, row 2 on X, row 1 off the board · P1 odd pins {col_range('A', 'i')}, even {col_range('A', 'j')[2:]} · P2 odd {col_range('B', 'g')}, even {col_range('B', 'h')[2:]} · fixings F1-F6.", 9.5, '#b45309')
+    text(40, 80, f"B: header row n is letter X for row 1 back to A for row 24 · A, AS BUILT: one hole on, row 2 on X, row 1 off the board · P1 odd pins {col_range('A', 'i')}, even {col_range('A', 'j')[2:]} · P2 odd {col_range('B', 'g')}, even {col_range('B', 'h')[2:]} · fixings: four corner holes per board (MEC-17).", 9.5, '#b45309')
     text(40, 93, 'Wires on the solder side, ALL INSULATED, PAD TO PAD: they meet only at pads, two wire ends per pad at most. Thick 18 AWG (3.11), thin 22 AWG, grey = a part lead bent over.', 9.5, '#b45309')
 
     # views
@@ -791,7 +788,7 @@ if __name__ == "__main__":
         x0, y0 = v.px(XMIN, YMAX if not v.flip else YMIN)
         x1, _ = v.px(XMAX, 0)
         text((x0 + x1) / 2, y0 + 22, 'front ◀  A sits one pitch ahead of B (as built) · A front to Discovery rear 100.6 mm  ▶ rear (fascia)', 8.5, '#64748b', anchor='middle')
-        text((x0 + x1) / 2, y0 + 34, 'overall width 106 mm · F1-F4: ⌀3.2 holes onto existing plate-2 holes, 10 mm M2.5 standoffs', 8.5, '#64748b', anchor='middle')
+        text((x0 + x1) / 2, y0 + 34, 'overall width 106 mm · four corner holes per board, 8 mm nylon M2.5 standoffs, onto the carrier tray (MEC-17)', 8.5, '#64748b', anchor='middle')
 
     # board C views
     CY = 760
@@ -804,7 +801,7 @@ if __name__ == "__main__":
     board_c(vc_t, True)
     board_c(vc_b, False)
     text(VX1 - 30, CY + 165, 'Socket first: meter CC1 and CC2 to V and to G, all four open - a socket with its own Rd (5.1k) or Rp cannot be the source.', 8.4, '#b45309')
-    text(VX1 - 30, CY + 179, f"Fit the F5 pan-head screw ({silk('C', 'e', 4)}) before the socket: the body rides 2.5 mm up on its flange, over the head. Ties through 3 mm holes at {silk('C', 'b', 2)} / {silk('C', 'i', 2)} and {silk('C', 'b', 6)} / {silk('C', 'i', 6)}, the second one over the pigtail.", 8.4, '#b45309')
+    text(VX1 - 30, CY + 179, f"The USB-C body rides 2.5 mm up on its flange. Ties through 3 mm holes at {silk('C', 'b', 2)} / {silk('C', 'i', 2)} and {silk('C', 'b', 6)} / {silk('C', 'i', 6)}, the second one over the pigtail.", 8.4, '#b45309')
 
     # ---------------------------------------------------------------- right column
     RX0 = 1130
@@ -873,15 +870,12 @@ if __name__ == "__main__":
     y = table(y + 26, 'PARTS', ['Board', 'Fitted'], parts, [12, 82])
 
     fix_rows = [
-        (None, 'F1', f"{N('A', 'g', 14)}, on grid", 'plate 2 M3 hole (148.18, 23.76), ⌀3.18'),
-        (None, 'F2', f"{N('B', 'd', 15)}, on grid", 'plate 2 M2.5 hole (148.2, 72.2), ⌀2.71 - 0.18 mm'),
-        (None, 'F3', f"A, between {silk('A', 'c', 5)} / {silk('A', 'd', 6)}", 'plate 2 M2.5 hole (169.88, 14.24) - mark from the plate'),
-        (None, 'F4', f"B, between {silk('B', 'o', 6)} / {silk('B', 'o', 7)}", 'plate 2 M2.5 hole (169.88, 100.24) - under the module'),
-        (None, 'F5', f"{N('C', 'e', 4)}, on grid", 'plate 2 M3 hole (99.24, 38.76), ⌀3.18 - under the socket'),
-        (None, 'F6', f"{N('C', 'e', 21)}, on grid", 'plate 2 M3 hole (99.24, 81.76) - 43.00 = 17 pitches + 0.18'),
+        (None, 'A', 'four corner holes', '2.5 mm in from each edge · M2.5 screw into an 8 mm nylon standoff'),
+        (None, 'B', 'four corner holes', 'same · the holes under the module stay free of wires'),
+        (None, 'C', 'four corner holes', 'same · the USB-C body lies between the two on its side'),
     ]
-    y = table(y + 26, 'FIXINGS  (MEC-15)', ['Fix', 'Board hole', 'Chassis hole'], fix_rows, [12, 62, 170])
-    text(RX0, y + 16, 'All six: ⌀3.2 in the board, M2.5 × 10 standoff, M2.5 screws, washer in the ⌀3.18 holes.', 8.4, '#475569')
+    y = table(y + 26, 'FIXINGS  (MEC-17)', ['Board', 'Hole', 'Fixing'], fix_rows, [12, 62, 170])
+    text(RX0, y + 16, 'Nothing is drilled. The tray (MEC-17) takes the boards from below; only the tray is screwed to plate 2, by six M2.5 screws (T1-T6).', 8.4, '#475569')
     text(RX0, y + 29, 'A·X.. at chassis x 181.20 · header row 1 and B·X.. at x 183.74 (B and the Discovery 2.54 mm back, as built) · A y 5.11, B y 110.99.', 8.4, '#475569')
     orientation_inset(y + 58)
 
@@ -898,8 +892,8 @@ if __name__ == "__main__":
         f"    {', '.join(l for _, _, l in XCVR_SOCKET[1][2:])} and {N('B', 'o', CAN_ROW)} / {silk('B', 'p', CAN_ROW)} = CANH / CANL. Its screw terminal is unused. Measure CANH-CANL unpowered: ~120 Ω = remove its terminator.",
         '5  The kit terminals may be 5.0 mm, not 5.08: the 3p CAN block spans 10.0 vs 10.16 mm of holes. Push it in; do not drill.',
         f"6  Before the Discovery goes back in: 5 V to GND not shorted · 6 V rail isolated from 5 V and 3V3 · 5 V on B·{silk('B', 'g', 2)} / {silk('B', 'h', 2)} only · nothing on B·{silk('B', 'g', 4)} (PH0) · {N('A', 'j', 3)} (P1-4 VDD) not on 3V3.",
-        '7  Fixings: drill F1, F2, F5 and F6 on the grid first. Screw A and B down with the Discovery in, then mark F3 and F4 from under the',
-        '    plate through its holes, lift the carrier and drill them. No wire may pass under a standoff: check each one before the screw goes in.',
+        '7  Fixings: nothing is drilled. Fit an 8 mm nylon standoff with a screw in each corner hole of A, B and C; the tray (MEC-17) takes the',
+        '    boards from below. No wire may pass under a standoff: check each of the twelve before its screw goes in.',
     ]
     yy = NY + 26
     for c in checks:

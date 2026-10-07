@@ -1042,18 +1042,20 @@ Positions, x from the front of plate 1 and y from its right edge, as modelled in
 |---|---|---|
 | **Battery** | x 85-162, y 30-93, lengthwise right behind the tie rod | plate 1, felt pad, felt straps and zip ties - fixed 2026-09-28 |
 | **Motor driver** | x 168-210, y 22.6-80.6 | plate 1, as mounted 21 Sep |
-| **(+) bus**, 221-415, 3 of 5 ports | x 88-107, y 40-70, entry face towards the opening | plate 2, levers down |
-| **(−) bus**, 221-415, 5 of 5 ports | x 134-153, y 40-70, entry face towards the opening | plate 2, levers down |
-| **Main fuse** 7.5 A | x 96-146, y 2-32, lid facing right | plate 2 |
-| **Motor fuse** 5 A | x 152-202, y 2-32, lid facing right | plate 2 |
-| **UBEC fuse** 5 A | x 152-202, y 88-118, lid facing left | plate 2 |
+| **(+) bus**, 221-415, 2 of 5 ports (INA226, S8) | x 88-107, y 40-70, entry face towards the opening | plate 2, levers down |
+| **(−) bus**, 221-415, 4 of 5 ports (battery, S4, S5, S7) | x 134-153, y 40-70, entry face towards the opening | plate 2, levers down |
+| **Main fuse** 7.5 A | x 96-146, y 2-29: base 34 x 12 (x 104-138), cap 26 x 15 (x 108-134) toward the right | plate 2 |
+| **Motor fuse** 5 A | x 152-202, y 2-29, base x 160-194, cap x 164-190 toward the right | plate 2 |
+| **UBEC fuse** 5 A | x 157-207 (moved 5 mm rear, clear of S5), y 91-118, cap toward the left | plate 2 |
 | **INA226** | x 108-134, y 78-100, upside down, terminals facing the opening | plate 2 |
 | **SW1 split**, DOMAXWILL 3-port | x 178-197, y 51-69, over the driver | plate 2 |
+| **S8** (switch feed), 3-port | x 157-176, y 51-69, ports on its front face | plate 2 |
+| **S9** (SW1 out + its LED +), 3-port | x 178-197, y 32-51, beside the split | plate 2 |
 | **UBEC** | x 100-135, y 100-112 | plate 2 |
 | **S1** (SM-2P + to main fuse) | x 83-96, y 21-40 | plate 2 |
 | **S2 / S4** (driver VM + and −) | x 157-176, y 35-48, stacked | plate 2 |
-| **S3 / S5** (UBEC + and −) | x 139-157, y 104-117, stacked | plate 2 |
-| **S6 / S7** (Bauer + and −) | beside the Bauer | plate 2, top face |
+| **S3 / S5** (UBEC + and −) | x 139-157; **S5 is a 5-port clip** (y 87-117, taped to the plate) with the 2-port S3 (y 104-117) hanging under it | plate 2 |
+| **S6 / S7** (Bauer + and −) | beside the Bauer; **S6 is a 3-port clip** (y 96-114) | plate 2, top face |
 
 The two buses face each other across **plate 2's 22.7 × 35.4 opening** (x 110-133). Every wire that
 has to reach plate 2's top face - the UBEC's 6 V pair to carrier board A, the Bauer's feed and
@@ -1063,7 +1065,7 @@ return - goes up through it, between the buses. The rearward runs lie flat on pl
 **Why.**
 
 - **The clips and fuses were never on the drawing.** MEC-12 placed bare WAGO bodies and no fuse
-  holders. The holders are about 50 × 18 × 30 with 12-13 cm leads each side, and every clip needs
+  holders. The holders are about 50 long and 28 across in plan, 18 deep (a 34 x 12 base with a narrower 26 x 15 cap on a strap, as the seller's photo shows) with 12-13 cm leads each side, and every clip needs
   strip length and a bend in front of its face.
 - **The battery fixed the floor.** Hiwonder's CAD puts the steering linkage at x 47-85.5 - servo
   bracket up to 38.5 mm high, the tie rod at 15-19 mm - so a 21 mm pack cannot sit forward of
@@ -1090,8 +1092,7 @@ return - goes up through it, between the buses. The rearward runs lie flat on pl
   holes and slots, and it holds a part wherever it has to go rather than where a hole happens to be.
 - **The UBEC left plate 1** because its output never stays there: HW-19 routes the servo's 6 V
   through carrier board A, so it climbs to plate 2 whatever happens.
-- **One (−) bus is enough.** With the two switch LED returns joined at the switches, the star has
-  exactly five returns: battery, driver, UBEC, Bauer and the LEDs.
+- **One (−) bus is enough.** Since 2026-10-06 the two switch LED returns join the UBEC's return in S5, so the star has four returns: battery, driver, UBEC (with both LEDs) and Bauer. One port is spare.
 
 **Rejected.**
 
@@ -1138,15 +1139,24 @@ return - goes up through it, between the buses. The rearward runs lie flat on pl
 
 - The clip outlines and which face the wires enter: the model uses 30 × 18.6 × 8.5 for the 221-415
   and 18.6 × 18.4 for the 3-port.
-- The fuse holder body with calipers - 50 × 18 × 30 is scaled off the vendor photo.
+- The fuse holder body with calipers - the base / cap shape is the seller's photo (2026-10-07), the sizes are scaled off it.
+  *Decided 2026-10-07: no calipers, so the estimates stand (fuse holders, the kit boards' corner holes at 2.5 mm in, the switch harness). They are checked by dry-fit instead: tape the holders to plate 2 before wiring, lay boards A and B on a 1:1 printout, measure the harness length with a ruler and read its gauge off the ferrule that fits.*
 - The pack's height with its felt (modelled 21 + 3) and the driver's top height.
+- **The switch wiring (decided 2026-10-06).** Each switch has four wires: **two green** (the contact, no polarity), **red** (LED +) and **black** (LED −); the LED has its own resistor and runs on 12 V (tested). To light the LED only when the switch is on, **LED + is joined to the switched output, never to the (+) bus**. Every join ends in a clip, so no wire meets another without one:
+  - **S8** (3-port, toward the rear) takes **(+) bus port 2** and both switches' first green wires. One bus port feeds both switches, so the switch harness reaches (run 05, 06a, 06b). (+) bus port 3 is spare.
+  - **SW1's output** (second green) and **its red LED +** meet in **S9** (3-port), and one wire goes from S9 to the SW1 split (runs 07a-07c).
+  - **SW2's output** and **its red LED +** meet in **S6**, which becomes a **3-port** clip with the Bauer's red lead (runs 15a, 15c, 15b). Two wires pass up the left slot instead of one: 2.4 + 1.6 mm in an opening about 5 x 10 mm, so check it on the real tray.
+  - **Both black LED − wires** go into **S5**, which becomes a **5-port** clip: UBEC (−), the run to the (−) bus (port 4), and the two LED returns (runs 13a, 13b). The (−) bus is then **4 of 5** ports, one spare.
+  - S9's pigtail enters the split's second port. Nothing is crimped on the switch tabs: the supplied socket harness is used, so BOM 3.17 (flag receptacles) is not needed.
+  [`../tools/check-harness-clearance.py`](../tools/check-harness-clearance.py) fails if a part overlaps another, a wire runs through a part, two wires share space, or wires meet with no clip.
+  Clips used: **3-port x 4** (split, S8, S9, S6), **5-port x 1** (S5), **2-port x 5** (S1, S2, S3, S4, S7). The positions of S8, S9 and S5 are stand-ins in the model; what must hold is the height over the motors (9 mm: no clip there, 8.5 mm + 1 mm of tape).
 - The screw heads under plate 2 - carrier F1-F4 and board C's F5, F6 - against the taped parts. *Done for the tray's own six fixings in MEC-17 (2026-10-05); the direct-fixing scheme it replaces would have clashed.*
   F3 lands at the motor fuse's lid edge.
-- The SW1 / SW2 tab layout, and which tab carries LED − (runs 13 and 14).
+- The switch harness: wire length (the model assumes the leads reach S8 / S9 or are extended) and gauge of the contact wires, which carry up to about 6 A for SW1.
 - That the driver's VM socket can be reached from the right side under the motor fuse - about
   16 mm of height between the floor parts and the holder. If not, the VM tail needs about 12 cm to
   be plugged with plate 2 held above, and that slack has to be stowed.
-- The Bauer's own lead length, which sets S6 and S7.
+- The Bauer's own lead length, which sets S6 and S7. S6 is a 3-port clip since 2026-10-06 (y 96-114): check it fits on the tray before the splices are taped.
 - The tires' outside diameter. The model uses about 68 mm, scaled off a photo - the CAD has the
   rims only. At that size a rear tire's front edge is at about x 191 at fuse height, and the
   motor and UBEC fuse lids end at x 190, so the lids are reached from the side just in front of
@@ -1394,6 +1404,7 @@ sat there). **This one:** Hedi asked for both boards turned across the vehicle a
 **The board is about 95 x 65 mm, not 105 x 65.** In the guide's photos the six mounting holes sit 49.0 mm apart, then about 40, on a 58 mm spacing, and the outline is 95 x 65 at that scale. The 105 is the *non-S* board's (UM12262 and its
 design files; MEC-11 took its drill file from there, and its first four holes still match). Hedi measured **96 x 67** over the connectors, which is the PCB plus the RJ45 and USB-A that overhang it. The tray uses 95 x 65 and its
 FRDM screw holes are loose (4.2 mm, counterbore 7.2 mm) so the +-1 mm in the photo does not matter.
+**Confirmed 2026-10-06 against the -S's own design files** (board 95020 rev B, in `vendor/`): the Gerber outline is **95.0 x 65.0 mm**, the six mounting holes are plated ⌀3.175 at u 3.5 / 52.5 / 91.5 and v 3.5 / 61.5, exact, and every connector in the table above lands within 1 mm of where the photo put it (full table: `bom/parts/1.1-FRDM-IMX91S/NOTES.md`). The tray as ordered is right on all four screwed holes; the two far-edge standoffs it simply stands on sit at u 91.5, 0.5 mm further than the model's 91.0, which its pad covers with room to spare. The ordered `compute-tray.stl` does not change.
 
 **The layout** (plate 3 frame, x from the nose):
 

@@ -21,6 +21,8 @@ it is placed by eye, for recognition only. Real models (GrabCAD, 3D ContentCentr
 sit behind a login and are not ours to commit.
 """
 import bpy, importlib.util, math, os, sys
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from blender_compat import fcurves, mp4                              # noqa: E402
 from mathutils import Matrix, Vector
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -82,10 +84,11 @@ CAPTIONS = [
     ((43.2, 51.4), "10  22 AWG, pad to pad: the GND chain, 5 V, 3V3, servo PWM, I2C, CAN TX / RX, CAN H / L, TERM"),
     ((51.4, 56), f"11  The one bridge: P2-5 to I2C-A VCC ({C.N('A', 'c', 21)}); A's GND comes from its own P1-5"),
     ((56, 58.8), "   Right way up again"),
-    ((58.8, 64), f"12  Module in face down, CANH / CANL into {C.N('B', 'o', C.CAN_ROW)} / {C.silk('B', 'p', C.CAN_ROW)}, TERM jumper on, four M2.5 standoffs"),
+    ((58.8, 62), f"12  Module in face down, CANH / CANL into {C.N('B', 'o', C.CAN_ROW)} / {C.silk('B', 'p', C.CAN_ROW)}, TERM jumper on"),
+    ((62, 64), "    A nylon standoff and screw in each of the four corner holes of A and B"),
     ((64, 67.4), "13  The Discovery drops onto the carrier"),
     ((67.4, 70.5), "14  Board C, the 5 V split: IN 5V and TO STM32, R1 / R2 10k source Rp, C1 470 uF"),
-    ((70.5, 72.8), f"    The F5 screw ({C.N('C', 'e', 4)}) first, then the USB-C socket over it: pigtail into {' / '.join(C.silk('C', c, r) for _, _, c, r, _ in C.C_PIGTAIL)}, two zip ties"),
+    ((70.5, 72.8), f"    Four corner standoffs and screws, then the USB-C socket: pigtail into {' / '.join(C.silk('C', c, r) for _, _, c, r, _ in C.C_PIGTAIL)}, two zip ties"),
     ((72.8, 84), "15  Solder side: IN 5V to C1 to the socket on each rail in 18 AWG, R1 / R2 leads bent to the CC landings"),
     ((84, 95), "The carrier and the 5 V split, ready for plate 2 (MEC-15, HW-19) - the Discovery is a mock"),
 ]
@@ -120,7 +123,7 @@ for n, c in [('fr4', FR4), ('pad', PAD), ('hole', HOLE), ('black', BLACK), ('sol
              ('mterm', '#15803d'), ('jumper', '#dc2626'), ('mark', '#ef4444'), ('silk', '#f8fafc'),
              ('disco', DISCO_PCB), ('usb', '#c0c4ca'), ('led_o', '#f97316'), ('led_g', '#22c55e'),
              ('led_r', '#ef4444'), ('led_b', '#3b82f6'), ('btn_b', '#2563eb'), ('mat', '#2b3a33'),
-             ('bare', '#e5e7eb')]:
+             ('bare', '#e5e7eb'), ('nylon', '#e8e4d8')]:
     mat(n, c)
 for net, c in C.NET.items():
     mat('net_' + net, c)
@@ -212,7 +215,7 @@ def show(o, frames):
         o.keyframe_insert("hide_render", frame=a)
         o.hide_render = True
         o.keyframe_insert("hide_render", frame=b)
-    for fc in o.animation_data.action.fcurves:
+    for fc in fcurves(o.animation_data.action):
         if fc.data_path == "hide_render":
             for k in fc.keyframe_points:
                 k.interpolation = 'CONSTANT'
@@ -501,11 +504,18 @@ m.box(C.RX(23) - 1.3, C.RX(22) + 1.3, y - 1.3, y + 1.3, 2.6, 8.8, 'jumper')
 drop(m.make('term-jumper', car), JUMPER, 15)
 
 m_so, m_sc = Mesh(), Mesh()
-for b, c, r, lab, _ in C.FIX:
-    x, y = hole(b, c, r)
-    m_so.cone((x, y, -1.6), (x, y, -11.6), 2.5, 2.5, 'brass', 6)
-    m_sc.cyl((x, y, 0), (x, y, 1.6), 2.2, 'screw', 16)
-    m_sc.box(x - 1.5, x + 1.5, y - 0.3, y + 0.3, 1.6, 1.65, 'hole')
+CORNER_INSET = 2.5           # the kit boards' own four corner holes, as animate-carrier-tray.py (MEC-17)
+
+
+def corners(x0, x1, y0, y1):
+    return [(x, y) for x in (x0 + CORNER_INSET, x1 - CORNER_INSET) for y in (y0 + CORNER_INSET, y1 - CORNER_INSET)]
+
+
+for b in ('A', 'B'):
+    for x, y in corners(*C.bx(b), *C.BOARD[b]['edge']):
+        m_so.cone((x, y, -1.6), (x, y, -9.6), 2.5, 2.5, 'nylon', 6)           # 8 mm, as the tray sets them
+        m_sc.cyl((x, y, 0), (x, y, 1.6), 2.2, 'screw', 16)
+        m_sc.box(x - 1.5, x + 1.5, y - 0.3, y + 0.3, 1.6, 1.65, 'hole')
 drop(m_so.make('standoffs', car), STANDOFFS, -30)
 drop(m_sc.make('screws', car), STANDOFFS + 0.5, 25)
 
@@ -573,15 +583,13 @@ for a, b_, lab_ in C.C_RES:
     resistor('c-res-' + lab_, ch(C.ci(a[0]), a[1]), ch(C.ci(b_[0]), b_[1]), cr, C_PARTS['res'], C_PINS)
 capacitor('c-cap-C1', ch(C.ci('c'), 12), ch(C.ci('a'), 12), cr, C_PARTS['cap'], C_PINS)
 m = Mesh()
-for c, r, _, _ in C.C_FIX:
-    x, y = ch(c, r)
-    m.cone((x, y, -1.6), (x, y, -11.6), 2.5, 2.5, 'brass', 6)
+for x, y in corners(OXc + C.C_EDGE_X[0], OXc + C.C_EDGE_X[1], OYc + C.C_EDGE_Y[0], OYc + C.C_EDGE_Y[1]):
+    m.cone((x, y, -1.6), (x, y, -9.6), 2.5, 2.5, 'nylon', 6)
 drop(m.make('c-standoffs', cr), C_PARTS['cap'] + 0.6, -30)
 
-# ---- the e4 / e21 screws, then the USB-C socket lying over e4, its pigtail and two ties
+# ---- the four corner screws, then the USB-C socket, its pigtail and two ties
 m = Mesh()
-for c, r, _, _ in C.C_FIX:
-    x, y = ch(c, r)
+for x, y in corners(OXc + C.C_EDGE_X[0], OXc + C.C_EDGE_X[1], OYc + C.C_EDGE_Y[0], OYc + C.C_EDGE_Y[1]):
     m.cyl((x, y, 0), (x, y, 1.7), 2.25, 'screw', 16)
     m.box(x - 1.5, x + 1.5, y - 0.3, y + 0.3, 1.7, 1.75, 'hole')
 drop(m.make('c-screws', cr), C_PARTS['screws'], 20)
@@ -712,7 +720,7 @@ sh.background_type = 'VIEWPORT'
 sh.background_color = (0.16, 0.17, 0.19)
 sc.world = bpy.data.worlds.new("bench")      # the render reads the world, not the viewport
 sc.world.color = (0.16, 0.17, 0.19)
-sc.render.resolution_x, sc.render.resolution_y = 1280, 720
+sc.render.resolution_x, sc.render.resolution_y = 1920, 1080
 if STILL is not None:
     sc.frame_set(S(STILL))
     sc.render.image_settings.file_format = 'PNG'
@@ -723,10 +731,7 @@ if STILL is not None:
 if PREVIEW:
     sc.render.resolution_percentage = 50
     sc.frame_step = 4
-sc.render.image_settings.file_format = 'FFMPEG'
-sc.render.ffmpeg.format = 'MPEG4'
-sc.render.ffmpeg.codec = 'H264'
-sc.render.ffmpeg.constant_rate_factor = 'HIGH'
+mp4(sc)
 sc.render.filepath = OUT
 bpy.ops.render.render(animation=True)
 print("wrote", OUT)

@@ -3,7 +3,7 @@
   <rect width="1320" height="890" fill="#fbfaf8"/>
 
   <text x="40" y="32" font-size="18" font-weight="700" fill="#1a1a1a">NEXUS - hardware wiring schematic</text>
-  <text x="40" y="52" font-size="11" fill="#666">Rear-wheel drive Ackermann · 2 drive motors + 1 steering servo · every load returns to the (−) WAGO bus · all fuses inline · all harness wire 18 AWG</text>
+  <text x="40" y="52" font-size="11" fill="#666">Rear-wheel drive Ackermann · 2 drive motors + 1 steering servo · every load returns to the (−) WAGO bus · all fuses inline · harness wire 18 AWG · carrier boards A, B, C shown</text>
 
   <!-- ===================== POWER ===================== -->
   <text x="40" y="88" font-size="13" font-weight="700" fill="#1a1a1a">POWER</text>
@@ -25,8 +25,8 @@
   <text x="305" y="191" font-size="8.5" fill="#991b1b" text-anchor="middle">inline · ≤15 cm from (+)</text>
   <line x1="360" y1="180" x2="390" y2="180" stroke="#d92b2b" stroke-width="3"/>
   <rect x="390" y="160" width="100" height="40" fill="#cffafe" stroke="#0e7490" stroke-width="1.6" rx="2"/>
-  <text x="440" y="177" font-size="10" font-weight="700" fill="#164e63" text-anchor="middle">SHUNT R002</text>
-  <text x="440" y="191" font-size="8.5" fill="#155e75" text-anchor="middle">2 mΩ · high-side</text>
+  <text x="440" y="177" font-size="10" font-weight="700" fill="#164e63" text-anchor="middle">INA226 SHUNT</text>
+  <text x="440" y="191" font-size="8.5" fill="#155e75" text-anchor="middle">R002 2 mΩ · high-side</text>
   <line x1="490" y1="180" x2="600" y2="180" stroke="#d92b2b" stroke-width="3"/>
 
   <!-- (+) bus bar -->
@@ -38,17 +38,25 @@
   <text x="613" y="396" font-size="7.5" fill="#991b1b" text-anchor="middle">1 × 221-415 · 2 spare</text>
 
   <!-- feeds off the (+) bar -->
-  <line x1="626" y1="168" x2="760" y2="168" stroke="#d92b2b" stroke-width="3"/>
-  <line x1="626" y1="330" x2="760" y2="330" stroke="#d92b2b" stroke-width="3"/>
-  <text x="693" y="321" font-size="7.5" fill="#991b1b" text-anchor="middle">no fuse - main covers it (HW-20)</text>
+  <line x1="626" y1="190" x2="668" y2="190" stroke="#d92b2b" stroke-width="3"/>
+  <line x1="668" y1="168" x2="668" y2="330" stroke="#d92b2b" stroke-width="3"/>
+  <line x1="668" y1="168" x2="760" y2="168" stroke="#d92b2b" stroke-width="3"/>
+  <line x1="668" y1="330" x2="760" y2="330" stroke="#d92b2b" stroke-width="3"/>
+  <circle cx="668" cy="190" r="3.2" fill="#b91c1c"/>
+  <text x="676" y="252" font-size="7.5" fill="#991b1b">one (+) bus port feeds</text>
+  <text x="676" y="263" font-size="7.5" fill="#991b1b">both switches</text>
+  <text x="676" y="302" font-size="7.5" fill="#991b1b">no fuse - main covers it (HW-20)</text>
 
   <!-- (−) bus bar and battery return -->
   <rect x="540" y="430" width="80" height="18" fill="#374151" stroke="#111827" stroke-width="1.6" rx="3"/>
   <circle cx="552" cy="439" r="2.5" fill="#e5e7eb"/><circle cx="566" cy="439" r="2.5" fill="#e5e7eb"/><circle cx="580" cy="439" r="2.5" fill="#e5e7eb"/><circle cx="594" cy="439" r="2.5" fill="#e5e7eb"/><circle cx="608" cy="439" r="2.5" fill="#e5e7eb"/>
   <text x="630" y="466" font-size="9" font-weight="700" fill="#111827" text-anchor="middle">(−) WAGO BUS - 1 × 221-415 · star ground</text>
-  <text x="630" y="479" font-size="7.5" fill="#475569" text-anchor="middle">5 of 5: battery, motor module, UBEC, Bauer, switch LEDs joined at the switches (MEC-16)</text>
+  <text x="630" y="479" font-size="7.5" fill="#475569" text-anchor="middle">4 of 5: battery, motor module, UBEC (with both switch LEDs), Bauer · one spare (MEC-16)</text>
   <path d="M210,240 L228,240 L228,439 L540,439" fill="none" stroke="#111827" stroke-width="3"/>
   <text x="380" y="455" font-size="9" fill="#374151" text-anchor="middle">battery return</text>
+  <!-- the two switch LED returns, joined, into the (−) bus -->
+  <path d="M740,232 L740,439 L620,439" fill="none" stroke="#111827" stroke-width="2.5"/>
+  <text x="748" y="278" font-size="7.5" fill="#374151">LED returns</text>
 
   <!-- fuse rationale -->
   <text x="252" y="262" font-size="8.5" font-weight="600" fill="#7f1d1d">Why the main fuse comes first:</text>
@@ -71,6 +79,13 @@
   <line x1="880" y1="168" x2="880" y2="238" stroke="#e8821a" stroke-width="3"/>
   <line x1="880" y1="238" x2="894" y2="238" stroke="#e8821a" stroke-width="3"/>
 
+  <!-- SW1 LED: (+) from the switched side, so it lights only when SW1 is on; (−) joins SW2 LED on the way to the (−) bus -->
+  <line x1="880" y1="232" x2="834" y2="232" stroke="#e8821a" stroke-width="2"/>
+  <circle cx="880" cy="232" r="2.8" fill="#e8821a"/>
+  <line x1="790" y1="232" x2="740" y2="232" stroke="#111827" stroke-width="2"/>
+  <rect x="790" y="219" width="44" height="26" fill="#ffffff" stroke="#b91c1c" stroke-width="1.6" rx="13"/><text x="812" y="231" font-size="8.5" font-weight="700" fill="#b91c1c" text-anchor="middle">LED</text><text x="812" y="241" font-size="6.5" fill="#b91c1c" text-anchor="middle">red</text>
+  <text x="812" y="258" font-size="7" fill="#991b1b" text-anchor="middle">lit only when SW1 is on</text>
+
   <rect x="894" y="161" width="28" height="14" fill="#fee2e2" stroke="#b91c1c" stroke-width="1.2" rx="2"/>
   <text x="908" y="171" font-size="7" font-weight="700" fill="#7f1d1d" text-anchor="middle">5 A</text>
   <line x1="922" y1="168" x2="950" y2="168" stroke="#e8821a" stroke-width="3"/>
@@ -80,25 +95,27 @@
   <text x="1035" y="180" font-size="8.5" fill="#7e22ce" text-anchor="middle">I²C slave · no servo output</text>
   <text x="1035" y="208" font-size="7" font-weight="700" fill="#b91c1c" text-anchor="middle">⚠ VM in: 2-pin 2.5 mm, ~3 A - needs an adapter</text>
   <text x="1035" y="192" font-size="8" fill="#7e22ce" text-anchor="middle">⏚ to (−) bus</text>
-  <line x1="1120" y1="168" x2="1160" y2="168" stroke="#e8821a" stroke-width="3"/>
-  <rect x="1160" y="143" width="135" height="50" fill="#ede9fe" stroke="#6d28d9" stroke-width="1.4" rx="2"/>
-  <text x="1227" y="161" font-size="10" font-weight="700" fill="#4c1d95" text-anchor="middle">2 × REAR MOTOR</text>
-  <text x="1227" y="175" font-size="8.5" fill="#5b21b6" text-anchor="middle">12 V · 8.3 W · 2.3 A stall</text>
-  <text x="1227" y="187" font-size="8" fill="#5b21b6" text-anchor="middle">encoder AB → module</text>
+  <line x1="1120" y1="168" x2="1175" y2="168" stroke="#e8821a" stroke-width="3"/>
+  <rect x="1175" y="143" width="120" height="50" fill="#ede9fe" stroke="#6d28d9" stroke-width="1.4" rx="2"/>
+  <text x="1235" y="161" font-size="10" font-weight="700" fill="#4c1d95" text-anchor="middle">2 × REAR MOTOR</text>
+  <text x="1235" y="175" font-size="8.5" fill="#5b21b6" text-anchor="middle">12 V · 8.3 W · 2.3 A stall</text>
+  <text x="1235" y="187" font-size="8" fill="#5b21b6" text-anchor="middle">encoder AB → module</text>
 
+  <line x1="880" y1="238" x2="894" y2="238" stroke="#e8821a" stroke-width="3"/>
   <rect x="894" y="231" width="28" height="14" fill="#fee2e2" stroke="#b91c1c" stroke-width="1.2" rx="2"/>
   <text x="908" y="241" font-size="7" font-weight="700" fill="#7f1d1d" text-anchor="middle">5 A</text>
   <line x1="922" y1="238" x2="950" y2="238" stroke="#e8821a" stroke-width="3"/>
-  <rect x="950" y="213" width="170" height="50" fill="#ccfbf1" stroke="#0f766e" stroke-width="1.6" rx="2"/>
-  <text x="1035" y="231" font-size="10" font-weight="700" fill="#134e4a" text-anchor="middle">ZHITING UBEC</text>
-  <text x="1035" y="245" font-size="9" fill="#115e59" text-anchor="middle">3S → 6.0 V · 3 A / 5 A pk</text>
-  <text x="1035" y="257" font-size="7.5" fill="#0f766e" text-anchor="middle">jumper on 6 V · rev-pol protected</text>
-  <line x1="1120" y1="238" x2="1160" y2="238" stroke="#0d9488" stroke-width="3"/>
-  <text x="1140" y="231" font-size="8" fill="#0f766e" text-anchor="middle">6 V</text>
-  <rect x="1160" y="213" width="135" height="50" fill="#ede9fe" stroke="#6d28d9" stroke-width="1.4" rx="2"/>
-  <text x="1227" y="231" font-size="10" font-weight="700" fill="#4c1d95" text-anchor="middle">STEERING SERVO</text>
-  <text x="1227" y="245" font-size="9" fill="#5b21b6" text-anchor="middle">LD-1501MG · 6–8.4 V</text>
-  <text x="1227" y="257" font-size="7.5" fill="#5b21b6" text-anchor="middle">PWM ← STM32 · ⏚ to bus</text>
+  <rect x="950" y="213" width="150" height="50" fill="#ccfbf1" stroke="#0f766e" stroke-width="1.6" rx="2"/>
+  <text x="1025" y="231" font-size="10" font-weight="700" fill="#134e4a" text-anchor="middle">ZHITING UBEC</text>
+  <text x="1025" y="245" font-size="9" fill="#115e59" text-anchor="middle">3S → 6.0 V · 3 A / 5 A pk</text>
+  <text x="1025" y="257" font-size="7.5" fill="#0f766e" text-anchor="middle">jumper on 6 V · rev-pol protected</text>
+  <!-- the servo is fed through carrier board A: 6V IN terminal, C2 470 uF, servo header (plate 2 top face) -->
+  <line x1="1100" y1="238" x2="1175" y2="238" stroke="#0d9488" stroke-width="3"/>
+  <rect x="1112" y="222" width="48" height="34" fill="#f0fdfa" stroke="#0f766e" stroke-width="1.4" rx="3"/><text x="1136.0" y="236" font-size="8.5" font-weight="700" fill="#134e4a" text-anchor="middle">BOARD A</text><text x="1136.0" y="248" font-size="6.5" fill="#134e4a" text-anchor="middle">6V IN · C2</text>
+  <rect x="1175" y="213" width="120" height="50" fill="#ede9fe" stroke="#6d28d9" stroke-width="1.4" rx="2"/>
+  <text x="1235" y="231" font-size="10" font-weight="700" fill="#4c1d95" text-anchor="middle">STEERING SERVO</text>
+  <text x="1235" y="245" font-size="9" fill="#5b21b6" text-anchor="middle">LD-1501MG · 6–8.4 V</text>
+  <text x="1235" y="257" font-size="7.5" fill="#5b21b6" text-anchor="middle">PWM via carrier A · ⏚</text>
 
   <!-- ===== LOGIC LANE ===== -->
   <rect x="760" y="308" width="100" height="44" fill="#dcfce7" stroke="#15803d" stroke-width="1.8" rx="6"/>
@@ -108,88 +125,86 @@
   <text x="810" y="365" font-size="7.5" fill="#64748b" text-anchor="middle">22 mm · same part, green</text>
 
   <line x1="860" y1="330" x2="950" y2="330" stroke="#e8821a" stroke-width="3"/>
+  <!-- SW2 LED: (+) from the switched side, (−) joins SW1 LED -->
+  <circle cx="900" cy="330" r="2.8" fill="#e8821a"/>
+  <path d="M900,330 L900,391 L834,391" fill="none" stroke="#e8821a" stroke-width="2"/>
+  <line x1="790" y1="391" x2="740" y2="391" stroke="#111827" stroke-width="2"/>
+  <circle cx="740" cy="391" r="2.8" fill="#111827"/>
+  <rect x="790" y="378" width="44" height="26" fill="#ffffff" stroke="#15803d" stroke-width="1.6" rx="13"/><text x="812" y="390" font-size="8.5" font-weight="700" fill="#15803d" text-anchor="middle">LED</text><text x="812" y="400" font-size="6.5" fill="#15803d" text-anchor="middle">green</text>
+  <text x="812" y="418" font-size="7" fill="#166534" text-anchor="middle">lit only when SW2 is on</text>
 
-  <rect x="950" y="305" width="170" height="50" fill="#fef3c7" stroke="#b45309" stroke-width="1.6" rx="2"/>
-  <text x="1035" y="323" font-size="10" font-weight="700" fill="#7c2d12" text-anchor="middle">Bauer 50 W</text>
-  <text x="1035" y="337" font-size="9" fill="#92400e" text-anchor="middle">12 V → 5 V · 10 A</text>
-  <text x="1035" y="349" font-size="7.5" fill="#a16207" text-anchor="middle">470–1000 µF · feeds both boards</text>
-  <line x1="1120" y1="330" x2="1160" y2="330" stroke="#15803d" stroke-width="3"/>
-  <circle cx="1145" cy="330" r="3.2" fill="#15803d"/>
-  <path d="M1145,330 L1145,400 L1160,400" fill="none" stroke="#15803d" stroke-width="3"/>
-  <text x="1132" y="323" font-size="8" fill="#15803d" text-anchor="middle">5 V</text>
-  <text x="1035" y="368" font-size="7.5" fill="#15803d" text-anchor="middle">5 V split on board C (HW-19)</text>
-  <rect x="1160" y="305" width="135" height="50" fill="#dbeafe" stroke="#1d4ed8" stroke-width="1.6" rx="2"/>
-  <text x="1227" y="323" font-size="10" font-weight="700" fill="#1e3a8a" text-anchor="middle">FRDM-IMX91S</text>
-  <text x="1227" y="337" font-size="9" fill="#1e40af" text-anchor="middle">J1 USB-C · 10 kΩ Rp</text>
-  <text x="1227" y="349" font-size="8" fill="#3b5bb5" text-anchor="middle">dumb 5 V, no PD</text>
+  <rect x="950" y="305" width="150" height="50" fill="#fef3c7" stroke="#b45309" stroke-width="1.6" rx="2"/>
+  <text x="1025" y="323" font-size="10" font-weight="700" fill="#7c2d12" text-anchor="middle">Bauer 50 W</text>
+  <text x="1025" y="337" font-size="9" fill="#92400e" text-anchor="middle">12 V → 5 V · 10 A</text>
+  <text x="1025" y="349" font-size="7.5" fill="#a16207" text-anchor="middle">470–1000 µF · both boards</text>
+  <!-- board C: IN 5V, C1 470 uF, R1 / R2 10 k Rp, the USB-C socket; TO STM32 goes to carrier B -->
+  <line x1="1100" y1="330" x2="1175" y2="330" stroke="#15803d" stroke-width="3"/>
+  <rect x="1112" y="314" width="48" height="34" fill="#f0fdf4" stroke="#15803d" stroke-width="1.4" rx="3"/><text x="1136.0" y="328" font-size="8.5" font-weight="700" fill="#14532d" text-anchor="middle">BOARD C</text><text x="1136.0" y="340" font-size="6.5" fill="#14532d" text-anchor="middle">5 V split</text>
+  <circle cx="1167" cy="330" r="3.2" fill="#15803d"/>
+  <path d="M1167,330 L1167,400 L1175,400" fill="none" stroke="#15803d" stroke-width="3"/>
+  <text x="1135" y="366" font-size="7" fill="#15803d" text-anchor="middle">USB-C → J1</text>
+  <text x="1135" y="412" font-size="7" fill="#15803d" text-anchor="middle">TO STM32</text>
+  <rect x="1175" y="305" width="120" height="50" fill="#dbeafe" stroke="#1d4ed8" stroke-width="1.6" rx="2"/>
+  <text x="1235" y="323" font-size="10" font-weight="700" fill="#1e3a8a" text-anchor="middle">FRDM-IMX91S</text>
+  <text x="1235" y="337" font-size="8.5" fill="#1e40af" text-anchor="middle">J1 USB-C · Rp on board C</text>
+  <text x="1235" y="349" font-size="8" fill="#3b5bb5" text-anchor="middle">dumb 5 V, no PD</text>
 
-  <rect x="1160" y="375" width="135" height="50" fill="#dcfce7" stroke="#15803d" stroke-width="1.6" rx="2"/>
-  <text x="1227" y="393" font-size="10" font-weight="700" fill="#14532d" text-anchor="middle">STM32F4DISCOVERY</text>
-  <text x="1227" y="407" font-size="9" fill="#166534" text-anchor="middle">MB997B · 5 V pin, P2</text>
-  <text x="1227" y="419" font-size="8" fill="#3f7d52" text-anchor="middle">⏚ to (−) bus</text>
+  <rect x="1175" y="375" width="120" height="50" fill="#dcfce7" stroke="#15803d" stroke-width="1.6" rx="2"/>
+  <text x="1235" y="393" font-size="10" font-weight="700" fill="#14532d" text-anchor="middle">STM32F4DISCOVERY</text>
+  <text x="1235" y="407" font-size="8.5" fill="#166534" text-anchor="middle">5 V via carrier B (5V IN)</text>
+  <text x="1235" y="419" font-size="8" fill="#3f7d52" text-anchor="middle">⏚ back through board C</text>
 
   <!-- ===================== SIGNALS ===================== -->
-  <text x="40" y="500" font-size="13" font-weight="700" fill="#1a1a1a">SIGNALS</text>
+  <text x="40" y="500" font-size="13" font-weight="700" fill="#1a1a1a">SIGNALS · CARRIER BOARDS</text>
   <line x1="40" y1="508" x2="1280" y2="508" stroke="#e2e8f0"/>
 
-  <rect x="60" y="545" width="170" height="70" fill="#cffafe" stroke="#0e7490" stroke-width="1.6" rx="3"/>
-  <text x="145" y="568" font-size="11" font-weight="700" fill="#164e63" text-anchor="middle">INA226</text>
-  <text x="145" y="584" font-size="9" fill="#155e75" text-anchor="middle">pack V + I</text>
-  <text x="145" y="600" font-size="8.5" fill="#155e75" text-anchor="middle">ALERT → bus under-volt</text>
-  <line x1="230" y1="580" x2="328" y2="580" stroke="#7c3aed" stroke-width="2.5" marker-end="url(#a)"/>
-  <text x="280" y="572" font-size="9" font-weight="600" fill="#5b21b6" text-anchor="middle">I²C2</text>
-  <text x="280" y="596" font-size="8" fill="#6d28d9" text-anchor="middle">PB10 SCL · PB11 SDA</text>
+  <!-- INA226 and the motor module reach the STM32 through carrier A -->
+  <rect x="40" y="540" width="160" height="66" fill="#cffafe" stroke="#0e7490" stroke-width="1.6" rx="3"/>
+  <text x="120" y="562" font-size="11" font-weight="700" fill="#164e63" text-anchor="middle">INA226</text>
+  <text x="120" y="578" font-size="9" fill="#155e75" text-anchor="middle">pack V + I</text>
+  <text x="120" y="594" font-size="8.5" fill="#155e75" text-anchor="middle">ALERT → bus under-volt</text>
+  <path d="M200,573 L225,573 L225,655 L250,655" fill="none" stroke="#7c3aed" stroke-width="2.5" marker-end="url(#a)"/>
+  <text x="212" y="566" font-size="8.5" font-weight="600" fill="#5b21b6" text-anchor="middle">I²C2</text>
+  <rect x="40" y="640" width="160" height="112" fill="#faf5ff" stroke="#9333ea" stroke-width="1.6" rx="3"/>
+  <text x="120" y="659" font-size="9.5" font-weight="700" fill="#6b21a8" text-anchor="middle">Encoder Motor Module</text>
+  <text x="120" y="673" font-size="8.5" fill="#7e22ce" text-anchor="middle">V1.4 · MM32F103</text>
+  <text x="120" y="687" font-size="8" fill="#7e22ce" text-anchor="middle">owns PWM + encoder counting</text>
+  <text x="120" y="700" font-size="8" fill="#7e22ce" text-anchor="middle">M1 + M3, both on the rear edge</text>
+  <text x="120" y="719" font-size="8" font-weight="700" fill="#b91c1c" text-anchor="middle">IIC 5 V is an OUTPUT:</text>
+  <text x="120" y="731" font-size="8" font-weight="700" fill="#b91c1c" text-anchor="middle">wire SCL / SDA / GND only</text>
+  <path d="M200,696 L225,696 L225,675 L250,675" fill="none" stroke="#7c3aed" stroke-width="2.5" marker-end="url(#a)"/>
+  <text x="212" y="714" font-size="8.5" font-weight="600" fill="#5b21b6" text-anchor="middle">I²C</text>
 
-  <rect x="330" y="530" width="210" height="110" fill="#dcfce7" stroke="#15803d" stroke-width="1.8" rx="3"/>
-  <text x="435" y="555" font-size="11" font-weight="700" fill="#14532d" text-anchor="middle">STM32F407</text>
-  <text x="435" y="571" font-size="9" fill="#166534" text-anchor="middle">real-time + BMS</text>
-  <text x="435" y="589" font-size="8.5" fill="#3f7d52" text-anchor="middle">CAN1 AF9: PD0 RX · PD1 TX</text>
-  <text x="435" y="604" font-size="8.5" fill="#3f7d52" text-anchor="middle">PB9 = Audio_SDA - do not use</text>
-  <text x="435" y="622" font-size="8.5" fill="#3f7d52" text-anchor="middle">SWD only, no VCP → USB-TTL</text>
+  <!-- the Discovery plugs onto carrier A (under P1) and carrier B (under P2); both sit on the carrier tray on plate 2 -->
+  <rect x="250" y="520" width="350" height="62" fill="#dcfce7" stroke="#15803d" stroke-width="1.8" rx="3"/>
+  <text x="425" y="540" font-size="11" font-weight="700" fill="#14532d" text-anchor="middle">STM32F4DISCOVERY · STM32F407</text>
+  <text x="425" y="556" font-size="8" fill="#166534" text-anchor="middle">real-time + BMS · CAN1 AF9: PD0 RX · PD1 TX · I²C2 PB10 SCL / PB11 SDA · PE9 PWM</text>
+  <text x="425" y="571" font-size="8" fill="#3f7d52" text-anchor="middle">PB9 = Audio_SDA - do not use · SWD only, no VCP → USB-TTL</text>
+  <line x1="335" y1="582" x2="335" y2="612" stroke="#94a3b8" stroke-width="5" marker-end="url(#a)"/>
+  <line x1="515" y1="582" x2="515" y2="612" stroke="#94a3b8" stroke-width="5" marker-end="url(#a)"/>
+  <text x="425" y="603" font-size="8" fill="#64748b" text-anchor="middle">plugs into the 1×25 sockets</text>
+  <rect x="250" y="612" width="170" height="140" fill="#f0fdfa" stroke="#0f766e" stroke-width="1.8" rx="3"/><text x="335.0" y="629" font-size="10.5" font-weight="700" fill="#134e4a" text-anchor="middle">CARRIER A</text><text x="335.0" y="642" font-size="8" fill="#0f766e" text-anchor="middle">under P1 · plate 2</text><text x="258" y="660" font-size="8.2" fill="#134e4a">6V IN terminal ← UBEC</text><text x="258" y="674" font-size="8.2" fill="#134e4a">C2 470 µF across the servo header</text><text x="258" y="688" font-size="8.2" fill="#134e4a">servo header: 6 V, GND, PWM</text><text x="258" y="702" font-size="8.2" fill="#134e4a">   via R4 1 kΩ from PE9</text><text x="258" y="716" font-size="8.2" fill="#134e4a">I²C headers: INA226, motor module</text>
+  <rect x="430" y="612" width="170" height="140" fill="#eff6ff" stroke="#1d4ed8" stroke-width="1.8" rx="3"/><text x="515.0" y="629" font-size="10.5" font-weight="700" fill="#1e3a8a" text-anchor="middle">CARRIER B</text><text x="515.0" y="642" font-size="8" fill="#1d4ed8" text-anchor="middle">under P2 · plate 2</text><text x="438" y="660" font-size="8.2" fill="#1e3a8a">5V IN terminal ← board C</text><text x="438" y="674" font-size="8.2" fill="#1e3a8a">SN65HVD230 module in a socket</text><text x="438" y="688" font-size="8.2" fill="#1e3a8a">   (TX / RX = PD1 / PD0, 3.3 V)</text><text x="438" y="702" font-size="8.2" fill="#1e3a8a">CAN terminal, 3-pin</text><text x="438" y="716" font-size="8.2" fill="#1e3a8a">R3 120 Ω = TERM jumper</text>
 
-  <line x1="540" y1="560" x2="620" y2="560" stroke="#1d4ed8" stroke-width="2.5"/>
-  <text x="580" y="552" font-size="8.5" fill="#1e3a8a" text-anchor="middle">TX/RX</text>
-  <rect x="620" y="530" width="160" height="60" fill="#dbeafe" stroke="#1d4ed8" stroke-width="1.6" rx="3"/>
-  <text x="700" y="552" font-size="10" font-weight="700" fill="#1e3a8a" text-anchor="middle">SN65HVD230</text>
-  <text x="700" y="567" font-size="9" fill="#1e40af" text-anchor="middle">3.3 V transceiver</text>
-  <text x="700" y="580" font-size="8" fill="#3b5bb5" text-anchor="middle">120 Ω on board - verify</text>
-  <line x1="780" y1="560" x2="1000" y2="560" stroke="#1d4ed8" stroke-width="3"/>
-  <text x="890" y="524" font-size="8.5" fill="#3b5bb5" text-anchor="middle">twisted pair · 120 Ω at each end, nowhere else</text>
-  <text x="890" y="551" font-size="9" font-weight="700" fill="#1e3a8a" text-anchor="middle">CAN BUS - H · L · GND</text>
-  <rect x="1000" y="525" width="260" height="80" fill="#dbeafe" stroke="#1d4ed8" stroke-width="1.8" rx="3"/>
-  <text x="1130" y="548" font-size="11" font-weight="700" fill="#1e3a8a" text-anchor="middle">FRDM-IMX91S</text>
-  <text x="1130" y="565" font-size="9" fill="#1e40af" text-anchor="middle">2×5 connector - CAN_H / CAN_L</text>
-  <text x="1130" y="580" font-size="8.5" fill="#3b5bb5" text-anchor="middle">on-board transceiver ✓ · 2× ADC · I²C/I³C</text>
-  <text x="1130" y="596" font-size="8.5" fill="#3b5bb5" text-anchor="middle">termination: check SW4 before adding 120 Ω</text>
-
-  <!-- CAN debug port: third node, stub off the middle of the bus (HW-18) -->
-  <circle cx="890" cy="560" r="3.4" fill="#1d4ed8"/>
-  <line x1="890" y1="560" x2="890" y2="616" stroke="#1d4ed8" stroke-width="2.5"/>
-  <rect x="795" y="616" width="190" height="64" fill="#eff6ff" stroke="#1d4ed8" stroke-width="1.6" stroke-dasharray="5,3" rx="3"/>
-  <text x="890" y="634" font-size="10" font-weight="700" fill="#1e3a8a" text-anchor="middle">CAN DEBUG PORT - DE-9 male</text>
-  <text x="890" y="648" font-size="8.5" fill="#1e40af" text-anchor="middle">pin 2 CAN_L · 3 CAN_GND · 7 CAN_H</text>
-  <text x="890" y="661" font-size="8.5" fill="#3b5bb5" text-anchor="middle">→ PC USB-CAN adapter, F-F cable</text>
-  <text x="890" y="674" font-size="8.5" font-weight="700" fill="#b91c1c" text-anchor="middle">stub · adapter 120 Ω must be OFF</text>
-
-  <!-- STM32 outputs: I2C to motor module, PWM to servo -->
-  <line x1="365" y1="640" x2="365" y2="688" stroke="#7c3aed" stroke-width="2.5" marker-end="url(#a)"/>
-  <text x="372" y="668" font-size="8" fill="#6d28d9">I²C</text>
-  <rect x="250" y="690" width="230" height="74" fill="#faf5ff" stroke="#9333ea" stroke-width="1.6" rx="3"/>
-  <text x="365" y="710" font-size="10" font-weight="700" fill="#6b21a8" text-anchor="middle">Encoder Motor Module V1.4</text>
-  <text x="365" y="725" font-size="8.5" fill="#7e22ce" text-anchor="middle">MM32F103 owns PWM + encoder counting</text>
-  <text x="365" y="740" font-size="8.5" fill="#7e22ce" text-anchor="middle">4 ports M1–M4 · use <tspan font-weight="700">M1 + M3</tspan>, both on the rear edge</text>
-  <text x="365" y="755" font-size="8.5" font-weight="700" fill="#b91c1c" text-anchor="middle">IIC 5 V is an OUTPUT - wire SCL/SDA/GND only</text>
-
-  <path d="M505,640 L505,670 L660,670 L660,688" fill="none" stroke="#78350f" stroke-width="2.5" marker-end="url(#a)"/>
-  <text x="582" y="664" font-size="8" fill="#78350f" text-anchor="middle">PWM</text>
-  <rect x="560" y="690" width="200" height="60" fill="#ede9fe" stroke="#6d28d9" stroke-width="1.4" rx="3"/>
-  <text x="660" y="710" font-size="10" font-weight="700" fill="#4c1d95" text-anchor="middle">STEERING SERVO - signal</text>
-  <text x="660" y="725" font-size="8.5" fill="#5b21b6" text-anchor="middle">500–2500 µs, direct from STM32</text>
-  <text x="660" y="740" font-size="8.5" fill="#5b21b6" text-anchor="middle">3.3 V logic - confirm on first power-up</text>
-
-  <text x="800" y="705" font-size="8.5" fill="#6b7280">electronic differential across the two rear wheels</text>
-  <text x="800" y="719" font-size="8.5" fill="#6b7280">is done in STM32 firmware - the axle is not a diff</text>
-  <text x="800" y="733" font-size="8.5" fill="#6b7280">motor-module I²C may share the INA226 bus (different addresses)</text>
+  <!-- CAN: carrier B terminal to the FRDM J7; the debug port is a stub off the middle of the bus (HW-18) -->
+  <path d="M600,690 L1000,690" fill="none" stroke="#1d4ed8" stroke-width="3"/>
+  <text x="800" y="682" font-size="9" font-weight="700" fill="#1e3a8a" text-anchor="middle">CAN BUS - H · L · GND</text>
+  <text x="800" y="666" font-size="8.5" fill="#3b5bb5" text-anchor="middle">twisted pair · 120 Ω at each end, nowhere else</text>
+  <rect x="1000" y="640" width="280" height="100" fill="#dbeafe" stroke="#1d4ed8" stroke-width="1.8" rx="3"/>
+  <text x="1140" y="662" font-size="11" font-weight="700" fill="#1e3a8a" text-anchor="middle">FRDM-IMX91S</text>
+  <text x="1140" y="679" font-size="8.5" fill="#1e40af" text-anchor="middle">J7 2×5 header: pin 8 CAN_H · 10 CAN_L · 6 GND</text>
+  <text x="1140" y="694" font-size="8.5" fill="#3b5bb5" text-anchor="middle">on-board TJA1051T/3, split termination + JP1</text>
+  <text x="1140" y="709" font-size="8.5" fill="#3b5bb5" text-anchor="middle">read JP1 and the resistors before adding a 120 Ω</text>
+  <text x="1140" y="724" font-size="8" fill="#3b5bb5" text-anchor="middle">J7 pins 7 / 9: I²C1 SCL / SDA · J1: 5 V in (board C)</text>
+  <circle cx="800" cy="690" r="3.4" fill="#1d4ed8"/>
+  <line x1="800" y1="690" x2="800" y2="712" stroke="#1d4ed8" stroke-width="2.5"/>
+  <rect x="705" y="712" width="190" height="62" fill="#eff6ff" stroke="#1d4ed8" stroke-width="1.6" stroke-dasharray="5,3" rx="3"/>
+  <text x="800" y="728" font-size="10" font-weight="700" fill="#1e3a8a" text-anchor="middle">CAN DEBUG PORT - DE-9 male</text>
+  <text x="800" y="741" font-size="8" fill="#1e40af" text-anchor="middle">pin 2 CAN_L · 3 GND · 7 CAN_H</text>
+  <text x="800" y="753" font-size="8" fill="#1e40af" text-anchor="middle">to the PC USB-CAN adapter, F-F cable · a stub</text>
+  <text x="800" y="766" font-size="8" font-weight="700" fill="#b91c1c" text-anchor="middle">adapter 120 Ω must be OFF</text>
+  <text x="1000" y="760" font-size="8.5" fill="#6b7280">electronic differential across the two rear wheels is firmware;</text>
+  <text x="1000" y="773" font-size="8.5" fill="#6b7280">the axle is not a diff. The motor-module I²C shares the INA226 bus.</text>
 
   <!-- ===================== LEGEND ===================== -->
   <line x1="40" y1="786" x2="1280" y2="786" stroke="#e2e8f0"/>
@@ -201,8 +216,7 @@
   <line x1="890" y1="808" x2="930" y2="808" stroke="#111827" stroke-width="3"/><text x="936" y="812" font-size="9.5" fill="#333">ground · returns to (−) bus</text>
   <line x1="140" y1="834" x2="180" y2="834" stroke="#1d4ed8" stroke-width="3"/><text x="186" y="838" font-size="9.5" fill="#333">CAN</text>
   <line x1="250" y1="834" x2="290" y2="834" stroke="#7c3aed" stroke-width="3"/><text x="296" y="838" font-size="9.5" fill="#333">I²C</text>
-  <line x1="360" y1="834" x2="400" y2="834" stroke="#78350f" stroke-width="3"/><text x="406" y="838" font-size="9.5" fill="#333">servo PWM</text>
   <text x="560" y="838" font-size="9.5" fill="#b91c1c">Build order: verify 5 V on a meter → fuse → battery last.</text>
   <text x="560" y="856" font-size="9.5" fill="#666">Unknowns: SM-2P connector temperature under load · FRDM loaded current · servo stall current.</text>
-  <text x="560" y="874" font-size="9.5" fill="#666">Switches: same 22 mm part - red = power train, green = logic; label the deck. Relay deferred (HW-12).</text>
+  <text x="560" y="874" font-size="9.5" fill="#666">Switches: same 22 mm part, red = power train, green = logic. Each LED is wired from the switched side, so it lights only when its switch is on. Relay deferred (HW-12).</text>
 </svg>

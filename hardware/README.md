@@ -66,7 +66,7 @@ drawing has plate 2's two faces as separate plans and the run table with cut len
 is [`../mechanical/scripts/plate1.py`](../mechanical/scripts/plate1.py). What it still rests on:
 
 - **Clip outlines**: 221-415, DOMAXWILL 3-port and 2-port, and which face the wires enter.
-- **Fuse holder body**, with calipers - 50 x 18 x 30 is scaled off a photo.
+- **Fuse holder body**, with calipers - the base / cap shape is the seller's photo (2026-10-07), the sizes are scaled off it.
 - **Battery height with its felt, and the driver's top height** - they set the clear air under the
   harness board.
 - **The carrier and board C screw heads under plate 2** against the taped parts.

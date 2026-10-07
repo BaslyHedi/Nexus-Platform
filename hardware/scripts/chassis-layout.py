@@ -76,20 +76,20 @@ RUNS = [   # plate 1 wiring, on plate 2's harness board (MEC-16, HW-20): #, run,
            # Cut lengths come from mechanical/scripts/plate1.py (modelled length x 1.2 + 22 mm strip)
     ('1', 'Battery + → main fuse', 'SM-2P + · fuse lead', '5 · 3', 'SM-2P is the battery disconnect · S1'),
     ('2', 'Main fuse → INA226 IN+', 'fuse lead 16 AWG', '~12', 'ferrule into the screw terminal'),
-    ('3', 'INA226 IN− → (+) bus', '18 red', '9', 'ferrule · WAGO'),
-    ('4', 'Battery − → (−) bus', 'SM-2P mate −', '12', 'across the opening · WAGO'),
-    ('5', '(+) bus → SW1 C', '18 red', '27', 'trunk over the motors · 4.8 mm receptacle'),
-    ('6', '(+) bus → SW2 C', '18 red', '27', 'trunk over the motors · 4.8 mm receptacle'),
-    ('7', 'SW1 NO → split', '18 red', '12', 'receptacle · 3-port'),
+    ('3', 'INA226 IN− → (+) bus', '18 red', '8', 'ferrule · WAGO'),
+    ('4', 'Battery − → (−) bus', 'SM-2P mate −', '10', 'across the opening · WAGO'),
+    ('5', '(+) bus port 2 → S8', '18 red', '11', 'WAGO · 3-port S8, toward the rear'),
+    ('6', 'S8 → SW1, SW2 contacts', 'switch green × 2', '20 · 22', "the switches' own wires · trunk over the motors"),
+    ('7', 'SW1 out + LED + → S9 → split', 'green · red · 18 orange', '13 · 13 · 6', '3-port S9 · LED + live only when SW1 is on'),
     ('8', 'split → F-MOT → S2 · VM+ pigtail', 'fuse lead · 18 red', '5 · 4 · 8 ↓', '3-port · S2 · driver VM plug, from the side'),
     ('9', 'split → F-UBEC → S3 · UBEC +', 'fuse lead 16 AWG', '5 · 4', "3-port · S3 · UBEC's own lead"),
-    ('10', 'UBEC 6 V → board A 6V IN', '18 red + black', '21', 'up through the opening · A terminal'),
-    ('11', 'UBEC − → S5 → (−) bus', '18 black', '11', "UBEC's own lead · S5 · WAGO"),
-    ('12', 'VM− pigtail → S4 → (−) bus', '18 black', '8 ↓ · 9', 'driver VM plug · S4 · WAGO'),
-    ('13', 'LED − SW1 ↔ SW2, then → (−)', '18 black', '8 + 23', 'receptacles · trunk · WAGO'),
-    ('14', 'LED + ↔ NO, on each switch', '18 red', '2 × 4', 'receptacles, at the switch'),
-    ('15', 'SW2 NO → S6 → Bauer +', '18 red', '32', 'receptacle · up the left slot beside the Bauer · S6 on the tray'),
-    ('16', 'Bauer − → S7 → (−) bus', '18 black', '22', 'S7 on the tray, right of the Bauer · up the right slot · WAGO'),
+    ('10', 'UBEC 6 V → board A 6V IN', '18 red + black', '18 · 19', 'up through the opening · A terminal'),
+    ('11', 'UBEC − → S5 → (−) bus', '18 black', '3 · 9', "UBEC's own lead · 5-port S5 · WAGO"),
+    ('12', 'VM− pigtail → S4 → (−) bus', '18 black', '8 ↓ · 8', 'driver VM plug · S4 · WAGO'),
+    ('13', 'SW1, SW2 LED − → S5', 'switch black × 2', '18 · 21', '5-port S5, with the UBEC return · one (−) bus port stays free'),
+    ('14', 'SW2 out + LED + → S6', 'green · red', '31 · 31', 'trunk · up the left slot · 3-port S6 on the tray'),
+    ('15', 'Bauer + lead → S6', '18 orange', '5', 'the Bauer\'s own lead · third wire in S6'),
+    ('16', 'Bauer − → S7 → (−) bus', '18 black', '18 · 19', 'S7 on the tray, right of the Bauer · up the right slot · WAGO'),
 ]
 
 
@@ -294,7 +294,7 @@ def m3_mark(view, x, y, label, colour='#047857'):
 FIXINGS = [('T1', 24.82, 60.24), ('T2', 52.82, 60.24), ('T3', 99.24, 81.76), ('T4', 120.06, 35.94), ('T5', 148.18, 81.76), ('T6', 148.18, 96.76)]
 
 # the S6 / S7 splices (Bauer 12 V + and -) in a lane either side of the Bauer, 18.6 x 13 mm
-SPLICES = [('S6', 42.0, 96.0), ('S7', 42.0, 11.5)]
+SPLICES = [('S6', 42.0, 96.0, 18.4), ('S7', 42.0, 11.5, 13)]       # name, x, y, height: S6 is a 3-port clip since 2026-10-06 (MEC-16)
 
 # the Bauer 50 W (BOM 3.4a, seller's drawing): body 64 x 57, corners cut 8 x 6.5; its two mounting holes are 5 mm in from each end and
 # 26 mm from the edge the four leads leave by (here y 89, the vehicle's left), 54 mm apart
@@ -346,8 +346,8 @@ def carrier_and_bauer():
         w(line(P2, x, 93, x, 97, stroke=colour, stroke_width=2))
     w(text(P2, 43, 89, 'leads wall ▼', font_size=6, fill='#be123c', text_anchor='middle'))
     w(text(P2, 104, 12, 'carrier tray', font_size=7, font_weight=700, fill='#0f766e', text_anchor='middle'))
-    for name, x, y in SPLICES:
-        w(rect(P2, x, y, 18.6, 13, rx=1.5, fill='#fed7aa', stroke='#c2410c', stroke_width=1.2) + text(P2, x + 9.3, y + 8.2, name, font_size=7, font_weight=700, fill='#c2410c', text_anchor='middle'))
+    for name, x, y, h in SPLICES:
+        w(rect(P2, x, y, 18.6, h, rx=1.5, fill='#fed7aa', stroke='#c2410c', stroke_width=1.2) + text(P2, x + 9.3, y + h / 2 + 2.5, name, font_size=7, font_weight=700, fill='#c2410c', text_anchor='middle'))
     # the rear pad (MEC-19): plain 4 mm plate to drill over plate 2's rear, six fixings; the J7 CAN lead lies across it, the cross-slot behind it stays clear
     w(outline(P2, REAR_PAD, fill='#0f766e', fill_opacity=0.09, stroke='#0f766e', stroke_width=1.3, stroke_dasharray='6 3'))
     for name, x, y, d in REAR_FIX:
@@ -493,12 +493,14 @@ def harness_board():
     w(rect(PB, 200, 64.03, 48, 5.47, fill='#64748b', fill_opacity=0.22, stroke='#64748b', stroke_width=0.8, stroke_dasharray='3 2'))
     w(rect(PB, 203, 120.5, 37, 120.47, fill='none', stroke='#6d28d9', stroke_width=0.8, stroke_dasharray='2 2'))
     w(text(PB, 205, 28.03, 'motors below:', font_size=5.4, font_weight=400, fill='#6d28d9', text_anchor='start') + text(PB, 205, 21.97, '9 mm, wires only', font_size=5.4, font_weight=400, fill='#6d28d9', text_anchor='start'))
-    w(rect(PB, 96, 31.97, 50, 30, rx=3, fill='#1f2937', stroke='#be185d', stroke_width=1.3))
-    w(rect(PB, 152, 31.97, 50, 30, rx=3, fill='#1f2937', stroke='#be185d', stroke_width=1.3))
-    w(rect(PB, 152, 118.03, 50, 30, rx=3, fill='#1f2937', stroke='#be185d', stroke_width=1.3))
+    # the three ATC holders, as the seller's photo shows them: boots, a wide base, a narrower cap on the lid side (MEC-16)
+    for fx, fy, flip in ((96, 23, False), (152, 23, False), (157, 97, True)):
+        w(rect(PB, fx, fy + 4, 8, 8, rx=2, fill='#1f2937', stroke='#be185d', stroke_width=1) + rect(PB, fx + 42, fy + 4, 8, 8, rx=2, fill='#1f2937', stroke='#be185d', stroke_width=1))
+        w(rect(PB, fx + 8, fy + 6, 34, 12, rx=2, fill='#1f2937', stroke='#be185d', stroke_width=1.3))
+        w(rect(PB, fx + 12, fy - 6 if not flip else fy + 21, 26, 15, rx=2, fill='#374151', stroke='#be185d', stroke_width=1.3))
     w(line(PB, 108, 1.97, 134, 1.97, stroke='#be185d', stroke_width=3))
     w(line(PB, 164, 1.97, 190, 1.97, stroke='#be185d', stroke_width=3))
-    w(line(PB, 164, 118.03, 190, 118.03, stroke='#be185d', stroke_width=3))
+    w(line(PB, 169, 118.03, 195, 118.03, stroke='#be185d', stroke_width=3))
     w(rect(PB, 88, 70.03, 18.59, 30, rx=2, fill='#fecaca', stroke='#b91c1c', stroke_width=1.3))
     w(rect(PB, 134, 70.03, 18.59, 30, rx=2, fill='#e2e8f0', stroke='#334155', stroke_width=1.3))
     w(line(PB, 106.59, 40.03, 106.59, 70.03, stroke='#b91c1c', stroke_width=2))
@@ -509,17 +511,19 @@ def harness_board():
     w(rect(PB, 100, 111.97, 35, 12, rx=2, fill='#fef08a', stroke='#a16207', stroke_width=1.2))
     w(rect(PB, 83, 39.62, 13, 18.59, rx=1.5, fill='#fed7aa', stroke='#c2410c', stroke_width=1))
     w(rect(PB, 157, 48.03, 18.59, 13, rx=1.5, fill='#fed7aa', stroke='#c2410c', stroke_width=1))
-    w(rect(PB, 138.71, 116.97, 18.59, 13, rx=1.5, fill='#fed7aa', stroke='#c2410c', stroke_width=1))
+    w(rect(PB, 137.2, 116.97, 18.59, 30, rx=1.5, fill='#fed7aa', stroke='#c2410c', stroke_width=1))                  # S5, the 5-port clip, S3 hangs under it
+    w(rect(PB, 157, 69.38, 18.59, 18.41, rx=2, fill='#fed7aa', stroke='#c2410c', stroke_width=1.2))                     # S8, the switch feed
+    w(rect(PB, 178, 50.8, 18.59, 18.41, rx=2, fill='#fed7aa', stroke='#c2410c', stroke_width=1.2))                      # S9, SW1's output and LED +
     w(GCLOSE)
     # its labels
     w(gopen())
-    w(text(PB, 121, 15.03, 'MAIN 7.5 A', font_size=6.4, font_weight=700, fill='#ffffff', text_anchor='middle'))
-    w(text(PB, 177, 15.03, 'MOTORS 5 A', font_size=6.4, font_weight=700, fill='#ffffff', text_anchor='middle'))
-    w(text(PB, 177, 100.97, 'UBEC 5 A', font_size=6.4, font_weight=700, fill='#ffffff', text_anchor='middle'))
+    w(text(PB, 121, 11.0, 'MAIN 7.5 A', font_size=6.4, font_weight=700, fill='#ffffff', text_anchor='middle'))
+    w(text(PB, 177, 11.0, 'MOTORS 5 A', font_size=6.4, font_weight=700, fill='#ffffff', text_anchor='middle'))
+    w(text(PB, 182, 110.97, 'UBEC 5 A', font_size=6.4, font_weight=700, fill='#ffffff', text_anchor='middle'))
     w(text(PB, 97.29, 56.97, '(+)', font_size=7.5, font_weight=700, fill='#b91c1c', text_anchor='middle'))
-    w(text(PB, 97.29, 50.97, '3 of 5', font_size=5.2, font_weight=400, fill='#b91c1c', text_anchor='middle'))
+    w(text(PB, 97.29, 50.97, '2 of 5', font_size=5.2, font_weight=400, fill='#b91c1c', text_anchor='middle'))
     w(text(PB, 143.29, 56.97, '(−)', font_size=7.5, font_weight=700, fill='#334155', text_anchor='middle'))
-    w(text(PB, 143.29, 50.97, '5 of 5', font_size=5.2, font_weight=400, fill='#334155', text_anchor='middle'))
+    w(text(PB, 143.29, 50.97, '4 of 5', font_size=5.2, font_weight=400, fill='#334155', text_anchor='middle'))
     w(text(PB, 121, 86.97, 'INA226', font_size=6.4, font_weight=700, fill='#0e7490', text_anchor='middle'))
     w(text(PB, 121, 81.97, 'terminals ↓', font_size=5, font_weight=400, fill='#0e7490', text_anchor='middle'))
     w(text(PB, 187.29, 61.97, 'SW1', font_size=5.4, font_weight=700, fill='#c2410c', text_anchor='middle'))
@@ -527,7 +531,9 @@ def harness_board():
     w(text(PB, 117.53, 105.03, 'UBEC 6 V', font_size=5.8, font_weight=700, fill='#a16207', text_anchor='middle'))
     w(text(PB, 89.53, 29.03, 'S1', font_size=5.4, font_weight=700, fill='#c2410c', text_anchor='middle'))
     w(text(PB, 166.29, 40.5, 'S2/S4', font_size=5.4, font_weight=700, fill='#c2410c', text_anchor='middle'))
-    w(text(PB, 148, 109.5, 'S3/S5', font_size=5.4, font_weight=700, fill='#c2410c', text_anchor='middle'))
+    w(text(PB, 148, 105.5, 'S5 / S3', font_size=5.4, font_weight=700, fill='#c2410c', text_anchor='middle'))
+    w(text(PB, 166.3, 60.2, 'S8', font_size=5.4, font_weight=700, fill='#c2410c', text_anchor='middle'))
+    w(text(PB, 187.3, 41.5, 'S9', font_size=5.4, font_weight=700, fill='#c2410c', text_anchor='middle'))
     w(text(PB, 121.47, 61.97, 'opening', font_size=5.4, font_weight=400, fill='#be185d', text_anchor='middle'))
     w(text(PB, 121.47, 56.97, 'wires up', font_size=5.4, font_weight=400, fill='#be185d', text_anchor='middle'))
     w(text(PB, 225, 65.97, 'trunk to SW1 / SW2', font_size=5.4, font_weight=400, fill='#475569', text_anchor='middle'))
@@ -640,14 +646,14 @@ def run_table():
     w(text(PX, 600, 525, 'single-plate CAD only ever had the 50 and our 3-deck model repeated it for both gaps. The fascia', font_size=9, fill='#475569'))
     w(text(PX, 600, 538, 'panels are therefore 52 and 42 mm tall and are no longer one blank (MEC-09).', font_size=9, fill='#475569'))
     w(text(PX, 600, 549, 'Plates 2 and 3 - settled and ordered 2026-10-06 (Craftcloud #516727254320, BOM 3.28): carrier tray MEC-17, compute tray MEC-18, rear pad MEC-19.', font_size=8.2, font_weight=700, fill='#0f766e'))
-    w(text(PX, 600, 561, "Plate 1 wiring - every run, on plate 2's harness board, 2026-09-28 (MEC-16, HW-20)", font_size=9.5, font_weight=700, fill='#1e293b'))
+    w(text(PX, 600, 561, "Plate 1 wiring - every run, on plate 2's harness board, updated 2026-10-06 (MEC-16, HW-20)", font_size=9.5, font_weight=700, fill='#1e293b'))
     w(gopen(font_size=7.6, font_weight=700, fill='#64748b') + text(PX, 600, 572, '#') + text(PX, 614, 572, 'Run') + text(PX, 772, 572, 'Wire') + text(PX, 862, 572, 'Cut, cm') + text(PX, 906, 572, 'Ends and clips') + GCLOSE)
     w(line(PX, 600, 576, 1280, 576, stroke='#e2e8f0'))
     for i, (n, run, wire, cut, ends) in enumerate(RUNS):
         y = f'{587.0 + 12.2 * i:.1f}'
         w(gopen(font_size=7.8, fill='#475569') + text(PX, 600, y, n, font_weight=700) + text(PX, 614, y, run)
           + text(PX, 772, y, wire) + text(PX, 862, y, cut) + text(PX, 906, y, ends) + GCLOSE)
-    w(text(PX, 600, 786, '18 AWG cut: ~1.5 m red, ~1.1 m black, of 2.5 + 2.5 m bought · clips: 2 × 221-415, 1 × 3-port, 7 × 2-port', font_size=8, font_weight=700, fill='#1e293b'))
+    w(text(PX, 600, 786, '18 AWG cut: ~0.4 m red / orange, ~1.0 m black · switches use their own wires · clips: 2 × 221-415, 4 × 3-port, 1 × 5-port, 5 × 2-port', font_size=8, font_weight=700, fill='#1e293b'))
     w(text(PX, 600, 798, 'Measured off the 3D model (plate1.py) + 22 mm strip + 20 %. ↓ = drop to plate 1, plugged from the right side once closed. Nominal heights.', font_size=8, fill='#b45309'))
     return o
 

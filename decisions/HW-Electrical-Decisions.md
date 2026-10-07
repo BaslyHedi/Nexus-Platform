@@ -461,7 +461,7 @@ every return ─ (−) bar ─ battery −
 
 *Formerly HD-19.*
 
-**Updated by MEC-16:** the (−) bus is **one** 221-415, five ports, with the two switch LED returns joined at the switches. The 221-500 carriers were already dropped; both buses are taped to plate 2's lower face with 3M foam tape.
+**Updated by MEC-16:** the (−) bus is **one** 221-415, five ports; since 2026-10-06 the two switch LED returns join the UBEC return in a 5-port clip (S5), so it uses four ports and one is spare. The (+) bus uses two (the INA226 and S8, the switch feed). The 221-500 carriers were already dropped; both buses are taped to plate 2's lower face with 3M foam tape.
 
 **Decision (2026-09-16).** Replace the LAOYE bus bars with **WAGO 221-415** lever connectors on
 **221-500** mounting carriers.
@@ -636,6 +636,7 @@ remove that resistor.
   the Bauer and the carrier (MEC-15), and the row-24 end keeps IN 5V and TO STM32.
 - **Held by two zip ties** through 3 mm holes drilled at C·I2 / B2 and C·I6 / B6: one over the body,
   one over the pigtail as strain relief. Both clear the F5 standoff (C·F4) underneath by about 0.9 mm.
+- **Superseded by MEC-17 (2026-10-05): F5 and F6 no longer exist.** The board stands on four corner holes and nylon standoffs on the carrier tray, and the drawing, the routing check and the animation follow. What follows is the 2026-09-29 reasoning.
 - **The F5 screw is under the body.** The flange is 10.3 mm tall and the body 5.3 mm, centred, so
   the body rides 2.5 mm off the board and clears a pan-head M2.5. Fit that screw first.
 - **The pigtail is soldered, cut to about 20 mm:** red V into C·J7 and black G into H7, each the
@@ -676,7 +677,7 @@ battery + ─ 7.5 A ─ shunt ─ (+) bus ─┬─ SW1 ─┬─ 5 A ─ Encode
   FRDM and the STM32 dead either way. The STM32 is the safety controller, and HW-17 already names
   the drive running on without it as the risk. The main blowing, which cuts the wheels as well, is
   the safer outcome.
-- **The holders are large** (about 50 x 18 mm, 30 mm tall with the lid, 12-13 cm of 16 AWG each
+- **The holders are large** (about 50 mm long, 28 across and 18 deep: a base with a narrower strap-on cap, 12-13 cm of 16 AWG each
   side) and plate 1 could not take four of them (MEC-16). The logic holder was also the one that
   had to follow the longest run, from the (+) bus back to SW2 at the fascia.
 

@@ -18,6 +18,8 @@ Coordinates: plate 3's layout frame (x front to rear, y from the vehicle's right
 The layout's y runs the wrong way for a right-handed frame, so a point goes to Blender as (x, -y, z).
 """
 import bpy, bmesh, math, os, re, sys, json
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from blender_compat import fcurves, mp4                              # noqa: E402
 from mathutils import Vector
 
 bpy.ops.wm.read_factory_settings(use_empty=True)
@@ -171,7 +173,7 @@ def show(o, frames):
             t.keyframe_insert("hide_render", frame=a)
             t.hide_render = True
             t.keyframe_insert("hide_render", frame=b)
-        for fc in t.animation_data.action.fcurves:
+        for fc in fcurves(t.animation_data.action):
             if fc.data_path == "hide_render":
                 for k in fc.keyframe_points:
                     k.interpolation = 'CONSTANT'
@@ -484,7 +486,7 @@ move(ROOT, [(0.0, (0, BENCH_Y, LIFT)), (CARRY[0], (0, BENCH_Y, LIFT)), (CARRY[0]
             (CARRY[2], (0, 0, LIFT)), (LOWER[0], (0, 0, LIFT)), (LOWER[1], (0, 0, 0))])
 move(P3, [(0.0, (0, 0, LIFT)), (LOWER[0], (0, 0, LIFT)), (LOWER[1], (0, 0, 0))])
 for ob in (ROOT, P3):
-    for fc in ob.animation_data.action.fcurves:
+    for fc in fcurves(ob.animation_data.action):
         for k in fc.keyframe_points:
             k.interpolation = 'BEZIER'
 
@@ -605,10 +607,7 @@ if STILL is not None:
 if PREVIEW:
     sc.render.resolution_percentage = 50
     sc.frame_step = 4
-sc.render.image_settings.file_format = 'FFMPEG'
-sc.render.ffmpeg.format = 'MPEG4'
-sc.render.ffmpeg.codec = 'H264'
-sc.render.ffmpeg.constant_rate_factor = 'HIGH'
+mp4(sc)
 sc.render.filepath = OUT
 bpy.ops.render.render(animation=True)
 print("wrote", OUT)

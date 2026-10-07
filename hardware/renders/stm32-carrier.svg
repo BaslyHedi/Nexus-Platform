@@ -3,7 +3,7 @@
 <text x="40.0" y="30.0" font-size="18" fill="#1a1a1a" font-weight="700">NEXUS - STM32 carrier and 5 V split board: soldering and wiring</text>
 <text x="40.0" y="49.0" font-size="10.5" fill="#666">Kit perfboards (BOM 5.11), 2.54 grid · Boards A and B, both 5×7 cm (18 × 24 holes), under P1 and P2, 5.9 mm apart · Board C 3×7 cm (10 × 24), the 5 V split · MEC-08 / MEC-15 / HW-19</text>
 <text x="40.0" y="66.0" font-size="9.5" fill="#b45309">Hole names: board·hole, as PRINTED on the kit board - letters A-X along the 70 mm side, numbers across (1-18 on A and B, 1-10 on C), A1 bottom-left with the print readable, as every view shows it.</text>
-<text x="40.0" y="80.0" font-size="9.5" fill="#b45309">B: header row n is letter X for row 1 back to A for row 24 · A, AS BUILT: one hole on, row 2 on X, row 1 off the board · P1 odd pins A·A10-X10, even A9-X9 · P2 odd B·A12-X12, even A11-X11 · fixings F1-F6.</text>
+<text x="40.0" y="80.0" font-size="9.5" fill="#b45309">B: header row n is letter X for row 1 back to A for row 24 · A, AS BUILT: one hole on, row 2 on X, row 1 off the board · P1 odd pins A·A10-X10, even A9-X9 · P2 odd B·A12-X12, even A11-X11 · fixings: four corner holes per board (MEC-17).</text>
 <text x="40.0" y="93.0" font-size="9.5" fill="#b45309">Wires on the solder side, ALL INSULATED, PAD TO PAD: they meet only at pads, two wire ends per pad at most. Thick 18 AWG (3.11), thin 22 AWG, grey = a part lead bent over.</text>
 <text x="30.0" y="108.0" font-size="12" fill="#1a1a1a" font-weight="700">A + B  COMPONENT SIDE  (from above, front LEFT)</text>
 <text x="30.0" y="123.0" font-size="8.5" fill="#64748b">P1 on the vehicle right (top), P2 on the vehicle left (bottom) - chassis-layout convention</text>
@@ -1089,26 +1089,38 @@
 <circle cx="166.7" cy="609.7" r="2.2" fill="#fff" stroke="#047857" stroke-width="1.1"/>
 <circle cx="248.5" cy="586.3" r="2.2" fill="#fff" stroke="#047857" stroke-width="1.1"/>
 <circle cx="248.5" cy="598.0" r="2.2" fill="#fff" stroke="#047857" stroke-width="1.1"/>
-<circle cx="213.5" cy="235.8" r="13.3" fill="#f1f5f9" fill-opacity="0.7" stroke="#64748b" stroke-width="1" stroke-dasharray="3 2"/>
-<line x1="209.5" y1="235.8" x2="217.5" y2="235.8" stroke="#64748b" stroke-width="0.9"/>
-<line x1="213.5" y1="231.8" x2="213.5" y2="239.8" stroke="#64748b" stroke-width="0.9"/>
-<circle cx="213.5" cy="235.8" r="7.4" fill="none" stroke="#0f172a" stroke-width="1.3"/>
-<text x="203.7" y="227.0" font-size="7.5" fill="#0f172a" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="end">F1</text>
-<circle cx="213.5" cy="458.6" r="13.3" fill="#f1f5f9" fill-opacity="0.7" stroke="#64748b" stroke-width="1" stroke-dasharray="3 2"/>
-<line x1="209.5" y1="458.6" x2="217.5" y2="458.6" stroke="#64748b" stroke-width="0.9"/>
-<line x1="213.5" y1="454.6" x2="213.5" y2="462.6" stroke="#64748b" stroke-width="0.9"/>
-<circle cx="213.5" cy="458.6" r="7.4" fill="none" stroke="#0f172a" stroke-width="1.3"/>
-<text x="203.7" y="449.9" font-size="7.5" fill="#0f172a" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="end">F2</text>
-<circle cx="313.3" cy="192.0" r="13.3" fill="#f1f5f9" fill-opacity="0.7" stroke="#64748b" stroke-width="1" stroke-dasharray="3 2"/>
-<line x1="309.3" y1="192.0" x2="317.3" y2="192.0" stroke="#64748b" stroke-width="0.9"/>
-<line x1="313.3" y1="188.0" x2="313.3" y2="196.0" stroke="#64748b" stroke-width="0.9"/>
-<circle cx="313.3" cy="192.0" r="7.4" fill="none" stroke="#0f172a" stroke-width="1.3"/>
-<text x="303.6" y="183.2" font-size="7.5" fill="#0f172a" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="end">F3</text>
-<circle cx="313.3" cy="587.6" r="13.3" fill="#f1f5f9" fill-opacity="0.7" stroke="#64748b" stroke-width="1" stroke-dasharray="3 2"/>
-<line x1="309.3" y1="587.6" x2="317.3" y2="587.6" stroke="#64748b" stroke-width="0.9"/>
-<line x1="313.3" y1="583.6" x2="313.3" y2="591.6" stroke="#64748b" stroke-width="0.9"/>
-<circle cx="313.3" cy="587.6" r="7.4" fill="none" stroke="#0f172a" stroke-width="1.3"/>
-<text x="303.6" y="578.9" font-size="7.5" fill="#0f172a" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="end">F4</text>
+<circle cx="81.5" cy="161.5" r="13.3" fill="#f1f5f9" fill-opacity="0.7" stroke="#64748b" stroke-width="1" stroke-dasharray="3 2"/>
+<line x1="77.5" y1="161.5" x2="85.5" y2="161.5" stroke="#64748b" stroke-width="0.9"/>
+<line x1="81.5" y1="157.5" x2="81.5" y2="165.5" stroke="#64748b" stroke-width="0.9"/>
+<circle cx="81.5" cy="161.5" r="7.4" fill="none" stroke="#0f172a" stroke-width="1.3"/>
+<circle cx="81.5" cy="368.5" r="13.3" fill="#f1f5f9" fill-opacity="0.7" stroke="#64748b" stroke-width="1" stroke-dasharray="3 2"/>
+<line x1="77.5" y1="368.5" x2="85.5" y2="368.5" stroke="#64748b" stroke-width="0.9"/>
+<line x1="81.5" y1="364.5" x2="81.5" y2="372.5" stroke="#64748b" stroke-width="0.9"/>
+<circle cx="81.5" cy="368.5" r="7.4" fill="none" stroke="#0f172a" stroke-width="1.3"/>
+<circle cx="380.5" cy="161.5" r="13.3" fill="#f1f5f9" fill-opacity="0.7" stroke="#64748b" stroke-width="1" stroke-dasharray="3 2"/>
+<line x1="376.5" y1="161.5" x2="384.5" y2="161.5" stroke="#64748b" stroke-width="0.9"/>
+<line x1="380.5" y1="157.5" x2="380.5" y2="165.5" stroke="#64748b" stroke-width="0.9"/>
+<circle cx="380.5" cy="161.5" r="7.4" fill="none" stroke="#0f172a" stroke-width="1.3"/>
+<circle cx="380.5" cy="368.5" r="13.3" fill="#f1f5f9" fill-opacity="0.7" stroke="#64748b" stroke-width="1" stroke-dasharray="3 2"/>
+<line x1="376.5" y1="368.5" x2="384.5" y2="368.5" stroke="#64748b" stroke-width="0.9"/>
+<line x1="380.5" y1="364.5" x2="380.5" y2="372.5" stroke="#64748b" stroke-width="0.9"/>
+<circle cx="380.5" cy="368.5" r="7.4" fill="none" stroke="#0f172a" stroke-width="1.3"/>
+<circle cx="93.2" cy="418.5" r="13.3" fill="#f1f5f9" fill-opacity="0.7" stroke="#64748b" stroke-width="1" stroke-dasharray="3 2"/>
+<line x1="89.2" y1="418.5" x2="97.2" y2="418.5" stroke="#64748b" stroke-width="0.9"/>
+<line x1="93.2" y1="414.5" x2="93.2" y2="422.5" stroke="#64748b" stroke-width="0.9"/>
+<circle cx="93.2" cy="418.5" r="7.4" fill="none" stroke="#0f172a" stroke-width="1.3"/>
+<circle cx="93.2" cy="625.5" r="13.3" fill="#f1f5f9" fill-opacity="0.7" stroke="#64748b" stroke-width="1" stroke-dasharray="3 2"/>
+<line x1="89.2" y1="625.5" x2="97.2" y2="625.5" stroke="#64748b" stroke-width="0.9"/>
+<line x1="93.2" y1="621.5" x2="93.2" y2="629.5" stroke="#64748b" stroke-width="0.9"/>
+<circle cx="93.2" cy="625.5" r="7.4" fill="none" stroke="#0f172a" stroke-width="1.3"/>
+<circle cx="392.2" cy="418.5" r="13.3" fill="#f1f5f9" fill-opacity="0.7" stroke="#64748b" stroke-width="1" stroke-dasharray="3 2"/>
+<line x1="388.2" y1="418.5" x2="396.2" y2="418.5" stroke="#64748b" stroke-width="0.9"/>
+<line x1="392.2" y1="414.5" x2="392.2" y2="422.5" stroke="#64748b" stroke-width="0.9"/>
+<circle cx="392.2" cy="418.5" r="7.4" fill="none" stroke="#0f172a" stroke-width="1.3"/>
+<circle cx="392.2" cy="625.5" r="13.3" fill="#f1f5f9" fill-opacity="0.7" stroke="#64748b" stroke-width="1" stroke-dasharray="3 2"/>
+<line x1="388.2" y1="625.5" x2="396.2" y2="625.5" stroke="#64748b" stroke-width="0.9"/>
+<line x1="392.2" y1="621.5" x2="392.2" y2="629.5" stroke="#64748b" stroke-width="0.9"/>
+<circle cx="392.2" cy="625.5" r="7.4" fill="none" stroke="#0f172a" stroke-width="1.3"/>
 <rect x="86.4" y="230.0" width="446.2" height="303.6" rx="3" fill="#eef2ff" fill-opacity="0.35" stroke="#4338ca" stroke-width="1.2" stroke-dasharray="7 4"/>
 <rect x="500.4" y="363.9" width="36.8" height="35.9" rx="1" fill="#cbd5e1" stroke="#4338ca" stroke-width="1"/>
 <text x="308.0" y="319.0" font-size="10" fill="#4338ca" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="middle">STM32F4DISCOVERY above</text>
@@ -2229,27 +2241,39 @@
 <circle cx="686.7" cy="177.4" r="3.1" fill="#e2e8f0" stroke="#047857" stroke-width="1.1"/>
 <circle cx="768.5" cy="200.7" r="3.1" fill="#e2e8f0" stroke="#047857" stroke-width="1.1"/>
 <circle cx="768.5" cy="189.1" r="3.1" fill="#e2e8f0" stroke="#047857" stroke-width="1.1"/>
-<circle cx="733.5" cy="551.3" r="13.3" fill="#f1f5f9" fill-opacity="0.7" stroke="#64748b" stroke-width="1" stroke-dasharray="3 2"/>
-<line x1="729.5" y1="551.3" x2="737.5" y2="551.3" stroke="#64748b" stroke-width="0.9"/>
-<line x1="733.5" y1="547.3" x2="733.5" y2="555.3" stroke="#64748b" stroke-width="0.9"/>
-<circle cx="733.5" cy="551.3" r="7.4" fill="none" stroke="#0f172a" stroke-width="1.3"/>
-<text x="723.7" y="542.5" font-size="7.5" fill="#0f172a" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="end">F1</text>
-<circle cx="733.5" cy="328.4" r="13.3" fill="#f1f5f9" fill-opacity="0.7" stroke="#64748b" stroke-width="1" stroke-dasharray="3 2"/>
-<line x1="729.5" y1="328.4" x2="737.5" y2="328.4" stroke="#64748b" stroke-width="0.9"/>
-<line x1="733.5" y1="324.4" x2="733.5" y2="332.4" stroke="#64748b" stroke-width="0.9"/>
-<circle cx="733.5" cy="328.4" r="7.4" fill="none" stroke="#0f172a" stroke-width="1.3"/>
-<text x="723.7" y="319.7" font-size="7.5" fill="#0f172a" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="end">F2</text>
-<circle cx="833.3" cy="595.1" r="13.3" fill="#f1f5f9" fill-opacity="0.7" stroke="#64748b" stroke-width="1" stroke-dasharray="3 2"/>
-<line x1="829.3" y1="595.1" x2="837.3" y2="595.1" stroke="#64748b" stroke-width="0.9"/>
-<line x1="833.3" y1="591.1" x2="833.3" y2="599.1" stroke="#64748b" stroke-width="0.9"/>
-<circle cx="833.3" cy="595.1" r="7.4" fill="none" stroke="#0f172a" stroke-width="1.3"/>
-<text x="823.6" y="586.3" font-size="7.5" fill="#0f172a" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="end">F3</text>
-<circle cx="833.3" cy="199.5" r="13.3" fill="#f1f5f9" fill-opacity="0.7" stroke="#64748b" stroke-width="1" stroke-dasharray="3 2"/>
-<line x1="829.3" y1="199.5" x2="837.3" y2="199.5" stroke="#64748b" stroke-width="0.9"/>
-<line x1="833.3" y1="195.5" x2="833.3" y2="203.5" stroke="#64748b" stroke-width="0.9"/>
-<circle cx="833.3" cy="199.5" r="7.4" fill="none" stroke="#0f172a" stroke-width="1.3"/>
-<text x="823.6" y="190.7" font-size="7.5" fill="#0f172a" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="end">F4</text>
-<polyline points="885.4,598.0 885.4,627.2 780.2,627.2 780.2,598.0" fill="none" stroke="#d97706" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="601.5" cy="625.5" r="13.3" fill="#f1f5f9" fill-opacity="0.7" stroke="#64748b" stroke-width="1" stroke-dasharray="3 2"/>
+<line x1="597.5" y1="625.5" x2="605.5" y2="625.5" stroke="#64748b" stroke-width="0.9"/>
+<line x1="601.5" y1="621.5" x2="601.5" y2="629.5" stroke="#64748b" stroke-width="0.9"/>
+<circle cx="601.5" cy="625.5" r="7.4" fill="none" stroke="#0f172a" stroke-width="1.3"/>
+<circle cx="601.5" cy="418.5" r="13.3" fill="#f1f5f9" fill-opacity="0.7" stroke="#64748b" stroke-width="1" stroke-dasharray="3 2"/>
+<line x1="597.5" y1="418.5" x2="605.5" y2="418.5" stroke="#64748b" stroke-width="0.9"/>
+<line x1="601.5" y1="414.5" x2="601.5" y2="422.5" stroke="#64748b" stroke-width="0.9"/>
+<circle cx="601.5" cy="418.5" r="7.4" fill="none" stroke="#0f172a" stroke-width="1.3"/>
+<circle cx="900.5" cy="625.5" r="13.3" fill="#f1f5f9" fill-opacity="0.7" stroke="#64748b" stroke-width="1" stroke-dasharray="3 2"/>
+<line x1="896.5" y1="625.5" x2="904.5" y2="625.5" stroke="#64748b" stroke-width="0.9"/>
+<line x1="900.5" y1="621.5" x2="900.5" y2="629.5" stroke="#64748b" stroke-width="0.9"/>
+<circle cx="900.5" cy="625.5" r="7.4" fill="none" stroke="#0f172a" stroke-width="1.3"/>
+<circle cx="900.5" cy="418.5" r="13.3" fill="#f1f5f9" fill-opacity="0.7" stroke="#64748b" stroke-width="1" stroke-dasharray="3 2"/>
+<line x1="896.5" y1="418.5" x2="904.5" y2="418.5" stroke="#64748b" stroke-width="0.9"/>
+<line x1="900.5" y1="414.5" x2="900.5" y2="422.5" stroke="#64748b" stroke-width="0.9"/>
+<circle cx="900.5" cy="418.5" r="7.4" fill="none" stroke="#0f172a" stroke-width="1.3"/>
+<circle cx="613.2" cy="368.5" r="13.3" fill="#f1f5f9" fill-opacity="0.7" stroke="#64748b" stroke-width="1" stroke-dasharray="3 2"/>
+<line x1="609.2" y1="368.5" x2="617.2" y2="368.5" stroke="#64748b" stroke-width="0.9"/>
+<line x1="613.2" y1="364.5" x2="613.2" y2="372.5" stroke="#64748b" stroke-width="0.9"/>
+<circle cx="613.2" cy="368.5" r="7.4" fill="none" stroke="#0f172a" stroke-width="1.3"/>
+<circle cx="613.2" cy="161.5" r="13.3" fill="#f1f5f9" fill-opacity="0.7" stroke="#64748b" stroke-width="1" stroke-dasharray="3 2"/>
+<line x1="609.2" y1="161.5" x2="617.2" y2="161.5" stroke="#64748b" stroke-width="0.9"/>
+<line x1="613.2" y1="157.5" x2="613.2" y2="165.5" stroke="#64748b" stroke-width="0.9"/>
+<circle cx="613.2" cy="161.5" r="7.4" fill="none" stroke="#0f172a" stroke-width="1.3"/>
+<circle cx="912.2" cy="368.5" r="13.3" fill="#f1f5f9" fill-opacity="0.7" stroke="#64748b" stroke-width="1" stroke-dasharray="3 2"/>
+<line x1="908.2" y1="368.5" x2="916.2" y2="368.5" stroke="#64748b" stroke-width="0.9"/>
+<line x1="912.2" y1="364.5" x2="912.2" y2="372.5" stroke="#64748b" stroke-width="0.9"/>
+<circle cx="912.2" cy="368.5" r="7.4" fill="none" stroke="#0f172a" stroke-width="1.3"/>
+<circle cx="912.2" cy="161.5" r="13.3" fill="#f1f5f9" fill-opacity="0.7" stroke="#64748b" stroke-width="1" stroke-dasharray="3 2"/>
+<line x1="908.2" y1="161.5" x2="916.2" y2="161.5" stroke="#64748b" stroke-width="0.9"/>
+<line x1="912.2" y1="157.5" x2="912.2" y2="165.5" stroke="#64748b" stroke-width="0.9"/>
+<circle cx="912.2" cy="161.5" r="7.4" fill="none" stroke="#0f172a" stroke-width="1.3"/>
+<polyline points="885.4,598.0 879.5,615.5 867.8,627.2 780.2,627.2 780.2,598.0" fill="none" stroke="#d97706" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
 <circle cx="885.4" cy="598.0" r="2.3" fill="#d97706" stroke="#fff" stroke-width="0.6"/>
 <circle cx="780.2" cy="598.0" r="2.3" fill="#d97706" stroke="#fff" stroke-width="0.6"/>
 <polyline points="780.2,598.0 780.2,592.2 745.2,592.2 745.2,598.0" fill="none" stroke="#d97706" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -2291,7 +2315,7 @@
 <polyline points="663.4,177.4 657.5,177.4 657.5,265.0 879.5,265.0 885.4,282.5" fill="none" stroke="#dc2626" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
 <circle cx="663.4" cy="177.4" r="2.3" fill="#dc2626" stroke="#fff" stroke-width="0.6"/>
 <circle cx="885.4" cy="282.5" r="2.3" fill="#dc2626" stroke="#fff" stroke-width="0.6"/>
-<polyline points="640.0,177.4 634.2,171.5 622.5,171.5 622.5,253.3 891.2,253.3 897.0,282.5" fill="none" stroke="#111827" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="640.0,177.4 634.2,171.5 622.5,183.2 622.5,253.3 891.2,253.3 897.0,282.5" fill="none" stroke="#111827" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
 <circle cx="640.0" cy="177.4" r="2.3" fill="#111827" stroke="#fff" stroke-width="0.6"/>
 <circle cx="897.0" cy="282.5" r="2.3" fill="#111827" stroke="#fff" stroke-width="0.6"/>
 <polyline points="897.0,294.2 902.9,288.4 902.9,183.2 897.0,177.4" fill="none" stroke="#111827" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
@@ -2362,9 +2386,9 @@
 <text x="932.7" y="307.7" font-size="7" fill="#b45309" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke">V12  P2-5 3V</text>
 <text x="932.7" y="318.7" font-size="7" fill="#b45309" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke">V11  P2-6 3V</text>
 <text x="301.3" y="659.0" font-size="8.5" fill="#64748b" text-anchor="middle">front ◀  A sits one pitch ahead of B (as built) · A front to Discovery rear 100.6 mm  ▶ rear (fascia)</text>
-<text x="301.3" y="671.0" font-size="8.5" fill="#64748b" text-anchor="middle">overall width 106 mm · F1-F4: ⌀3.2 holes onto existing plate-2 holes, 10 mm M2.5 standoffs</text>
+<text x="301.3" y="671.0" font-size="8.5" fill="#64748b" text-anchor="middle">overall width 106 mm · four corner holes per board, 8 mm nylon M2.5 standoffs, onto the carrier tray (MEC-17)</text>
 <text x="821.3" y="659.0" font-size="8.5" fill="#64748b" text-anchor="middle">front ◀  A sits one pitch ahead of B (as built) · A front to Discovery rear 100.6 mm  ▶ rear (fascia)</text>
-<text x="821.3" y="671.0" font-size="8.5" fill="#64748b" text-anchor="middle">overall width 106 mm · F1-F4: ⌀3.2 holes onto existing plate-2 holes, 10 mm M2.5 standoffs</text>
+<text x="821.3" y="671.0" font-size="8.5" fill="#64748b" text-anchor="middle">overall width 106 mm · four corner holes per board, 8 mm nylon M2.5 standoffs, onto the carrier tray (MEC-17)</text>
 <text x="40.0" y="718.0" font-size="12" fill="#1a1a1a" font-weight="700">C  5 V SPLIT BOARD  (component side)</text>
 <text x="40.0" y="733.0" font-size="8.5" fill="#64748b">across the plate-2 waist, x 85.5-115.5: letter A at the vehicle right, 10 to the front · socket opening faces the vehicle right</text>
 <text x="560.0" y="718.0" font-size="12" fill="#1a1a1a" font-weight="700">C  SOLDER SIDE  (turned over about the long axis)</text>
@@ -2646,10 +2670,22 @@
 <text x="412.0" y="757.0" font-size="7" fill="#15803d" font-weight="700" text-anchor="middle">V</text>
 <text x="423.7" y="757.0" font-size="7" fill="#15803d" font-weight="700" text-anchor="middle">W</text>
 <text x="435.4" y="757.0" font-size="7" fill="#15803d" font-weight="700" text-anchor="middle">X</text>
-<circle cx="201.7" cy="823.2" r="13.3" fill="#f1f5f9" fill-opacity="0.7" stroke="#64748b" stroke-width="1" stroke-dasharray="3 2"/>
-<circle cx="201.7" cy="823.2" r="7.4" fill="none" stroke="#0f172a" stroke-width="1.3"/>
-<circle cx="400.3" cy="823.2" r="13.3" fill="#f1f5f9" fill-opacity="0.7" stroke="#64748b" stroke-width="1" stroke-dasharray="3 2"/>
-<circle cx="400.3" cy="823.2" r="7.4" fill="none" stroke="#0f172a" stroke-width="1.3"/>
+<circle cx="151.5" cy="771.5" r="13.3" fill="#f1f5f9" fill-opacity="0.7" stroke="#64748b" stroke-width="1" stroke-dasharray="3 2"/>
+<line x1="147.5" y1="771.5" x2="155.5" y2="771.5" stroke="#64748b" stroke-width="0.9"/>
+<line x1="151.5" y1="767.5" x2="151.5" y2="775.5" stroke="#64748b" stroke-width="0.9"/>
+<circle cx="151.5" cy="771.5" r="7.4" fill="none" stroke="#0f172a" stroke-width="1.3"/>
+<circle cx="151.5" cy="886.5" r="13.3" fill="#f1f5f9" fill-opacity="0.7" stroke="#64748b" stroke-width="1" stroke-dasharray="3 2"/>
+<line x1="147.5" y1="886.5" x2="155.5" y2="886.5" stroke="#64748b" stroke-width="0.9"/>
+<line x1="151.5" y1="882.5" x2="151.5" y2="890.5" stroke="#64748b" stroke-width="0.9"/>
+<circle cx="151.5" cy="886.5" r="7.4" fill="none" stroke="#0f172a" stroke-width="1.3"/>
+<circle cx="450.5" cy="771.5" r="13.3" fill="#f1f5f9" fill-opacity="0.7" stroke="#64748b" stroke-width="1" stroke-dasharray="3 2"/>
+<line x1="446.5" y1="771.5" x2="454.5" y2="771.5" stroke="#64748b" stroke-width="0.9"/>
+<line x1="450.5" y1="767.5" x2="450.5" y2="775.5" stroke="#64748b" stroke-width="0.9"/>
+<circle cx="450.5" cy="771.5" r="7.4" fill="none" stroke="#0f172a" stroke-width="1.3"/>
+<circle cx="450.5" cy="886.5" r="13.3" fill="#f1f5f9" fill-opacity="0.7" stroke="#64748b" stroke-width="1" stroke-dasharray="3 2"/>
+<line x1="446.5" y1="886.5" x2="454.5" y2="886.5" stroke="#64748b" stroke-width="0.9"/>
+<line x1="450.5" y1="882.5" x2="450.5" y2="890.5" stroke="#64748b" stroke-width="0.9"/>
+<circle cx="450.5" cy="886.5" r="7.4" fill="none" stroke="#0f172a" stroke-width="1.3"/>
 <rect x="417.9" y="764.7" width="35.0" height="46.7" rx="1.5" fill="#dbeafe" stroke="#1e40af" stroke-width="1.4"/>
 <line x1="452.8" y1="764.7" x2="452.8" y2="811.5" stroke="#1e40af" stroke-width="3.2"/>
 <text x="467.5" y="787.1" font-size="8" fill="#1e40af" font-weight="700" text-anchor="start">IN 5V</text>
@@ -2693,7 +2729,6 @@
 <text x="125.3" y="836.0" font-size="6.5" fill="#64748b" text-anchor="end">cable to FRDM J1</text>
 <text x="125.3" y="847.0" font-size="6.5" fill="#64748b" text-anchor="end">zip ties along B, F</text>
 <text x="125.3" y="856.0" font-size="6.5" fill="#64748b" text-anchor="end">D−/D+ cut, insulated</text>
-<circle cx="201.7" cy="823.2" r="10.3" fill="none" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="3 2"/>
 <line x1="248.4" y1="846.5" x2="295.2" y2="846.5" stroke="#94a3b8" stroke-width="1.4"/>
 <rect x="258.8" y="842.0" width="26" height="9" rx="3" fill="#bfdbfe" stroke="#1e40af" stroke-width="1"/>
 <text x="271.8" y="839.5" font-size="6.5" fill="#1e40af" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="middle">R1 10k</text>
@@ -2711,10 +2746,7 @@
 <circle cx="295.2" cy="776.4" r="2.8" fill="#fff" stroke="#a16207" stroke-width="1.2"/>
 <text x="295.2" y="791.1" font-size="8" fill="#a16207" font-weight="700" text-anchor="middle">C1</text>
 <text x="299.2" y="826.2" font-size="6.5" fill="#a16207" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="start">470µF</text>
-<line x1="201.7" y1="836.5" x2="201.7" y2="902.0" stroke="#64748b" stroke-width="0.7" stroke-dasharray="2 2"/>
-<text x="201.7" y="911.0" font-size="6.5" fill="#0f172a" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="middle">F5 at F4 · (99.24, 38.76)</text>
-<line x1="400.3" y1="836.5" x2="400.3" y2="902.0" stroke="#64748b" stroke-width="0.7" stroke-dasharray="2 2"/>
-<text x="400.3" y="911.0" font-size="6.5" fill="#0f172a" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="middle">F6 at F21 · (99.24, 81.76)</text>
+<text x="301.0" y="911.0" font-size="6.5" fill="#0f172a" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="middle">four corner holes: M2.5 screw into an 8 mm nylon standoff, from below (MEC-17)</text>
 <rect x="660.0" y="760.0" width="322.0" height="138.0" rx="4" fill="#f0fdf4" stroke="#15803d" stroke-width="1.6"/>
 <polygon points="660.0,760.0 687.6,760.0 660.0,787.6" fill="#e11d48" fill-opacity="0.9"/>
 <text x="668.3" y="770.8" font-size="5.5" fill="#fff" font-weight="700" text-anchor="middle">A1</text>
@@ -2992,10 +3024,22 @@
 <text x="932.0" y="757.0" font-size="7" fill="#15803d" font-weight="700" text-anchor="middle">V</text>
 <text x="943.7" y="757.0" font-size="7" fill="#15803d" font-weight="700" text-anchor="middle">W</text>
 <text x="955.4" y="757.0" font-size="7" fill="#15803d" font-weight="700" text-anchor="middle">X</text>
-<circle cx="721.7" cy="834.8" r="13.3" fill="#f1f5f9" fill-opacity="0.7" stroke="#64748b" stroke-width="1" stroke-dasharray="3 2"/>
-<circle cx="721.7" cy="834.8" r="7.4" fill="none" stroke="#0f172a" stroke-width="1.3"/>
-<circle cx="920.3" cy="834.8" r="13.3" fill="#f1f5f9" fill-opacity="0.7" stroke="#64748b" stroke-width="1" stroke-dasharray="3 2"/>
-<circle cx="920.3" cy="834.8" r="7.4" fill="none" stroke="#0f172a" stroke-width="1.3"/>
+<circle cx="671.5" cy="886.5" r="13.3" fill="#f1f5f9" fill-opacity="0.7" stroke="#64748b" stroke-width="1" stroke-dasharray="3 2"/>
+<line x1="667.5" y1="886.5" x2="675.5" y2="886.5" stroke="#64748b" stroke-width="0.9"/>
+<line x1="671.5" y1="882.5" x2="671.5" y2="890.5" stroke="#64748b" stroke-width="0.9"/>
+<circle cx="671.5" cy="886.5" r="7.4" fill="none" stroke="#0f172a" stroke-width="1.3"/>
+<circle cx="671.5" cy="771.5" r="13.3" fill="#f1f5f9" fill-opacity="0.7" stroke="#64748b" stroke-width="1" stroke-dasharray="3 2"/>
+<line x1="667.5" y1="771.5" x2="675.5" y2="771.5" stroke="#64748b" stroke-width="0.9"/>
+<line x1="671.5" y1="767.5" x2="671.5" y2="775.5" stroke="#64748b" stroke-width="0.9"/>
+<circle cx="671.5" cy="771.5" r="7.4" fill="none" stroke="#0f172a" stroke-width="1.3"/>
+<circle cx="970.5" cy="886.5" r="13.3" fill="#f1f5f9" fill-opacity="0.7" stroke="#64748b" stroke-width="1" stroke-dasharray="3 2"/>
+<line x1="966.5" y1="886.5" x2="974.5" y2="886.5" stroke="#64748b" stroke-width="0.9"/>
+<line x1="970.5" y1="882.5" x2="970.5" y2="890.5" stroke="#64748b" stroke-width="0.9"/>
+<circle cx="970.5" cy="886.5" r="7.4" fill="none" stroke="#0f172a" stroke-width="1.3"/>
+<circle cx="970.5" cy="771.5" r="13.3" fill="#f1f5f9" fill-opacity="0.7" stroke="#64748b" stroke-width="1" stroke-dasharray="3 2"/>
+<line x1="966.5" y1="771.5" x2="974.5" y2="771.5" stroke="#64748b" stroke-width="0.9"/>
+<line x1="970.5" y1="767.5" x2="970.5" y2="775.5" stroke="#64748b" stroke-width="0.9"/>
+<circle cx="970.5" cy="771.5" r="7.4" fill="none" stroke="#0f172a" stroke-width="1.3"/>
 <circle cx="955.4" cy="881.6" r="3.4" fill="#e2e8f0" stroke="#1e40af" stroke-width="1.3"/>
 <circle cx="955.4" cy="858.2" r="3.4" fill="#e2e8f0" stroke="#1e40af" stroke-width="1.3"/>
 <circle cx="955.4" cy="811.5" r="3.4" fill="#e2e8f0" stroke="#1e40af" stroke-width="1.3"/>
@@ -3050,7 +3094,7 @@
 <circle cx="756.7" cy="788.1" r="2.3" fill="#64748b" stroke="#fff" stroke-width="0.6"/>
 <text x="739.2" y="802.8" font-size="6.5" fill="#475569" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="middle">R1 / R2 leads bent to D7 / B7</text>
 <text x="40.0" y="925.0" font-size="8.4" fill="#b45309">Socket first: meter CC1 and CC2 to V and to G, all four open - a socket with its own Rd (5.1k) or Rp cannot be the source.</text>
-<text x="40.0" y="939.0" font-size="8.4" fill="#b45309">Fit the F5 pan-head screw (F4) before the socket: the body rides 2.5 mm up on its flange, over the head. Ties through 3 mm holes at I2 / B2 and I6 / B6, the second one over the pigtail.</text>
+<text x="40.0" y="939.0" font-size="8.4" fill="#b45309">The USB-C body rides 2.5 mm up on its flange. Ties through 3 mm holes at I2 / B2 and I6 / B6, the second one over the pigtail.</text>
 <text x="1130.0" y="100.0" font-size="12" fill="#1a1a1a" font-weight="700">NETLIST</text>
 <line x1="1130" y1="108" x2="1680" y2="108" stroke="#e2e8f0"/>
 <rect x="1130" y="116" width="550" height="19" fill="#f1f5f9" stroke="#cbd5e1"/>
@@ -3202,72 +3246,60 @@
 <rect x="1130" y="865" width="550" height="19" fill="#ffffff" stroke="#e2e8f0"/>
 <text x="1142.0" y="878.0" font-size="8.4" fill="#1e293b" font-weight="700">Wire</text>
 <text x="1212.0" y="878.0" font-size="7.9" fill="#475569">22 AWG insulated copper hook-up wire (not in BOM) · 18 AWG silicone copper (3.11) for the thick runs · not the CCA Dupont leads (5.7)</text>
-<text x="1130.0" y="910.0" font-size="12" fill="#1a1a1a" font-weight="700">FIXINGS  (MEC-15)</text>
+<text x="1130.0" y="910.0" font-size="12" fill="#1a1a1a" font-weight="700">FIXINGS  (MEC-17)</text>
 <line x1="1130" y1="918" x2="1680" y2="918" stroke="#e2e8f0"/>
 <rect x="1130" y="926" width="550" height="19" fill="#f1f5f9" stroke="#cbd5e1"/>
-<text x="1142.0" y="939.0" font-size="8.5" fill="#334155" font-weight="700">Fix</text>
-<text x="1192.0" y="939.0" font-size="8.5" fill="#334155" font-weight="700">Board hole</text>
-<text x="1300.0" y="939.0" font-size="8.5" fill="#334155" font-weight="700">Chassis hole</text>
+<text x="1142.0" y="939.0" font-size="8.5" fill="#334155" font-weight="700">Board</text>
+<text x="1192.0" y="939.0" font-size="8.5" fill="#334155" font-weight="700">Hole</text>
+<text x="1300.0" y="939.0" font-size="8.5" fill="#334155" font-weight="700">Fixing</text>
 <rect x="1130" y="945" width="550" height="19" fill="#ffffff" stroke="#e2e8f0"/>
-<text x="1142.0" y="958.0" font-size="8.4" fill="#1e293b" font-weight="700">F1</text>
-<text x="1192.0" y="958.0" font-size="7.9" fill="#475569">A·K12, on grid</text>
-<text x="1300.0" y="958.0" font-size="7.9" fill="#475569">plate 2 M3 hole (148.18, 23.76), ⌀3.18</text>
+<text x="1142.0" y="958.0" font-size="8.4" fill="#1e293b" font-weight="700">A</text>
+<text x="1192.0" y="958.0" font-size="7.9" fill="#475569">four corner holes</text>
+<text x="1300.0" y="958.0" font-size="7.9" fill="#475569">2.5 mm in from each edge · M2.5 screw into an 8 mm nylon standoff</text>
 <rect x="1130" y="964" width="550" height="19" fill="#f8fafc" stroke="#e2e8f0"/>
-<text x="1142.0" y="977.0" font-size="8.4" fill="#1e293b" font-weight="700">F2</text>
-<text x="1192.0" y="977.0" font-size="7.9" fill="#475569">B·J15, on grid</text>
-<text x="1300.0" y="977.0" font-size="7.9" fill="#475569">plate 2 M2.5 hole (148.2, 72.2), ⌀2.71 - 0.18 mm</text>
+<text x="1142.0" y="977.0" font-size="8.4" fill="#1e293b" font-weight="700">B</text>
+<text x="1192.0" y="977.0" font-size="7.9" fill="#475569">four corner holes</text>
+<text x="1300.0" y="977.0" font-size="7.9" fill="#475569">same · the holes under the module stay free of wires</text>
 <rect x="1130" y="983" width="550" height="19" fill="#ffffff" stroke="#e2e8f0"/>
-<text x="1142.0" y="996.0" font-size="8.4" fill="#1e293b" font-weight="700">F3</text>
-<text x="1192.0" y="996.0" font-size="7.9" fill="#475569">A, between T16 / S15</text>
-<text x="1300.0" y="996.0" font-size="7.9" fill="#475569">plate 2 M2.5 hole (169.88, 14.24) - mark from the plate</text>
-<rect x="1130" y="1002" width="550" height="19" fill="#f8fafc" stroke="#e2e8f0"/>
-<text x="1142.0" y="1015.0" font-size="8.4" fill="#1e293b" font-weight="700">F4</text>
-<text x="1192.0" y="1015.0" font-size="7.9" fill="#475569">B, between S4 / R4</text>
-<text x="1300.0" y="1015.0" font-size="7.9" fill="#475569">plate 2 M2.5 hole (169.88, 100.24) - under the module</text>
-<rect x="1130" y="1021" width="550" height="19" fill="#ffffff" stroke="#e2e8f0"/>
-<text x="1142.0" y="1034.0" font-size="8.4" fill="#1e293b" font-weight="700">F5</text>
-<text x="1192.0" y="1034.0" font-size="7.9" fill="#475569">C·F4, on grid</text>
-<text x="1300.0" y="1034.0" font-size="7.9" fill="#475569">plate 2 M3 hole (99.24, 38.76), ⌀3.18 - under the socket</text>
-<rect x="1130" y="1040" width="550" height="19" fill="#f8fafc" stroke="#e2e8f0"/>
-<text x="1142.0" y="1053.0" font-size="8.4" fill="#1e293b" font-weight="700">F6</text>
-<text x="1192.0" y="1053.0" font-size="7.9" fill="#475569">C·F21, on grid</text>
-<text x="1300.0" y="1053.0" font-size="7.9" fill="#475569">plate 2 M3 hole (99.24, 81.76) - 43.00 = 17 pitches + 0.18</text>
-<text x="1130.0" y="1075.0" font-size="8.4" fill="#475569">All six: ⌀3.2 in the board, M2.5 × 10 standoff, M2.5 screws, washer in the ⌀3.18 holes.</text>
-<text x="1130.0" y="1088.0" font-size="8.4" fill="#475569">A·X.. at chassis x 181.20 · header row 1 and B·X.. at x 183.74 (B and the Discovery 2.54 mm back, as built) · A y 5.11, B y 110.99.</text>
-<text x="1130.0" y="1117.0" font-size="12" fill="#1a1a1a" font-weight="700">ORIENTATION - where A and B sit under the Discovery</text>
-<line x1="1130" y1="1125" x2="1680" y2="1125" stroke="#e2e8f0"/>
-<rect x="1172.0" y="1149.0" width="108.5" height="77.5" rx="2" fill="#dcfce7" stroke="#15803d" stroke-width="1.2"/>
-<polygon points="1172.0,1226.5 1186.0,1226.5 1172.0,1212.5" fill="#e11d48" fill-opacity="0.9"/>
-<text x="1176.2" y="1224.8" font-size="5.5" fill="#fff" font-weight="700" text-anchor="middle">A1</text>
-<text x="1252.2" y="1166.5" font-size="10" fill="#15803d" font-weight="700" text-anchor="middle">board A</text>
-<rect x="1175.9" y="1235.6" width="108.5" height="77.5" rx="2" fill="#dcfce7" stroke="#15803d" stroke-width="1.2"/>
-<polygon points="1175.9,1313.1 1189.9,1313.1 1175.9,1299.2" fill="#e11d48" fill-opacity="0.9"/>
-<text x="1180.1" y="1311.4" font-size="5.5" fill="#fff" font-weight="700" text-anchor="middle">A1</text>
-<text x="1252.2" y="1299.7" font-size="10" fill="#15803d" font-weight="700" text-anchor="middle">board B</text>
-<rect x="1177.5" y="1176.0" width="150.3" height="102.3" rx="2" fill="none" stroke="#4338ca" stroke-width="1.4" stroke-dasharray="5 3"/>
-<text x="1232.1" y="1234.0" font-size="7.5" fill="#4338ca" font-weight="700" text-anchor="middle">Discovery, above</text>
-<rect x="1179.0" y="1183.8" width="98.4" height="7.9" fill="#1f2937"/>
-<circle cx="1275.5" cy="1185.8" r="2.4" fill="#fbbf24"/>
-<text x="1228.2" y="1198.2" font-size="8" fill="#4338ca" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="middle">P1</text>
-<rect x="1179.0" y="1262.6" width="98.4" height="7.9" fill="#1f2937"/>
-<circle cx="1275.5" cy="1264.5" r="2.4" fill="#fbbf24"/>
-<text x="1228.2" y="1275.9" font-size="8" fill="#4338ca" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="middle">P2</text>
-<rect x="1317.0" y="1221.1" width="12.4" height="12.1" rx="1" fill="#94a3b8" stroke="#334155" stroke-width="0.8"/>
-<text x="1316.2" y="1230.1" font-size="7" fill="#334155" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="end">CN1</text>
-<text x="1249.9" y="1144.0" font-size="7" fill="#64748b" text-anchor="middle">vehicle RIGHT</text>
-<text x="1249.9" y="1324.1" font-size="7" fill="#64748b" text-anchor="middle">vehicle LEFT</text>
-<text x="1168.0" y="1231.1" font-size="7" fill="#64748b" font-weight="700" text-anchor="end">FRONT</text>
-<text x="1331.9" y="1231.1" font-size="7" fill="#64748b" font-weight="700" text-anchor="start">REAR</text>
-<text x="1367.9" y="1151.0" font-size="8.2" fill="#1e293b" font-weight="700">Discovery from above, components up, as in every view.</text>
-<text x="1367.9" y="1163.5" font-size="8.2" fill="#475569">CN1, the ST-LINK mini-USB, points to the REAR (fascia).</text>
-<text x="1367.9" y="1176.0" font-size="8.2" fill="#475569">P1 is the header on the vehicle RIGHT: board A goes under it.</text>
-<text x="1367.9" y="1188.5" font-size="8.2" fill="#475569">P2 is the header on the vehicle LEFT: board B goes under it.</text>
-<text x="1367.9" y="1201.0" font-size="8.2" fill="#475569">Both headers have pin 1 (yellow) at the CN1 end.</text>
-<text x="1367.9" y="1213.5" font-size="8.2" fill="#475569"></text>
-<text x="1367.9" y="1226.0" font-size="8.2" fill="#1e293b" font-weight="700">Red triangle = the corner at printed hole A1.</text>
-<text x="1367.9" y="1238.5" font-size="8.2" fill="#475569">On A and on B: the FRONT corner on the vehicle-LEFT edge.</text>
-<text x="1367.9" y="1251.0" font-size="8.2" fill="#475569">Mark that corner on both faces with a pen before soldering:</text>
-<text x="1367.9" y="1263.5" font-size="8.2" fill="#475569">both boards then read the same way up, print legible.</text>
+<text x="1142.0" y="996.0" font-size="8.4" fill="#1e293b" font-weight="700">C</text>
+<text x="1192.0" y="996.0" font-size="7.9" fill="#475569">four corner holes</text>
+<text x="1300.0" y="996.0" font-size="7.9" fill="#475569">same · the USB-C body lies between the two on its side</text>
+<text x="1130.0" y="1018.0" font-size="8.4" fill="#475569">Nothing is drilled. The tray (MEC-17) takes the boards from below; only the tray is screwed to plate 2, by six M2.5 screws (T1-T6).</text>
+<text x="1130.0" y="1031.0" font-size="8.4" fill="#475569">A·X.. at chassis x 181.20 · header row 1 and B·X.. at x 183.74 (B and the Discovery 2.54 mm back, as built) · A y 5.11, B y 110.99.</text>
+<text x="1130.0" y="1060.0" font-size="12" fill="#1a1a1a" font-weight="700">ORIENTATION - where A and B sit under the Discovery</text>
+<line x1="1130" y1="1068" x2="1680" y2="1068" stroke="#e2e8f0"/>
+<rect x="1172.0" y="1092.0" width="108.5" height="77.5" rx="2" fill="#dcfce7" stroke="#15803d" stroke-width="1.2"/>
+<polygon points="1172.0,1169.5 1186.0,1169.5 1172.0,1155.5" fill="#e11d48" fill-opacity="0.9"/>
+<text x="1176.2" y="1167.8" font-size="5.5" fill="#fff" font-weight="700" text-anchor="middle">A1</text>
+<text x="1252.2" y="1109.5" font-size="10" fill="#15803d" font-weight="700" text-anchor="middle">board A</text>
+<rect x="1175.9" y="1178.6" width="108.5" height="77.5" rx="2" fill="#dcfce7" stroke="#15803d" stroke-width="1.2"/>
+<polygon points="1175.9,1256.1 1189.9,1256.1 1175.9,1242.2" fill="#e11d48" fill-opacity="0.9"/>
+<text x="1180.1" y="1254.4" font-size="5.5" fill="#fff" font-weight="700" text-anchor="middle">A1</text>
+<text x="1252.2" y="1242.7" font-size="10" fill="#15803d" font-weight="700" text-anchor="middle">board B</text>
+<rect x="1177.5" y="1119.0" width="150.3" height="102.3" rx="2" fill="none" stroke="#4338ca" stroke-width="1.4" stroke-dasharray="5 3"/>
+<text x="1232.1" y="1177.0" font-size="7.5" fill="#4338ca" font-weight="700" text-anchor="middle">Discovery, above</text>
+<rect x="1179.0" y="1126.8" width="98.4" height="7.9" fill="#1f2937"/>
+<circle cx="1275.5" cy="1128.8" r="2.4" fill="#fbbf24"/>
+<text x="1228.2" y="1141.2" font-size="8" fill="#4338ca" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="middle">P1</text>
+<rect x="1179.0" y="1205.6" width="98.4" height="7.9" fill="#1f2937"/>
+<circle cx="1275.5" cy="1207.5" r="2.4" fill="#fbbf24"/>
+<text x="1228.2" y="1218.9" font-size="8" fill="#4338ca" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="middle">P2</text>
+<rect x="1317.0" y="1164.1" width="12.4" height="12.1" rx="1" fill="#94a3b8" stroke="#334155" stroke-width="0.8"/>
+<text x="1316.2" y="1173.1" font-size="7" fill="#334155" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="end">CN1</text>
+<text x="1249.9" y="1087.0" font-size="7" fill="#64748b" text-anchor="middle">vehicle RIGHT</text>
+<text x="1249.9" y="1267.1" font-size="7" fill="#64748b" text-anchor="middle">vehicle LEFT</text>
+<text x="1168.0" y="1174.1" font-size="7" fill="#64748b" font-weight="700" text-anchor="end">FRONT</text>
+<text x="1331.9" y="1174.1" font-size="7" fill="#64748b" font-weight="700" text-anchor="start">REAR</text>
+<text x="1367.9" y="1094.0" font-size="8.2" fill="#1e293b" font-weight="700">Discovery from above, components up, as in every view.</text>
+<text x="1367.9" y="1106.5" font-size="8.2" fill="#475569">CN1, the ST-LINK mini-USB, points to the REAR (fascia).</text>
+<text x="1367.9" y="1119.0" font-size="8.2" fill="#475569">P1 is the header on the vehicle RIGHT: board A goes under it.</text>
+<text x="1367.9" y="1131.5" font-size="8.2" fill="#475569">P2 is the header on the vehicle LEFT: board B goes under it.</text>
+<text x="1367.9" y="1144.0" font-size="8.2" fill="#475569">Both headers have pin 1 (yellow) at the CN1 end.</text>
+<text x="1367.9" y="1156.5" font-size="8.2" fill="#475569"></text>
+<text x="1367.9" y="1169.0" font-size="8.2" fill="#1e293b" font-weight="700">Red triangle = the corner at printed hole A1.</text>
+<text x="1367.9" y="1181.5" font-size="8.2" fill="#475569">On A and on B: the FRONT corner on the vehicle-LEFT edge.</text>
+<text x="1367.9" y="1194.0" font-size="8.2" fill="#475569">Mark that corner on both faces with a pen before soldering:</text>
+<text x="1367.9" y="1206.5" font-size="8.2" fill="#475569">both boards then read the same way up, print legible.</text>
 <text x="40.0" y="985.0" font-size="12" fill="#1a1a1a" font-weight="700">CHECK BEFORE THE IRON IS HOT</text>
 <line x1="40" y1="993" x2="1100" y2="993" stroke="#e2e8f0"/>
 <text x="40.0" y="1011.0" font-size="9" fill="#475569">1  Count the holes: A and B need 18 × 24, C 10 × 24. The drawing assumes the usual kit counts; a board one row short moves everything.</text>
@@ -3278,8 +3310,8 @@
 <text x="40.0" y="1086.0" font-size="9" fill="#475569">    GND, 3V3 and B·M4 / M3 = CANH / CANL. Its screw terminal is unused. Measure CANH-CANL unpowered: ~120 Ω = remove its terminator.</text>
 <text x="40.0" y="1101.0" font-size="9" fill="#475569">5  The kit terminals may be 5.0 mm, not 5.08: the 3p CAN block spans 10.0 vs 10.16 mm of holes. Push it in; do not drill.</text>
 <text x="40.0" y="1116.0" font-size="9" fill="#475569">6  Before the Discovery goes back in: 5 V to GND not shorted · 6 V rail isolated from 5 V and 3V3 · 5 V on B·W12 / W11 only · nothing on B·U12 (PH0) · A·V9 (P1-4 VDD) not on 3V3.</text>
-<text x="40.0" y="1131.0" font-size="9" fill="#475569">7  Fixings: drill F1, F2, F5 and F6 on the grid first. Screw A and B down with the Discovery in, then mark F3 and F4 from under the</text>
-<text x="40.0" y="1146.0" font-size="9" fill="#475569">    plate through its holes, lift the carrier and drill them. No wire may pass under a standoff: check each one before the screw goes in.</text>
+<text x="40.0" y="1131.0" font-size="9" fill="#475569">7  Fixings: nothing is drilled. Fit an 8 mm nylon standoff with a screw in each corner hole of A, B and C; the tray (MEC-17) takes the</text>
+<text x="40.0" y="1146.0" font-size="9" fill="#475569">    boards from below. No wire may pass under a standoff: check each of the twelve before its screw goes in.</text>
 <text x="40.0" y="1179.0" font-size="9.3" fill="#1e293b" font-weight="700">Why two 5×7 boards</text>
 <text x="40.0" y="1193.0" font-size="8.8" fill="#475569">The kit's 7×9 (24 × 30) takes all 100 pins, but the Discovery</text>
 <text x="40.0" y="1205.5" font-size="8.8" fill="#475569">covers it, so no terminal or cap would have anywhere to go. Two 5×7s</text>

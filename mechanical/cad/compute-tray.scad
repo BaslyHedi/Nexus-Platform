@@ -21,7 +21,7 @@
 //   (J1 power 5.1, J11 console 5.9, J7 CAN 4.4); MEC-18 traces each. No 40-pin ribbon: nothing in the BOM uses it.
 //
 // TO MEASURE before ordering (the defaults are guesses)
-//   FRDM_L / FRDM_W - the bare PCB, 95 x 65 from the Quick Start Guide. Hedi's 96 x 67 includes the connectors that overhang; check the PCB alone
+//   (closed 2026-10-06) FRDM_L / FRDM_W: the bare PCB is 95.0 x 65.0 mm, confirmed from the board's own Gerbers (design files 95020 rev B); Hedi's 96 x 67 included the overhanging connectors. The six mounting holes are at u 3.5 / 52.5 / 91.5, v 3.5 / 61.5: the model's two far standoffs are at u 91.0, 0.5 mm short, inside the pad
 //   the Pi standoffs' thread (female-female assumed) and the M2.5 screw head height, for the counterbore
 
 PART = "tray";               // "tray" | "plan" | "outline" | "lib" (the preview file includes this one)

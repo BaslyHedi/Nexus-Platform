@@ -388,8 +388,8 @@
 <line x1="145.0" y1="548.1" x2="145.0" y2="554.9" stroke="#dc2626" stroke-width="2"/>
 <text x="133.1" y="541.3" font-size="6" fill="#be123c" text-anchor="middle">leads wall ▼</text>
 <text x="236.8" y="410.4" font-size="7" font-weight="700" fill="#0f766e" text-anchor="middle">carrier tray</text>
-<rect x="131.4" y="553.2" width="31.6" height="22.1" rx="1.5" fill="#fed7aa" stroke="#c2410c" stroke-width="1.2"/><text x="147.2" y="567.1" font-size="7" font-weight="700" fill="#c2410c" text-anchor="middle">S6</text>
-<rect x="131.4" y="409.6" width="31.6" height="22.1" rx="1.5" fill="#fed7aa" stroke="#c2410c" stroke-width="1.2"/><text x="147.2" y="423.5" font-size="7" font-weight="700" fill="#c2410c" text-anchor="middle">S7</text>
+<rect x="131.4" y="553.2" width="31.6" height="31.3" rx="1.5" fill="#fed7aa" stroke="#c2410c" stroke-width="1.2"/><text x="147.2" y="573.1" font-size="7" font-weight="700" fill="#c2410c" text-anchor="middle">S6</text>
+<rect x="131.4" y="409.6" width="31.6" height="22.1" rx="1.5" fill="#fed7aa" stroke="#c2410c" stroke-width="1.2"/><text x="147.2" y="424.9" font-size="7" font-weight="700" fill="#c2410c" text-anchor="middle">S7</text>
 <path d="M484.6 411.4 L486.7 415.5 L486.7 568.5 L485.7 571.5 L481.6 573.6 L398.3 573.6 L395.3 572.6 L393.2 568.5 L393.2 415.5 L394.2 412.5 L398.3 410.4 L481.6 410.4 Z" fill="#0f766e" fill-opacity="0.09" stroke="#0f766e" stroke-width="1.3" stroke-dasharray="6 3"/>
 <circle cx="409.6" cy="458.0" r="4.2" fill="none" stroke="#047857" stroke-width="1.8"/><circle cx="409.6" cy="458.0" r="1.5" fill="#047857"/><text x="416.7" y="452.9" font-size="6.5" fill="#047857" font-weight="700" text-anchor="start">R1</text>
 <circle cx="409.6" cy="526.0" r="4.2" fill="none" stroke="#047857" stroke-width="1.8"/><circle cx="409.6" cy="526.0" r="1.5" fill="#047857"/><text x="416.7" y="520.9" font-size="6.5" fill="#047857" font-weight="700" text-anchor="start">R2</text>
@@ -594,12 +594,18 @@
 <rect x="400.0" y="762.3" width="81.6" height="9.3" fill="#64748b" fill-opacity="0.22" stroke="#64748b" stroke-width="0.8" stroke-dasharray="3 2"/>
 <rect x="405.1" y="666.3" width="62.9" height="204.8" fill="none" stroke="#6d28d9" stroke-width="0.8" stroke-dasharray="2 2"/>
 <text x="408.5" y="823.5" font-size="5.4" font-weight="400" fill="#6d28d9" text-anchor="start">motors below:</text><text x="408.5" y="833.8" font-size="5.4" font-weight="400" fill="#6d28d9" text-anchor="start">9 mm, wires only</text>
-<rect x="223.2" y="816.8" width="85.0" height="51.0" rx="3" fill="#1f2937" stroke="#be185d" stroke-width="1.3"/>
-<rect x="318.4" y="816.8" width="85.0" height="51.0" rx="3" fill="#1f2937" stroke="#be185d" stroke-width="1.3"/>
-<rect x="318.4" y="670.5" width="85.0" height="51.0" rx="3" fill="#1f2937" stroke="#be185d" stroke-width="1.3"/>
+<rect x="223.2" y="825.2" width="13.6" height="13.6" rx="2" fill="#1f2937" stroke="#be185d" stroke-width="1"/><rect x="294.6" y="825.2" width="13.6" height="13.6" rx="2" fill="#1f2937" stroke="#be185d" stroke-width="1"/>
+<rect x="236.8" y="821.9" width="57.8" height="20.4" rx="2" fill="#1f2937" stroke="#be185d" stroke-width="1.3"/>
+<rect x="243.6" y="842.2" width="44.2" height="25.5" rx="2" fill="#374151" stroke="#be185d" stroke-width="1.3"/>
+<rect x="318.4" y="825.2" width="13.6" height="13.6" rx="2" fill="#1f2937" stroke="#be185d" stroke-width="1"/><rect x="389.8" y="825.2" width="13.6" height="13.6" rx="2" fill="#1f2937" stroke="#be185d" stroke-width="1"/>
+<rect x="332.0" y="821.9" width="57.8" height="20.4" rx="2" fill="#1f2937" stroke="#be185d" stroke-width="1.3"/>
+<rect x="338.8" y="842.2" width="44.2" height="25.5" rx="2" fill="#374151" stroke="#be185d" stroke-width="1.3"/>
+<rect x="326.9" y="699.5" width="13.6" height="13.6" rx="2" fill="#1f2937" stroke="#be185d" stroke-width="1"/><rect x="398.3" y="699.5" width="13.6" height="13.6" rx="2" fill="#1f2937" stroke="#be185d" stroke-width="1"/>
+<rect x="340.5" y="696.0" width="57.8" height="20.4" rx="2" fill="#1f2937" stroke="#be185d" stroke-width="1.3"/>
+<rect x="347.3" y="670.5" width="44.2" height="25.5" rx="2" fill="#374151" stroke="#be185d" stroke-width="1.3"/>
 <line x1="243.6" y1="867.8" x2="287.8" y2="867.8" stroke="#be185d" stroke-width="3"/>
 <line x1="338.8" y1="867.8" x2="383.0" y2="867.8" stroke="#be185d" stroke-width="3"/>
-<line x1="338.8" y1="670.5" x2="383.0" y2="670.5" stroke="#be185d" stroke-width="3"/>
+<line x1="347.3" y1="670.5" x2="391.5" y2="670.5" stroke="#be185d" stroke-width="3"/>
 <rect x="209.6" y="752.1" width="31.6" height="51.0" rx="2" fill="#fecaca" stroke="#b91c1c" stroke-width="1.3"/>
 <rect x="287.8" y="752.1" width="31.6" height="51.0" rx="2" fill="#e2e8f0" stroke="#334155" stroke-width="1.3"/>
 <line x1="241.2" y1="803.1" x2="241.2" y2="752.1" stroke="#b91c1c" stroke-width="2"/>
@@ -610,16 +616,18 @@
 <rect x="230.0" y="680.8" width="59.5" height="20.4" rx="2" fill="#fef08a" stroke="#a16207" stroke-width="1.2"/>
 <rect x="201.1" y="803.8" width="22.1" height="31.6" rx="1.5" fill="#fed7aa" stroke="#c2410c" stroke-width="1"/>
 <rect x="326.9" y="789.5" width="31.6" height="22.1" rx="1.5" fill="#fed7aa" stroke="#c2410c" stroke-width="1"/>
-<rect x="295.8" y="672.3" width="31.6" height="22.1" rx="1.5" fill="#fed7aa" stroke="#c2410c" stroke-width="1"/>
+<rect x="293.2" y="672.3" width="31.6" height="51.0" rx="1.5" fill="#fed7aa" stroke="#c2410c" stroke-width="1"/>
+<rect x="326.9" y="753.2" width="31.6" height="31.3" rx="2" fill="#fed7aa" stroke="#c2410c" stroke-width="1.2"/>
+<rect x="362.6" y="784.8" width="31.6" height="31.3" rx="2" fill="#fed7aa" stroke="#c2410c" stroke-width="1.2"/>
 </g>
 <g>
-<text x="265.7" y="845.6" font-size="6.4" font-weight="700" fill="#ffffff" text-anchor="middle">MAIN 7.5 A</text>
-<text x="360.9" y="845.6" font-size="6.4" font-weight="700" fill="#ffffff" text-anchor="middle">MOTORS 5 A</text>
-<text x="360.9" y="699.5" font-size="6.4" font-weight="700" fill="#ffffff" text-anchor="middle">UBEC 5 A</text>
+<text x="265.7" y="852.4" font-size="6.4" font-weight="700" fill="#ffffff" text-anchor="middle">MAIN 7.5 A</text>
+<text x="360.9" y="852.4" font-size="6.4" font-weight="700" fill="#ffffff" text-anchor="middle">MOTORS 5 A</text>
+<text x="369.4" y="682.5" font-size="6.4" font-weight="700" fill="#ffffff" text-anchor="middle">UBEC 5 A</text>
 <text x="225.4" y="774.3" font-size="7.5" font-weight="700" fill="#b91c1c" text-anchor="middle">(+)</text>
-<text x="225.4" y="784.5" font-size="5.2" font-weight="400" fill="#b91c1c" text-anchor="middle">3 of 5</text>
+<text x="225.4" y="784.5" font-size="5.2" font-weight="400" fill="#b91c1c" text-anchor="middle">2 of 5</text>
 <text x="303.6" y="774.3" font-size="7.5" font-weight="700" fill="#334155" text-anchor="middle">(−)</text>
-<text x="303.6" y="784.5" font-size="5.2" font-weight="400" fill="#334155" text-anchor="middle">5 of 5</text>
+<text x="303.6" y="784.5" font-size="5.2" font-weight="400" fill="#334155" text-anchor="middle">4 of 5</text>
 <text x="265.7" y="723.3" font-size="6.4" font-weight="700" fill="#0e7490" text-anchor="middle">INA226</text>
 <text x="265.7" y="731.8" font-size="5" font-weight="400" fill="#0e7490" text-anchor="middle">terminals ↓</text>
 <text x="378.4" y="765.8" font-size="5.4" font-weight="700" fill="#c2410c" text-anchor="middle">SW1</text>
@@ -627,7 +635,9 @@
 <text x="259.8" y="692.6" font-size="5.8" font-weight="700" fill="#a16207" text-anchor="middle">UBEC 6 V</text>
 <text x="212.2" y="821.8" font-size="5.4" font-weight="700" fill="#c2410c" text-anchor="middle">S1</text>
 <text x="342.7" y="802.3" font-size="5.4" font-weight="700" fill="#c2410c" text-anchor="middle">S2/S4</text>
-<text x="311.6" y="685.0" font-size="5.4" font-weight="700" fill="#c2410c" text-anchor="middle">S3/S5</text>
+<text x="311.6" y="691.8" font-size="5.4" font-weight="700" fill="#c2410c" text-anchor="middle">S5 / S3</text>
+<text x="342.7" y="768.8" font-size="5.4" font-weight="700" fill="#c2410c" text-anchor="middle">S8</text>
+<text x="378.4" y="800.6" font-size="5.4" font-weight="700" fill="#c2410c" text-anchor="middle">S9</text>
 <text x="266.5" y="765.8" font-size="5.4" font-weight="400" fill="#be185d" text-anchor="middle">opening</text>
 <text x="266.5" y="774.3" font-size="5.4" font-weight="400" fill="#be185d" text-anchor="middle">wires up</text>
 <text x="442.5" y="759.0" font-size="5.4" font-weight="400" fill="#475569" text-anchor="middle">trunk to SW1 / SW2</text>
@@ -726,26 +736,26 @@
 <text x="600" y="525" font-size="9" fill="#475569">single-plate CAD only ever had the 50 and our 3-deck model repeated it for both gaps. The fascia</text>
 <text x="600" y="538" font-size="9" fill="#475569">panels are therefore 52 and 42 mm tall and are no longer one blank (MEC-09).</text>
 <text x="600" y="549" font-size="8.2" font-weight="700" fill="#0f766e">Plates 2 and 3 - settled and ordered 2026-10-06 (Craftcloud #516727254320, BOM 3.28): carrier tray MEC-17, compute tray MEC-18, rear pad MEC-19.</text>
-<text x="600" y="561" font-size="9.5" font-weight="700" fill="#1e293b">Plate 1 wiring - every run, on plate 2's harness board, 2026-09-28 (MEC-16, HW-20)</text>
+<text x="600" y="561" font-size="9.5" font-weight="700" fill="#1e293b">Plate 1 wiring - every run, on plate 2's harness board, updated 2026-10-06 (MEC-16, HW-20)</text>
 <g font-size="7.6" font-weight="700" fill="#64748b"><text x="600" y="572">#</text><text x="614" y="572">Run</text><text x="772" y="572">Wire</text><text x="862" y="572">Cut, cm</text><text x="906" y="572">Ends and clips</text></g>
 <line x1="600" y1="576" x2="1280" y2="576" stroke="#e2e8f0"/>
 <g font-size="7.8" fill="#475569"><text x="600" y="587.0" font-weight="700">1</text><text x="614" y="587.0">Battery + → main fuse</text><text x="772" y="587.0">SM-2P + · fuse lead</text><text x="862" y="587.0">5 · 3</text><text x="906" y="587.0">SM-2P is the battery disconnect · S1</text></g>
 <g font-size="7.8" fill="#475569"><text x="600" y="599.2" font-weight="700">2</text><text x="614" y="599.2">Main fuse → INA226 IN+</text><text x="772" y="599.2">fuse lead 16 AWG</text><text x="862" y="599.2">~12</text><text x="906" y="599.2">ferrule into the screw terminal</text></g>
-<g font-size="7.8" fill="#475569"><text x="600" y="611.4" font-weight="700">3</text><text x="614" y="611.4">INA226 IN− → (+) bus</text><text x="772" y="611.4">18 red</text><text x="862" y="611.4">9</text><text x="906" y="611.4">ferrule · WAGO</text></g>
-<g font-size="7.8" fill="#475569"><text x="600" y="623.6" font-weight="700">4</text><text x="614" y="623.6">Battery − → (−) bus</text><text x="772" y="623.6">SM-2P mate −</text><text x="862" y="623.6">12</text><text x="906" y="623.6">across the opening · WAGO</text></g>
-<g font-size="7.8" fill="#475569"><text x="600" y="635.8" font-weight="700">5</text><text x="614" y="635.8">(+) bus → SW1 C</text><text x="772" y="635.8">18 red</text><text x="862" y="635.8">27</text><text x="906" y="635.8">trunk over the motors · 4.8 mm receptacle</text></g>
-<g font-size="7.8" fill="#475569"><text x="600" y="648.0" font-weight="700">6</text><text x="614" y="648.0">(+) bus → SW2 C</text><text x="772" y="648.0">18 red</text><text x="862" y="648.0">27</text><text x="906" y="648.0">trunk over the motors · 4.8 mm receptacle</text></g>
-<g font-size="7.8" fill="#475569"><text x="600" y="660.2" font-weight="700">7</text><text x="614" y="660.2">SW1 NO → split</text><text x="772" y="660.2">18 red</text><text x="862" y="660.2">12</text><text x="906" y="660.2">receptacle · 3-port</text></g>
+<g font-size="7.8" fill="#475569"><text x="600" y="611.4" font-weight="700">3</text><text x="614" y="611.4">INA226 IN− → (+) bus</text><text x="772" y="611.4">18 red</text><text x="862" y="611.4">8</text><text x="906" y="611.4">ferrule · WAGO</text></g>
+<g font-size="7.8" fill="#475569"><text x="600" y="623.6" font-weight="700">4</text><text x="614" y="623.6">Battery − → (−) bus</text><text x="772" y="623.6">SM-2P mate −</text><text x="862" y="623.6">10</text><text x="906" y="623.6">across the opening · WAGO</text></g>
+<g font-size="7.8" fill="#475569"><text x="600" y="635.8" font-weight="700">5</text><text x="614" y="635.8">(+) bus port 2 → S8</text><text x="772" y="635.8">18 red</text><text x="862" y="635.8">11</text><text x="906" y="635.8">WAGO · 3-port S8, toward the rear</text></g>
+<g font-size="7.8" fill="#475569"><text x="600" y="648.0" font-weight="700">6</text><text x="614" y="648.0">S8 → SW1, SW2 contacts</text><text x="772" y="648.0">switch green × 2</text><text x="862" y="648.0">20 · 22</text><text x="906" y="648.0">the switches' own wires · trunk over the motors</text></g>
+<g font-size="7.8" fill="#475569"><text x="600" y="660.2" font-weight="700">7</text><text x="614" y="660.2">SW1 out + LED + → S9 → split</text><text x="772" y="660.2">green · red · 18 orange</text><text x="862" y="660.2">13 · 13 · 6</text><text x="906" y="660.2">3-port S9 · LED + live only when SW1 is on</text></g>
 <g font-size="7.8" fill="#475569"><text x="600" y="672.4" font-weight="700">8</text><text x="614" y="672.4">split → F-MOT → S2 · VM+ pigtail</text><text x="772" y="672.4">fuse lead · 18 red</text><text x="862" y="672.4">5 · 4 · 8 ↓</text><text x="906" y="672.4">3-port · S2 · driver VM plug, from the side</text></g>
 <g font-size="7.8" fill="#475569"><text x="600" y="684.6" font-weight="700">9</text><text x="614" y="684.6">split → F-UBEC → S3 · UBEC +</text><text x="772" y="684.6">fuse lead 16 AWG</text><text x="862" y="684.6">5 · 4</text><text x="906" y="684.6">3-port · S3 · UBEC's own lead</text></g>
-<g font-size="7.8" fill="#475569"><text x="600" y="696.8" font-weight="700">10</text><text x="614" y="696.8">UBEC 6 V → board A 6V IN</text><text x="772" y="696.8">18 red + black</text><text x="862" y="696.8">21</text><text x="906" y="696.8">up through the opening · A terminal</text></g>
-<g font-size="7.8" fill="#475569"><text x="600" y="709.0" font-weight="700">11</text><text x="614" y="709.0">UBEC − → S5 → (−) bus</text><text x="772" y="709.0">18 black</text><text x="862" y="709.0">11</text><text x="906" y="709.0">UBEC's own lead · S5 · WAGO</text></g>
-<g font-size="7.8" fill="#475569"><text x="600" y="721.2" font-weight="700">12</text><text x="614" y="721.2">VM− pigtail → S4 → (−) bus</text><text x="772" y="721.2">18 black</text><text x="862" y="721.2">8 ↓ · 9</text><text x="906" y="721.2">driver VM plug · S4 · WAGO</text></g>
-<g font-size="7.8" fill="#475569"><text x="600" y="733.4" font-weight="700">13</text><text x="614" y="733.4">LED − SW1 ↔ SW2, then → (−)</text><text x="772" y="733.4">18 black</text><text x="862" y="733.4">8 + 23</text><text x="906" y="733.4">receptacles · trunk · WAGO</text></g>
-<g font-size="7.8" fill="#475569"><text x="600" y="745.6" font-weight="700">14</text><text x="614" y="745.6">LED + ↔ NO, on each switch</text><text x="772" y="745.6">18 red</text><text x="862" y="745.6">2 × 4</text><text x="906" y="745.6">receptacles, at the switch</text></g>
-<g font-size="7.8" fill="#475569"><text x="600" y="757.8" font-weight="700">15</text><text x="614" y="757.8">SW2 NO → S6 → Bauer +</text><text x="772" y="757.8">18 red</text><text x="862" y="757.8">32</text><text x="906" y="757.8">receptacle · up the left slot beside the Bauer · S6 on the tray</text></g>
-<g font-size="7.8" fill="#475569"><text x="600" y="770.0" font-weight="700">16</text><text x="614" y="770.0">Bauer − → S7 → (−) bus</text><text x="772" y="770.0">18 black</text><text x="862" y="770.0">22</text><text x="906" y="770.0">S7 on the tray, right of the Bauer · up the right slot · WAGO</text></g>
-<text x="600" y="786" font-size="8" font-weight="700" fill="#1e293b">18 AWG cut: ~1.5 m red, ~1.1 m black, of 2.5 + 2.5 m bought · clips: 2 × 221-415, 1 × 3-port, 7 × 2-port</text>
+<g font-size="7.8" fill="#475569"><text x="600" y="696.8" font-weight="700">10</text><text x="614" y="696.8">UBEC 6 V → board A 6V IN</text><text x="772" y="696.8">18 red + black</text><text x="862" y="696.8">18 · 19</text><text x="906" y="696.8">up through the opening · A terminal</text></g>
+<g font-size="7.8" fill="#475569"><text x="600" y="709.0" font-weight="700">11</text><text x="614" y="709.0">UBEC − → S5 → (−) bus</text><text x="772" y="709.0">18 black</text><text x="862" y="709.0">3 · 9</text><text x="906" y="709.0">UBEC's own lead · 5-port S5 · WAGO</text></g>
+<g font-size="7.8" fill="#475569"><text x="600" y="721.2" font-weight="700">12</text><text x="614" y="721.2">VM− pigtail → S4 → (−) bus</text><text x="772" y="721.2">18 black</text><text x="862" y="721.2">8 ↓ · 8</text><text x="906" y="721.2">driver VM plug · S4 · WAGO</text></g>
+<g font-size="7.8" fill="#475569"><text x="600" y="733.4" font-weight="700">13</text><text x="614" y="733.4">SW1, SW2 LED − → S5</text><text x="772" y="733.4">switch black × 2</text><text x="862" y="733.4">18 · 21</text><text x="906" y="733.4">5-port S5, with the UBEC return · one (−) bus port stays free</text></g>
+<g font-size="7.8" fill="#475569"><text x="600" y="745.6" font-weight="700">14</text><text x="614" y="745.6">SW2 out + LED + → S6</text><text x="772" y="745.6">green · red</text><text x="862" y="745.6">31 · 31</text><text x="906" y="745.6">trunk · up the left slot · 3-port S6 on the tray</text></g>
+<g font-size="7.8" fill="#475569"><text x="600" y="757.8" font-weight="700">15</text><text x="614" y="757.8">Bauer + lead → S6</text><text x="772" y="757.8">18 orange</text><text x="862" y="757.8">5</text><text x="906" y="757.8">the Bauer's own lead · third wire in S6</text></g>
+<g font-size="7.8" fill="#475569"><text x="600" y="770.0" font-weight="700">16</text><text x="614" y="770.0">Bauer − → S7 → (−) bus</text><text x="772" y="770.0">18 black</text><text x="862" y="770.0">18 · 19</text><text x="906" y="770.0">S7 on the tray, right of the Bauer · up the right slot · WAGO</text></g>
+<text x="600" y="786" font-size="8" font-weight="700" fill="#1e293b">18 AWG cut: ~0.4 m red / orange, ~1.0 m black · switches use their own wires · clips: 2 × 221-415, 4 × 3-port, 1 × 5-port, 5 × 2-port</text>
 <text x="600" y="798" font-size="8" fill="#b45309">Measured off the 3D model (plate1.py) + 22 mm strip + 20 %. ↓ = drop to plate 1, plugged from the right side once closed. Nominal heights.</text>
 <text x="600" y="812" font-size="13" font-weight="700" fill="#1a1a1a">LEGEND</text>
 <line x1="600" y1="820" x2="1280" y2="820" stroke="#e2e8f0"/>
