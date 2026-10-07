@@ -1,7 +1,7 @@
 """Assembly animation of the harness-board sandwich (MEC-16), rendered by Blender.
 
     python3 plate1.py && python3 make-assembly.py      # the model it animates
-    blender -b -P animate-harness-board.py                   # -> ../renders/harness-board-animation.mp4, about 1 min 20 s
+    blender -b -P animate-harness-board.py                   # -> ../renders/harness-board-animation.mp4, about 1 min at 1080p
     blender -b -P animate-harness-board.py -- --preview      # quarter size, every 4th frame
 
 It follows MEC-16's build steps: plate 2 lies upside down beside the chassis, its parts
@@ -17,6 +17,8 @@ vehicle's right side (vehicle X -85, Z 50.56). The flip goes over the top, so pl
 never passes through the chassis.
 """
 import bpy, math, os, sys
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from blender_compat import fcurves                              # noqa: E402
 from mathutils import Matrix, Vector
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -123,7 +125,7 @@ def show(o, frames):
         o.keyframe_insert("hide_render", frame=a)
         o.hide_render = True
         o.keyframe_insert("hide_render", frame=b)
-    for fc in o.animation_data.action.fcurves:
+    for fc in fcurves(o.animation_data.action):
         for k in fc.keyframe_points:
             k.interpolation = 'CONSTANT'
 

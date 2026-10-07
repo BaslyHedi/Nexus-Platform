@@ -21,6 +21,8 @@ it is placed by eye, for recognition only. Real models (GrabCAD, 3D ContentCentr
 sit behind a login and are not ours to commit.
 """
 import bpy, importlib.util, math, os, sys
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from blender_compat import fcurves                              # noqa: E402
 from mathutils import Matrix, Vector
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -213,7 +215,7 @@ def show(o, frames):
         o.keyframe_insert("hide_render", frame=a)
         o.hide_render = True
         o.keyframe_insert("hide_render", frame=b)
-    for fc in o.animation_data.action.fcurves:
+    for fc in fcurves(o.animation_data.action):
         if fc.data_path == "hide_render":
             for k in fc.keyframe_points:
                 k.interpolation = 'CONSTANT'

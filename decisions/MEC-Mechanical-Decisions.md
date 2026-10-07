@@ -1042,8 +1042,8 @@ Positions, x from the front of plate 1 and y from its right edge, as modelled in
 |---|---|---|
 | **Battery** | x 85-162, y 30-93, lengthwise right behind the tie rod | plate 1, felt pad, felt straps and zip ties - fixed 2026-09-28 |
 | **Motor driver** | x 168-210, y 22.6-80.6 | plate 1, as mounted 21 Sep |
-| **(+) bus**, 221-415, 3 of 5 ports | x 88-107, y 40-70, entry face towards the opening | plate 2, levers down |
-| **(−) bus**, 221-415, 5 of 5 ports | x 134-153, y 40-70, entry face towards the opening | plate 2, levers down |
+| **(+) bus**, 221-415, 2 of 5 ports (INA226, S8) | x 88-107, y 40-70, entry face towards the opening | plate 2, levers down |
+| **(−) bus**, 221-415, 4 of 5 ports (battery, S4, S5, S7) | x 134-153, y 40-70, entry face towards the opening | plate 2, levers down |
 | **Main fuse** 7.5 A | x 96-146, y 2-29: base 34 x 12 (x 104-138), cap 26 x 15 (x 108-134) toward the right | plate 2 |
 | **Motor fuse** 5 A | x 152-202, y 2-29, base x 160-194, cap x 164-190 toward the right | plate 2 |
 | **UBEC fuse** 5 A | x 157-207 (moved 5 mm rear, clear of S5), y 91-118, cap toward the left | plate 2 |

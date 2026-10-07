@@ -408,69 +408,86 @@ def finalize_runs(iters=1500):
 
     Each run is resampled every 3 mm. The ends (the first and last 9 mm, where a wire meets its clip, terminal or tab) stay put; the rest
     is pulled towards the route that was drawn, smoothed, and pushed apart wherever two wires, or a wire and a part, are closer than
-    their radii. Over the motors the wires stay in the 9 mm between the motor cans (z 41) and plate 2's face.
+    their radii. Over the motors the wires stay in the 9 mm between the motor cans (z 41) and plate 2's face. Plain Python (a 6 mm
+    grid finds the neighbours), so the script still needs nothing but the standard library.
     """
-    import numpy as np
     obst = []
     for n, m, t in PARTS:
         if n.startswith(("bus-", "fuse-", "ina226", "split-", "ubec", "splice-", "p2-")) and not n.endswith(("-tape", "-levers", "-mark", "-rating", "-terminals", "-6v-in")):
             xs = [v[0] for tri in t for v in tri]; ys = [v[1] for tri in t for v in tri]; zs = [v[2] for tri in t for v in tri]
             obst.append((min(xs), max(xs), min(ys), max(ys), min(zs), max(zs)))
-    O = np.array(obst)
     runs = []
     for name, mat, d, pts in RUNS:
-        dn = np.array(_dense(pts))
-        runs.append(dict(name=name, mat=mat, d=d, r=d / 2, home=dn.copy(), p=dn.copy(),
-                         fixed=np.array([i < 3 or i >= len(dn) - 3 for i in range(len(dn))])))
+        dn = [list(q) for q in _dense(pts)]
+        n = len(dn)
+        runs.append(dict(r=d / 2, home=[q[:] for q in dn], p=dn, fixed=[i < 3 or i >= n - 3 for i in range(n)]))
+    flat = [(k, i) for k, R in enumerate(runs) for i in range(len(R["p"]))]
+    rad = [runs[k]["r"] for k, i in flat]
+    near = []                                              # the parts each sample can ever reach: those within 25 mm of where it started
+    for k, i in flat:
+        h = runs[k]["home"][i]
+        near.append([b for b in obst if b[0] - 25 < h[0] < b[1] + 25 and b[2] - 25 < h[1] < b[3] + 25 and b[4] - 25 < h[2] < b[5] + 25])
+    CELL = 6.0
     for it in range(iters):
         for R in runs:                                     # pull home, smooth
             p, h, f = R["p"], R["home"], R["fixed"]
-            q = p.copy()
-            q[1:-1] += 0.5 * (0.5 * (p[:-2] + p[2:]) - p[1:-1])
-            q += 0.04 * (h - q)
-            q[f] = h[f]
+            q = [c[:] for c in p]
+            for i in range(1, len(p) - 1):
+                for a_ in range(3):
+                    q[i][a_] += 0.5 * (0.5 * (p[i - 1][a_] + p[i + 1][a_]) - p[i][a_])
+            for i in range(len(q)):
+                if f[i]:
+                    q[i] = h[i][:]
+                else:
+                    for a_ in range(3):
+                        q[i][a_] += 0.04 * (h[i][a_] - q[i][a_])
             R["p"] = q
-        allp = np.concatenate([R["p"] for R in runs])
-        owner = np.concatenate([[k] * len(R["p"]) for k, R in enumerate(runs)])
-        rad = np.concatenate([[R["r"]] * len(R["p"]) for R in runs])
-        fix = np.concatenate([R["fixed"] for R in runs])
-        push = np.zeros_like(allp)
-        for k in range(len(allp)):                         # wire against wire
-            dv = allp[k] - allp
-            dist = np.sqrt((dv ** 2).sum(1)) + 1e-9
-            need = rad[k] + rad + 1.1
-            hit = (dist < need) & (owner != owner[k])
-            if hit.any():
-                mv = (dv[hit] / dist[hit, None]) * ((need[hit] - dist[hit]) * 0.5)[:, None]
-                push[k] += mv.sum(0)
-        for k in range(len(allp)):                         # wire against parts
-            q, r = allp[k], rad[k] + 0.4
-            inside = (O[:, 0] - r < q[0]) & (q[0] < O[:, 1] + r) & (O[:, 2] - r < q[1]) & (q[1] < O[:, 3] + r) & (O[:, 4] - r < q[2]) & (q[2] < O[:, 5] + r)
-            for b in O[inside]:
-                gaps = [(q[0] - (b[0] - r)), ((b[1] + r) - q[0]), (q[1] - (b[2] - r)), ((b[3] + r) - q[1]), (q[2] - (b[4] - r)), ((b[5] + r) - q[2])]
-                a = int(np.argmin(gaps))
-                step = np.zeros(3)
-                step[a // 2] = -gaps[a] if a % 2 == 0 else gaps[a]
-                push[k] += step
-        push[fix] = 0
-        allp = allp + np.clip(push, -1.5, 1.5)
+        allp = [runs[k]["p"][i] for k, i in flat]
+        grid = {}
+        for idx, q in enumerate(allp):
+            grid.setdefault((int(q[0] // CELL), int(q[1] // CELL), int(q[2] // CELL)), []).append(idx)
+        push = [[0.0, 0.0, 0.0] for _ in allp]
+        for idx, q in enumerate(allp):
+            if runs[flat[idx][0]]["fixed"][flat[idx][1]]:
+                continue
+            cx, cy_, cz = int(q[0] // CELL), int(q[1] // CELL), int(q[2] // CELL)
+            for gx in (cx - 1, cx, cx + 1):
+                for gy in (cy_ - 1, cy_, cy_ + 1):
+                    for gz in (cz - 1, cz, cz + 1):
+                        for j in grid.get((gx, gy, gz), ()):
+                            if flat[j][0] == flat[idx][0]:
+                                continue
+                            o = allp[j]
+                            dx, dy, dz = q[0] - o[0], q[1] - o[1], q[2] - o[2]
+                            dist = math.sqrt(dx * dx + dy * dy + dz * dz) + 1e-9
+                            need = rad[idx] + rad[j] + 1.1
+                            if dist < need:
+                                f = (need - dist) * 0.5 / dist
+                                push[idx][0] += dx * f; push[idx][1] += dy * f; push[idx][2] += dz * f
+            r = rad[idx] + 0.4                             # against the parts
+            for b in near[idx]:
+                if b[0] - r < q[0] < b[1] + r and b[2] - r < q[1] < b[3] + r and b[4] - r < q[2] < b[5] + r:
+                    gaps = [q[0] - (b[0] - r), (b[1] + r) - q[0], q[1] - (b[2] - r), (b[3] + r) - q[1], q[2] - (b[4] - r), (b[5] + r) - q[2]]
+                    a_ = gaps.index(min(gaps))
+                    push[idx][a_ // 2] += -gaps[a_] if a_ % 2 == 0 else gaps[a_]
         o = 0
-        for R in runs:                                     # limits, then write back
-            n = len(R["p"])
-            P = allp[o:o + n]
-            o += n
-            for i in range(n):
+        for k, R in enumerate(runs):                       # apply, then the limits
+            for i in range(len(R["p"])):
                 if R["fixed"][i]:
                     continue
+                q = R["p"][i]
+                for a_ in range(3):
+                    q[a_] += max(-1.5, min(1.5, push[o + i][a_]))
                 if R["home"][i][2] < 49.4 - R["r"]:        # a wire that lies under plate 2 stays under it
-                    over_motors = P[i][0] > 203 and R["home"][i][0] > 200
-                    P[i][2] = min(P[i][2], 49.4 - R["r"])
-                    P[i][2] = max(P[i][2], (41.3 + R["r"]) if over_motors else 12.0)
-            R["p"] = P
+                    over_motors = q[0] > 203 and R["home"][i][0] > 200
+                    q[2] = min(q[2], 49.4 - R["r"])
+                    q[2] = max(q[2], (41.3 + R["r"]) if over_motors else 12.0)
+            o += len(R["p"])
     for R, (name, mat, d, pts) in zip(runs, list(RUNS)):
         pts2 = [tuple(float(x) for x in q) for q in R["p"]]
         RUNS[RUNS.index((name, mat, d, pts))] = (name, mat, d, pts2)
         part(name, mat, wire(pts2, d))
+
 
 
 DROPS = []            # wires that cross between the decks, one curve per state

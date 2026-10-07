@@ -19,6 +19,8 @@ Coordinates: plate 2's layout frame (x front to rear, y from the vehicle's right
 The layout's y runs the wrong way for a right-handed frame, so a point goes to Blender as (x, -y, z).
 """
 import bpy, bmesh, math, os, re, sys
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from blender_compat import fcurves                              # noqa: E402
 from mathutils import Vector
 
 bpy.ops.wm.read_factory_settings(use_empty=True)           # before carrier_model, which creates the materials
@@ -166,7 +168,7 @@ def show(o, frames):
             t.keyframe_insert("hide_render", frame=a)
             t.hide_render = True
             t.keyframe_insert("hide_render", frame=b)
-        for fc in t.animation_data.action.fcurves:
+        for fc in fcurves(t.animation_data.action):
             if fc.data_path == "hide_render":
                 for k in fc.keyframe_points:
                     k.interpolation = 'CONSTANT'
