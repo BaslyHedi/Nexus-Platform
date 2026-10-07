@@ -26,7 +26,7 @@ Drawings: [wiring schematic](../hardware/renders/wiring-schematic.svg) · [STM32
 | **HW-16** | WAGO 221-415 lever connectors as the power buses |
 | **HW-17** | One 5 V converter, not two |
 | **HW-18** | CAN debug port - DE-9 on the fascia, PC as an unterminated third node |
-| **HW-19** | The 5 V split, its bulk capacitor and the USB-C Rp move onto a board; CAN termination is a jumper |
+| **HW-19** | The 5 V split, its bulk capacitor and the USB-C Rp move onto a board; CAN termination is a jumper. *Rp dropped 2026-10-07* |
 | **HW-20** | Three fuses - the logic branch runs on the main fuse |
 | **HW-21** | Servo PWM on PE9 (TIM1_CH1); the servo lead is black / red / white |
 
@@ -55,7 +55,14 @@ both are non-isolated bucks sharing battery negative. See HW-06.
 
 *Formerly HD-02.*
 
-**Decision.** Bauer 50 W → 5 V → J1 through a USB-C **source** pigtail carrying 10 kΩ Rp.
+**Revised 2026-10-07: no Rp, no CC.** The KUOQIY socket carries its own **5.1 kΩ Rd on CC1 and CC2**
+(4.98 kΩ measured on an unwired spare), so it is a sink and could never be the source this entry
+calls for. The FRDM was then run from the socket on **VBUS and GND only, CC unconnected, and booted**.
+So J1 needs no CC at all: the source Rp, the 10 kΩ pull-ups and the CC wires are dropped, and the
+text below that asks for them is history. Full-load current is still untested.
+
+**Decision.** Bauer 50 W → 5 V → J1 through a USB-C pigtail on **VBUS and GND only**. *(Original: a
+USB-C **source** pigtail carrying 10 kΩ Rp.)*
 
 **Why.** Verified on the bench 2026-09-13: the board boots and runs from a dumb 5 V / 1 A
 supply. No negotiation, no 12–20 V.
@@ -66,8 +73,9 @@ through USB Type-C PD connector (P1)" with PTN5110 PD PHYs and an MP8759GD pre-b
 Treat UM12262's entire power chapter as not applicable to this board.
 
 **Consequence.** A 12 V→USB-C PD source module was specified and then cancelled - €20 saved.
-The pigtail must be **source** role: 10 kΩ Rp pull-**ups** on CC1/CC2 advertise 5 V @ 3 A.
-The 5.1 kΩ pull-**downs** on most DIY USB-C leads are the sink role and are wrong here.
+*Original, superseded 2026-10-07:* the pigtail must be **source** role: 10 kΩ Rp pull-**ups** on
+CC1/CC2 advertise 5 V @ 3 A, and the 5.1 kΩ pull-**downs** on most DIY USB-C leads are the sink role.
+The bench showed the board does not look at CC, so neither is needed.
 
 ---
 
@@ -536,7 +544,8 @@ watchdog. If the wheels stop, the module times out and this decision costs nothi
 ports), wired to the existing CAN bus per **CiA 303-1**: pin 2 = CAN_L,
 pin 3 = CAN_GND, pin 7 = CAN_H. Pin 9 (CAN_V+) stays **unconnected** - the robot does not
 feed the PC adapter. A USB-CAN adapter joins the bus through a straight-through 9-pin
-**female-to-female** cable.
+**female-to-female** cable. *Revised 2026-10-07: the adapter bought (BOM 4.7) has a screw terminal
+rather than a DE-9, so the PC end is a hand-made twisted pair from a female DE-9 to that terminal.*
 
 | | |
 |---|---|
@@ -563,9 +572,14 @@ about 10 ns, four orders of magnitude below anything that matters.
   1 Mbit/s, where the stub guidance tightens to ~0.3 m.
 - **CAN_GND must be in the cable.** The PC and the robot are on separate supplies; without pin 3
   the two transceivers have no shared reference and common-mode drifts.
-- **Galvanic isolation is worth paying for** in the adapter. The PC's USB ground meets the robot's
-  battery ground at this connector; an isolated adapter keeps a wiring fault on the robot away
-  from the laptop.
+- **Galvanic isolation was considered and waived (2026-10-07).** The PC's USB ground meets the
+  robot's battery ground at this connector, and an isolated adapter would keep a wiring fault on the
+  robot away from the laptop. But CAN and ST-LINK debugging happen together on one laptop, and the
+  ST-LINK already ties the same grounds with no isolation, so isolating CAN alone buys little: it
+  covers only a wiring fault on the CAN pins. No isolated adapter and no USB isolator is used.
+  The residual risk is a hand-wiring mistake, so before the laptop is connected: robot off, buzz
+  pin 2, 7 and 3 against each other and against 5 V and the battery rails, and read CANH-CANL
+  (about 60 Ω with both ends terminated and the adapter's R120 off).
 - Fascia geometry: the flange (30.8 × 12.55) clears the deck-2 tab (z 81.12…85.12, x ±38…56) by
   ~15 mm vertically and sits inside the 88.5 mm flat rear face. It no longer has that face to
   itself - see MEC-05 for how it shares it with the USB ports.
@@ -584,7 +598,8 @@ its pigtail is soldered straight into the board. See "Revision 2026-09-29" at th
 
 - **Board C, the 5 V split.** A 3×7 cm kit board takes the Bauer's 5 V and splits it in two, one
   output to the STM32 carrier and one to the USB-C pigtail that feeds the FRDM's J1. It carries **C1,
-  470 µF**, and **R1/R2, 10 kΩ from CC1 and CC2 to 5 V**, the source Rp that HW-02 calls for. Four
+  470 µF**, and **R1/R2, 10 kΩ from CC1 and CC2 to 5 V**, the source Rp that HW-02 then called for
+  (*dropped 2026-10-07: HW-02 no longer needs it, see the revision at the end*). Four
   2-pin screw terminals: IN 5V, TO STM32, FRDM PWR (VBUS/GND), FRDM CC. *Since 2026-09-29:
   two terminals, and the USB-C socket soldered in place of the FRDM pair (see the revision below).*
 - **C2, the second 470 µF, sits on carrier board A across the servo header,** where the stall current
@@ -647,12 +662,30 @@ remove that resistor.
 - **Why solder rather than terminals.** The pigtail is 24 AWG, which a 5.08 screw clamp holds
   poorly without ferrules, and two terminals and a loose socket become one tied-down part. It costs
   unplugging: to free the socket, cut the ties and desolder four wires.
-- **Check first:** CC1 and CC2 to V and to G, all four open (BOM 5.1). A socket with its own
-  Rd or Rp cannot be the source.
+- **Checked 2026-10-07:** the socket has its own 5.1 kΩ Rd on CC1 and CC2 (4.98 kΩ on a spare), so
+  it cannot be the source. See the revision 2026-10-07 below.
 - **To confirm on the vehicle.** The socket's face is at C's edge, and plate 2 is only about 80 mm
   wide at the waist, so the C-to-C plug stands about 20 mm past the plate edge at plate-2 height.
   Check nothing outboard is in its way, and that the 20 cm cable reaches J1 on plate 3.
   J1 is on the FRDM's v-max edge, u 31-41 (MEC-18, from the Quick Start Guide); the 20 cm cable fits (MEC-18 traces it).
+
+**Revision 2026-10-07 · no Rp: R1, R2 and the CC wires are gone.** The socket's own 5.1 kΩ Rd made it a
+sink, and the FRDM booted with VBUS and GND only, so CC is not used (HW-02). Board C is now IN 5V,
+TO STM32, C1 and the socket on its red and black wires, and nothing else.
+
+- **R1 and R2 are not fitted.** If already soldered, leave them unconnected or remove them. The two
+  22 AWG wires that fed their tops (TO STM32 + to R1 top to R2 top) are not run, and C·G8 / I8 and
+  C·G12 / I12 stay empty.
+- **The green (CC1) and yellow (CC2) pigtail wires are cut short and insulated one by one**, like the
+  white and blue D- and D+: never twisted together, never soldered. Only red (C·A7) and black (C·C7)
+  go into the board; C·G7 and C·I7 stay empty.
+- **Why leave the socket's Rd alone.** It sits inside the moulded body and cannot be reworked. With CC
+  unconnected it is harmless, and the bench test above ran exactly this way.
+- **Not tested: full load.** The FRDM booted; its loaded current draw is still unmeasured, and Hedi
+  has deferred that test until the vehicle can run it.
+- **The drawing, the routing check (`tools/check-carrier-routing.py`), the wiring schematic and the
+  animation script were updated, and the carrier animation was re-rendered locally (the videos are not
+  tracked in git).**
 
 ---
 

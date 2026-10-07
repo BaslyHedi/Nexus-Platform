@@ -431,8 +431,9 @@ STM32F4DISCOVERY to a standard prototyping/wrapping board."* The headers ship po
   UM1472's wording implies it does, but a dry fit costs nothing and a misjudged row spacing wastes
   the board.
 - **Two PC ground paths now exist** - the fascia Mini-B ST-LINK (5.10) and the CAN debug port
-  (HW-18) both tie PC ground to battery ground. This makes the **isolated** USB-CAN adapter in 4.7
-  a requirement rather than a preference.
+  (HW-18) both tie PC ground to battery ground. *This made an isolated USB-CAN adapter a requirement;
+  **waived 2026-10-07** (HW-18): both paths meet the same laptop at the same time, so isolating the
+  CAN one alone does not break the ground tie.*
 - **Height:** carrier + female header + Discovery is ~28 mm in a 50 mm gap. It fits, but board
   placement must still stay forward of **y ≈ 109** where the switch bodies intrude (MEC-02).
 
@@ -947,8 +948,7 @@ insulated wire can only be joined at a pad. The routing is redone to suit.
   legitimate.
 - **Wire.** The servo current on A and the FRDM current on C run in **18 AWG silicone copper** (BOM
   3.11). Everything else is **22 AWG insulated copper hook-up wire**, still not in the BOM, and not
-  the CCA Dupont leads (5.7). On C, R1 and R2's lower leads are bent over to the CC landings instead
-  of a wire.
+  the CCA Dupont leads (5.7). *(R1 and R2 were dropped on 2026-10-07, so C has no bent leads any more, HW-19.)*
 - **A's P1 GND pins are no longer wired.** A's ground arrives through the GND bridge, and with the
   Discovery in, through its ground plane as well. *Reversed on 2026-10-03: the bridge is gone, and
   A's ground comes from its own P1-5 (last revision).*

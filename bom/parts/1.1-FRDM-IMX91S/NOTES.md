@@ -62,10 +62,10 @@ The bench test worked through a C-to-A cable, which carries a **56 kΩ Rp** in t
 therefore advertises only USB default current (500–900 mA). Fine on the bench; not what you
 want on the robot, because a sink that honours the advertisement could current-limit itself.
 
-On the vehicle, feed J1 from a **USB-C source pigtail with 10 kΩ Rp on both CC pins**, which
-advertises 5 V @ 3 A. Note the polarity of the role: the pigtail is the *source* and needs
-**Rp pull-ups**; the 5.1 kΩ pull-*downs* found on most DIY USB-C leads are the *sink* role
-and are wrong here.
+*Superseded 2026-10-07.* The plan was a USB-C source pigtail with 10 kΩ Rp on both CC pins. The
+KUOQIY socket turned out to carry its own 5.1 kΩ Rd (a sink), and the board **booted with VBUS and GND
+only, CC unconnected**, through the C-to-C cable. So on the vehicle J1 is fed on VBUS and GND alone and
+no Rp is fitted (HW-02). Loaded current is still untested.
 
 ## Open question this folder should answer
 

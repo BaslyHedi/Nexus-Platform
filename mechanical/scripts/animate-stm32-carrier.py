@@ -87,9 +87,9 @@ CAPTIONS = [
     ((58.8, 62), f"12  Module in face down, CANH / CANL into {C.N('B', 'o', C.CAN_ROW)} / {C.silk('B', 'p', C.CAN_ROW)}, TERM jumper on"),
     ((62, 64), "    A nylon standoff and screw in each of the four corner holes of A and B"),
     ((64, 67.4), "13  The Discovery drops onto the carrier"),
-    ((67.4, 70.5), "14  Board C, the 5 V split: IN 5V and TO STM32, R1 / R2 10k source Rp, C1 470 uF"),
+    ((67.4, 70.5), "14  Board C, the 5 V split: IN 5V and TO STM32, C1 470 uF"),
     ((70.5, 72.8), f"    Four corner standoffs and screws, then the USB-C socket: pigtail into {' / '.join(C.silk('C', c, r) for _, _, c, r, _ in C.C_PIGTAIL)}, two zip ties"),
-    ((72.8, 84), "15  Solder side: IN 5V to C1 to the socket on each rail in 18 AWG, R1 / R2 leads bent to the CC landings"),
+    ((72.8, 84), "15  Solder side: IN 5V to C1 to the socket on each rail in 18 AWG; D-, D+, CC1, CC2 cut short and insulated"),
     ((84, 95), "The carrier and the 5 V split, ready for plate 2 (MEC-15, HW-19) - the Discovery is a mock"),
 ]
 
