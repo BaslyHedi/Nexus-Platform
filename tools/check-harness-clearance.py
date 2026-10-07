@@ -5,7 +5,7 @@
 
 1. No two parts of the harness board overlap (clips, fuse holders, INA226, UBEC), apart from the two stacked splice pairs.
 2. No wire runs through a part, or through the battery, the driver or a switch.
-3. No two wires share space: 5 or more 1.5 mm samples closer than their radii (less 0.3 mm) fail. Wires that end at the same clip
+3. No two wires share space: any 1.5 mm sample closer than the two radii (less 1.0 mm: where wires cross they may press together) fails. Wires that end at the same clip
    port are checked only beyond 8 mm of their ends.
 4. No wire is joined to another without a part: where two or more wire ends meet, a clip, bus, holder, module or plug must be
    within 8 mm. (The MEC-16 audit of 2026-10-06 found three joints with none.)
@@ -57,8 +57,8 @@ for n, r, smp, pts in runs:
             err.append(f'{n} runs through {pn} ({hit} samples)')
 for (n1, r1, s1, p1), (n2, r2, s2, p2) in itertools.combinations(runs, 2):
     cnt = sum(1 for a in s1 if math.dist(a, p1[0]) >= 8 and math.dist(a, p1[-1]) >= 8
-              for b in s2 if math.dist(b, p2[0]) >= 8 and math.dist(b, p2[-1]) >= 8 and math.dist(a, b) < r1 + r2 - 0.3)
-    if cnt >= 5:
+              for b in s2 if math.dist(b, p2[0]) >= 8 and math.dist(b, p2[-1]) >= 8 and math.dist(a, b) < r1 + r2 - 1.0)
+    if cnt >= 1:
         err.append(f'{n1} and {n2} share space ({cnt} samples)')
 
 ends = [(p[0], n) for n, m, d, p in plate1.RUNS] + [(p[-1], n) for n, m, d, p in plate1.RUNS]
