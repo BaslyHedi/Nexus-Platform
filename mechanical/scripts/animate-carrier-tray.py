@@ -20,7 +20,7 @@ The layout's y runs the wrong way for a right-handed frame, so a point goes to B
 """
 import bpy, bmesh, math, os, re, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from blender_compat import fcurves                              # noqa: E402
+from blender_compat import fcurves, mp4                              # noqa: E402
 from mathutils import Vector
 
 bpy.ops.wm.read_factory_settings(use_empty=True)           # before carrier_model, which creates the materials
@@ -648,10 +648,7 @@ if STILL is not None:
 if PREVIEW:
     sc.render.resolution_percentage = 50
     sc.frame_step = 4
-sc.render.image_settings.file_format = 'FFMPEG'
-sc.render.ffmpeg.format = 'MPEG4'
-sc.render.ffmpeg.codec = 'H264'
-sc.render.ffmpeg.constant_rate_factor = 'HIGH'
+mp4(sc)
 sc.render.filepath = OUT
 bpy.ops.render.render(animation=True)
 print("wrote", OUT)

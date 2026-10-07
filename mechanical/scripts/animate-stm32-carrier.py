@@ -22,7 +22,7 @@ sit behind a login and are not ours to commit.
 """
 import bpy, importlib.util, math, os, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from blender_compat import fcurves                              # noqa: E402
+from blender_compat import fcurves, mp4                              # noqa: E402
 from mathutils import Matrix, Vector
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -731,10 +731,7 @@ if STILL is not None:
 if PREVIEW:
     sc.render.resolution_percentage = 50
     sc.frame_step = 4
-sc.render.image_settings.file_format = 'FFMPEG'
-sc.render.ffmpeg.format = 'MPEG4'
-sc.render.ffmpeg.codec = 'H264'
-sc.render.ffmpeg.constant_rate_factor = 'HIGH'
+mp4(sc)
 sc.render.filepath = OUT
 bpy.ops.render.render(animation=True)
 print("wrote", OUT)

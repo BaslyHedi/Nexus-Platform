@@ -18,7 +18,7 @@ never passes through the chassis.
 """
 import bpy, math, os, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from blender_compat import fcurves                              # noqa: E402
+from blender_compat import fcurves, mp4                              # noqa: E402
 from mathutils import Matrix, Vector
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -304,10 +304,7 @@ sc.render.resolution_x, sc.render.resolution_y = 1920, 1080
 if PREVIEW:
     sc.render.resolution_percentage = 50
     sc.frame_step = 4
-sc.render.image_settings.file_format = 'FFMPEG'
-sc.render.ffmpeg.format = 'MPEG4'
-sc.render.ffmpeg.codec = 'H264'
-sc.render.ffmpeg.constant_rate_factor = 'HIGH'
+mp4(sc)
 sc.render.filepath = OUT
 bpy.ops.render.render(animation=True)
 print("wrote", OUT)

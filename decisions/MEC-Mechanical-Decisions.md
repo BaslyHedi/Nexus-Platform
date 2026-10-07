@@ -1147,6 +1147,7 @@ return - goes up through it, between the buses. The rearward runs lie flat on pl
   - **SW2's output** and **its red LED +** meet in **S6**, which becomes a **3-port** clip with the Bauer's red lead (runs 15a, 15c, 15b). Two wires pass up the left slot instead of one: 2.4 + 1.6 mm in an opening about 5 x 10 mm, so check it on the real tray.
   - **Both black LED − wires** go into **S5**, which becomes a **5-port** clip: UBEC (−), the run to the (−) bus (port 4), and the two LED returns (runs 13a, 13b). The (−) bus is then **4 of 5** ports, one spare.
   - S9's pigtail enters the split's second port. Nothing is crimped on the switch tabs: the supplied socket harness is used, so BOM 3.17 (flag receptacles) is not needed.
+  [`../tools/check-harness-clearance.py`](../tools/check-harness-clearance.py) fails if a part overlaps another, a wire runs through a part, two wires share space, or wires meet with no clip.
   Clips used: **3-port x 4** (split, S8, S9, S6), **5-port x 1** (S5), **2-port x 5** (S1, S2, S3, S4, S7). The positions of S8, S9 and S5 are stand-ins in the model; what must hold is the height over the motors (9 mm: no clip there, 8.5 mm + 1 mm of tape).
 - The screw heads under plate 2 - carrier F1-F4 and board C's F5, F6 - against the taped parts. *Done for the tray's own six fixings in MEC-17 (2026-10-05); the direct-fixing scheme it replaces would have clashed.*
   F3 lands at the motor fuse's lid edge.
