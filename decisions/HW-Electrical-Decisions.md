@@ -656,7 +656,7 @@ remove that resistor.
   the body rides 2.5 mm off the board and clears a pan-head M2.5. Fit that screw first.
 - **The pigtail is soldered, cut to about 20 mm:** red V into C·J7 and black G into H7, each the
   end of an 18 AWG chain from IN 5V through C1 (J24 → J12 → J7 and H24 → H12 → H7, MEC-15's
-  2026-09-30 routing). Green CC1 goes into D7 and yellow CC2 into B7. **R1 and R2 sit at D8-D12 and
+  2026-09-30 routing). Green CC1 goes into D7 and yellow CC2 into B7 *(superseded 2026-10-07: both are cut short, see the revision at the end)*. **R1 and R2 sit at D8-D12 and
   B8-B12**, their lower leads bent over to D7 / B7, and their tops fed from TO STM32 + (D24 → D12 →
   B12). White D− and blue D+ are cut short and insulated one by one, never twisted together.
 - **Why solder rather than terminals.** The pigtail is 24 AWG, which a 5.08 screw clamp holds
@@ -674,11 +674,11 @@ sink, and the FRDM booted with VBUS and GND only, so CC is not used (HW-02). Boa
 TO STM32, C1 and the socket on its red and black wires, and nothing else.
 
 - **R1 and R2 are not fitted.** If already soldered, leave them unconnected or remove them. The two
-  22 AWG wires that fed their tops (TO STM32 + to R1 top to R2 top) are not run, and C·G8 / I8 and
-  C·G12 / I12 stay empty.
+  22 AWG wires that fed their tops (TO STM32 + to R1 top to R2 top) are not run, and C·D8 / B8 and
+  C·D12 / B12 stay empty.
 - **The green (CC1) and yellow (CC2) pigtail wires are cut short and insulated one by one**, like the
-  white and blue D- and D+: never twisted together, never soldered. Only red (C·A7) and black (C·C7)
-  go into the board; C·G7 and C·I7 stay empty.
+  white and blue D- and D+: never twisted together, never soldered. Only red (C·J7) and black (C·H7)
+  go into the board; C·D7 and C·B7 stay empty.
 - **Why leave the socket's Rd alone.** It sits inside the moulded body and cannot be reworked. With CC
   unconnected it is harmless, and the bench test above ran exactly this way.
 - **Not tested: full load.** The FRDM booted; its loaded current draw is still unmeasured, and Hedi
