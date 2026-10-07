@@ -1140,6 +1140,7 @@ return - goes up through it, between the buses. The rearward runs lie flat on pl
 - The clip outlines and which face the wires enter: the model uses 30 × 18.6 × 8.5 for the 221-415
   and 18.6 × 18.4 for the 3-port.
 - The fuse holder body with calipers - the base / cap shape is the seller's photo (2026-10-07), the sizes are scaled off it.
+  *Decided 2026-10-07: no calipers, so the estimates stand (fuse holders, the kit boards' corner holes at 2.5 mm in, the switch harness). They are checked by dry-fit instead: tape the holders to plate 2 before wiring, lay boards A and B on a 1:1 printout, measure the harness length with a ruler and read its gauge off the ferrule that fits.*
 - The pack's height with its felt (modelled 21 + 3) and the driver's top height.
 - **The switch wiring (decided 2026-10-06).** Each switch has four wires: **two green** (the contact, no polarity), **red** (LED +) and **black** (LED −); the LED has its own resistor and runs on 12 V (tested). To light the LED only when the switch is on, **LED + is joined to the switched output, never to the (+) bus**. Every join ends in a clip, so no wire meets another without one:
   - **S8** (3-port, toward the rear) takes **(+) bus port 2** and both switches' first green wires. One bus port feeds both switches, so the switch harness reaches (run 05, 06a, 06b). (+) bus port 3 is spare.
