@@ -7,6 +7,8 @@ Format, and how to add one: [README](README.md).
 | # | Decision |
 |---|---|
 | **SW-01** | The flash bootloader speaks OpenCyphal, not UDS |
+| **SW-02** | The FBL's Cyphal stack is written in-house, not taken from libcanard |
+| **SW-03** | The FBL is written in C++20, as a freestanding subset |
 
 The rest of what Phase 1 has to settle is listed in [`../system/phases.md`](../system/phases.md) under
 *Decided in Phase 1*: the CAN matrix and its tooling, the FBL's memory map, the Zephyr board port, the
@@ -16,6 +18,8 @@ repository and CI template, and how the STM32 reports a fault to the i.MX 91. Re
 ---
 
 ## SW-01 · The flash bootloader speaks OpenCyphal, not UDS
+
+**Updated by SW-02:** the FBL's Cyphal stack is written in-house; `libcanard` is a design reference and the fallback, not a dependency. Read the libcanard items under *Consequences* and *To confirm* against the in-house stack. The language is C++20 ([SW-03](#sw-03--the-fbl-is-written-in-c20-as-a-freestanding-subset)).
 
 **Decision (2026-10-11).** The STM32 flash bootloader (FBL) receives its application image over
 **Cyphal/CAN** (OpenCyphal v1) on the 500 kbit/s classic-CAN bus. The host sends a software-update command to
@@ -66,3 +70,99 @@ run on Linux so it works from the PC adapter now and from the i.MX 91 later.
   from memory when this entry was drafted.
 
 ---
+
+## SW-02 · The FBL's Cyphal stack is written in-house, not taken from libcanard
+
+**Decision (2026-10-11).** The FBL carries its own implementation of Cyphal/CAN: the CAN identifier layout, the
+tail byte, segmentation and reassembly of multi-frame transfers, the transfer CRC and transfer-ID handling, and the
+serialization of the standard types it uses. **The scope is what the download needs and nothing more:** publish
+`uavcan.node.Heartbeat`, serve `uavcan.node.GetInfo` and `uavcan.node.ExecuteCommand`, and act as a client of
+`uavcan.file.Read`. The stack lives in its own folder and build target inside `Nexus-STM32-FBL`, with no dependency
+on the rest of the bootloader. Whether it then moves out and is shared, with the App, `Nexus-CAN-Utils` or the
+Linux programs, is decided once the FBL works, not now. `libcanard` and Kocherga stay as design references.
+
+**Why.**
+
+- **The protocol is the new ground in the FBL, and a library hides it.** The bootloader mechanics (flash, vector
+  table, CRC, jump) are known ground ([`phases.md`](../system/phases.md), *Learning focus*). Linking `libcanard`
+  would leave the one unfamiliar part as a black box. `phases.md` already says to take the longer road where a
+  library hides the protocol.
+- **The scope is small enough to finish.** One node, four ports, and one reassembly session at a time. That is
+  a fraction of a general-purpose stack, and it is what T1.1 and T1.2 need.
+- **There is an independent implementation to check against.** The PC adapter runs `yakut` and `pycyphal` over
+  SocketCAN ([HW-18](HW-Electrical-Decisions.md)), so every frame the in-house stack sends or accepts can be
+  tested against a stack it shares no code with.
+
+**Rejected.**
+
+- **`libcanard`** (C, MIT): compact, proven and made for this kind of target. Rejected only because it does the
+  part that is meant to be learned. It stays the fallback if the in-house stack proves a poor use of the phase.
+- **`libcyphal`** (C++): the same reason, and it is larger.
+- **A general-purpose stack written now** (many ports, many sessions, both transports): rejected because no
+  second user exists yet. Generality comes with the second user, if it comes.
+
+**Consequences.**
+
+- **Correctness has no library behind it.** The stack is tested on the host, layer by layer, against the
+  specification's examples, and on the bench against `yakut`. A download that completes is not enough evidence on
+  its own: the multi-frame and error paths need their own tests.
+- **The four standard `uavcan` types are serialized by hand.** They belong to the Cyphal specification, not to the
+  NEXUS CAN matrix, so the rule that nothing hand-copies a matrix definition ([`phases.md`](../system/phases.md),
+  *Repositories*) still holds. Any NEXUS-specific type the FBL needs comes from a `Nexus-CAN-Utils` release.
+- **SW-01's footprint question moves to the in-house code.** The size budget is measured on this stack, with
+  Kocherga's footprint still the yardstick.
+- **The Linux side's stack is still open** (SW-01). The in-house stack becomes one more candidate, which is part
+  of why it is kept free of FBL dependencies.
+
+**To confirm.**
+
+- The port IDs and type versions of the four standard types, from the specification. SW-01's to-confirm on names
+  still applies.
+- That the stack interoperates with `yakut` at 500 kbit/s: a full download and an interrupted one (T1.1).
+- That it fits the FBL's flash region, once the memory map is decided.
+
+---
+
+## SW-03 · The FBL is written in C++20, as a freestanding subset
+
+**Decision (2026-10-11).** The bootloader and its Cyphal stack ([SW-02](#sw-02--the-fbls-cyphal-stack-is-written-in-house-not-taken-from-libcanard))
+are written in **C++20**, built with `arm-none-eabi-gcc`, as a freestanding subset: **no exceptions, no RTTI, no
+dynamic allocation**, and no part of the standard library that allocates or pulls in I/O. The FBL-Updater's
+toolchain is not decided here; [`phases.md`](../system/phases.md) leaves it until it is written.
+
+**Why.**
+
+- **C on bare metal is known ground; C++ on bare metal is not.** C++ is on the project's learning list
+  ([`../CLAUDE.md`](../CLAUDE.md)). The FBL is a low-risk place to learn it: it is small, and the ST-LINK stays
+  the recovery path (T1.2).
+- **Cyphal maps well onto the language.** Node ID, port ID and transfer ID become distinct types, so mixing them
+  up is a compile error. CRC tables are computed at compile time. Buffers have a fixed capacity set by a template
+  rather than a macro, with no heap.
+- **C++20 specifically, for concepts and `std::span`.** A concept states what a CAN or flash driver must provide, and
+  both the STM32 driver and the host-test fake satisfy it, without virtual dispatch. `std::span` carries a buffer
+  and its length as one value. `arm-none-eabi-gcc` supports both.
+- **The Linux side is C++ first** ([`phases.md`](../system/phases.md), *Repositories*). If the Cyphal stack is
+  later shared (SW-02), it is already in the language its other users are written in.
+
+**Rejected.**
+
+- **C**: the default for a small bootloader and the language of `libcanard`. Rejected because it keeps the whole
+  FBL on known ground.
+- **C++17**: no concepts and no `std::span`, the two features the design leans on.
+- **Rust**: on the learning list too, but a much larger step on a part that has to work for T1.1 and T1.2. Its
+  place is on the Linux side, later.
+
+**Consequences.**
+
+- **The startup code has one more job.** It runs the static constructors before `main`, or the FBL has no
+  non-trivial globals. Either way, nothing may still be pending at the jump to the application.
+- **Size is watched, not assumed.** A stray `std::function`, `new` or stream pulls library code into the image.
+  The map file is checked and CI reports the image size on every build.
+- **The coding rules are written down in `Nexus-STM32-FBL`:** which standard headers are allowed, and the
+  compiler flags that enforce the subset. A published rule set (MISRA C++:2023 is the candidate) is chosen there.
+- **Host tests are C++ too**, built for the PC from the same sources.
+
+**To confirm.**
+
+- That the image links with no exception-handling or RTTI support and no allocating library code, shown by the map file.
+- That the image fits the FBL's flash region with room for Phase 3's signature checking, measured once the memory map is decided.

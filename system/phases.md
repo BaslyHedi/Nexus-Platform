@@ -87,14 +87,14 @@ split: the **bus, both computers and the update path** in Phase 1, the **actuato
 
 ### Learning focus
 
-**New:** **OpenCyphal** (the protocol the bootloader speaks, [SW-01](../decisions/SW-Software-Decisions.md)); the **Yocto** workflow end to end (layers, recipes, `kas`, the NXP BSP, machine and image
+**New:** **OpenCyphal** (the protocol the bootloader speaks, [SW-01](../decisions/SW-Software-Decisions.md), with the FBL's own stack written in-house, SW-02); **C++20 on bare metal** (the FBL's language, SW-03); the **Yocto** workflow end to end (layers, recipes, `kas`, the NXP BSP, machine and image
 configuration, device tree and kernel configuration for the FRDM-IMX91); **embedded Linux user space**
 (SocketCAN, writing and cross-building a C++ program, the Cyphal file server and flashing client running on Linux); **Zephyr** (west,
 devicetree, Kconfig, a board definition for the carrier, how it differs from an AUTOSAR-style stack); and **CI
 and repository structure** across firmware, Linux and tooling.
 
 **Known, so kept lean:** CAN itself, the bootloader mechanics (flash, vector table, CRC, jump) and the repo
-layout. The FBL is bare-metal and small and built to the usual pattern; only the protocol on top of it is new. The point of Phase 1 is that they work and are structured well,
+layout. The FBL is bare-metal and small and built to the usual pattern; only the protocol on top of it, written in-house (SW-02), and the language, C++20 (SW-03), are new. The point of Phase 1 is that they work and are structured well,
 so the new ground has something solid to stand on.
 
 ### Repositories (Phase 1.7)
@@ -125,7 +125,7 @@ Three relationships carry the whole structure:
   versioned on its own and the image only assembles it. This is the pattern Phase 3's containers and OTA will
   extend.
 
-**Decided already (2026-10-11):** the FBL is bare-metal, to keep it small and fast; the CAN matrix and the flashing client share one repository, `Nexus-CAN-Utils`; the Yocto build is driven by `kas`. The flash protocol is **OpenCyphal** ([SW-01](../decisions/SW-Software-Decisions.md)). The others get their `SW-` entry when written down.
+**Decided already (2026-10-11):** the FBL is bare-metal, to keep it small and fast; the CAN matrix and the flashing client share one repository, `Nexus-CAN-Utils`; the Yocto build is driven by `kas`. The flash protocol is **OpenCyphal** ([SW-01](../decisions/SW-Software-Decisions.md)). The FBL is written in **C++20** with an **in-house Cyphal stack** (SW-02, SW-03). The others get their `SW-` entry when written down.
 
 **Decided in Phase 1, recorded as `SW-nn` as each one is made:** the flashing IDs and bus timing, the language of the
 flashing client (it must run on Linux, which points at C++ or Rust), and how each consumer takes a release; the
