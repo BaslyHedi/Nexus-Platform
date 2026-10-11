@@ -54,6 +54,7 @@ Software element, level 2, handed over: the repository in the [configuration tab
 - Phase: 1
 - Verification: Test T1.1
 - Realised-by: SW
+- Decisions: SW-04
 
 ### Nexus-Physical-01-06-R005
 

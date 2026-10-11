@@ -184,6 +184,7 @@ not decided here; [`phases.md`](../system/phases.md) leaves it until it is writt
 **To confirm.**
 
 - That the image links with no exception-handling or RTTI support and no allocating library code, shown by the map file.
+- That MISRA C++:2023 is written for C++17, as stated above. MISRA's document is not in `vendor/` and this was not checked here.
 - That the image fits the FBL's 128 KB region (SW-04) with room for Phase 3's signature checking, measured once it is built.
 
 ---
@@ -259,7 +260,7 @@ and no non-volatile memory (NvM) region exist yet.** Both are left open, see *Co
 
 ## SW-05 · The FBL uses the main SRAM only, leaves the CCM empty and does not use the FPU
 
-**Updated by SW-06:** the hand-off block lives in the backup SRAM, so it does not depend on the main SRAM surviving a reset. **Updated by SW-07:** the FBL's code and constants are in the SRAM too, which the SRAM budget in this entry has to cover.
+**Updated by SW-06:** the hand-off block lives in the backup SRAM, so it does not depend on the main SRAM surviving a reset. **Updated by SW-07:** the FBL's code and constants are in the SRAM too, so the 128 KB of SRAM holds the code as well as the data.
 
 **Decision (2026-10-11).** The FBL places its stack, variables and buffers in the main SRAM at `0x20000000`. **The
 64 KB core-coupled memory (CCM) at `0x10000000` is left empty.** The FBL is built without floating point
@@ -271,8 +272,9 @@ and no non-volatile memory (NvM) region exist yet.** Both are left open, see *Co
   which makes accesses deterministic. The FBL has no timing that depends on that. The CCM stays free for data that
   does, when there is some.
 - **The CCM is a poor place for anything both images share.** It is a separate region, it needs its own clock enable bit
-  in `RCC_AHB1ENR`, and it cannot be reached by DMA or execute code. Where the hand-off block from the application to
-  the FBL lives is a separate entry, because RM0090 does not document the main SRAM as retained across a reset.
+  in `RCC_AHB1ENR`, and it is reached only by the CPU through the data bus, outside the bus matrix (RM0090 section 2.3.1), so DMA cannot use
+  it and instructions are not fetched from it. The hand-off block from the application to the FBL does not live in the
+  main SRAM, because RM0090 does not document it as retained across a reset (SW-06).
 - **The FBL has no floating-point work.** The FPU is off after reset and the FBL leaves it so. The application
   enables it, which Zephyr does itself. The two images are never linked together, so their ABIs need not match.
 
@@ -285,8 +287,7 @@ and no non-volatile memory (NvM) region exist yet.** Both are left open, see *Co
 **Consequences.**
 
 - `fbl.ld` describes one RAM region. The CCM is not in it.
-- The location of the hand-off block is a separate entry, with the entry rules. The candidates are the 4 KB backup SRAM and
-  the main SRAM, see *To confirm*.
+- The hand-off block is not in the main SRAM. It lives in the backup SRAM (SW-06).
 
 **To confirm.**
 
@@ -312,8 +313,7 @@ remaining 3.5 KB is not claimed. The record's layout is written in the interface
 
 - **It is the memory the manual documents as surviving a system reset.** RM0090 Rev 22 says a system reset resets
   registers and says nothing about the main SRAM. The backup SRAM is not affected by it, and only a protection level change
-  from 1 to 0 clears it (sections 7.1.3 and 5.1.2). The main SRAM would have to be measured on the board and could change
-  with a silicon revision or a debugger setting.
+  from 1 to 0 clears it (sections 7.1.3 and 5.1.2). The main SRAM would have to be measured on the board, and the manual would still not back the result.
 - **It is big enough.** The `ExecuteCommand` parameter is a path of up to 255 bytes, and the record adds the node ID, the
   magic and the CRC. The 80 bytes of the RTC backup registers cannot hold that.
 - **It leaves the main SRAM free of an agreement between two images.** Neither image's linker script has to keep the other's
@@ -341,6 +341,9 @@ remaining 3.5 KB is not claimed. The record's layout is written in the interface
 **To confirm.**
 
 - The record layout and its size against the 512 bytes reserved.
+- Whether the record also carries the node's own node ID, so that the FBL takes the ID the application had, or whether the
+  ID is fixed in the CAN matrix (SW-01). When the host sends the command to an FBL that is already running, no record is
+  written and the FBL takes the request directly.
 - That the backup SRAM keeps its content over the reset from the application on the board.
 - Whether the Discovery board's VBAT is wired to a battery or to VDD, which sets what survives a power loss.
 
@@ -350,18 +353,22 @@ remaining 3.5 KB is not claimed. The record's layout is written in the interface
 
 **Decision (2026-10-11).** The FBL is stored in the flash sectors 0 to 4 (SW-04) and **runs from the SRAM**. A small start-up
 routine and the vector table stay in the flash. At reset the routine copies the vector table, the code, the constants and the
-initialised data to the SRAM, points `VTOR` at the copy in the SRAM, clears the `.bss` and calls `main`. After that no
-instruction, constant or vector is fetched from the flash.
+initialised data to the SRAM, points `VTOR` at the copy in the SRAM, clears the `.bss` and calls `main`. Once `main` runs, no
+instruction, constant or vector is fetched from the flash. The constructor tables, if any, are read once, before `main`.
 
 **Why.**
 
 - **Any read of the flash while it is being erased or programmed stalls the bus.** RM0090 Rev 22, section 3.6: "code or data
   fetches cannot be performed while a write/erase operation is ongoing". The F407 has one bank, so there is no other bank to
   read from. A sector erase takes up to 500 ms for 16 KB, 1.1 s for 64 KB and 2 s for 128 KB (SW-04).
-- **The FBL erases and programs the flash that the bus is serving, while it is receiving.** The bxCAN has two receive FIFOs of
-  three frames each (RM0090, bxCAN). A full frame with a 29-bit identifier and eight data bytes is about 131 bits, so 0.26 ms at 500 kbit/s, and a FIFO fills in under 1 ms. A CPU stalled for the length
-  of an erase would lose frames, and the host's `file.Read` transfer would fail. With the code, the constants and the
-  vector table in the SRAM, the CPU keeps servicing the bus while the flash controller works.
+- **A stalled FBL drops off the bus.** The FBL erases up to seven sectors of the application region, each taking up to 2 s
+  (SW-04). A Cyphal node publishes its heartbeat at least every second and is considered offline after 3 s without one
+  (Cyphal Specification v1.0, `uavcan.node.Heartbeat`: `MAX_PUBLICATION_PERIOD` 1 s, `OFFLINE_TIMEOUT` 3 s). A 128 KB erase
+  plus one heartbeat period reaches that limit. Requests such as `GetInfo` that arrive during the erase also go unanswered.
+  A full frame with a 29-bit identifier and eight data bytes is about 131 bits, so 0.26 ms at 500 kbit/s, and the bxCAN
+  holds three frames per receive FIFO (RM0090), so traffic that passes the acceptance filters can overflow a FIFO in
+  under 1 ms. With the code, the constants and the vector table in the SRAM, the CPU keeps running while the flash
+  controller works.
 - **The flash driver only reads and polls registers during the operation.** `FLASH_SR` is polled for the BSY bit. The manual
   notes that a write to `FLASH_CR` with BSY set stalls the bus, so the driver must not write it then.
 
@@ -369,9 +376,10 @@ instruction, constant or vector is fetched from the flash.
 
 - **Execute in place, with only the erase routine in the SRAM.** The interrupt entry still fetches its vector from the flash
   and the handler runs from the flash, so the first CAN interrupt during an erase stalls.
-- **Execute in place and stop receiving while erasing.** The host's file transfer is driven by the FBL's `file.Read` requests
-  (SW-01), so the FBL can pause between requests. This can work. It
-  was set aside because it ties the erase to the protocol's pacing and leaves every other flash read in the FBL, such as a `const` table, a stall waiting to happen.
+- **Execute in place and pace the transfer around each erase.** The host's file transfer is driven by the FBL's
+  `file.Read` requests (SW-01), so the FBL controls when file data arrives and can erase between requests. That protects the
+  file data. It was set aside because it cannot keep the heartbeat going through a single erase, and because every other flash
+  read in the FBL, such as a `const` table, is a stall waiting to happen.
 
 **Consequences.**
 
