@@ -1,7 +1,7 @@
 # Requirements
 
-The requirements of NEXUS, written to the method in [`../system/method.md`](../system/method.md): **one file per
-system-of-interest, system element or software item**, named by its ID. Phase 1 is written in full: 84 requirements
+The requirements of NEXUS, written to the method in [`../system/method.md`](../system/method.md) and the rules in
+[rules.md](rules.md): **one file per system-of-interest, system element or software item**, named by its ID. Phase 1 is written in full: 84 requirements
 in 14 files.
 
 **The checker is not brought to this format yet.** [`../tools/check-requirements.py`](../tools/check-requirements.py) still
@@ -46,7 +46,8 @@ one block per requirement:
 | Field | Rule | SysML |
 |---|---|---|
 | **ID** | `<file ID>-Rnnn`; numbers never reused | |
-| **Statement** | One sentence with "shall"; one verifiable thing; a limit where one exists | |
+| **Statement** | One sentence in an EARS pattern, written to [rules.md](rules.md) | |
+| **Need** | Level 0 only: the phase-plan item it comes from, a goal, deliverable or test of [phases.md](../system/phases.md) | *trace* |
 | **Function** | The `Nexus-Logical-DNN-Fnn` it concerns, one or more. A derived requirement may bring in a supporting function its parent does not name (the bus serving an update) | *trace* |
 | **Derived-from** | The requirements one level up it comes from; `-` at level 0. Absent in the enabling system | *deriveReqt* |
 | **Allocated-to** | The elements or items one level down that meet it. **Plain**: each holds requirements derived from this one. **`(as-is)`**: the element meets it unchanged and no child is written. `-`: a leaf, met here | *satisfy* |

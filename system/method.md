@@ -84,14 +84,14 @@ HW, SW and SYS are not elements and not targets of allocation: they describe how
 
 ## Rules
 
-1. **One requirement, one element.** A requirement that two elements share is split into one for each and an interface
-   requirement on what connects them.
-2. **Write a requirement on an element only if it says something its parent did not.** Otherwise allocate the parent as-is.
-3. **The logical view names no technology.** The mechanism enters in the physical view and the requirements derived for it.
-4. **Black box at the top.** A vehicle requirement names the vehicle and its actors, never the STM32, the FRDM or the bus.
-5. **Every requirement has a verification**, at every level.
-6. **Phase is an attribute** of a requirement, not a separate tree. Phase 1 is a filter.
-7. **Written to be checked**: one statement with "shall", one verifiable thing, a limit where one exists.
+**Requirement rules** are in [`../requirements/rules.md`](../requirements/rules.md): the INCOSE Guide to Writing Requirements
+(characteristics C1 to C15, rules R1 to R42), ISO/IEC/IEEE 29148 and the EARS sentence patterns, with what each level adds.
+
+**Architecture rules**, for the two views:
+
+1. **The logical view names no technology.** The mechanism enters in the physical view and in the requirements derived for it.
+2. **Each component and element keeps its own ID.** The two views are related by allocation only.
+3. **Phase is an attribute**, of a component, an element and a requirement, not a separate tree. Phase 1 is a filter.
 
 ## The V
 
