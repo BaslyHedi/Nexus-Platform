@@ -113,15 +113,13 @@ The table below is here for anything outside the project - notes, chat history, 
 
 ## Still open
 
+Closed on 2026-10-11 and removed from this table: the switch harness depth (MEC-14), the P1/P2 pin direction (MEC-08, resolved 2026-09-20), the clip, fuse-holder, battery and driver check (MEC-16), and the UBEC input lead (HW-20).
+
 Questions that block a decision, or that a decision rests on and nobody has measured yet.
 
 | Question | Blocks |
 |---|---|
 | SM-2P battery connector temperature under load | HW-13 - XT30 if it runs warm |
 | FRDM loaded current draw | compute branch fuse sizing |
-| Switch **harness depth**: bezel to wire exit with the red socket fitted (over ~33 mm reaches the motors). Seller asked | MEC-14 - wiring only, not the print |
 | Which USB-CAN adapter, and is its 120 Ω switchable? | HW-18 - must be OFF |
 | Does the Encoder Motor Module time out when I²C commands stop? | HW-17 - decides whether the HW-12 relay is needed before autonomy |
-| Which way do the Discovery's P1/P2 pins protrude? | MEC-08 - decides whether the carrier sits above or below the board |
-| Clip and fuse-holder outlines, battery and driver heights, screw heads under plate 2 | MEC-16 - the harness board's layout |
-| UBEC input lead gauge | HW-20 - it is what keeps the UBEC fuse on the list |
