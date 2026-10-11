@@ -46,7 +46,7 @@ structure.
 | # | Deliverable | Done when |
 |---|---|---|
 | 1.1 | **Assembled vehicle** | Everything in [`../bom/BOM.md`](../bom/BOM.md) marked Phase 1 is fitted per [`../hardware/README.md`](../hardware/README.md); powers up from the battery with the harness checks passed; the fascia is on |
-| 1.2 | **CAN matrix v1.0, defined and released** | A machine-readable matrix (DBC) and a short document exist for the 500 kbit/s classic-CAN bus: ID plan, every message with its signals, cycle time, owner and receiver, timeout behaviour, byte order and scaling, the bootloader frames, the versioning rule. It is **tagged and released**, and both sides consume the tag rather than a copy |
+| 1.2 | **CAN matrix v1.0, defined and released** | A machine-readable matrix (a DBC, or Cyphal DSDL types, per the open question in [SW-01](../decisions/SW-Software-Decisions.md)) and a short document exist for the 500 kbit/s classic-CAN bus: ID plan, every message with its signals, cycle time, owner and receiver, timeout behaviour, byte order and scaling, the bootloader's Cyphal subjects and services, the versioning rule. It is **tagged and released**, and both sides consume the tag rather than a copy |
 | 1.3 | **Wiring and parts demo** | A scripted bench run, checklist and result logged, that exercises every part once: both rails and the pack measurement, CAN loopback on both nodes and from the PC, each motor both ways, the steering through its range, the encoders, the fascia controls. A real `candump` of the run is captured |
 | 1.4 | **STM32 FBL** (flash bootloader) | A small resident bootloader that, on request over CAN, erases, receives, verifies (CRC) and writes an application image, then jumps to it. A broken or absent app leaves the FBL reachable. A new app goes on with **no ST-LINK**. Unsigned and unencrypted: security is Phase 3 |
 | 1.5 | **STM32 minimal app** | The thing the FBL downloads. Zephyr on the F407; decodes the matrix's command frames, drives motors and steering **open loop**, stops if commands stop (command time-out), and sends a heartbeat and a state frame. Nothing smarter |
@@ -67,15 +67,14 @@ Phase 1 is finished when, on the finished vehicle, with no ST-LINK connected:
 
 ### Learning focus
 
-**New:** the **Yocto** workflow end to end (layers, recipes, `kas`, the NXP BSP, machine and image
+**New:** **OpenCyphal** (the protocol the bootloader speaks, [SW-01](../decisions/SW-Software-Decisions.md)); the **Yocto** workflow end to end (layers, recipes, `kas`, the NXP BSP, machine and image
 configuration, device tree and kernel configuration for the FRDM-IMX91); **embedded Linux user space**
-(SocketCAN, writing and cross-building a C++ program, the UDS client running on Linux); **Zephyr** (west,
+(SocketCAN, writing and cross-building a C++ program, the Cyphal file server and flashing client running on Linux); **Zephyr** (west,
 devicetree, Kconfig, a board definition for the carrier, how it differs from an AUTOSAR-style stack); and **CI
 and repository structure** across firmware, Linux and tooling.
 
-**Known, so kept lean:** the CAN matrix, UDS download services and the bootloader are standard ground. They
-are built to the usual pattern, not explored; the FBL is bare-metal and small, and the matrix and flasher are
-as simple as a correct implementation allows. The point of Phase 1 is that they work and are structured well,
+**Known, so kept lean:** CAN itself, the bootloader mechanics (flash, vector table, CRC, jump) and the repo
+layout. The FBL is bare-metal and small and built to the usual pattern; only the protocol on top of it is new. The point of Phase 1 is that they work and are structured well,
 so the new ground has something solid to stand on.
 
 ### Repositories (Phase 1.7)
@@ -88,7 +87,7 @@ Every repository below carries a short `README.md` and a `CLAUDE.md`, a CI workf
 |---|---|---|---|
 | **Nexus-Platform** (exists) | Definition: system, decisions, hardware, mechanical, BOM, phases | Decision IDs | |
 | **Nexus-STM32-FBL** | The flash bootloader: **bare-metal, small by design** (no RTOS, no HAL beyond what the CAN and flash drivers need), its memory map and its protocol implementation | `fbl.elf` | CAN-Utils release (bootloader frames) |
-| **Nexus-CAN-Utils** | **The CAN matrix** (DBC, document, ID plan, bootloader frames), its **generators** (C header, Linux bindings, which will keep moving), and the **UDS flashing client** that downloads an app through the FBL. The client is Linux-portable, so it runs from the PC adapter now and from the i.MX 91 later. Capture/replay and the bench-demo runner start here too, and can be split out if they grow | **Tagged releases** `vMAJOR.MINOR.PATCH`; the flasher binary | Decision IDs |
+| **Nexus-CAN-Utils** | **The CAN matrix** (document, ID plan, and the Cyphal data types and subject/service IDs that carry it), its **generators** (C and Linux bindings, which will keep moving), and the **Cyphal flashing client**: a file server that offers an app image to the FBL, which pulls it ([SW-01](../decisions/SW-Software-Decisions.md)). The client is Linux-portable, so it runs from the PC adapter now and from the i.MX 91 later. Capture/replay and the bench-demo runner start here too, and can be split out if they grow | **Tagged releases** `vMAJOR.MINOR.PATCH`; the flasher binary | Decision IDs |
 | **Nexus-STM32-App** | The Zephyr application the FBL loads (west workspace, own board definition for the carrier) | `app.bin` | CAN-Utils release, the FBL's memory map |
 | **Nexus-IMX91-Linux** | The Yocto layer `meta-nexus`, the build manifest, the image recipe, kernel and device-tree changes | Bootable image | NXP BSP, apps by tag |
 | **Nexus-IMX91-Apps** | Linux-side programs (C++ first, Rust where it earns its place); starts as the minimal CAN sender | Binaries, packaged by a Yocto recipe | CAN-Utils release |
@@ -106,11 +105,9 @@ Three relationships carry the whole structure:
   versioned on its own and the image only assembles it. This is the pattern Phase 3's containers and OTA will
   extend.
 
-**Decided already (2026-10-11):** the FBL is bare-metal, to keep it small and fast; the CAN matrix and the UDS flashing client share one repository, `Nexus-CAN-Utils`; the Yocto build is driven by `kas`. Each gets its `SW-` entry when it is written down.
+**Decided already (2026-10-11):** the FBL is bare-metal, to keep it small and fast; the CAN matrix and the flashing client share one repository, `Nexus-CAN-Utils`; the Yocto build is driven by `kas`. The flash protocol is **OpenCyphal** ([SW-01](../decisions/SW-Software-Decisions.md)). The others get their `SW-` entry when written down.
 
-**Decided in Phase 1, recorded as `SW-nn` as each one is made:** the matrix's ID plan and tooling, the language of the flashing client (it must run on Linux, which points at C++ or Rust), and how each consumer takes a release; the flash
-protocol (UDS download services over ISO-TP, which is familiar ground and makes the bootloader a standard
-one; the first `SW` entry confirms it); the FBL's
+**Decided in Phase 1, recorded as `SW-nn` as each one is made:** the matrix's ID plan and tooling, the language of the flashing client (it must run on Linux, which points at C++ or Rust), and how each consumer takes a release; whether the application messages are also Cyphal or a plain-ID matrix sharing the bus (SW-01 leaves this open); the FBL's
 memory map and how the app is told apart from garbage; the repository and CI template; the
 build-manifest tool (`kas`, decided); the branching and tag rules shared by all repositories.
 
@@ -132,7 +129,7 @@ needs. None is forbidden if it comes free, but none gates the phase.
 | Speed and steering loops on the STM32 | Encoder feedback, PID with limits on speed, acceleration, jerk and steer rate; kinematics from speed + curvature to wheel setpoints (Ackermann) |
 | Motion state and odometry | Wheel speed to pose; the IMU joins here if it is bought |
 | Vehicle modes and safe stop | A small state machine (off, standby, manual, fault), watchdogs, command time-outs end to end, emergency stop, low-pack shutdown from the pack measurement ([SYS-01](../decisions/SYS-System-Decisions.md)) |
-| Diagnostics on the bus | UDS-style read/clear of fault codes and live data; the data logger and replay on the Linux side |
+| Diagnostics on the bus | fault codes and live data over the bus (Cyphal services or UDS, decided then); the data logger and replay on the Linux side |
 | Linux services | A motion gateway and a status service as proper C++/Rust services with a defined lifecycle, not a script |
 | Operator interface and link | Gamepad or keyboard teleop from a laptop over Wi-Fi, vehicle status on the fascia LEDs and in a telemetry stream |
 
