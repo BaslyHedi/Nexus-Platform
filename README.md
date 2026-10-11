@@ -128,7 +128,7 @@ python3 tools/check-drawings.py
 ## Checking the requirements
 
 Requirements are Markdown blocks with fixed fields. This checks their format, links, trace to the drawings and writing
-rules, and fails when the generated `requirements/TRACE.md` or `requirements/renders/traceability.svg` is stale (`--write`
+rules, and fails when the generated `requirements/TRACE.md` or `requirements/traceability.html` is stale (`--write`
 regenerates both):
 
 ```bash
