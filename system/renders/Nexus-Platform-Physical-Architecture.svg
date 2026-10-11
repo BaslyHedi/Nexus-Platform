@@ -83,7 +83,7 @@
 <text x="1143.0" y="212" font-size="10.5" fill="#374151">To be selected (6.3)</text>
 </g>
 <g id="Nexus-Physical-04">
-<rect x="250" y="330" width="1110" height="70" rx="4" fill="#f8fafc" stroke="#334155" stroke-width="1.6"/>
+<rect x="250" y="330" width="1110" height="70" rx="4" fill="#e2e8f0" stroke="#334155" stroke-width="1.6"/>
 <text x="262" y="348" font-size="9.5" font-weight="700" fill="#334155" font-family="ui-monospace, Menlo, Consolas, monospace">Nexus-Physical-04</text>
 <text x="262" y="368" font-size="13" font-weight="700" fill="#111827">Vehicle CAN bus</text>
 <circle cx="440" cy="359.5" r="1.8" fill="#334155"/>
@@ -233,17 +233,19 @@
 <text x="512" y="924" font-size="10" fill="#374151">command</text>
 <path d="M600,920 L634,920" fill="none" stroke="#c2410c" stroke-width="1.6" stroke-dasharray="6 3" marker-end="url(#mp)"/>
 <text x="642" y="924" font-size="10" fill="#374151">physical interaction</text>
-<text x="30" y="950" font-size="10" font-weight="700" fill="#1a1a1a">FIRST PHASE</text>
-<rect x="108" y="939" width="42" height="14" rx="7" fill="#dcfce7" stroke="#15803d" stroke-width="0.8"/>
-<text x="129.0" y="949.5" font-size="8.5" font-weight="700" text-anchor="middle" fill="#15803d">PHASE 1</text>
-<rect x="156" y="939" width="42" height="14" rx="7" fill="#e0f2fe" stroke="#0369a1" stroke-width="0.8"/>
-<text x="177.0" y="949.5" font-size="8.5" font-weight="700" text-anchor="middle" fill="#0369a1">PHASE 2</text>
-<rect x="204" y="939" width="42" height="14" rx="7" fill="#fae8ff" stroke="#a21caf" stroke-width="0.8"/>
-<text x="225.0" y="949.5" font-size="8.5" font-weight="700" text-anchor="middle" fill="#a21caf">PHASE 3</text>
-<rect x="252" y="939" width="42" height="14" rx="7" fill="#ffedd5" stroke="#c2410c" stroke-width="0.8"/>
-<text x="273.0" y="949.5" font-size="8.5" font-weight="700" text-anchor="middle" fill="#c2410c">PHASE 4</text>
-<rect x="300" y="939" width="42" height="14" rx="7" fill="#f1f5f9" stroke="#64748b" stroke-width="0.8"/>
-<text x="321.0" y="949.5" font-size="8.5" font-weight="700" text-anchor="middle" fill="#475569">PHASE 5</text>
-<text x="350" y="950" font-size="10" fill="#374151">first phase the element exists in (phases.md) · which functions each element realises is the allocation, kept out of this view</text>
+<rect x="30" y="939" width="16" height="14" rx="2" fill="#e2e8f0" stroke="#334155" stroke-width="1.2"/>
+<text x="52" y="950" font-size="10" fill="#374151"><tspan font-weight="700">physical element</tspan>: one colour for the whole physical view</text>
+<text x="400" y="950" font-size="10" font-weight="700" fill="#1a1a1a">FIRST PHASE</text>
+<rect x="478" y="939" width="42" height="14" rx="7" fill="#dcfce7" stroke="#15803d" stroke-width="0.8"/>
+<text x="499.0" y="949.5" font-size="8.5" font-weight="700" text-anchor="middle" fill="#15803d">PHASE 1</text>
+<rect x="526" y="939" width="42" height="14" rx="7" fill="#e0f2fe" stroke="#0369a1" stroke-width="0.8"/>
+<text x="547.0" y="949.5" font-size="8.5" font-weight="700" text-anchor="middle" fill="#0369a1">PHASE 2</text>
+<rect x="574" y="939" width="42" height="14" rx="7" fill="#fae8ff" stroke="#a21caf" stroke-width="0.8"/>
+<text x="595.0" y="949.5" font-size="8.5" font-weight="700" text-anchor="middle" fill="#a21caf">PHASE 3</text>
+<rect x="622" y="939" width="42" height="14" rx="7" fill="#ffedd5" stroke="#c2410c" stroke-width="0.8"/>
+<text x="643.0" y="949.5" font-size="8.5" font-weight="700" text-anchor="middle" fill="#c2410c">PHASE 4</text>
+<rect x="670" y="939" width="42" height="14" rx="7" fill="#f1f5f9" stroke="#64748b" stroke-width="0.8"/>
+<text x="691.0" y="949.5" font-size="8.5" font-weight="700" text-anchor="middle" fill="#475569">PHASE 5</text>
+<text x="720" y="950" font-size="10" fill="#374151">first phase the element exists in (phases.md) · which functions each element realises is the allocation, kept out of this view</text>
 </g>
 </svg>

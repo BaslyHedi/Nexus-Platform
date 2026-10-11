@@ -17,7 +17,7 @@ sys.dont_write_bytecode = True
 
 OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'renders', 'Nexus-Platform-Logical-Architecture.svg')
 
-W, H = 1640, 1115
+W, H = 1640, 1140
 MONO = 'ui-monospace, Menlo, Consolas, monospace'
 
 # phase -> (pill fill, pill stroke, pill text). Phase 1 keeps the green the drawing always had.
@@ -30,14 +30,10 @@ PHASES = {
 }
 PILL_W = 42
 
-# domain -> (stroke, header fill)
-DOMAINS = {
-    1: ('#92400e', '#fef3c7'),
-    2: ('#1d4ed8', '#dbeafe'),
-    3: ('#6d28d9', '#ede9fe'),
-    4: ('#0f766e', '#ccfbf1'),
-    5: ('#be123c', '#ffe4e6'),
-}
+# One colour per view, shared by both architecture drawings: (stroke, header fill). The physical drawing imports VIEWS.
+VIEWS = {'logical': ('#0f766e', '#ccfbf1'), 'physical': ('#334155', '#e2e8f0')}
+LOGICAL = VIEWS['logical']
+DOMAINS = [(1, 'Vehicle Foundation'), (2, 'Motion'), (3, 'Autonomy'), (4, 'Communication & Interaction'), (5, 'Dependability & Lifecycle')]
 
 # marker id -> colour; each has an end marker and a start marker
 MARKERS = [('mi', '#374151'), ('mc', '#1d4ed8'), ('me', '#d92b2b'), ('mp', '#c2410c')]
@@ -57,8 +53,7 @@ def pill(x, y, phase, text_x=None, text_y=None):
 
 def card(sid, name, phase, x, y, w, h, *columns):
     """A logical component card. `columns` are lists of functions; a function is a list of lines, the first one gets the bullet."""
-    d = int(sid[-3])
-    stroke, head = DOMAINS[d]
+    stroke, head = LOGICAL
     o = [f'<g id="{sid}">',
          f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="4" fill="#ffffff" stroke="{stroke}" stroke-width="1.6"/>',
          f'<path d="M{x},{y + 4} a4,4 0 0 1 4,-4 h{w - 8} a4,4 0 0 1 4,4 v38 h-{w} z" fill="{head}"/>',
@@ -144,14 +139,14 @@ def build():
 
     # --- the communication backbone is a banner, not a card
     o += ['<g id="Nexus-Logical-401">',
-          '<rect x="250" y="300" width="1110" height="60" rx="4" fill="#ccfbf1" stroke="#0f766e" stroke-width="1.6"/>',
-          f'<text x="262" y="318" font-size="9.5" font-weight="700" fill="#0f766e" font-family="{MONO}">Nexus-Logical-401</text>',
+          f'<rect x="250" y="300" width="1110" height="60" rx="4" fill="{LOGICAL[1]}" stroke="{LOGICAL[0]}" stroke-width="1.6"/>',
+          f'<text x="262" y="318" font-size="9.5" font-weight="700" fill="{LOGICAL[0]}" font-family="{MONO}">Nexus-Logical-401</text>',
           '<text x="262" y="338" font-size="13" font-weight="700" fill="#111827">In-Vehicle Communication</text>',
-          '<text x="262" y="352" font-size="9" fill="#0f766e">backbone - every electronic component attaches here</text>']
+          f'<text x="262" y="352" font-size="9" fill="{LOGICAL[0]}">backbone - every electronic component attaches here</text>']
     for (cx, cy, t) in [(522, 321.5, 'Exchange signals between nodes'), (822, 321.5, 'Time-synchronise nodes'),
                         (522, 338.5, 'Route between signals and services'),
                         (822, 338.5, 'Publish services & topics')]:
-        o += [f'<circle cx="{cx}" cy="{cy}" r="1.8" fill="#0f766e"/>',
+        o += [f'<circle cx="{cx}" cy="{cy}" r="1.8" fill="{LOGICAL[0]}"/>',
               f'<text x="{cx + 7}" y="{int(cy + 3.5)}" font-size="10.5" fill="#374151">{esc(t)}</text>']
     o += pill(1308, 307, 1)
     o.append('</g>')
@@ -167,8 +162,8 @@ def build():
         ['Enforce speed, accel. & jerk limits'],
         ['Estimate vehicle motion state', '(odometry from wheel speed, inertial data)'],
         ['Execute safe-stop requests'], ['Report motion state']])
-    o += ['<rect x="1110" y="390" width="260" height="245" rx="6" fill="none" stroke="#1d4ed8" stroke-width="1" stroke-dasharray="3 3"/>',
-          '<text x="1370" y="385" font-size="8.5" font-weight="700" fill="#1d4ed8" text-anchor="end" letter-spacing="1">ACTUATION</text>']
+    o += [f'<rect x="1110" y="390" width="260" height="245" rx="6" fill="none" stroke="{LOGICAL[0]}" stroke-width="1" stroke-dasharray="3 3"/>',
+          f'<text x="1370" y="385" font-size="8.5" font-weight="700" fill="{LOGICAL[0]}" text-anchor="end" letter-spacing="1">ACTUATION</text>']
     o += card('Nexus-Logical-201', 'Propulsion', 1, 1120, 400, 240, 105, [
         ['Produce drive torque, rear wheels'], ['Track wheel-speed setpoints'], ['Measure wheel speed']])
     o += card('Nexus-Logical-202', 'Steering', 1, 1120, 520, 240, 105, [
@@ -184,7 +179,7 @@ def build():
         ['Convert energy to the supplies', 'the loads need'], ['Measure pack voltage & current'], ['Estimate state of charge']])
 
     # --- row 4: cross-cutting
-    o.append('<text x="250" y="840" font-size="10" font-weight="700" fill="#be123c" letter-spacing="1">'
+    o.append(f'<text x="250" y="840" font-size="10" font-weight="700" fill="{LOGICAL[0]}" letter-spacing="1">'
              'CROSS-CUTTING - these reach every logical component above through 401</text>')
     o += card('Nexus-Logical-501', 'Supervision & Safety', 1, 250, 850, 240, 150, [
         ['Manage vehicle modes & transitions'], ['Emergency stop & safe stop'], ['Watchdogs & command time-outs'],
@@ -230,20 +225,16 @@ def build():
                           (440.8, 'e', 'energy (dashed = logic supply)'), (668.8, 'p', 'physical interaction')]:
         o += flow(f'M{x},1046 L{x + 34},1046', kind)
         o.append(f'<text x="{round(x + 42, 1)}" y="1050" font-size="10" fill="#374151">{text}</text>')
-    o.append('<text x="30" y="1076" font-size="10" font-weight="700" fill="#1a1a1a">DOMAINS</text>')
-    x = 92
-    for d, name, adv in [(1, 'Vehicle Foundation', 158.8), (2, 'Motion', 91.6), (3, 'Autonomy', 102.8),
-                         (4, 'Communication & Interaction', 209.2), (5, 'Dependability & Lifecycle', 208.0)]:
-        stroke, head = DOMAINS[d]
-        o += [f'<rect x="{x}" y="1065" width="16" height="14" rx="2" fill="{head}" stroke="{stroke}" stroke-width="1.2"/>',
-              f'<text x="{round(x + 22, 1)}" y="1076" font-size="10" fill="#374151"><tspan font-weight="700" fill="{stroke}">{d}xx</tspan> {esc(name)}</text>']
-        x = round(x + adv, 1)
-    o.append(f'<text x="{x}" y="1076" font-size="10" font-weight="700" fill="#1a1a1a">FIRST PHASE</text>')
-    x = round(x + 78, 1)
+    o += [f'<rect x="30" y="1065" width="16" height="14" rx="2" fill="{LOGICAL[1]}" stroke="{LOGICAL[0]}" stroke-width="1.2"/>',
+          '<text x="52" y="1076" font-size="10" fill="#374151"><tspan font-weight="700">logical component</tspan>: one colour for the whole logical view</text>',
+          '<text x="400" y="1076" font-size="10" font-weight="700" fill="#1a1a1a">FIRST PHASE</text>']
+    x = 478
     for p in PHASES:
         o += pill(x, 1065, p)
         x = round(x + PILL_W + 6, 1)
     o.append(f'<text x="{x + 2}" y="1076" font-size="10" fill="#374151">first phase the component exists in (phases.md)</text>')
+    o.append('<text x="30" y="1102" font-size="10" fill="#374151"><tspan font-weight="700" fill="#1a1a1a">DOMAINS</tspan>'
+             '   the D of Nexus-Logical-DNN:   ' + '   ·   '.join(f'<tspan font-weight="700">{d}xx</tspan> {esc(n)}' for d, n in DOMAINS) + '</text>')
     o += ['</g>', '</svg>']
     return '\n'.join(o) + '\n'
 

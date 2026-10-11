@@ -17,16 +17,16 @@ _spec = importlib.util.spec_from_file_location('logical', os.path.join(HERE, 'Ne
 L = importlib.util.module_from_spec(_spec)
 _spec.loader.exec_module(L)
 esc, pill, external, flow, write = L.esc, L.pill, L.external, L.flow, L.write
-MONO, PHASES, PILL_W, MARKERS = L.MONO, L.PHASES, L.PILL_W, L.MARKERS
+MONO, PHASES, PILL_W, MARKERS, VIEWS = L.MONO, L.PHASES, L.PILL_W, L.MARKERS, L.VIEWS
 
 OUT = os.path.join(HERE, '..', 'renders', 'Nexus-Platform-Physical-Architecture.svg')
 W, H = 1640, 1010
-SLATE = ('#334155', '#e2e8f0')
+PHYSICAL = VIEWS['physical']
 
 
 def element(eid, name, phase, x, y, w, h, *columns):
     """An element card: ID, name, first phase, and the parts it is built from."""
-    stroke, head = SLATE
+    stroke, head = PHYSICAL
     o = [f'<g id="{eid}">',
          f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="4" fill="#ffffff" stroke="{stroke}" stroke-width="1.6"/>',
          f'<path d="M{x},{y + 4} a4,4 0 0 1 4,-4 h{w - 8} a4,4 0 0 1 4,4 v38 h-{w} z" fill="{head}"/>',
@@ -81,9 +81,9 @@ def build():
         'Camera first', 'Then a range sensor or LiDAR', 'To be selected (6.3)'])
 
     # --- the bus: a banner, as in the logical drawing
-    stroke, head = SLATE
+    stroke, head = PHYSICAL
     o += ['<g id="Nexus-Physical-04">',
-          f'<rect x="250" y="330" width="1110" height="70" rx="4" fill="#f8fafc" stroke="{stroke}" stroke-width="1.6"/>',
+          f'<rect x="250" y="330" width="1110" height="70" rx="4" fill="{head}" stroke="{stroke}" stroke-width="1.6"/>',
           f'<text x="262" y="348" font-size="9.5" font-weight="700" fill="{stroke}" font-family="{MONO}">Nexus-Physical-04</text>',
           '<text x="262" y="368" font-size="13" font-weight="700" fill="#111827">Vehicle CAN bus</text>',]
     for (cx, cy, t) in [(440, 359.5, 'Classic CAN, 500 kbit/s'), (440, 376.5, '120 Ω at both ends (module, FRDM JP1)'),
@@ -146,8 +146,10 @@ def build():
                           (600, 'p', 'physical interaction')]:
         o += flow(f'M{x},920 L{x + 34},920', kind)
         o.append(f'<text x="{x + 42}" y="924" font-size="10" fill="#374151">{text}</text>')
-    o.append('<text x="30" y="950" font-size="10" font-weight="700" fill="#1a1a1a">FIRST PHASE</text>')
-    x = 108
+    o += [f'<rect x="30" y="939" width="16" height="14" rx="2" fill="{PHYSICAL[1]}" stroke="{PHYSICAL[0]}" stroke-width="1.2"/>',
+          '<text x="52" y="950" font-size="10" fill="#374151"><tspan font-weight="700">physical element</tspan>: one colour for the whole physical view</text>',
+          '<text x="400" y="950" font-size="10" font-weight="700" fill="#1a1a1a">FIRST PHASE</text>']
+    x = 478
     for p in PHASES:
         o += pill(x, 939, p)
         x += PILL_W + 6
