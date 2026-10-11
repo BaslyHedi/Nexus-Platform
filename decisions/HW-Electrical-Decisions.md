@@ -721,7 +721,7 @@ battery + ─ 7.5 A ─ shunt ─ (+) bus ─┬─ SW1 ─┬─ 5 A ─ Encode
 - **The (+) bus uses 3 of its 5 ports**: INA226 out, SW1, SW2.
 - The BOM fuse table and the wiring schematic drop the logic fuse.
 
-**To confirm.** The UBEC's input lead gauge, which is what keeps its fuse on the list.
+**Settled 2026-10-11.** The UBEC is already mounted and stays as it is, so its fuse stays on the list. The input lead gauge was not measured.
 
 ---
 

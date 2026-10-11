@@ -117,6 +117,6 @@ ships two standoff lengths. So the panels are different parts and are **not** in
 - **Some port geometry is read off photos** - the USB-C body width and flange depth, the Mini-B
   screw pitch and body. None of it is critical any more: the nearest body is 6 mm from a standoff,
   and the Mini-B's slotted hole takes any pitch from 27 to 30 (MEC-13).
-- **The switch harness depth is unverified.** The bare switch is 25 mm deep and clears the motors by
-  about 8 mm, but the plug-on socket harness adds to that (MEC-14). It affects the wiring, not the
-  print.
+- **The switch harness depth is checked on the real parts (2026-10-11).** The bare switch is 25 mm
+  deep and clears the motors by about 8 mm; with the plug-on socket harness fitted it still fits
+  behind the motors, with the cables pushed slightly to the side (MEC-14).

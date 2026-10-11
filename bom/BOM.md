@@ -244,7 +244,7 @@ kit, heat-shrink, UBEC, INA226, CAN transceiver, resistor kit and the USB-C feed
 
 3.8 WAGO 221-415 and 5.8 Mini-B cable (dispatched 18 Sep) · 3.14 capacitors (dispatched 18 Sep)
 · **3.5a/3.5c switches, due 29 Sep – 13 Oct** - no longer blocks the fascia: the vendor
-drawing settles the hole, bezel and nut (MEC-14). Only the harness depth waits for them.
+drawing settles the hole, bezel and nut (MEC-14). They arrived, and the harness fits behind the motors (MEC-14, 2026-10-11).
 
 Resolved: board variant · DC-DC choice · servo rail · over-discharge approach · FRDM power
 input (plain 5 V) · CAN transceiver count · bus distribution · fascia geometry.

@@ -304,7 +304,7 @@ one line in `labels_lower()`.
 
 ## MEC-07 · The fascia is clamped at four corners - six M3 for the whole thing
 
-**Updated by MEC-14:** the switch drawing gives the nut (25 A/F, 28.5 across corners) and the bare depth (25 mm), closing the check below for the switch itself. The harness depth is still open.
+**Updated by MEC-14:** the switch drawing gives the nut (25 A/F, 28.5 across corners) and the bare depth (25 mm), closing the check below for the switch itself. **Checked on the real switches (2026-10-11):** the harness fits behind the motors, with the cables pushed slightly to the side. The harness depth is closed.
 
 **Confirmed by MEC-10 (2026-09-20):** both fixing positions land exactly on real CAD holes,
 and both are ⌀3.18 - the only M3-capable class on the plate.
@@ -1152,6 +1152,7 @@ return - goes up through it, between the buses. The rearward runs lie flat on pl
   Clips used: **3-port x 4** (split, S8, S9, S6), **5-port x 1** (S5), **2-port x 5** (S1, S2, S3, S4, S7). The positions of S8, S9 and S5 are stand-ins in the model; what must hold is the height over the motors (9 mm: no clip there, 8.5 mm + 1 mm of tape).
 - The screw heads under plate 2 - carrier F1-F4 and board C's F5, F6 - against the taped parts. *Done for the tray's own six fixings in MEC-17 (2026-10-05); the direct-fixing scheme it replaces would have clashed.*
   F3 lands at the motor fuse's lid edge.
+- **Checked on the real parts (2026-10-11):** battery and driver are about 20 mm tall; the clips and fuse holders went in as designed and the wiring is clean. The layout stands unchanged.
 - The switch harness: wire length (the model assumes the leads reach S8 / S9 or are extended) and gauge of the contact wires, which carry up to about 6 A for SW1.
 - That the driver's VM socket can be reached from the right side under the motor fuse - about
   16 mm of height between the floor parts and the holder. If not, the VM tail needs about 12 cm to
