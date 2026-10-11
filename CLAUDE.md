@@ -92,8 +92,8 @@ It has no motors driven and no control loops. Do not restate the plan here.
 **The power stage is bought and in hand** (delivered 18 Sep 2026) - converter, fuses, wire,
 distribution, UBEC, current sensor, CAN transceiver and the USB-C feed. No *selection* blocks
 a powered-up Phase 1: the converter, both CAN transceivers and the board variant are settled.
-What remains is bench verification, and the connectors that break CAN out of the two boards -
-of which the FRDM's 2×5 mating connector is the only real blocker, and it is free to resolve.
+As of 2026-10-11 nothing is left to buy or select for Phase 1, including the FRDM's 2×5 mating
+connector; what remains is the bench tests in [`system/phases.md`](system/phases.md).
 
 Component status and quantities live in [`bom/BOM.md`](bom/BOM.md); the electrical
 and mechanical rationale, and the list of what is still open, lives in

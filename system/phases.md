@@ -52,7 +52,7 @@ criteria are met and the evidence named in it exists, and not before.
 | 1.2 | **CAN IDs for flashing** | The bus bit rate and timing (500 kbit/s, classic CAN) and the identifiers the bootloader uses (Cyphal node IDs, subjects and services for update, heartbeat and node info) are written down and **tagged as a release** in `Nexus-CAN-Utils`. **The application messages are not part of Phase 1**: their layer and content are decided in Phase 2 |
 | 1.3 | **Bench demo** | The tests below pass |
 | 1.4 | **STM32 FBL** (flash bootloader) | A small bare-metal resident bootloader that, on request over CAN, receives an image by Cyphal file transfer, erases, writes and verifies it, then jumps to it. A broken or absent image leaves the FBL reachable. Unsigned and unencrypted: security is Phase 3 |
-| 1.5 | **STM32 app and FBL-Updater** | Two images the FBL can download, built with Zephyr where the app is concerned: a **minimal app** (LED pattern, Cyphal heartbeat, shows what it hears) and an **FBL-Updater**, an image whose only job is to rewrite the FBL's own flash region, since a bootloader cannot overwrite itself while running |
+| 1.5 | **STM32 app and FBL-Updater** | Two images the FBL can download: a **minimal app** (Zephyr: LED pattern, Cyphal heartbeat, shows what it hears) and an **FBL-Updater**, an image (toolchain decided when it is written) whose only job is to rewrite the FBL's own flash region, since a bootloader cannot overwrite itself while running |
 | 1.6 | **FRDM image and apps** | The Yocto repository and the first Linux apps (one repository each) described in tests T2.1 and T2.2 |
 | 1.7 | **Project structure** | The repositories below exist, each builds in CI from a clean clone and cites decision IDs back to this one |
 
@@ -137,8 +137,7 @@ application layer and the matrix beyond flashing are **Phase 2**.
 ### Out of Phase 1
 
 The application messages of the CAN matrix, motors, steering, encoders and the INA226 (first thing in Phase 2), closed-loop speed and steering control, odometry, the IMU, operator input beyond bench tools, Wi-Fi teleop,
-containers, secure boot, signed images, OTA of the Linux side, the Pi 5, ROS 2, any sensor beyond what the demo
-needs. None is forbidden if it comes free, but none gates the phase.
+containers, secure boot, signed images, OTA of the Linux side, the Pi 5, ROS 2, any sensor. None is forbidden if it comes free, but none gates the phase.
 
 ---
 
