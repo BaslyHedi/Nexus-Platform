@@ -266,8 +266,9 @@ and no non-volatile memory (NvM) region exist yet.** Both are left open, see *Co
 - **Nothing in the FBL needs the CCM.** It reaches the CPU through the data bus only, so no DMA contention touches it,
   which makes accesses deterministic. The FBL has no timing that depends on that. The CCM stays free for data that
   does, when there is some.
-- **The hand-off from the application is simpler in the main SRAM.** The CCM cannot hold code or DMA buffers and sits in
-  a separate region, so a block that both images agree on lives in the main SRAM.
+- **The CCM is a poor place for anything both images share.** It is a separate region, it needs its own clock enable bit
+  in `RCC_AHB1ENR`, and it cannot be reached by DMA or execute code. Where the hand-off block from the application to
+  the FBL lives is a separate entry, because RM0090 does not document the main SRAM as retained across a reset.
 - **The FBL has no floating-point work.** The FPU is off after reset and the FBL leaves it so. The application
   enables it, which Zephyr does itself. The two images are never linked together, so their ABIs need not match.
 
@@ -280,9 +281,15 @@ and no non-volatile memory (NvM) region exist yet.** Both are left open, see *Co
 **Consequences.**
 
 - `fbl.ld` describes one RAM region. The CCM is not in it.
-- The location of the hand-off block in the main SRAM is a separate entry, with the entry rules.
+- The location of the hand-off block is a separate entry, with the entry rules. The candidates are the 4 KB backup SRAM and
+  the main SRAM, see *To confirm*.
 
 **To confirm.**
 
-- That the main SRAM contents survive the software reset by which the application hands over to the FBL. This is the
-  condition for the hand-off record, and it is checked against RM0090 and then on the board.
+- ~~That the main SRAM survives the software reset.~~ Checked against RM0090 Rev 22 (2026-10-11): a system reset sets
+  all registers to their reset values and the manual says nothing about the main SRAM, neither kept nor cleared. It
+  states that Standby loses it, and a power-on reset leaves it undefined. **Only the backup domain is documented as
+  surviving a system reset:** the 4 KB backup SRAM at `0x40024000` to `0x40024FFF` (cleared only by a protection level
+  change from 1 to 0) and 20 RTC backup registers (80 bytes). Writing either needs the `PWREN` clock, `PWR_CR.DBP` and,
+  for the SRAM, `RCC_AHB1ENR.BKPSRAMEN`. Whether the main SRAM keeps its contents across `SYSRESETREQ` on this part is
+  then a measurement on the board, and the hand-off record carries a magic value and a CRC in any case.
