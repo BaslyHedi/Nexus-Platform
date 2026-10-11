@@ -116,8 +116,9 @@ Linux programs, is decided once the FBL works, not now. `libcanard` and Kocherga
 
 **To confirm.**
 
-- The port IDs and type versions of the four standard types, from the specification. SW-01's to-confirm on names
-  still applies.
+- ~~The port IDs and type versions of the four standard types.~~ Checked against Specification v1.0, revision
+  2025-05-16 (2026-10-11): Heartbeat 7509 v1.0, GetInfo 430 v1.0, ExecuteCommand 435 v1.3, file.Read 408 v1.1. The
+  update command is `COMMAND_BEGIN_SOFTWARE_UPDATE` = 65533. SW-01's to-confirm on names is settled the same way.
 - That the stack interoperates with `yakut` at 500 kbit/s: a full download and an interrupted one (T1.1).
 - That it fits the FBL's flash region, once the memory map is decided.
 
