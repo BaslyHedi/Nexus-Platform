@@ -68,7 +68,10 @@ what is taken from each and what is NEXUS's own. The method is
 [`../system/method.md`](../system/method.md).
 
 - The hierarchy is the **physical breakdown**. The vehicle is the first system of interest, and each system element becomes
-  one in turn (recursion), until a bought part or a software item, which is handed over to its repository.
+  one in turn (recursion), until a bought part, a hardware element drawn here, or a software element, which is handed over.
+  Element IDs are hierarchical (`Nexus-Physical-01-04` inside `Nexus-Physical-01`), and a node is decomposed into all its
+  elements, hardware and software. Requirements are allocated to elements, never to repositories: which repository
+  implements which software element is configuration management, a table in the enabling system.
 - At each level the architecture has a **logical view** and a **physical view** of the same system, related by
   **allocation**. The components of the logical architecture are logical components, not levels of the hierarchy.
 - A requirement is **allocated** to an element as it is, or **derived** into new requirements where the architecture adds
@@ -85,10 +88,10 @@ what is taken from each and what is NEXUS's own. The method is
   it stacked the logical architecture above the physical one as two levels, which made a 1:1 pair such as 401 and the CAN
   bus look like two systems, and needed a "merge" rule to undo it. As two views of one level, they are simply one allocation.
 - Allocating requirements to the domains HW, SW and SYS gives no root and no tree. Domain stays a property of a leaf.
-- The hand-over at the software item matches the automotive split (ASPICE SYS to SWE) and keeps this repository free of code.
+- The hand-over at the software element matches the automotive split (ASPICE SYS to SWE) and keeps this repository free of code.
 - Markdown rather than YAML as the source: the PR is where this is reviewed, and a Markdown block reads and diffs there
   while the checker gives the same link guarantees.
 
 **Consequence.** The physical view is drawn ([`../system/physical-architecture.md`](../system/physical-architecture.md)); the
 Phase 1 allocation and the Phase 1 requirements follow it ([`../requirements/`](../requirements/README.md)): the vehicle
-as a black box, the enabling system beside it, the system elements, and the software items handed over to their repositories.
+as a black box, the enabling system beside it, the system elements, and the elements inside each node, handed over to their repositories.

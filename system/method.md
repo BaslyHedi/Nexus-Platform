@@ -52,18 +52,28 @@ Each element then becomes the system of interest at the next level, with its own
 own logical and physical views, its own allocation.
 
 ```text
-Vehicle                     requirements · logical view · physical view · allocation
-  └─ STM32 node             requirements · logical view · physical view · allocation
-       ├─ Discovery board    bought: the recursion stops at a BOM part
-       ├─ carrier boards
-       ├─ FBL software item  hand-over: the repository Nexus-STM32-FBL, targets FBL and FBL-Updater
-       └─ App software item  hand-over: the repository Nexus-STM32-App
+Vehicle (system-of-interest)          requirements · logical view · physical view · allocation
+  └─ Nexus-Physical-01 STM32 node     requirements · local physical view · allocation to its elements
+       ├─ 01-01 Discovery board        hardware, bought: recursion stops (COTS)
+       ├─ 01-02 Carrier boards         hardware, designed here (hardware/): recursion stops at the drawing
+       ├─ 01-03 Transceiver module     hardware, bought
+       ├─ 01-04 Bootloader             software element: handed over
+       ├─ 01-05 FBL-Updater            software element: handed over
+       └─ 01-06 Application            software element: handed over
 ```
 
-**Where the recursion stops.** At a **bought part** (a BOM item), and at a **software item**, which is handed over to
-its repository. That repository writes its own software requirements derived from ours (SWE.1 onward) and cites our
-IDs; facts travel one way, out of this repository, which holds no code. A software item is a repository; a build
-target inside it (the FBL-Updater in the FBL repository) is not an element of its own.
+**Element IDs are hierarchical**: an element inside `Nexus-Physical-01` is `Nexus-Physical-01-NN`, so its parent shows in its ID.
+A node is decomposed into **all** its elements, hardware and software, and its requirements are allocated across them.
+
+**Where the recursion stops.** At a **bought part**, whose requirements state what the vehicle relies on from it and are
+checked against its vendor documentation; at a **hardware element designed here**, whose requirements its drawing must
+satisfy; and at a **software element**, which is handed over. The team of a software element writes its software
+requirements from ours (ASPICE SWE.1 onward) and cites our IDs; facts travel one way, out of this repository, which holds no code.
+
+**Requirements are allocated to elements, never to repositories.** A repository is configuration management, part of the
+enabling system: it holds the implementation of one or more software elements (the bootloader and the FBL-Updater share
+one). The configuration table in [`../requirements/Nexus-Enabling.md`](../requirements/Nexus-Enabling.md) says which
+repository and which build target implement each software element.
 
 ## Requirements and their relations
 
@@ -103,7 +113,7 @@ Each level of recursion has its verification on the right side of the V:
 | Vehicle requirements | **System verification**: the bench tests T1.1 to T2.3 |
 | Vehicle architecture: elements and interfaces | **Integration**: the elements working together over their interfaces |
 | Element requirements | **Element verification**, and the same again one level down |
-| Software item, handed over | Verification inside the repository |
+| Software element, handed over | Software verification by the team of the element (SWE.4 to SWE.6) |
 
 Each phase is one pass through the V over a growing scope.
 
@@ -120,4 +130,4 @@ the PR, and the checker gives the same guarantees.
 2. Vehicle architecture: the logical view (exists, Draft B) and the physical view (Draft A).
 3. Allocation of the logical functions to the physical elements, and the interfaces.
 4. Element requirements, allocated or derived.
-5. Recursion into each element that is neither a bought part nor a software item.
+5. Recursion into each element that is neither a bought part, nor a hardware element drawn here, nor a software element.

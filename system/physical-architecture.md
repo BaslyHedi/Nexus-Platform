@@ -13,8 +13,8 @@ to [`../hardware/README.md`](../hardware/README.md) and the decisions; the drawi
 ## Allocation, Phase 1
 
 Each logical function used in Phase 1 against the physical elements that perform it (SysML *allocate*). The numbers are the
-`Fnn` shown on the [logical drawing](renders/Nexus-Platform-Logical-Architecture.svg). Software items below an element are
-in brackets. The table agrees with the `Function` field of the [requirements](../requirements/README.md); a change goes in both.
+`Fnn` shown on the [logical drawing](renders/Nexus-Platform-Logical-Architecture.svg). The elements inside a node that take
+part are in brackets. The table agrees with the `Function` field of the [requirements](../requirements/README.md); a change goes in both.
 
 | Function | Phase 1 form | Elements |
 |---|---|---|
@@ -22,25 +22,71 @@ in brackets. The table agrees with the `Function` field of the [requirements](..
 | `Nexus-Logical-101-F02` Protect circuits against overcurrent | Three fuses | 05 |
 | `Nexus-Logical-101-F03` Switch drive & logic branches | SW1, SW2 | 05 |
 | `Nexus-Logical-101-F04` Accept charge from the charger | The supplied charger | 05 |
-| `Nexus-Logical-101-F05` Convert energy to the supplies the loads need | 5 V converter, 6 V UBEC | 05 |
+| `Nexus-Logical-101-F05` Convert energy to the supplies the loads need | 5 V converter, 6 V UBEC | 05; 01 (01-01, 01-02) and 02 (02-01) take the supply in |
 | `Nexus-Logical-102-F01` Carry & locate every component | Three decks | 06 |
 | `Nexus-Logical-102-F02` Protect harness & electronics | Harness board, trays | 06 |
 | `Nexus-Logical-102-F03` Expose controls & service access | Rear fascia | 06 |
-| `Nexus-Logical-201-F01` Produce drive torque, rear wheels | Fitted and supplied, not driven | 07; 01 provides the command interface |
-| `Nexus-Logical-202-F01` Set front wheel angle | Fitted and supplied, not driven | 08; 01 provides the command interface |
-| `Nexus-Logical-401-F01` Exchange signals between nodes | Cyphal heartbeat and update transfer at 500 kbit/s | 04, 01 (App), 02 (Linux apps) |
-| `Nexus-Logical-501-F01` Manage vehicle modes & transitions | Start-up of the Linux side from its own storage | 02 (Yocto) |
+| `Nexus-Logical-201-F01` Produce drive torque, rear wheels | Fitted and supplied, not driven | 07; 01 (01-01, 01-02) provides the command interface |
+| `Nexus-Logical-202-F01` Set front wheel angle | Fitted and supplied, not driven | 08; 01 (01-01, 01-02) provides the command interface |
+| `Nexus-Logical-401-F01` Exchange signals between nodes | Cyphal heartbeat and update transfer at 500 kbit/s | 04; 01 (01-01 to 01-04, 01-06); 02 (02-01, 02-03, 02-04) |
+| `Nexus-Logical-501-F01` Manage vehicle modes & transitions | Start-up of the Linux side from its own storage | 02 (02-01, 02-02, 02-03) |
 | `Nexus-Logical-501-F02` Emergency stop & safe stop | SW1 cuts the drive | 05, 06 |
-| `Nexus-Logical-503-F03` Log & replay bus and sensor data | `candump` on board | 02 (Yocto) |
-| `Nexus-Logical-503-F04` Provide debug access | DE-9 stub, SWD, console, LED states, versions | 01 (FBL, App), 02 (Linux apps), 04 |
-| `Nexus-Logical-504-F01` Deliver updates | Image served over CAN, programmed by the bootloader; released apps in the image | 01 (FBL, App), 02 (CAN-Utils, Yocto) |
-| `Nexus-Logical-504-F02` Verify integrity before install | CRC | 01 (FBL) |
-| `Nexus-Logical-504-F03` Roll back a failed update | The bootloader stays reachable | 01 (FBL) |
+| `Nexus-Logical-503-F03` Log & replay bus and sensor data | `candump` on board | 02 (02-03) |
+| `Nexus-Logical-503-F04` Provide debug access | DE-9 stub, SWD, console, LED states, versions | 04; 01 (01-01, 01-04 to 01-06); 02 (02-01, 02-04 to 02-06) |
+| `Nexus-Logical-504-F01` Deliver updates | Image served over CAN, programmed by the bootloader; released apps in the image | 01 (01-01, 01-04 to 01-06); 02 (02-03, 02-05) |
+| `Nexus-Logical-504-F02` Verify integrity before install | CRC | 01 (01-04, 01-05) |
+| `Nexus-Logical-504-F03` Roll back a failed update | The bootloader stays reachable | 01 (01-04) |
 
 Functions of later phases are allocated when their phase starts.
 
 **Repositories, CI and the bench PC are not elements of the vehicle.** They are the **enabling system** (ISO/IEC/IEEE 15288),
 with requirements of their own in [`../requirements/Nexus-Enabling.md`](../requirements/Nexus-Enabling.md).
+
+## Inside the nodes (level 2)
+
+Each node is a system-of-interest in turn, with its own physical view: the elements it is built from and the connections
+between them. Element IDs are hierarchical, `Nexus-Physical-01-NN` inside `Nexus-Physical-01`. Requirements are allocated to
+these elements, never to the repositories that implement the software ones (configuration table in
+[`../requirements/Nexus-Enabling.md`](../requirements/Nexus-Enabling.md)).
+
+### Nexus-Physical-01, STM32 node
+
+| ID | Element | Kind |
+|---|---|---|
+| [01-01](../requirements/Nexus-Physical-01-01.md) | Discovery board: STM32F4DISCOVERY MB997B, with the ST-LINK V2 and four user LEDs (BOM 1.2) | hardware, bought |
+| [01-02](../requirements/Nexus-Physical-01-02.md) | Carrier boards A and B, with R3, R4, C2 and the headers ([stm32-carrier](../hardware/renders/stm32-carrier.svg)) | hardware, designed here |
+| [01-03](../requirements/Nexus-Physical-01-03.md) | CAN transceiver module SN65HVD230 (BOM 4.1) | hardware, bought |
+| [01-04](../requirements/Nexus-Physical-01-04.md) | Bootloader | software |
+| [01-05](../requirements/Nexus-Physical-01-05.md) | FBL-Updater | software |
+| [01-06](../requirements/Nexus-Physical-01-06.md) | Application | software |
+
+| From | To | What passes |
+|---|---|---|
+| 01-02 carrier | 01-01 Discovery board | 5 V into P2 pins 3 and 4; PD0, PD1, PB10, PB11, PE9 through the headers (HW-19) |
+| 01-02 carrier | 01-03 transceiver | PD0 to the receive output, PD1 to the transmit input (HW-09) |
+| 01-03 transceiver | the bus (Nexus-Physical-04) | CAN_H, CAN_L, with the module's 120 Ω as this end's termination |
+| 01-02 carrier | servo and motor driver headers | 6 V from the UBEC with C2 across it, PWM through R4, I2C (HW-14, HW-19, HW-21) |
+| 01-04, 01-05, 01-06 | 01-01 flash | the bootloader region and the application region of the memory map |
+| 01-01 Discovery board | bench PC | SWD through the ST-LINK, by USB at the fascia |
+
+### Nexus-Physical-02, FRDM node
+
+| ID | Element | Kind |
+|---|---|---|
+| [02-01](../requirements/Nexus-Physical-02-01.md) | FRDM board: FRDM-IMX91S, with its CAN transceiver, JP1 and USB-C ports (BOM 1.1) | hardware, bought |
+| [02-02](../requirements/Nexus-Physical-02-02.md) | SD card (BOM 5.3) | hardware, bought |
+| [02-03](../requirements/Nexus-Physical-02-03.md) | Linux image: BSP, kernel, root file system | software |
+| [02-04](../requirements/Nexus-Physical-02-04.md) | Heartbeat program | software |
+| [02-05](../requirements/Nexus-Physical-02-05.md) | Flashing client | software |
+| [02-06](../requirements/Nexus-Physical-02-06.md) | Test applications, two throwaway programs | software |
+
+| From | To | What passes |
+|---|---|---|
+| power element (Nexus-Physical-05) | 02-01 FRDM board | 5 V at USB-C J1, no power delivery (HW-02) |
+| 02-01 FRDM board | the bus (Nexus-Physical-04) | CAN_H, CAN_L on P12 pins 8 and 10, terminated by JP1 |
+| 02-02 SD card | 02-01 FRDM board | the boot medium, holding 02-03 |
+| 02-03 Linux image | 02-04, 02-05, 02-06 | runs them; SocketCAN to the bus |
+| 02-01 FRDM board | bench PC | the UART console at USB-C J11, by USB at the fascia |
 
 ## How the two views compare
 

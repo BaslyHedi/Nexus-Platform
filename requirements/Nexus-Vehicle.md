@@ -16,7 +16,7 @@ System-of-interest, level 0. Its requirements are the system requirements, writt
 - Need: Deliverable 1.1
 - Function: Nexus-Logical-101-F01, Nexus-Logical-101-F05
 - Derived-from: -
-- Allocated-to: Nexus-Physical-05
+- Allocated-to: Nexus-Physical-05, Nexus-Physical-01, Nexus-Physical-02
 - Phase: 1
 - Verification: Demo The vehicle powers up from the battery with the harness checks passed
 
@@ -98,7 +98,7 @@ System-of-interest, level 0. Its requirements are the system requirements, writt
 - Derived-from: -
 - Allocated-to: Nexus-Physical-07, Nexus-Physical-05, Nexus-Physical-01
 - Phase: 1
-- Verification: Integration Nexus-Physical-05-R002, Nexus-Physical-07-R001, Nexus-Physical-01-R014
+- Verification: Integration Nexus-Physical-05-R002, Nexus-Physical-07-R001, Nexus-Physical-01-R016
 
 ### Nexus-Vehicle-R009
 
@@ -109,7 +109,7 @@ System-of-interest, level 0. Its requirements are the system requirements, writt
 - Derived-from: -
 - Allocated-to: Nexus-Physical-08, Nexus-Physical-05, Nexus-Physical-01
 - Phase: 1
-- Verification: Integration Nexus-Physical-05-R003, Nexus-Physical-05-R004, Nexus-Physical-08-R001, Nexus-Physical-01-R015
+- Verification: Integration Nexus-Physical-05-R003, Nexus-Physical-05-R004, Nexus-Physical-08-R001, Nexus-Physical-01-R017, Nexus-Physical-01-R018
 
 ### Nexus-Vehicle-R010
 
@@ -132,7 +132,7 @@ System-of-interest, level 0. Its requirements are the system requirements, writt
 - Derived-from: -
 - Allocated-to: Nexus-Physical-04, Nexus-Physical-01, Nexus-Physical-02
 - Phase: 1
-- Verification: Integration Nexus-Physical-04-R001, Nexus-Physical-04-R002, Nexus-Physical-04-R003, Nexus-Physical-04-R006, Nexus-Physical-04-R007, Nexus-Physical-04-R008, Nexus-Physical-01-R001, Nexus-Physical-01-R002, Nexus-Physical-01-R003, Nexus-Physical-02-R001, Nexus-Physical-02-R002, Nexus-Physical-02-R003, Nexus-Physical-02-R004
+- Verification: Integration Nexus-Physical-04-R001, Nexus-Physical-04-R002, Nexus-Physical-04-R003, Nexus-Physical-04-R006, Nexus-Physical-04-R007, Nexus-Physical-04-R008, Nexus-Physical-01-R002, Nexus-Physical-01-R003, Nexus-Physical-01-R004, Nexus-Physical-01-R005, Nexus-Physical-02-R002, Nexus-Physical-02-R003, Nexus-Physical-02-R004, Nexus-Physical-02-R005
 
 ### Nexus-Vehicle-R012
 
@@ -143,7 +143,7 @@ System-of-interest, level 0. Its requirements are the system requirements, writt
 - Derived-from: -
 - Allocated-to: Nexus-Physical-04, Nexus-Physical-01
 - Phase: 1
-- Verification: Integration Nexus-Physical-04-R001, Nexus-Physical-04-R006, Nexus-Physical-01-R004, Nexus-Physical-01-R005, Nexus-Physical-01-R006
+- Verification: Integration Nexus-Physical-04-R001, Nexus-Physical-04-R006, Nexus-Physical-01-R006, Nexus-Physical-01-R007, Nexus-Physical-01-R008
 
 ### Nexus-Vehicle-R013
 
@@ -154,7 +154,7 @@ System-of-interest, level 0. Its requirements are the system requirements, writt
 - Derived-from: -
 - Allocated-to: Nexus-Physical-02, Nexus-Physical-04, Nexus-Physical-01
 - Phase: 1
-- Verification: Integration Nexus-Physical-04-R006, Nexus-Physical-01-R004, Nexus-Physical-01-R005, Nexus-Physical-01-R006, Nexus-Physical-02-R005
+- Verification: Integration Nexus-Physical-04-R006, Nexus-Physical-01-R006, Nexus-Physical-01-R007, Nexus-Physical-01-R008, Nexus-Physical-02-R006
 
 ### Nexus-Vehicle-R014
 
@@ -165,7 +165,7 @@ System-of-interest, level 0. Its requirements are the system requirements, writt
 - Derived-from: -
 - Allocated-to: Nexus-Physical-01
 - Phase: 1
-- Verification: Integration Nexus-Physical-01-R007
+- Verification: Integration Nexus-Physical-01-R009
 
 ### Nexus-Vehicle-R015
 
@@ -176,7 +176,7 @@ System-of-interest, level 0. Its requirements are the system requirements, writt
 - Derived-from: -
 - Allocated-to: Nexus-Physical-01
 - Phase: 1
-- Verification: Integration Nexus-Physical-01-R006, Nexus-Physical-01-R008
+- Verification: Integration Nexus-Physical-01-R008, Nexus-Physical-01-R010
 
 ### Nexus-Vehicle-R016
 
@@ -187,7 +187,7 @@ System-of-interest, level 0. Its requirements are the system requirements, writt
 - Derived-from: -
 - Allocated-to: Nexus-Physical-04, Nexus-Physical-01
 - Phase: 1
-- Verification: Integration Nexus-Physical-04-R006, Nexus-Physical-01-R009, Nexus-Physical-01-R010
+- Verification: Integration Nexus-Physical-04-R006, Nexus-Physical-01-R011, Nexus-Physical-01-R012
 
 ### Nexus-Vehicle-R017
 
@@ -198,7 +198,7 @@ System-of-interest, level 0. Its requirements are the system requirements, writt
 - Derived-from: -
 - Allocated-to: Nexus-Physical-01
 - Phase: 1
-- Verification: Integration Nexus-Physical-01-R011
+- Verification: Integration Nexus-Physical-01-R013
 
 ### Nexus-Vehicle-R018
 
@@ -209,7 +209,7 @@ System-of-interest, level 0. Its requirements are the system requirements, writt
 - Derived-from: -
 - Allocated-to: Nexus-Physical-01, Nexus-Physical-02
 - Phase: 1
-- Verification: Integration Nexus-Physical-01-R012, Nexus-Physical-02-R008
+- Verification: Integration Nexus-Physical-01-R014, Nexus-Physical-02-R009
 
 ### Nexus-Vehicle-R019
 
@@ -220,7 +220,7 @@ System-of-interest, level 0. Its requirements are the system requirements, writt
 - Derived-from: -
 - Allocated-to: Nexus-Physical-02
 - Phase: 1
-- Verification: Integration Nexus-Physical-02-R006, Nexus-Physical-02-R007
+- Verification: Integration Nexus-Physical-02-R007, Nexus-Physical-02-R008
 
 ### Nexus-Vehicle-R020
 
@@ -253,7 +253,7 @@ System-of-interest, level 0. Its requirements are the system requirements, writt
 - Derived-from: -
 - Allocated-to: Nexus-Physical-01, Nexus-Physical-02
 - Phase: 1
-- Verification: Integration Nexus-Physical-01-R013, Nexus-Physical-02-R011
+- Verification: Integration Nexus-Physical-01-R015, Nexus-Physical-02-R012
 
 ### Nexus-Vehicle-R023
 
@@ -264,4 +264,4 @@ System-of-interest, level 0. Its requirements are the system requirements, writt
 - Derived-from: -
 - Allocated-to: Nexus-Physical-02
 - Phase: 1
-- Verification: Integration Nexus-Physical-02-R009, Nexus-Physical-02-R010
+- Verification: Integration Nexus-Physical-02-R010, Nexus-Physical-02-R011

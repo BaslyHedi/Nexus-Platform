@@ -1,9 +1,9 @@
 # Requirements
 
 The requirements of NEXUS, written to the method in [`../system/method.md`](../system/method.md) and the rules in
-[rules.md](rules.md), with the terms of [glossary.md](glossary.md): **one file per system-of-interest, system element or
-software item**, named by its ID. Phase 1 is written in full: 118 requirements in 14 files, 37 at level 0, 50 at level 1,
-31 at level 2. Each statement is in an EARS pattern.
+[rules.md](rules.md), with the terms of [glossary.md](glossary.md): **one file per system-of-interest or system element**, named
+by its ID. Phase 1 is written in full: 153 requirements in 21 files, 39 at level 0, 54 at level 1, 60 at level 2. Each
+statement is in an EARS pattern.
 
 **The checker is not brought to this format yet.** [`../tools/check-requirements.py`](../tools/check-requirements.py) still
 checks an earlier format and fails on these files; updating it, and generating the trace and allocation matrices from
@@ -16,13 +16,19 @@ these files, is the next step.
 | 0 | [Nexus-Vehicle](Nexus-Vehicle.md) | The system requirements, black box: they name the vehicle and its actors, never an element |
 | 0 | [Nexus-Enabling](Nexus-Enabling.md) | The **enabling system** (ISO/IEC/IEEE 15288): repositories, CI, release tags, the `kas` build, the bench PC. Not part of the vehicle, so not derived from it |
 | 1 | [Nexus-Physical-01](Nexus-Physical-01.md) STM32 node, [02](Nexus-Physical-02.md) FRDM node, [04](Nexus-Physical-04.md) CAN bus, [05](Nexus-Physical-05.md) power, [06](Nexus-Physical-06.md) chassis, [07](Nexus-Physical-07.md) rear drive, [08](Nexus-Physical-08.md) steering | The system elements of the [physical view](../system/physical-architecture.md) that exist in Phase 1. 03 (Pi 5) and 09 (sensors) start in Phase 4 |
-| 2 | [Nexus-STM32-FBL](Nexus-STM32-FBL.md), [Nexus-STM32-App](Nexus-STM32-App.md) | Software items of the STM32 node. The FBL-Updater is a target of the FBL repository, not an item of its own |
-| 2 | [Nexus-IMX91-Yocto](Nexus-IMX91-Yocto.md), [Nexus-Linux-Apps](Nexus-Linux-Apps.md), [Nexus-CAN-Utils](Nexus-CAN-Utils.md) | Software items of the FRDM node. `Nexus-Linux-Apps` is a class: each application gets its own file when its repository is created |
+| 2 | [01-01](Nexus-Physical-01-01.md) Discovery board, [01-02](Nexus-Physical-01-02.md) carrier boards, [01-03](Nexus-Physical-01-03.md) transceiver module, [01-04](Nexus-Physical-01-04.md) bootloader, [01-05](Nexus-Physical-01-05.md) FBL-Updater, [01-06](Nexus-Physical-01-06.md) application | The elements of the STM32 node, hardware and software |
+| 2 | [02-01](Nexus-Physical-02-01.md) FRDM board, [02-02](Nexus-Physical-02-02.md) SD card, [02-03](Nexus-Physical-02-03.md) Linux image, [02-04](Nexus-Physical-02-04.md) heartbeat program, [02-05](Nexus-Physical-02-05.md) flashing client, [02-06](Nexus-Physical-02-06.md) test applications | The elements of the FRDM node, hardware and software |
 
-**Where the recursion stops.** The hardware elements 04 to 08 are realised directly, so their requirements are leaves. The
-nodes recurse one level, into software items, which are handed over: each repository derives its own software requirements
-from the ones here and cites their IDs. Bought boards (the Discovery, the FRDM) are not written as files; what the node needs
-of them is a hardware leaf on the node.
+**Element IDs are hierarchical**: `Nexus-Physical-01-04` is element 04 of `Nexus-Physical-01`. The local view of each node,
+its elements and their connections, is in [`../system/physical-architecture.md`](../system/physical-architecture.md).
+
+**Where the recursion stops.** The hardware elements 04 to 08 state their requirements at part level, so they are leaves.
+Each node is decomposed into all its elements: a bought part states what the node relies on from it; the carrier boards
+state what their drawing must satisfy; a software element is handed over, and its team derives the software requirements
+from the ones here.
+
+**Requirements are allocated to elements, never to repositories.** Which repository implements which software element is
+the configuration table in [Nexus-Enabling](Nexus-Enabling.md).
 
 **Logical components have no file.** Requirements trace to their functions (`Function`) and are met by physical elements.
 The Phase 1 allocation of functions to elements is in [`../system/physical-architecture.md`](../system/physical-architecture.md).
@@ -33,15 +39,15 @@ It opens with the **definition card** of the method (purpose and boundary, inter
 one block per requirement:
 
 ```markdown
-### Nexus-Physical-01-R007
+### Nexus-Physical-01-R009
 
 **Statement.** If a download is interrupted, then the node shall remain ready for a new download.
 
 - Function: Nexus-Logical-504-F03
 - Derived-from: Nexus-Vehicle-R014
-- Allocated-to: Nexus-STM32-FBL
+- Allocated-to: Nexus-Physical-01-04
 - Phase: 1
-- Verification: Integration Nexus-STM32-FBL-R005
+- Verification: Integration Nexus-Physical-01-04-R006
 ```
 
 | Field | Rule | SysML |
@@ -51,7 +57,7 @@ one block per requirement:
 | **Need** | Level 0 only: the phase-plan item it comes from, a goal, deliverable or test of [phases.md](../system/phases.md) | *trace* |
 | **Function** | The `Nexus-Logical-DNN-Fnn` it concerns, one or more. A derived requirement may bring in a supporting function its parent does not name (the bus serving an update) | *trace* |
 | **Derived-from** | The requirements one level up it comes from; `-` at level 0. Absent in the enabling system | *deriveReqt* |
-| **Allocated-to** | The elements or items one level down that meet it. **Plain**: each holds requirements derived from this one. **`(as-is)`**: the element meets it unchanged and no child is written. `-`: a leaf, met here | *satisfy* |
+| **Allocated-to** | The elements one level down that meet it. **Plain**: each holds requirements derived from this one. **`(as-is)`**: the element meets it unchanged and no child is written. `-`: a leaf, met here | *satisfy* |
 | **Phase** | 1 to 5; never later than a parent's | |
 | **Verification** | On every requirement: `Test`, `Inspection`, `Analysis` or `Demo` and the reference, or `Integration` and the children whose passing verifies it. `T1.1`-style references are the tests of [phases.md](../system/phases.md) | *verify* |
 | **Realised-by** | `HW`, `SW` or `SYS` (a procedure), several allowed. Required where nothing is derived below; absent elsewhere | |

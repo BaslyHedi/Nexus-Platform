@@ -76,7 +76,7 @@ All 42 apply. Where NEXUS sharpens one, the note says how.
 1. **The subject is the vehicle** (R2, R3): "The vehicle shall …".
 2. **Black box** (C2, R31). The statement names only the vehicle, its **actors** (operator, charger, environment, a PC at
    the diagnostic port, and later the remote station) and its **external interfaces** (the power switches, the charge
-   input, the diagnostic CAN port, the debug ports). It never names an element, an internal bus, a board or a software item.
+   input, the diagnostic CAN port, the debug ports). It never names an element, an internal bus, a board or a software element.
 3. **Observable from outside** (C7). It can be verified on the closed vehicle, through its external interfaces.
 4. **External interface properties are vehicle level** (C2). The connector and bit rate of the diagnostic port are what a
    PC must match, so they may be stated here. Internal values may not.
@@ -90,7 +90,7 @@ All 42 apply. Where NEXUS sharpens one, the note says how.
 
 ## 3. Enabling system (level 0, beside the vehicle)
 
-1. **The subject is the enabling item** (R3): "Each software item", "The Linux image build", "The USB-CAN adapter".
+1. **The subject is the enabling item** (R3): "Each repository", "The Linux image build", "The USB-CAN adapter".
 2. **Not derived from the vehicle** (C1): `Need` names the phase-plan item, typically a deliverable.
 3. **No vehicle behaviour** (C2): what the vehicle does belongs in the vehicle file, even when a tool performs the test.
 4. **Realised mostly by `SYS`**: a procedure or convention, verified by inspecting the CI runs, tags and builds.
@@ -110,16 +110,20 @@ All 42 apply. Where NEXUS sharpens one, the note says how.
    derived requirement may bring in a supporting function its parent does not name; the table then lists it.
 8. **Hardware ends here**: a requirement realised in hardware is a leaf with `Realised-by: HW`.
 
-## 5. Software items (level 2)
+## 5. Elements inside a node (level 2)
 
-1. **The subject is the item** (R3): "The bootloader", "The application", "The image".
-2. **Behaviour at the item's boundary** (C2, R31), as the node sees it: on the bus, on the LEDs, in the memory regions, at
-   the console. No internal design (modules, algorithms, libraries) unless a decision has fixed it, such as Cyphal (SW-01).
-3. **Hand-over**: nothing below this level is written here. Each repository derives its own software requirements from
-   these and cites their IDs.
-4. **No repository obligations** (C2): CI, tags and builds belong to the enabling system.
-5. **A build target is described inside its item**: the FBL-Updater is a target of the bootloader repository.
-6. **Verified on the target**: a phase test on the vehicle, or an inspection of the repository.
+1. **The subject is the element** (R3): "The Discovery board", "The carrier", "The bootloader", "The Linux image".
+2. **Elements, never repositories** (C2): a statement names the element, not the repository or the build target that
+   implements it. Which repository implements which software element is the configuration table of the enabling system.
+3. **A bought hardware element** states what the node relies on from the part: a pin left free, a supply it accepts, a
+   feature it has. It is verified by **analysis** against the vendor documentation, or by a test. Its internals are not decomposed.
+4. **A hardware element designed here** (the carrier boards) states what its drawing must satisfy, and is verified by
+   **inspection** against the drawing, or by a measurement.
+5. **A software element** states behaviour at its boundary, as the node sees it: on the bus, on the LEDs, in the memory
+   regions, at the console. No internal design (modules, algorithms, libraries) unless a decision has fixed it, such as Cyphal (SW-01).
+6. **Hand-over**: nothing below a software element is written here. Its team derives the software requirements from these
+   and cites their IDs.
+7. **No repository obligations** (C2): CI, tags and builds belong to the enabling system.
 
 ## Before committing a requirement
 
