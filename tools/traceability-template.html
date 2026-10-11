@@ -1,31 +1,34 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Nexus Requirements Traceability</title>
+<!-- Template for requirements/renders/traceability.html, filled by tools/check-requirements.py (%%SUB%%, %%DATA%%). Edit this file, never the page. -->
 <style>
-:root{--bg:#f6f5f2;--panel:#ffffff;--ink:#1f2937;--muted:#6b7280;--line:#e5e7eb;--soft:#f3f4f6;--shadow:0 1px 2px rgba(0,0,0,.06),0 2px 8px rgba(0,0,0,.05);--mix:white;--mixk:14%;--inkmix:0%;--hl:#f59e0b;color-scheme:light}
-@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#0f1115;--panel:#181b22;--ink:#e5e7eb;--muted:#9ca3af;--line:#2a2f3a;--soft:#222632;--shadow:0 1px 2px rgba(0,0,0,.5);--mix:#181b22;--mixk:30%;--inkmix:45%;--hl:#fbbf24;color-scheme:dark}}
-:root[data-theme=dark]{--bg:#0f1115;--panel:#181b22;--ink:#e5e7eb;--muted:#9ca3af;--line:#2a2f3a;--soft:#222632;--shadow:0 1px 2px rgba(0,0,0,.5);--mix:#181b22;--mixk:30%;--inkmix:45%;--hl:#fbbf24;color-scheme:dark}
+:root{--bg:#f6f5f2;--panel:#ffffff;--ink:#1f2937;--muted:#6b7280;--line:#e5e7eb;--soft:#f3f4f6;--grid:#e4e1da;--shadow:0 1px 2px rgba(0,0,0,.06),0 2px 8px rgba(0,0,0,.05);--mix:white;--mixk:14%;--inkmix:0%;--hl:#f59e0b;color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#0f1115;--panel:#181b22;--ink:#e5e7eb;--muted:#9ca3af;--line:#2a2f3a;--soft:#222632;--grid:#1c2028;--shadow:0 1px 2px rgba(0,0,0,.5);--mix:#181b22;--mixk:30%;--inkmix:45%;--hl:#fbbf24;color-scheme:dark}}
+:root[data-theme=dark]{--bg:#0f1115;--panel:#181b22;--ink:#e5e7eb;--muted:#9ca3af;--line:#2a2f3a;--soft:#222632;--grid:#1c2028;--shadow:0 1px 2px rgba(0,0,0,.5);--mix:#181b22;--mixk:30%;--inkmix:45%;--hl:#fbbf24;color-scheme:dark}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
-header{position:sticky;top:0;z-index:5;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(6px);border-bottom:1px solid var(--line);padding:12px 16px}
-h1{font-size:19px;margin:0}
-.sub{color:var(--muted);font-size:12.5px;margin:2px 0 10px}
+html,body{height:100%}
+body{margin:0;display:flex;flex-direction:column;background:var(--bg);color:var(--ink);font:14px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+header{flex:none;z-index:5;background:var(--bg);border-bottom:1px solid var(--line);padding:10px 16px}
+h1{font-size:18px;margin:0}
+.sub{color:var(--muted);font-size:12px;margin:2px 0 8px}
 .controls{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
-button,input,select{font:inherit;font-size:13px;color:var(--ink);background:var(--panel);border:1px solid var(--line);border-radius:7px;padding:5px 10px}
+button,input,select{font:inherit;font-size:13px;color:var(--ink);background:var(--panel);border:1px solid var(--line);border-radius:7px;padding:4px 10px}
 button{cursor:pointer}button:hover{background:var(--soft)}
-input[type=search]{flex:1 1 220px;min-width:160px}
+input[type=search]{flex:1 1 200px;min-width:150px}
 .sep{width:1px;height:22px;background:var(--line);margin:0 4px}
-.legend{display:flex;flex-wrap:wrap;gap:14px;align-items:center;color:var(--muted);font-size:12px;margin-top:8px}
+.lbl{color:var(--muted);font-size:12px}
+.zoom{min-width:44px;text-align:center;color:var(--muted);font-size:12px}
+.legend{display:flex;flex-wrap:wrap;gap:14px;align-items:center;color:var(--muted);font-size:12px;margin-top:6px}
 .legend .b{pointer-events:none}
-main{position:relative;overflow:auto;padding:16px}
-#stage{position:relative;display:grid;grid-template-columns:repeat(3,minmax(300px,380px));column-gap:150px;min-width:1250px;width:max-content;margin:0 auto}
-svg#links{position:absolute;inset:0;pointer-events:none;overflow:visible;z-index:0}
-.col{position:relative;z-index:1}
-.col h2{font-size:11px;letter-spacing:.08em;color:var(--muted);margin:0 0 6px;display:flex;justify-content:space-between;align-items:center;text-transform:uppercase}
-.col h2 button{font-size:11px;padding:2px 8px}
-.group{font-size:11px;color:var(--muted);margin:14px 0 4px;letter-spacing:.06em;text-transform:uppercase}
-.card{--sys:#6b7280;position:relative;background:var(--panel);border:1px solid var(--line);border-left:5px solid var(--sys);border-radius:10px;box-shadow:var(--shadow);margin:0 0 12px}
-.card>.head{display:flex;gap:8px;align-items:flex-start;padding:8px 10px;background:color-mix(in srgb,var(--sys) var(--mixk),var(--mix));border-radius:9px 9px 0 0;cursor:pointer;user-select:none}
+main{position:relative;flex:1;overflow:hidden;cursor:grab;touch-action:none;background-image:radial-gradient(var(--grid) 1px,transparent 1px);background-size:22px 22px}
+main.panning{cursor:grabbing}
+#stage{position:absolute;left:0;top:0;transform-origin:0 0}
+svg#links{position:absolute;left:0;top:0;overflow:visible;pointer-events:none;z-index:0}
+.colhead{position:absolute;font-size:11px;letter-spacing:.08em;color:var(--muted);text-transform:uppercase;white-space:nowrap;z-index:1}
+.card{--sys:#6b7280;position:absolute;width:380px;z-index:1;background:var(--panel);border:1px solid var(--line);border-left:5px solid var(--sys);border-radius:10px;box-shadow:var(--shadow)}
+.card.dragging{z-index:3;box-shadow:0 8px 24px rgba(0,0,0,.25);opacity:.95}
+.card>.head{display:flex;gap:8px;align-items:flex-start;padding:8px 10px;background:color-mix(in srgb,var(--sys) var(--mixk),var(--mix));border-radius:9px 9px 0 0;cursor:move;user-select:none;touch-action:none}
 .card.closed>.head{border-radius:9px}
 .chev{flex:none;width:16px;transition:transform .15s;color:var(--muted);margin-top:2px}
 .card.closed .chev{transform:rotate(-90deg)}
@@ -41,17 +44,18 @@ svg#links{position:absolute;inset:0;pointer-events:none;overflow:visible;z-index
 .path{fill:none;stroke:color-mix(in srgb,var(--c),white var(--inkmix));stroke-width:1.2;opacity:.38;display:none}
 .path.asis{stroke-dasharray:5 4;opacity:.6}
 .mode-reqs .path{display:inline}
-.focus .path{display:none}.focus .path.on{display:inline;opacity:1;stroke-width:2}
+.focus .path{display:none}.focus .path.on{display:inline;opacity:1;stroke-width:2.2}
 .edge{display:none;transition:opacity .15s}.mode-systems .edge{display:inline}.focus .edge{display:none}
 .edge .ep{fill:none;stroke:color-mix(in srgb,var(--c),white var(--inkmix));opacity:.6;pointer-events:visibleStroke;cursor:help}
 .edge.asis .ep{stroke-dasharray:7 5}
 .edge circle{fill:var(--panel);stroke:color-mix(in srgb,var(--c),white var(--inkmix));stroke-width:1.5;pointer-events:auto;cursor:help}
 .edge text{font:700 10px ui-monospace,Menlo,Consolas,monospace;fill:color-mix(in srgb,var(--c),white var(--inkmix));text-anchor:middle;dominant-baseline:central;pointer-events:none}
 .hovering .edge{opacity:.1}.hovering .edge.hot{opacity:1}.hovering .edge.hot .ep{opacity:.95}
-.filtering .edge{opacity:.15}
-.focus .b{opacity:.25}.focus .b.on{opacity:1}.b.sel{outline:2.5px solid var(--hl);outline-offset:2px}
-.filtering .b:not(.match){opacity:.18}.filtering .path{opacity:.05}
 .card.hot{box-shadow:0 0 0 2px color-mix(in srgb,var(--sys),white var(--inkmix)),var(--shadow)}
+.focus .b{opacity:.25}.focus .b.on{opacity:1}.b.sel{outline:2.5px solid var(--hl);outline-offset:2px}
+.focus .card:not(.inline){opacity:.55}
+.filtering .b:not(.match){opacity:.18}.filtering .path,.filtering .edge{opacity:.12}
+.hint{position:absolute;right:12px;bottom:10px;font-size:11.5px;color:var(--muted);background:color-mix(in srgb,var(--bg) 85%,transparent);padding:4px 8px;border-radius:6px;pointer-events:none}
 aside{position:fixed;top:0;right:0;bottom:0;width:min(440px,100vw);background:var(--panel);border-left:1px solid var(--line);box-shadow:-4px 0 18px rgba(0,0,0,.12);transform:translateX(105%);transition:transform .2s;z-index:10;overflow:auto;padding:18px 18px 40px}
 aside.open{transform:none}
 aside .close{position:absolute;top:12px;right:12px}
@@ -62,132 +66,189 @@ aside table{border-collapse:collapse;font-size:13px;width:100%}
 aside th{text-align:left;color:var(--muted);font-weight:600;padding:4px 10px 4px 0;vertical-align:top;white-space:nowrap}
 aside td{padding:4px 0}
 aside .b{margin:0 4px 4px 0}
-.empty{color:var(--muted);font-size:12px}
-@media (max-width:700px){header{padding:10px}h1{font-size:16px}}
+@media (max-width:700px){header{padding:8px 10px}h1{font-size:16px}.legend,.hint{display:none}}
 </style></head><body>
 <header>
   <h1>Nexus Requirements Traceability</h1>
   <div class="sub">%%SUB%%</div>
   <div class="controls">
+    <button type="button" id="fit" title="Scale the whole tree to the window">Fit</button>
+    <button type="button" id="zout" title="Zoom out" aria-label="Zoom out">−</button><span class="zoom" id="zlabel">100%</span><button type="button" id="zin" title="Zoom in" aria-label="Zoom in">+</button>
+    <span class="sep"></span>
     <button type="button" id="expand">Expand all</button><button type="button" id="collapse">Collapse all</button>
+    <button type="button" id="tidy" title="Restack the cards in each column, closing the gaps">Tidy</button>
+    <button type="button" id="reset" title="Forget moved cards and lay the tree out again">Reset layout</button>
     <span class="sep"></span>
     <input type="search" id="filter" placeholder="Filter by ID or statement" aria-label="Filter requirements">
     <span class="sep"></span>
-    <label for="linkmode" class="empty">Links</label>
+    <label for="linkmode" class="lbl">Links</label>
     <select id="linkmode"><option value="systems">Between systems</option><option value="reqs">Every requirement</option><option value="none">None</option></select>
-    <label for="theme" class="empty">Theme</label>
+    <label for="theme" class="lbl">Theme</label>
     <select id="theme"><option value="auto">Auto</option><option value="light">Light</option><option value="dark">Dark</option></select>
   </div>
   <div class="legend">
     <span><span class="b der" style="--sys:#6b7280">R001</span> derived below</span>
     <span><span class="b" style="--sys:#6b7280">R002</span> leaf, met here</span>
     <span><span class="b asis" style="--sys:#6b7280">R003</span> passed on as-is</span>
-    <span>Between systems: one line per pair of systems, the number is how many requirements it carries, thicker for more · dashed: as-is ·
-    hover a card to light up its links · click a bubble to see only its own lineage, requirement by requirement</span>
+    <span>one line per pair of systems, the badge counts its requirements · hover a card to light its lines · click a bubble for its own lineage</span>
   </div>
 </header>
-<main id="main"><div id="stage"><svg id="links" aria-hidden="true"></svg></div></main>
+<main id="main" class="mode-systems"><div id="stage"><svg id="links" aria-hidden="true"></svg></div>
+  <div class="hint">drag a card by its header · drag the background to pan · wheel to zoom · click a header without moving it to fold</div></main>
 <aside id="panel" aria-live="polite"></aside>
 <script id="data" type="application/json">%%DATA%%</script>
 <script>
 (function(){
 const D=JSON.parse(document.getElementById('data').textContent), R=D.reqs, S=D.systems;
-const stage=document.getElementById('stage'), svg=document.getElementById('links'), main=document.getElementById('main'), panel=document.getElementById('panel');
-const NS='http://www.w3.org/2000/svg';
+const main=document.getElementById('main'), stage=document.getElementById('stage'), svg=document.getElementById('links'), panel=document.getElementById('panel');
+const NS='http://www.w3.org/2000/svg', CARD_W=380, COL_GAP=190, GAP=16, TOP=34;
 const el=(t,c,txt)=>{const e=document.createElement(t);if(c)e.className=c;if(txt!=null)e.textContent=txt;return e};
-// theme
-const themeSel=document.getElementById('theme');
-let theme='auto';try{theme=localStorage.getItem('nexus-trace-theme')||'auto'}catch(e){}
-const applyTheme=t=>{if(t==='auto')document.documentElement.removeAttribute('data-theme');else document.documentElement.setAttribute('data-theme',t);themeSel.value=t;requestAnimationFrame(draw)};
-themeSel.addEventListener('change',()=>{try{localStorage.setItem('nexus-trace-theme',themeSel.value)}catch(e){}applyTheme(themeSel.value)});
-applyTheme(theme);
-// build columns, cards, bubbles
-const cards={}, bubbles={};
-D.columns.forEach((col,ci)=>{
-  const c=el('section','col');const h=el('h2');h.append(el('span','',col.title));
-  const tb=el('button','', 'Fold');tb.type='button';tb.addEventListener('click',()=>{const ids=col.groups.flatMap(g=>g.systems);const anyOpen=ids.some(i=>!cards[i].classList.contains('closed'));ids.forEach(i=>cards[i].classList.toggle('closed',anyOpen));tb.textContent=anyOpen?'Unfold':'Fold';draw()});
-  h.append(tb);c.append(h);
-  col.groups.forEach(g=>{
-    if(g.label)c.append(el('div','group',g.label));
-    g.systems.forEach(sid=>{
-      const s=S[sid];const card=el('div','card');card.id='card-'+sid;card.style.setProperty('--sys',s.colour);
-      const head=el('div','head');head.setAttribute('role','button');head.tabIndex=0;head.setAttribute('aria-expanded','true');
-      head.innerHTML='<svg class="chev" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>';
-      const t=el('div');t.append(el('div','id',sid),el('div','name',s.name),el('div','meta',s.within+' · '+s.reqs.length+' requirements'));head.append(t);
-      const tog=()=>{card.classList.toggle('closed');head.setAttribute('aria-expanded',!card.classList.contains('closed'));draw()};
-      head.addEventListener('click',tog);head.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();tog()}});
-      const bb=el('div','bubbles');
-      s.reqs.forEach(rid=>{const q=R[rid];const b=el('button','b'+(q.der.length?' der':'')+(q.asis.length?' asis':''),rid.slice(-4));b.type='button';
-        b.style.setProperty('--sys',s.colour);b.title=rid+': '+q.text;b.dataset.rid=rid;b.addEventListener('click',e=>{e.stopPropagation();select(rid)});bb.append(b);bubbles[rid]=b});
-      card.append(head,bb);c.append(card);cards[sid]=card;
-    });
-  });
-  stage.append(c);
+const store={get(k,d){try{const v=localStorage.getItem('nexus-trace-'+k);return v==null?d:JSON.parse(v)}catch(e){return d}},set(k,v){try{localStorage.setItem('nexus-trace-'+k,JSON.stringify(v))}catch(e){}}};
+
+// ---------------------------------------------------------------- cards and bubbles
+const cards={}, bubbles={}, pos={}, heads=[];
+let drag=null;
+D.columns.forEach(col=>{
+  const h=el('div','colhead',col.title);stage.append(h);heads.push(h);
+  col.groups.forEach(g=>g.systems.forEach(sid=>{
+    const s=S[sid];const card=el('div','card');card.style.setProperty('--sys',s.colour);
+    const head=el('div','head');head.tabIndex=0;head.setAttribute('aria-expanded','true');head.title='Drag to move · click to fold';
+    head.innerHTML='<svg class="chev" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>';
+    const t=el('div');t.append(el('div','id',sid),el('div','name',s.name),el('div','meta',s.within+' · '+s.reqs.length+' requirements'));head.append(t);
+    const bb=el('div','bubbles');
+    s.reqs.forEach(rid=>{const q=R[rid];const b=el('button','b'+(q.der.length?' der':'')+(q.asis.length?' asis':''),rid.slice(-4));b.type='button';
+      b.style.setProperty('--sys',s.colour);b.title=rid+': '+q.text;b.addEventListener('click',e=>{e.stopPropagation();select(rid)});bb.append(b);bubbles[rid]=b});
+    card.append(head,bb);stage.append(card);cards[sid]=card;
+    head.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();fold(sid)}});
+    head.addEventListener('pointerdown',e=>startDrag(e,sid));
+    head.addEventListener('mouseenter',()=>hover(sid,true));head.addEventListener('mouseleave',()=>hover(sid,false));
+  }));
 });
-// links: requirement level (shown for a selection, or all in "Every requirement") and system level (the default)
+const order=D.columns.map(c=>c.groups.flatMap(g=>g.systems));
+const place=sid=>{cards[sid].style.left=pos[sid].x+'px';cards[sid].style.top=pos[sid].y+'px'};
+const size=sid=>({w:cards[sid].offsetWidth,h:cards[sid].offsetHeight});
+
+// ---------------------------------------------------------------- layout: automatic tree, overlap removal, tidy
+function autoLayout(){order.forEach((col,ci)=>{let y=TOP;col.forEach(sid=>{pos[sid]={x:ci*(CARD_W+COL_GAP),y};y+=size(sid).h+GAP})});
+  Object.keys(pos).forEach(place);placeHeads()}
+function placeHeads(){heads.forEach((h,ci)=>{const xs=order[ci].map(s=>pos[s].x),ys=order[ci].map(s=>pos[s].y);h.style.left=Math.min(...xs)+'px';h.style.top=(Math.min(...ys)-24)+'px'})}
+function overlaps(a,b){const A=size(a),B=size(b);return pos[a].x<pos[b].x+B.w&&pos[b].x<pos[a].x+A.w&&pos[a].y<pos[b].y+B.h+GAP&&pos[b].y<pos[a].y+A.h+GAP}
+function resolve(){const ids=Object.keys(pos).sort((a,b)=>pos[a].y-pos[b].y||pos[a].x-pos[b].x);
+  for(let i=0;i<ids.length;i++)for(let j=0;j<i;j++){const a=ids[j],b=ids[i];if(overlaps(a,b))pos[b].y=pos[a].y+size(a).h+GAP}
+  ids.forEach(place);placeHeads()}
+function tidy(){order.forEach(col=>{const ids=col.slice().sort((a,b)=>pos[a].y-pos[b].y);let y=TOP;ids.forEach(sid=>{pos[sid].y=y;y+=size(sid).h+GAP})});
+  Object.keys(pos).forEach(place);placeHeads();save();draw()}
+const save=()=>{store.set('pos',pos);store.set('closed',Object.keys(cards).filter(s=>cards[s].classList.contains('closed')))};
+
+// ---------------------------------------------------------------- view: pan, zoom, fit
+const view={x:0,y:0,k:1};
+function applyView(){stage.style.transform='translate('+view.x+'px,'+view.y+'px) scale('+view.k+')';document.getElementById('zlabel').textContent=Math.round(view.k*100)+'%'}
+function bbox(){let x0=1e9,y0=1e9,x1=-1e9,y1=-1e9;Object.keys(pos).forEach(s=>{const z=size(s);x0=Math.min(x0,pos[s].x);y0=Math.min(y0,pos[s].y-30);x1=Math.max(x1,pos[s].x+z.w);y1=Math.max(y1,pos[s].y+z.h)});return {x0,y0,x1,y1}}
+function fit(){const b=bbox(),W=main.clientWidth,H=main.clientHeight,pad=28;view.k=Math.max(.15,Math.min(1.4,(W-2*pad)/(b.x1-b.x0),(H-2*pad)/(b.y1-b.y0)));
+  view.x=(W-(b.x1-b.x0)*view.k)/2-b.x0*view.k;view.y=pad-b.y0*view.k;applyView()}
+function zoomAt(k,cx,cy){k=Math.max(.15,Math.min(2.5,k));view.x=cx-(cx-view.x)*k/view.k;view.y=cy-(cy-view.y)*k/view.k;view.k=k;applyView()}
+main.addEventListener('wheel',e=>{e.preventDefault();const r=main.getBoundingClientRect();zoomAt(view.k*Math.exp(-e.deltaY*.0015),e.clientX-r.left,e.clientY-r.top)},{passive:false});
+document.getElementById('zin').addEventListener('click',()=>zoomAt(view.k*1.2,main.clientWidth/2,main.clientHeight/2));
+document.getElementById('zout').addEventListener('click',()=>zoomAt(view.k/1.2,main.clientWidth/2,main.clientHeight/2));
+document.getElementById('fit').addEventListener('click',fit);
+function centreOn(elm){const r=elm.getBoundingClientRect(),m=main.getBoundingClientRect();if(r.left>m.left+40&&r.right<m.right-460&&r.top>m.top+40&&r.bottom<m.bottom-40)return;
+  view.x+=m.left+(m.width-440)/2-(r.left+r.width/2);view.y+=m.top+m.height/2-(r.top+r.height/2);applyView()}
+let pan=null;
+main.addEventListener('pointerdown',e=>{if(e.target.closest('.card,button,select,input,aside'))return;pan={x:e.clientX,y:e.clientY,vx:view.x,vy:view.y,moved:false};main.setPointerCapture(e.pointerId);main.classList.add('panning')});
+main.addEventListener('pointermove',e=>{if(!pan)return;const dx=e.clientX-pan.x,dy=e.clientY-pan.y;if(Math.abs(dx)+Math.abs(dy)>3)pan.moved=true;view.x=pan.vx+dx;view.y=pan.vy+dy;applyView()});
+main.addEventListener('pointerup',()=>{if(pan&&!pan.moved)clear();pan=null;main.classList.remove('panning')});
+
+// ---------------------------------------------------------------- dragging a card; a click without movement folds it
+function startDrag(e,sid){if(e.button!==0)return;e.stopPropagation();const h=e.currentTarget;h.setPointerCapture(e.pointerId);
+  drag={sid,x:e.clientX,y:e.clientY,px:pos[sid].x,py:pos[sid].y,moved:false};
+  h.onpointermove=ev=>{const dx=(ev.clientX-drag.x)/view.k,dy=(ev.clientY-drag.y)/view.k;if(!drag.moved&&Math.abs(dx)+Math.abs(dy)<4/view.k)return;
+    drag.moved=true;cards[sid].classList.add('dragging');pos[sid]={x:drag.px+dx,y:drag.py+dy};place(sid);draw()};
+  h.onpointerup=()=>{h.onpointermove=h.onpointerup=null;cards[sid].classList.remove('dragging');const moved=drag.moved;drag=null;
+    if(moved){resolve();save();draw()}else fold(sid)}}
+function fold(sid,force){const c=cards[sid];const closed=force==null?!c.classList.contains('closed'):force;c.classList.toggle('closed',closed);
+  c.querySelector('.head').setAttribute('aria-expanded',!closed);resolve();save();draw()}
+
+// ---------------------------------------------------------------- links: between systems (default) and between requirements
 const modeSel=document.getElementById('linkmode');
-let mode='systems';try{mode=localStorage.getItem('nexus-trace-links')||'systems'}catch(e){}
-const applyMode=m=>{['systems','reqs','none'].forEach(x=>main.classList.toggle('mode-'+x,x===m));modeSel.value=m;draw()};
-modeSel.addEventListener('change',()=>{try{localStorage.setItem('nexus-trace-links',modeSel.value)}catch(e){}applyMode(modeSel.value)});
+const applyMode=m=>{['systems','reqs','none'].forEach(x=>main.classList.toggle('mode-'+x,x===m));modeSel.value=m};
+modeSel.addEventListener('change',()=>{store.set('links',modeSel.value);applyMode(modeSel.value);draw()});
 const agg={};
 Object.keys(R).sort().forEach(rid=>{const q=R[rid];
   q.kids.forEach(k=>{const t=R[k].soi,key=q.soi+'>'+t;(agg[key]=agg[key]||{from:q.soi,to:t,n:0,asis:false}).n++});
   q.asis.forEach(a=>{const key=q.soi+'>'+a+'>as-is';(agg[key]=agg[key]||{from:q.soi,to:a,n:0,asis:true}).n++})});
-const edges=Object.keys(agg).sort().map(k=>agg[k]);
-const outs={},ins={};
+const edges=Object.keys(agg).sort().map(k=>agg[k]), outs={}, ins={};
 edges.forEach(e=>{const g=document.createElementNS(NS,'g');g.setAttribute('class','edge'+(e.asis?' asis':''));g.style.setProperty('--c',S[e.from].colour);
   const t=document.createElementNS(NS,'title');t.textContent=e.n+' requirement'+(e.n>1?'s':'')+(e.asis?' passed as-is':' derived')+' from '+e.from+' to '+e.to;
   const p=document.createElementNS(NS,'path');p.setAttribute('class','ep');p.style.strokeWidth=(1.4+Math.log2(e.n)*1.4).toFixed(2);
   const c=document.createElementNS(NS,'circle');c.setAttribute('r',e.n>9?11:9);const x=document.createElementNS(NS,'text');x.textContent=e.n;
   g.append(t,p,c,x);svg.append(g);Object.assign(e,{g,p,c,x});(outs[e.from]=outs[e.from]||[]).push(e);(ins[e.to]=ins[e.to]||[]).push(e)});
-function hover(sid,on){main.classList.toggle('hovering',on);cards[sid].classList.toggle('hot',on);edges.forEach(e=>e.g.classList.toggle('hot',on&&(e.from===sid||e.to===sid)))}
-Object.keys(cards).forEach(sid=>{const h=cards[sid].querySelector('.head');h.addEventListener('mouseenter',()=>hover(sid,true));h.addEventListener('mouseleave',()=>hover(sid,false))});
-function drawEdges(){const st=stage.getBoundingClientRect(),B={};
-  Object.keys(cards).forEach(sid=>{const r=cards[sid].getBoundingClientRect();B[sid]={l:r.left-st.left,r:r.right-st.left,t:r.top-st.top,b:r.bottom-st.top}});
-  const spread=(list,sid,key,other)=>{const bx=B[sid],n=list.length;list.slice().sort((a,b)=>B[a[other]].t-B[b[other]].t).forEach((e,i)=>{const pad=Math.min(16,(bx.b-bx.t)/4);e[key]=bx.t+pad+(i+.5)*(bx.b-bx.t-2*pad)/n})};
-  Object.keys(outs).forEach(sid=>spread(outs[sid],sid,'ya','to'));Object.keys(ins).forEach(sid=>spread(ins[sid],sid,'yb','from'));
-  edges.forEach(e=>{const ax=B[e.from].r,bx=B[e.to].l,dx=Math.max(40,(bx-ax)/2);
-    e.p.setAttribute('d','M'+ax+','+e.ya+' C'+(ax+dx)+','+e.ya+' '+(bx-dx)+','+e.yb+' '+bx+','+e.yb);
-    const mx=(ax+3*(ax+dx)+3*(bx-dx)+bx)/8, my=(e.ya+3*e.ya+3*e.yb+e.yb)/8;
-    e.c.setAttribute('cx',mx);e.c.setAttribute('cy',my);e.x.setAttribute('x',mx);e.x.setAttribute('y',my)})}
 const paths=[];
 Object.keys(R).sort().forEach(rid=>{const q=R[rid];
   q.kids.forEach(k=>paths.push({from:rid,to:k,asis:false,c:S[q.soi].colour}));
   q.asis.forEach(a=>paths.push({from:rid,toCard:a,asis:true,c:S[q.soi].colour}))});
 paths.forEach(p=>{const e=document.createElementNS(NS,'path');e.setAttribute('class','path'+(p.asis?' asis':''));e.style.setProperty('--c',p.c);svg.append(e);p.el=e});
-function anchor(rid,side){const sid=R[rid].soi, card=cards[sid];const t=card.classList.contains('closed')?card.querySelector('.head'):bubbles[rid];return box(t,side)}
-function box(t,side){const r=t.getBoundingClientRect(), s=stage.getBoundingClientRect();return {x:(side==='r'?r.right:r.left)-s.left,y:r.top+r.height/2-s.top}}
-function draw(){const s=stage.getBoundingClientRect();svg.setAttribute('width',s.width);svg.setAttribute('height',s.height);svg.setAttribute('viewBox','0 0 '+s.width+' '+s.height);
-  paths.forEach(p=>{const a=anchor(p.from,'r');const b=p.asis?box(cards[p.toCard].querySelector('.head'),'l'):anchor(p.to,'l');const dx=Math.max(40,(b.x-a.x)/2);
-    p.el.setAttribute('d','M'+a.x+','+a.y+' C'+(a.x+dx)+','+a.y+' '+(b.x-dx)+','+b.y+' '+b.x+','+b.y)});
-  drawEdges()}
-new ResizeObserver(draw).observe(stage);window.addEventListener('resize',draw);
-// selection and lineage
+const bend=(ax,bx)=>Math.max(50,Math.abs(bx-ax)/2)*(bx>=ax?1:-1);
+const curve=(ax,ay,bx,by)=>{const dx=bend(ax,bx);return 'M'+ax+','+ay+' C'+(ax+dx)+','+ay+' '+(bx-dx)+','+by+' '+bx+','+by};
+function rectOf(sid){const z=size(sid);return {l:pos[sid].x,r:pos[sid].x+z.w,t:pos[sid].y,b:pos[sid].y+z.h}}
+const headMid=sid=>pos[sid].y+cards[sid].querySelector('.head').offsetHeight/2;
+function anchor(rid,toward){const sid=R[rid].soi,c=cards[sid],B=rectOf(sid),right=toward>=(B.l+B.r)/2;
+  if(c.classList.contains('closed'))return {x:right?B.r:B.l,y:headMid(sid)};
+  const b=bubbles[rid];return {x:right?B.r:B.l,y:B.t+b.offsetTop+b.offsetHeight/2}}  // at the card's edge, level with the bubble (offsetTop is relative to the card)
+function draw(){const b=bbox();svg.setAttribute('width',Math.max(1,b.x1+200));svg.setAttribute('height',Math.max(1,b.y1+200));
+  const B={};Object.keys(cards).forEach(s=>B[s]=rectOf(s));
+  const spread=(list,sid,key,other)=>{const bx=B[sid],n=list.length,pad=Math.min(16,(bx.b-bx.t)/4);
+    list.slice().sort((a,b)=>B[a[other]].t-B[b[other]].t).forEach((e,i)=>{e[key]=bx.t+pad+(i+.5)*(bx.b-bx.t-2*pad)/n})};
+  Object.keys(outs).forEach(s=>spread(outs[s],s,'ya','to'));Object.keys(ins).forEach(s=>spread(ins[s],s,'yb','from'));
+  edges.forEach(e=>{const f=B[e.from],t=B[e.to],right=(t.l+t.r)/2>=(f.l+f.r)/2;const ax=right?f.r:f.l,bx=right?t.l:t.r,dx=bend(ax,bx);
+    e.p.setAttribute('d',curve(ax,e.ya,bx,e.yb));
+    const mx=(ax+3*(ax+dx)+3*(bx-dx)+bx)/8,my=(e.ya+3*e.ya+3*e.yb+e.yb)/8;e.c.setAttribute('cx',mx);e.c.setAttribute('cy',my);e.x.setAttribute('x',mx);e.x.setAttribute('y',my)});
+  paths.forEach(p=>{const tb=p.asis?B[p.toCard]:B[R[p.to].soi],fb=B[R[p.from].soi];
+    const a=anchor(p.from,(tb.l+tb.r)/2);const b=p.asis?{x:(tb.l+tb.r)/2>=(fb.l+fb.r)/2?tb.l:tb.r,y:headMid(p.toCard)}:anchor(p.to,(fb.l+fb.r)/2);
+    p.el.setAttribute('d',curve(a.x,a.y,b.x,b.y))})}
+function hover(sid,on){if(drag)return;main.classList.toggle('hovering',on);cards[sid].classList.toggle('hot',on);edges.forEach(e=>e.g.classList.toggle('hot',on&&(e.from===sid||e.to===sid)))}
+
+// ---------------------------------------------------------------- selection, lineage, details
 function lineage(rid){const set=new Set([rid]);const up=r=>R[r].up.forEach(p=>{if(R[p]&&!set.has(p)){set.add(p);up(p)}});const down=r=>R[r].kids.forEach(k=>{if(!set.has(k)){set.add(k);down(k)}});up(rid);down(rid);return set}
-let sel=null;
-function select(rid){sel=rid;const L=lineage(rid);main.classList.add('focus');
-  Object.entries(bubbles).forEach(([r,b])=>{b.classList.toggle('on',L.has(r));b.classList.toggle('sel',r===rid)});
+function select(rid){const L=lineage(rid),inLine=new Set([...L].map(r=>R[r].soi));R[rid].asis.forEach(a=>inLine.add(a));
+  main.classList.add('focus');Object.entries(bubbles).forEach(([r,b])=>{b.classList.toggle('on',L.has(r));b.classList.toggle('sel',r===rid)});
+  Object.entries(cards).forEach(([s,c])=>c.classList.toggle('inline',inLine.has(s)));
   paths.forEach(p=>p.el.classList.toggle('on',L.has(p.from)&&(p.asis||L.has(p.to))));
-  L.forEach(r=>{const c=cards[R[r].soi];if(c.classList.contains('closed')){c.classList.remove('closed')}});draw();show(rid);
-  bubbles[rid].scrollIntoView({block:'nearest',inline:'nearest'})}
-function clear(){sel=null;main.classList.remove('focus');Object.values(bubbles).forEach(b=>b.classList.remove('on','sel'));paths.forEach(p=>p.el.classList.remove('on'));panel.classList.remove('open')}
+  inLine.forEach(s=>cards[s].classList.remove('closed'));resolve();draw();show(rid);centreOn(bubbles[rid])}
+function clear(){main.classList.remove('focus');Object.values(bubbles).forEach(b=>b.classList.remove('on','sel'));Object.values(cards).forEach(c=>c.classList.remove('inline'));
+  paths.forEach(p=>p.el.classList.remove('on'));panel.classList.remove('open')}
 function chip(rid){const q=R[rid];const b=el('button','b'+(q.der.length?' der':'')+(q.asis.length?' asis':''),rid);b.type='button';b.style.setProperty('--sys',S[q.soi].colour);b.title=q.text;b.addEventListener('click',()=>select(rid));return b}
-function sysChip(sid){const b=el('button','b',sid);b.type='button';b.style.setProperty('--sys',S[sid].colour);b.addEventListener('click',()=>{const c=cards[sid];c.classList.remove('closed');draw();c.scrollIntoView({block:'center',inline:'center'})});return b}
-function show(rid){const q=R[rid], s=S[q.soi];panel.innerHTML='';panel.style.setProperty('--sys',s.colour);
+function sysChip(sid){const b=el('button','b',sid);b.type='button';b.style.setProperty('--sys',S[sid].colour);b.addEventListener('click',()=>{fold(sid,false);centreOn(cards[sid])});return b}
+function show(rid){const q=R[rid],s=S[q.soi];panel.innerHTML='';
   const x=el('button','close','Close');x.type='button';x.addEventListener('click',clear);panel.append(x);
   const id=el('div','rid',rid);id.style.color='color-mix(in srgb,'+s.colour+',white var(--inkmix))';panel.append(id,el('div','sysname',s.name+' · '+s.within),el('div','stmt',q.text));
   const t=el('table');const row=(k,v)=>{if(v==null||(Array.isArray(v)&&!v.length)||v==='')return;const tr=el('tr');tr.append(el('th','',k));const td=el('td');if(Array.isArray(v))v.forEach(n=>td.append(n));else td.textContent=v;tr.append(td);t.append(tr)};
-  row('Need',q.need);row('Function',q.fn.join(', '));row('Derived from',q.up.filter(r=>R[r]).map(chip));
-  row('Allocated to',q.der.map(sysChip));row('As-is to',q.asis.map(sysChip));row('Decomposed to',q.kids.map(chip));
-  row('Phase',q.phase);if(q.ver.startsWith('Integration ')){const ids=q.ver.slice(12).split(',').map(x=>x.trim()).filter(x=>R[x]);row('Verification',[document.createTextNode('Integration of '),...ids.map(chip)])}else row('Verification',q.ver);row('Realised by',q.real);row('Decisions',q.dec);panel.append(t);panel.classList.add('open')}
+  row('Need',q.need);row('Function',q.fn.join(', '));row('Derived from',q.up.filter(r=>R[r]).map(chip));row('Allocated to',q.der.map(sysChip));row('As-is to',q.asis.map(sysChip));
+  row('Decomposed to',q.kids.map(chip));row('Phase',q.phase);
+  if(q.ver.startsWith('Integration ')){const ids=q.ver.slice(12).split(',').map(v=>v.trim()).filter(v=>R[v]);row('Verification',[document.createTextNode('Integration of '),...ids.map(chip)])}else row('Verification',q.ver);
+  row('Realised by',q.real);row('Decisions',q.dec);panel.append(t);panel.classList.add('open')}
 document.addEventListener('keydown',e=>{if(e.key==='Escape')clear()});
-main.addEventListener('click',e=>{if(e.target===main||e.target===stage)clear()});
-// expand, collapse, filter
-document.getElementById('expand').addEventListener('click',()=>{Object.values(cards).forEach(c=>c.classList.remove('closed'));draw()});
-document.getElementById('collapse').addEventListener('click',()=>{Object.values(cards).forEach(c=>c.classList.add('closed'));draw()});
+
+// ---------------------------------------------------------------- toolbar
+document.getElementById('expand').addEventListener('click',()=>{Object.values(cards).forEach(c=>c.classList.remove('closed'));tidy();fit()});
+document.getElementById('collapse').addEventListener('click',()=>{Object.values(cards).forEach(c=>c.classList.add('closed'));tidy();fit()});
+document.getElementById('tidy').addEventListener('click',()=>{tidy();fit()});
+document.getElementById('reset').addEventListener('click',()=>{Object.keys(cards).forEach(s=>{const c=order[order.length-1].includes(s);cards[s].classList.toggle('closed',c);cards[s].querySelector('.head').setAttribute('aria-expanded',!c)});
+  autoLayout();save();draw();fit()});
 document.getElementById('filter').addEventListener('input',e=>{const v=e.target.value.toLowerCase().trim();main.classList.toggle('filtering',!!v);
-  Object.entries(bubbles).forEach(([r,b])=>{const hit=!!v&&(r.toLowerCase().includes(v)||R[r].text.toLowerCase().includes(v));b.classList.toggle('match',hit);if(hit)cards[R[r].soi].classList.remove('closed')});draw()});
-applyMode(mode);if(document.fonts&&document.fonts.ready)document.fonts.ready.then(draw);requestAnimationFrame(draw);
+  Object.entries(bubbles).forEach(([r,b])=>{const hit=!!v&&(r.toLowerCase().includes(v)||R[r].text.toLowerCase().includes(v));b.classList.toggle('match',hit);if(hit)cards[R[r].soi].classList.remove('closed')});resolve();draw()});
+const themeSel=document.getElementById('theme');
+const applyTheme=t=>{if(t==='auto')document.documentElement.removeAttribute('data-theme');else document.documentElement.setAttribute('data-theme',t);themeSel.value=t};
+themeSel.addEventListener('change',()=>{store.set('theme',themeSel.value);applyTheme(themeSel.value)});
+
+// ---------------------------------------------------------------- start
+applyTheme(store.get('theme','auto'));applyMode(store.get('links','systems'));
+// first view: the system and the subsystems open, the components folded to their headers so the whole tree fits
+store.get('closed',order[order.length-1]).forEach(s=>{if(cards[s]){cards[s].classList.add('closed');cards[s].querySelector('.head').setAttribute('aria-expanded','false')}});
+autoLayout();const saved=store.get('pos',null);
+if(saved&&Object.keys(cards).every(s=>saved[s])){Object.keys(cards).forEach(s=>{pos[s]={x:saved[s].x,y:saved[s].y};place(s)});placeHeads();resolve()}
+draw();fit();
+window.addEventListener('resize',draw);
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>{resolve();draw()});
 if(location.hash&&R[location.hash.slice(1)])select(location.hash.slice(1));
 })();
 </script></body></html>

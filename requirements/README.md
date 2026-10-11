@@ -10,11 +10,12 @@ the links between levels, the trace to the drawings and the allocation table, an
 generates two views that must stay in step with the files:
 
 - [TRACE.md](TRACE.md): needs, tests, function allocation and the derivation tree, as tables;
-- [renders/traceability.html](renders/traceability.html): the interactive view, opened in a browser. Each system is a card in
-  its colour from the drawings, in three columns (system, subsystems, components); its requirements are bubbles. By default
-  one line joins each pair of systems, with a badge for how many requirements it carries; hovering a card lights up its
-  lines, and clicking a bubble draws only that requirement's lineage and opens its fields. *Links* switches to every
-  requirement or to none. Cards fold one by one, by column or all at once; a filter, and light, dark or automatic theme.
+- [renders/traceability.html](renders/traceability.html): the interactive view, opened in a browser. A canvas laid out as the
+  tree, system, subsystems, components, and fitted to the window: each system is a card in its colour from the drawings,
+  its requirements are bubbles, and one line joins each pair of systems with a badge for how many requirements it carries.
+  Drag a card by its header to move it (positions are remembered), drag the background to pan, wheel to zoom, *Fit* to see
+  everything again; *Tidy* restacks and *Reset layout* starts over. Hovering a card lights up its lines; clicking a bubble
+  draws only its lineage and opens its fields. *Links* switches to every requirement or to none; light, dark or auto theme.
 
 ```bash
 python3 tools/check-requirements.py            # fails on any problem, and when a generated view is stale
