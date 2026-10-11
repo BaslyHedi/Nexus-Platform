@@ -38,11 +38,20 @@ svg#links{position:absolute;inset:0;pointer-events:none;overflow:visible;z-index
 .b.der{background:color-mix(in srgb,var(--sys) var(--mixk),var(--mix))}
 .b.asis{border-style:dashed}
 .b:hover,.b:focus-visible{outline:2px solid var(--hl);outline-offset:1px}
-.path{fill:none;stroke:color-mix(in srgb,var(--c),white var(--inkmix));stroke-width:1.2;opacity:.38;transition:opacity .15s}
+.path{fill:none;stroke:color-mix(in srgb,var(--c),white var(--inkmix));stroke-width:1.2;opacity:.38;display:none}
 .path.asis{stroke-dasharray:5 4;opacity:.6}
-.focus .path{opacity:.06}.focus .path.on{opacity:1;stroke-width:2}
+.mode-reqs .path{display:inline}
+.focus .path{display:none}.focus .path.on{display:inline;opacity:1;stroke-width:2}
+.edge{display:none;transition:opacity .15s}.mode-systems .edge{display:inline}.focus .edge{display:none}
+.edge .ep{fill:none;stroke:color-mix(in srgb,var(--c),white var(--inkmix));opacity:.6;pointer-events:visibleStroke;cursor:help}
+.edge.asis .ep{stroke-dasharray:7 5}
+.edge circle{fill:var(--panel);stroke:color-mix(in srgb,var(--c),white var(--inkmix));stroke-width:1.5;pointer-events:auto;cursor:help}
+.edge text{font:700 10px ui-monospace,Menlo,Consolas,monospace;fill:color-mix(in srgb,var(--c),white var(--inkmix));text-anchor:middle;dominant-baseline:central;pointer-events:none}
+.hovering .edge{opacity:.1}.hovering .edge.hot{opacity:1}.hovering .edge.hot .ep{opacity:.95}
+.filtering .edge{opacity:.15}
 .focus .b{opacity:.25}.focus .b.on{opacity:1}.b.sel{outline:2.5px solid var(--hl);outline-offset:2px}
 .filtering .b:not(.match){opacity:.18}.filtering .path{opacity:.05}
+.card.hot{box-shadow:0 0 0 2px color-mix(in srgb,var(--sys),white var(--inkmix)),var(--shadow)}
 aside{position:fixed;top:0;right:0;bottom:0;width:min(440px,100vw);background:var(--panel);border-left:1px solid var(--line);box-shadow:-4px 0 18px rgba(0,0,0,.12);transform:translateX(105%);transition:transform .2s;z-index:10;overflow:auto;padding:18px 18px 40px}
 aside.open{transform:none}
 aside .close{position:absolute;top:12px;right:12px}
@@ -64,6 +73,8 @@ aside .b{margin:0 4px 4px 0}
     <span class="sep"></span>
     <input type="search" id="filter" placeholder="Filter by ID or statement" aria-label="Filter requirements">
     <span class="sep"></span>
+    <label for="linkmode" class="empty">Links</label>
+    <select id="linkmode"><option value="systems">Between systems</option><option value="reqs">Every requirement</option><option value="none">None</option></select>
     <label for="theme" class="empty">Theme</label>
     <select id="theme"><option value="auto">Auto</option><option value="light">Light</option><option value="dark">Dark</option></select>
   </div>
@@ -71,7 +82,8 @@ aside .b{margin:0 4px 4px 0}
     <span><span class="b der" style="--sys:#6b7280">R001</span> derived below</span>
     <span><span class="b" style="--sys:#6b7280">R002</span> leaf, met here</span>
     <span><span class="b asis" style="--sys:#6b7280">R003</span> passed on as-is</span>
-    <span>line: parent to child, in the parent's colour · dashed line: as-is allocation · click a bubble for its lineage and details</span>
+    <span>Between systems: one line per pair of systems, the number is how many requirements it carries, thicker for more · dashed: as-is ·
+    hover a card to light up its links · click a bubble to see only its own lineage, requirement by requirement</span>
   </div>
 </header>
 <main id="main"><div id="stage"><svg id="links" aria-hidden="true"></svg></div></main>
@@ -112,7 +124,32 @@ D.columns.forEach((col,ci)=>{
   });
   stage.append(c);
 });
-// links
+// links: requirement level (shown for a selection, or all in "Every requirement") and system level (the default)
+const modeSel=document.getElementById('linkmode');
+let mode='systems';try{mode=localStorage.getItem('nexus-trace-links')||'systems'}catch(e){}
+const applyMode=m=>{['systems','reqs','none'].forEach(x=>main.classList.toggle('mode-'+x,x===m));modeSel.value=m;draw()};
+modeSel.addEventListener('change',()=>{try{localStorage.setItem('nexus-trace-links',modeSel.value)}catch(e){}applyMode(modeSel.value)});
+const agg={};
+Object.keys(R).sort().forEach(rid=>{const q=R[rid];
+  q.kids.forEach(k=>{const t=R[k].soi,key=q.soi+'>'+t;(agg[key]=agg[key]||{from:q.soi,to:t,n:0,asis:false}).n++});
+  q.asis.forEach(a=>{const key=q.soi+'>'+a+'>as-is';(agg[key]=agg[key]||{from:q.soi,to:a,n:0,asis:true}).n++})});
+const edges=Object.keys(agg).sort().map(k=>agg[k]);
+const outs={},ins={};
+edges.forEach(e=>{const g=document.createElementNS(NS,'g');g.setAttribute('class','edge'+(e.asis?' asis':''));g.style.setProperty('--c',S[e.from].colour);
+  const t=document.createElementNS(NS,'title');t.textContent=e.n+' requirement'+(e.n>1?'s':'')+(e.asis?' passed as-is':' derived')+' from '+e.from+' to '+e.to;
+  const p=document.createElementNS(NS,'path');p.setAttribute('class','ep');p.style.strokeWidth=(1.4+Math.log2(e.n)*1.4).toFixed(2);
+  const c=document.createElementNS(NS,'circle');c.setAttribute('r',e.n>9?11:9);const x=document.createElementNS(NS,'text');x.textContent=e.n;
+  g.append(t,p,c,x);svg.append(g);Object.assign(e,{g,p,c,x});(outs[e.from]=outs[e.from]||[]).push(e);(ins[e.to]=ins[e.to]||[]).push(e)});
+function hover(sid,on){main.classList.toggle('hovering',on);cards[sid].classList.toggle('hot',on);edges.forEach(e=>e.g.classList.toggle('hot',on&&(e.from===sid||e.to===sid)))}
+Object.keys(cards).forEach(sid=>{const h=cards[sid].querySelector('.head');h.addEventListener('mouseenter',()=>hover(sid,true));h.addEventListener('mouseleave',()=>hover(sid,false))});
+function drawEdges(){const st=stage.getBoundingClientRect(),B={};
+  Object.keys(cards).forEach(sid=>{const r=cards[sid].getBoundingClientRect();B[sid]={l:r.left-st.left,r:r.right-st.left,t:r.top-st.top,b:r.bottom-st.top}});
+  const spread=(list,sid,key,other)=>{const bx=B[sid],n=list.length;list.slice().sort((a,b)=>B[a[other]].t-B[b[other]].t).forEach((e,i)=>{const pad=Math.min(16,(bx.b-bx.t)/4);e[key]=bx.t+pad+(i+.5)*(bx.b-bx.t-2*pad)/n})};
+  Object.keys(outs).forEach(sid=>spread(outs[sid],sid,'ya','to'));Object.keys(ins).forEach(sid=>spread(ins[sid],sid,'yb','from'));
+  edges.forEach(e=>{const ax=B[e.from].r,bx=B[e.to].l,dx=Math.max(40,(bx-ax)/2);
+    e.p.setAttribute('d','M'+ax+','+e.ya+' C'+(ax+dx)+','+e.ya+' '+(bx-dx)+','+e.yb+' '+bx+','+e.yb);
+    const mx=(ax+3*(ax+dx)+3*(bx-dx)+bx)/8, my=(e.ya+3*e.ya+3*e.yb+e.yb)/8;
+    e.c.setAttribute('cx',mx);e.c.setAttribute('cy',my);e.x.setAttribute('x',mx);e.x.setAttribute('y',my)})}
 const paths=[];
 Object.keys(R).sort().forEach(rid=>{const q=R[rid];
   q.kids.forEach(k=>paths.push({from:rid,to:k,asis:false,c:S[q.soi].colour}));
@@ -122,7 +159,8 @@ function anchor(rid,side){const sid=R[rid].soi, card=cards[sid];const t=card.cla
 function box(t,side){const r=t.getBoundingClientRect(), s=stage.getBoundingClientRect();return {x:(side==='r'?r.right:r.left)-s.left,y:r.top+r.height/2-s.top}}
 function draw(){const s=stage.getBoundingClientRect();svg.setAttribute('width',s.width);svg.setAttribute('height',s.height);svg.setAttribute('viewBox','0 0 '+s.width+' '+s.height);
   paths.forEach(p=>{const a=anchor(p.from,'r');const b=p.asis?box(cards[p.toCard].querySelector('.head'),'l'):anchor(p.to,'l');const dx=Math.max(40,(b.x-a.x)/2);
-    p.el.setAttribute('d','M'+a.x+','+a.y+' C'+(a.x+dx)+','+a.y+' '+(b.x-dx)+','+b.y+' '+b.x+','+b.y)})}
+    p.el.setAttribute('d','M'+a.x+','+a.y+' C'+(a.x+dx)+','+a.y+' '+(b.x-dx)+','+b.y+' '+b.x+','+b.y)});
+  drawEdges()}
 new ResizeObserver(draw).observe(stage);window.addEventListener('resize',draw);
 // selection and lineage
 function lineage(rid){const set=new Set([rid]);const up=r=>R[r].up.forEach(p=>{if(R[p]&&!set.has(p)){set.add(p);up(p)}});const down=r=>R[r].kids.forEach(k=>{if(!set.has(k)){set.add(k);down(k)}});up(rid);down(rid);return set}
@@ -149,7 +187,7 @@ document.getElementById('expand').addEventListener('click',()=>{Object.values(ca
 document.getElementById('collapse').addEventListener('click',()=>{Object.values(cards).forEach(c=>c.classList.add('closed'));draw()});
 document.getElementById('filter').addEventListener('input',e=>{const v=e.target.value.toLowerCase().trim();main.classList.toggle('filtering',!!v);
   Object.entries(bubbles).forEach(([r,b])=>{const hit=!!v&&(r.toLowerCase().includes(v)||R[r].text.toLowerCase().includes(v));b.classList.toggle('match',hit);if(hit)cards[R[r].soi].classList.remove('closed')});draw()});
-if(document.fonts&&document.fonts.ready)document.fonts.ready.then(draw);requestAnimationFrame(draw);
+applyMode(mode);if(document.fonts&&document.fonts.ready)document.fonts.ready.then(draw);requestAnimationFrame(draw);
 if(location.hash&&R[location.hash.slice(1)])select(location.hash.slice(1));
 })();
 </script></body></html>
