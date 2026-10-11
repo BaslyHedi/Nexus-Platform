@@ -2,7 +2,7 @@
 
 What NEXUS is built in, in what order, and **when each phase is finished**. This file owns the phase
 plan; the drawing carries only the phase a sub-system first appears in
-([`renders/Nexus-Platform-System-Layout.svg`](renders/Nexus-Platform-System-Layout.svg)), and the reasoning
+([`renders/Nexus-Platform-Logical-Architecture.svg`](renders/Nexus-Platform-Logical-Architecture.svg)), and the reasoning
 for having phases at all is [SYS-02](../decisions/SYS-System-Decisions.md).
 
 **Pace is set by learning, not by the calendar.** Nothing here has a date. A phase is done when its exit
@@ -240,6 +240,6 @@ in its starting phase.
 ## Changing the plan
 
 Moving a sub-system between phases, or an item between deliverables, is an edit here plus the `PHASES`/card
-entry in [`scripts/Nexus-Platform-System-Layout.py`](scripts/Nexus-Platform-System-Layout.py) and a regenerated
+entry in [`scripts/Nexus-Platform-Logical-Architecture.py`](scripts/Nexus-Platform-Logical-Architecture.py) and a regenerated
 drawing; the decision that shaped the split is [SYS-02](../decisions/SYS-System-Decisions.md). A phase's exit
 criteria change only by an explicit decision, and a change made because the phase is hard is the one to avoid.

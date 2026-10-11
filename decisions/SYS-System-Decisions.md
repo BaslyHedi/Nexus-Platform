@@ -8,6 +8,7 @@ Numbering is `SYS-nn`, unique across the project and never reused. Format, and h
 |---|---|
 | **SYS-01** | Layered over-discharge protection, not a cutoff module |
 | **SYS-02** | Five phases, paced by learning; Phase 1 is foundation, not driving |
+| **SYS-03** | Requirements are derived and allocated through four levels of systems of interest |
 
 ---
 
@@ -57,3 +58,23 @@ localization (301, 302) are Phase 4 with planning (303) in Phase 5. Phase 1's re
 that settle the matrix and the flash protocol, are listed in the phase plan.
 
 ---
+
+## SYS-03 · Requirements are derived and allocated through four levels of systems of interest
+
+**Decision (2026-10-11).** Requirements are written against **systems of interest** at four levels - vehicle,
+logical sub-system, physical node, component - and each requirement belongs to exactly one of them. Allocating
+a requirement to a child produces a derived requirement on it. Method and rules: [`../system/method.md`](../system/method.md).
+The logical layout drawing is renamed `Nexus-Platform-Logical-Architecture` to say which view it is.
+
+**Why.**
+
+- Allocating requirements to the domains HW, SW and SYS gives no root and no tree: a function such as "update
+  the MCU over CAN" is not a hardware or a software requirement, it is both. Domain stays as an attribute of a leaf.
+- Allocating straight to physical elements fails without a logical level, because one sub-system (supervision,
+  update) lands on several nodes. Keeping both gives a logical and a physical architecture from one set of requirements.
+- The CAN bus is its own physical element because its requirements belong to neither node, and T2.3 verifies them.
+- Requirements stop at "allocated to repository X": the repository chooses its solution and derives its own,
+  which keeps this one free of code, as [`../README.md`](../README.md) requires.
+
+**Consequence.** A physical architecture and an allocation matrix are needed next, then the requirements. The
+file format and ID style are still open (see the end of the method file).

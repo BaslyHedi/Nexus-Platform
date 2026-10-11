@@ -10,7 +10,7 @@
 <marker id="mps" markerWidth="8" markerHeight="8" refX="1" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M8,0 L0,4 L8,8 z" fill="#c2410c"/></marker>
 </defs>
 <rect width="1640" height="1115" fill="#fbfaf8"/>
-<text x="30" y="40" font-size="22" font-weight="700" fill="#1a1a1a">Nexus Platform System Layout</text>
+<text x="30" y="40" font-size="22" font-weight="700" fill="#1a1a1a">Nexus Platform Logical Architecture</text>
 <text x="30" y="62" font-size="11.5" fill="#555">Functional decomposition into sub-systems · logical view - says <tspan font-style="italic">what</tspan> the vehicle must do, not which board does it (hardware allocation is a later view)</text>
 <text x="30" y="80" font-size="11.5" fill="#555">ID scheme <tspan font-family="ui-monospace, Menlo, Consolas, monospace" font-weight="700">Nexus-SubSys-DNN</tspan> - D = functional domain (1–5), NN = sub-system within it. Functions inside a sub-system will be numbered <tspan font-family="ui-monospace, Menlo, Consolas, monospace" font-weight="700">Nexus-SubSys-DNN-Fnn</tspan>.</text>
 <text x="1610" y="40" font-size="11" font-weight="700" fill="#b45309" text-anchor="end">DRAFT B · for review</text>

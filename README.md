@@ -22,7 +22,7 @@ the vehicle hardware is largely defined and built, and the software repositories
 2026-10-11 and are still empty. What each phase delivers is in [`system/phases.md`](system/phases.md).
 
 Worth reading first: [`decisions/`](decisions/README.md) (why it is this way), [`system/phases.md`](system/phases.md)
-(what is built when), and [`system/renders/Nexus-Platform-System-Layout.svg`](system/renders/Nexus-Platform-System-Layout.svg)
+(what is built when), and [`system/renders/Nexus-Platform-Logical-Architecture.svg`](system/renders/Nexus-Platform-Logical-Architecture.svg)
 (the decomposition).
 
 ## Repositories

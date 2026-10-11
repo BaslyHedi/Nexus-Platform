@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-"""The system layout drawing: every Nexus-SubSys-DNN sub-system, its functions, its phase and the flows between them (SYS-02).
+"""The logical architecture drawing (L1 of ../method.md): every Nexus-SubSys-DNN sub-system, its functions, its phase and the flows between them (SYS-02).
 
-    python3 Nexus-Platform-System-Layout.py     # -> ../renders/Nexus-Platform-System-Layout.svg
+    python3 Nexus-Platform-Logical-Architecture.py     # -> ../renders/Nexus-Platform-Logical-Architecture.svg
     python3 ../../tools/check-drawings.py       # fails if the SVG is not what this script writes
 
 The sub-systems are one table, SUBSYSTEMS, in drawing order: id, name, phase, the card's box, and its functions in one or two columns
@@ -14,7 +14,7 @@ Everything is in pixels; there is no scale. Edit this script, never the SVG.
 import os, sys
 sys.dont_write_bytecode = True
 
-OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'renders', 'Nexus-Platform-System-Layout.svg')
+OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'renders', 'Nexus-Platform-Logical-Architecture.svg')
 
 W, H = 1640, 1115
 MONO = 'ui-monospace, Menlo, Consolas, monospace'
@@ -110,7 +110,7 @@ def build():
         o.append(f'<marker id="{mid}s" markerWidth="8" markerHeight="8" refX="1" refY="4" orient="auto" markerUnits="userSpaceOnUse">'
                  f'<path d="M8,0 L0,4 L8,8 z" fill="{c}"/></marker>')
     o += ['</defs>', f'<rect width="{W}" height="{H}" fill="#fbfaf8"/>',
-          '<text x="30" y="40" font-size="22" font-weight="700" fill="#1a1a1a">Nexus Platform System Layout</text>',
+          '<text x="30" y="40" font-size="22" font-weight="700" fill="#1a1a1a">Nexus Platform Logical Architecture</text>',
           '<text x="30" y="62" font-size="11.5" fill="#555">Functional decomposition into sub-systems · logical view - says '
           '<tspan font-style="italic">what</tspan> the vehicle must do, not which board does it (hardware allocation is a later view)</text>',
           f'<text x="30" y="80" font-size="11.5" fill="#555">ID scheme <tspan font-family="{MONO}" font-weight="700">Nexus-SubSys-DNN</tspan>'

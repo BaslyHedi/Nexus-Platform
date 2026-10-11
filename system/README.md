@@ -1,6 +1,6 @@
 # System Definition
 
-What NEXUS must **do**, decomposed top-down. This is the logical view - it names functions and
+What NEXUS must **do**, decomposed top-down. This is the logical view (L1 of [method.md](method.md)) - it names functions and
 the sub-systems that own them, not the boards that run them. Hardware allocation comes later
 and lives in [`../hardware/README.md`](../hardware/README.md), with the reasoning in
 [`../decisions/README.md`](../decisions/README.md).
@@ -12,7 +12,8 @@ render, point headless Chrome at it. Same rule as [`../hardware/README.md`](../h
 
 | Drawing | Owns |
 |---|---|
-| [Nexus-Platform-System-Layout](renders/Nexus-Platform-System-Layout.svg) | The sub-system decomposition - every `Nexus-SubSys-DNN` ID, its name, the phase it first exists in and key flows. **Generated** by [`scripts/Nexus-Platform-System-Layout.py`](scripts/Nexus-Platform-System-Layout.py): edit the script, never the SVG, and `python3 tools/check-drawings.py` fails if they drift |
+| [Nexus-Platform-Logical-Architecture](renders/Nexus-Platform-Logical-Architecture.svg) | The sub-system decomposition - every `Nexus-SubSys-DNN` ID, its name, the phase it first exists in and key flows. **Generated** by [`scripts/Nexus-Platform-Logical-Architecture.py`](scripts/Nexus-Platform-Logical-Architecture.py): edit the script, never the SVG, and `python3 tools/check-drawings.py` fails if they drift |
+| [method.md](method.md) | How requirements are written, derived and allocated: systems of interest, the four levels, the rules ([SYS-03](../decisions/SYS-System-Decisions.md)) |
 | [phases.md](phases.md) | The five phases, the goal and exit criteria of each, Phase 1 in full including the repositories ([SYS-02](../decisions/SYS-System-Decisions.md)) |
 
 The layout owns the list of sub-systems. Do not restate it here; link to it.
@@ -28,7 +29,8 @@ IDs are never reused. A retired sub-system keeps its number.
 
 ## Workflow
 
-1. **System layout** - settle the decomposition, and which phase each sub-system starts in. *← current step, Draft B*
-2. **One drawing per sub-system** - `Nexus-SubSys-DNN-<Name>.svg`, showing the
+1. **Logical architecture** - settle the decomposition, and which phase each sub-system starts in. *Draft B*
+2. **Physical architecture** - the nodes, the bus, power distribution and chassis, and the allocation of functions to them.
+3. **One drawing per sub-system** - `Nexus-SubSys-DNN-<Name>.svg`, showing the
    functions it realises and its interfaces to other sub-systems.
-3. **Requirements per function**, traced to the `-Fnn` IDs.
+4. **Requirements**, derived level by level and allocated, per [method.md](method.md), traced to the `-Fnn` IDs. *← current step: the method is written, the requirements are not*
