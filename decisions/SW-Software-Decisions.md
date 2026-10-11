@@ -8,7 +8,7 @@ Format, and how to add one: [README](README.md).
 |---|---|
 | **SW-01** | The flash bootloader speaks OpenCyphal, not UDS |
 | **SW-02** | The FBL's Cyphal stack is written in-house, not taken from libcanard |
-| **SW-03** | The FBL is written in C++20, as a freestanding subset |
+| **SW-03** | The FBL is written in C++17, as a freestanding subset |
 
 The rest of what Phase 1 has to settle is listed in [`../system/phases.md`](../system/phases.md) under
 *Decided in Phase 1*: the CAN matrix and its tooling, the FBL's memory map, the Zephyr board port, the
@@ -19,7 +19,7 @@ repository and CI template, and how the STM32 reports a fault to the i.MX 91. Re
 
 ## SW-01 · The flash bootloader speaks OpenCyphal, not UDS
 
-**Updated by SW-02:** the FBL's Cyphal stack is written in-house; `libcanard` is a design reference and the fallback, not a dependency. Read the libcanard items under *Consequences* and *To confirm* against the in-house stack. The language is C++20 ([SW-03](#sw-03--the-fbl-is-written-in-c20-as-a-freestanding-subset)).
+**Updated by SW-02:** the FBL's Cyphal stack is written in-house; `libcanard` is a design reference and the fallback, not a dependency. Read the libcanard items under *Consequences* and *To confirm* against the in-house stack. The language is C++17 ([SW-03](#sw-03--the-fbl-is-written-in-c17-as-a-freestanding-subset)).
 
 **Decision (2026-10-11).** The STM32 flash bootloader (FBL) receives its application image over
 **Cyphal/CAN** (OpenCyphal v1) on the 500 kbit/s classic-CAN bus. The host sends a software-update command to
@@ -123,12 +123,14 @@ Linux programs, is decided once the FBL works, not now. `libcanard` and Kocherga
 
 ---
 
-## SW-03 · The FBL is written in C++20, as a freestanding subset
+## SW-03 · The FBL is written in C++17, as a freestanding subset
 
 **Decision (2026-10-11).** The bootloader and its Cyphal stack ([SW-02](#sw-02--the-fbls-cyphal-stack-is-written-in-house-not-taken-from-libcanard))
-are written in **C++20**, built with `arm-none-eabi-gcc`, as a freestanding subset: **no exceptions, no RTTI, no
-dynamic allocation**, and no part of the standard library that allocates or pulls in I/O. The FBL-Updater's
-toolchain is not decided here; [`phases.md`](../system/phases.md) leaves it until it is written.
+are written in **C++17**, built with `arm-none-eabi-gcc`, as a freestanding subset: **no exceptions, no RTTI, no
+dynamic allocation**, and no part of the standard library that allocates or pulls in I/O. **C++17 is the starting
+point, not the ceiling:** a later move to C++20 is planned, made once the FBL works, as a deliberate step to learn
+what the newer standard changes on a known code base. That move gets its own entry. The FBL-Updater's toolchain is
+not decided here; [`phases.md`](../system/phases.md) leaves it until it is written.
 
 **Why.**
 
@@ -136,30 +138,42 @@ toolchain is not decided here; [`phases.md`](../system/phases.md) leaves it unti
   ([`../CLAUDE.md`](../CLAUDE.md)). The FBL is a low-risk place to learn it: it is small, and the ST-LINK stays
   the recovery path (T1.2).
 - **Cyphal maps well onto the language.** Node ID, port ID and transfer ID become distinct types, so mixing them
-  up is a compile error. CRC tables are computed at compile time. Buffers have a fixed capacity set by a template
-  rather than a macro, with no heap.
-- **C++20 specifically, for concepts and `std::span`.** A concept states what a CAN or flash driver must provide, and
-  both the STM32 driver and the host-test fake satisfy it, without virtual dispatch. `std::span` carries a buffer
-  and its length as one value. `arm-none-eabi-gcc` supports both.
+  up is a compile error. CRC tables are computed at compile time with `constexpr`. Buffers have a fixed capacity
+  set by a template rather than a macro, with no heap.
 - **The Linux side is C++ first** ([`phases.md`](../system/phases.md), *Repositories*). If the Cyphal stack is
   later shared (SW-02), it is already in the language its other users are written in.
+- **C++17 is the standard MISRA C++:2023 is written for** (its title: *Guidelines for the use of C++17 in critical
+  systems*). Starting on C++17 means the whole code base can sit under one published rule set, with no feature
+  outside it.
+- **The standard version does not change the image.** For the same source, C++17 and C++20 produce the same code;
+  size and speed follow from which features are used. The choice is about how the source is written and which
+  rules cover it, so starting on the more conservative standard costs nothing at run time.
+- **Migrating later is a lesson in itself.** Moving a working code base to C++20 shows what each feature replaces,
+  which is easier to see than starting with it.
 
 **Rejected.**
 
 - **C**: the default for a small bootloader and the language of `libcanard`. Rejected because it keeps the whole
   FBL on known ground.
-- **C++17**: no concepts and no `std::span`, the two features the design leans on.
+- **C++20 from the start**: it brings `constinit` (a global that cannot be initialized at compile time becomes a
+  build error), concepts, `std::span`, designated initializers and `<bit>`. Only `constinit` is more than a
+  convenience, and none lets the FBL do something C++17 cannot. Rejected for now because MISRA C++:2023 would cover
+  only the C++17 part of the code. It is the planned second step, not a dead end.
 - **Rust**: on the learning list too, but a much larger step on a part that has to work for T1.1 and T1.2. Its
   place is on the Linux side, later.
 
 **Consequences.**
 
 - **The startup code has one more job.** It runs the static constructors before `main`, or the FBL has no
-  non-trivial globals. Either way, nothing may still be pending at the jump to the application.
+  non-trivial globals. Without `constinit`, that is held by discipline and checked in the map file: an empty
+  `.init_array` shows nothing runs before `main`. Nothing may still be pending at the jump to the application.
+- **What C++20 would give is written by hand.** A small span type of its own for buffer and length, helpers for
+  byte order and bit operations, and `static_assert` on templates where a concept would state a driver's contract.
+  These are the places the C++20 migration replaces, so they are kept few and easy to find.
 - **Size is watched, not assumed.** A stray `std::function`, `new` or stream pulls library code into the image.
   The map file is checked and CI reports the image size on every build.
-- **The coding rules are written down in `Nexus-STM32-FBL`:** which standard headers are allowed, and the
-  compiler flags that enforce the subset. A published rule set (MISRA C++:2023 is the candidate) is chosen there.
+- **The coding rules are written down in `Nexus-STM32-FBL`:** MISRA C++:2023 as the reference rule set, which
+  standard headers are allowed, and the compiler flags that enforce the subset.
 - **Host tests are C++ too**, built for the PC from the same sources.
 
 **To confirm.**
