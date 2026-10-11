@@ -125,12 +125,12 @@ Three relationships carry the whole structure:
   versioned on its own and the image only assembles it. This is the pattern Phase 3's containers and OTA will
   extend.
 
-**Decided already (2026-10-11):** the FBL is bare-metal, to keep it small and fast; the CAN matrix and the flashing client share one repository, `Nexus-CAN-Utils`; the Yocto build is driven by `kas`. The flash protocol is **OpenCyphal** ([SW-01](../decisions/SW-Software-Decisions.md)). The FBL is written in **C++17** with an **in-house Cyphal stack** (SW-02, SW-03). The others get their `SW-` entry when written down.
+**Decided already (2026-10-11):** the FBL is bare-metal, to keep it small and fast; the CAN matrix and the flashing client share one repository, `Nexus-CAN-Utils`; the Yocto build is driven by `kas`. The flash protocol is **OpenCyphal** ([SW-01](../decisions/SW-Software-Decisions.md)). The FBL is written in **C++17** with an **in-house Cyphal stack** (SW-02, SW-03), with the flash map of the STM32 and its RAM and FPU use fixed (SW-04, SW-05). The others get their `SW-` entry when written down.
 
 **Decided in Phase 1, recorded as `SW-nn` as each one is made:** the flashing IDs and bus timing, the language of the
 flashing client (it must run on Linux, which points at C++ or Rust), and how each consumer takes a release; the
 CI service and repository template; the branching and tag rules shared by all repositories. **The STM32 decisions
-(flash memory map, how a valid app is recognised, entry rules for the FBL, the pin map, the board definition, the
+(how a valid app is recognised, entry rules for the FBL, the pin map, the board definition, the
 LED patterns) are recorded when the STM32 repositories are created and the work starts**, not before. The
 application layer and the matrix beyond flashing are **Phase 2**.
 

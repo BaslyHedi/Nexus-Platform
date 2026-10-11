@@ -9,9 +9,11 @@ Format, and how to add one: [README](README.md).
 | **SW-01** | The flash bootloader speaks OpenCyphal, not UDS |
 | **SW-02** | The FBL's Cyphal stack is written in-house, not taken from libcanard |
 | **SW-03** | The FBL is written in C++17, as a freestanding subset |
+| **SW-04** | The STM32 flash holds the FBL in sectors 0 to 4 and the application in sectors 5 to 11 |
+| **SW-05** | The FBL uses the main SRAM only, leaves the CCM empty and does not use the FPU |
 
 The rest of what Phase 1 has to settle is listed in [`../system/phases.md`](../system/phases.md) under
-*Decided in Phase 1*: the CAN matrix and its tooling, the FBL's memory map, the Zephyr board port, the
+*Decided in Phase 1*: the CAN matrix and its tooling, the Zephyr board port, the
 repository and CI template, and how the STM32 reports a fault to the i.MX 91. Related hardware constraints are
 [HW-10](HW-Electrical-Decisions.md) (I²C pins) and [SYS-01](SYS-System-Decisions.md) (over-discharge protection).
 
@@ -120,7 +122,7 @@ Linux programs, is decided once the FBL works, not now. `libcanard` and Kocherga
   2025-05-16 (2026-10-11): Heartbeat 7509 v1.0, GetInfo 430 v1.0, ExecuteCommand 435 v1.3, file.Read 408 v1.1. The
   update command is `COMMAND_BEGIN_SOFTWARE_UPDATE` = 65533. SW-01's to-confirm on names is settled the same way.
 - That the stack interoperates with `yakut` at 500 kbit/s: a full download and an interrupted one (T1.1).
-- That it fits the FBL's flash region, once the memory map is decided.
+- That it fits the FBL's 128 KB region (SW-04), once it is built.
 
 ---
 
@@ -180,4 +182,96 @@ not decided here; [`phases.md`](../system/phases.md) leaves it until it is writt
 **To confirm.**
 
 - That the image links with no exception-handling or RTTI support and no allocating library code, shown by the map file.
-- That the image fits the FBL's flash region with room for Phase 3's signature checking, measured once the memory map is decided.
+- That the image fits the FBL's 128 KB region (SW-04) with room for Phase 3's signature checking, measured once it is built.
+
+---
+
+## SW-04 · The STM32 flash holds the FBL in sectors 0 to 4 and the application in sectors 5 to 11
+
+**Decision (2026-10-11).** The STM32F407VGT6 has 1 MB of flash in one bank, in 12 sectors. The map is:
+
+| Region | Sectors | Address range | Size |
+|---|---|---|---|
+| FBL | 0 to 4 (4 x 16 KB, 1 x 64 KB) | `0x08000000` to `0x0801FFFF` | 128 KB |
+| Application | 5 to 11 (7 x 128 KB) | `0x08020000` to `0x080FFFFF` | 896 KB |
+
+The FBL's vector table is at `0x08000000`. The application is linked for `0x08020000`. **No configuration (CFG) region
+and no non-volatile memory (NvM) region exist yet.** Both are left open, see *Consequences*.
+
+**Why.**
+
+- **The FBL must be in sector 0.** At reset the core reads its stack pointer and reset vector from `0x00000000`, which with
+  BOOT0 low is an alias of `0x08000000`. The F407 has no boot-address option byte, so nothing but the first sector can
+  start the FBL. A region of constants in sector 0 was proposed and dropped for this reason.
+- **128 KB is room, not a measured need.** The in-house FBL is expected to fit in far less, but it is not written and
+  SW-02 means no library footprint exists to compare against. Phase 3 adds signature checking and anti-rollback to the
+  FBL. The application's start address is the one value every application build depends on, so it is fixed generously
+  now rather than moved later.
+- **The application starts on a 128 KB sector boundary.** Its first erase unit is a full sector, and the region is a
+  whole number of sectors of one size.
+- **The FBL region is 5 sectors.** Sector 4 is 64 KB, so the FBL-Updater erases four small sectors and one 64 KB sector
+  when it rewrites the region.
+
+**Rejected.**
+
+- **FBL of 64 KB (sectors 0 to 3), the first proposal.** Smaller, but it gives Phase 3 no room, and moving the application
+  start later breaks every application build.
+- **FBL in sectors 5 to 7 (384 KB).** Reset cannot reach it, and it is far larger than the FBL needs.
+- **NvM in the 16 KB sectors, with the FBL in sector 0 only (32 KB).** The small sectors minimise the erase time, but a
+  32 KB FBL has no room for Phase 3.
+
+**Consequences.**
+
+- **Flash erase and program stall every flash read on this single-bank part.** Code and data in SRAM keep running, but an
+  application that fetches from flash waits for the erase to finish. For a flash-based NvM that means **erase and
+  garbage collection can only happen in a safe vehicle state** (standby or off), never while a control loop runs.
+  Putting the whole control path in RAM is not a practical way around it.
+- **NvM is deferred to Phase 2**, where the plan places configuration and calibration parameters. The options then are
+  flash with erase only in a safe state, or an external memory on I²C (no erase, no garbage collection, needs a BOM
+  item and a hardware decision). If NvM is on-chip, it is carved from the top of the application region, so only the
+  application's end moves and never its start.
+- **The FBL-Updater rewrites sectors 0 to 4 and the rewrite is not power-fail safe.** A power loss in the middle leaves no
+  valid vector table, and the ST-LINK is the recovery path, as T1.2 already says.
+- **The first FBL goes on with the ST-LINK, by sector erase.** A full-chip erase would also wipe any later NvM.
+- **The interface headers and `memory_map.ld` in `Nexus-STM32-FBL` carry these addresses**, and both the FBL and the
+  application build take them from there.
+
+**To confirm.**
+
+- The sector layout and addresses, against RM0090. They were recalled from memory when this entry was written.
+- The erase and program times of each sector size, from the F407 datasheet, since the safe-state rule rests on them.
+- That the FBL fits the region with room for Phase 3, measured once it is built.
+
+---
+
+## SW-05 · The FBL uses the main SRAM only, leaves the CCM empty and does not use the FPU
+
+**Decision (2026-10-11).** The FBL places its stack, variables and buffers in the main SRAM at `0x20000000`. **The
+64 KB core-coupled memory (CCM) at `0x10000000` is left empty.** The FBL is built without floating point
+(`-mfloat-abi=soft`) and never enables the FPU.
+
+**Why.**
+
+- **Nothing in the FBL needs the CCM.** It reaches the CPU through the data bus only, so no DMA contention touches it,
+  which makes accesses deterministic. The FBL has no timing that depends on that. The CCM stays free for data that
+  does, when there is some.
+- **The hand-off from the application is simpler in the main SRAM.** The CCM cannot hold code or DMA buffers and sits in
+  a separate region, so a block that both images agree on lives in the main SRAM.
+- **The FBL has no floating-point work.** The FPU is off after reset and the FBL leaves it so. The application
+  enables it, which Zephyr does itself. The two images are never linked together, so their ABIs need not match.
+
+**Rejected.**
+
+- **Stack in the CCM from the start**: gains determinism the FBL does not need, and adds a second region to the linker
+  script and the startup code.
+- **Hard-float in the FBL**: no benefit, and a lazy-stacking cost on interrupt entry for no gain.
+
+**Consequences.**
+
+- `fbl.ld` describes one RAM region. The CCM is not in it.
+- The location of the hand-off block in the main SRAM is a separate entry, with the entry rules.
+
+**To confirm.**
+
+- That the main SRAM contents survive the software reset by which the application hands over to the FBL. This is the
+  condition for the hand-off record, and it is checked against RM0090 and then on the board.
