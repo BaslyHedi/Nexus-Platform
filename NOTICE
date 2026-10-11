@@ -1,0 +1,22 @@
+NEXUS Platform
+Copyright 2026 Hedi Basly
+https://github.com/BaslyHedi/Nexus-Platform
+
+This product includes work by Hedi Basly. If you reuse it, keep this notice
+and the copyright notices in the files, and say where it came from.
+
+Licensing of this repository, by kind of file:
+
+  Apache License 2.0 (LICENSE)
+    Code and tooling: scripts/ and tools/ folders, *.py, and the OpenSCAD
+    sources (*.scad).
+
+  Creative Commons Attribution 4.0 International (LICENSE-docs)
+    Everything else the author wrote: Markdown documents, decision records,
+    the BOM, the drawings (*.svg), the print files (*.stl) and the PDF
+    template.
+
+Facts about third-party parts (dimensions, pinouts, ratings, titles of vendor
+documents) are recorded here as measurements and references. No vendor
+document, datasheet, schematic or CAD file is part of this repository, and
+vendor and product names belong to their owners.

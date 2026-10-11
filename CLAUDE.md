@@ -100,32 +100,11 @@ and mechanical rationale, and the list of what is still open, lives in
 [`decisions/README.md`](decisions/README.md).
 Those two files own them; do not restate them here.
 
-## The video series
+## Evidence
 
-NEXUS is the subject of a long-form video series on **The Embedded Stack**. The
-engine that makes those videos lives in `~/work/EmbeddedStack-VideoGen`, and
-**that repo owns everything about the videos** - the series plan, the playlist,
-the per-video briefs, what is scheduled and what is blocked:
-
-- `~/work/EmbeddedStack-VideoGen/notes/series/nexus-platform.md`
-  - the four videos, the playlist title, and what each one is waiting for.
-
-Nothing about the videos is recorded in this project, and nothing about the
-platform is restated over there. The direction the facts travel is **one way**:
-the files here are the source, and a brief quotes them with a link back at the
-moment it is written.
-
-Two consequences worth knowing while working here:
-
-- **A design document is not `--reference` material.** The video engine's
-  grounding flags mean "output a tool printed" and "source a human wrote in a
-  public repo". `BOM.md` and the `Design-Decisions/` files are neither, so
-  their facts reach a script through the brief. `fascia.scad` is the one file
-  here that genuinely fits `--source`.
-- **A real capture is worth making deliberately.** A `candump` off the finished
-  CAN bus, a boot log from the i.MX 91, `openscad` rendering the clash check
-  empty - each of those turns a video from "narrated" to "grounded". When one
-  of those moments arrives, capture it even if no video needs it yet.
+When a real capture becomes possible - a `candump` off the CAN bus, a boot log from the i.MX 91, `openscad`
+rendering the clash check empty, a CI run - keep it, even if no test asks for it yet. The Phase 1 tests in
+[`system/phases.md`](system/phases.md) name the evidence each one needs.
 
 ## Repository conventions
 

@@ -645,7 +645,7 @@ def run_table():
     w(text(PX, 600, 512, 'Measured on the built kit: 50 mm below, 40 mm above. The kit ships two standoff lengths; the', font_size=9, fill='#475569'))
     w(text(PX, 600, 525, 'single-plate CAD only ever had the 50 and our 3-deck model repeated it for both gaps. The fascia', font_size=9, fill='#475569'))
     w(text(PX, 600, 538, 'panels are therefore 52 and 42 mm tall and are no longer one blank (MEC-09).', font_size=9, fill='#475569'))
-    w(text(PX, 600, 549, 'Plates 2 and 3 - settled and ordered 2026-10-06 (Craftcloud #516727254320, BOM 3.28): carrier tray MEC-17, compute tray MEC-18, rear pad MEC-19.', font_size=8.2, font_weight=700, fill='#0f766e'))
+    w(text(PX, 600, 549, 'Plates 2 and 3 - settled and ordered 2026-10-06 (Craftcloud, BOM 3.28): carrier tray MEC-17, compute tray MEC-18, rear pad MEC-19.', font_size=8.2, font_weight=700, fill='#0f766e'))
     w(text(PX, 600, 561, "Plate 1 wiring - every run, on plate 2's harness board, updated 2026-10-06 (MEC-16, HW-20)", font_size=9.5, font_weight=700, fill='#1e293b'))
     w(gopen(font_size=7.6, font_weight=700, fill='#64748b') + text(PX, 600, 572, '#') + text(PX, 614, 572, 'Run') + text(PX, 772, 572, 'Wire') + text(PX, 862, 572, 'Cut, cm') + text(PX, 906, 572, 'Ends and clips') + GCLOSE)
     w(line(PX, 600, 576, 1280, 576, stroke='#e2e8f0'))

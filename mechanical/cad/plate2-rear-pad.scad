@@ -2,7 +2,7 @@
 //
 //   openscad -D 'PART="tray"' -o plate2-rear-pad.stl plate2-rear-pad.scad
 //
-// STATUS 2026-10-06: ORDERED with the carrier and compute trays (Craftcloud #516727254320, BOM 3.28), not printed or dry-fitted yet.
+// STATUS 2026-10-06: ORDERED with the carrier and compute trays (Craftcloud, BOM 3.28), not printed or dry-fitted yet.
 //
 // FRAME. Plate 2's own: x from the front to the rear, y from the vehicle's RIGHT edge to its LEFT, mm (the layout frame of MEC-15 /
 // MEC-17 / hardware/scripts/chassis-layout.py). Plates 1, 2 and 3 are identical, so plate3-data.scad is plate 2's data too. With z up the
