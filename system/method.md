@@ -3,27 +3,32 @@
 How NEXUS is defined, from what it must do down to the repositories that build it. This file owns the method; the
 reasoning for choosing it is [SYS-03](../decisions/SYS-System-Decisions.md).
 
-**The method is not invented here.** It follows the conventional concepts of systems engineering and uses their terms.
-Clause numbers are not cited; the summary below is what each source contributes.
+**The method is not invented here.** It uses the concepts and terms of the references below. **NEXUS claims conformance
+with none of them**: it is not assessed or certified, and it applies a small part of each. The table says, for each one,
+what is taken from it and where the method goes further on its own account, so a reader can tell the two apart.
 
-| Source | What NEXUS takes from it |
-|---|---|
-| **ISO/IEC/IEEE 15288** (system life cycle processes) | The system of interest, system elements, and **recursion**: each system element can become a system of interest of its own. The technical processes, in order: stakeholder needs, system requirements, architecture definition, then integration, verification, validation |
-| **ISO/IEC/IEEE 42010** (architecture description) | An architecture is described in several **views**. The logical view and the physical view are two views of the **same** architecture, related by **correspondences** |
-| **INCOSE SE Handbook**, **NASA SE Handbook** | The logical (functional) architecture is technology-independent and the physical architecture realises it; functions are **allocated** to physical elements. A requirement passed to an element unchanged is **allocated**, one created by the design at that level is **derived** |
-| **OMG SysML** | The names of the relations: *derive*, *allocate*, *satisfy*, *verify* |
-| **Automotive SPICE** (SYS.1 to SYS.5, SWE), **ISO 26262-4** | System requirements are allocated to system elements (hardware, software, mechanics) during system architectural design; each software element then starts its own cycle |
+| Reference | Taken from it | NEXUS's own application |
+|---|---|---|
+| **ISO/IEC/IEEE 15288:2023**, *Systems and software engineering: System life cycle processes* | The terms **system-of-interest** and **system element**, and their recursive use: an element can be treated as a system-of-interest in turn. The technical processes used here: stakeholder needs and requirements definition, system requirements definition, system architecture definition, integration, verification, validation | Where the recursion stops (a bought part, a software item handed over to its repository) |
+| **ISO/IEC/IEEE 42010:2022**, *Software, systems and enterprise: Architecture description* | An architecture description is made of **views**, each governed by a **viewpoint**, with **correspondences** between elements of different views. The standard prescribes no method, notation or particular viewpoints | The two viewpoints, **logical** and **physical**, and the use of allocation as the correspondence between them |
+| **SEBoK** (Systems Engineering Body of Knowledge, INCOSE, IEEE Computer Society and SERC), articles *System Requirements Definition*, *Logical Architecture*, *System Architecture Design Definition* | The logical architecture is "as much as possible, independent of implementation decisions". Physical items "provide a design implementation for the corresponding logical element". Allocation "is the process by which the requirements at one level of the physical architecture are assigned" | The drawing conventions and IDs of the two views |
+| **NASA Systems Engineering Handbook**, NASA/SP-2016-6105 Rev 2 | Requirements flow down to lower-level elements, which then hold **allocated requirements** (assigned from the parent) and **derived requirements**: "requirements arising from constraints, ... factors introduced by the selected architecture, and the design" (Figure 4.2-3, glossary) | The label **as-is** for an allocated requirement that the element meets unchanged, with no child text |
+| **OMG SysML** (v1.x requirement and allocation relations) | The relations: *deriveReqt* between requirements, *satisfy* from an element to a requirement it meets, *verify* from a test case to a requirement, *allocate* from a function to the structure that performs it, *trace* as the generic link | Markdown fields in place of a model (see the relations below) |
+| **Automotive SPICE**, PAM 4.0 (VDA QMC) | The shape of the V: SYS.1 Requirements Elicitation, SYS.2 System Requirements Analysis, SYS.3 System Architectural Design, SYS.4 System Integration and Integration Verification, SYS.5 System Verification, and the hand-over from system to software processes (SWE.1 onward) | Used as orientation only; no assessment, no work products as such |
+
+Functional safety (ISO 26262), SOTIF (ISO 21448) and cybersecurity (ISO/SAE 21434) are **not** part of this method. Where a
+later phase needs hazard analysis or a safety case, it is added as its own decision.
 
 ## Terms
 
-| Standard term | In NEXUS |
+| Term, and where it comes from | In NEXUS |
 |---|---|
-| System of interest | The element being defined at the moment: the vehicle first, then each element in turn |
-| Stakeholder needs | The goals and tests of each phase in [phases.md](phases.md) |
-| System requirements | The vehicle's requirements, `Nexus-Vehicle` |
-| Logical view: logical components and functions | The [logical architecture](renders/Nexus-Platform-Logical-Architecture.svg): components `Nexus-SubSys-DNN`, functions `Nexus-SubSys-DNN-Fnn`. They are called sub-systems there for history; in this method they are **logical components**, not part of the hierarchy |
-| Physical view: system elements | The [physical architecture](renders/Nexus-Platform-Physical-Architecture.svg): elements `Nexus-Phys-NN` |
-| Correspondence, allocation | Which physical element realises which logical function ([physical-architecture.md](physical-architecture.md)) |
+| System-of-interest (15288) | The element being defined at the moment: the vehicle first, then each element in turn |
+| Stakeholder needs (15288) | The goals and tests of each phase in [phases.md](phases.md) |
+| System requirements (15288) | The vehicle's requirements, `Nexus-Vehicle` |
+| Logical view (42010 view, SEBoK logical architecture): logical components and functions | The [logical architecture](renders/Nexus-Platform-Logical-Architecture.svg): components `Nexus-SubSys-DNN`, functions `Nexus-SubSys-DNN-Fnn`. They are called sub-systems there for history; in this method they are **logical components**, not part of the hierarchy |
+| Physical view (42010 view), system elements (15288) | The [physical architecture](renders/Nexus-Platform-Physical-Architecture.svg): elements `Nexus-Phys-NN` |
+| Correspondence (42010), allocation (SysML *allocate*) | Which physical element performs which logical function ([physical-architecture.md](physical-architecture.md)) |
 
 ## The system of interest and recursion
 
@@ -62,13 +67,16 @@ target inside it (the FBL-Updater in the FBL repository) is not an element of it
 
 A requirement belongs to **one** system of interest or element and is written in that element's file. Its relations:
 
-| Relation | Meaning |
-|---|---|
-| **Derived from** | The requirement one level up that it comes from. Reads the other way as *decomposed to* |
-| **Allocated to** | The element below that must meet it. **As-is**: the element meets the requirement unchanged and no new text is written. **Derived**: the element gets new requirements derived from it |
-| **Function** | The function of the logical view that the requirement concerns. Requirements are not written on logical components; they trace to functions and are allocated to physical elements |
-| **Verified by** | The test, inspection, analysis or demonstration that shows it is met, or the **integration** of the requirements derived from it |
-| **Decisions** | The `HW-`, `MEC-`, `SYS-` or `SW-` entries that shaped it. Requirements say what, decisions say why |
+| Field | Meaning | SysML relation |
+|---|---|---|
+| **Derived from** | The requirement one level up that it comes from. Reads the other way as *decomposed to* | *deriveReqt* |
+| **Allocated to** | The element that must meet it. **As-is** (NEXUS label): the element meets it unchanged and no new text is written. Otherwise the element gets **derived** requirements, each pointing back with *Derived from* | *satisfy*, from the element to the requirement |
+| **Function** | The function of the logical view that the requirement concerns. Requirements are not written on logical components; they trace to functions and are met by physical elements | *trace* |
+| **Verified by** | The test, inspection, analysis or demonstration that shows it is met, or the **integration** of the requirements derived from it | *verify* |
+| **Decisions** | The `HW-`, `MEC-`, `SYS-` or `SW-` entries that shaped it. Requirements say what, decisions say why | none (NEXUS) |
+
+The allocation of a **function** to a physical element is SysML *allocate*. It is kept separately from the requirements
+([physical-architecture.md](physical-architecture.md)).
 
 HW, SW and SYS are not elements and not targets of allocation: they describe how a requirement on a leaf is realised.
 

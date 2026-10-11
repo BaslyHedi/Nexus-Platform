@@ -61,8 +61,10 @@ that settle the matrix and the flash protocol, are listed in the phase plan.
 
 ## SYS-03 · Conventional systems engineering: one physical hierarchy, logical and physical views at each level
 
-**Decision (2026-10-11).** NEXUS is defined with the conventional concepts of systems engineering, after ISO/IEC/IEEE 15288,
-ISO/IEC/IEEE 42010, the INCOSE and NASA handbooks and SysML, and uses their terms. The method is
+**Decision (2026-10-11).** NEXUS is defined with the conventional concepts of systems engineering and uses their terms:
+ISO/IEC/IEEE 15288:2023, ISO/IEC/IEEE 42010:2022, SEBoK, the NASA Systems Engineering Handbook (SP-2016-6105 Rev 2), the
+SysML relations and the Automotive SPICE 4.0 V as orientation. It claims conformance with none of them; the method file says
+what is taken from each and what is NEXUS's own. The method is
 [`../system/method.md`](../system/method.md).
 
 - The hierarchy is the **physical breakdown**. The vehicle is the first system of interest, and each system element becomes
