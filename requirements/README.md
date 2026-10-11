@@ -15,7 +15,8 @@ generates two views that must stay in step with the files:
   its requirements are bubbles, and one line joins each pair of systems with a badge for how many requirements it carries.
   Drag a card by its header to move it (positions are remembered), drag the background to pan, wheel to zoom, *Fit* to see
   everything again; *Tidy* restacks and *Reset layout* starts over. Hovering a card lights up its lines; clicking a bubble
-  draws only its lineage and opens its fields. *Links* switches to every requirement or to none; light, dark or auto theme.
+  draws only its lineage and opens its fields. *Phase* shows one phase, or with *and earlier* everything up to it; the line
+  badges count only what is shown. *Links* switches to every requirement or to none; light, dark or auto theme.
 
 ```bash
 python3 tools/check-requirements.py            # fails on any problem, and when a generated view is stale
