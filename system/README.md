@@ -38,4 +38,4 @@ IDs are never reused. A retired component or element keeps its number.
 3. **Allocation** - each function of the logical architecture to the physical element or elements that realise it. *Phase 1 done ([physical-architecture.md](physical-architecture.md))*
 4. **One drawing per logical component** - `Nexus-Logical-DNN-<Name>.svg`, showing the
    functions it realises and its interfaces to other components.
-5. **Requirements**, derived level by level and allocated, per [method.md](method.md), traced to the `-Fnn` IDs. *Phase 1 written ([requirements/](../requirements/README.md)); the checker is next*
+5. **Requirements**, derived level by level and allocated, per [method.md](method.md), traced to the `-Fnn` IDs. *Phase 1 written ([requirements/](../requirements/README.md)), checked and traced by `tools/check-requirements.py`*

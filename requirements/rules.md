@@ -125,6 +125,9 @@ All 42 apply. Where NEXUS sharpens one, the note says how.
    and cites their IDs.
 7. **No repository obligations** (C2): CI, tags and builds belong to the enabling system.
 
+**Checked by the tool.** `tools/check-requirements.py` enforces the EARS clause forms, one "shall" per statement, and R7, R8,
+R9, R10, R16, R17, R21, R24 and R32. The other rules need a reader.
+
 ## Before committing a requirement
 
 - Which EARS pattern is it, and is its subject the entity of its file (R1, R3)?

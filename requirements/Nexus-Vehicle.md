@@ -93,7 +93,7 @@ System-of-interest, level 0. Its requirements are the system requirements, writt
 
 **Statement.** The vehicle shall carry a rear-wheel drive, fitted and supplied with power.
 
-- Need: Phase 1: 201 fitted and powered, not driven
+- Need: Phase 1: 201 fitted and powered but not driven
 - Function: Nexus-Logical-201-F01
 - Derived-from: -
 - Allocated-to: Nexus-Physical-07, Nexus-Physical-05, Nexus-Physical-01
@@ -104,7 +104,7 @@ System-of-interest, level 0. Its requirements are the system requirements, writt
 
 **Statement.** The vehicle shall carry an Ackermann front steering, fitted and supplied with power.
 
-- Need: Phase 1: 202 fitted and powered, not driven
+- Need: Phase 1: 202 fitted and powered but not driven
 - Function: Nexus-Logical-202-F01
 - Derived-from: -
 - Allocated-to: Nexus-Physical-08, Nexus-Physical-05, Nexus-Physical-01
@@ -235,7 +235,7 @@ System-of-interest, level 0. Its requirements are the system requirements, writt
 
 ### Nexus-Vehicle-R021
 
-**Statement.** The vehicle shall keep the CAN communication free of errors whether a PC is connected to the diagnostic port or not.
+**Statement.** The vehicle shall keep the CAN communication free of errors with or without a PC on the diagnostic port.
 
 - Need: T2.3
 - Function: Nexus-Logical-401-F01

@@ -2,12 +2,21 @@
 
 The requirements of NEXUS, written to the method in [`../system/method.md`](../system/method.md) and the rules in
 [rules.md](rules.md), with the terms of [glossary.md](glossary.md): **one file per system-of-interest or system element**, named
-by its ID. Phase 1 is written in full: 153 requirements in 21 files, 39 at level 0, 54 at level 1, 60 at level 2. Each
+by its ID. Phase 1 is written in full: 154 requirements in 21 files, 39 at level 0, 54 at level 1, 61 at level 2. Each
 statement is in an EARS pattern.
 
-**The checker is not brought to this format yet.** [`../tools/check-requirements.py`](../tools/check-requirements.py) still
-checks an earlier format and fails on these files; updating it, and generating the trace and allocation matrices from
-these files, is the next step.
+**Checked and traced by one tool**, [`../tools/check-requirements.py`](../tools/check-requirements.py). It checks the format,
+the links between levels, the trace to the drawings and the allocation table, and the mechanical writing rules, and it
+generates two views that must stay in step with the files:
+
+- [TRACE.md](TRACE.md): needs, tests, function allocation and the derivation tree, as tables;
+- [renders/traceability.svg](renders/traceability.svg): the graphical view, with each system in its colour, its requirements
+  inside, and a link for each derivation and each as-is allocation. Open it in a browser and hover a row for the full statement.
+
+```bash
+python3 tools/check-requirements.py            # fails on any problem, and when a generated view is stale
+python3 tools/check-requirements.py --write    # regenerates TRACE.md and renders/traceability.svg
+```
 
 ## The files
 
