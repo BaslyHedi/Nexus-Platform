@@ -57,7 +57,7 @@ Phase 1 is finished when, on the finished vehicle, with no ST-LINK connected:
 2. The FRDM sends a motion command from the released matrix and the vehicle moves; stopping the commands stops
    the vehicle.
 3. The demo (1.3) passes end to end and its log is committed or linked.
-4. Changing a signal in the matrix is a version bump and a PR in one repository, after which the firmware and the
+4. Changing a signal in the matrix is a version bump and a PR in the App repository, after which the firmware and the
    Linux program both pick it up by version, and a mismatch is a build error and not a bench surprise.
 
 ### Learning focus
@@ -76,26 +76,32 @@ Every repository below carries a short `README.md` and a `CLAUDE.md`, a CI workf
 | Repository | Owns | Produces | Consumes |
 |---|---|---|---|
 | **Nexus-Platform** (exists) | Definition: system, decisions, hardware, mechanical, BOM, phases | Decision IDs | |
-| **Nexus-CAN-Matrix** | The contract: DBC, the document, the bootloader frame set, and a generator for the C header and the Linux-side bindings | **Tagged releases** `vMAJOR.MINOR.PATCH` | Decision IDs |
-| **Nexus-STM32-FBL** | The flash bootloader, its memory map and its protocol implementation | `fbl.elf` | Matrix release |
-| **Nexus-STM32-App** | The Zephyr application the FBL loads (west workspace, own board definition for the carrier) | `app.bin` | Matrix release, the FBL's memory map |
+| **Nexus-STM32-FBL** | The flash bootloader: **bare-metal, small by design** (no RTOS, no HAL beyond what the CAN and flash drivers need), its memory map and its protocol implementation | `fbl.elf` | The bootloader frames of a matrix release |
+| **Nexus-STM32-App** | The Zephyr application the FBL loads (west workspace, own board definition for the carrier) **and the CAN matrix** in `can/` (DBC, document, generator for the C header) | `app.bin`, **matrix releases** | The FBL's memory map |
 | **Nexus-IMX91-Linux** | The Yocto layer `meta-nexus`, the build manifest, the image recipe, kernel and device-tree changes | Bootable image | NXP BSP, apps by tag |
-| **Nexus-IMX91-Apps** | Linux-side programs (C++ first, Rust where it earns its place); starts as the minimal CAN sender | Binaries, packaged by a Yocto recipe | Matrix release |
-| **Nexus-Host-Tools** | PC-side: the CAN flasher for the FBL, the bench-demo runner, log capture and replay | Python/Rust CLI | Matrix release |
+| **Nexus-IMX91-Apps** | Linux-side programs (C++ first, Rust where it earns its place); starts as the minimal CAN sender | Binaries, packaged by a Yocto recipe | Matrix release (how it arrives is open, below) |
+| **Nexus-Host-Tools** | PC-side: the CAN flasher for the FBL, the bench-demo runner, log capture and replay | Python/Rust CLI | Matrix release (same) |
 
-Two relationships carry the whole structure:
+Three relationships carry the whole structure:
 
-- **Matrix to everyone.** Nothing hand-copies a message definition. The matrix repo generates, the consumers
-  pin a tag. A matrix change that breaks a consumer shows in the consumer's CI.
+- **Matrix to everyone.** The matrix is one shared artifact and lives in `Nexus-STM32-App/can/`; the STM32 side
+  generates its header from it in the same repository. Nothing hand-copies a message definition. Matrix releases
+  carry their own tag prefix (`can-v1.0.0`) so they are not confused with app versions. The FBL, being a separate
+  repository, pins a matrix tag for its few bootloader frames.
+- **Open: how the Linux side stays in sync.** The candidates are a git submodule or a pinned fetch of
+  `can/` at a tag, a Yocto recipe that fetches the DBC at a tag and generates bindings at build time, or a
+  published release artifact (DBC plus generated headers) that the Linux repositories download. The choice is
+  the first `SW` entry of the Linux side and must make a mismatch a build error, as exit criterion 4 requires.
 - **Apps to image.** The Yocto recipe fetches an app repository at a tag, so Linux-side software is built and
   versioned on its own and the image only assembles it. This is the pattern Phase 3's containers and OTA will
   extend.
 
-**Decided in Phase 1, recorded as `SW-nn` as each one is made:** the matrix's ID plan and tooling; the flash
+**Decided already:** the FBL is bare-metal, to keep it small and fast (Hedi, 2026-10-11); it gets its `SW-` entry with the memory map.
+
+**Decided in Phase 1, recorded as `SW-nn` as each one is made:** the matrix's ID plan and tooling, and how the Linux side tracks it; the flash
 protocol (a UDS-style download service set over ISO-TP is the automotive way and the better lesson, a bespoke
 frame set is faster; the plan assumes UDS/ISO-TP and the first `SW` entry confirms or overturns it); the FBL's
-memory map and how the app is told apart from garbage; whether the FBL is bare-metal or a Zephyr-based image
-(MCUboot does not download over CAN, so it is not a shortcut here); the repository and CI template; the
+memory map and how the app is told apart from garbage; the repository and CI template; the
 build-manifest tool (`west`, `kas`, `repo`); the branching and tag rules shared by all repositories.
 
 ### Out of Phase 1
