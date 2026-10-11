@@ -105,7 +105,7 @@ System-of-interest, level 0. Its requirements are the system requirements, writt
 
 ### Nexus-Vehicle-R010
 
-**Statement.** The vehicle shall publish its heartbeats on its diagnostic CAN port at the rate set in the CAN matrix, for 10 minutes with no error frame, bus-off or missed heartbeat.
+**Statement.** The vehicle shall show continuously on its diagnostic port that its on-board software is alive.
 
 - Function: Nexus-Logical-401-F01
 - Derived-from: -
