@@ -10,6 +10,11 @@ criteria are true, and it is fine, even intended, to build a thing twice if the 
 technology properly. Where a shortcut exists that would skip the learning (a vendor bootloader, a ready-made
 image, a library that hides the protocol), the plan says so and takes the longer road.
 
+**Where the learning is.** The builder is an experienced firmware and AUTOSAR engineer, so CAN, UDS,
+bootloaders, drivers and RTOS fundamentals are known ground. The new ground is **embedded Linux and Yocto,
+Zephyr, robotics and cybersecurity**. Plans put the effort there; the familiar parts are kept deliberately
+small and standard so they do not eat the phase.
+
 ## At a glance
 
 | Phase | Name | Goal in one line | Sub-systems that start |
@@ -62,10 +67,16 @@ Phase 1 is finished when, on the finished vehicle, with no ST-LINK connected:
 
 ### Learning focus
 
-CAN at the frame level (arbitration, bit timing, error states) and the matrix as an interface contract; a
-flash bootloader and the flash/vector-table mechanics behind it; Zephyr (devicetree, Kconfig, west, drivers,
-threads) on a board that is not the usual one; the first Yocto build (layers, recipes, `kas` or manifest, BSP, device
-tree); SocketCAN; CI for embedded targets; and repository structure as an engineering product.
+**New:** the **Yocto** workflow end to end (layers, recipes, `kas`, the NXP BSP, machine and image
+configuration, device tree and kernel configuration for the FRDM-IMX91); **embedded Linux user space**
+(SocketCAN, writing and cross-building a C++ program, the UDS client running on Linux); **Zephyr** (west,
+devicetree, Kconfig, a board definition for the carrier, how it differs from an AUTOSAR-style stack); and **CI
+and repository structure** across firmware, Linux and tooling.
+
+**Known, so kept lean:** the CAN matrix, UDS download services and the bootloader are standard ground. They
+are built to the usual pattern, not explored; the FBL is bare-metal and small, and the matrix and flasher are
+as simple as a correct implementation allows. The point of Phase 1 is that they work and are structured well,
+so the new ground has something solid to stand on.
 
 ### Repositories (Phase 1.7)
 
@@ -76,33 +87,32 @@ Every repository below carries a short `README.md` and a `CLAUDE.md`, a CI workf
 | Repository | Owns | Produces | Consumes |
 |---|---|---|---|
 | **Nexus-Platform** (exists) | Definition: system, decisions, hardware, mechanical, BOM, phases | Decision IDs | |
-| **Nexus-STM32-FBL** | The flash bootloader: **bare-metal, small by design** (no RTOS, no HAL beyond what the CAN and flash drivers need), its memory map and its protocol implementation | `fbl.elf` | The bootloader frames of a matrix release |
-| **Nexus-STM32-App** | The Zephyr application the FBL loads (west workspace, own board definition for the carrier) **and the CAN matrix** in `can/` (DBC, document, generator for the C header) | `app.bin`, **matrix releases** | The FBL's memory map |
+| **Nexus-STM32-FBL** | The flash bootloader: **bare-metal, small by design** (no RTOS, no HAL beyond what the CAN and flash drivers need), its memory map and its protocol implementation | `fbl.elf` | CAN-Utils release (bootloader frames) |
+| **Nexus-CAN-Utils** | **The CAN matrix** (DBC, document, ID plan, bootloader frames), its **generators** (C header, Linux bindings, which will keep moving), and the **UDS flashing client** that downloads an app through the FBL. The client is Linux-portable, so it runs from the PC adapter now and from the i.MX 91 later. Capture/replay and the bench-demo runner start here too, and can be split out if they grow | **Tagged releases** `vMAJOR.MINOR.PATCH`; the flasher binary | Decision IDs |
+| **Nexus-STM32-App** | The Zephyr application the FBL loads (west workspace, own board definition for the carrier) | `app.bin` | CAN-Utils release, the FBL's memory map |
 | **Nexus-IMX91-Linux** | The Yocto layer `meta-nexus`, the build manifest, the image recipe, kernel and device-tree changes | Bootable image | NXP BSP, apps by tag |
-| **Nexus-IMX91-Apps** | Linux-side programs (C++ first, Rust where it earns its place); starts as the minimal CAN sender | Binaries, packaged by a Yocto recipe | Matrix release (how it arrives is open, below) |
-| **Nexus-Host-Tools** | PC-side: the CAN flasher for the FBL, the bench-demo runner, log capture and replay | Python/Rust CLI | Matrix release (same) |
+| **Nexus-IMX91-Apps** | Linux-side programs (C++ first, Rust where it earns its place); starts as the minimal CAN sender | Binaries, packaged by a Yocto recipe | CAN-Utils release |
 
 Three relationships carry the whole structure:
 
-- **Matrix to everyone.** The matrix is one shared artifact and lives in `Nexus-STM32-App/can/`; the STM32 side
-  generates its header from it in the same repository. Nothing hand-copies a message definition. Matrix releases
-  carry their own tag prefix (`can-v1.0.0`) so they are not confused with app versions. The FBL, being a separate
-  repository, pins a matrix tag for its few bootloader frames.
-- **Open: how the Linux side stays in sync.** The candidates are a git submodule or a pinned fetch of
-  `can/` at a tag, a Yocto recipe that fetches the DBC at a tag and generates bindings at build time, or a
-  published release artifact (DBC plus generated headers) that the Linux repositories download. The choice is
-  the first `SW` entry of the Linux side and must make a mismatch a build error, as exit criterion 4 requires.
+- **Matrix to everyone.** The matrix is one shared artifact with its own repository, because the interface it
+  generates will keep changing. Nothing hand-copies a message definition: the STM32 App, the FBL and the Linux
+  programs each **pin a CAN-Utils tag** and build against what it generates. A matrix change that breaks a consumer
+  shows in the consumer's CI, which is exit criterion 4.
+- **Open: how a consumer takes the tag.** A git submodule, a pinned fetch in the build (for Linux, a Yocto recipe
+  that fetches the release and generates bindings at build time), or a published release artifact. It can differ
+  per consumer and is the first `SW` entry of each. It must make a mismatch a build error.
 - **Apps to image.** The Yocto recipe fetches an app repository at a tag, so Linux-side software is built and
   versioned on its own and the image only assembles it. This is the pattern Phase 3's containers and OTA will
   extend.
 
-**Decided already:** the FBL is bare-metal, to keep it small and fast (Hedi, 2026-10-11); it gets its `SW-` entry with the memory map.
+**Decided already (2026-10-11):** the FBL is bare-metal, to keep it small and fast; the CAN matrix and the UDS flashing client share one repository, `Nexus-CAN-Utils`; the Yocto build is driven by `kas`. Each gets its `SW-` entry when it is written down.
 
-**Decided in Phase 1, recorded as `SW-nn` as each one is made:** the matrix's ID plan and tooling, and how the Linux side tracks it; the flash
-protocol (a UDS-style download service set over ISO-TP is the automotive way and the better lesson, a bespoke
-frame set is faster; the plan assumes UDS/ISO-TP and the first `SW` entry confirms or overturns it); the FBL's
+**Decided in Phase 1, recorded as `SW-nn` as each one is made:** the matrix's ID plan and tooling, the language of the flashing client (it must run on Linux, which points at C++ or Rust), and how each consumer takes a release; the flash
+protocol (UDS download services over ISO-TP, which is familiar ground and makes the bootloader a standard
+one; the first `SW` entry confirms it); the FBL's
 memory map and how the app is told apart from garbage; the repository and CI template; the
-build-manifest tool (`west`, `kas`, `repo`); the branching and tag rules shared by all repositories.
+build-manifest tool (`kas`, decided); the branching and tag rules shared by all repositories.
 
 ### Out of Phase 1
 
@@ -130,8 +140,9 @@ needs. None is forbidden if it comes free, but none gates the phase.
 that matches the commanded values within stated limits, loses the link and stops by itself, and every stop and
 fault is explained by a logged event.
 
-**Learning focus:** control loops on an RTOS and their timing, the vehicle model, state machines for safety,
-UDS diagnostics, writing long-running Linux services.
+**Learning focus:** Linux services done properly (systemd, IPC, lifecycle, logging), the network link and teleop
+from the Linux side, the vehicle model (Ackermann kinematics, odometry), and Zephyr in depth. Control loops
+and safety state machines are known ground, kept simple.
 
 ## Phase 3 - Platform
 
@@ -152,8 +163,9 @@ UDS diagnostics, writing long-running Linux services.
 failed update rolls back by itself, and a release goes from a merged PR to the vehicle without a hand-built
 step.
 
-**Learning focus:** the chain of trust, key management, A/B and rollback design, containers on embedded Linux,
-release engineering.
+**Learning focus:** the **cybersecurity** stack on a real part: the i.MX 91 chain of trust and trusted
+execution, key management, signed and measured boot, authenticated messaging, A/B and rollback design,
+containers on embedded Linux, and release engineering.
 
 ## Phase 4 - Perception
 
@@ -170,6 +182,8 @@ release engineering.
 **Done when** the vehicle, driven by hand, builds a map of a room and reports its own pose against it with a
 confidence that drops when it should.
 
+**Learning focus:** robotics from scratch: ROS 2 (nodes, transforms, time), sensor integration, SLAM and sensor fusion.
+
 ## Phase 5 - Autonomy
 
 > **Goal.** The vehicle drives a mission by itself and stops safely when it cannot.
@@ -183,6 +197,8 @@ confidence that drops when it should.
 
 **Done when** the vehicle drives a short course it has not driven before, avoids an obstacle placed in its
 path, and hands control back on request.
+
+**Learning focus:** planning and behaviour for a vehicle (route, trajectory, obstacle avoidance) and treating an autonomy stack as an untrusted source from the safety side.
 
 ---
 
