@@ -13,8 +13,8 @@
 <text x="30" y="40" font-size="22" font-weight="700" fill="#1a1a1a">Nexus Platform System Layout</text>
 <text x="30" y="62" font-size="11.5" fill="#555">Functional decomposition into sub-systems · logical view - says <tspan font-style="italic">what</tspan> the vehicle must do, not which board does it (hardware allocation is a later view)</text>
 <text x="30" y="80" font-size="11.5" fill="#555">ID scheme <tspan font-family="ui-monospace, Menlo, Consolas, monospace" font-weight="700">Nexus-SubSys-DNN</tspan> - D = functional domain (1–5), NN = sub-system within it. Functions inside a sub-system will be numbered <tspan font-family="ui-monospace, Menlo, Consolas, monospace" font-weight="700">Nexus-SubSys-DNN-Fnn</tspan>.</text>
-<text x="1610" y="40" font-size="11" font-weight="700" fill="#b45309" text-anchor="end">DRAFT A · for review</text>
-<text x="1610" y="58" font-size="10" fill="#777" text-anchor="end">2026-09-17</text>
+<text x="1610" y="40" font-size="11" font-weight="700" fill="#b45309" text-anchor="end">DRAFT B · for review</text>
+<text x="1610" y="58" font-size="10" fill="#777" text-anchor="end">2026-10-11</text>
 <g transform="translate(0,14)">
 <rect x="30" y="140" width="170" height="100" rx="4" fill="#f3f4f6" stroke="#6b7280" stroke-width="1.2" stroke-dasharray="5 3"/>
 <text x="115.0" y="186.0" font-size="12" font-weight="700" fill="#374151" text-anchor="middle">Operator</text>
@@ -36,8 +36,8 @@
 <line x1="250" y1="160" x2="490" y2="160" stroke="#0f766e" stroke-width="0.8"/>
 <text x="262" y="134" font-size="9.5" font-weight="700" fill="#0f766e" font-family="ui-monospace, Menlo, Consolas, monospace">Nexus-SubSys-402</text>
 <text x="262" y="152" font-size="13" font-weight="700" fill="#111827">Operator Interface</text>
-<rect x="438" y="125" width="42" height="14" rx="7" fill="#dcfce7" stroke="#15803d" stroke-width="0.8"/>
-<text x="459.0" y="135.5" font-size="8.5" font-weight="700" text-anchor="middle" fill="#15803d">PHASE 1</text>
+<rect x="438" y="125" width="42" height="14" rx="7" fill="#e0f2fe" stroke="#0369a1" stroke-width="0.8"/>
+<text x="459.0" y="135.5" font-size="8.5" font-weight="700" text-anchor="middle" fill="#0369a1">PHASE 2</text>
 <circle cx="266.0" cy="176.5" r="1.8" fill="#0f766e"/>
 <text x="273.0" y="180" font-size="10.5" fill="#374151" xml:space="preserve">Accept local controls (buttons)</text>
 <circle cx="266.0" cy="192.5" r="1.8" fill="#0f766e"/>
@@ -55,8 +55,8 @@
 <line x1="540" y1="160" x2="780" y2="160" stroke="#6d28d9" stroke-width="0.8"/>
 <text x="552" y="134" font-size="9.5" font-weight="700" fill="#6d28d9" font-family="ui-monospace, Menlo, Consolas, monospace">Nexus-SubSys-303</text>
 <text x="552" y="152" font-size="13" font-weight="700" fill="#111827">Planning &amp; Decision</text>
-<rect x="720" y="125" width="50" height="14" rx="7" fill="#f1f5f9" stroke="#64748b" stroke-width="0.8"/>
-<text x="745.0" y="135.5" font-size="8.5" font-weight="700" text-anchor="middle" fill="#475569">LATER</text>
+<rect x="728" y="125" width="42" height="14" rx="7" fill="#f1f5f9" stroke="#64748b" stroke-width="0.8"/>
+<text x="749.0" y="135.5" font-size="8.5" font-weight="700" text-anchor="middle" fill="#475569">PHASE 5</text>
 <circle cx="556.0" cy="176.5" r="1.8" fill="#6d28d9"/>
 <text x="563.0" y="180" font-size="10.5" fill="#374151" xml:space="preserve">Manage mission &amp; route</text>
 <circle cx="556.0" cy="192.5" r="1.8" fill="#6d28d9"/>
@@ -73,8 +73,8 @@
 <line x1="830" y1="160" x2="1070" y2="160" stroke="#6d28d9" stroke-width="0.8"/>
 <text x="842" y="134" font-size="9.5" font-weight="700" fill="#6d28d9" font-family="ui-monospace, Menlo, Consolas, monospace">Nexus-SubSys-302</text>
 <text x="842" y="152" font-size="13" font-weight="700" fill="#111827">Localization &amp; Mapping</text>
-<rect x="1010" y="125" width="50" height="14" rx="7" fill="#f1f5f9" stroke="#64748b" stroke-width="0.8"/>
-<text x="1035.0" y="135.5" font-size="8.5" font-weight="700" text-anchor="middle" fill="#475569">LATER</text>
+<rect x="1018" y="125" width="42" height="14" rx="7" fill="#ffedd5" stroke="#c2410c" stroke-width="0.8"/>
+<text x="1039.0" y="135.5" font-size="8.5" font-weight="700" text-anchor="middle" fill="#c2410c">PHASE 4</text>
 <circle cx="846.0" cy="176.5" r="1.8" fill="#6d28d9"/>
 <text x="853.0" y="180" font-size="10.5" fill="#374151" xml:space="preserve">Estimate vehicle pose</text>
 <circle cx="846.0" cy="192.5" r="1.8" fill="#6d28d9"/>
@@ -90,8 +90,8 @@
 <line x1="1120" y1="160" x2="1360" y2="160" stroke="#6d28d9" stroke-width="0.8"/>
 <text x="1132" y="134" font-size="9.5" font-weight="700" fill="#6d28d9" font-family="ui-monospace, Menlo, Consolas, monospace">Nexus-SubSys-301</text>
 <text x="1132" y="152" font-size="13" font-weight="700" fill="#111827">Environment Perception</text>
-<rect x="1300" y="125" width="50" height="14" rx="7" fill="#f1f5f9" stroke="#64748b" stroke-width="0.8"/>
-<text x="1325.0" y="135.5" font-size="8.5" font-weight="700" text-anchor="middle" fill="#475569">LATER</text>
+<rect x="1308" y="125" width="42" height="14" rx="7" fill="#ffedd5" stroke="#c2410c" stroke-width="0.8"/>
+<text x="1329.0" y="135.5" font-size="8.5" font-weight="700" text-anchor="middle" fill="#c2410c">PHASE 4</text>
 <circle cx="1136.0" cy="176.5" r="1.8" fill="#6d28d9"/>
 <text x="1143.0" y="180" font-size="10.5" fill="#374151" xml:space="preserve">Sense surroundings</text>
 <text x="1143.0" y="196" font-size="10.5" fill="#374151" xml:space="preserve">  (camera, LiDAR, range sensors)</text>
@@ -115,8 +115,8 @@
 <text x="529" y="342" font-size="10.5" fill="#374151">Route between CAN and service middleware</text>
 <circle cx="822" cy="338.5" r="1.8" fill="#0f766e"/>
 <text x="829" y="342" font-size="10.5" fill="#374151">Publish services / topics (ROS 2 · SOME/IP)</text>
-<rect x="1300" y="307" width="50" height="14" rx="7" fill="#dcfce7" stroke="#15803d" stroke-width="0.8"/>
-<text x="1325" y="317.5" font-size="8.5" font-weight="700" text-anchor="middle" fill="#15803d">PHASE 1</text>
+<rect x="1308" y="307" width="42" height="14" rx="7" fill="#dcfce7" stroke="#15803d" stroke-width="0.8"/>
+<text x="1329.0" y="317.5" font-size="8.5" font-weight="700" text-anchor="middle" fill="#15803d">PHASE 1</text>
 </g>
 <g id="Nexus-SubSys-403">
 <rect x="250" y="400" width="240" height="145" rx="4" fill="#ffffff" stroke="#0f766e" stroke-width="1.6"/>
@@ -124,8 +124,8 @@
 <line x1="250" y1="442" x2="490" y2="442" stroke="#0f766e" stroke-width="0.8"/>
 <text x="262" y="416" font-size="9.5" font-weight="700" fill="#0f766e" font-family="ui-monospace, Menlo, Consolas, monospace">Nexus-SubSys-403</text>
 <text x="262" y="434" font-size="13" font-weight="700" fill="#111827">External Connectivity</text>
-<rect x="438" y="407" width="42" height="14" rx="7" fill="#dcfce7" stroke="#15803d" stroke-width="0.8"/>
-<text x="459.0" y="417.5" font-size="8.5" font-weight="700" text-anchor="middle" fill="#15803d">PHASE 1</text>
+<rect x="438" y="407" width="42" height="14" rx="7" fill="#e0f2fe" stroke="#0369a1" stroke-width="0.8"/>
+<text x="459.0" y="417.5" font-size="8.5" font-weight="700" text-anchor="middle" fill="#0369a1">PHASE 2</text>
 <circle cx="266.0" cy="458.5" r="1.8" fill="#0f766e"/>
 <text x="273.0" y="462" font-size="10.5" fill="#374151" xml:space="preserve">Link to remote station</text>
 <text x="273.0" y="478" font-size="10.5" fill="#374151" xml:space="preserve">  (Wi-Fi, Ethernet)</text>
@@ -264,8 +264,8 @@
 <line x1="540" y1="892" x2="780" y2="892" stroke="#be123c" stroke-width="0.8"/>
 <text x="552" y="866" font-size="9.5" font-weight="700" fill="#be123c" font-family="ui-monospace, Menlo, Consolas, monospace">Nexus-SubSys-502</text>
 <text x="552" y="884" font-size="13" font-weight="700" fill="#111827">Cybersecurity</text>
-<rect x="720" y="857" width="50" height="14" rx="7" fill="#f1f5f9" stroke="#64748b" stroke-width="0.8"/>
-<text x="745.0" y="867.5" font-size="8.5" font-weight="700" text-anchor="middle" fill="#475569">LATER</text>
+<rect x="728" y="857" width="42" height="14" rx="7" fill="#fae8ff" stroke="#a21caf" stroke-width="0.8"/>
+<text x="749.0" y="867.5" font-size="8.5" font-weight="700" text-anchor="middle" fill="#a21caf">PHASE 3</text>
 <circle cx="556.0" cy="908.5" r="1.8" fill="#be123c"/>
 <text x="563.0" y="912" font-size="10.5" fill="#374151" xml:space="preserve">Secure &amp; measured boot</text>
 <circle cx="556.0" cy="924.5" r="1.8" fill="#be123c"/>
@@ -301,8 +301,8 @@
 <line x1="1120" y1="892" x2="1360" y2="892" stroke="#be123c" stroke-width="0.8"/>
 <text x="1132" y="866" font-size="9.5" font-weight="700" fill="#be123c" font-family="ui-monospace, Menlo, Consolas, monospace">Nexus-SubSys-504</text>
 <text x="1132" y="884" font-size="13" font-weight="700" fill="#111827">Software Update &amp; Config.</text>
-<rect x="1300" y="857" width="50" height="14" rx="7" fill="#f1f5f9" stroke="#64748b" stroke-width="0.8"/>
-<text x="1325.0" y="867.5" font-size="8.5" font-weight="700" text-anchor="middle" fill="#475569">LATER</text>
+<rect x="1308" y="857" width="42" height="14" rx="7" fill="#dcfce7" stroke="#15803d" stroke-width="0.8"/>
+<text x="1329.0" y="867.5" font-size="8.5" font-weight="700" text-anchor="middle" fill="#15803d">PHASE 1</text>
 <circle cx="1136.0" cy="908.5" r="1.8" fill="#be123c"/>
 <text x="1143.0" y="912" font-size="10.5" fill="#374151" xml:space="preserve">Deliver updates (OTA, A/B slots)</text>
 <circle cx="1136.0" cy="924.5" r="1.8" fill="#be123c"/>
@@ -378,11 +378,17 @@
 <text x="467.2" y="1076" font-size="10" fill="#374151"><tspan font-weight="700" fill="#0f766e">4xx</tspan> Communication &amp; Interaction</text>
 <rect x="654.4" y="1065" width="16" height="14" rx="2" fill="#ffe4e6" stroke="#be123c" stroke-width="1.2"/>
 <text x="676.4" y="1076" font-size="10" fill="#374151"><tspan font-weight="700" fill="#be123c">5xx</tspan> Dependability &amp; Lifecycle</text>
-<rect x="862.4" y="1065" width="42" height="14" rx="7" fill="#dcfce7" stroke="#15803d" stroke-width="0.8"/>
-<text x="883.4" y="1075.5" font-size="8.5" font-weight="700" text-anchor="middle" fill="#15803d">PHASE 1</text>
-<text x="910.4" y="1076" font-size="10" fill="#374151">needed to drive end-to-end</text>
-<rect x="1062.4" y="1065" width="50" height="14" rx="7" fill="#f1f5f9" stroke="#64748b" stroke-width="0.8"/>
-<text x="1087.4" y="1075.5" font-size="8.5" font-weight="700" text-anchor="middle" fill="#475569">LATER</text>
-<text x="1118.4" y="1076" font-size="10" fill="#374151">placeholder, detailed when its phase starts</text>
+<text x="862.4" y="1076" font-size="10" font-weight="700" fill="#1a1a1a">FIRST PHASE</text>
+<rect x="940.4" y="1065" width="42" height="14" rx="7" fill="#dcfce7" stroke="#15803d" stroke-width="0.8"/>
+<text x="961.4" y="1075.5" font-size="8.5" font-weight="700" text-anchor="middle" fill="#15803d">PHASE 1</text>
+<rect x="988.4" y="1065" width="42" height="14" rx="7" fill="#e0f2fe" stroke="#0369a1" stroke-width="0.8"/>
+<text x="1009.4" y="1075.5" font-size="8.5" font-weight="700" text-anchor="middle" fill="#0369a1">PHASE 2</text>
+<rect x="1036.4" y="1065" width="42" height="14" rx="7" fill="#fae8ff" stroke="#a21caf" stroke-width="0.8"/>
+<text x="1057.4" y="1075.5" font-size="8.5" font-weight="700" text-anchor="middle" fill="#a21caf">PHASE 3</text>
+<rect x="1084.4" y="1065" width="42" height="14" rx="7" fill="#ffedd5" stroke="#c2410c" stroke-width="0.8"/>
+<text x="1105.4" y="1075.5" font-size="8.5" font-weight="700" text-anchor="middle" fill="#c2410c">PHASE 4</text>
+<rect x="1132.4" y="1065" width="42" height="14" rx="7" fill="#f1f5f9" stroke="#64748b" stroke-width="0.8"/>
+<text x="1153.4" y="1075.5" font-size="8.5" font-weight="700" text-anchor="middle" fill="#475569">PHASE 5</text>
+<text x="1182.4" y="1076" font-size="10" fill="#374151">first phase the sub-system exists in (phases.md)</text>
 </g>
 </svg>

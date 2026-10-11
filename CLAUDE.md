@@ -78,13 +78,16 @@ port** on the rear fascia lets a PC join the bus as a third node.
 
 Treat these as settled. Revisit one only if asked, or if something concrete contradicts it.
 
-## Phase 1
+## Phases
 
-Get the stack above physically working end to end: battery → regulated 5 V → i.MX 91,
-CAN to the STM32, STM32 driving motors and steering. Everything else (Yocto images,
-Rust services, ROS 2, sensors, security, OTA) builds on top of that once it moves.
+Five phases - Foundation, Drive, Platform, Perception, Autonomy - paced by **learning, not
+speed**; [`system/phases.md`](system/phases.md) owns the goal and exit criteria of each, and
+[SYS-02](decisions/SYS-System-Decisions.md) the reasoning. **Phase 1 is Foundation:** the assembled
+vehicle, a released CAN matrix, a bench demo, an STM32 flash bootloader that downloads an app over
+CAN, a minimal FRDM image that sends matrix messages, and the repository structure the rest lives in.
+It has no control loops. Do not restate the plan here.
 
-### Open hardware items
+### Open hardware items (Phase 1)
 
 **The power stage is bought and in hand** (delivered 18 Sep 2026) - converter, fuses, wire,
 distribution, UBEC, current sensor, CAN transceiver and the USB-C feed. No *selection* blocks
