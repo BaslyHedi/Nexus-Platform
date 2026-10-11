@@ -223,23 +223,26 @@ and no non-volatile memory (NvM) region exist yet.** Both are left open, see *Co
 **Consequences.**
 
 - **Flash erase and program stall every flash read on this single-bank part.** Code and data in SRAM keep running, but an
-  application that fetches from flash waits for the erase to finish. For a flash-based NvM that means **erase and
+  application that fetches from flash waits for the erase to finish. At 3.3 V with 32-bit programming the datasheet
+  (DS8626 Rev 8, Table 40) gives a typical and maximum erase time of 250 ms and 500 ms for a 16 KB sector, 550 ms and
+  1.1 s for the 64 KB sector, and 1 s and 2 s for a 128 KB sector. A word takes 16 µs typical and 100 µs at most to program. For a flash-based NvM that means **erase and
   garbage collection can only happen in a safe vehicle state** (standby or off), never while a control loop runs.
   Putting the whole control path in RAM is not a practical way around it.
 - **NvM is deferred to Phase 2**, where the plan places configuration and calibration parameters. The options then are
   flash with erase only in a safe state, or an external memory on I²C (no erase, no garbage collection, needs a BOM
   item and a hardware decision). If NvM is on-chip, it is carved from the top of the application region, so only the
   application's end moves and never its start.
-- **The FBL-Updater rewrites sectors 0 to 4 and the rewrite is not power-fail safe.** A power loss in the middle leaves no
-  valid vector table, and the ST-LINK is the recovery path, as T1.2 already says.
+- **The FBL-Updater rewrites sectors 0 to 4 and the rewrite is not power-fail safe.** The erase alone takes about 1.6 s
+  typical and 3.1 s at most (four 16 KB sectors and the 64 KB one). A power loss from the first erase until the new
+  vector table is written leaves no valid FBL, and the ST-LINK is the recovery path, as T1.2 already says.
 - **The first FBL goes on with the ST-LINK, by sector erase.** A full-chip erase would also wipe any later NvM.
 - **The interface headers and `memory_map.ld` in `Nexus-STM32-FBL` carry these addresses**, and both the FBL and the
   application build take them from there.
 
 **To confirm.**
 
-- The sector layout and addresses, against RM0090. They were recalled from memory when this entry was written.
-- The erase and program times of each sector size, from the F407 datasheet, since the safe-state rule rests on them.
+- **The sector layout and addresses, against RM0090.** They were recalled from memory when this entry was written, and
+  DS8626 does not give them (it states 1 MB and the sector erase times only). RM0090 is not yet in `vendor/`.
 - That the FBL fits the region with room for Phase 3, measured once it is built.
 
 ---
