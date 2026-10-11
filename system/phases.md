@@ -1,8 +1,8 @@
 # Phases
 
 What NEXUS is built in, in what order, and **when each phase is finished**. This file owns the phase
-plan; the drawing carries only the phase a sub-system first appears in
-([`renders/Nexus-Platform-System-Layout.svg`](renders/Nexus-Platform-System-Layout.svg)), and the reasoning
+plan; the drawing carries only the phase a logical component first appears in
+([`renders/Nexus-Platform-Logical-Architecture.svg`](renders/Nexus-Platform-Logical-Architecture.svg)), and the reasoning
 for having phases at all is [SYS-02](../decisions/SYS-System-Decisions.md).
 
 **Pace is set by learning, not by the calendar.** Nothing here has a date. A phase is done when its exit
@@ -17,7 +17,7 @@ small and standard so they do not eat the phase.
 
 ## At a glance
 
-| Phase | Name | Goal in one line | Sub-systems that start |
+| Phase | Name | Goal in one line | Logical components that start |
 |---|---|---|---|
 | **1** | Foundation | An assembled vehicle, a bootloader that can update the MCU over CAN, a first Linux image built from released apps, a heartbeat between the two computers, and the repositories everything else lives in | 101 102 201 202 401 501 503 504 |
 | **2** | Drive | The vehicle drives under closed-loop control, supervised, from a remote station | 203 402 403 |
@@ -25,7 +25,7 @@ small and standard so they do not eat the phase.
 | **4** | Perception | The vehicle senses and localises itself: Raspberry Pi 5, ROS 2, camera and range sensors | 301 302 |
 | **5** | Autonomy | The vehicle plans and drives a mission by itself | 303 |
 
-A sub-system starting in a phase does not mean it is finished there. 201, 202, 501, 503 and 504 start in Phase 1 with
+A logical component starting in a phase does not mean it is finished there. 201, 202, 501, 503 and 504 start in Phase 1 with
 a thin first cut (201 and 202 as hardware only, not yet driven) and grow in later phases; the table at the end says which functions land when.
 
 ---
@@ -195,7 +195,7 @@ containers on embedded Linux, and release engineering.
 | Deliverable | Notes |
 |---|---|
 | Raspberry Pi 5 joins the bus | Second vehicle computer; power, mounting and network decided in a new `HW`/`MEC` entry first |
-| ROS 2 | Middleware on the Pi 5 (and a gateway to the i.MX 91 side); the service-middleware half of Nexus-SubSys-401 |
+| ROS 2 | Middleware on the Pi 5 (and a gateway to the i.MX 91 side); the service-middleware half of Nexus-Logical-401 |
 | Sensors | Camera first, then a range sensor or LiDAR; time-synchronised with the vehicle |
 | Perception | Obstacle and free-space detection, with a confidence output |
 | Localization | Odometry, IMU and perception fused into a pose; a map |
@@ -212,7 +212,7 @@ confidence that drops when it should.
 | Deliverable | Notes |
 |---|---|
 | Mission and route | A goal in the map and a route to it |
-| Behaviour and trajectory | Driving behaviour, collision-free trajectory, issued as speed + curvature requests into Nexus-SubSys-203 |
+| Behaviour and trajectory | Driving behaviour, collision-free trajectory, issued as speed + curvature requests into Nexus-Logical-203 |
 | Arbitration | Autonomous requests arbitrated with manual and teleop; the operator can always take over |
 | Safety case | The supervision layer treats the planner as an untrusted source |
 
@@ -223,12 +223,12 @@ path, and hands control back on request.
 
 ---
 
-## What each sub-system carries, by phase
+## What each logical component carries, by phase
 
-Sub-systems that start in Phase 1 but continue after it, and what lands when. Anything not listed arrives whole
+Logical components that start in Phase 1 but continue after it, and what lands when. Anything not listed arrives whole
 in its starting phase.
 
-| Sub-system | Phase 1 | Later |
+| Logical component | Phase 1 | Later |
 |---|---|---|
 | 201 Propulsion, 202 Steering | The motors, servo and driver fitted and powered, **not driven** | **2:** bring-up, then driven from the STM32 app |
 | 203 Vehicle Motion Control | Starts in Phase 2 | **2:** translate requests to setpoints, close the loops, limits, odometry, safe-stop. **5:** arbitrate autonomous requests |
@@ -239,7 +239,7 @@ in its starting phase.
 
 ## Changing the plan
 
-Moving a sub-system between phases, or an item between deliverables, is an edit here plus the `PHASES`/card
-entry in [`scripts/Nexus-Platform-System-Layout.py`](scripts/Nexus-Platform-System-Layout.py) and a regenerated
+Moving a logical component between phases, or an item between deliverables, is an edit here plus the `PHASES`/card
+entry in [`scripts/Nexus-Platform-Logical-Architecture.py`](scripts/Nexus-Platform-Logical-Architecture.py) and a regenerated
 drawing; the decision that shaped the split is [SYS-02](../decisions/SYS-System-Decisions.md). A phase's exit
 criteria change only by an explicit decision, and a change made because the phase is hard is the one to avoid.

@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nexus Requirements Traceability</title>
+<!-- Template for requirements/renders/traceability.html, filled by tools/check-requirements.py (%%SUB%%, %%DATA%%). Edit this file, never the page. -->
+<style>
+:root{--bg:#f6f5f2;--panel:#ffffff;--ink:#1f2937;--muted:#6b7280;--line:#e5e7eb;--soft:#f3f4f6;--grid:#e4e1da;--shadow:0 1px 2px rgba(0,0,0,.06),0 2px 8px rgba(0,0,0,.05);--mix:white;--mixk:14%;--inkmix:0%;--hl:#f59e0b;color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#0f1115;--panel:#181b22;--ink:#e5e7eb;--muted:#9ca3af;--line:#2a2f3a;--soft:#222632;--grid:#1c2028;--shadow:0 1px 2px rgba(0,0,0,.5);--mix:#181b22;--mixk:30%;--inkmix:45%;--hl:#fbbf24;color-scheme:dark}}
+:root[data-theme=dark]{--bg:#0f1115;--panel:#181b22;--ink:#e5e7eb;--muted:#9ca3af;--line:#2a2f3a;--soft:#222632;--grid:#1c2028;--shadow:0 1px 2px rgba(0,0,0,.5);--mix:#181b22;--mixk:30%;--inkmix:45%;--hl:#fbbf24;color-scheme:dark}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;display:flex;flex-direction:column;background:var(--bg);color:var(--ink);font:14px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+header{flex:none;z-index:5;background:var(--bg);border-bottom:1px solid var(--line);padding:10px 16px}
+h1{font-size:18px;margin:0}
+.sub{color:var(--muted);font-size:12px;margin:2px 0 8px}
+.controls{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+button,input,select{font:inherit;font-size:13px;color:var(--ink);background:var(--panel);border:1px solid var(--line);border-radius:7px;padding:4px 10px}
+button{cursor:pointer}button:hover{background:var(--soft)}
+input[type=search]{flex:1 1 200px;min-width:150px}
+.sep{width:1px;height:22px;background:var(--line);margin:0 4px}
+.lbl{color:var(--muted);font-size:12px}
+.zoom{min-width:44px;text-align:center;color:var(--muted);font-size:12px}
+.legend{display:flex;flex-wrap:wrap;gap:14px;align-items:center;color:var(--muted);font-size:12px;margin-top:6px}
+.legend .b{pointer-events:none}
+main{position:relative;flex:1;overflow:hidden;cursor:grab;touch-action:none;background-image:radial-gradient(var(--grid) 1px,transparent 1px);background-size:22px 22px}
+main.panning{cursor:grabbing}
+#stage{position:absolute;left:0;top:0;transform-origin:0 0}
+svg#links{position:absolute;left:0;top:0;overflow:visible;pointer-events:none;z-index:0}
+.colhead{position:absolute;font-size:11px;letter-spacing:.08em;color:var(--muted);text-transform:uppercase;white-space:nowrap;z-index:1}
+.card{--sys:#6b7280;position:absolute;width:380px;z-index:1;background:var(--panel);border:1px solid var(--line);border-left:5px solid var(--sys);border-radius:10px;box-shadow:var(--shadow)}
+.card.dragging{z-index:3;box-shadow:0 8px 24px rgba(0,0,0,.25);opacity:.95}
+.card>.head{display:flex;gap:8px;align-items:flex-start;padding:8px 10px;background:color-mix(in srgb,var(--sys) var(--mixk),var(--mix));border-radius:9px 9px 0 0;cursor:move;user-select:none;touch-action:none}
+.card.closed>.head{border-radius:9px}
+.chev{flex:none;width:16px;transition:transform .15s;color:var(--muted);margin-top:2px}
+.card.closed .chev{transform:rotate(-90deg)}
+.head .id{font:700 11.5px ui-monospace,Menlo,Consolas,monospace;color:color-mix(in srgb,var(--sys),white var(--inkmix))}
+.head .name{font-weight:650;font-size:14px}
+.head .meta{color:var(--muted);font-size:11.5px}
+.bubbles{display:flex;flex-wrap:wrap;gap:6px;padding:10px}
+.card.closed .bubbles{display:none}
+.b{--sys:#6b7280;font:600 11.5px ui-monospace,Menlo,Consolas,monospace;border-radius:999px;padding:3px 9px;border:1.5px solid var(--sys);color:color-mix(in srgb,var(--sys),white var(--inkmix));background:var(--panel);cursor:pointer;line-height:1.3}
+.b.der{background:color-mix(in srgb,var(--sys) var(--mixk),var(--mix))}
+.b.asis{border-style:dashed}
+.b:hover,.b:focus-visible{outline:2px solid var(--hl);outline-offset:1px}
+.path{fill:none;stroke:color-mix(in srgb,var(--c),white var(--inkmix));stroke-width:1.2;opacity:.38;display:none}
+.path.asis{stroke-dasharray:5 4;opacity:.6}
+.mode-reqs .path{display:inline}
+.focus .path{display:none}.focus .path.on{display:inline;opacity:1;stroke-width:2.2}
+.edge{display:none;transition:opacity .15s}.mode-systems .edge{display:inline}.focus .edge{display:none}
+.edge .ep{fill:none;stroke:color-mix(in srgb,var(--c),white var(--inkmix));opacity:.6;pointer-events:visibleStroke;cursor:help}
+.edge.asis .ep{stroke-dasharray:7 5}
+.edge circle{fill:var(--panel);stroke:color-mix(in srgb,var(--c),white var(--inkmix));stroke-width:1.5;pointer-events:auto;cursor:help}
+.edge text{font:700 10px ui-monospace,Menlo,Consolas,monospace;fill:color-mix(in srgb,var(--c),white var(--inkmix));text-anchor:middle;dominant-baseline:central;pointer-events:none}
+.hovering .edge{opacity:.1}.hovering .edge.hot{opacity:1}.hovering .edge.hot .ep{opacity:.95}
+.card.hot{box-shadow:0 0 0 2px color-mix(in srgb,var(--sys),white var(--inkmix)),var(--shadow)}
+.focus .b{opacity:.25}.focus .b.on{opacity:1}.b.sel{outline:2.5px solid var(--hl);outline-offset:2px}
+.focus .card:not(.inline){opacity:.55}
+.filtering .b:not(.match){opacity:.18}.filtering .path,.filtering .edge{opacity:.12}
+.off{display:none!important}
+.count{color:var(--muted);font-size:12px;white-space:nowrap}
+.empty-state{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:15px;pointer-events:none}
+.hint{position:absolute;right:12px;bottom:10px;font-size:11.5px;color:var(--muted);background:color-mix(in srgb,var(--bg) 85%,transparent);padding:4px 8px;border-radius:6px;pointer-events:none}
+aside{position:fixed;top:0;right:0;bottom:0;width:min(440px,100vw);background:var(--panel);border-left:1px solid var(--line);box-shadow:-4px 0 18px rgba(0,0,0,.12);transform:translateX(105%);transition:transform .2s;z-index:10;overflow:auto;padding:18px 18px 40px}
+aside.open{transform:none}
+aside .close{position:absolute;top:12px;right:12px}
+aside .rid{font:700 13px ui-monospace,Menlo,Consolas,monospace}
+aside .sysname{font-size:12.5px;color:var(--muted);margin:2px 0 10px}
+aside .stmt{font-size:15px;line-height:1.5;margin:8px 0 14px;padding:10px 12px;background:var(--soft);border-radius:8px}
+aside table{border-collapse:collapse;font-size:13px;width:100%}
+aside th{text-align:left;color:var(--muted);font-weight:600;padding:4px 10px 4px 0;vertical-align:top;white-space:nowrap}
+aside td{padding:4px 0}
+aside .b{margin:0 4px 4px 0}
+@media (max-width:700px){header{padding:8px 10px}h1{font-size:16px}.legend,.hint{display:none}}
+</style></head><body>
+<header>
+  <h1>Nexus Requirements Traceability</h1>
+  <div class="sub">%%SUB%%</div>
+  <div class="controls">
+    <button type="button" id="fit" title="Scale the whole tree to the window">Fit</button>
+    <button type="button" id="zout" title="Zoom out" aria-label="Zoom out">−</button><span class="zoom" id="zlabel">100%</span><button type="button" id="zin" title="Zoom in" aria-label="Zoom in">+</button>
+    <span class="sep"></span>
+    <button type="button" id="expand">Expand all</button><button type="button" id="collapse">Collapse all</button>
+    <button type="button" id="tidy" title="Restack the cards in each column, closing the gaps">Tidy</button>
+    <button type="button" id="reset" title="Forget moved cards and lay the tree out again">Reset layout</button>
+    <span class="sep"></span>
+    <input type="search" id="filter" placeholder="Filter by ID or statement" aria-label="Filter requirements">
+    <span class="sep"></span>
+    <label for="phase" class="lbl">Phase</label>
+    <select id="phase"><option value="all">All phases</option><option value="1">Phase 1</option><option value="2">Phase 2</option><option value="3">Phase 3</option><option value="4">Phase 4</option><option value="5">Phase 5</option></select>
+    <label class="lbl"><input type="checkbox" id="earlier"> and earlier</label>
+    <span class="count" id="count"></span>
+    <span class="sep"></span>
+    <label for="linkmode" class="lbl">Links</label>
+    <select id="linkmode"><option value="systems">Between systems</option><option value="reqs">Every requirement</option><option value="none">None</option></select>
+    <label for="theme" class="lbl">Theme</label>
+    <select id="theme"><option value="auto">Auto</option><option value="light">Light</option><option value="dark">Dark</option></select>
+  </div>
+  <div class="legend">
+    <span><span class="b der" style="--sys:#6b7280">R001</span> derived below</span>
+    <span><span class="b" style="--sys:#6b7280">R002</span> leaf, met here</span>
+    <span><span class="b asis" style="--sys:#6b7280">R003</span> passed on as-is</span>
+    <span>one line per pair of systems, the badge counts its requirements · hover a card to light its lines · click a bubble for its own lineage</span>
+  </div>
+</header>
+<main id="main" class="mode-systems"><div id="stage"><svg id="links" aria-hidden="true"></svg></div>
+  <div class="empty-state off" id="empty">No requirements in this phase yet.</div>
+  <div class="hint">drag a card by its header · drag the background to pan · wheel to zoom · click a header without moving it to fold</div></main>
+<aside id="panel" aria-live="polite"></aside>
+<script id="data" type="application/json">%%DATA%%</script>
+<script>
+(function(){
+const D=JSON.parse(document.getElementById('data').textContent), R=D.reqs, S=D.systems;
+const main=document.getElementById('main'), stage=document.getElementById('stage'), svg=document.getElementById('links'), panel=document.getElementById('panel');
+const NS='http://www.w3.org/2000/svg', CARD_W=380, COL_GAP=190, GAP=16, TOP=34;
+const el=(t,c,txt)=>{const e=document.createElement(t);if(c)e.className=c;if(txt!=null)e.textContent=txt;return e};
+const store={get(k,d){try{const v=localStorage.getItem('nexus-trace-'+k);return v==null?d:JSON.parse(v)}catch(e){return d}},set(k,v){try{localStorage.setItem('nexus-trace-'+k,JSON.stringify(v))}catch(e){}}};
+
+// ---------------------------------------------------------------- cards and bubbles
+const cards={}, bubbles={}, pos={}, heads=[];
+let drag=null;
+D.columns.forEach(col=>{
+  const h=el('div','colhead',col.title);stage.append(h);heads.push(h);
+  col.groups.forEach(g=>g.systems.forEach(sid=>{
+    const s=S[sid];const card=el('div','card');card.style.setProperty('--sys',s.colour);
+    const head=el('div','head');head.tabIndex=0;head.setAttribute('aria-expanded','true');head.title='Drag to move · click to fold';
+    head.innerHTML='<svg class="chev" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>';
+    const t=el('div');t.append(el('div','id',sid),el('div','name',s.name),el('div','meta',s.within+' · '+s.reqs.length+' requirements'));head.append(t);
+    const bb=el('div','bubbles');
+    s.reqs.forEach(rid=>{const q=R[rid];const b=el('button','b'+(q.der.length?' der':'')+(q.asis.length?' asis':''),rid.slice(-4));b.type='button';
+      b.style.setProperty('--sys',s.colour);b.title=rid+': '+q.text;b.addEventListener('click',e=>{e.stopPropagation();select(rid)});bb.append(b);bubbles[rid]=b});
+    card.append(head,bb);stage.append(card);cards[sid]=card;
+    head.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();fold(sid)}});
+    head.addEventListener('pointerdown',e=>startDrag(e,sid));
+    head.addEventListener('mouseenter',()=>hover(sid,true));head.addEventListener('mouseleave',()=>hover(sid,false));
+  }));
+});
+const order=D.columns.map(c=>c.groups.flatMap(g=>g.systems));
+const place=sid=>{cards[sid].style.left=pos[sid].x+'px';cards[sid].style.top=pos[sid].y+'px'};
+const size=sid=>({w:cards[sid].offsetWidth,h:cards[sid].offsetHeight});
+const shown=sid=>!cards[sid].classList.contains('off'), shownIds=()=>Object.keys(pos).filter(shown);
+
+// ---------------------------------------------------------------- layout: automatic tree, overlap removal, tidy
+function autoLayout(){order.forEach((col,ci)=>{let y=TOP;col.forEach(sid=>{pos[sid]={x:ci*(CARD_W+COL_GAP),y};if(shown(sid))y+=size(sid).h+GAP})});
+  Object.keys(pos).forEach(place);placeHeads()}
+function placeHeads(){heads.forEach((h,ci)=>{const ids=order[ci].filter(s=>pos[s]&&shown(s));h.classList.toggle('off',!ids.length);if(!ids.length)return;
+  h.style.left=Math.min(...ids.map(s=>pos[s].x))+'px';h.style.top=(Math.min(...ids.map(s=>pos[s].y))-24)+'px'})}
+function overlaps(a,b){const A=size(a),B=size(b);return pos[a].x<pos[b].x+B.w&&pos[b].x<pos[a].x+A.w&&pos[a].y<pos[b].y+B.h+GAP&&pos[b].y<pos[a].y+A.h+GAP}
+function resolve(){const ids=shownIds().sort((a,b)=>pos[a].y-pos[b].y||pos[a].x-pos[b].x);
+  for(let i=0;i<ids.length;i++)for(let j=0;j<i;j++){const a=ids[j],b=ids[i];if(overlaps(a,b))pos[b].y=pos[a].y+size(a).h+GAP}
+  ids.forEach(place);placeHeads()}
+function tidy(){order.forEach(col=>{const ids=col.filter(shown).sort((a,b)=>pos[a].y-pos[b].y);let y=TOP;ids.forEach(sid=>{pos[sid].y=y;y+=size(sid).h+GAP})});
+  Object.keys(pos).forEach(place);placeHeads();save();draw()}
+const save=()=>{store.set('pos',pos);store.set('closed',Object.keys(cards).filter(s=>cards[s].classList.contains('closed')))};
+
+// ---------------------------------------------------------------- view: pan, zoom, fit
+const view={x:0,y:0,k:1};
+function applyView(){stage.style.transform='translate('+view.x+'px,'+view.y+'px) scale('+view.k+')';document.getElementById('zlabel').textContent=Math.round(view.k*100)+'%'}
+function bbox(){let x0=1e9,y0=1e9,x1=-1e9,y1=-1e9;const ids=shownIds();if(!ids.length)return {x0:0,y0:0,x1:1,y1:1};ids.forEach(s=>{const z=size(s);x0=Math.min(x0,pos[s].x);y0=Math.min(y0,pos[s].y-30);x1=Math.max(x1,pos[s].x+z.w);y1=Math.max(y1,pos[s].y+z.h)});return {x0,y0,x1,y1}}
+function fit(){const b=bbox(),W=main.clientWidth,H=main.clientHeight,pad=28;view.k=Math.max(.15,Math.min(1.4,(W-2*pad)/(b.x1-b.x0),(H-2*pad)/(b.y1-b.y0)));
+  view.x=(W-(b.x1-b.x0)*view.k)/2-b.x0*view.k;view.y=pad-b.y0*view.k;applyView()}
+function zoomAt(k,cx,cy){k=Math.max(.15,Math.min(2.5,k));view.x=cx-(cx-view.x)*k/view.k;view.y=cy-(cy-view.y)*k/view.k;view.k=k;applyView()}
+main.addEventListener('wheel',e=>{e.preventDefault();const r=main.getBoundingClientRect();zoomAt(view.k*Math.exp(-e.deltaY*.0015),e.clientX-r.left,e.clientY-r.top)},{passive:false});
+document.getElementById('zin').addEventListener('click',()=>zoomAt(view.k*1.2,main.clientWidth/2,main.clientHeight/2));
+document.getElementById('zout').addEventListener('click',()=>zoomAt(view.k/1.2,main.clientWidth/2,main.clientHeight/2));
+document.getElementById('fit').addEventListener('click',fit);
+function centreOn(elm){const r=elm.getBoundingClientRect(),m=main.getBoundingClientRect();if(r.left>m.left+40&&r.right<m.right-460&&r.top>m.top+40&&r.bottom<m.bottom-40)return;
+  view.x+=m.left+(m.width-440)/2-(r.left+r.width/2);view.y+=m.top+m.height/2-(r.top+r.height/2);applyView()}
+let pan=null;
+main.addEventListener('pointerdown',e=>{if(e.target.closest('.card,button,select,input,aside'))return;pan={x:e.clientX,y:e.clientY,vx:view.x,vy:view.y,moved:false};main.setPointerCapture(e.pointerId);main.classList.add('panning')});
+main.addEventListener('pointermove',e=>{if(!pan)return;const dx=e.clientX-pan.x,dy=e.clientY-pan.y;if(Math.abs(dx)+Math.abs(dy)>3)pan.moved=true;view.x=pan.vx+dx;view.y=pan.vy+dy;applyView()});
+main.addEventListener('pointerup',()=>{if(pan&&!pan.moved)clear();pan=null;main.classList.remove('panning')});
+
+// ---------------------------------------------------------------- dragging a card; a click without movement folds it
+function startDrag(e,sid){if(e.button!==0)return;e.stopPropagation();const h=e.currentTarget;h.setPointerCapture(e.pointerId);
+  drag={sid,x:e.clientX,y:e.clientY,px:pos[sid].x,py:pos[sid].y,moved:false};
+  h.onpointermove=ev=>{const dx=(ev.clientX-drag.x)/view.k,dy=(ev.clientY-drag.y)/view.k;if(!drag.moved&&Math.abs(dx)+Math.abs(dy)<4/view.k)return;
+    drag.moved=true;cards[sid].classList.add('dragging');pos[sid]={x:drag.px+dx,y:drag.py+dy};place(sid);draw()};
+  h.onpointerup=()=>{h.onpointermove=h.onpointerup=null;cards[sid].classList.remove('dragging');const moved=drag.moved;drag=null;
+    if(moved){resolve();save();draw()}else fold(sid)}}
+function fold(sid,force){const c=cards[sid];const closed=force==null?!c.classList.contains('closed'):force;c.classList.toggle('closed',closed);
+  c.querySelector('.head').setAttribute('aria-expanded',!closed);resolve();save();draw()}
+
+// ---------------------------------------------------------------- links: between systems (default) and between requirements
+const modeSel=document.getElementById('linkmode');
+const applyMode=m=>{['systems','reqs','none'].forEach(x=>main.classList.toggle('mode-'+x,x===m));modeSel.value=m};
+modeSel.addEventListener('change',()=>{store.set('links',modeSel.value);applyMode(modeSel.value);draw()});
+const agg={};
+Object.keys(R).sort().forEach(rid=>{const q=R[rid];
+  q.kids.forEach(k=>{const t=R[k].soi,key=q.soi+'>'+t;(agg[key]=agg[key]||{from:q.soi,to:t,n:0,asis:false,pairs:[]}).pairs.push([rid,k])});
+  q.asis.forEach(a=>{const key=q.soi+'>'+a+'>as-is';(agg[key]=agg[key]||{from:q.soi,to:a,n:0,asis:true,pairs:[]}).pairs.push([rid,null])})});
+Object.values(agg).forEach(e=>e.n=e.pairs.length);
+const edges=Object.keys(agg).sort().map(k=>agg[k]), outs={}, ins={};
+edges.forEach(e=>{const g=document.createElementNS(NS,'g');g.setAttribute('class','edge'+(e.asis?' asis':''));g.style.setProperty('--c',S[e.from].colour);
+  const t=document.createElementNS(NS,'title');t.textContent=e.n+' requirement'+(e.n>1?'s':'')+(e.asis?' passed as-is':' derived')+' from '+e.from+' to '+e.to;
+  const p=document.createElementNS(NS,'path');p.setAttribute('class','ep');p.style.strokeWidth=(1.4+Math.log2(e.n)*1.4).toFixed(2);
+  const c=document.createElementNS(NS,'circle');c.setAttribute('r',e.n>9?11:9);const x=document.createElementNS(NS,'text');x.textContent=e.n;
+  g.append(t,p,c,x);svg.append(g);Object.assign(e,{g,p,c,x,t});(outs[e.from]=outs[e.from]||[]).push(e);(ins[e.to]=ins[e.to]||[]).push(e)});
+const paths=[];
+Object.keys(R).sort().forEach(rid=>{const q=R[rid];
+  q.kids.forEach(k=>paths.push({from:rid,to:k,asis:false,c:S[q.soi].colour}));
+  q.asis.forEach(a=>paths.push({from:rid,toCard:a,asis:true,c:S[q.soi].colour}))});
+paths.forEach(p=>{const e=document.createElementNS(NS,'path');e.setAttribute('class','path'+(p.asis?' asis':''));e.style.setProperty('--c',p.c);svg.append(e);p.el=e});
+const bend=(ax,bx)=>Math.max(50,Math.abs(bx-ax)/2)*(bx>=ax?1:-1);
+const curve=(ax,ay,bx,by)=>{const dx=bend(ax,bx);return 'M'+ax+','+ay+' C'+(ax+dx)+','+ay+' '+(bx-dx)+','+by+' '+bx+','+by};
+function rectOf(sid){const z=size(sid);return {l:pos[sid].x,r:pos[sid].x+z.w,t:pos[sid].y,b:pos[sid].y+z.h}}
+const headMid=sid=>pos[sid].y+cards[sid].querySelector('.head').offsetHeight/2;
+function anchor(rid,toward){const sid=R[rid].soi,c=cards[sid],B=rectOf(sid),right=toward>=(B.l+B.r)/2;
+  if(c.classList.contains('closed'))return {x:right?B.r:B.l,y:headMid(sid)};
+  const b=bubbles[rid];return {x:right?B.r:B.l,y:B.t+b.offsetTop+b.offsetHeight/2}}  // at the card's edge, level with the bubble (offsetTop is relative to the card)
+function draw(){const b=bbox();svg.setAttribute('width',Math.max(1,b.x1+200));svg.setAttribute('height',Math.max(1,b.y1+200));
+  const B={};Object.keys(cards).forEach(s=>B[s]=rectOf(s));
+  const spread=(all,sid,key,other)=>{const list=all.filter(e=>e.n>0),bx=B[sid],n=list.length,pad=Math.min(16,(bx.b-bx.t)/4);
+    list.slice().sort((a,b)=>B[a[other]].t-B[b[other]].t).forEach((e,i)=>{e[key]=bx.t+pad+(i+.5)*(bx.b-bx.t-2*pad)/n})};
+  Object.keys(outs).forEach(s=>spread(outs[s],s,'ya','to'));Object.keys(ins).forEach(s=>spread(ins[s],s,'yb','from'));
+  edges.forEach(e=>{if(!e.n)return;const f=B[e.from],t=B[e.to],right=(t.l+t.r)/2>=(f.l+f.r)/2;const ax=right?f.r:f.l,bx=right?t.l:t.r,dx=bend(ax,bx);
+    e.p.setAttribute('d',curve(ax,e.ya,bx,e.yb));
+    const mx=(ax+3*(ax+dx)+3*(bx-dx)+bx)/8,my=(e.ya+3*e.ya+3*e.yb+e.yb)/8;e.c.setAttribute('cx',mx);e.c.setAttribute('cy',my);e.x.setAttribute('x',mx);e.x.setAttribute('y',my)});
+  paths.forEach(p=>{if(p.el.classList.contains('off'))return;const tb=p.asis?B[p.toCard]:B[R[p.to].soi],fb=B[R[p.from].soi];
+    const a=anchor(p.from,(tb.l+tb.r)/2);const b=p.asis?{x:(tb.l+tb.r)/2>=(fb.l+fb.r)/2?tb.l:tb.r,y:headMid(p.toCard)}:anchor(p.to,(fb.l+fb.r)/2);
+    p.el.setAttribute('d',curve(a.x,a.y,b.x,b.y))})}
+function hover(sid,on){if(drag)return;main.classList.toggle('hovering',on);cards[sid].classList.toggle('hot',on);edges.forEach(e=>e.g.classList.toggle('hot',on&&(e.from===sid||e.to===sid)))}
+
+// ---------------------------------------------------------------- selection, lineage, details
+function lineage(rid){const set=new Set([rid]);const up=r=>R[r].up.forEach(p=>{if(R[p]&&vis(p)&&!set.has(p)){set.add(p);up(p)}});const down=r=>R[r].kids.forEach(k=>{if(vis(k)&&!set.has(k)){set.add(k);down(k)}});up(rid);down(rid);return set}
+function select(rid){const L=lineage(rid),inLine=new Set([...L].map(r=>R[r].soi));R[rid].asis.forEach(a=>inLine.add(a));
+  main.classList.add('focus');Object.entries(bubbles).forEach(([r,b])=>{b.classList.toggle('on',L.has(r));b.classList.toggle('sel',r===rid)});
+  Object.entries(cards).forEach(([s,c])=>c.classList.toggle('inline',inLine.has(s)));
+  paths.forEach(p=>p.el.classList.toggle('on',L.has(p.from)&&(p.asis||L.has(p.to))));
+  inLine.forEach(s=>cards[s].classList.remove('closed'));resolve();draw();show(rid);centreOn(bubbles[rid])}
+function clear(){main.classList.remove('focus');Object.values(bubbles).forEach(b=>b.classList.remove('on','sel'));Object.values(cards).forEach(c=>c.classList.remove('inline'));
+  paths.forEach(p=>p.el.classList.remove('on'));panel.classList.remove('open')}
+function chip(rid){const q=R[rid];const b=el('button','b'+(q.der.length?' der':'')+(q.asis.length?' asis':''),rid);b.type='button';b.style.setProperty('--sys',S[q.soi].colour);b.title=q.text;b.addEventListener('click',()=>select(rid));return b}
+function sysChip(sid){const b=el('button','b',sid);b.type='button';b.style.setProperty('--sys',S[sid].colour);b.addEventListener('click',()=>{fold(sid,false);centreOn(cards[sid])});return b}
+function show(rid){const q=R[rid],s=S[q.soi];panel.innerHTML='';
+  const x=el('button','close','Close');x.type='button';x.addEventListener('click',clear);panel.append(x);
+  const id=el('div','rid',rid);id.style.color='color-mix(in srgb,'+s.colour+',white var(--inkmix))';panel.append(id,el('div','sysname',s.name+' · '+s.within),el('div','stmt',q.text));
+  const t=el('table');const row=(k,v)=>{if(v==null||(Array.isArray(v)&&!v.length)||v==='')return;const tr=el('tr');tr.append(el('th','',k));const td=el('td');if(Array.isArray(v))v.forEach(n=>td.append(n));else td.textContent=v;tr.append(td);t.append(tr)};
+  row('Need',q.need);row('Function',q.fn.join(', '));row('Derived from',q.up.filter(r=>R[r]).map(chip));row('Allocated to',q.der.map(sysChip));row('As-is to',q.asis.map(sysChip));
+  row('Decomposed to',q.kids.map(chip));row('Phase',q.phase);
+  if(q.ver.startsWith('Integration ')){const ids=q.ver.slice(12).split(',').map(v=>v.trim()).filter(v=>R[v]);row('Verification',[document.createTextNode('Integration of '),...ids.map(chip)])}else row('Verification',q.ver);
+  row('Realised by',q.real);row('Decisions',q.dec);panel.append(t);panel.classList.add('open')}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')clear()});
+
+// ---------------------------------------------------------------- toolbar
+document.getElementById('expand').addEventListener('click',()=>{Object.values(cards).forEach(c=>c.classList.remove('closed'));tidy();fit()});
+document.getElementById('collapse').addEventListener('click',()=>{Object.values(cards).forEach(c=>c.classList.add('closed'));tidy();fit()});
+document.getElementById('tidy').addEventListener('click',()=>{tidy();fit()});
+document.getElementById('reset').addEventListener('click',()=>{Object.keys(cards).forEach(s=>{const c=order[order.length-1].includes(s);cards[s].classList.toggle('closed',c);cards[s].querySelector('.head').setAttribute('aria-expanded',!c)});
+  autoLayout();save();draw();fit()});
+document.getElementById('filter').addEventListener('input',e=>{const v=e.target.value.toLowerCase().trim();main.classList.toggle('filtering',!!v);
+  Object.entries(bubbles).forEach(([r,b])=>{const hit=!!v&&(r.toLowerCase().includes(v)||R[r].text.toLowerCase().includes(v));b.classList.toggle('match',hit);if(hit)cards[R[r].soi].classList.remove('closed')});resolve();draw()});
+const themeSel=document.getElementById('theme');
+const applyTheme=t=>{if(t==='auto')document.documentElement.removeAttribute('data-theme');else document.documentElement.setAttribute('data-theme',t);themeSel.value=t};
+themeSel.addEventListener('change',()=>{store.set('theme',themeSel.value);applyTheme(themeSel.value)});
+
+// ---------------------------------------------------------------- phase filter: one phase, or that phase and the ones before it
+const phaseSel=document.getElementById('phase'), earlier=document.getElementById('earlier');
+let vis=()=>true;
+function applyPhase(){const v=phaseSel.value,p=Number(v),cum=earlier.checked;earlier.disabled=v==='all';
+  vis=rid=>v==='all'||(cum?Number(R[rid].phase)<=p:Number(R[rid].phase)===p);
+  let n=0;Object.entries(bubbles).forEach(([r,b])=>{const on=vis(r);b.classList.toggle('off',!on);if(on)n++});
+  Object.entries(cards).forEach(([s,c])=>c.classList.toggle('off',!S[s].reqs.some(vis)));
+  edges.forEach(e=>{e.n=e.pairs.filter(([a,b])=>vis(a)&&(b==null||vis(b))).length;e.g.classList.toggle('off',!e.n);if(!e.n)return;
+    e.x.textContent=e.n;e.c.setAttribute('r',e.n>9?11:9);e.p.style.strokeWidth=(1.4+Math.log2(e.n)*1.4).toFixed(2);
+    e.t.textContent=e.n+' requirement'+(e.n>1?'s':'')+(e.asis?' passed as-is':' derived')+' from '+e.from+' to '+e.to});
+  paths.forEach(p=>p.el.classList.toggle('off',!vis(p.from)||(!p.asis&&!vis(p.to))));
+  document.getElementById('count').textContent=v==='all'?'':n+' of '+Object.keys(R).length+' requirements';
+  document.getElementById('empty').classList.toggle('off',n>0);
+  store.set('phase',{v,cum})}
+function phaseChanged(){clear();applyPhase();tidy();fit()}
+phaseSel.addEventListener('change',phaseChanged);earlier.addEventListener('change',phaseChanged);
+
+// ---------------------------------------------------------------- start
+applyTheme(store.get('theme','auto'));applyMode(store.get('links','systems'));
+// first view: the system and the subsystems open, the components folded to their headers so the whole tree fits
+store.get('closed',order[order.length-1]).forEach(s=>{if(cards[s]){cards[s].classList.add('closed');cards[s].querySelector('.head').setAttribute('aria-expanded','false')}});
+{const ph=store.get('phase',{v:'all',cum:false});phaseSel.value=ph.v;earlier.checked=!!ph.cum;applyPhase()}
+autoLayout();const saved=store.get('pos',null);
+if(saved&&Object.keys(cards).every(s=>saved[s])){Object.keys(cards).forEach(s=>{pos[s]={x:saved[s].x,y:saved[s].y};place(s)});placeHeads();resolve()}
+draw();fit();
+window.addEventListener('resize',draw);
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>{resolve();draw()});
+if(location.hash&&R[location.hash.slice(1)])select(location.hash.slice(1));
+})();
+</script></body></html>

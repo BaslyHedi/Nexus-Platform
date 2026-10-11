@@ -8,6 +8,7 @@ Numbering is `SYS-nn`, unique across the project and never reused. Format, and h
 |---|---|
 | **SYS-01** | Layered over-discharge protection, not a cutoff module |
 | **SYS-02** | Five phases, paced by learning; Phase 1 is foundation, not driving |
+| **SYS-03** | Conventional systems engineering: one physical hierarchy, logical and physical views at each level |
 
 ---
 
@@ -57,3 +58,43 @@ localization (301, 302) are Phase 4 with planning (303) in Phase 5. Phase 1's re
 that settle the matrix and the flash protocol, are listed in the phase plan.
 
 ---
+
+## SYS-03 · Conventional systems engineering: one physical hierarchy, logical and physical views at each level
+
+**Decision (2026-10-11).** NEXUS is defined with the conventional concepts of systems engineering and uses their terms:
+ISO/IEC/IEEE 15288:2023, ISO/IEC/IEEE 42010:2022, SEBoK, the NASA Systems Engineering Handbook (SP-2016-6105 Rev 2), the
+SysML relations and the Automotive SPICE 4.0 V as orientation. It claims conformance with none of them; the method file says
+what is taken from each and what is NEXUS's own. The method is
+[`../system/method.md`](../system/method.md).
+
+- The hierarchy is the **physical breakdown**. The vehicle is the first system of interest, and each system element becomes
+  one in turn (recursion), until a bought part, a hardware element drawn here, or a software element, which is handed over.
+  Element IDs are hierarchical (`Nexus-Physical-01-04` inside `Nexus-Physical-01`), and a node is decomposed into all its
+  elements, hardware and software. Requirements are allocated to elements, never to repositories: which repository
+  implements which software element is configuration management, a table in the enabling system.
+- At each level the architecture has a **logical view** and a **physical view** of the same system, related by
+  **allocation**. The components of the logical architecture are logical components, not levels of the hierarchy.
+- A requirement is **allocated** to an element as it is, or **derived** into new requirements where the architecture adds
+  something. Requirements trace to functions and are allocated to physical elements. Every requirement has a verification.
+- **IDs name their view**: logical components are `Nexus-Logical-DNN`, physical elements `Nexus-Physical-NN`. The logical
+  components were `Nexus-SubSys-DNN` until this decision and keep their numbers (`Nexus-SubSys-504` is `Nexus-Logical-504`),
+  so no ID is reused. "Logic" was rejected as the prefix: it already names the 5 V logic branch and the LOGIC switch (MEC-06),
+  and "sub-system" is the usual word for a physical breakdown, which is the confusion this decision removes.
+- **The levels carry the common names** of NASA, SEBoK and ASPICE, since ISO 15288 names none: the vehicle is the
+  **system**, its system elements are **subsystems**, and the elements inside a subsystem are **components**. The requirement
+  folders are `system/`, `subsystems/` and `components/<subsystem>/`.
+- Requirements are Markdown, one file per system of interest or element, validated by `tools/check-requirements.py`.
+
+**Why.**
+
+- **The standards already answer this**, and a home-made method would have to rediscover the same answers. A first draft did:
+  it stacked the logical architecture above the physical one as two levels, which made a 1:1 pair such as 401 and the CAN
+  bus look like two systems, and needed a "merge" rule to undo it. As two views of one level, they are simply one allocation.
+- Allocating requirements to the domains HW, SW and SYS gives no root and no tree. Domain stays a property of a leaf.
+- The hand-over at the software element matches the automotive split (ASPICE SYS to SWE) and keeps this repository free of code.
+- Markdown rather than YAML as the source: the PR is where this is reviewed, and a Markdown block reads and diffs there
+  while the checker gives the same link guarantees.
+
+**Consequence.** The physical view is drawn ([`../system/physical-architecture.md`](../system/physical-architecture.md)); the
+Phase 1 allocation and the Phase 1 requirements follow it ([`../requirements/`](../requirements/README.md)): the vehicle
+as a black box, the enabling system beside it, the system elements, and the elements inside each node, handed over to their repositories.

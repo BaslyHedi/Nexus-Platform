@@ -847,7 +847,7 @@ if __name__ == "__main__":
         (None, 'A SERVO', f"LD-1501MG plug: white (signal) {N('A', 'c', 14)} at the FRONT, red {silk('A', 'c', 13)}, black {silk('A', 'c', 12)} - HW-21"),
         (None, 'A I2C-A', 'INA226 GND, VCC, SCL, SDA - F-F leads, signal only'),
         (None, 'A I2C-B', 'motor module SCL / SDA / GND - never its 5 V pin'),
-        (None, 'B CAN', 'twisted H, L + GND to DE-9 stub and FRDM P12 (HW-09, HW-18)'),
+        (None, 'B CAN', 'twisted H, L + GND to DE-9 stub and FRDM J7 (HW-09, HW-18)'),
         (None, 'B TERM', 'jumper ON = this end terminated (120 Ω), OFF = open'),
     ]
     y = table(y + 26, 'WHAT PLUGS IN WHERE', ['Connector', 'Cable'], ext_rows, [12, 96])

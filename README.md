@@ -22,7 +22,7 @@ the vehicle hardware is largely defined and built, and the software repositories
 2026-10-11 and are still empty. What each phase delivers is in [`system/phases.md`](system/phases.md).
 
 Worth reading first: [`decisions/`](decisions/README.md) (why it is this way), [`system/phases.md`](system/phases.md)
-(what is built when), and [`system/renders/Nexus-Platform-System-Layout.svg`](system/renders/Nexus-Platform-System-Layout.svg)
+(what is built when), and [`system/renders/Nexus-Platform-Logical-Architecture.svg`](system/renders/Nexus-Platform-Logical-Architecture.svg)
 (the decomposition).
 
 ## Repositories
@@ -61,7 +61,8 @@ NXP's design files). **No vendor document is redistributed here**; see below.
 
 | Folder | Owns |
 |---|---|
-| [`system/README.md`](system/README.md) | What NEXUS must **do** - the top-down functional decomposition and the `Nexus-SubSys-DNN` IDs, the **phase plan** (`phases.md`); its diagram is in `renders/`, written by the script in `scripts/` |
+| [`requirements/`](requirements/README.md) | The requirements, one Markdown file per system of interest or element, derived and allocated per [`system/method.md`](system/method.md) |
+| [`system/README.md`](system/README.md) | What NEXUS must **do** - the logical and physical views of the architecture with their `Nexus-Logical-DNN` and `Nexus-Physical-NN` IDs, the method, the **phase plan** (`phases.md`); its diagram is in `renders/`, written by the script in `scripts/` |
 | [`decisions/README.md`](decisions/README.md) | Every settled decision and the reasoning behind it, split **HW / MEC / SYS / SW**. Its README owns the numbering rules |
 | [`hardware/README.md`](hardware/README.md) | Build drawings, to scale - chassis layout, wiring schematic, STM32 carrier - the SVGs in `renders/`, the script that writes the carrier's in `scripts/` |
 | [`mechanical/README.md`](mechanical/README.md) | The parts we make, in `cad/` (`fascia.scad` is the source of truth, plus the print files and the proposed carrier tray), the scripts that build and animate the model in `scripts/`, and their output in `renders/` |
@@ -122,4 +123,14 @@ the SVG; this fails if an SVG has drifted from its script:
 
 ```bash
 python3 tools/check-drawings.py
+```
+
+## Checking the requirements
+
+Requirements are Markdown blocks with fixed fields. This checks their format, links, trace to the drawings and writing
+rules, and fails when the generated `requirements/TRACE.md` or `requirements/renders/traceability.html` is stale (`--write`
+regenerates both):
+
+```bash
+python3 tools/check-requirements.py
 ```
