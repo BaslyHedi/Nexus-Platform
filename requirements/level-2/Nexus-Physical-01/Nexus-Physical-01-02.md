@@ -1,6 +1,6 @@
 # Nexus-Physical-01-02 - Carrier boards A and B
 
-Hardware element, level 2, designed in this project: drawn in [stm32-carrier](../hardware/renders/stm32-carrier.svg) (MEC-15, HW-19). Its requirements are what the drawing must satisfy. Written to [../system/method.md](../system/method.md) and [rules.md](rules.md).
+Hardware element, level 2, designed in this project: drawn in [stm32-carrier](../../../hardware/renders/stm32-carrier.svg) (MEC-15, HW-19). Its requirements are what the drawing must satisfy. Written to [../system/method.md](../../../system/method.md) and [rules.md](../../rules.md).
 
 - **Purpose and boundary.** The two kit boards the Discovery board drops onto, with the transceiver module, the R3 jumper, R4, C2 and the headers.
 - **Interfaces.** The Discovery board [01-01](Nexus-Physical-01-01.md), the transceiver module [01-03](Nexus-Physical-01-03.md), board C of the power element, the motor driver and servo headers.

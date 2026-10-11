@@ -1,10 +1,10 @@
 # Nexus-Physical-04 - Vehicle CAN bus
 
-System element, level 1. Written to [../system/method.md](../system/method.md) and [rules.md](rules.md).
+System element, level 1. Written to [../system/method.md](../../system/method.md) and [rules.md](../rules.md).
 
 - **Purpose and boundary.** The bus wiring, its two terminations and the DE-9 stub on the fascia. What travels on it is defined by the CAN matrix, released by the enabling system.
 - **Interfaces.** [Nexus-Physical-01](Nexus-Physical-01.md) and [Nexus-Physical-02](Nexus-Physical-02.md) at its two ends; the bench PC at the DE-9 stub.
-- **Allocated functions.** See the [allocation](../system/physical-architecture.md): 401 F1, 503 F4, 504 F1.
+- **Allocated functions.** See the [allocation](../../system/physical-architecture.md): 401 F1, 503 F4, 504 F1.
 - **Modes.** Idle; carrying traffic; faulted (error frames or bus-off).
 
 ## Requirements

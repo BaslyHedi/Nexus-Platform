@@ -1,6 +1,6 @@
 # Nexus-Physical-01-01 - Discovery board
 
-Hardware element, level 2, bought: its requirements state what the node relies on, checked against the vendor documentation; the recursion stops here. Written to [../system/method.md](../system/method.md) and [rules.md](rules.md).
+Hardware element, level 2, bought: its requirements state what the node relies on, checked against the vendor documentation; the recursion stops here. Written to [../system/method.md](../../../system/method.md) and [rules.md](../../rules.md).
 
 - **Purpose and boundary.** The STM32F4DISCOVERY, board revision MB997B (BOM 1.2): the STM32F407, the on-board ST-LINK V2 and four user LEDs.
 - **Interfaces.** The carrier [01-02](Nexus-Physical-01-02.md) through headers P1 and P2; the bench PC through the ST-LINK USB port.

@@ -1,6 +1,6 @@
 # Nexus-Enabling - Enabling system: build, release and bench tools
 
-Enabling system (ISO/IEC/IEEE 15288), level 0, beside the vehicle. Its requirements are not derived from the vehicle's: it serves the vehicle through its life cycle without being part of it. Written to [../system/method.md](../system/method.md) and [rules.md](rules.md).
+Enabling system (ISO/IEC/IEEE 15288), level 0, beside the vehicle. Its requirements are not derived from the vehicle's: it serves the vehicle through its life cycle without being part of it. Written to [../system/method.md](../../system/method.md) and [rules.md](../rules.md).
 
 - **Purpose and boundary.** The repositories and their CI, the release tags, the `kas` build of the Linux image, the CAN matrix as a released artifact, the configuration table below, and the bench PC with the USB-CAN adapter and the ST-LINK.
 - **Interfaces.** The vehicle, at its diagnostic port and its debug ports; the software elements, which it builds and releases.
@@ -16,13 +16,13 @@ IDs of the elements it implements.
 
 | Software element | Repository | Build target |
 |---|---|---|
-| [Nexus-Physical-01-04](Nexus-Physical-01-04.md) Bootloader | `Nexus-STM32-FBL` | the bootloader |
-| [Nexus-Physical-01-05](Nexus-Physical-01-05.md) FBL-Updater | `Nexus-STM32-FBL` | the FBL-Updater |
-| [Nexus-Physical-01-06](Nexus-Physical-01-06.md) Application | `Nexus-STM32-App` | the application |
-| [Nexus-Physical-02-03](Nexus-Physical-02-03.md) Linux image | `Nexus-IMX91-Yocto` | the image |
-| [Nexus-Physical-02-04](Nexus-Physical-02-04.md) Heartbeat program | its own repository, named when created | the program |
-| [Nexus-Physical-02-05](Nexus-Physical-02-05.md) Flashing client | `Nexus-CAN-Utils` | the flashing client |
-| [Nexus-Physical-02-06](Nexus-Physical-02-06.md) Test applications | one repository each, named when created | one program each |
+| [Nexus-Physical-01-04](../level-2/Nexus-Physical-01/Nexus-Physical-01-04.md) Bootloader | `Nexus-STM32-FBL` | the bootloader |
+| [Nexus-Physical-01-05](../level-2/Nexus-Physical-01/Nexus-Physical-01-05.md) FBL-Updater | `Nexus-STM32-FBL` | the FBL-Updater |
+| [Nexus-Physical-01-06](../level-2/Nexus-Physical-01/Nexus-Physical-01-06.md) Application | `Nexus-STM32-App` | the application |
+| [Nexus-Physical-02-03](../level-2/Nexus-Physical-02/Nexus-Physical-02-03.md) Linux image | `Nexus-IMX91-Yocto` | the image |
+| [Nexus-Physical-02-04](../level-2/Nexus-Physical-02/Nexus-Physical-02-04.md) Heartbeat program | its own repository, named when created | the program |
+| [Nexus-Physical-02-05](../level-2/Nexus-Physical-02/Nexus-Physical-02-05.md) Flashing client | `Nexus-CAN-Utils` | the flashing client |
+| [Nexus-Physical-02-06](../level-2/Nexus-Physical-02/Nexus-Physical-02-06.md) Test applications | one repository each, named when created | one program each |
 | The CAN matrix, an interface definition and not an element | `Nexus-CAN-Utils` | the matrix release and its generated bindings |
 
 ## Requirements

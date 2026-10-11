@@ -1,6 +1,6 @@
 # Nexus-Physical-02-02 - SD card
 
-Hardware element, level 2, bought: its requirements state what the node relies on, checked against the vendor documentation; the recursion stops here. Written to [../system/method.md](../system/method.md) and [rules.md](rules.md).
+Hardware element, level 2, bought: its requirements state what the node relies on, checked against the vendor documentation; the recursion stops here. Written to [../system/method.md](../../../system/method.md) and [rules.md](../../rules.md).
 
 - **Purpose and boundary.** The microSD card the board boots from (BOM 5.3).
 - **Interfaces.** The FRDM board [02-01](Nexus-Physical-02-01.md).

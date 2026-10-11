@@ -1,9 +1,9 @@
 # Nexus-Physical-01-03 - CAN transceiver module
 
-Hardware element, level 2, bought: its requirements state what the node relies on, checked against the vendor documentation; the recursion stops here. Written to [../system/method.md](../system/method.md) and [rules.md](rules.md).
+Hardware element, level 2, bought: its requirements state what the node relies on, checked against the vendor documentation; the recursion stops here. Written to [../system/method.md](../../../system/method.md) and [rules.md](../../rules.md).
 
 - **Purpose and boundary.** The SN65HVD230 module (BOM 4.1), with its own 120 Ω termination.
-- **Interfaces.** The carrier [01-02](Nexus-Physical-01-02.md) on the logic side; the bus [Nexus-Physical-04](Nexus-Physical-04.md) on the CAN side.
+- **Interfaces.** The carrier [01-02](Nexus-Physical-01-02.md) on the logic side; the bus [Nexus-Physical-04](../../level-1/Nexus-Physical-04.md) on the CAN side.
 - **Allocated functions.** 401 F1.
 - **Modes.** None.
 

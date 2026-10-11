@@ -1,10 +1,10 @@
 # Nexus-Vehicle - NEXUS vehicle
 
-System-of-interest, level 0. Its requirements are the system requirements, written as a black box. Written to [../system/method.md](../system/method.md) and [rules.md](rules.md).
+System-of-interest, level 0. Its requirements are the system requirements, written as a black box. Written to [../system/method.md](../../system/method.md) and [rules.md](../rules.md).
 
-- **Purpose and boundary.** The assembled vehicle, inside the system boundary of both [architecture](../system/renders/Nexus-Platform-Logical-Architecture.svg) [views](../system/renders/Nexus-Platform-Physical-Architecture.svg). It names no element of its own.
+- **Purpose and boundary.** The assembled vehicle, inside the system boundary of both [architecture](../../system/renders/Nexus-Platform-Logical-Architecture.svg) [views](../../system/renders/Nexus-Platform-Physical-Architecture.svg). It names no element of its own.
 - **Interfaces.** Operator, charger, environment, and a PC with the USB-CAN adapter at the diagnostic port (test equipment, part of the enabling system). The remote station joins in Phase 2.
-- **Allocated functions.** All functions of the logical view; Phase 1 uses those listed in the [allocation](../system/physical-architecture.md).
+- **Allocated functions.** All functions of the logical view; Phase 1 uses those listed in the [allocation](../../system/physical-architecture.md).
 - **Modes.** Unpowered; computing only (logic switch on); drive and computing (both switches on).
 
 ## Requirements

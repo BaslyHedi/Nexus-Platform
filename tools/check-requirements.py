@@ -5,7 +5,8 @@
     python3 tools/check-requirements.py --write    # regenerates requirements/TRACE.md and requirements/renders/traceability.html
 
 What it checks, against system/method.md, requirements/README.md (format) and requirements/rules.md (writing):
-  the files     one per system-of-interest or element, named by an ID that the drawings define; the block format and fields
+  the files     one per system-of-interest or element, named by an ID that the drawings define, in the folder of its level
+                (level-0, level-1, level-2/<node>); the block format and fields
   the links     Derived-from one level up and allocated from there; Allocated-to one level down, inside the parent; each plain
                 allocation has a child, an as-is one has none; Integration lists exactly the children
   the trace     Function names a function on the logical drawing whose component exists by the requirement's phase; the
@@ -84,9 +85,16 @@ for line in read(os.path.join(ROOT, 'system', 'physical-architecture.md')).split
 # ------------------------------------------------------------------ the requirement files
 FIELDS = ['Need', 'Function', 'Derived-from', 'Allocated-to', 'Phase', 'Verification', 'Realised-by', 'Decisions']
 reqs, files = {}, {}
-for path in sorted(glob.glob(os.path.join(REQ, 'Nexus-*.md'))):
+def expected_path(sid):
+    """Where a system's file belongs: one folder per level, and level 2 grouped by the node it is inside."""
+    return os.path.join({0: 'level-0', 1: 'level-1', 2: os.path.join('level-2', sid[:17])}[level(sid)], sid + '.md')
+
+
+for path in sorted(glob.glob(os.path.join(REQ, '**', 'Nexus-*.md'), recursive=True)):
     sid = os.path.basename(path)[:-3]
     text = read(path)
+    if os.path.relpath(path, REQ) != expected_path(sid):
+        err(os.path.relpath(path, REQ), f'belongs in requirements/{expected_path(sid)}')
     m = re.match(r'# (\S+) - (.+)\n', text)
     if not m or m.group(1) != sid:
         err(f'{sid}.md', 'the first line is not "# <ID> - <name>"')

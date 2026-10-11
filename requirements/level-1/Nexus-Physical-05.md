@@ -1,10 +1,10 @@
 # Nexus-Physical-05 - Power supply and distribution
 
-System element, level 1. Realised in hardware; the recursion stops here. Written to [../system/method.md](../system/method.md) and [rules.md](rules.md).
+System element, level 1. Realised in hardware; the recursion stops here. Written to [../system/method.md](../../system/method.md) and [rules.md](../rules.md).
 
 - **Purpose and boundary.** Pack, fuses, buses, SW1 and SW2, the 5 V converter with board C, the steering UBEC, the shunt and INA226.
 - **Interfaces.** Supplies [Nexus-Physical-01](Nexus-Physical-01.md), [Nexus-Physical-02](Nexus-Physical-02.md), [Nexus-Physical-07](Nexus-Physical-07.md) and the servo of [Nexus-Physical-08](Nexus-Physical-08.md); the charger and the operator outside.
-- **Allocated functions.** See the [allocation](../system/physical-architecture.md): 101 F1 to F5, 501 F2.
+- **Allocated functions.** See the [allocation](../../system/physical-architecture.md): 101 F1 to F5, 501 F2.
 - **Modes.** Pack disconnected; pack connected, switches off; logic on; drive on.
 
 ## Requirements

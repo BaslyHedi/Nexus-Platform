@@ -72,7 +72,7 @@ requirements from ours (ASPICE SWE.1 onward) and cites our IDs; facts travel one
 
 **Requirements are allocated to elements, never to repositories.** A repository is configuration management, part of the
 enabling system: it holds the implementation of one or more software elements (the bootloader and the FBL-Updater share
-one). The configuration table in [`../requirements/Nexus-Enabling.md`](../requirements/Nexus-Enabling.md) says which
+one). The configuration table in [`../requirements/Nexus-Enabling.md`](../requirements/level-0/Nexus-Enabling.md) says which
 repository and which build target implement each software element.
 
 ## Requirements and their relations

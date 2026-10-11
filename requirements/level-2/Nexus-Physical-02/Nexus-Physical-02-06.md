@@ -1,6 +1,6 @@
 # Nexus-Physical-02-06 - Test applications
 
-Software element, level 2, handed over: the repository in the [configuration table](Nexus-Enabling.md) derives its own software requirements from these and cites their IDs. Written to [../system/method.md](../system/method.md) and [rules.md](rules.md).
+Software element, level 2, handed over: the repository in the [configuration table](../../level-0/Nexus-Enabling.md) derives its own software requirements from these and cites their IDs. Written to [../system/method.md](../../../system/method.md) and [rules.md](../../rules.md).
 
 - **Purpose and boundary.** Two throwaway programs that print their name and version, proving the repository, CI and image chain (T2.1).
 - **Interfaces.** Carried by the Linux image [02-03](Nexus-Physical-02-03.md).

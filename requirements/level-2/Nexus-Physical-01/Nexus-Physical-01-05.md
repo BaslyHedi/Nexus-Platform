@@ -1,6 +1,6 @@
 # Nexus-Physical-01-05 - FBL-Updater
 
-Software element, level 2, handed over: the repository in the [configuration table](Nexus-Enabling.md) derives its own software requirements from these and cites their IDs. Written to [../system/method.md](../system/method.md) and [rules.md](rules.md).
+Software element, level 2, handed over: the repository in the [configuration table](../../level-0/Nexus-Enabling.md) derives its own software requirements from these and cites their IDs. Written to [../system/method.md](../../../system/method.md) and [rules.md](../../rules.md).
 
 - **Purpose and boundary.** An image whose only job is to rewrite the bootloader region, since a bootloader cannot overwrite itself while it runs.
 - **Interfaces.** Started by the bootloader [01-04](Nexus-Physical-01-04.md) like an application.

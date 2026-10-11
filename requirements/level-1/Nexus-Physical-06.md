@@ -1,10 +1,10 @@
 # Nexus-Physical-06 - Chassis and enclosure
 
-System element, level 1. Realised in hardware; the recursion stops here. Written to [../system/method.md](../system/method.md) and [rules.md](rules.md).
+System element, level 1. Realised in hardware; the recursion stops here. Written to [../system/method.md](../../system/method.md) and [rules.md](../rules.md).
 
 - **Purpose and boundary.** The three-deck chassis, the trays and pads, the harness board and the rear fascia.
 - **Interfaces.** Carries every other element; the fascia holds the switches of [Nexus-Physical-05](Nexus-Physical-05.md) and the ports of [Nexus-Physical-01](Nexus-Physical-01.md), [Nexus-Physical-02](Nexus-Physical-02.md) and [Nexus-Physical-04](Nexus-Physical-04.md).
-- **Allocated functions.** See the [allocation](../system/physical-architecture.md): 102 F1 to F3.
+- **Allocated functions.** See the [allocation](../../system/physical-architecture.md): 102 F1 to F3.
 - **Modes.** None.
 
 ## Requirements

@@ -1,9 +1,9 @@
 # Nexus-Physical-02-01 - FRDM board
 
-Hardware element, level 2, bought: its requirements state what the node relies on, checked against the vendor documentation; the recursion stops here. Written to [../system/method.md](../system/method.md) and [rules.md](rules.md).
+Hardware element, level 2, bought: its requirements state what the node relies on, checked against the vendor documentation; the recursion stops here. Written to [../system/method.md](../../../system/method.md) and [rules.md](../../rules.md).
 
 - **Purpose and boundary.** The FRDM-IMX91S (BOM 1.1), with its on-board CAN transceiver, its split termination behind JP1, its SD slot and its debug USB-C port.
-- **Interfaces.** The bus [Nexus-Physical-04](Nexus-Physical-04.md) at header J7; 5 V at USB-C J1; the bench PC at USB-C J11.
+- **Interfaces.** The bus [Nexus-Physical-04](../../level-1/Nexus-Physical-04.md) at header J7; 5 V at USB-C J1; the bench PC at USB-C J11.
 - **Allocated functions.** 101 F5, 401 F1, 501 F1, 503 F4.
 - **Modes.** Off; booting; running.
 

@@ -1,10 +1,10 @@
 # Nexus-Physical-08 - Steering actuator
 
-System element, level 1. Realised in hardware; the recursion stops here. Written to [../system/method.md](../system/method.md) and [rules.md](rules.md).
+System element, level 1. Realised in hardware; the recursion stops here. Written to [../system/method.md](../../system/method.md) and [rules.md](../rules.md).
 
 - **Purpose and boundary.** The LD-1501MG servo and the Ackermann linkage.
 - **Interfaces.** Supplied and commanded through the servo lead from [Nexus-Physical-01](Nexus-Physical-01.md) (6 V from [Nexus-Physical-05](Nexus-Physical-05.md), PWM from Phase 2); the environment through the front wheels.
-- **Allocated functions.** See the [allocation](../system/physical-architecture.md): 202 F1.
+- **Allocated functions.** See the [allocation](../../system/physical-architecture.md): 202 F1.
 - **Modes.** Unpowered; powered and idle (Phase 1).
 
 ## Requirements
