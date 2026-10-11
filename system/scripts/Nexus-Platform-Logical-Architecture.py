@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
-"""The logical architecture drawing, the logical view of the vehicle (../method.md): every Nexus-SubSys-DNN sub-system, its functions, its phase and the flows between them (SYS-02).
+"""The logical view of the vehicle architecture (../method.md): every logical component Nexus-SubSys-DNN, its functions, its phase and the flows between them (SYS-02, SYS-03).
 
     python3 Nexus-Platform-Logical-Architecture.py     # -> ../renders/Nexus-Platform-Logical-Architecture.svg
     python3 ../../tools/check-drawings.py       # fails if the SVG is not what this script writes
 
-The sub-systems are one table, SUBSYSTEMS, in drawing order: id, name, phase, the card's box, and its functions in one or two columns
-(a function is a list of lines; the first line gets the bullet). The phase on a card is the FIRST phase in which the sub-system exists,
+The logical components are called sub-systems here for history; the IDs keep that name. Each is one card() call in drawing order: id, name,
+phase, the card's box, and its functions in one or two columns (a function is a list of lines; the first line gets the bullet). Function
+names are technology-free: a part, a bus or a protocol belongs to the physical view. The phase on a card is the FIRST phase in which it exists,
 and `PHASES` is the one table that says what each phase is called and how its pill looks. What each phase delivers, and which functions
 of a sub-system arrive when, is owned by ../phases.md, never by this drawing. Flows are listed at the bottom in pixels.
 
@@ -111,10 +112,10 @@ def build():
                  f'<path d="M8,0 L0,4 L8,8 z" fill="{c}"/></marker>')
     o += ['</defs>', f'<rect width="{W}" height="{H}" fill="#fbfaf8"/>',
           '<text x="30" y="40" font-size="22" font-weight="700" fill="#1a1a1a">Nexus Platform Logical Architecture</text>',
-          '<text x="30" y="62" font-size="11.5" fill="#555">Functional decomposition into sub-systems · logical view - says '
-          '<tspan font-style="italic">what</tspan> the vehicle must do, not which board does it (hardware allocation is a later view)</text>',
+          '<text x="30" y="62" font-size="11.5" fill="#555">Logical view of the vehicle architecture · the logical components (sub-systems) and their functions · says '
+          '<tspan font-style="italic">what</tspan> the vehicle must do, free of technology; the physical view says what it is built from, and allocation relates the two</text>',
           f'<text x="30" y="80" font-size="11.5" fill="#555">ID scheme <tspan font-family="{MONO}" font-weight="700">Nexus-SubSys-DNN</tspan>'
-          f' - D = functional domain (1–5), NN = sub-system within it. Functions inside a sub-system will be numbered '
+          f' - D = functional domain (1–5), NN = component within it. Functions inside a component will be numbered '
           f'<tspan font-family="{MONO}" font-weight="700">Nexus-SubSys-DNN-Fnn</tspan>.</text>',
           '<text x="1610" y="40" font-size="11" font-weight="700" fill="#b45309" text-anchor="end">DRAFT B · for review</text>',
           '<text x="1610" y="58" font-size="10" fill="#777" text-anchor="end">2026-10-11</text>',
@@ -129,16 +130,16 @@ def build():
 
     # --- row 1: communication & interaction (402), autonomy (303, 302, 301)
     o += card('Nexus-SubSys-402', 'Operator Interface', 2, 250, 118, 240, 145, [
-        ['Accept local controls (buttons)'], ['Show vehicle status (LEDs, display)'], ['Take manual / teleop drive input'],
+        ['Accept local controls'], ['Show vehicle status'], ['Take manual / teleop drive input'],
         ['Take mode & mission requests'], ['Present telemetry to the operator']])
     o += card('Nexus-SubSys-303', 'Planning & Decision', 5, 540, 118, 240, 145, [
         ['Manage mission & route'], ['Decide driving behaviour'], ['Plan a collision-free trajectory'],
         ['Issue motion requests', '(target speed + curvature)']])
     o += card('Nexus-SubSys-302', 'Localization & Mapping', 4, 830, 118, 240, 145, [
-        ['Estimate vehicle pose'], ['Fuse odometry, IMU & perception'], ['Build & maintain the map'],
+        ['Estimate vehicle pose'], ['Fuse odometry, inertial & perception data'], ['Build & maintain the map'],
         ['Report localization confidence']])
     o += card('Nexus-SubSys-301', 'Environment Perception', 4, 1120, 118, 240, 145, [
-        ['Sense surroundings', '(camera, LiDAR, range sensors)'], ['Detect & track obstacles'],
+        ['Sense surroundings'], ['Detect & track obstacles'],
         ['Detect drivable space & markers'], ['Report perception confidence']])
 
     # --- the communication backbone is a banner, not a card
@@ -147,9 +148,9 @@ def build():
           f'<text x="262" y="318" font-size="9.5" font-weight="700" fill="#0f766e" font-family="{MONO}">Nexus-SubSys-401</text>',
           '<text x="262" y="338" font-size="13" font-weight="700" fill="#111827">In-Vehicle Communication</text>',
           '<text x="262" y="352" font-size="9" fill="#0f766e">backbone - every electronic sub-system attaches here</text>']
-    for (cx, cy, t) in [(522, 321.5, 'Exchange signals between nodes (CAN)'), (822, 321.5, 'Time-synchronise nodes'),
-                        (522, 338.5, 'Route between CAN and service middleware'),
-                        (822, 338.5, 'Publish services / topics (ROS 2 · SOME/IP)')]:
+    for (cx, cy, t) in [(522, 321.5, 'Exchange signals between nodes'), (822, 321.5, 'Time-synchronise nodes'),
+                        (522, 338.5, 'Route between signals and services'),
+                        (822, 338.5, 'Publish services & topics')]:
         o += [f'<circle cx="{cx}" cy="{cy}" r="1.8" fill="#0f766e"/>',
               f'<text x="{cx + 7}" y="{int(cy + 3.5)}" font-size="10.5" fill="#374151">{esc(t)}</text>']
     o += pill(1308, 307, 1)
@@ -157,30 +158,30 @@ def build():
 
     # --- row 2: external connectivity (403), vehicle motion control (203), actuation (201, 202)
     o += card('Nexus-SubSys-403', 'External Connectivity', 2, 250, 400, 240, 145, [
-        ['Link to remote station', '(Wi-Fi, Ethernet)'], ['Carry remote sessions & teleop'], ['Stream telemetry off-board'],
+        ['Link to remote station'], ['Carry remote sessions & teleop'], ['Stream telemetry off-board'],
         ['Carry update & diagnostic data']])
     o += card('Nexus-SubSys-203', 'Vehicle Motion Control', 2, 540, 400, 530, 225, [
         ['Arbitrate motion requests', '(manual · teleop · autonomous)'],
         ['Translate speed + curvature into', 'wheel-speed & steer-angle setpoints'],
         ['Close speed & steering control loops']], [
         ['Enforce speed, accel. & jerk limits'],
-        ['Estimate vehicle motion state', '(odometry from wheel speed, IMU)'],
+        ['Estimate vehicle motion state', '(odometry from wheel speed, inertial data)'],
         ['Execute safe-stop requests'], ['Report motion state']])
     o += ['<rect x="1110" y="390" width="260" height="245" rx="6" fill="none" stroke="#1d4ed8" stroke-width="1" stroke-dasharray="3 3"/>',
           '<text x="1370" y="385" font-size="8.5" font-weight="700" fill="#1d4ed8" text-anchor="end" letter-spacing="1">ACTUATION</text>']
     o += card('Nexus-SubSys-201', 'Propulsion', 1, 1120, 400, 240, 105, [
-        ['Produce drive torque, rear wheels'], ['Track wheel-speed setpoints'], ['Measure wheel speed (encoders)']])
+        ['Produce drive torque, rear wheels'], ['Track wheel-speed setpoints'], ['Measure wheel speed']])
     o += card('Nexus-SubSys-202', 'Steering', 1, 1120, 520, 240, 105, [
         ['Set front wheel angle (Ackermann)'], ['Enforce steer angle & rate limits'], ['Report steering state']])
 
     # --- row 3: vehicle foundation
     o += card('Nexus-SubSys-102', 'Structure & Enclosure', 1, 250, 675, 530, 120, [
-        ['Carry & locate every component', '(3-deck chassis)'], ['Protect harness & electronics']], [
-        ['Expose controls & service ports', '(rear fascia)'], ['Manage heat & vibration']])
+        ['Carry & locate every component'], ['Protect harness & electronics']], [
+        ['Expose controls & service access'], ['Manage heat & vibration']])
     o += card('Nexus-SubSys-101', 'Energy Storage & Distribution', 1, 830, 675, 530, 120, [
-        ['Store energy (3S LiPo)'], ['Protect circuits (fuses)'], ['Switch drive & logic branches'],
+        ['Store energy on board'], ['Protect circuits against overcurrent'], ['Switch drive & logic branches'],
         ['Accept charge from the charger']], [
-        ['Convert supply rails (5 V, 6 V)'], ['Measure pack voltage & current'], ['Estimate state of charge']])
+        ['Convert energy to the supplies', 'the loads need'], ['Measure pack voltage & current'], ['Estimate state of charge']])
 
     # --- row 4: cross-cutting
     o.append('<text x="250" y="840" font-size="10" font-weight="700" fill="#be123c" letter-spacing="1">'
@@ -193,9 +194,9 @@ def build():
         ['Control access to the vehicle'], ['Detect intrusions & anomalies']])
     o += card('Nexus-SubSys-503', 'Diagnostics & Data Logging', 1, 830, 850, 240, 150, [
         ['Monitor sub-system health'], ['Record fault codes & event data'], ['Log & replay bus and sensor data'],
-        ['Provide debug access', '(CAN port, UART, SWD)']])
+        ['Provide debug access']])
     o += card('Nexus-SubSys-504', 'Software Update & Config.', 1, 1120, 850, 240, 150, [
-        ['Deliver updates (OTA, A/B slots)'], ['Verify integrity before install'], ['Roll back a failed update'],
+        ['Deliver updates'], ['Verify integrity before install'], ['Roll back a failed update'],
         ['Manage configuration &', 'calibration parameters']])
 
     # --- flows
@@ -211,14 +212,14 @@ def build():
     o += FL('M660,263 L660,298', 'c', anchor='start', labels=[(668, 285, 'motion request')])
     o += FL('M660,360 L660,398', 'c', anchor='start', labels=[(668, 384, 'motion request')])
     o += FL('M950,400 L950,362', 'i', anchor='start', labels=[(958, 384, 'vehicle motion state')])
-    o += FL('M950,300 L950,265', 'i', anchor='start', labels=[(958, 285, 'odometry · IMU')])
+    o += FL('M950,300 L950,265', 'i', anchor='start', labels=[(958, 285, 'motion measurements')])
     o += FL('M1070,440 L1118,440', 'c', size=8, labels=[(1095, 432, 'speed')])
     o += FL('M1120,470 L1072,470', 'i', size=8, labels=[(1095, 484, 'actual')])
     o += FL('M1070,560 L1118,560', 'c', size=8, labels=[(1095, 552, 'angle')])
     o += FL('M1120,590 L1072,590', 'i', size=8, labels=[(1095, 604, 'state')])
     o += FL('M1372,450 L1438,450', 'p', size=8, labels=[(1405, 442, 'traction')])
     o += FL('M1372,570 L1438,570', 'p', size=8, labels=[(1405, 562, 'wheel angle')])
-    o += FL('M1240,675 L1240,637', 'e', anchor='start', labels=[(1248, 659, 'actuator power (drive branch)')])
+    o += FL('M1240,675 L1240,637', 'e', anchor='start', labels=[(1248, 659, 'actuator power')])
     o += FL('M900,675 L900,627', 'e', dashed=True, anchor='start', labels=[(908, 659, 'logic supply → all electronics')])
     o += FL('M1440,735 L1362,735', 'e', labels=[(1400, 727, 'charge')])
 
