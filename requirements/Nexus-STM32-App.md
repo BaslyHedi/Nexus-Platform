@@ -1,19 +1,20 @@
-# Nexus-STM32-App - STM32 minimal application (repository)
+# Nexus-STM32-App - STM32 application (software item)
 
-Component, level 3. Requirements follow [../system/method.md](../system/method.md).
+Software item, level 2, handed over to the repository `Nexus-STM32-App`. Written to [../system/method.md](../system/method.md).
 
-- **Purpose and boundary.** The Zephyr application the FBL loads: LED pattern, Cyphal heartbeat, shows what it hears.
-- **Interfaces.** Loaded by [Nexus-STM32-FBL](Nexus-STM32-FBL.md); consumes a [Nexus-CAN-Utils](Nexus-CAN-Utils.md) release.
-- **Allocated functions.** From the STM32 node: heartbeat out and in, LED pattern, version.
+- **Purpose and boundary.** The minimal Zephyr application the bootloader loads.
+- **Interfaces.** Loaded by [Nexus-STM32-FBL](Nexus-STM32-FBL.md); the CAN matrix by a pinned tag.
+- **Allocated functions.** From [Nexus-Physical-01](Nexus-Physical-01.md): 401 F1, 503 F4, 504 F1.
 - **Modes.** Running.
 
 ## Requirements
 
 ### Nexus-STM32-App-R001
 
-**Statement.** The app shall publish a Cyphal heartbeat at the rate set in the CAN matrix.
+**Statement.** The application shall publish a Cyphal heartbeat at the rate set in the CAN matrix.
 
-- Derived-from: Nexus-Phys-STM32-R002
+- Function: Nexus-Logical-401-F01
+- Derived-from: Nexus-Physical-01-R002
 - Allocated-to: -
 - Phase: 1
 - Verification: Test T2.3
@@ -22,9 +23,10 @@ Component, level 3. Requirements follow [../system/method.md](../system/method.m
 
 ### Nexus-STM32-App-R002
 
-**Statement.** The app shall show on an LED that it receives the FRDM's heartbeat.
+**Statement.** The application shall show on an LED that it receives the FRDM node's heartbeat.
 
-- Derived-from: Nexus-Phys-STM32-R003
+- Function: Nexus-Logical-401-F01
+- Derived-from: Nexus-Physical-01-R003
 - Allocated-to: -
 - Phase: 1
 - Verification: Test T2.3
@@ -32,40 +34,33 @@ Component, level 3. Requirements follow [../system/method.md](../system/method.m
 
 ### Nexus-STM32-App-R003
 
-**Statement.** The app shall show its own LED pattern while it runs.
+**Statement.** The application shall be linked for the application region and started by the bootloader.
 
-- Derived-from: Nexus-Phys-STM32-R009
+- Function: Nexus-Logical-504-F01
+- Derived-from: Nexus-Physical-01-R004
+- Allocated-to: -
+- Phase: 1
+- Verification: Test T1.1
+- Realised-by: SW
+
+### Nexus-STM32-App-R004
+
+**Statement.** The application shall show its own LED pattern while it runs, written in the repository.
+
+- Function: Nexus-Logical-503-F04
+- Derived-from: Nexus-Physical-01-R008
 - Allocated-to: -
 - Phase: 1
 - Verification: Test T1.3
 - Realised-by: SW
 
-### Nexus-STM32-App-R004
-
-**Statement.** The app shall report its version in its node info.
-
-- Derived-from: Nexus-Phys-STM32-R012
-- Allocated-to: -
-- Phase: 1
-- Verification: Test T1.1
-- Realised-by: SW
-
 ### Nexus-STM32-App-R005
 
-**Statement.** The app shall be linked for the application region and be started by the FBL.
+**Statement.** The application shall report its version in its node info.
 
-- Derived-from: Nexus-Phys-STM32-R004
+- Function: Nexus-Logical-503-F04
+- Derived-from: Nexus-Physical-01-R009
 - Allocated-to: -
 - Phase: 1
 - Verification: Test T1.1
-- Realised-by: SW
-
-### Nexus-STM32-App-R006
-
-**Statement.** The app repository shall build in CI from a clean clone and cite decision IDs back to Nexus-Platform.
-
-- Derived-from: Nexus-Phys-STM32-R014
-- Allocated-to: -
-- Phase: 1
-- Verification: Inspection The CI run
 - Realised-by: SW

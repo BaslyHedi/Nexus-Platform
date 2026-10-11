@@ -90,5 +90,5 @@ what is taken from each and what is NEXUS's own. The method is
   while the checker gives the same link guarantees.
 
 **Consequence.** The physical view is drawn ([`../system/physical-architecture.md`](../system/physical-architecture.md)); the
-allocation of functions to elements is next, then the requirements. A first pass of requirements written before the method
-settled is parked in [`../requirements/`](../requirements/README.md) and is redone on it.
+Phase 1 allocation and the Phase 1 requirements follow it ([`../requirements/`](../requirements/README.md)): the vehicle
+as a black box, the enabling system beside it, the system elements, and the software items handed over to their repositories.

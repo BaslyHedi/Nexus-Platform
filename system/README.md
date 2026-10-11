@@ -34,7 +34,7 @@ IDs are never reused. A retired component or element keeps its number.
 
 1. **Logical architecture** - settle the decomposition, and which phase each logical component starts in. *Draft B*
 2. **Physical architecture** - the physical view: the system elements and the connections between them. *Draft B, for review*
-3. **Allocation** - each function of the logical architecture to the physical element or elements that realise it.
+3. **Allocation** - each function of the logical architecture to the physical element or elements that realise it. *Phase 1 done ([physical-architecture.md](physical-architecture.md))*
 4. **One drawing per logical component** - `Nexus-Logical-DNN-<Name>.svg`, showing the
    functions it realises and its interfaces to other components.
-5. **Requirements**, derived level by level and allocated, per [method.md](method.md), traced to the `-Fnn` IDs. *a first pass is in [requirements/](../requirements/README.md); it predates steps 2 and 3 and is redone on them*
+5. **Requirements**, derived level by level and allocated, per [method.md](method.md), traced to the `-Fnn` IDs. *Phase 1 written ([requirements/](../requirements/README.md)); the checker is next*
