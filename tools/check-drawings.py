@@ -10,7 +10,8 @@ import os, subprocess, sys, tempfile
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 DRAWINGS = [('hardware', 'chassis-layout'), ('hardware', 'wiring-schematic'), ('hardware', 'stm32-carrier'),
-            ('system', 'Nexus-Platform-Logical-Architecture'), ('system', 'Nexus-Platform-Physical-Architecture')]
+            ('system', 'Nexus-Platform-Logical-Architecture'), ('system', 'Nexus-Platform-Physical-Architecture'),
+            ('system', 'Nexus-Physical-01-Local-View'), ('system', 'Nexus-Physical-02-Local-View')]
 
 bad = 0
 with tempfile.TemporaryDirectory() as tmp:

@@ -51,6 +51,8 @@ these elements, never to the repositories that implement the software ones (conf
 
 ### Nexus-Physical-01, STM32 node
 
+Drawn in [Nexus-Physical-01-Local-View](renders/Nexus-Physical-01-Local-View.svg), which owns the element list.
+
 | ID | Element | Kind |
 |---|---|---|
 | [01-01](../requirements/Nexus-Physical-01-01.md) | Discovery board: STM32F4DISCOVERY MB997B, with the ST-LINK V2 and four user LEDs (BOM 1.2) | hardware, bought |
@@ -70,6 +72,9 @@ these elements, never to the repositories that implement the software ones (conf
 | 01-01 Discovery board | bench PC | SWD through the ST-LINK, by USB at the fascia |
 
 ### Nexus-Physical-02, FRDM node
+
+Drawn in [Nexus-Physical-02-Local-View](renders/Nexus-Physical-02-Local-View.svg), which owns the element list. Board facts
+from the FRDM-IMX91S schematic SCH-95020 rev B.
 
 | ID | Element | Kind |
 |---|---|---|
