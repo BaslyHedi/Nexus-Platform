@@ -5,8 +5,57 @@ made of. A personal Ackermann-steering autonomous robot built as a miniature of 
 modern automotive E/E architecture - high-level compute and real-time control with a
 network in between. [`CLAUDE.md`](CLAUDE.md) owns the platform overview.
 
-This repository holds **no code**. Firmware, the Linux image and the applications each
-get their own repository as they are written; they consume this one.
+This repository holds **no firmware or application code**: those live in their own repositories
+(below) and cite this one. What is here is the definition, plus the small scripts that generate the drawings and
+models from it.
+
+## What this is, and where it stands
+
+NEXUS is a learning platform: a 4-wheel Ackermann robot with an **NXP i.MX 91** (Embedded Linux, Yocto) for
+high-level compute and an **STM32F407** (real-time control) on a **CAN** bus between them. It is built to get
+hands-on with the architecture of a modern vehicle, and the repository is written the way such a project would be:
+numbered decisions with their reasons and the options rejected, a bill of materials, a functional decomposition, and
+a phase plan with testable exit criteria.
+
+The pace is set by learning, not by the calendar, so nothing here has a date. **Phase 1 (Foundation) is under way**:
+the vehicle hardware is largely defined and built, and the software repositories below were created on
+2026-10-11 and are still empty. What each phase delivers is in [`system/phases.md`](system/phases.md).
+
+Worth reading first: [`decisions/`](decisions/README.md) (why it is this way), [`system/phases.md`](system/phases.md)
+(what is built when), and [`system/renders/Nexus-Platform-System-Layout.svg`](system/renders/Nexus-Platform-System-Layout.svg)
+(the decomposition).
+
+## Repositories
+
+| Repository | What it holds |
+|---|---|
+| **Nexus-Platform** (this one) | Definition: system, decisions, hardware, mechanical, BOM, phase plan |
+| [Nexus-STM32-FBL](https://github.com/BaslyHedi/Nexus-STM32-FBL) | Bare-metal flash bootloader for the STM32, updated over CAN with Cyphal |
+| [Nexus-STM32-App](https://github.com/BaslyHedi/Nexus-STM32-App) | The Zephyr application the bootloader loads |
+| [Nexus-CAN-Utils](https://github.com/BaslyHedi/Nexus-CAN-Utils) | The CAN matrix, its generators and the flashing client |
+| [Nexus-IMX91-Yocto](https://github.com/BaslyHedi/Nexus-IMX91-Yocto) | The Yocto build (`kas`) of the Linux image for the FRDM-IMX91 |
+
+Each Linux application will get its own repository, with its own CI and releases.
+
+## How it is made
+
+The architecture, the decisions and the hardware are the author's. The documentation, the drawing generators and the
+records are written with **Claude Code** (Anthropic) as a pairing assistant, and commits made that way carry a
+`Co-Authored-By` trailer.
+
+## Licence and attribution
+
+Free to use, reuse and adapt **as long as you credit the source**. Code and tooling are
+**Apache-2.0** ([`LICENSE`](LICENSE)); the documents, drawings and print files are **CC BY 4.0**
+([`LICENSE-docs`](LICENSE-docs)). [`NOTICE`](NOTICE) says which applies to what. A suitable credit line:
+
+> Based on NEXUS Platform by Hedi Basly, https://github.com/BaslyHedi/Nexus-Platform
+
+## Where the numbers come from
+
+Dimensions, pinouts and ratings of third-party parts are **measured or derived** from the vendors' documents and CAD
+(for example the chassis plate outline, traced from Hiwonder's CAD export, and the FRDM board outline, taken from
+NXP's design files). **No vendor document is redistributed here**; see below.
 
 ## Layout
 
