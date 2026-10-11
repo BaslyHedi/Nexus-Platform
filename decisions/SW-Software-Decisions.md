@@ -11,6 +11,8 @@ Format, and how to add one: [README](README.md).
 | **SW-03** | The FBL is written in C++17, as a freestanding subset |
 | **SW-04** | The STM32 flash holds the FBL in sectors 0 to 4 and the application in sectors 5 to 11 |
 | **SW-05** | The FBL uses the main SRAM only, leaves the CCM empty and does not use the FPU |
+| **SW-06** | The application hands over to the FBL through the backup SRAM |
+| **SW-07** | The FBL executes from the SRAM, not from the flash |
 
 The rest of what Phase 1 has to settle is listed in [`../system/phases.md`](../system/phases.md) under
 *Decided in Phase 1*: the CAN matrix and its tooling, the Zephyr board port, the
@@ -257,6 +259,8 @@ and no non-volatile memory (NvM) region exist yet.** Both are left open, see *Co
 
 ## SW-05 · The FBL uses the main SRAM only, leaves the CCM empty and does not use the FPU
 
+**Updated by SW-06:** the hand-off block lives in the backup SRAM, so it does not depend on the main SRAM surviving a reset. **Updated by SW-07:** the FBL's code and constants are in the SRAM too, which the SRAM budget in this entry has to cover.
+
 **Decision (2026-10-11).** The FBL places its stack, variables and buffers in the main SRAM at `0x20000000`. **The
 64 KB core-coupled memory (CCM) at `0x10000000` is left empty.** The FBL is built without floating point
 (`-mfloat-abi=soft`) and never enables the FPU.
@@ -293,3 +297,98 @@ and no non-volatile memory (NvM) region exist yet.** Both are left open, see *Co
   change from 1 to 0) and 20 RTC backup registers (80 bytes). Writing either needs the `PWREN` clock, `PWR_CR.DBP` and,
   for the SRAM, `RCC_AHB1ENR.BKPSRAMEN`. Whether the main SRAM keeps its contents across `SYSRESETREQ` on this part is
   then a measurement on the board, and the hand-off record carries a magic value and a CRC in any case.
+
+---
+
+## SW-06 · The application hands over to the FBL through the backup SRAM
+
+**Decision (2026-10-11).** When the application accepts `uavcan.node.ExecuteCommand` with
+`COMMAND_BEGIN_SOFTWARE_UPDATE`, it writes a hand-off record into the **4 KB backup SRAM** (`0x40024000` to
+`0x40024FFF`) and resets the device. The FBL reads the record after the reset. **The first 512 bytes of the backup SRAM
+are reserved for the record**, which carries the requesting node's ID and the file path, a magic value and a CRC. The
+remaining 3.5 KB is not claimed. The record's layout is written in the interface headers of `Nexus-STM32-FBL`.
+
+**Why.**
+
+- **It is the memory the manual documents as surviving a system reset.** RM0090 Rev 22 says a system reset resets
+  registers and says nothing about the main SRAM. The backup SRAM is not affected by it, and only a protection level change
+  from 1 to 0 clears it (sections 6.1.3 and 3.7). The main SRAM would have to be measured on the board and could change
+  with a silicon revision or a debugger setting.
+- **It is big enough.** The `ExecuteCommand` parameter is a path of up to 255 bytes, and the record adds the node ID, the
+  magic and the CRC. The 80 bytes of the RTC backup registers cannot hold that.
+- **It leaves the main SRAM free of an agreement between two images.** Neither image's linker script has to keep the other's
+  block out of its `.bss`.
+
+**Rejected.**
+
+- **The main SRAM at a fixed address.** It probably works across a software reset, since no hardware clears it on this
+  part, but the manual does not say so, and both linker scripts would have to keep the block out of reach.
+- **The RTC backup registers.** Documented to survive, but 80 bytes cannot carry a file path. They stay available for a
+  short flag.
+- **A flag in the flash.** It costs an erase, which stalls the bus (SW-04) and wears a sector for each update.
+
+**Consequences.**
+
+- **Both images enable the same three things before touching the record:** the `PWR` clock (`RCC_APB1ENR.PWREN`), write
+  access to the backup domain (`PWR_CR.DBP`) and the SRAM clock (`RCC_AHB1ENR.BKPSRAMEN`). The application is Zephyr, so
+  how it gets there is a question for `Nexus-STM32-App`.
+- **After a power-on the record is garbage unless a battery on VBAT keeps the SRAM.** The magic value and the CRC are what
+  tell a real request from noise, so the FBL treats anything else as no request.
+- **The FBL clears the record once it has read it**, or a later reset would repeat the update.
+- **The linker scripts of both images carry the region and the section**, and the numbers are in
+  `interface/linker/memory_map.ld`.
+
+**To confirm.**
+
+- The record layout and its size against the 512 bytes reserved.
+- That the backup SRAM keeps its content over the reset from the application on the board.
+- Whether the Discovery board's VBAT is wired to a battery or to VDD, which sets what survives a power loss.
+
+---
+
+## SW-07 · The FBL executes from the SRAM, not from the flash
+
+**Decision (2026-10-11).** The FBL is stored in the flash sectors 0 to 4 (SW-04) and **runs from the SRAM**. A small start-up
+routine and the vector table stay in the flash. At reset the routine copies the vector table, the code, the constants and the
+initialised data to the SRAM, points `VTOR` at the copy in the SRAM, clears the `.bss` and calls `main`. After that no
+instruction, constant or vector is fetched from the flash.
+
+**Why.**
+
+- **Any read of the flash while it is being erased or programmed stalls the bus.** RM0090 Rev 22, section 3.6: "code or data
+  fetches cannot be performed while a write/erase operation is ongoing". The F407 has one bank, so there is no other bank to
+  read from. A sector erase takes up to 500 ms for 16 KB, 1.1 s for 64 KB and 2 s for 128 KB (SW-04).
+- **The FBL erases and programs the flash that the bus is serving, while it is receiving.** The bxCAN has two receive FIFOs of
+  three frames each (RM0090). A frame of eight bytes at 500 kbit/s takes on the order of 0.1 ms, so a CPU stalled for the length
+  of an erase would lose frames, and the host's `file.Read` transfer would fail. With the code, the constants and the
+  vector table in the SRAM, the CPU keeps servicing the bus while the flash controller works.
+- **The flash driver only reads and polls registers during the operation.** `FLASH_SR` is polled for the BSY bit. The manual
+  notes that a write to `FLASH_CR` with BSY set stalls the bus, so the driver must not write it then.
+
+**Rejected.**
+
+- **Execute in place, with only the erase routine in the SRAM.** The interrupt entry still fetches its vector from the flash
+  and the handler runs from the flash, so the first CAN interrupt during an erase stalls.
+- **Execute in place and stop receiving while erasing.** The host's file transfer is driven by the FBL's `file.Read` requests
+  (SW-01), so the FBL can pause between requests. This works, and is what a bootloader on a two-bank part does. It
+  was set aside because it ties the erase to the protocol's pacing, and the F407 gives no second bank to relax it.
+
+**Consequences.**
+
+- **The SRAM budget includes the code.** The FBL's image, plus the 512-byte vector table copy, the `.bss` and a stack,
+  must fit in the 128 KB (SW-05). The FBL is far smaller than that today.
+- **The start-up routine is the only code that runs from the flash.** It is placed in its own section, `.boot_text`, so the
+  linker can keep it in the flash. It must not use a function, a constant or a global that is in the copied image.
+- **The vector table has to be aligned.** For 98 vectors (16 system and 82 interrupts), the Cortex-M4 requires an alignment of
+  512 bytes for `VTOR`.
+- **The application is not affected.** It runs from the flash, as Zephyr does by default, and reinitialises the SRAM when
+  it starts. The FBL's SRAM contents do not survive the jump.
+- **A debugger sees the code at its SRAM addresses.** Breakpoints in the copied code are SRAM breakpoints, which the F4's
+  flash patch unit does not need to provide.
+
+**To confirm.**
+
+- That the vector alignment is 512 bytes for 98 vectors, from the Cortex-M4 programming manual (PM0214), which is not in
+  `vendor/` yet.
+- On the board, that the FBL keeps receiving over a 128 KB sector erase.
+- The time the start-up copy takes, which has not been measured.
