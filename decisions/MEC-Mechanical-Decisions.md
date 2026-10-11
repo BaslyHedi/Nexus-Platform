@@ -1387,7 +1387,7 @@ which is why the second lane is the mirror of the first. The tray has a wing for
 
 **Status (2026-10-06): ordered 2026-10-06 (BOM 3.28), with the checks below accepted; nothing printed or dry-fitted yet.** Source: [`../mechanical/cad/compute-tray.scad`](../mechanical/cad/compute-tray.scad) -> `compute-tray.stl`;
 the renders come from [`../mechanical/cad/compute-tray-preview.scad`](../mechanical/cad/compute-tray-preview.scad) (plate 3's data is exported from the layout drawing by
-[`../mechanical/scripts/plate3-data.py`](../mechanical/scripts/plate3-data.py)). Ordered **together with the carrier tray (MEC-17) and the rear pad (MEC-19)** in one Craftcloud order (#516727254320): a print service charges less for one order with everything than for two.
+[`../mechanical/scripts/plate3-data.py`](../mechanical/scripts/plate3-data.py)). Ordered **together with the carrier tray (MEC-17) and the rear pad (MEC-19)** in one Craftcloud order: a print service charges less for one order with everything than for two.
 PETG, 4 mm, flat, no supports, **236.6 x 108.0 x 4 mm** (needs a bed of 240 mm or more). It follows MEC-12 (the FRDM on plate 3).
 
 **History of the layout (all 2026-10-06, all in git).** First the FRDM at MEC-11's place with the Pi in the nose; then a spare nose with the FRDM along the vehicle (rejected: its USB plugs need about 25 mm behind the board and the Pi pad

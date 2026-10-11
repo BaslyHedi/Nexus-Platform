@@ -735,7 +735,7 @@
 <text x="600" y="512" font-size="9" fill="#475569">Measured on the built kit: 50 mm below, 40 mm above. The kit ships two standoff lengths; the</text>
 <text x="600" y="525" font-size="9" fill="#475569">single-plate CAD only ever had the 50 and our 3-deck model repeated it for both gaps. The fascia</text>
 <text x="600" y="538" font-size="9" fill="#475569">panels are therefore 52 and 42 mm tall and are no longer one blank (MEC-09).</text>
-<text x="600" y="549" font-size="8.2" font-weight="700" fill="#0f766e">Plates 2 and 3 - settled and ordered 2026-10-06 (Craftcloud #516727254320, BOM 3.28): carrier tray MEC-17, compute tray MEC-18, rear pad MEC-19.</text>
+<text x="600" y="549" font-size="8.2" font-weight="700" fill="#0f766e">Plates 2 and 3 - settled and ordered 2026-10-06 (Craftcloud, BOM 3.28): carrier tray MEC-17, compute tray MEC-18, rear pad MEC-19.</text>
 <text x="600" y="561" font-size="9.5" font-weight="700" fill="#1e293b">Plate 1 wiring - every run, on plate 2's harness board, updated 2026-10-06 (MEC-16, HW-20)</text>
 <g font-size="7.6" font-weight="700" fill="#64748b"><text x="600" y="572">#</text><text x="614" y="572">Run</text><text x="772" y="572">Wire</text><text x="862" y="572">Cut, cm</text><text x="906" y="572">Ends and clips</text></g>
 <line x1="600" y1="576" x2="1280" y2="576" stroke="#e2e8f0"/>
