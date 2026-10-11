@@ -19,51 +19,71 @@ small and standard so they do not eat the phase.
 
 | Phase | Name | Goal in one line | Sub-systems that start |
 |---|---|---|---|
-| **1** | Foundation | An assembled vehicle, a released CAN matrix, a bootloader that can update the MCU over it, a first Linux image, and the repositories everything else lives in | 101 102 201 202 203 401 501 503 504 |
-| **2** | Drive | The vehicle drives under closed-loop control, supervised, from a remote station | 402 403 |
+| **1** | Foundation | An assembled vehicle, a bootloader that can update the MCU over CAN, a first Linux image built from released apps, a heartbeat between the two computers, and the repositories everything else lives in | 101 102 201 202 401 501 503 504 |
+| **2** | Drive | The vehicle drives under closed-loop control, supervised, from a remote station | 203 402 403 |
 | **3** | Platform | The software stack is production-shaped: Yocto product image, containers, secure boot, signed updates, CI/CD | 502 |
 | **4** | Perception | The vehicle senses and localises itself: Raspberry Pi 5, ROS 2, camera and range sensors | 301 302 |
 | **5** | Autonomy | The vehicle plans and drives a mission by itself | 303 |
 
-A sub-system starting in a phase does not mean it is finished there. 203, 501, 503 and 504 start in Phase 1 with
-a thin first cut and grow in later phases; the table at the end says which functions land when.
+A sub-system starting in a phase does not mean it is finished there. 201, 202, 501, 503 and 504 start in Phase 1 with
+a thin first cut (201 and 202 as hardware only, not yet driven) and grow in later phases; the table at the end says which functions land when.
 
 ---
 
 ## Phase 1 - Foundation
 
-> **Goal.** The vehicle exists, its two computers speak a defined and released language, the MCU can be
-> re-flashed over that language with no debugger attached, and the project's repositories are in place so every
-> later phase has somewhere to go.
+> **Goal.** The vehicle exists, its two computers can talk to each other over CAN, the MCU can be re-flashed
+> over that bus with no debugger attached, a first Linux image boots from built, released apps, and the
+> project's repositories are in place so every later phase has somewhere to go.
 
-**Phase 1 is deliberately not about driving well.** No control loops, no autonomy, no teleop. The success
-case is a boring one: a bench demo that proves every part works and every wire is right, and a software
-structure that will not need to be torn up in Phase 2. The most important deliverable is the last one, the
-structure.
+**Phase 1 is deliberately not about driving.** No motors, no control loops, no autonomy, no teleop. The success
+case is a boring one: each test below passes, on the real vehicle, with its evidence kept. The most important
+deliverable is the last one, the structure.
+
+**Each test is its own milestone, closed on its own time.** None is meant to be finished in one session; the
+pace is set by what is being learned on the way (see the top of this file). A test closes when its pass
+criteria are met and the evidence named in it exists, and not before.
 
 ### Deliverables
 
 | # | Deliverable | Done when |
 |---|---|---|
 | 1.1 | **Assembled vehicle** | Everything in [`../bom/BOM.md`](../bom/BOM.md) marked Phase 1 is fitted per [`../hardware/README.md`](../hardware/README.md); powers up from the battery with the harness checks passed; the fascia is on |
-| 1.2 | **CAN matrix v1.0, defined and released** | A machine-readable matrix (a DBC, or Cyphal DSDL types, per the open question in [SW-01](../decisions/SW-Software-Decisions.md)) and a short document exist for the 500 kbit/s classic-CAN bus: ID plan, every message with its signals, cycle time, owner and receiver, timeout behaviour, byte order and scaling, the bootloader's Cyphal subjects and services, the versioning rule. It is **tagged and released**, and both sides consume the tag rather than a copy |
-| 1.3 | **Wiring and parts demo** | A scripted bench run, checklist and result logged, that exercises every part once: both rails and the pack measurement, CAN loopback on both nodes and from the PC, each motor both ways, the steering through its range, the encoders, the fascia controls. A real `candump` of the run is captured |
-| 1.4 | **STM32 FBL** (flash bootloader) | A small resident bootloader that, on request over CAN, erases, receives, verifies (CRC) and writes an application image, then jumps to it. A broken or absent app leaves the FBL reachable. A new app goes on with **no ST-LINK**. Unsigned and unencrypted: security is Phase 3 |
-| 1.5 | **STM32 minimal app** | The thing the FBL downloads. Zephyr on the F407; decodes the matrix's command frames, drives motors and steering **open loop**, stops if commands stop (command time-out), and sends a heartbeat and a state frame. Nothing smarter |
-| 1.6 | **FRDM minimal image** | A first Yocto build for the FRDM-IMX91 (NXP BSP, own layer, own image recipe) that boots, brings `can0` up at the matrix's bit rate, and runs a small program that sends the matrix's messages and prints what comes back |
-| 1.7 | **Project structure** | The repositories below exist, each builds in CI from a clean clone, each cites decision IDs back to this one, and the matrix flows to both firmware and Linux as a pinned release |
+| 1.2 | **CAN IDs for flashing** | The bus bit rate and timing (500 kbit/s, classic CAN) and the identifiers the bootloader uses (Cyphal node IDs, subjects and services for update, heartbeat and node info) are written down and **tagged as a release** in `Nexus-CAN-Utils`. **The application messages are not part of Phase 1**: their layer and content are decided in Phase 2 |
+| 1.3 | **Bench demo** | The tests below pass |
+| 1.4 | **STM32 FBL** (flash bootloader) | A small bare-metal resident bootloader that, on request over CAN, receives an image by Cyphal file transfer, erases, writes and verifies it, then jumps to it. A broken or absent image leaves the FBL reachable. Unsigned and unencrypted: security is Phase 3 |
+| 1.5 | **STM32 app and FBL-Updater** | Two images the FBL can download, built with Zephyr where the app is concerned: a **minimal app** (LED pattern, Cyphal heartbeat, shows what it hears) and an **FBL-Updater**, an image whose only job is to rewrite the FBL's own flash region, since a bootloader cannot overwrite itself while running |
+| 1.6 | **FRDM image and apps** | The Yocto repository and the first Linux apps (one repository each) described in tests T2.1 and T2.2 |
+| 1.7 | **Project structure** | The repositories below exist, each builds in CI from a clean clone and cites decision IDs back to this one |
+
+### Bench demo: tests and pass criteria
+
+**STM32 side**
+
+| Test | What it proves | Pass criteria | Evidence |
+|---|---|---|---|
+| **T1.1** Flashable app | The FBL can take a new application over CAN, with no ST-LINK | An app image is sent from the PC adapter, then from the FRDM once T2.3 passes. The FBL verifies it and the STM32 boots into it. **10 consecutive cycles** with two different builds, each shown by the version in its node info. A download interrupted by pulling the CAN cable or the power leaves the FBL reachable and the next download succeeds | `candump` of one full download; the flasher's log of the 10 cycles |
+| **T1.2** Flashable FBL-Updater | The FBL itself can be replaced over CAN | The FBL-Updater is downloaded exactly like an app, runs, and rewrites the FBL region with a new build. After a power cycle the new FBL is the one running (shown by its version), and T1.1 still passes with it. The very first FBL goes on with the ST-LINK, which stays the recovery path | Flasher log; node info before and after |
+| **T1.3** LED patterns | You can tell by looking what the STM32 is running | The four on-board LEDs show a pattern **distinct for each state**: FBL idle, FBL receiving, FBL-Updater running, app running. Each is recognisable at arm's length without the others being confused with it, and the patterns are written down in the FBL's and app's repositories | A short video showing all four states |
+
+**FRDM side**
+
+| Test | What it proves | Pass criteria | Evidence |
+|---|---|---|---|
+| **T2.1** Apps and their CI | One repository per Linux app works as a unit | At least two throwaway apps, each in **its own repository**, that print their own name and version. Each repository's CI builds from a clean clone on every push (cross-built for the i.MX 91) and publishes a **release artifact on a tag** | The CI runs and the two releases |
+| **T2.2** Yocto image | The image is reproducible and carries the released apps | A separate Yocto repository, built with `kas` from a clean clone, **fetches the apps at their release tags** and builds a minimal image that **boots from the SD card on the FRDM-IMX91**. Logging in, both apps are present and print their names and versions | The boot log; the `kas` config and build log |
+| **T2.3** CAN exchange | The two nodes talk | On the vehicle's bus at 500 kbit/s, **the FRDM sends a Cyphal heartbeat and the STM32 shows that it receives it**, and **the STM32 sends one that the FRDM sees**, at the heartbeat rate, for **10 minutes with no error frames, bus-off or missed heartbeat**. The PC adapter, as the third node on the DE-9 port, sees both streams. The Linux side needs a small program for this, which is a third app repository | `candump` from the FRDM and from the PC adapter |
 
 ### Exit criteria
 
-Phase 1 is finished when, on the finished vehicle, with no ST-LINK connected:
+Phase 1 is finished when **T1.1 to T1.3 and T2.1 to T2.3 have all passed**, the evidence for each is committed or
+linked, and the repositories of 1.7 exist.
 
-1. The i.MX 91 (or the PC adapter) flashes a new STM32 app over CAN, the STM32 boots into it, and the heartbeat
-   in the matrix shows the new app's version.
-2. The FRDM sends a motion command from the released matrix and the vehicle moves; stopping the commands stops
-   the vehicle.
-3. The demo (1.3) passes end to end and its log is committed or linked.
-4. Changing a signal in the matrix is a version bump and a PR in the App repository, after which the firmware and the
-   Linux program both pick it up by version, and a mismatch is a build error and not a bench surprise.
+### Not tested in Phase 1
+
+The motors, steering servo, encoders, INA226 and fascia controls. They are exercised when the STM32 application
+work starts, as the first step of Phase 2 (see its table), so the "every part is functional" check is
+split: the **bus, both computers and the update path** in Phase 1, the **actuators and sensors** in Phase 2.
 
 ### Learning focus
 
@@ -90,14 +110,14 @@ Every repository below carries a short `README.md` and a `CLAUDE.md`, a CI workf
 | **Nexus-CAN-Utils** | **The CAN matrix** (document, ID plan, and the Cyphal data types and subject/service IDs that carry it), its **generators** (C and Linux bindings, which will keep moving), and the **Cyphal flashing client**: a file server that offers an app image to the FBL, which pulls it ([SW-01](../decisions/SW-Software-Decisions.md)). The client is Linux-portable, so it runs from the PC adapter now and from the i.MX 91 later. Capture/replay and the bench-demo runner start here too, and can be split out if they grow | **Tagged releases** `vMAJOR.MINOR.PATCH`; the flasher binary | Decision IDs |
 | **Nexus-STM32-App** | The Zephyr application the FBL loads (west workspace, own board definition for the carrier) | `app.bin` | CAN-Utils release, the FBL's memory map |
 | **Nexus-IMX91-Linux** | The Yocto layer `meta-nexus`, the build manifest, the image recipe, kernel and device-tree changes | Bootable image | NXP BSP, apps by tag |
-| **Nexus-IMX91-Apps** | Linux-side programs (C++ first, Rust where it earns its place); starts as the minimal CAN sender | Binaries, packaged by a Yocto recipe | CAN-Utils release |
+| **One repository per Linux app** (`Nexus-<AppName>`, names as they are made) | One program each, with **its own CI, versioning and releases** (C++ first, Rust where it earns its place). Phase 1 has two throwaway name-printing apps and the heartbeat program (T2.1, T2.3) | A release artifact per tag | CAN-Utils release, where it speaks CAN |
 
 Three relationships carry the whole structure:
 
 - **Matrix to everyone.** The matrix is one shared artifact with its own repository, because the interface it
   generates will keep changing. Nothing hand-copies a message definition: the STM32 App, the FBL and the Linux
   programs each **pin a CAN-Utils tag** and build against what it generates. A matrix change that breaks a consumer
-  shows in the consumer's CI, which is exit criterion 4.
+  shows in the consumer's CI.
 - **Open: how a consumer takes the tag.** A git submodule, a pinned fetch in the build (for Linux, a Yocto recipe
   that fetches the release and generates bindings at build time), or a published release artifact. It can differ
   per consumer and is the first `SW` entry of each. It must make a mismatch a build error.
@@ -107,13 +127,16 @@ Three relationships carry the whole structure:
 
 **Decided already (2026-10-11):** the FBL is bare-metal, to keep it small and fast; the CAN matrix and the flashing client share one repository, `Nexus-CAN-Utils`; the Yocto build is driven by `kas`. The flash protocol is **OpenCyphal** ([SW-01](../decisions/SW-Software-Decisions.md)). The others get their `SW-` entry when written down.
 
-**Decided in Phase 1, recorded as `SW-nn` as each one is made:** the matrix's ID plan and tooling, the language of the flashing client (it must run on Linux, which points at C++ or Rust), and how each consumer takes a release; whether the application messages are also Cyphal or a plain-ID matrix sharing the bus (SW-01 leaves this open); the FBL's
-memory map and how the app is told apart from garbage; the repository and CI template; the
-build-manifest tool (`kas`, decided); the branching and tag rules shared by all repositories.
+**Decided in Phase 1, recorded as `SW-nn` as each one is made:** the flashing IDs and bus timing, the language of the
+flashing client (it must run on Linux, which points at C++ or Rust), and how each consumer takes a release; the
+CI service and repository template; the branching and tag rules shared by all repositories. **The STM32 decisions
+(flash memory map, how a valid app is recognised, entry rules for the FBL, the pin map, the board definition, the
+LED patterns) are recorded when the STM32 repositories are created and the work starts**, not before. The
+application layer and the matrix beyond flashing are **Phase 2**.
 
 ### Out of Phase 1
 
-Closed-loop speed and steering control, odometry, the IMU, operator input beyond bench tools, Wi-Fi teleop,
+The application messages of the CAN matrix, motors, steering, encoders and the INA226 (first thing in Phase 2), closed-loop speed and steering control, odometry, the IMU, operator input beyond bench tools, Wi-Fi teleop,
 containers, secure boot, signed images, OTA of the Linux side, the Pi 5, ROS 2, any sensor beyond what the demo
 needs. None is forbidden if it comes free, but none gates the phase.
 
@@ -126,6 +149,8 @@ needs. None is forbidden if it comes free, but none gates the phase.
 
 | Deliverable | Notes |
 |---|---|
+| Actuator and sensor bring-up | First step: test the motors both ways, the steering through its range, the encoders (including whether the Encoder Motor Module times out when I²C commands stop, [HW-17](../decisions/HW-Electrical-Decisions.md)), the INA226 and the fascia controls, from the STM32 app |
+| Application layer and CAN matrix | Decide whether the application messages are also Cyphal, then write the matrix: message set, cycle times, time-outs, versioning ([SW-01](../decisions/SW-Software-Decisions.md)) |
 | Speed and steering loops on the STM32 | Encoder feedback, PID with limits on speed, acceleration, jerk and steer rate; kinematics from speed + curvature to wheel setpoints (Ackermann) |
 | Motion state and odometry | Wheel speed to pose; the IMU joins here if it is bought |
 | Vehicle modes and safe stop | A small state machine (off, standby, manual, fault), watchdogs, command time-outs end to end, emergency stop, low-pack shutdown from the pack measurement ([SYS-01](../decisions/SYS-System-Decisions.md)) |
@@ -206,11 +231,12 @@ in its starting phase.
 
 | Sub-system | Phase 1 | Later |
 |---|---|---|
-| 203 Vehicle Motion Control | Translate a speed + curvature request to open-loop setpoints; report motion state | **2:** close the loops, limits, odometry, safe-stop. **5:** arbitrate autonomous requests |
-| 501 Supervision & Safety | Command time-out, heartbeat watchdog, the hardware switches and fuse protection already built | **2:** modes and transitions, safe stop, fault handling, low-pack shutdown |
+| 201 Propulsion, 202 Steering | The motors, servo and driver fitted and powered, **not driven** | **2:** bring-up, then driven from the STM32 app |
+| 203 Vehicle Motion Control | Starts in Phase 2 | **2:** translate requests to setpoints, close the loops, limits, odometry, safe-stop. **5:** arbitrate autonomous requests |
+| 501 Supervision & Safety | The hardware switches and fuse protection already built (HW-03, HW-08, HW-20) | **2:** command time-out and watchdog, modes and transitions, safe stop, fault handling, low-pack shutdown |
 | 503 Diagnostics & Data Logging | The DE-9 CAN port, SWD, UART; `candump` capture of the demo | **2:** fault codes and event data, logging and replay. **3:** health monitoring in CI |
 | 504 Software Update & Config. | **FBL: download an app over CAN, verify by CRC, jump** | **2:** configuration and calibration parameters. **3:** signed images, OTA with A/B slots and rollback |
-| 401 In-Vehicle Communication | CAN matrix v1.0 and SocketCAN | **3:** message protection (with 502). **4:** ROS 2 / SOME/IP, time synchronisation |
+| 401 In-Vehicle Communication | The bus, the flashing identifiers, a heartbeat, SocketCAN | **2:** the application layer and matrix. **3:** message protection (with 502). **4:** ROS 2 / SOME/IP, time synchronisation |
 
 ## Changing the plan
 

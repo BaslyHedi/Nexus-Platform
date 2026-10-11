@@ -159,7 +159,7 @@ def build():
     o += card('Nexus-SubSys-403', 'External Connectivity', 2, 250, 400, 240, 145, [
         ['Link to remote station', '(Wi-Fi, Ethernet)'], ['Carry remote sessions & teleop'], ['Stream telemetry off-board'],
         ['Carry update & diagnostic data']])
-    o += card('Nexus-SubSys-203', 'Vehicle Motion Control', 1, 540, 400, 530, 225, [
+    o += card('Nexus-SubSys-203', 'Vehicle Motion Control', 2, 540, 400, 530, 225, [
         ['Arbitrate motion requests', '(manual · teleop · autonomous)'],
         ['Translate speed + curvature into', 'wheel-speed & steer-angle setpoints'],
         ['Close speed & steering control loops']], [

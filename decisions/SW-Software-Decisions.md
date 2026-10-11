@@ -52,7 +52,7 @@ run on Linux so it works from the PC adapter now and from the i.MX 91 later.
   (libcanard in C, libcyphal in C++, or `pycyphal` for tooling). The language choice is still open.
 - The bootloader needs a **node ID** and a fixed set of subjects and services. Its identifiers, and any ID ranges
   the application uses, are part of the CAN matrix.
-- **The application layer is not decided here.** Whether the vehicle's own messages (motion request, state,
+- **The application layer is not decided here, and is not a Phase 1 question.** Phase 1 needs only the flashing identifiers and a heartbeat; the application layer is decided in Phase 2. Whether the vehicle's own messages (motion request, state,
   heartbeat) are also Cyphal, with the matrix as a set of DSDL types and a subject-ID table, or a plain-ID matrix
   sharing the bus, is a separate entry. Running both on one bus is possible but needs the ID ranges kept apart.
 - Diagnostics (Phase 2) can use Cyphal services instead of UDS. That is also left to its own

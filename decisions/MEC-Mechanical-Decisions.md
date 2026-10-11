@@ -24,7 +24,7 @@ Drawings: [chassis layout](../hardware/renders/chassis-layout.svg). Geometry and
 | **MEC-14** | The switch drawing closes the lower panel - and its holes open to 22.4 |
 | **MEC-15** | The carrier is two kit boards joined by the Discovery, not one board |
 | **MEC-16** | Plate 2's lower face is the harness board - plate 1 carries only the battery and the driver |
-| **MEC-17** | *Proposed:* one tray carries boards A, B and C and bolts to plate 2 |
+| **MEC-17** | One tray carries boards A, B and C and bolts to plate 2 |
 | **MEC-18** | One wide tray on plate 3 - a spare nose, the Pi 5, a plug gap, the FRDM, all turned across |
 | **MEC-19** | A separate pad spread over plate 2's rear |
 
@@ -1165,7 +1165,7 @@ return - goes up through it, between the buses. The rearward runs lie flat on pl
 
 ---
 
-## MEC-17 · *Proposed:* one tray carries boards A, B and C and bolts to plate 2
+## MEC-17 · One tray carries boards A, B and C and bolts to plate 2
 
 **Status (2026-10-06): fit-reviewed for a single print; see "Fit review before ordering". Ordered 2026-10-06 (BOM 3.28), nothing printed yet.** Proposed 2026-10-05. A brainstorm with Hedi, modelled so it can be
 judged. Source: [`../mechanical/cad/carrier-tray.scad`](../mechanical/cad/carrier-tray.scad).

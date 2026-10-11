@@ -113,13 +113,11 @@ The table below is here for anything outside the project - notes, chat history, 
 
 ## Still open
 
-Closed on 2026-10-11 and removed from this table: the switch harness depth (MEC-14), the P1/P2 pin direction (MEC-08, resolved 2026-09-20), the clip, fuse-holder, battery and driver check (MEC-16), and the UBEC input lead (HW-20).
+Closed on 2026-10-11 and removed from this table: the FRDM's loaded current draw (it cannot be measured before the board is loaded, and does not gate anything; read it off the INA226 once the image runs), which USB-CAN adapter (the RH-02 PLUS, BOM 4.7, HW-18), the switch harness depth (MEC-14), the P1/P2 pin direction (MEC-08, resolved 2026-09-20), the clip, fuse-holder, battery and driver check (MEC-16), and the UBEC input lead (HW-20).
 
 Questions that block a decision, or that a decision rests on and nobody has measured yet.
 
 | Question | Blocks |
 |---|---|
 | SM-2P battery connector temperature under load | HW-13 - XT30 if it runs warm |
-| FRDM loaded current draw | compute branch fuse sizing |
-| Which USB-CAN adapter, and is its 120 Ω switchable? | HW-18 - must be OFF |
-| Does the Encoder Motor Module time out when I²C commands stop? | HW-17 - decides whether the HW-12 relay is needed before autonomy |
+| Does the Encoder Motor Module time out when I²C commands stop? (tested when the STM32 app work starts, Phase 2 bring-up) | HW-17 - decides whether the HW-12 relay is needed before autonomy |

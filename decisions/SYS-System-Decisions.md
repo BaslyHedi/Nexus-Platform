@@ -41,8 +41,8 @@ denominator from day one.
 
 **Decision.** The project is built in five phases - **Foundation, Drive, Platform, Perception, Autonomy** -
 each with a goal and exit criteria, owned by [`../system/phases.md`](../system/phases.md). Phase 1 is
-the assembled vehicle, a released CAN matrix, a bench demo, a CAN flash bootloader with a minimal STM32 app, a
-minimal FRDM image, and the repository structure. It contains no control loops.
+the assembled vehicle, a CAN flash bootloader with a minimal STM32 app, a
+minimal FRDM image, and the repository structure. It drives nothing and contains no control loops.
 
 **Why.** The first plan had two buckets, "Phase 1" and "later", and everything that was not wiring was
 later. That hides the real order of dependency: the bus contract has to exist before either side of it, and

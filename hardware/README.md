@@ -85,7 +85,7 @@ is [`../mechanical/scripts/plate1.py`](../mechanical/scripts/plate1.py). What it
 - **The pack's real capacity is unknown.** 63 x 77 x 20 with the leads on a 63 face is three
   21700s in a single row, so 3S1P and **4300-5000 mAh, not the 6000 on the label**. Measure it on
   the first full discharge through the INA226 - it is the denominator for coulomb counting.
-- **The CAN matrix is still to draw** - message IDs, rates, payloads.
+- **The CAN matrix is still to draw** - Phase 1 needs only the flashing identifiers and a heartbeat, the application messages come in Phase 2 ([`../system/phases.md`](../system/phases.md)).
 - Switch depth and mounting-nut OD, once SW1/SW2 arrive (MEC-07).
 - USB-C and Mini-B aperture sizes on the parts ordered 20 Sep (MEC-05).
 

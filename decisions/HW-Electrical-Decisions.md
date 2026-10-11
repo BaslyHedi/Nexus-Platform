@@ -572,6 +572,7 @@ about 10 ns, four orders of magnitude below anything that matters.
   1 Mbit/s, where the stub guidance tightens to ~0.3 m.
 - **CAN_GND must be in the cable.** The PC and the robot are on separate supplies; without pin 3
   the two transceivers have no shared reference and common-mode drifts.
+- **The adapter is chosen (2026-10-11): the Jhoinrch RH-02 PLUS, BOM 4.7.** It is Canable 2.0 based, so Linux sees it as SocketCAN (`gs_usb`, or `slcand`), which is what the Cyphal tools (`yakut`, `pycyphal`) use for the bootloader's file server (SW-01) and for the third-node trace. Its 120 Ω stays OFF; check that with a meter when first connecting.
 - **Galvanic isolation was considered and waived (2026-10-07).** The PC's USB ground meets the
   robot's battery ground at this connector, and an isolated adapter would keep a wiring fault on the
   robot away from the laptop. But CAN and ST-LINK debugging happen together on one laptop, and the

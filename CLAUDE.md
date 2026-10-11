@@ -83,9 +83,9 @@ Treat these as settled. Revisit one only if asked, or if something concrete cont
 Five phases - Foundation, Drive, Platform, Perception, Autonomy - paced by **learning, not
 speed**; [`system/phases.md`](system/phases.md) owns the goal and exit criteria of each, and
 [SYS-02](decisions/SYS-System-Decisions.md) the reasoning. **Phase 1 is Foundation:** the assembled
-vehicle, a released CAN matrix, a bench demo, an STM32 flash bootloader that downloads an app over
-CAN, a minimal FRDM image that sends matrix messages, and the repository structure the rest lives in.
-It has no control loops. Do not restate the plan here.
+vehicle, an STM32 flash bootloader that downloads an app over CAN (Cyphal), a minimal Yocto image built
+from released apps, a heartbeat between the two computers, and the repository structure the rest lives in.
+It has no motors driven and no control loops. Do not restate the plan here.
 
 ### Open hardware items (Phase 1)
 
