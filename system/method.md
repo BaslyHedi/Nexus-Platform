@@ -28,6 +28,7 @@ later phase needs hazard analysis or a safety case, it is added as its own decis
 | System requirements (15288) | The vehicle's requirements, `Nexus-Vehicle` |
 | Logical view (42010 view, SEBoK logical architecture): logical components and functions | The [logical architecture](renders/Nexus-Platform-Logical-Architecture.svg): components `Nexus-Logical-DNN`, functions `Nexus-Logical-DNN-Fnn`. They were called sub-systems (`Nexus-SubSys-DNN`) until 2026-10-11 and kept their numbers. They are **logical components**, not part of the hierarchy |
 | Physical view (42010 view), system elements (15288) | The [physical architecture](renders/Nexus-Platform-Physical-Architecture.svg): elements `Nexus-Physical-NN` |
+| Levels of the hierarchy: **system**, **subsystem**, **component** (NASA SE Handbook, SEBoK; ASPICE for components) | ISO 15288 names no levels, every part being a system element. NEXUS uses the common names: the vehicle is the **system**, its system elements `Nexus-Physical-NN` are **subsystems**, and the elements inside a subsystem `Nexus-Physical-NN-NN` are **components**. The requirement folders follow them |
 | Correspondence (42010), allocation (SysML *allocate*) | Which physical element performs which logical function ([physical-architecture.md](physical-architecture.md)) |
 | Enabling system (15288) | What the vehicle needs through its life cycle without being part of it: repositories, CI, release tags, the image build, the bench PC. Its own requirements, `Nexus-Enabling`, not derived from the vehicle's |
 | Function number | The `Fnn` printed before each function on the logical drawing |
@@ -72,7 +73,7 @@ requirements from ours (ASPICE SWE.1 onward) and cites our IDs; facts travel one
 
 **Requirements are allocated to elements, never to repositories.** A repository is configuration management, part of the
 enabling system: it holds the implementation of one or more software elements (the bootloader and the FBL-Updater share
-one). The configuration table in [`../requirements/Nexus-Enabling.md`](../requirements/level-0/Nexus-Enabling.md) says which
+one). The configuration table in [`../requirements/Nexus-Enabling.md`](../requirements/system/Nexus-Enabling.md) says which
 repository and which build target implement each software element.
 
 ## Requirements and their relations

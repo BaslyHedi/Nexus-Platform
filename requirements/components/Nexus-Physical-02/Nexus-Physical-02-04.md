@@ -1,6 +1,6 @@
 # Nexus-Physical-02-04 - Heartbeat program
 
-Software element, level 2, handed over: the repository in the [configuration table](../../level-0/Nexus-Enabling.md) derives its own software requirements from these and cites their IDs. Written to [../system/method.md](../../../system/method.md) and [rules.md](../../rules.md).
+Software element, level 2, handed over: the repository in the [configuration table](../../system/Nexus-Enabling.md) derives its own software requirements from these and cites their IDs. Written to [../system/method.md](../../../system/method.md) and [rules.md](../../rules.md).
 
 - **Purpose and boundary.** The Linux program that publishes the FRDM node's heartbeat and logs the STM32 node's.
 - **Interfaces.** The bus through SocketCAN; the CAN matrix by a pinned tag.

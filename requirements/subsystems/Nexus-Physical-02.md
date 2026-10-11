@@ -2,7 +2,7 @@
 
 System element, level 1. Written to [../system/method.md](../../system/method.md) and [rules.md](../rules.md).
 
-- **Purpose and boundary.** The FRDM-IMX91S with its SD card and the Linux software. Its elements, defined in [the node's local view](../../system/physical-architecture.md): FRDM board [02-01](../level-2/Nexus-Physical-02/Nexus-Physical-02-01.md), SD card [02-02](../level-2/Nexus-Physical-02/Nexus-Physical-02-02.md), Linux image [02-03](../level-2/Nexus-Physical-02/Nexus-Physical-02-03.md), heartbeat program [02-04](../level-2/Nexus-Physical-02/Nexus-Physical-02-04.md), flashing client [02-05](../level-2/Nexus-Physical-02/Nexus-Physical-02-05.md), test applications [02-06](../level-2/Nexus-Physical-02/Nexus-Physical-02-06.md).
+- **Purpose and boundary.** The FRDM-IMX91S with its SD card and the Linux software. Its elements, defined in [the node's local view](../../system/physical-architecture.md): FRDM board [02-01](../components/Nexus-Physical-02/Nexus-Physical-02-01.md), SD card [02-02](../components/Nexus-Physical-02/Nexus-Physical-02-02.md), Linux image [02-03](../components/Nexus-Physical-02/Nexus-Physical-02-03.md), heartbeat program [02-04](../components/Nexus-Physical-02/Nexus-Physical-02-04.md), flashing client [02-05](../components/Nexus-Physical-02/Nexus-Physical-02-05.md), test applications [02-06](../components/Nexus-Physical-02/Nexus-Physical-02-06.md).
 - **Interfaces.** The bus [Nexus-Physical-04](Nexus-Physical-04.md); 5 V by USB-C from [Nexus-Physical-05](Nexus-Physical-05.md); the UART console to the bench PC.
 - **Allocated functions.** See the [allocation](../../system/physical-architecture.md): 401 F1, 501 F1, 503 F3 and F4, 504 F1.
 - **Modes.** Booting; running; off.

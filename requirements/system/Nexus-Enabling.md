@@ -16,13 +16,13 @@ IDs of the elements it implements.
 
 | Software element | Repository | Build target |
 |---|---|---|
-| [Nexus-Physical-01-04](../level-2/Nexus-Physical-01/Nexus-Physical-01-04.md) Bootloader | `Nexus-STM32-FBL` | the bootloader |
-| [Nexus-Physical-01-05](../level-2/Nexus-Physical-01/Nexus-Physical-01-05.md) FBL-Updater | `Nexus-STM32-FBL` | the FBL-Updater |
-| [Nexus-Physical-01-06](../level-2/Nexus-Physical-01/Nexus-Physical-01-06.md) Application | `Nexus-STM32-App` | the application |
-| [Nexus-Physical-02-03](../level-2/Nexus-Physical-02/Nexus-Physical-02-03.md) Linux image | `Nexus-IMX91-Yocto` | the image |
-| [Nexus-Physical-02-04](../level-2/Nexus-Physical-02/Nexus-Physical-02-04.md) Heartbeat program | its own repository, named when created | the program |
-| [Nexus-Physical-02-05](../level-2/Nexus-Physical-02/Nexus-Physical-02-05.md) Flashing client | `Nexus-CAN-Utils` | the flashing client |
-| [Nexus-Physical-02-06](../level-2/Nexus-Physical-02/Nexus-Physical-02-06.md) Test applications | one repository each, named when created | one program each |
+| [Nexus-Physical-01-04](../components/Nexus-Physical-01/Nexus-Physical-01-04.md) Bootloader | `Nexus-STM32-FBL` | the bootloader |
+| [Nexus-Physical-01-05](../components/Nexus-Physical-01/Nexus-Physical-01-05.md) FBL-Updater | `Nexus-STM32-FBL` | the FBL-Updater |
+| [Nexus-Physical-01-06](../components/Nexus-Physical-01/Nexus-Physical-01-06.md) Application | `Nexus-STM32-App` | the application |
+| [Nexus-Physical-02-03](../components/Nexus-Physical-02/Nexus-Physical-02-03.md) Linux image | `Nexus-IMX91-Yocto` | the image |
+| [Nexus-Physical-02-04](../components/Nexus-Physical-02/Nexus-Physical-02-04.md) Heartbeat program | its own repository, named when created | the program |
+| [Nexus-Physical-02-05](../components/Nexus-Physical-02/Nexus-Physical-02-05.md) Flashing client | `Nexus-CAN-Utils` | the flashing client |
+| [Nexus-Physical-02-06](../components/Nexus-Physical-02/Nexus-Physical-02-06.md) Test applications | one repository each, named when created | one program each |
 | The CAN matrix, an interface definition and not an element | `Nexus-CAN-Utils` | the matrix release and its generated bindings |
 
 ## Requirements

@@ -19,7 +19,7 @@ conformance with none of the references; it uses their content as its rule set.
 
 | | Characteristic | In NEXUS |
 |---|---|---|
-| C1 | **Necessary** | It traces up: to a parent requirement, or at level 0 to a phase-plan item (`Need`). Without it the parent or the need has a gap |
+| C1 | **Necessary** | It traces up: to a parent requirement, or at the system level to a phase-plan item (`Need`). Without it the parent or the need has a gap |
 | C2 | **Appropriate** | Its intent and detail match the level of the entity it is about. Sections 2 to 5 say what that means per level |
 | C3 | **Unambiguous** | It has one reading for every reader |
 | C4 | **Complete** | It stands on its own, without its heading or its neighbours |
@@ -28,7 +28,7 @@ conformance with none of the references; it uses their content as its rule set.
 | C7 | **Verifiable** | It can be shown to be met: `Verification` names the method and the pass criterion |
 | C8 | **Correct** | It is a faithful statement of its source: the parent, the phase plan, the decision it cites |
 | C9 | **Conforming** | It follows a pattern below and the block format of [README.md](README.md) |
-| C10 | **Complete** (set) | Every goal, deliverable and test of the phase is covered at level 0; every derived allocation has its children |
+| C10 | **Complete** (set) | Every goal, deliverable and test of the phase is covered at the system level; every derived allocation has its children |
 | C11 | **Consistent** (set) | No conflict, no overlap, the same terms and units throughout |
 | C12 | **Feasible** (set) | The phase can meet all of them together |
 | C13 | **Comprehensible** (set) | What is required at a level is clear without reading the levels below |
@@ -71,7 +71,7 @@ All 42 apply. Where NEXUS sharpens one, the note says how.
 | **Uniformity of language** | R36 consistent terms and units; R37 consistent acronyms; R38 abbreviations defined; R39 a project style guide; R40 consistent decimal format | R39: this file is the style guide |
 | **Modularity** | R41 group related requirements; R42 a defined structure for sets | R42: one file per system-of-interest, element or item, in the format of [README.md](README.md) |
 
-## 2. Vehicle (system requirements, level 0)
+## 2. The vehicle: system requirements
 
 1. **The subject is the vehicle** (R2, R3): "The vehicle shall …".
 2. **Black box** (C2, R31). The statement names only the vehicle, its **actors** (operator, charger, environment, a PC at
@@ -88,14 +88,14 @@ All 42 apply. Where NEXUS sharpens one, the note says how.
 8. **Traced to its functions**: `Function` names the logical functions it concerns.
 9. **Verified by system verification**: a phase test, or a demonstration or inspection of the whole vehicle.
 
-## 3. Enabling system (level 0, beside the vehicle)
+## 3. The enabling system, beside the vehicle
 
 1. **The subject is the enabling item** (R3): "Each repository", "The Linux image build", "The USB-CAN adapter".
 2. **Not derived from the vehicle** (C1): `Need` names the phase-plan item, typically a deliverable.
 3. **No vehicle behaviour** (C2): what the vehicle does belongs in the vehicle file, even when a tool performs the test.
 4. **Realised mostly by `SYS`**: a procedure or convention, verified by inspecting the CI runs, tags and builds.
 
-## 4. System elements (level 1)
+## 4. Subsystems
 
 1. **The subject is the element** (R3): "The node", "The bus", "The element", or a named part of it ("SW1").
 2. **Only what adds to the parent** (C1, R30): a split, an interface, a value, a physical property, or a constraint from a
@@ -110,7 +110,7 @@ All 42 apply. Where NEXUS sharpens one, the note says how.
    derived requirement may bring in a supporting function its parent does not name; the table then lists it.
 8. **Hardware ends here**: a requirement realised in hardware is a leaf with `Realised-by: HW`.
 
-## 5. Elements inside a node (level 2)
+## 5. Components
 
 1. **The subject is the element** (R3): "The Discovery board", "The carrier", "The bootloader", "The Linux image".
 2. **Elements, never repositories** (C2): a statement names the element, not the repository or the build target that

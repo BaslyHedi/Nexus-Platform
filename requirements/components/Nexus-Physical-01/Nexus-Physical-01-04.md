@@ -1,6 +1,6 @@
 # Nexus-Physical-01-04 - Bootloader
 
-Software element, level 2, handed over: the repository in the [configuration table](../../level-0/Nexus-Enabling.md) derives its own software requirements from these and cites their IDs. Written to [../system/method.md](../../../system/method.md) and [rules.md](../../rules.md).
+Software element, level 2, handed over: the repository in the [configuration table](../../system/Nexus-Enabling.md) derives its own software requirements from these and cites their IDs. Written to [../system/method.md](../../../system/method.md) and [rules.md](../../rules.md).
 
 - **Purpose and boundary.** The resident flash bootloader: bare-metal and small by design ([phases.md](../../../system/phases.md)), unsigned and unencrypted in Phase 1.
 - **Interfaces.** The bus through CAN1; the application [01-06](Nexus-Physical-01-06.md) and the FBL-Updater [01-05](Nexus-Physical-01-05.md) through the memory map; the CAN matrix by a pinned tag.

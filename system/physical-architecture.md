@@ -40,14 +40,14 @@ part are in brackets. The table agrees with the `Function` field of the [require
 Functions of later phases are allocated when their phase starts.
 
 **Repositories, CI and the bench PC are not elements of the vehicle.** They are the **enabling system** (ISO/IEC/IEEE 15288),
-with requirements of their own in [`../requirements/Nexus-Enabling.md`](../requirements/level-0/Nexus-Enabling.md).
+with requirements of their own in [`../requirements/Nexus-Enabling.md`](../requirements/system/Nexus-Enabling.md).
 
-## Inside the nodes (level 2)
+## Inside the nodes: components
 
 Each node is a system-of-interest in turn, with its own physical view: the elements it is built from and the connections
 between them. Element IDs are hierarchical, `Nexus-Physical-01-NN` inside `Nexus-Physical-01`. Requirements are allocated to
 these elements, never to the repositories that implement the software ones (configuration table in
-[`../requirements/Nexus-Enabling.md`](../requirements/level-0/Nexus-Enabling.md)).
+[`../requirements/Nexus-Enabling.md`](../requirements/system/Nexus-Enabling.md)).
 
 ### Nexus-Physical-01, STM32 node
 
@@ -55,12 +55,12 @@ Drawn in [Nexus-Physical-01-Local-View](renders/Nexus-Physical-01-Local-View.svg
 
 | ID | Element | Kind |
 |---|---|---|
-| [01-01](../requirements/level-2/Nexus-Physical-01/Nexus-Physical-01-01.md) | Discovery board: STM32F4DISCOVERY MB997B, with the ST-LINK V2 and four user LEDs (BOM 1.2) | hardware, bought |
-| [01-02](../requirements/level-2/Nexus-Physical-01/Nexus-Physical-01-02.md) | Carrier boards A and B, with R3, R4, C2 and the headers ([stm32-carrier](../hardware/renders/stm32-carrier.svg)) | hardware, designed here |
-| [01-03](../requirements/level-2/Nexus-Physical-01/Nexus-Physical-01-03.md) | CAN transceiver module SN65HVD230 (BOM 4.1) | hardware, bought |
-| [01-04](../requirements/level-2/Nexus-Physical-01/Nexus-Physical-01-04.md) | Bootloader | software |
-| [01-05](../requirements/level-2/Nexus-Physical-01/Nexus-Physical-01-05.md) | FBL-Updater | software |
-| [01-06](../requirements/level-2/Nexus-Physical-01/Nexus-Physical-01-06.md) | Application | software |
+| [01-01](../requirements/components/Nexus-Physical-01/Nexus-Physical-01-01.md) | Discovery board: STM32F4DISCOVERY MB997B, with the ST-LINK V2 and four user LEDs (BOM 1.2) | hardware, bought |
+| [01-02](../requirements/components/Nexus-Physical-01/Nexus-Physical-01-02.md) | Carrier boards A and B, with R3, R4, C2 and the headers ([stm32-carrier](../hardware/renders/stm32-carrier.svg)) | hardware, designed here |
+| [01-03](../requirements/components/Nexus-Physical-01/Nexus-Physical-01-03.md) | CAN transceiver module SN65HVD230 (BOM 4.1) | hardware, bought |
+| [01-04](../requirements/components/Nexus-Physical-01/Nexus-Physical-01-04.md) | Bootloader | software |
+| [01-05](../requirements/components/Nexus-Physical-01/Nexus-Physical-01-05.md) | FBL-Updater | software |
+| [01-06](../requirements/components/Nexus-Physical-01/Nexus-Physical-01-06.md) | Application | software |
 
 | From | To | What passes |
 |---|---|---|
@@ -78,12 +78,12 @@ from the FRDM-IMX91S schematic SCH-95020 rev B.
 
 | ID | Element | Kind |
 |---|---|---|
-| [02-01](../requirements/level-2/Nexus-Physical-02/Nexus-Physical-02-01.md) | FRDM board: FRDM-IMX91S, with its CAN transceiver, JP1 and USB-C ports (BOM 1.1) | hardware, bought |
-| [02-02](../requirements/level-2/Nexus-Physical-02/Nexus-Physical-02-02.md) | SD card (BOM 5.3) | hardware, bought |
-| [02-03](../requirements/level-2/Nexus-Physical-02/Nexus-Physical-02-03.md) | Linux image: BSP, kernel, root file system | software |
-| [02-04](../requirements/level-2/Nexus-Physical-02/Nexus-Physical-02-04.md) | Heartbeat program | software |
-| [02-05](../requirements/level-2/Nexus-Physical-02/Nexus-Physical-02-05.md) | Flashing client | software |
-| [02-06](../requirements/level-2/Nexus-Physical-02/Nexus-Physical-02-06.md) | Test applications, two throwaway programs | software |
+| [02-01](../requirements/components/Nexus-Physical-02/Nexus-Physical-02-01.md) | FRDM board: FRDM-IMX91S, with its CAN transceiver, JP1 and USB-C ports (BOM 1.1) | hardware, bought |
+| [02-02](../requirements/components/Nexus-Physical-02/Nexus-Physical-02-02.md) | SD card (BOM 5.3) | hardware, bought |
+| [02-03](../requirements/components/Nexus-Physical-02/Nexus-Physical-02-03.md) | Linux image: BSP, kernel, root file system | software |
+| [02-04](../requirements/components/Nexus-Physical-02/Nexus-Physical-02-04.md) | Heartbeat program | software |
+| [02-05](../requirements/components/Nexus-Physical-02/Nexus-Physical-02-05.md) | Flashing client | software |
+| [02-06](../requirements/components/Nexus-Physical-02/Nexus-Physical-02-06.md) | Test applications, two throwaway programs | software |
 
 | From | To | What passes |
 |---|---|---|

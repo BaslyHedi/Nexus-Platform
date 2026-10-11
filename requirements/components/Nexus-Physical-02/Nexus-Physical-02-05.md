@@ -1,6 +1,6 @@
 # Nexus-Physical-02-05 - Flashing client
 
-Software element, level 2, handed over: the repository in the [configuration table](../../level-0/Nexus-Enabling.md) derives its own software requirements from these and cites their IDs. Written to [../system/method.md](../../../system/method.md) and [rules.md](../../rules.md).
+Software element, level 2, handed over: the repository in the [configuration table](../../system/Nexus-Enabling.md) derives its own software requirements from these and cites their IDs. Written to [../system/method.md](../../../system/method.md) and [rules.md](../../rules.md).
 
 - **Purpose and boundary.** The Cyphal file server that offers images to the bootloader (SW-01). The same program runs on the bench PC, as part of the enabling system.
 - **Interfaces.** The bus through SocketCAN; the bootloader [01-04](../Nexus-Physical-01/Nexus-Physical-01-04.md) at the far end.

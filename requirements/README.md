@@ -2,7 +2,7 @@
 
 The requirements of NEXUS, written to the method in [`../system/method.md`](../system/method.md) and the rules in
 [rules.md](rules.md), with the terms of [glossary.md](glossary.md): **one file per system-of-interest or system element**, named
-by its ID. Phase 1 is written in full: 154 requirements in 21 files, 39 at level 0, 54 at level 1, 61 at level 2. Each
+by its ID. Phase 1 is written in full: 154 requirements in 21 files: 39 system, 54 subsystem, 61 component. Each
 statement is in an EARS pattern.
 
 **Checked and traced by one tool**, [`../tools/check-requirements.py`](../tools/check-requirements.py). It checks the format,
@@ -22,22 +22,23 @@ python3 tools/check-requirements.py --write    # regenerates TRACE.md and render
 
 ## The files
 
-One folder per level, and level 2 grouped by the node its elements are inside. The checker fails on a file in the wrong place.
+One folder per level of the hierarchy, named as NASA, SEBoK and ASPICE name them; components are grouped by the subsystem
+they are inside. The checker fails on a file in the wrong place.
 
 ```text
-level-0/                       the system-of-interest and the enabling system
-level-1/                       the system elements of the vehicle
-level-2/Nexus-Physical-01/     the elements of the STM32 node
-level-2/Nexus-Physical-02/     the elements of the FRDM node
+system/                           the system-of-interest (the vehicle) and the enabling system
+subsystems/                       the subsystems of the vehicle (ISO 15288: its system elements)
+components/Nexus-Physical-01/     the components of the STM32 node
+components/Nexus-Physical-02/     the components of the FRDM node
 ```
 
-| Level | File | What it is |
+| Level | Files | What they are |
 |---|---|---|
-| 0 | [Nexus-Vehicle](level-0/Nexus-Vehicle.md) | The system requirements, black box: they name the vehicle and its actors, never an element |
-| 0 | [Nexus-Enabling](level-0/Nexus-Enabling.md) | The **enabling system** (ISO/IEC/IEEE 15288): repositories, CI, release tags, the `kas` build, the bench PC. Not part of the vehicle, so not derived from it |
-| 1 | [Nexus-Physical-01](level-1/Nexus-Physical-01.md) STM32 node, [02](level-1/Nexus-Physical-02.md) FRDM node, [04](level-1/Nexus-Physical-04.md) CAN bus, [05](level-1/Nexus-Physical-05.md) power, [06](level-1/Nexus-Physical-06.md) chassis, [07](level-1/Nexus-Physical-07.md) rear drive, [08](level-1/Nexus-Physical-08.md) steering | The system elements of the [physical view](../system/physical-architecture.md) that exist in Phase 1. 03 (Pi 5) and 09 (sensors) start in Phase 4 |
-| 2 | [01-01](level-2/Nexus-Physical-01/Nexus-Physical-01-01.md) Discovery board, [01-02](level-2/Nexus-Physical-01/Nexus-Physical-01-02.md) carrier boards, [01-03](level-2/Nexus-Physical-01/Nexus-Physical-01-03.md) transceiver module, [01-04](level-2/Nexus-Physical-01/Nexus-Physical-01-04.md) bootloader, [01-05](level-2/Nexus-Physical-01/Nexus-Physical-01-05.md) FBL-Updater, [01-06](level-2/Nexus-Physical-01/Nexus-Physical-01-06.md) application | The elements of the STM32 node, hardware and software |
-| 2 | [02-01](level-2/Nexus-Physical-02/Nexus-Physical-02-01.md) FRDM board, [02-02](level-2/Nexus-Physical-02/Nexus-Physical-02-02.md) SD card, [02-03](level-2/Nexus-Physical-02/Nexus-Physical-02-03.md) Linux image, [02-04](level-2/Nexus-Physical-02/Nexus-Physical-02-04.md) heartbeat program, [02-05](level-2/Nexus-Physical-02/Nexus-Physical-02-05.md) flashing client, [02-06](level-2/Nexus-Physical-02/Nexus-Physical-02-06.md) test applications | The elements of the FRDM node, hardware and software |
+| System | [Nexus-Vehicle](system/Nexus-Vehicle.md) | The system requirements, black box: they name the vehicle and its actors, never an element |
+| System | [Nexus-Enabling](system/Nexus-Enabling.md) | The **enabling system** (ISO/IEC/IEEE 15288): repositories, CI, release tags, the `kas` build, the bench PC. Not part of the vehicle, so not derived from it |
+| Subsystem | [Nexus-Physical-01](subsystems/Nexus-Physical-01.md) STM32 node, [02](subsystems/Nexus-Physical-02.md) FRDM node, [04](subsystems/Nexus-Physical-04.md) CAN bus, [05](subsystems/Nexus-Physical-05.md) power, [06](subsystems/Nexus-Physical-06.md) chassis, [07](subsystems/Nexus-Physical-07.md) rear drive, [08](subsystems/Nexus-Physical-08.md) steering | The system elements of the [physical view](../system/physical-architecture.md) that exist in Phase 1. 03 (Pi 5) and 09 (sensors) start in Phase 4 |
+| Component | [01-01](components/Nexus-Physical-01/Nexus-Physical-01-01.md) Discovery board, [01-02](components/Nexus-Physical-01/Nexus-Physical-01-02.md) carrier boards, [01-03](components/Nexus-Physical-01/Nexus-Physical-01-03.md) transceiver module, [01-04](components/Nexus-Physical-01/Nexus-Physical-01-04.md) bootloader, [01-05](components/Nexus-Physical-01/Nexus-Physical-01-05.md) FBL-Updater, [01-06](components/Nexus-Physical-01/Nexus-Physical-01-06.md) application | The elements of the STM32 node, hardware and software |
+| Component | [02-01](components/Nexus-Physical-02/Nexus-Physical-02-01.md) FRDM board, [02-02](components/Nexus-Physical-02/Nexus-Physical-02-02.md) SD card, [02-03](components/Nexus-Physical-02/Nexus-Physical-02-03.md) Linux image, [02-04](components/Nexus-Physical-02/Nexus-Physical-02-04.md) heartbeat program, [02-05](components/Nexus-Physical-02/Nexus-Physical-02-05.md) flashing client, [02-06](components/Nexus-Physical-02/Nexus-Physical-02-06.md) test applications | The elements of the FRDM node, hardware and software |
 
 **Element IDs are hierarchical**: `Nexus-Physical-01-04` is element 04 of `Nexus-Physical-01`. The local view of each node,
 its elements and their connections, is in [`../system/physical-architecture.md`](../system/physical-architecture.md).
@@ -48,7 +49,7 @@ state what their drawing must satisfy; a software element is handed over, and it
 from the ones here.
 
 **Requirements are allocated to elements, never to repositories.** Which repository implements which software element is
-the configuration table in [Nexus-Enabling](level-0/Nexus-Enabling.md).
+the configuration table in [Nexus-Enabling](system/Nexus-Enabling.md).
 
 **Logical components have no file.** Requirements trace to their functions (`Function`) and are met by physical elements.
 The Phase 1 allocation of functions to elements is in [`../system/physical-architecture.md`](../system/physical-architecture.md).
@@ -74,9 +75,9 @@ one block per requirement:
 |---|---|---|
 | **ID** | `<file ID>-Rnnn`; numbers never reused | |
 | **Statement** | One sentence in an EARS pattern, written to [rules.md](rules.md) | |
-| **Need** | Level 0 only: the phase-plan item it comes from, a goal, deliverable or test of [phases.md](../system/phases.md) | *trace* |
+| **Need** | System level only: the phase-plan item it comes from, a goal, deliverable or test of [phases.md](../system/phases.md) | *trace* |
 | **Function** | The `Nexus-Logical-DNN-Fnn` it concerns, one or more. A derived requirement may bring in a supporting function its parent does not name (the bus serving an update) | *trace* |
-| **Derived-from** | The requirements one level up it comes from; `-` at level 0. Absent in the enabling system | *deriveReqt* |
+| **Derived-from** | The requirements one level up it comes from; `-` at the system level. Absent in the enabling system | *deriveReqt* |
 | **Allocated-to** | The elements one level down that meet it. **Plain**: each holds requirements derived from this one. **`(as-is)`**: the element meets it unchanged and no child is written. `-`: a leaf, met here | *satisfy* |
 | **Phase** | 1 to 5; never later than a parent's | |
 | **Verification** | On every requirement: `Test`, `Inspection`, `Analysis` or `Demo` and the reference, or `Integration` and the children whose passing verifies it. `T1.1`-style references are the tests of [phases.md](../system/phases.md) | *verify* |

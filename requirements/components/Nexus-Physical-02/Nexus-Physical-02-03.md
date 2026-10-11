@@ -1,6 +1,6 @@
 # Nexus-Physical-02-03 - Linux image
 
-Software element, level 2, handed over: the repository in the [configuration table](../../level-0/Nexus-Enabling.md) derives its own software requirements from these and cites their IDs. Written to [../system/method.md](../../../system/method.md) and [rules.md](../../rules.md).
+Software element, level 2, handed over: the repository in the [configuration table](../../system/Nexus-Enabling.md) derives its own software requirements from these and cites their IDs. Written to [../system/method.md](../../../system/method.md) and [rules.md](../../rules.md).
 
 - **Purpose and boundary.** The bootable image: BSP, kernel and device tree, root file system, and the released applications it carries.
 - **Interfaces.** The FRDM board [02-01](Nexus-Physical-02-01.md); the applications [02-04](Nexus-Physical-02-04.md), [02-05](Nexus-Physical-02-05.md), [02-06](Nexus-Physical-02-06.md) by release tag.
