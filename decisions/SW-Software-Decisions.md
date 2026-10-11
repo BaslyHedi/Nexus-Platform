@@ -379,8 +379,11 @@ instruction, constant or vector is fetched from the flash.
   must fit in the 128 KB (SW-05). The FBL is far smaller than that today.
 - **The start-up routine is the only code that runs from the flash.** It is placed in its own section, `.boot_text`, so the
   linker can keep it in the flash. It must not use a function, a constant or a global that is in the copied image.
-- **The vector table has to be aligned.** For 98 vectors (16 system and 82 interrupts), the Cortex-M4 requires an alignment of
-  512 bytes for `VTOR`.
+- **The vector table has to be aligned.** The F407 has 82 maskable interrupt channels (RM0090 Rev 22), so 98 entries and a
+  table of 392 bytes. PM0214 Rev 10, section 4.4.4, sets the minimum `VTOR` alignment at 128 words, which is 512 bytes.
+  Bit 29 of the offset selects the SRAM region, which is where the copy lives.
+- **The copy is complete before `VTOR` is written.** PM0214 section 4.3.10 requires the new table's fault, NMI and enabled
+  interrupt entries to be valid before it is programmed.
 - **The application is not affected.** It runs from the flash, as Zephyr does by default, and reinitialises the SRAM when
   it starts. The FBL's SRAM contents do not survive the jump.
 - **A debugger sees the code at its SRAM addresses.** The symbols match the running code, and the start-up routine's own
@@ -388,7 +391,6 @@ instruction, constant or vector is fetched from the flash.
 
 **To confirm.**
 
-- That the vector alignment is 512 bytes for 98 vectors, from the Cortex-M4 programming manual (PM0214), which is not in
-  `vendor/` yet.
+- ~~The vector alignment.~~ Checked against PM0214 Rev 10 (2026-10-11): 128 words, 512 bytes, for the 98 entries.
 - On the board, that the FBL keeps receiving over a 128 KB sector erase.
 - The time the start-up copy takes, which has not been measured.
