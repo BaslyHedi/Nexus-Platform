@@ -7,6 +7,7 @@ Numbering is `SYS-nn`, unique across the project and never reused. Format, and h
 | # | Decision |
 |---|---|
 | **SYS-01** | Layered over-discharge protection, not a cutoff module |
+| **SYS-02** | Five phases, paced by learning; Phase 1 is foundation, not driving |
 
 ---
 
@@ -33,5 +34,26 @@ PCB, which is the backstop the buzzer would have been.
 **Consequence.** Per-cell voltage is permanently unobservable on this pack. Pack-level V and I
 is the whole available signal. Capacity is known - 6000 mAh - so coulomb counting has its
 denominator from day one.
+
+---
+
+## SYS-02 · Five phases, paced by learning; Phase 1 is foundation, not driving
+
+**Decision.** The project is built in five phases - **Foundation, Drive, Platform, Perception, Autonomy** -
+each with a goal and exit criteria, owned by [`../system/phases.md`](../system/phases.md). Phase 1 is
+the assembled vehicle, a CAN flash bootloader with a minimal STM32 app, a
+minimal FRDM image, and the repository structure. It drives nothing and contains no control loops.
+
+**Why.** The first plan had two buckets, "Phase 1" and "later", and everything that was not wiring was
+later. That hides the real order of dependency: the bus contract has to exist before either side of it, and
+the means of updating the MCU has to exist before the MCU runs anything worth updating. The project exists
+to learn C++, Rust, Embedded Linux, Yocto, Zephyr, CAN, secure boot and OTA, so the order is chosen for what each
+step makes learnable, and no phase has a date.
+
+**Consequence.** The drawing marks each sub-system with the phase it **first exists in**, which moved some of
+its earlier tags: Software Update (504) is Phase 1 because the FBL is its first form, Operator Interface (402)
+and External Connectivity (403) are Phase 2, Cybersecurity (502) is Phase 3, and perception and
+localization (301, 302) are Phase 4 with planning (303) in Phase 5. Phase 1's repositories, and the `SW-` entries
+that settle the matrix and the flash protocol, are listed in the phase plan.
 
 ---

@@ -233,9 +233,7 @@ presents CAN_H/CAN_L on its 2×5 connector. **CAN1 on PD0 (RX) / PD1 (TX), AF9.*
 parts. Pin choice verified against UM1472: PA11/PA12 are taken by USB OTG on this board and
 PB9 is `Audio_SDA` for the CS43L22 codec. PD0/PD1 are free and both broken out on header P2.
 
-**Consequence.** 120 Ω at **both** ends and nowhere else. Measure before fitting anything:
-the SN65HVD230 module may already carry its 120 Ω, and the FRDM's SW4 (CAN split termination)
-may cover that end. Run H, L **and GND**; twist the pair. The DE-9 debug port (HW-18) hangs
+**Consequence.** 120 Ω at **both** ends and nowhere else. **Resolved 2026-10-11 (Hedi, from the FRDM schematic page):** the STM32 end is terminated by **the CAN transceiver module's own 120 Ω**, and the carrier's removable R3 (HW-19) is **built but not used** (its jumper stays open); the FRDM end is terminated by its own split termination, **R139 + R144, 60.4 Ω each, joined through jumper JP1** (120.8 Ω across CAN_H/CAN_L, 47 pF from the midpoint to GND), so **JP1 fitted = terminated**. R140 and R143 are not fitted. The board has no SW4 on this page; JP1 is the control. Run H, L **and GND**; twist the pair. The DE-9 debug port (HW-18) hangs
 off this bus as an **unterminated stub** - it does not change these two ends.
 
 ---
@@ -565,13 +563,14 @@ about 10 ns, four orders of magnitude below anything that matters.
 
 **Consequences.**
 
-- **The USB-CAN adapter's own 120 Ω must be switched OFF.** Most ship with it on or jumpered on.
+- **The USB-CAN adapter's own 120 Ω stays OFF.** It has switches for it and needs none: both ends of the bus are already terminated (HW-09). Checked 2026-10-11.
   Three terminators pull the bus to 40 Ω and it stops working - this is the single most likely
   cause of a dead bus after this port is added, so check it first.
 - **Keep the adapter cable short**, ≤ 2 m. Fine at 500 kbit/s; revisit if the bus ever goes to
   1 Mbit/s, where the stub guidance tightens to ~0.3 m.
 - **CAN_GND must be in the cable.** The PC and the robot are on separate supplies; without pin 3
   the two transceivers have no shared reference and common-mode drifts.
+- **The adapter is chosen (2026-10-11): the Jhoinrch RH-02 PLUS, BOM 4.7.** It is Canable 2.0 based, so Linux sees it as SocketCAN (`gs_usb`, or `slcand`), which is what the Cyphal tools (`yakut`, `pycyphal`) use for the bootloader's file server (SW-01) and for the third-node trace. It is ordered and in hand (arrived, 2026-10-11).
 - **Galvanic isolation was considered and waived (2026-10-07).** The PC's USB ground meets the
   robot's battery ground at this connector, and an isolated adapter would keep a wiring fault on the
   robot away from the laptop. But CAN and ST-LINK debugging happen together on one laptop, and the
@@ -604,7 +603,7 @@ its pigtail is soldered straight into the board. See "Revision 2026-09-29" at th
   two terminals, and the USB-C socket soldered in place of the FRDM pair (see the revision below).*
 - **C2, the second 470 µF, sits on carrier board A across the servo header,** where the stall current
   is drawn.
-- **The carrier's end of the CAN bus is terminated by a jumper.** R3, 120 Ω, in series with a 2-pin
+- **The carrier carries a removable termination (R3), which is not used.** *Revised 2026-10-11: the SN65HVD230 module already has its own 120 Ω and that is the STM32 end's terminator, so the jumper stays open and the module's resistor is not removed. R3 stays as the fallback if the module is ever changed.* As built: R3, 120 Ω, in series with a 2-pin
   header across CAN_H/CAN_L on board B. Jumper on means terminated. *As built 2026-10-03: the kit
   has no 120 Ω, so R3 is **R3a 100 Ω + R3b 20 Ω in series**, exactly 120 Ω. R3a sits where R3 was
   (B·F8-B8), R3b along the front row (B·A8-A4), and R3a's own lead is bent from B·B8 to B·A8 to
@@ -621,7 +620,7 @@ its pigtail is soldered straight into the board. See "Revision 2026-09-29" at th
   carrier's wiring, and it sits where the old WAGO split did, so the topology of HW-17 is unchanged.
 - **Selectable termination is how the bus actually gets debugged.** Which end is terminated has been
   an open question since HW-09 (the module's resistor, the FRDM's SW4). A jumper makes it a setting.
-  It only works if the module's own 120 Ω is removed, so it is.
+  It would only work if the module's own 120 Ω were removed; since 2026-10-11 it is not, and R3 is the spare.
 - **R4 is the cheapest insurance on the board.** A servo plug fitted one pin off puts 6 V on PE9; 1 kΩ
   limits that to about 3 mA into the clamp diode. At 50 Hz it costs nothing.
 
@@ -640,8 +639,7 @@ headers; Fig. 10 puts P2's odd pins **inboard**.
   UBEC. They carry signal or return current only, and the loop is accepted.
 - A third board needs a home on plate 2, next to the Bauer.
 
-**To confirm.** CANH-CANL on the module, unpowered, before it is fitted. If it reads about 120 Ω,
-remove that resistor.
+**To confirm.** *Closed 2026-10-11 (Hedi):* the CAN termination check is done; the STM32 end is terminated by the module's own resistor, and the carrier's R3 jumper is left open so there is no second terminator.
 
 **Revision 2026-09-29 · the USB-C socket lives on board C.** Hole names as printed on the kit board (MEC-15).
 *Renamed 2026-10-05: C's print runs the other way round from A and B (numbers 1-24 along the long side from the USB-C end, letters A-J up the short side from the bottom, components up and the socket on the left). Every C name below was swapped to match; the old names were letter = row, number = 11 - column.*

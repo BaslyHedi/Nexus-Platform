@@ -78,19 +78,22 @@ port** on the rear fascia lets a PC join the bus as a third node.
 
 Treat these as settled. Revisit one only if asked, or if something concrete contradicts it.
 
-## Phase 1
+## Phases
 
-Get the stack above physically working end to end: battery → regulated 5 V → i.MX 91,
-CAN to the STM32, STM32 driving motors and steering. Everything else (Yocto images,
-Rust services, ROS 2, sensors, security, OTA) builds on top of that once it moves.
+Five phases - Foundation, Drive, Platform, Perception, Autonomy - paced by **learning, not
+speed**; [`system/phases.md`](system/phases.md) owns the goal and exit criteria of each, and
+[SYS-02](decisions/SYS-System-Decisions.md) the reasoning. **Phase 1 is Foundation:** the assembled
+vehicle, an STM32 flash bootloader that downloads an app over CAN (Cyphal), a minimal Yocto image built
+from released apps, a heartbeat between the two computers, and the repository structure the rest lives in.
+It has no motors driven and no control loops. Do not restate the plan here.
 
-### Open hardware items
+### Open hardware items (Phase 1)
 
 **The power stage is bought and in hand** (delivered 18 Sep 2026) - converter, fuses, wire,
 distribution, UBEC, current sensor, CAN transceiver and the USB-C feed. No *selection* blocks
 a powered-up Phase 1: the converter, both CAN transceivers and the board variant are settled.
-What remains is bench verification, and the connectors that break CAN out of the two boards -
-of which the FRDM's 2×5 mating connector is the only real blocker, and it is free to resolve.
+As of 2026-10-11 nothing is left to buy or select for Phase 1, including the FRDM's 2×5 mating
+connector; what remains is the bench tests in [`system/phases.md`](system/phases.md).
 
 Component status and quantities live in [`bom/BOM.md`](bom/BOM.md); the electrical
 and mechanical rationale, and the list of what is still open, lives in

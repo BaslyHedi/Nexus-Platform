@@ -34,5 +34,4 @@ bend to suit). **The screw terminal is not used**, and it hangs about 1.5 mm off
 all sits on board B is MEC-15's business
 (revision 2026-10-03), drawn in [`../../../hardware/renders/stm32-carrier.svg`](../../../hardware/renders/stm32-carrier.svg).
 
-**Still to measure:** the screw terminal's height, and CANH-CANL unpowered (HW-09: ~120 Ω means an on-board
-terminator that has to come off, so the carrier's TERM jumper alone decides).
+**Still to measure:** the screw terminal's height. **Termination (2026-10-11):** the module's own 120 Ω stays on and is the STM32 end's terminator (HW-09); the carrier's TERM jumper is left open.

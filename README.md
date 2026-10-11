@@ -12,7 +12,7 @@ get their own repository as they are written; they consume this one.
 
 | Folder | Owns |
 |---|---|
-| [`system/README.md`](system/README.md) | What NEXUS must **do** - the top-down functional decomposition and the `Nexus-SubSys-DNN` IDs; its diagram is in `renders/` |
+| [`system/README.md`](system/README.md) | What NEXUS must **do** - the top-down functional decomposition and the `Nexus-SubSys-DNN` IDs, the **phase plan** (`phases.md`); its diagram is in `renders/`, written by the script in `scripts/` |
 | [`decisions/README.md`](decisions/README.md) | Every settled decision and the reasoning behind it, split **HW / MEC / SYS / SW**. Its README owns the numbering rules |
 | [`hardware/README.md`](hardware/README.md) | Build drawings, to scale - chassis layout, wiring schematic, STM32 carrier - the SVGs in `renders/`, the script that writes the carrier's in `scripts/` |
 | [`mechanical/README.md`](mechanical/README.md) | The parts we make, in `cad/` (`fascia.scad` is the source of truth, plus the print files and the proposed carrier tray), the scripts that build and animate the model in `scripts/`, and their output in `renders/` |
@@ -68,7 +68,7 @@ python3 tools/check-links.py
 
 ## Checking the drawings
 
-The three drawings in `hardware/renders/` are written by the scripts of the same name in `hardware/scripts/`. Edit the script, never
+The drawings in `hardware/renders/` and `system/renders/` are written by the scripts of the same name in `hardware/scripts/` and `system/scripts/`. Edit the script, never
 the SVG; this fails if an SVG has drifted from its script:
 
 ```bash
