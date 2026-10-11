@@ -42,7 +42,7 @@ A term in a requirement means exactly what this file says.
 | **Heartbeat** | The periodic Cyphal message by which a node announces that it runs (SW-01) |
 | **Image** | A program in the binary form that is written to flash or to the SD card |
 | **Logic branch** | The circuit SW2 switches: the 5 V converter, which feeds both nodes (HW-08, HW-17) |
-| **Memory map** | The division of the STM32 flash into the bootloader region and the application region, a design artefact of the STM32 node |
+| **Memory map** | The division of the STM32 flash into the bootloader region and the application region, a design artefact of the STM32 node, fixed by SW-04 |
 | **Node** | A computer on the CAN bus: the STM32 node (`Nexus-Physical-01`) or the FRDM node (`Nexus-Physical-02`). A PC on the diagnostic port is a further node |
 | **Node info** | The Cyphal service through which a node reports its name and version (SW-01) |
 | **Pack voltage** | The voltage of the 3S battery, 11.1 V nominal |
