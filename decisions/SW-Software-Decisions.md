@@ -312,7 +312,7 @@ remaining 3.5 KB is not claimed. The record's layout is written in the interface
 
 - **It is the memory the manual documents as surviving a system reset.** RM0090 Rev 22 says a system reset resets
   registers and says nothing about the main SRAM. The backup SRAM is not affected by it, and only a protection level change
-  from 1 to 0 clears it (sections 6.1.3 and 3.7). The main SRAM would have to be measured on the board and could change
+  from 1 to 0 clears it (sections 7.1.3 and 5.1.2). The main SRAM would have to be measured on the board and could change
   with a silicon revision or a debugger setting.
 - **It is big enough.** The `ExecuteCommand` parameter is a path of up to 255 bytes, and the record adds the node ID, the
   magic and the CRC. The 80 bytes of the RTC backup registers cannot hold that.
@@ -359,7 +359,7 @@ instruction, constant or vector is fetched from the flash.
   fetches cannot be performed while a write/erase operation is ongoing". The F407 has one bank, so there is no other bank to
   read from. A sector erase takes up to 500 ms for 16 KB, 1.1 s for 64 KB and 2 s for 128 KB (SW-04).
 - **The FBL erases and programs the flash that the bus is serving, while it is receiving.** The bxCAN has two receive FIFOs of
-  three frames each (RM0090). A frame of eight bytes at 500 kbit/s takes on the order of 0.1 ms, so a CPU stalled for the length
+  three frames each (RM0090, bxCAN). A full frame with a 29-bit identifier and eight data bytes is about 131 bits, so 0.26 ms at 500 kbit/s, and a FIFO fills in under 1 ms. A CPU stalled for the length
   of an erase would lose frames, and the host's `file.Read` transfer would fail. With the code, the constants and the
   vector table in the SRAM, the CPU keeps servicing the bus while the flash controller works.
 - **The flash driver only reads and polls registers during the operation.** `FLASH_SR` is polled for the BSY bit. The manual
@@ -370,8 +370,8 @@ instruction, constant or vector is fetched from the flash.
 - **Execute in place, with only the erase routine in the SRAM.** The interrupt entry still fetches its vector from the flash
   and the handler runs from the flash, so the first CAN interrupt during an erase stalls.
 - **Execute in place and stop receiving while erasing.** The host's file transfer is driven by the FBL's `file.Read` requests
-  (SW-01), so the FBL can pause between requests. This works, and is what a bootloader on a two-bank part does. It
-  was set aside because it ties the erase to the protocol's pacing, and the F407 gives no second bank to relax it.
+  (SW-01), so the FBL can pause between requests. This can work. It
+  was set aside because it ties the erase to the protocol's pacing and leaves every other flash read in the FBL, such as a `const` table, a stall waiting to happen.
 
 **Consequences.**
 
@@ -383,8 +383,8 @@ instruction, constant or vector is fetched from the flash.
   512 bytes for `VTOR`.
 - **The application is not affected.** It runs from the flash, as Zephyr does by default, and reinitialises the SRAM when
   it starts. The FBL's SRAM contents do not survive the jump.
-- **A debugger sees the code at its SRAM addresses.** Breakpoints in the copied code are SRAM breakpoints, which the F4's
-  flash patch unit does not need to provide.
+- **A debugger sees the code at its SRAM addresses.** The symbols match the running code, and the start-up routine's own
+  symbols are at their flash addresses.
 
 **To confirm.**
 
