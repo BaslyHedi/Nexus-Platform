@@ -41,7 +41,7 @@ def build():
     o += element('Nexus-Physical-02-02', 'SD card', 1, 1060, 140, 280, 110, [
         'microSD (5.3)', 'Holds the Linux image'])
 
-    group(o, 260, 380, 1100, 330, 'SOFTWARE ELEMENTS · ON THE SD CARD, RUN BY THE I.MX 91')
+    group(o, 260, 380, 1100, 330, 'SOFTWARE ELEMENTS · ON THE SD CARD, RUN BY THE I.MX 91', 'Nexus-Physical-02')
     o += element('Nexus-Physical-02-03', 'Linux image', 1, 275, 395, 1070, 105, [
         'BSP, kernel and device tree, root file system', 'Boots to a login prompt'], [
         'SocketCAN on the FlexCAN controller, candump', 'Carries each released application at its tag'])
@@ -63,7 +63,7 @@ def build():
         o += FL(f'M{x},502 L{x},558', 'p', size=8)
     o.append('<text x="451" y="534" font-size="8" fill="#c2410c">carried at release tags</text>')
 
-    key(o, 880)
+    key(o, 880, 'Nexus-Physical-02')
     o += ['</g>', '</svg>']
     return '\n'.join(o) + '\n'
 

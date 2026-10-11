@@ -33,6 +33,21 @@ PILL_W = 42
 # One colour per view, shared by both architecture drawings: (stroke, header fill). The physical drawing imports VIEWS.
 VIEWS = {'logical': ('#0f766e', '#ccfbf1'), 'physical': ('#334155', '#e2e8f0')}
 LOGICAL = VIEWS['logical']
+# One colour per system, shared by every physical and traceability drawing: (stroke, fill). An element inside a node
+# (Nexus-Physical-NN-MM) takes the colour of its node. The logical view keeps its single colour: its components are not systems.
+SYSTEMS = {
+    'Nexus-Vehicle': ('#1f2937', '#e5e7eb'), 'Nexus-Enabling': ('#57534e', '#f5f5f4'),
+    'Nexus-Physical-01': ('#4338ca', '#e0e7ff'), 'Nexus-Physical-02': ('#7e22ce', '#f3e8ff'),
+    'Nexus-Physical-03': ('#be185d', '#fce7f3'), 'Nexus-Physical-04': ('#0e7490', '#cffafe'),
+    'Nexus-Physical-05': ('#b45309', '#fef3c7'), 'Nexus-Physical-06': ('#854d0e', '#fef9c3'),
+    'Nexus-Physical-07': ('#15803d', '#dcfce7'), 'Nexus-Physical-08': ('#9f1239', '#ffe4e6'),
+    'Nexus-Physical-09': ('#0369a1', '#e0f2fe'),
+}
+
+
+def system_colour(sid):
+    """The colour of a system, or of the node an element belongs to."""
+    return SYSTEMS.get(sid) or SYSTEMS[sid[:len('Nexus-Physical-NN')]]
 DOMAINS = [(1, 'Vehicle Foundation'), (2, 'Motion'), (3, 'Autonomy'), (4, 'Communication & Interaction'), (5, 'Dependability & Lifecycle')]
 
 # marker id -> colour; each has an end marker and a start marker

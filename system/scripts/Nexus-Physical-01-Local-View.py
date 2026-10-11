@@ -18,7 +18,8 @@ _spec = importlib.util.spec_from_file_location('physical', os.path.join(HERE, 'N
 P = importlib.util.module_from_spec(_spec)
 _spec.loader.exec_module(P)
 element, external, flow, pill, esc, write = P.element, P.external, P.flow, P.pill, P.esc, P.write
-MONO, MARKERS, PHYSICAL = P.MONO, P.MARKERS, P.PHYSICAL
+MONO, MARKERS, system_colour = P.MONO, P.MARKERS, P.system_colour
+NODE = 'Nexus-Physical-01'
 
 OUT = os.path.join(HERE, '..', 'renders', 'Nexus-Physical-01-Local-View.svg')
 W, H = 1640, 960
@@ -46,20 +47,22 @@ def neighbour(x, y, w, h, title, sub):
     return external(x, y, w, h, title, sub)
 
 
-def group(o, x, y, w, h, label):
-    o += [f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="6" fill="none" stroke="{PHYSICAL[0]}" stroke-width="1" stroke-dasharray="3 3"/>',
-          f'<text x="{x + 10}" y="{y - 6}" font-size="8.5" font-weight="700" fill="{PHYSICAL[0]}" letter-spacing="1">{esc(label)}</text>']
+def group(o, x, y, w, h, label, node):
+    ink = system_colour(node)[0]
+    o += [f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="6" fill="none" stroke="{ink}" stroke-width="1" stroke-dasharray="3 3"/>',
+          f'<text x="{x + 10}" y="{y - 6}" font-size="8.5" font-weight="700" fill="{ink}" letter-spacing="1">{esc(label)}</text>']
 
 
-def key(o, y):
+def key(o, y, node):
+    stroke, fill = system_colour(node)
     o += [f'<line x1="30" y1="{y}" x2="1610" y2="{y}" stroke="#e5e7eb"/>',
           f'<text x="30" y="{y + 22}" font-size="10" font-weight="700" fill="#1a1a1a">CONNECTIONS</text>']
     for x, kind, text in [(120, 'e', 'energy'), (230, 'i', 'signal / data'), (390, 'c', 'command'), (520, 'p', 'storage / physical')]:
         o += flow(f'M{x},{y + 18} L{x + 34},{y + 18}', kind)
         o.append(f'<text x="{x + 42}" y="{y + 22}" font-size="10" fill="#374151">{text}</text>')
-    o += [f'<rect x="30" y="{y + 37}" width="16" height="14" rx="2" fill="{PHYSICAL[1]}" stroke="{PHYSICAL[0]}" stroke-width="1.2"/>',
+    o += [f'<rect x="30" y="{y + 37}" width="16" height="14" rx="2" fill="{fill}" stroke="{stroke}" stroke-width="1.2"/>',
           f'<text x="52" y="{y + 48}" font-size="10" fill="#374151"><tspan font-weight="700">element of the node</tspan>: '
-          f'Nexus-Physical-0N-NN, its parent in its ID · dashed grey boxes are neighbouring elements outside the node</text>',
+          f'{node}-NN, in the colour of the node · dashed grey boxes are neighbouring elements outside the node</text>',
           f'<text x="760" y="{y + 48}" font-size="10" font-weight="700" fill="#1a1a1a">FIRST PHASE</text>']
     o += pill(838, y + 37, 1)
     o.append(f'<text x="{838 + P.PILL_W + 8}" y="{y + 48}" font-size="10" fill="#374151">every element of the node exists from Phase 1</text>')
@@ -85,11 +88,12 @@ def build():
         'STM32F4DISCOVERY, board MB997B (1.2)', 'STM32F407: CAN1 on PD0 / PD1', 'I2C2 on PB10 / PB11, TIM1 channel 1 on PE9'], [
         'Four user LEDs', 'ST-LINK V2, SWD over USB', 'Runs from 5 V on header P2'])
 
-    group(o, 600, 360, 740, 185, 'SOFTWARE ELEMENTS · IN THE FLASH OF THE STM32F407')
-    o += [f'<rect x="610" y="370" width="220" height="16" rx="2" fill="{PHYSICAL[1]}"/>',
-          f'<text x="720" y="381.5" font-size="8.5" font-weight="700" fill="{PHYSICAL[0]}" text-anchor="middle">BOOTLOADER REGION</text>',
-          f'<rect x="840" y="370" width="490" height="16" rx="2" fill="{PHYSICAL[1]}"/>',
-          f'<text x="1085" y="381.5" font-size="8.5" font-weight="700" fill="{PHYSICAL[0]}" text-anchor="middle">APPLICATION REGION · ONE IMAGE AT A TIME</text>']
+    group(o, 600, 360, 740, 185, 'SOFTWARE ELEMENTS · IN THE FLASH OF THE STM32F407', NODE)
+    ink, fill = system_colour(NODE)
+    o += [f'<rect x="610" y="370" width="220" height="16" rx="2" fill="{fill}"/>',
+          f'<text x="720" y="381.5" font-size="8.5" font-weight="700" fill="{ink}" text-anchor="middle">BOOTLOADER REGION</text>',
+          f'<rect x="840" y="370" width="490" height="16" rx="2" fill="{fill}"/>',
+          f'<text x="1085" y="381.5" font-size="8.5" font-weight="700" fill="{ink}" text-anchor="middle">APPLICATION REGION · ONE IMAGE AT A TIME</text>']
     o += element('Nexus-Physical-01-04', 'Bootloader', 1, 610, 395, 220, 140, [
         'Bare-metal, Cyphal (SW-01)', 'Receives, programs, checks CRC', 'Stays reachable on failure', 'Idle and receiving patterns'])
     o += element('Nexus-Physical-01-05', 'FBL-Updater', 1, 840, 395, 240, 140, [
@@ -114,7 +118,7 @@ def build():
     o += FL('M1362,605 L1438,605', 'c', start=True, size=8, labels=[(1400, 597, 'I2C')])
     o += FL('M1362,690 L1438,690', 'c', size=8, labels=[(1400, 682, '6 V + PWM')])
 
-    key(o, 880)
+    key(o, 880, NODE)
     o += ['</g>', '</svg>']
     return '\n'.join(o) + '\n'
 
