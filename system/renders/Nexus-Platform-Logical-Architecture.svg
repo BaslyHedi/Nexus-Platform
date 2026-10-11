@@ -12,7 +12,7 @@
 <rect width="1640" height="1140" fill="#fbfaf8"/>
 <text x="30" y="40" font-size="22" font-weight="700" fill="#1a1a1a">Nexus Platform Logical Architecture</text>
 <text x="30" y="62" font-size="11.5" fill="#555">Logical view of the vehicle architecture · the logical components and their functions · says <tspan font-style="italic">what</tspan> the vehicle must do, free of technology; the physical view says what it is built from, and allocation relates the two</text>
-<text x="30" y="80" font-size="11.5" fill="#555">ID scheme <tspan font-family="ui-monospace, Menlo, Consolas, monospace" font-weight="700">Nexus-Logical-DNN</tspan> - D = functional domain (1–5), NN = component within it. Functions inside a component will be numbered <tspan font-family="ui-monospace, Menlo, Consolas, monospace" font-weight="700">Nexus-Logical-DNN-Fnn</tspan>.</text>
+<text x="30" y="80" font-size="11.5" fill="#555">ID scheme <tspan font-family="ui-monospace, Menlo, Consolas, monospace" font-weight="700">Nexus-Logical-DNN</tspan> - D = functional domain (1–5), NN = component within it. The number before each function is its Fnn: <tspan font-family="ui-monospace, Menlo, Consolas, monospace" font-weight="700">Nexus-Logical-DNN-Fnn</tspan>.</text>
 <text x="1610" y="40" font-size="11" font-weight="700" fill="#b45309" text-anchor="end">DRAFT B · for review</text>
 <text x="1610" y="58" font-size="10" fill="#777" text-anchor="end">2026-10-11</text>
 <g transform="translate(0,14)">
@@ -38,15 +38,15 @@
 <text x="262" y="152" font-size="13" font-weight="700" fill="#111827">Operator Interface</text>
 <rect x="438" y="125" width="42" height="14" rx="7" fill="#e0f2fe" stroke="#0369a1" stroke-width="0.8"/>
 <text x="459.0" y="135.5" font-size="8.5" font-weight="700" text-anchor="middle" fill="#0369a1">PHASE 2</text>
-<circle cx="266.0" cy="176.5" r="1.8" fill="#0f766e"/>
+<text x="266.0" y="179.5" font-size="8" font-weight="700" fill="#0f766e" text-anchor="middle" font-family="ui-monospace, Menlo, Consolas, monospace">1</text>
 <text x="273.0" y="180" font-size="10.5" fill="#374151" xml:space="preserve">Accept local controls</text>
-<circle cx="266.0" cy="192.5" r="1.8" fill="#0f766e"/>
+<text x="266.0" y="195.5" font-size="8" font-weight="700" fill="#0f766e" text-anchor="middle" font-family="ui-monospace, Menlo, Consolas, monospace">2</text>
 <text x="273.0" y="196" font-size="10.5" fill="#374151" xml:space="preserve">Show vehicle status</text>
-<circle cx="266.0" cy="208.5" r="1.8" fill="#0f766e"/>
+<text x="266.0" y="211.5" font-size="8" font-weight="700" fill="#0f766e" text-anchor="middle" font-family="ui-monospace, Menlo, Consolas, monospace">3</text>
 <text x="273.0" y="212" font-size="10.5" fill="#374151" xml:space="preserve">Take manual / teleop drive input</text>
-<circle cx="266.0" cy="224.5" r="1.8" fill="#0f766e"/>
+<text x="266.0" y="227.5" font-size="8" font-weight="700" fill="#0f766e" text-anchor="middle" font-family="ui-monospace, Menlo, Consolas, monospace">4</text>
 <text x="273.0" y="228" font-size="10.5" fill="#374151" xml:space="preserve">Take mode &amp; mission requests</text>
-<circle cx="266.0" cy="240.5" r="1.8" fill="#0f766e"/>
+<text x="266.0" y="243.5" font-size="8" font-weight="700" fill="#0f766e" text-anchor="middle" font-family="ui-monospace, Menlo, Consolas, monospace">5</text>
 <text x="273.0" y="244" font-size="10.5" fill="#374151" xml:space="preserve">Present telemetry to the operator</text>
 </g>
 <g id="Nexus-Logical-303">
@@ -57,13 +57,13 @@
 <text x="552" y="152" font-size="13" font-weight="700" fill="#111827">Planning &amp; Decision</text>
 <rect x="728" y="125" width="42" height="14" rx="7" fill="#f1f5f9" stroke="#64748b" stroke-width="0.8"/>
 <text x="749.0" y="135.5" font-size="8.5" font-weight="700" text-anchor="middle" fill="#475569">PHASE 5</text>
-<circle cx="556.0" cy="176.5" r="1.8" fill="#0f766e"/>
+<text x="556.0" y="179.5" font-size="8" font-weight="700" fill="#0f766e" text-anchor="middle" font-family="ui-monospace, Menlo, Consolas, monospace">1</text>
 <text x="563.0" y="180" font-size="10.5" fill="#374151" xml:space="preserve">Manage mission &amp; route</text>
-<circle cx="556.0" cy="192.5" r="1.8" fill="#0f766e"/>
+<text x="556.0" y="195.5" font-size="8" font-weight="700" fill="#0f766e" text-anchor="middle" font-family="ui-monospace, Menlo, Consolas, monospace">2</text>
 <text x="563.0" y="196" font-size="10.5" fill="#374151" xml:space="preserve">Decide driving behaviour</text>
-<circle cx="556.0" cy="208.5" r="1.8" fill="#0f766e"/>
+<text x="556.0" y="211.5" font-size="8" font-weight="700" fill="#0f766e" text-anchor="middle" font-family="ui-monospace, Menlo, Consolas, monospace">3</text>
 <text x="563.0" y="212" font-size="10.5" fill="#374151" xml:space="preserve">Plan a collision-free trajectory</text>
-<circle cx="556.0" cy="224.5" r="1.8" fill="#0f766e"/>
+<text x="556.0" y="227.5" font-size="8" font-weight="700" fill="#0f766e" text-anchor="middle" font-family="ui-monospace, Menlo, Consolas, monospace">4</text>
 <text x="563.0" y="228" font-size="10.5" fill="#374151" xml:space="preserve">Issue motion requests</text>
 <text x="563.0" y="244" font-size="10.5" fill="#374151" xml:space="preserve">  (target speed + curvature)</text>
 </g>
@@ -75,13 +75,13 @@
 <text x="842" y="152" font-size="13" font-weight="700" fill="#111827">Localization &amp; Mapping</text>
 <rect x="1018" y="125" width="42" height="14" rx="7" fill="#ffedd5" stroke="#c2410c" stroke-width="0.8"/>
 <text x="1039.0" y="135.5" font-size="8.5" font-weight="700" text-anchor="middle" fill="#c2410c">PHASE 4</text>
-<circle cx="846.0" cy="176.5" r="1.8" fill="#0f766e"/>
+<text x="846.0" y="179.5" font-size="8" font-weight="700" fill="#0f766e" text-anchor="middle" font-family="ui-monospace, Menlo, Consolas, monospace">1</text>
 <text x="853.0" y="180" font-size="10.5" fill="#374151" xml:space="preserve">Estimate vehicle pose</text>
-<circle cx="846.0" cy="192.5" r="1.8" fill="#0f766e"/>
+<text x="846.0" y="195.5" font-size="8" font-weight="700" fill="#0f766e" text-anchor="middle" font-family="ui-monospace, Menlo, Consolas, monospace">2</text>
 <text x="853.0" y="196" font-size="10.5" fill="#374151" xml:space="preserve">Fuse odometry, inertial &amp; perception data</text>
-<circle cx="846.0" cy="208.5" r="1.8" fill="#0f766e"/>
+<text x="846.0" y="211.5" font-size="8" font-weight="700" fill="#0f766e" text-anchor="middle" font-family="ui-monospace, Menlo, Consolas, monospace">3</text>
 <text x="853.0" y="212" font-size="10.5" fill="#374151" xml:space="preserve">Build &amp; maintain the map</text>
-<circle cx="846.0" cy="224.5" r="1.8" fill="#0f766e"/>
+<text x="846.0" y="227.5" font-size="8" font-weight="700" fill="#0f766e" text-anchor="middle" font-family="ui-monospace, Menlo, Consolas, monospace">4</text>
 <text x="853.0" y="228" font-size="10.5" fill="#374151" xml:space="preserve">Report localization confidence</text>
 </g>
 <g id="Nexus-Logical-301">
@@ -92,13 +92,13 @@
 <text x="1132" y="152" font-size="13" font-weight="700" fill="#111827">Environment Perception</text>
 <rect x="1308" y="125" width="42" height="14" rx="7" fill="#ffedd5" stroke="#c2410c" stroke-width="0.8"/>
 <text x="1329.0" y="135.5" font-size="8.5" font-weight="700" text-anchor="middle" fill="#c2410c">PHASE 4</text>
-<circle cx="1136.0" cy="176.5" r="1.8" fill="#0f766e"/>
+<text x="1136.0" y="179.5" font-size="8" font-weight="700" fill="#0f766e" text-anchor="middle" font-family="ui-monospace, Menlo, Consolas, monospace">1</text>
 <text x="1143.0" y="180" font-size="10.5" fill="#374151" xml:space="preserve">Sense surroundings</text>
-<circle cx="1136.0" cy="192.5" r="1.8" fill="#0f766e"/>
+<text x="1136.0" y="195.5" font-size="8" font-weight="700" fill="#0f766e" text-anchor="middle" font-family="ui-monospace, Menlo, Consolas, monospace">2</text>
 <text x="1143.0" y="196" font-size="10.5" fill="#374151" xml:space="preserve">Detect &amp; track obstacles</text>
-<circle cx="1136.0" cy="208.5" r="1.8" fill="#0f766e"/>
+<text x="1136.0" y="211.5" font-size="8" font-weight="700" fill="#0f766e" text-anchor="middle" font-family="ui-monospace, Menlo, Consolas, monospace">3</text>
 <text x="1143.0" y="212" font-size="10.5" fill="#374151" xml:space="preserve">Detect drivable space &amp; markers</text>
-<circle cx="1136.0" cy="224.5" r="1.8" fill="#0f766e"/>
+<text x="1136.0" y="227.5" font-size="8" font-weight="700" fill="#0f766e" text-anchor="middle" font-family="ui-monospace, Menlo, Consolas, monospace">4</text>
 <text x="1143.0" y="228" font-size="10.5" fill="#374151" xml:space="preserve">Report perception confidence</text>
 </g>
 <g id="Nexus-Logical-401">
@@ -106,13 +106,13 @@
 <text x="262" y="318" font-size="9.5" font-weight="700" fill="#0f766e" font-family="ui-monospace, Menlo, Consolas, monospace">Nexus-Logical-401</text>
 <text x="262" y="338" font-size="13" font-weight="700" fill="#111827">In-Vehicle Communication</text>
 <text x="262" y="352" font-size="9" fill="#0f766e">backbone - every electronic component attaches here</text>
-<circle cx="522" cy="321.5" r="1.8" fill="#0f766e"/>
+<text x="522" y="324.5" font-size="8" font-weight="700" fill="#0f766e" text-anchor="middle" font-family="ui-monospace, Menlo, Consolas, monospace">1</text>
 <text x="529" y="325" font-size="10.5" fill="#374151">Exchange signals between nodes</text>
-<circle cx="822" cy="321.5" r="1.8" fill="#0f766e"/>
+<text x="822" y="324.5" font-size="8" font-weight="700" fill="#0f766e" text-anchor="middle" font-family="ui-monospace, Menlo, Consolas, monospace">2</text>
 <text x="829" y="325" font-size="10.5" fill="#374151">Time-synchronise nodes</text>
-<circle cx="522" cy="338.5" r="1.8" fill="#0f766e"/>
+<text x="522" y="341.5" font-size="8" font-weight="700" fill="#0f766e" text-anchor="middle" font-family="ui-monospace, Menlo, Consolas, monospace">3</text>
 <text x="529" y="342" font-size="10.5" fill="#374151">Route between signals and services</text>
-<circle cx="822" cy="338.5" r="1.8" fill="#0f766e"/>
+<text x="822" y="341.5" font-size="8" font-weight="700" fill="#0f766e" text-anchor="middle" font-family="ui-monospace, Menlo, Consolas, monospace">4</text>
 <text x="829" y="342" font-size="10.5" fill="#374151">Publish services &amp; topics</text>
 <rect x="1308" y="307" width="42" height="14" rx="7" fill="#dcfce7" stroke="#15803d" stroke-width="0.8"/>
 <text x="1329.0" y="317.5" font-size="8.5" font-weight="700" text-anchor="middle" fill="#15803d">PHASE 1</text>
@@ -125,13 +125,13 @@
 <text x="262" y="434" font-size="13" font-weight="700" fill="#111827">External Connectivity</text>
 <rect x="438" y="407" width="42" height="14" rx="7" fill="#e0f2fe" stroke="#0369a1" stroke-width="0.8"/>
 <text x="459.0" y="417.5" font-size="8.5" font-weight="700" text-anchor="middle" fill="#0369a1">PHASE 2</text>
-<circle cx="266.0" cy="458.5" r="1.8" fill="#0f766e"/>
+<text x="266.0" y="461.5" font-size="8" font-weight="700" fill="#0f766e" text-anchor="middle" font-family="ui-monospace, Menlo, Consolas, monospace">1</text>
 <text x="273.0" y="462" font-size="10.5" fill="#374151" xml:space="preserve">Link to remote station</text>
-<circle cx="266.0" cy="474.5" r="1.8" fill="#0f766e"/>
+<text x="266.0" y="477.5" font-size="8" font-weight="700" fill="#0f766e" text-anchor="middle" font-family="ui-monospace, Menlo, Consolas, monospace">2</text>
 <text x="273.0" y="478" font-size="10.5" fill="#374151" xml:space="preserve">Carry remote sessions &amp; teleop</text>
-<circle cx="266.0" cy="490.5" r="1.8" fill="#0f766e"/>
+<text x="266.0" y="493.5" font-size="8" font-weight="700" fill="#0f766e" text-anchor="middle" font-family="ui-monospace, Menlo, Consolas, monospace">3</text>
 <text x="273.0" y="494" font-size="10.5" fill="#374151" xml:space="preserve">Stream telemetry off-board</text>
-<circle cx="266.0" cy="506.5" r="1.8" fill="#0f766e"/>
+<text x="266.0" y="509.5" font-size="8" font-weight="700" fill="#0f766e" text-anchor="middle" font-family="ui-monospace, Menlo, Consolas, monospace">4</text>
 <text x="273.0" y="510" font-size="10.5" fill="#374151" xml:space="preserve">Carry update &amp; diagnostic data</text>
 </g>
 <g id="Nexus-Logical-203">
@@ -142,22 +142,22 @@
 <text x="552" y="434" font-size="13" font-weight="700" fill="#111827">Vehicle Motion Control</text>
 <rect x="1018" y="407" width="42" height="14" rx="7" fill="#e0f2fe" stroke="#0369a1" stroke-width="0.8"/>
 <text x="1039.0" y="417.5" font-size="8.5" font-weight="700" text-anchor="middle" fill="#0369a1">PHASE 2</text>
-<circle cx="556.0" cy="458.5" r="1.8" fill="#0f766e"/>
+<text x="556.0" y="461.5" font-size="8" font-weight="700" fill="#0f766e" text-anchor="middle" font-family="ui-monospace, Menlo, Consolas, monospace">1</text>
 <text x="563.0" y="462" font-size="10.5" fill="#374151" xml:space="preserve">Arbitrate motion requests</text>
 <text x="563.0" y="478" font-size="10.5" fill="#374151" xml:space="preserve">  (manual · teleop · autonomous)</text>
-<circle cx="556.0" cy="490.5" r="1.8" fill="#0f766e"/>
+<text x="556.0" y="493.5" font-size="8" font-weight="700" fill="#0f766e" text-anchor="middle" font-family="ui-monospace, Menlo, Consolas, monospace">2</text>
 <text x="563.0" y="494" font-size="10.5" fill="#374151" xml:space="preserve">Translate speed + curvature into</text>
 <text x="563.0" y="510" font-size="10.5" fill="#374151" xml:space="preserve">  wheel-speed &amp; steer-angle setpoints</text>
-<circle cx="556.0" cy="522.5" r="1.8" fill="#0f766e"/>
+<text x="556.0" y="525.5" font-size="8" font-weight="700" fill="#0f766e" text-anchor="middle" font-family="ui-monospace, Menlo, Consolas, monospace">3</text>
 <text x="563.0" y="526" font-size="10.5" fill="#374151" xml:space="preserve">Close speed &amp; steering control loops</text>
-<circle cx="815.0" cy="458.5" r="1.8" fill="#0f766e"/>
+<text x="815.0" y="461.5" font-size="8" font-weight="700" fill="#0f766e" text-anchor="middle" font-family="ui-monospace, Menlo, Consolas, monospace">4</text>
 <text x="822.0" y="462" font-size="10.5" fill="#374151" xml:space="preserve">Enforce speed, accel. &amp; jerk limits</text>
-<circle cx="815.0" cy="474.5" r="1.8" fill="#0f766e"/>
+<text x="815.0" y="477.5" font-size="8" font-weight="700" fill="#0f766e" text-anchor="middle" font-family="ui-monospace, Menlo, Consolas, monospace">5</text>
 <text x="822.0" y="478" font-size="10.5" fill="#374151" xml:space="preserve">Estimate vehicle motion state</text>
 <text x="822.0" y="494" font-size="10.5" fill="#374151" xml:space="preserve">  (odometry from wheel speed, inertial data)</text>
-<circle cx="815.0" cy="506.5" r="1.8" fill="#0f766e"/>
+<text x="815.0" y="509.5" font-size="8" font-weight="700" fill="#0f766e" text-anchor="middle" font-family="ui-monospace, Menlo, Consolas, monospace">6</text>
 <text x="822.0" y="510" font-size="10.5" fill="#374151" xml:space="preserve">Execute safe-stop requests</text>
-<circle cx="815.0" cy="522.5" r="1.8" fill="#0f766e"/>
+<text x="815.0" y="525.5" font-size="8" font-weight="700" fill="#0f766e" text-anchor="middle" font-family="ui-monospace, Menlo, Consolas, monospace">7</text>
 <text x="822.0" y="526" font-size="10.5" fill="#374151" xml:space="preserve">Report motion state</text>
 </g>
 <rect x="1110" y="390" width="260" height="245" rx="6" fill="none" stroke="#0f766e" stroke-width="1" stroke-dasharray="3 3"/>
@@ -170,11 +170,11 @@
 <text x="1132" y="434" font-size="13" font-weight="700" fill="#111827">Propulsion</text>
 <rect x="1308" y="407" width="42" height="14" rx="7" fill="#dcfce7" stroke="#15803d" stroke-width="0.8"/>
 <text x="1329.0" y="417.5" font-size="8.5" font-weight="700" text-anchor="middle" fill="#15803d">PHASE 1</text>
-<circle cx="1136.0" cy="458.5" r="1.8" fill="#0f766e"/>
+<text x="1136.0" y="461.5" font-size="8" font-weight="700" fill="#0f766e" text-anchor="middle" font-family="ui-monospace, Menlo, Consolas, monospace">1</text>
 <text x="1143.0" y="462" font-size="10.5" fill="#374151" xml:space="preserve">Produce drive torque, rear wheels</text>
-<circle cx="1136.0" cy="474.5" r="1.8" fill="#0f766e"/>
+<text x="1136.0" y="477.5" font-size="8" font-weight="700" fill="#0f766e" text-anchor="middle" font-family="ui-monospace, Menlo, Consolas, monospace">2</text>
 <text x="1143.0" y="478" font-size="10.5" fill="#374151" xml:space="preserve">Track wheel-speed setpoints</text>
-<circle cx="1136.0" cy="490.5" r="1.8" fill="#0f766e"/>
+<text x="1136.0" y="493.5" font-size="8" font-weight="700" fill="#0f766e" text-anchor="middle" font-family="ui-monospace, Menlo, Consolas, monospace">3</text>
 <text x="1143.0" y="494" font-size="10.5" fill="#374151" xml:space="preserve">Measure wheel speed</text>
 </g>
 <g id="Nexus-Logical-202">
@@ -185,11 +185,11 @@
 <text x="1132" y="554" font-size="13" font-weight="700" fill="#111827">Steering</text>
 <rect x="1308" y="527" width="42" height="14" rx="7" fill="#dcfce7" stroke="#15803d" stroke-width="0.8"/>
 <text x="1329.0" y="537.5" font-size="8.5" font-weight="700" text-anchor="middle" fill="#15803d">PHASE 1</text>
-<circle cx="1136.0" cy="578.5" r="1.8" fill="#0f766e"/>
+<text x="1136.0" y="581.5" font-size="8" font-weight="700" fill="#0f766e" text-anchor="middle" font-family="ui-monospace, Menlo, Consolas, monospace">1</text>
 <text x="1143.0" y="582" font-size="10.5" fill="#374151" xml:space="preserve">Set front wheel angle (Ackermann)</text>
-<circle cx="1136.0" cy="594.5" r="1.8" fill="#0f766e"/>
+<text x="1136.0" y="597.5" font-size="8" font-weight="700" fill="#0f766e" text-anchor="middle" font-family="ui-monospace, Menlo, Consolas, monospace">2</text>
 <text x="1143.0" y="598" font-size="10.5" fill="#374151" xml:space="preserve">Enforce steer angle &amp; rate limits</text>
-<circle cx="1136.0" cy="610.5" r="1.8" fill="#0f766e"/>
+<text x="1136.0" y="613.5" font-size="8" font-weight="700" fill="#0f766e" text-anchor="middle" font-family="ui-monospace, Menlo, Consolas, monospace">3</text>
 <text x="1143.0" y="614" font-size="10.5" fill="#374151" xml:space="preserve">Report steering state</text>
 </g>
 <g id="Nexus-Logical-102">
@@ -200,13 +200,13 @@
 <text x="262" y="709" font-size="13" font-weight="700" fill="#111827">Structure &amp; Enclosure</text>
 <rect x="728" y="682" width="42" height="14" rx="7" fill="#dcfce7" stroke="#15803d" stroke-width="0.8"/>
 <text x="749.0" y="692.5" font-size="8.5" font-weight="700" text-anchor="middle" fill="#15803d">PHASE 1</text>
-<circle cx="266.0" cy="733.5" r="1.8" fill="#0f766e"/>
+<text x="266.0" y="736.5" font-size="8" font-weight="700" fill="#0f766e" text-anchor="middle" font-family="ui-monospace, Menlo, Consolas, monospace">1</text>
 <text x="273.0" y="737" font-size="10.5" fill="#374151" xml:space="preserve">Carry &amp; locate every component</text>
-<circle cx="266.0" cy="749.5" r="1.8" fill="#0f766e"/>
+<text x="266.0" y="752.5" font-size="8" font-weight="700" fill="#0f766e" text-anchor="middle" font-family="ui-monospace, Menlo, Consolas, monospace">2</text>
 <text x="273.0" y="753" font-size="10.5" fill="#374151" xml:space="preserve">Protect harness &amp; electronics</text>
-<circle cx="525.0" cy="733.5" r="1.8" fill="#0f766e"/>
+<text x="525.0" y="736.5" font-size="8" font-weight="700" fill="#0f766e" text-anchor="middle" font-family="ui-monospace, Menlo, Consolas, monospace">3</text>
 <text x="532.0" y="737" font-size="10.5" fill="#374151" xml:space="preserve">Expose controls &amp; service access</text>
-<circle cx="525.0" cy="749.5" r="1.8" fill="#0f766e"/>
+<text x="525.0" y="752.5" font-size="8" font-weight="700" fill="#0f766e" text-anchor="middle" font-family="ui-monospace, Menlo, Consolas, monospace">4</text>
 <text x="532.0" y="753" font-size="10.5" fill="#374151" xml:space="preserve">Manage heat &amp; vibration</text>
 </g>
 <g id="Nexus-Logical-101">
@@ -217,20 +217,20 @@
 <text x="842" y="709" font-size="13" font-weight="700" fill="#111827">Energy Storage &amp; Distribution</text>
 <rect x="1308" y="682" width="42" height="14" rx="7" fill="#dcfce7" stroke="#15803d" stroke-width="0.8"/>
 <text x="1329.0" y="692.5" font-size="8.5" font-weight="700" text-anchor="middle" fill="#15803d">PHASE 1</text>
-<circle cx="846.0" cy="733.5" r="1.8" fill="#0f766e"/>
+<text x="846.0" y="736.5" font-size="8" font-weight="700" fill="#0f766e" text-anchor="middle" font-family="ui-monospace, Menlo, Consolas, monospace">1</text>
 <text x="853.0" y="737" font-size="10.5" fill="#374151" xml:space="preserve">Store energy on board</text>
-<circle cx="846.0" cy="749.5" r="1.8" fill="#0f766e"/>
+<text x="846.0" y="752.5" font-size="8" font-weight="700" fill="#0f766e" text-anchor="middle" font-family="ui-monospace, Menlo, Consolas, monospace">2</text>
 <text x="853.0" y="753" font-size="10.5" fill="#374151" xml:space="preserve">Protect circuits against overcurrent</text>
-<circle cx="846.0" cy="765.5" r="1.8" fill="#0f766e"/>
+<text x="846.0" y="768.5" font-size="8" font-weight="700" fill="#0f766e" text-anchor="middle" font-family="ui-monospace, Menlo, Consolas, monospace">3</text>
 <text x="853.0" y="769" font-size="10.5" fill="#374151" xml:space="preserve">Switch drive &amp; logic branches</text>
-<circle cx="846.0" cy="781.5" r="1.8" fill="#0f766e"/>
+<text x="846.0" y="784.5" font-size="8" font-weight="700" fill="#0f766e" text-anchor="middle" font-family="ui-monospace, Menlo, Consolas, monospace">4</text>
 <text x="853.0" y="785" font-size="10.5" fill="#374151" xml:space="preserve">Accept charge from the charger</text>
-<circle cx="1105.0" cy="733.5" r="1.8" fill="#0f766e"/>
+<text x="1105.0" y="736.5" font-size="8" font-weight="700" fill="#0f766e" text-anchor="middle" font-family="ui-monospace, Menlo, Consolas, monospace">5</text>
 <text x="1112.0" y="737" font-size="10.5" fill="#374151" xml:space="preserve">Convert energy to the supplies</text>
 <text x="1112.0" y="753" font-size="10.5" fill="#374151" xml:space="preserve">  the loads need</text>
-<circle cx="1105.0" cy="765.5" r="1.8" fill="#0f766e"/>
+<text x="1105.0" y="768.5" font-size="8" font-weight="700" fill="#0f766e" text-anchor="middle" font-family="ui-monospace, Menlo, Consolas, monospace">6</text>
 <text x="1112.0" y="769" font-size="10.5" fill="#374151" xml:space="preserve">Measure pack voltage &amp; current</text>
-<circle cx="1105.0" cy="781.5" r="1.8" fill="#0f766e"/>
+<text x="1105.0" y="784.5" font-size="8" font-weight="700" fill="#0f766e" text-anchor="middle" font-family="ui-monospace, Menlo, Consolas, monospace">7</text>
 <text x="1112.0" y="785" font-size="10.5" fill="#374151" xml:space="preserve">Estimate state of charge</text>
 </g>
 <text x="250" y="840" font-size="10" font-weight="700" fill="#0f766e" letter-spacing="1">CROSS-CUTTING - these reach every logical component above through 401</text>
@@ -242,17 +242,17 @@
 <text x="262" y="884" font-size="13" font-weight="700" fill="#111827">Supervision &amp; Safety</text>
 <rect x="438" y="857" width="42" height="14" rx="7" fill="#dcfce7" stroke="#15803d" stroke-width="0.8"/>
 <text x="459.0" y="867.5" font-size="8.5" font-weight="700" text-anchor="middle" fill="#15803d">PHASE 1</text>
-<circle cx="266.0" cy="908.5" r="1.8" fill="#0f766e"/>
+<text x="266.0" y="911.5" font-size="8" font-weight="700" fill="#0f766e" text-anchor="middle" font-family="ui-monospace, Menlo, Consolas, monospace">1</text>
 <text x="273.0" y="912" font-size="10.5" fill="#374151" xml:space="preserve">Manage vehicle modes &amp; transitions</text>
-<circle cx="266.0" cy="924.5" r="1.8" fill="#0f766e"/>
+<text x="266.0" y="927.5" font-size="8" font-weight="700" fill="#0f766e" text-anchor="middle" font-family="ui-monospace, Menlo, Consolas, monospace">2</text>
 <text x="273.0" y="928" font-size="10.5" fill="#374151" xml:space="preserve">Emergency stop &amp; safe stop</text>
-<circle cx="266.0" cy="940.5" r="1.8" fill="#0f766e"/>
+<text x="266.0" y="943.5" font-size="8" font-weight="700" fill="#0f766e" text-anchor="middle" font-family="ui-monospace, Menlo, Consolas, monospace">3</text>
 <text x="273.0" y="944" font-size="10.5" fill="#374151" xml:space="preserve">Watchdogs &amp; command time-outs</text>
-<circle cx="266.0" cy="956.5" r="1.8" fill="#0f766e"/>
+<text x="266.0" y="959.5" font-size="8" font-weight="700" fill="#0f766e" text-anchor="middle" font-family="ui-monospace, Menlo, Consolas, monospace">4</text>
 <text x="273.0" y="960" font-size="10.5" fill="#374151" xml:space="preserve">Detect faults, enter degraded mode</text>
-<circle cx="266.0" cy="972.5" r="1.8" fill="#0f766e"/>
+<text x="266.0" y="975.5" font-size="8" font-weight="700" fill="#0f766e" text-anchor="middle" font-family="ui-monospace, Menlo, Consolas, monospace">5</text>
 <text x="273.0" y="976" font-size="10.5" fill="#374151" xml:space="preserve">Shut down gracefully on low pack</text>
-<circle cx="266.0" cy="988.5" r="1.8" fill="#0f766e"/>
+<text x="266.0" y="991.5" font-size="8" font-weight="700" fill="#0f766e" text-anchor="middle" font-family="ui-monospace, Menlo, Consolas, monospace">6</text>
 <text x="273.0" y="992" font-size="10.5" fill="#374151" xml:space="preserve">Command drive-power cut-off</text>
 </g>
 <g id="Nexus-Logical-502">
@@ -263,15 +263,15 @@
 <text x="552" y="884" font-size="13" font-weight="700" fill="#111827">Cybersecurity</text>
 <rect x="728" y="857" width="42" height="14" rx="7" fill="#fae8ff" stroke="#a21caf" stroke-width="0.8"/>
 <text x="749.0" y="867.5" font-size="8.5" font-weight="700" text-anchor="middle" fill="#a21caf">PHASE 3</text>
-<circle cx="556.0" cy="908.5" r="1.8" fill="#0f766e"/>
+<text x="556.0" y="911.5" font-size="8" font-weight="700" fill="#0f766e" text-anchor="middle" font-family="ui-monospace, Menlo, Consolas, monospace">1</text>
 <text x="563.0" y="912" font-size="10.5" fill="#374151" xml:space="preserve">Secure &amp; measured boot</text>
-<circle cx="556.0" cy="924.5" r="1.8" fill="#0f766e"/>
+<text x="556.0" y="927.5" font-size="8" font-weight="700" fill="#0f766e" text-anchor="middle" font-family="ui-monospace, Menlo, Consolas, monospace">2</text>
 <text x="563.0" y="928" font-size="10.5" fill="#374151" xml:space="preserve">Store keys, trusted execution</text>
-<circle cx="556.0" cy="940.5" r="1.8" fill="#0f766e"/>
+<text x="556.0" y="943.5" font-size="8" font-weight="700" fill="#0f766e" text-anchor="middle" font-family="ui-monospace, Menlo, Consolas, monospace">3</text>
 <text x="563.0" y="944" font-size="10.5" fill="#374151" xml:space="preserve">Authenticate &amp; protect messages</text>
-<circle cx="556.0" cy="956.5" r="1.8" fill="#0f766e"/>
+<text x="556.0" y="959.5" font-size="8" font-weight="700" fill="#0f766e" text-anchor="middle" font-family="ui-monospace, Menlo, Consolas, monospace">4</text>
 <text x="563.0" y="960" font-size="10.5" fill="#374151" xml:space="preserve">Control access to the vehicle</text>
-<circle cx="556.0" cy="972.5" r="1.8" fill="#0f766e"/>
+<text x="556.0" y="975.5" font-size="8" font-weight="700" fill="#0f766e" text-anchor="middle" font-family="ui-monospace, Menlo, Consolas, monospace">5</text>
 <text x="563.0" y="976" font-size="10.5" fill="#374151" xml:space="preserve">Detect intrusions &amp; anomalies</text>
 </g>
 <g id="Nexus-Logical-503">
@@ -282,13 +282,13 @@
 <text x="842" y="884" font-size="13" font-weight="700" fill="#111827">Diagnostics &amp; Data Logging</text>
 <rect x="1018" y="857" width="42" height="14" rx="7" fill="#dcfce7" stroke="#15803d" stroke-width="0.8"/>
 <text x="1039.0" y="867.5" font-size="8.5" font-weight="700" text-anchor="middle" fill="#15803d">PHASE 1</text>
-<circle cx="846.0" cy="908.5" r="1.8" fill="#0f766e"/>
+<text x="846.0" y="911.5" font-size="8" font-weight="700" fill="#0f766e" text-anchor="middle" font-family="ui-monospace, Menlo, Consolas, monospace">1</text>
 <text x="853.0" y="912" font-size="10.5" fill="#374151" xml:space="preserve">Monitor component health</text>
-<circle cx="846.0" cy="924.5" r="1.8" fill="#0f766e"/>
+<text x="846.0" y="927.5" font-size="8" font-weight="700" fill="#0f766e" text-anchor="middle" font-family="ui-monospace, Menlo, Consolas, monospace">2</text>
 <text x="853.0" y="928" font-size="10.5" fill="#374151" xml:space="preserve">Record fault codes &amp; event data</text>
-<circle cx="846.0" cy="940.5" r="1.8" fill="#0f766e"/>
+<text x="846.0" y="943.5" font-size="8" font-weight="700" fill="#0f766e" text-anchor="middle" font-family="ui-monospace, Menlo, Consolas, monospace">3</text>
 <text x="853.0" y="944" font-size="10.5" fill="#374151" xml:space="preserve">Log &amp; replay bus and sensor data</text>
-<circle cx="846.0" cy="956.5" r="1.8" fill="#0f766e"/>
+<text x="846.0" y="959.5" font-size="8" font-weight="700" fill="#0f766e" text-anchor="middle" font-family="ui-monospace, Menlo, Consolas, monospace">4</text>
 <text x="853.0" y="960" font-size="10.5" fill="#374151" xml:space="preserve">Provide debug access</text>
 </g>
 <g id="Nexus-Logical-504">
@@ -299,13 +299,13 @@
 <text x="1132" y="884" font-size="13" font-weight="700" fill="#111827">Software Update &amp; Config.</text>
 <rect x="1308" y="857" width="42" height="14" rx="7" fill="#dcfce7" stroke="#15803d" stroke-width="0.8"/>
 <text x="1329.0" y="867.5" font-size="8.5" font-weight="700" text-anchor="middle" fill="#15803d">PHASE 1</text>
-<circle cx="1136.0" cy="908.5" r="1.8" fill="#0f766e"/>
+<text x="1136.0" y="911.5" font-size="8" font-weight="700" fill="#0f766e" text-anchor="middle" font-family="ui-monospace, Menlo, Consolas, monospace">1</text>
 <text x="1143.0" y="912" font-size="10.5" fill="#374151" xml:space="preserve">Deliver updates</text>
-<circle cx="1136.0" cy="924.5" r="1.8" fill="#0f766e"/>
+<text x="1136.0" y="927.5" font-size="8" font-weight="700" fill="#0f766e" text-anchor="middle" font-family="ui-monospace, Menlo, Consolas, monospace">2</text>
 <text x="1143.0" y="928" font-size="10.5" fill="#374151" xml:space="preserve">Verify integrity before install</text>
-<circle cx="1136.0" cy="940.5" r="1.8" fill="#0f766e"/>
+<text x="1136.0" y="943.5" font-size="8" font-weight="700" fill="#0f766e" text-anchor="middle" font-family="ui-monospace, Menlo, Consolas, monospace">3</text>
 <text x="1143.0" y="944" font-size="10.5" fill="#374151" xml:space="preserve">Roll back a failed update</text>
-<circle cx="1136.0" cy="956.5" r="1.8" fill="#0f766e"/>
+<text x="1136.0" y="959.5" font-size="8" font-weight="700" fill="#0f766e" text-anchor="middle" font-family="ui-monospace, Menlo, Consolas, monospace">4</text>
 <text x="1143.0" y="960" font-size="10.5" fill="#374151" xml:space="preserve">Manage configuration &amp;</text>
 <text x="1143.0" y="976" font-size="10.5" fill="#374151" xml:space="preserve">  calibration parameters</text>
 </g>

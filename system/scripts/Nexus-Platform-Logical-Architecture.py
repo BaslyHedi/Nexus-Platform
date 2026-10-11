@@ -61,18 +61,26 @@ def card(sid, name, phase, x, y, w, h, *columns):
          f'<text x="{x + 12}" y="{y + 16}" font-size="9.5" font-weight="700" fill="{stroke}" font-family="{MONO}">{sid}</text>',
          f'<text x="{x + 12}" y="{y + 34}" font-size="13" font-weight="700" fill="#111827">{esc(name)}</text>']
     o += pill(x + w - 10 - PILL_W, y + 7, phase)
+    n = 0
     for ci, col in enumerate(columns):
         bx = float(x + 16 + 259 * ci)
         row = y + 58.5
         for fn in col:
             for li, line in enumerate(fn):
                 if li == 0:
-                    o.append(f'<circle cx="{bx}" cy="{row}" r="1.8" fill="{stroke}"/>')
+                    n += 1
+                    o.append(fnum(bx, row, n, stroke))
                 o.append(f'<text x="{bx + 7}" y="{int(row + 3.5)}" font-size="10.5" fill="#374151" xml:space="preserve">'
                          f'{"  " if li else ""}{esc(line)}</text>')
                 row += 16
     o.append('</g>')
     return o
+
+
+def fnum(cx, cy, n, colour):
+    """A function's number in place of its bullet: n is the Fnn of Nexus-Logical-DNN-Fnn."""
+    return (f'<text x="{cx}" y="{round(cy + 3, 1)}" font-size="8" font-weight="700" fill="{colour}" text-anchor="middle" '
+            f'font-family="{MONO}">{n}</text>')
 
 
 def external(x, y, w, h, title, sub):
@@ -110,7 +118,7 @@ def build():
           '<text x="30" y="62" font-size="11.5" fill="#555">Logical view of the vehicle architecture · the logical components and their functions · says '
           '<tspan font-style="italic">what</tspan> the vehicle must do, free of technology; the physical view says what it is built from, and allocation relates the two</text>',
           f'<text x="30" y="80" font-size="11.5" fill="#555">ID scheme <tspan font-family="{MONO}" font-weight="700">Nexus-Logical-DNN</tspan>'
-          f' - D = functional domain (1–5), NN = component within it. Functions inside a component will be numbered '
+          f' - D = functional domain (1–5), NN = component within it. The number before each function is its Fnn: '
           f'<tspan font-family="{MONO}" font-weight="700">Nexus-Logical-DNN-Fnn</tspan>.</text>',
           '<text x="1610" y="40" font-size="11" font-weight="700" fill="#b45309" text-anchor="end">DRAFT B · for review</text>',
           '<text x="1610" y="58" font-size="10" fill="#777" text-anchor="end">2026-10-11</text>',
@@ -143,10 +151,10 @@ def build():
           f'<text x="262" y="318" font-size="9.5" font-weight="700" fill="{LOGICAL[0]}" font-family="{MONO}">Nexus-Logical-401</text>',
           '<text x="262" y="338" font-size="13" font-weight="700" fill="#111827">In-Vehicle Communication</text>',
           f'<text x="262" y="352" font-size="9" fill="{LOGICAL[0]}">backbone - every electronic component attaches here</text>']
-    for (cx, cy, t) in [(522, 321.5, 'Exchange signals between nodes'), (822, 321.5, 'Time-synchronise nodes'),
-                        (522, 338.5, 'Route between signals and services'),
-                        (822, 338.5, 'Publish services & topics')]:
-        o += [f'<circle cx="{cx}" cy="{cy}" r="1.8" fill="{LOGICAL[0]}"/>',
+    for n, (cx, cy, t) in enumerate([(522, 321.5, 'Exchange signals between nodes'), (822, 321.5, 'Time-synchronise nodes'),
+                                     (522, 338.5, 'Route between signals and services'),
+                                     (822, 338.5, 'Publish services & topics')], 1):
+        o += [fnum(cx, cy, n, LOGICAL[0]),
               f'<text x="{cx + 7}" y="{int(cy + 3.5)}" font-size="10.5" fill="#374151">{esc(t)}</text>']
     o += pill(1308, 307, 1)
     o.append('</g>')
