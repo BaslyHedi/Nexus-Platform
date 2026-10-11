@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
-"""The logical view of the vehicle architecture (../method.md): every logical component Nexus-SubSys-DNN, its functions, its phase and the flows between them (SYS-02, SYS-03).
+"""The logical view of the vehicle architecture (../method.md): every logical component Nexus-Logical-DNN, its functions, its phase and the flows between them (SYS-02, SYS-03).
 
     python3 Nexus-Platform-Logical-Architecture.py     # -> ../renders/Nexus-Platform-Logical-Architecture.svg
     python3 ../../tools/check-drawings.py       # fails if the SVG is not what this script writes
 
-The logical components are called sub-systems here for history; the IDs keep that name. Each is one card() call in drawing order: id, name,
+The logical components were called sub-systems (Nexus-SubSys-DNN) until 2026-10-11 and kept their numbers (SYS-03). Each is one card() call in drawing order: id, name,
 phase, the card's box, and its functions in one or two columns (a function is a list of lines; the first line gets the bullet). Function
 names are technology-free: a part, a bus or a protocol belongs to the physical view. The phase on a card is the FIRST phase in which it exists,
 and `PHASES` is the one table that says what each phase is called and how its pill looks. What each phase delivers, and which functions
-of a sub-system arrive when, is owned by ../phases.md, never by this drawing. Flows are listed at the bottom in pixels.
+of a component arrive when, is owned by ../phases.md, never by this drawing. Flows are listed at the bottom in pixels.
 
 Everything is in pixels; there is no scale. Edit this script, never the SVG.
 """
@@ -56,7 +56,7 @@ def pill(x, y, phase, text_x=None, text_y=None):
 
 
 def card(sid, name, phase, x, y, w, h, *columns):
-    """A sub-system card. `columns` are lists of functions; a function is a list of lines, the first one gets the bullet."""
+    """A logical component card. `columns` are lists of functions; a function is a list of lines, the first one gets the bullet."""
     d = int(sid[-3])
     stroke, head = DOMAINS[d]
     o = [f'<g id="{sid}">',
@@ -112,11 +112,11 @@ def build():
                  f'<path d="M8,0 L0,4 L8,8 z" fill="{c}"/></marker>')
     o += ['</defs>', f'<rect width="{W}" height="{H}" fill="#fbfaf8"/>',
           '<text x="30" y="40" font-size="22" font-weight="700" fill="#1a1a1a">Nexus Platform Logical Architecture</text>',
-          '<text x="30" y="62" font-size="11.5" fill="#555">Logical view of the vehicle architecture · the logical components (sub-systems) and their functions · says '
+          '<text x="30" y="62" font-size="11.5" fill="#555">Logical view of the vehicle architecture · the logical components and their functions · says '
           '<tspan font-style="italic">what</tspan> the vehicle must do, free of technology; the physical view says what it is built from, and allocation relates the two</text>',
-          f'<text x="30" y="80" font-size="11.5" fill="#555">ID scheme <tspan font-family="{MONO}" font-weight="700">Nexus-SubSys-DNN</tspan>'
+          f'<text x="30" y="80" font-size="11.5" fill="#555">ID scheme <tspan font-family="{MONO}" font-weight="700">Nexus-Logical-DNN</tspan>'
           f' - D = functional domain (1–5), NN = component within it. Functions inside a component will be numbered '
-          f'<tspan font-family="{MONO}" font-weight="700">Nexus-SubSys-DNN-Fnn</tspan>.</text>',
+          f'<tspan font-family="{MONO}" font-weight="700">Nexus-Logical-DNN-Fnn</tspan>.</text>',
           '<text x="1610" y="40" font-size="11" font-weight="700" fill="#b45309" text-anchor="end">DRAFT B · for review</text>',
           '<text x="1610" y="58" font-size="10" fill="#777" text-anchor="end">2026-10-11</text>',
           '<g transform="translate(0,14)">']
@@ -129,25 +129,25 @@ def build():
           '<text x="240" y="98" font-size="9" font-weight="700" fill="#9ca3af" letter-spacing="1">NEXUS VEHICLE - SYSTEM BOUNDARY</text>']
 
     # --- row 1: communication & interaction (402), autonomy (303, 302, 301)
-    o += card('Nexus-SubSys-402', 'Operator Interface', 2, 250, 118, 240, 145, [
+    o += card('Nexus-Logical-402', 'Operator Interface', 2, 250, 118, 240, 145, [
         ['Accept local controls'], ['Show vehicle status'], ['Take manual / teleop drive input'],
         ['Take mode & mission requests'], ['Present telemetry to the operator']])
-    o += card('Nexus-SubSys-303', 'Planning & Decision', 5, 540, 118, 240, 145, [
+    o += card('Nexus-Logical-303', 'Planning & Decision', 5, 540, 118, 240, 145, [
         ['Manage mission & route'], ['Decide driving behaviour'], ['Plan a collision-free trajectory'],
         ['Issue motion requests', '(target speed + curvature)']])
-    o += card('Nexus-SubSys-302', 'Localization & Mapping', 4, 830, 118, 240, 145, [
+    o += card('Nexus-Logical-302', 'Localization & Mapping', 4, 830, 118, 240, 145, [
         ['Estimate vehicle pose'], ['Fuse odometry, inertial & perception data'], ['Build & maintain the map'],
         ['Report localization confidence']])
-    o += card('Nexus-SubSys-301', 'Environment Perception', 4, 1120, 118, 240, 145, [
+    o += card('Nexus-Logical-301', 'Environment Perception', 4, 1120, 118, 240, 145, [
         ['Sense surroundings'], ['Detect & track obstacles'],
         ['Detect drivable space & markers'], ['Report perception confidence']])
 
     # --- the communication backbone is a banner, not a card
-    o += ['<g id="Nexus-SubSys-401">',
+    o += ['<g id="Nexus-Logical-401">',
           '<rect x="250" y="300" width="1110" height="60" rx="4" fill="#ccfbf1" stroke="#0f766e" stroke-width="1.6"/>',
-          f'<text x="262" y="318" font-size="9.5" font-weight="700" fill="#0f766e" font-family="{MONO}">Nexus-SubSys-401</text>',
+          f'<text x="262" y="318" font-size="9.5" font-weight="700" fill="#0f766e" font-family="{MONO}">Nexus-Logical-401</text>',
           '<text x="262" y="338" font-size="13" font-weight="700" fill="#111827">In-Vehicle Communication</text>',
-          '<text x="262" y="352" font-size="9" fill="#0f766e">backbone - every electronic sub-system attaches here</text>']
+          '<text x="262" y="352" font-size="9" fill="#0f766e">backbone - every electronic component attaches here</text>']
     for (cx, cy, t) in [(522, 321.5, 'Exchange signals between nodes'), (822, 321.5, 'Time-synchronise nodes'),
                         (522, 338.5, 'Route between signals and services'),
                         (822, 338.5, 'Publish services & topics')]:
@@ -157,10 +157,10 @@ def build():
     o.append('</g>')
 
     # --- row 2: external connectivity (403), vehicle motion control (203), actuation (201, 202)
-    o += card('Nexus-SubSys-403', 'External Connectivity', 2, 250, 400, 240, 145, [
+    o += card('Nexus-Logical-403', 'External Connectivity', 2, 250, 400, 240, 145, [
         ['Link to remote station'], ['Carry remote sessions & teleop'], ['Stream telemetry off-board'],
         ['Carry update & diagnostic data']])
-    o += card('Nexus-SubSys-203', 'Vehicle Motion Control', 2, 540, 400, 530, 225, [
+    o += card('Nexus-Logical-203', 'Vehicle Motion Control', 2, 540, 400, 530, 225, [
         ['Arbitrate motion requests', '(manual · teleop · autonomous)'],
         ['Translate speed + curvature into', 'wheel-speed & steer-angle setpoints'],
         ['Close speed & steering control loops']], [
@@ -169,33 +169,33 @@ def build():
         ['Execute safe-stop requests'], ['Report motion state']])
     o += ['<rect x="1110" y="390" width="260" height="245" rx="6" fill="none" stroke="#1d4ed8" stroke-width="1" stroke-dasharray="3 3"/>',
           '<text x="1370" y="385" font-size="8.5" font-weight="700" fill="#1d4ed8" text-anchor="end" letter-spacing="1">ACTUATION</text>']
-    o += card('Nexus-SubSys-201', 'Propulsion', 1, 1120, 400, 240, 105, [
+    o += card('Nexus-Logical-201', 'Propulsion', 1, 1120, 400, 240, 105, [
         ['Produce drive torque, rear wheels'], ['Track wheel-speed setpoints'], ['Measure wheel speed']])
-    o += card('Nexus-SubSys-202', 'Steering', 1, 1120, 520, 240, 105, [
+    o += card('Nexus-Logical-202', 'Steering', 1, 1120, 520, 240, 105, [
         ['Set front wheel angle (Ackermann)'], ['Enforce steer angle & rate limits'], ['Report steering state']])
 
     # --- row 3: vehicle foundation
-    o += card('Nexus-SubSys-102', 'Structure & Enclosure', 1, 250, 675, 530, 120, [
+    o += card('Nexus-Logical-102', 'Structure & Enclosure', 1, 250, 675, 530, 120, [
         ['Carry & locate every component'], ['Protect harness & electronics']], [
         ['Expose controls & service access'], ['Manage heat & vibration']])
-    o += card('Nexus-SubSys-101', 'Energy Storage & Distribution', 1, 830, 675, 530, 120, [
+    o += card('Nexus-Logical-101', 'Energy Storage & Distribution', 1, 830, 675, 530, 120, [
         ['Store energy on board'], ['Protect circuits against overcurrent'], ['Switch drive & logic branches'],
         ['Accept charge from the charger']], [
         ['Convert energy to the supplies', 'the loads need'], ['Measure pack voltage & current'], ['Estimate state of charge']])
 
     # --- row 4: cross-cutting
     o.append('<text x="250" y="840" font-size="10" font-weight="700" fill="#be123c" letter-spacing="1">'
-             'CROSS-CUTTING - these reach every sub-system above through 401</text>')
-    o += card('Nexus-SubSys-501', 'Supervision & Safety', 1, 250, 850, 240, 150, [
+             'CROSS-CUTTING - these reach every logical component above through 401</text>')
+    o += card('Nexus-Logical-501', 'Supervision & Safety', 1, 250, 850, 240, 150, [
         ['Manage vehicle modes & transitions'], ['Emergency stop & safe stop'], ['Watchdogs & command time-outs'],
         ['Detect faults, enter degraded mode'], ['Shut down gracefully on low pack'], ['Command drive-power cut-off']])
-    o += card('Nexus-SubSys-502', 'Cybersecurity', 3, 540, 850, 240, 150, [
+    o += card('Nexus-Logical-502', 'Cybersecurity', 3, 540, 850, 240, 150, [
         ['Secure & measured boot'], ['Store keys, trusted execution'], ['Authenticate & protect messages'],
         ['Control access to the vehicle'], ['Detect intrusions & anomalies']])
-    o += card('Nexus-SubSys-503', 'Diagnostics & Data Logging', 1, 830, 850, 240, 150, [
-        ['Monitor sub-system health'], ['Record fault codes & event data'], ['Log & replay bus and sensor data'],
+    o += card('Nexus-Logical-503', 'Diagnostics & Data Logging', 1, 830, 850, 240, 150, [
+        ['Monitor component health'], ['Record fault codes & event data'], ['Log & replay bus and sensor data'],
         ['Provide debug access']])
-    o += card('Nexus-SubSys-504', 'Software Update & Config.', 1, 1120, 850, 240, 150, [
+    o += card('Nexus-Logical-504', 'Software Update & Config.', 1, 1120, 850, 240, 150, [
         ['Deliver updates'], ['Verify integrity before install'], ['Roll back a failed update'],
         ['Manage configuration &', 'calibration parameters']])
 
@@ -243,7 +243,7 @@ def build():
     for p in PHASES:
         o += pill(x, 1065, p)
         x = round(x + PILL_W + 6, 1)
-    o.append(f'<text x="{x + 2}" y="1076" font-size="10" fill="#374151">first phase the sub-system exists in (phases.md)</text>')
+    o.append(f'<text x="{x + 2}" y="1076" font-size="10" fill="#374151">first phase the component exists in (phases.md)</text>')
     o += ['</g>', '</svg>']
     return '\n'.join(o) + '\n'
 

@@ -26,8 +26,8 @@ later phase needs hazard analysis or a safety case, it is added as its own decis
 | System-of-interest (15288) | The element being defined at the moment: the vehicle first, then each element in turn |
 | Stakeholder needs (15288) | The goals and tests of each phase in [phases.md](phases.md) |
 | System requirements (15288) | The vehicle's requirements, `Nexus-Vehicle` |
-| Logical view (42010 view, SEBoK logical architecture): logical components and functions | The [logical architecture](renders/Nexus-Platform-Logical-Architecture.svg): components `Nexus-SubSys-DNN`, functions `Nexus-SubSys-DNN-Fnn`. They are called sub-systems there for history; in this method they are **logical components**, not part of the hierarchy |
-| Physical view (42010 view), system elements (15288) | The [physical architecture](renders/Nexus-Platform-Physical-Architecture.svg): elements `Nexus-Phys-NN` |
+| Logical view (42010 view, SEBoK logical architecture): logical components and functions | The [logical architecture](renders/Nexus-Platform-Logical-Architecture.svg): components `Nexus-Logical-DNN`, functions `Nexus-Logical-DNN-Fnn`. They were called sub-systems (`Nexus-SubSys-DNN`) until 2026-10-11 and kept their numbers. They are **logical components**, not part of the hierarchy |
+| Physical view (42010 view), system elements (15288) | The [physical architecture](renders/Nexus-Platform-Physical-Architecture.svg): elements `Nexus-Physical-NN` |
 | Correspondence (42010), allocation (SysML *allocate*) | Which physical element performs which logical function ([physical-architecture.md](physical-architecture.md)) |
 
 ## The system of interest and recursion

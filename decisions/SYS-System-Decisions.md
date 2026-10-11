@@ -70,10 +70,13 @@ what is taken from each and what is NEXUS's own. The method is
 - The hierarchy is the **physical breakdown**. The vehicle is the first system of interest, and each system element becomes
   one in turn (recursion), until a bought part or a software item, which is handed over to its repository.
 - At each level the architecture has a **logical view** and a **physical view** of the same system, related by
-  **allocation**. The sub-systems of the logical architecture are logical components, not levels of the hierarchy.
+  **allocation**. The components of the logical architecture are logical components, not levels of the hierarchy.
 - A requirement is **allocated** to an element as it is, or **derived** into new requirements where the architecture adds
   something. Requirements trace to functions and are allocated to physical elements. Every requirement has a verification.
-- Physical elements are `Nexus-Phys-NN`; logical components keep `Nexus-SubSys-DNN`.
+- **IDs name their view**: logical components are `Nexus-Logical-DNN`, physical elements `Nexus-Physical-NN`. The logical
+  components were `Nexus-SubSys-DNN` until this decision and keep their numbers (`Nexus-SubSys-504` is `Nexus-Logical-504`),
+  so no ID is reused. "Logic" was rejected as the prefix: it already names the 5 V logic branch and the LOGIC switch (MEC-06),
+  and "sub-system" is the usual word for a physical breakdown, which is the confusion this decision removes.
 - Requirements are Markdown, one file per system of interest or element, validated by `tools/check-requirements.py`.
 
 **Why.**

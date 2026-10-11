@@ -5,7 +5,7 @@
     python3 ../../tools/check-drawings.py             # fails if the SVG is not what this script writes
 
 This is the physical view of the vehicle's architecture; the logical view is the logical architecture drawing, and the two are related by
-allocation (../physical-architecture.md), never on this drawing. Every element has its own Nexus-Phys-NN ID. The parts listed on a card name their BOM item; the BOM owns the parts, the decisions own the wiring. The pill is the first phase
+allocation (../physical-architecture.md), never on this drawing. Every element has its own Nexus-Physical-NN ID. The parts listed on a card name their BOM item; the BOM owns the parts, the decisions own the wiring. The pill is the first phase
 the element exists in. The helpers (pill, external, flow) are the logical architecture's, loaded from its script so the two
 drawings look alike. Everything is in pixels; there is no scale. Edit this script, never the SVG.
 """
@@ -57,7 +57,7 @@ def build():
           '<text x="30" y="40" font-size="22" font-weight="700" fill="#1a1a1a">Nexus Platform Physical Architecture</text>',
           '<text x="30" y="62" font-size="11.5" fill="#555">Physical view of the vehicle architecture · the system elements and the connections between them · '
           'says <tspan font-style="italic">what it is built from</tspan>; the logical view says what it does, and allocation relates the two</text>',
-          f'<text x="30" y="80" font-size="11.5" fill="#555">ID scheme <tspan font-family="{MONO}" font-weight="700">Nexus-Phys-NN</tspan>'
+          f'<text x="30" y="80" font-size="11.5" fill="#555">ID scheme <tspan font-family="{MONO}" font-weight="700">Nexus-Physical-NN</tspan>'
           f' - one number per element, never reused. Numbers in brackets are BOM items.</text>',
           '<text x="1610" y="40" font-size="11" font-weight="700" fill="#b45309" text-anchor="end">DRAFT B · for review</text>',
           '<text x="1610" y="58" font-size="10" fill="#777" text-anchor="end">2026-10-11</text>',
@@ -72,19 +72,19 @@ def build():
           '<text x="240" y="108" font-size="9" font-weight="700" fill="#9ca3af" letter-spacing="1">NEXUS VEHICLE - SYSTEM BOUNDARY</text>']
 
     # --- row 1: compute above the bus, the perception sensors by the environment
-    o += element('Nexus-Phys-02', 'FRDM node: Linux compute', 1, 250, 118, 330, 160, [
+    o += element('Nexus-Physical-02', 'FRDM node: Linux compute', 1, 250, 118, 330, 160, [
         'FRDM-IMX91S (1.1)', 'On-board CAN transceiver, 2×5 header P12', 'microSD card, boot media (5.3)',
         'Wi-Fi on board', 'UART console, USB-C J11'])
-    o += element('Nexus-Phys-03', 'Raspberry Pi 5 node', 4, 700, 118, 330, 160, [
+    o += element('Nexus-Physical-03', 'Raspberry Pi 5 node', 4, 700, 118, 330, 160, [
         'Raspberry Pi 5, 8 GB (6.1)', 'CAN hardware (6.2, later)', 'Power, mounting, network: to decide'])
-    o += element('Nexus-Phys-09', 'Perception sensors', 4, 1120, 118, 240, 160, [
+    o += element('Nexus-Physical-09', 'Perception sensors', 4, 1120, 118, 240, 160, [
         'Camera first', 'Then a range sensor or LiDAR', 'To be selected (6.3)'])
 
     # --- the bus: a banner, as in the logical drawing
     stroke, head = SLATE
-    o += ['<g id="Nexus-Phys-04">',
+    o += ['<g id="Nexus-Physical-04">',
           f'<rect x="250" y="330" width="1110" height="70" rx="4" fill="#f8fafc" stroke="{stroke}" stroke-width="1.6"/>',
-          f'<text x="262" y="348" font-size="9.5" font-weight="700" fill="{stroke}" font-family="{MONO}">Nexus-Phys-04</text>',
+          f'<text x="262" y="348" font-size="9.5" font-weight="700" fill="{stroke}" font-family="{MONO}">Nexus-Physical-04</text>',
           '<text x="262" y="368" font-size="13" font-weight="700" fill="#111827">Vehicle CAN bus</text>',]
     for (cx, cy, t) in [(440, 359.5, 'Classic CAN, 500 kbit/s'), (440, 376.5, '120 Ω at both ends (module, FRDM JP1)'),
                         (730, 359.5, 'Twisted pair H / L and GND, about 30 cm (4.3)'),
@@ -95,20 +95,20 @@ def build():
     o.append('</g>')
 
     # --- row 2: the real-time node and the actuators it will command
-    o += element('Nexus-Phys-01', 'STM32 node: real-time control', 1, 250, 450, 420, 200, [
+    o += element('Nexus-Physical-01', 'STM32 node: real-time control', 1, 250, 450, 420, 200, [
         'STM32F4DISCOVERY, MB997B (1.2)', 'Carrier boards A and B (5.11)', 'SN65HVD230 CAN transceiver (4.1)',
         'Four user LEDs', 'ST-LINK/V2 on board, SWD', 'I²C PB10 / PB11 · servo PWM PE9'])
-    o += element('Nexus-Phys-08', 'Steering actuator', 1, 1120, 450, 240, 95, [
+    o += element('Nexus-Physical-08', 'Steering actuator', 1, 1120, 450, 240, 95, [
         'LD-1501MG servo (2.3)', 'Ackermann linkage (2.1)'])
-    o += element('Nexus-Phys-07', 'Rear drive', 1, 1120, 560, 240, 90, [
+    o += element('Nexus-Physical-07', 'Rear drive', 1, 1120, 560, 240, 90, [
         'Two encoder gear motors, 12 V (2.2)', 'Encoder Motor Module V1.4 (2.4)'])
 
     # --- row 3: energy and structure
-    o += element('Nexus-Phys-05', 'Power supply and distribution', 1, 250, 700, 600, 140, [
+    o += element('Nexus-Physical-05', 'Power supply and distribution', 1, 250, 700, 600, 140, [
         '3S LiPo, 11.1 V, 6000 mAh (3.1)', 'Fuses: 7.5 A main, 2 × 5 A (3.7)', 'SW1 DRIVE, SW2 LOGIC (3.5a, 3.5c)',
         'WAGO (+) and (−) buses (3.8)'], [
         'Shunt 2 mΩ and INA226 (3.9)', '5 V converter, 50 W (3.4a), board C', '6 V UBEC for the servo (3.18)'])
-    o += element('Nexus-Phys-06', 'Chassis and enclosure', 1, 900, 700, 460, 140, [
+    o += element('Nexus-Physical-06', 'Chassis and enclosure', 1, 900, 700, 460, 140, [
         'Hiwonder three-deck chassis (2.1)', 'Printed trays and pads (3.28)', 'Harness board, plate 2 (MEC-16)',
         'Rear fascia, two panels (3.29)'])
     o.append('<text x="1344" y="828" font-size="9" font-style="italic" fill="#334155" text-anchor="end">carries and locates every element</text>')
