@@ -80,5 +80,13 @@ The logical layout drawing is renamed `Nexus-Platform-Logical-Architecture` to s
 rejected: the PR is where this is reviewed, and a Markdown block reads and diffs there while the checker gives the same
 link guarantees.
 
-**Consequence.** A physical architecture and an allocation matrix are needed next, then the requirements. The
-ID codes of the logical SoIs are still open (see the end of the method file).
+**Allocated and derived (2026-10-11).** An allocation passes a requirement on **as-is** or **derives** new text from it.
+A physical element writes a requirement only where it adds something, so a logical sub-system and a physical element
+that are almost one thing (401 and the CAN bus) do not duplicate each other. Verification is required at every level
+(`Integration` of the children where something is derived below), which is what the V needs on its right side.
+
+**IDs (2026-10-11).** The SoI code is the ID that already exists: `Nexus-SubSys-DNN` for a logical SoI and the repository
+name for a component. Only the vehicle (`Nexus-Vehicle`) and the physical elements (`Nexus-Phys-<Name>`) needed new ones.
+
+**Consequence.** Phase 1 is written in full, 113 requirements from the vehicle to the repositories, with the physical architecture in
+[`../system/physical-architecture.md`](../system/physical-architecture.md). The checker is brought to this format next.

@@ -13,6 +13,7 @@ render, point headless Chrome at it. Same rule as [`../hardware/README.md`](../h
 | Drawing | Owns |
 |---|---|
 | [Nexus-Platform-Logical-Architecture](renders/Nexus-Platform-Logical-Architecture.svg) | The sub-system decomposition - every `Nexus-SubSys-DNN` ID, its name, the phase it first exists in and key flows. **Generated** by [`scripts/Nexus-Platform-Logical-Architecture.py`](scripts/Nexus-Platform-Logical-Architecture.py): edit the script, never the SVG, and `python3 tools/check-drawings.py` fails if they drift |
+| [physical-architecture.md](physical-architecture.md) | The physical elements (L2), what each contains and the interfaces between them; the allocation of functions to them is in the requirements |
 | [method.md](method.md) | How requirements are written, derived and allocated: systems of interest, the four levels, the rules ([SYS-03](../decisions/SYS-System-Decisions.md)) |
 | [phases.md](phases.md) | The five phases, the goal and exit criteria of each, Phase 1 in full including the repositories ([SYS-02](../decisions/SYS-System-Decisions.md)) |
 
@@ -30,7 +31,7 @@ IDs are never reused. A retired sub-system keeps its number.
 ## Workflow
 
 1. **Logical architecture** - settle the decomposition, and which phase each sub-system starts in. *Draft B*
-2. **Physical architecture** - the nodes, the bus, power distribution and chassis, and the allocation of functions to them.
+2. **Physical architecture** - the nodes, the bus, power distribution, chassis and drive train, and the allocation of functions to them. *Done for Phase 1*
 3. **One drawing per sub-system** - `Nexus-SubSys-DNN-<Name>.svg`, showing the
    functions it realises and its interfaces to other sub-systems.
-4. **Requirements**, derived level by level and allocated, per [method.md](method.md), traced to the `-Fnn` IDs. *← current step: the method is written, the requirements are not*
+4. **Requirements**, derived level by level and allocated, per [method.md](method.md), traced to the `-Fnn` IDs. *Phase 1 written in full ([requirements/](../requirements/README.md)); the checker is next*
