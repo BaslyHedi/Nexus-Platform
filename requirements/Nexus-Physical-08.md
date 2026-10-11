@@ -1,6 +1,6 @@
 # Nexus-Physical-08 - Steering actuator
 
-System element, level 1. Realised in hardware; the recursion stops here. Written to [../system/method.md](../system/method.md).
+System element, level 1. Realised in hardware; the recursion stops here. Written to [../system/method.md](../system/method.md) and [rules.md](rules.md).
 
 - **Purpose and boundary.** The LD-1501MG servo and the Ackermann linkage.
 - **Interfaces.** Supplied and commanded through the servo lead from [Nexus-Physical-01](Nexus-Physical-01.md) (6 V from [Nexus-Physical-05](Nexus-Physical-05.md), PWM from Phase 2); the environment through the front wheels.
@@ -11,10 +11,10 @@ System element, level 1. Realised in hardware; the recursion stops here. Written
 
 ### Nexus-Physical-08-R001
 
-**Statement.** The LD-1501MG servo on the front axle shall steer the front wheels through the Ackermann linkage.
+**Statement.** The element shall steer the front wheels with the LD-1501MG servo through the Ackermann linkage.
 
 - Function: Nexus-Logical-202-F01
-- Derived-from: Nexus-Vehicle-R008
+- Derived-from: Nexus-Vehicle-R009
 - Allocated-to: -
 - Phase: 1
 - Verification: Inspection The servo is fitted and the linkage moves freely by hand

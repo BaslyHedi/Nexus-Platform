@@ -1,6 +1,6 @@
 # Nexus-STM32-App - STM32 application (software item)
 
-Software item, level 2, handed over to the repository `Nexus-STM32-App`. Written to [../system/method.md](../system/method.md).
+Software item, level 2, handed over to the repository `Nexus-STM32-App`. Written to [../system/method.md](../system/method.md) and [rules.md](rules.md).
 
 - **Purpose and boundary.** The minimal Zephyr application the bootloader loads.
 - **Interfaces.** Loaded by [Nexus-STM32-FBL](Nexus-STM32-FBL.md); the CAN matrix by a pinned tag.
@@ -23,7 +23,7 @@ Software item, level 2, handed over to the repository `Nexus-STM32-App`. Written
 
 ### Nexus-STM32-App-R002
 
-**Statement.** The application shall show on an LED that it receives the FRDM node's heartbeat.
+**Statement.** When the application receives a heartbeat from the FRDM node, the application shall indicate the reception on an LED.
 
 - Function: Nexus-Logical-401-F01
 - Derived-from: Nexus-Physical-01-R003
@@ -34,10 +34,10 @@ Software item, level 2, handed over to the repository `Nexus-STM32-App`. Written
 
 ### Nexus-STM32-App-R003
 
-**Statement.** The application shall be linked for the application region and started by the bootloader.
+**Statement.** The application shall be linked for the application region.
 
 - Function: Nexus-Logical-504-F01
-- Derived-from: Nexus-Physical-01-R004
+- Derived-from: Nexus-Physical-01-R006
 - Allocated-to: -
 - Phase: 1
 - Verification: Test T1.1
@@ -45,10 +45,10 @@ Software item, level 2, handed over to the repository `Nexus-STM32-App`. Written
 
 ### Nexus-STM32-App-R004
 
-**Statement.** The application shall show its own LED pattern while it runs, written in the repository.
+**Statement.** While running, the application shall show the application pattern that the repository defines.
 
 - Function: Nexus-Logical-503-F04
-- Derived-from: Nexus-Physical-01-R008
+- Derived-from: Nexus-Physical-01-R011
 - Allocated-to: -
 - Phase: 1
 - Verification: Test T1.3
@@ -56,10 +56,10 @@ Software item, level 2, handed over to the repository `Nexus-STM32-App`. Written
 
 ### Nexus-STM32-App-R005
 
-**Statement.** The application shall report its version in its node info.
+**Statement.** When asked over the bus, the application shall report the application version in the node info.
 
 - Function: Nexus-Logical-503-F04
-- Derived-from: Nexus-Physical-01-R009
+- Derived-from: Nexus-Physical-01-R012
 - Allocated-to: -
 - Phase: 1
 - Verification: Test T1.1

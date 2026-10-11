@@ -1,8 +1,9 @@
 # Requirements
 
 The requirements of NEXUS, written to the method in [`../system/method.md`](../system/method.md) and the rules in
-[rules.md](rules.md): **one file per system-of-interest, system element or software item**, named by its ID. Phase 1 is written in full: 84 requirements
-in 14 files.
+[rules.md](rules.md), with the terms of [glossary.md](glossary.md): **one file per system-of-interest, system element or
+software item**, named by its ID. Phase 1 is written in full: 118 requirements in 14 files, 37 at level 0, 50 at level 1,
+31 at level 2. Each statement is in an EARS pattern.
 
 **The checker is not brought to this format yet.** [`../tools/check-requirements.py`](../tools/check-requirements.py) still
 checks an earlier format and fails on these files; updating it, and generating the trace and allocation matrices from
@@ -32,15 +33,15 @@ It opens with the **definition card** of the method (purpose and boundary, inter
 one block per requirement:
 
 ```markdown
-### Nexus-Physical-01-R005
+### Nexus-Physical-01-R007
 
-**Statement.** The node shall verify an image's CRC before it starts it.
+**Statement.** If a download is interrupted, then the node shall remain ready for a new download.
 
-- Function: Nexus-Logical-504-F02
-- Derived-from: Nexus-Vehicle-R011
+- Function: Nexus-Logical-504-F03
+- Derived-from: Nexus-Vehicle-R014
 - Allocated-to: Nexus-STM32-FBL
 - Phase: 1
-- Verification: Integration Nexus-STM32-FBL-R003
+- Verification: Integration Nexus-STM32-FBL-R005
 ```
 
 | Field | Rule | SysML |
