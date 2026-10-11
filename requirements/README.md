@@ -10,13 +10,14 @@ the links between levels, the trace to the drawings and the allocation table, an
 generates two views that must stay in step with the files:
 
 - [TRACE.md](TRACE.md): needs, tests, function allocation and the derivation tree, as tables;
-- [traceability.html](traceability.html): a page that folds and unfolds, opened in a browser. The systems as a hierarchy, each
-  in its colour with its requirements inside, and the derivation tree from each vehicle requirement down; each requirement
-  unfolds to its fields and links. Expand all, collapse all and a filter at the top.
+- [renders/traceability.html](renders/traceability.html): the interactive view, opened in a browser. Each system is a card in
+  its colour from the drawings, in three columns by level; its requirements are bubbles, and lines join each parent to its
+  children. Cards fold one by one, by column or all at once; clicking a bubble highlights its lineage and opens its fields;
+  a filter, and light, dark or automatic theme.
 
 ```bash
 python3 tools/check-requirements.py            # fails on any problem, and when a generated view is stale
-python3 tools/check-requirements.py --write    # regenerates TRACE.md and traceability.html
+python3 tools/check-requirements.py --write    # regenerates TRACE.md and renders/traceability.html
 ```
 
 ## The files
