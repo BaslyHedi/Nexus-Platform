@@ -132,3 +132,21 @@ the PR, and the checker gives the same guarantees.
 3. Allocation of the logical functions to the physical elements, and the interfaces.
 4. Element requirements, allocated or derived.
 5. Recursion into each element that is neither a bought part, nor a hardware element drawn here, nor a software element.
+
+## Open questions of the method
+
+Recorded on 2026-10-11, after the method was applied to Phase 1. Each is a topic for its own session; none blocks the
+requirements as written. The method today covers *writing* requirements; what follows is about their *life* afterwards.
+
+| # | Topic | Open question | Reference practice |
+|---|---|---|---|
+| 1 | Status | A status per requirement (draft, agreed, verified, retired), and a retired requirement kept as a tombstone so its ID is never reused | ISO/IEC/IEEE 29148 requirement attributes |
+| 2 | Baselines | A baseline per phase (for example a git tag frozen at the phase exit), and how a change after it is made: a PR citing a decision | Configuration baselines, ISO 15288; NASA allocated baseline |
+| 3 | Change impact | Suspect links: when a parent statement changes, its children are flagged for review until confirmed; the checker could detect it from git | Suspect links in requirement tools; ASPICE consistency |
+| 4 | Downstream trace | How each repository publishes its software requirements and tests with links to ours, and how the tool reads them back, so the trace does not stop at the hand-over | ASPICE SWE.1 to SWE.6 bidirectional traceability |
+| 5 | Verification records | A result per requirement (passed, failed, open; date; evidence link), and test specifications below the phase tests | ISO 15288 verification; the evidence rule of the project's `CLAUDE.md` |
+| 6 | Recursion | The nodes have a local physical view but no logical view: their functions are not decomposed yet | Step 2 of the order of work |
+| 7 | Requirements with no parent | A rule for requirements that come from an architecture decision or a hazard rather than from a parent requirement | NASA SE Handbook, derived requirements |
+| 8 | Other sources | Hazard analysis from Phase 2, interface control documents (the CAN matrix), any regulation | ISO 21448, STPA; ICDs |
+| 9 | Automation | The checks running in CI on every pull request to this repository | |
+

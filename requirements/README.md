@@ -88,9 +88,34 @@ one block per requirement:
 
 ## Open points
 
-- **The heartbeat rate has no number.** The requirements say "the rate set in the CAN matrix": the Cyphal values in
-  [SW-01](../decisions/SW-Software-Decisions.md) are still to be confirmed from the specification.
-- **Phase 1 start-up is traced to `Nexus-Logical-501-F01`** (manage vehicle modes and transitions), its first form being the
-  Linux side booting from its own storage. The function proper is Phase 2.
-- **Verifications are planned, not performed.** Only the harness checks have run; each `Test` waits for its bench test.
-- **102 F4, heat and vibration, has no requirement**: there is no measured limit to write it against.
+Recorded on 2026-10-11 after the Phase 1 requirements were written. Each group is a topic for its own session. The open
+questions of the method itself (status, baselines, change impact, downstream trace) are in
+[`../system/method.md`](../system/method.md#open-questions-of-the-method).
+
+**1. Missing requirements on the STM32 update path.** T1.1 runs the update while the application runs, and nothing says:
+- how the application hands over to the bootloader when a software-update request arrives;
+- what the bootloader does at power-up: start a valid application, or stay;
+- how a valid image is recognised (header, CRC, version), beyond "the CRC matches".
+
+These are the FBL entry rules and the valid-app rule that [phases.md](../system/phases.md) leaves to Phase 1.
+
+**2. Values cited but not yet fixed**, each waiting for its decision:
+- heartbeat rate, Cyphal node IDs, subjects and services: the CAN matrix (deliverable 1.2), checked against the Cyphal specification (SW-01 "to confirm");
+- the memory map and the four LED patterns: the bootloader and application repositories;
+- flashing-client language, CI service, repository template, how a consumer pins a tag: `SW-nn` entries;
+- the repository names of the heartbeat program and the test applications.
+
+**3. Assumptions to confirm on the hardware:**
+- `Nexus-Vehicle-R010`: the Encoder Motor Module does not drive at power-up (HW-17, not measured);
+- `Nexus-Physical-02-01-R006`: the FRDM boot switch SW1 is set to 0011;
+- `Nexus-Physical-02-01-R005`: the UART console is on USB-C J11 (from the BOM; the schematic shows a CH342 debug UART, the connector not confirmed);
+- `Nexus-Physical-01-01-R003`: the F407 sector layout lets the bootloader sectors be erased separately (reference manual not checked).
+
+**4. Verification.** Only the harness checks have run; each `Test` waits for its bench test, and there is no field yet for a
+result or its evidence (method question 5).
+
+**5. Coverage and review:**
+- 102 F4 (heat and vibration) has no requirement, for lack of a measured limit;
+- Phase 1 start-up is traced to `Nexus-Logical-501-F01` as its first form;
+- the checker does not yet check that a `Need` names a real deliverable, that terms are in the glossary, or combinators;
+- the drawings are still marked Draft A or B, and the 154 statements have been checked by the tool, not yet read through in review.
