@@ -87,12 +87,17 @@ creates an interface requirement on whatever connects them.
 | L2 | FRDM or PC adapter: serve an image. CAN bus: carry it at 500 kbit/s. STM32 node: accept, verify and boot it |
 | L3 | FBL: receive by Cyphal file transfer, erase, write, verify, jump. FBL: remain reachable if the image is bad. CAN-Utils: define the update identifiers |
 
+## Format
+
+Markdown, one file per SoI in [`../requirements/`](../requirements/README.md), a fixed block per requirement,
+checked by `tools/check-requirements.py`, which also generates the trace and the allocation matrix. The block
+format, the field rules and what the check fails on are in that README. YAML as source was weighed and rejected
+(SYS-03): Markdown is read and diffed in the PR, and the checker gives the same guarantees.
+
 ## Not yet decided
 
-- **File format** for the requirements and the checker that validates links: Markdown with a fixed block per
-  requirement and `tools/check-requirements.py` generating the trace and allocation matrices (leaning), or YAML
-  as source with generated Markdown.
-- **ID format**: proposed `VEH-R012`, `STM-R004`, `FBL-R010` (SoI code, then number). Never reused, like every
-  other ID here. Decision IDs keep their prefixes.
+- **ID format**: proposed `VEH-R012`, `STM-R004`, `FBL-R010` (SoI code, then number), which is what the checker
+  enforces. Never reused, like every other ID here. The codes for the logical SoIs (for example `SS504` for
+  `Nexus-SubSys-504`) are not yet fixed.
 - **Scope of the first pass**: the Phase 1 sub-systems (101, 102, 201 and 202 as hardware only, 401, 501 as
   the hardware switches, 503, 504).

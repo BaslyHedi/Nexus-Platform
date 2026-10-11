@@ -61,6 +61,7 @@ NXP's design files). **No vendor document is redistributed here**; see below.
 
 | Folder | Owns |
 |---|---|
+| [`requirements/`](requirements/README.md) | The requirements, one Markdown file per system of interest, derived and allocated through four levels ([`system/method.md`](system/method.md)); `TRACE.md` is generated |
 | [`system/README.md`](system/README.md) | What NEXUS must **do** - the top-down functional decomposition and the `Nexus-SubSys-DNN` IDs, the **phase plan** (`phases.md`); its diagram is in `renders/`, written by the script in `scripts/` |
 | [`decisions/README.md`](decisions/README.md) | Every settled decision and the reasoning behind it, split **HW / MEC / SYS / SW**. Its README owns the numbering rules |
 | [`hardware/README.md`](hardware/README.md) | Build drawings, to scale - chassis layout, wiring schematic, STM32 carrier - the SVGs in `renders/`, the script that writes the carrier's in `scripts/` |
@@ -122,4 +123,13 @@ the SVG; this fails if an SVG has drifted from its script:
 
 ```bash
 python3 tools/check-drawings.py
+```
+
+## Checking the requirements
+
+Requirements are Markdown blocks with fixed fields; this fails on a broken derivation or allocation, a leaf with no
+verification, and a stale `requirements/TRACE.md` (`--write` regenerates it):
+
+```bash
+python3 tools/check-requirements.py
 ```

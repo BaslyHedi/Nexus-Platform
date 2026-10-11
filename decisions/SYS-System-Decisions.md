@@ -76,5 +76,9 @@ The logical layout drawing is renamed `Nexus-Platform-Logical-Architecture` to s
 - Requirements stop at "allocated to repository X": the repository chooses its solution and derives its own,
   which keeps this one free of code, as [`../README.md`](../README.md) requires.
 
+**Format (2026-10-11).** Markdown, one file per SoI, validated by `tools/check-requirements.py`. YAML as source was
+rejected: the PR is where this is reviewed, and a Markdown block reads and diffs there while the checker gives the same
+link guarantees.
+
 **Consequence.** A physical architecture and an allocation matrix are needed next, then the requirements. The
-file format and ID style are still open (see the end of the method file).
+ID codes of the logical SoIs are still open (see the end of the method file).
