@@ -40,14 +40,14 @@ part are in brackets. The table agrees with the `Function` field of the [require
 Functions of later phases are allocated when their phase starts.
 
 **Repositories, CI and the bench PC are not elements of the vehicle.** They are the **enabling system** (ISO/IEC/IEEE 15288),
-with requirements of their own in [`../requirements/Nexus-Enabling.md`](../requirements/system/Nexus-Enabling.md).
+with requirements of their own in [`../requirements/system/Nexus-Enabling.md`](../requirements/system/Nexus-Enabling.md).
 
 ## Inside the nodes: components
 
 Each node is a system-of-interest in turn, with its own physical view: the elements it is built from and the connections
 between them. Element IDs are hierarchical, `Nexus-Physical-01-NN` inside `Nexus-Physical-01`. Requirements are allocated to
 these elements, never to the repositories that implement the software ones (configuration table in
-[`../requirements/Nexus-Enabling.md`](../requirements/system/Nexus-Enabling.md)).
+[`../requirements/system/Nexus-Enabling.md`](../requirements/system/Nexus-Enabling.md)).
 
 ### Nexus-Physical-01, STM32 node
 

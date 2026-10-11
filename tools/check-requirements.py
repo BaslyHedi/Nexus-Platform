@@ -15,12 +15,12 @@ What it checks, against system/method.md, requirements/README.md (format) and re
   the rules     an EARS pattern, "shall", and the mechanical GtWR rules (R7, R8, R9, R10, R16, R17, R21, R24, R32), no em-dash
 
 What it writes: TRACE.md (needs, tests, derivation, function allocation as tables) and renders/traceability.html, built from
-tools/traceability-template.html: the systems as cards in three columns by level, each in its colour from the drawings
-(SYSTEMS), its requirements as bubbles, and a line for each derivation and each as-is allocation. Cards fold and unfold one
-by one, by column or all at once; a bubble opens its lineage and its fields; light, dark and automatic themes.
+tools/traceability-template.html: a canvas laid out as the tree and fitted to the window, each system a movable card in its
+colour from the drawings (SYSTEMS) with its requirements as bubbles, one line per pair of systems with a count badge, a
+bubble's own lineage on click, a phase filter, and light, dark and automatic themes.
 Elements and functions are read from the drawings themselves (system/scripts/*.py), so the drawings stay their single source.
 """
-import glob, importlib.util, os, re, sys
+import glob, importlib.util, json, os, re, sys
 from collections import defaultdict
 sys.dont_write_bytecode = True
 
@@ -105,7 +105,7 @@ for path in sorted(glob.glob(os.path.join(REQ, '**', 'Nexus-*.md'), recursive=Tr
         err(f'{sid}.md', 'no drawing defines this system or element')
         continue
     files[sid] = m.group(2) if m else sid
-    if '—' in text:
+    if '\u2014' in text:
         err(f'{sid}.md', 'contains an em-dash')
     for block in re.split(r'^### ', text, flags=re.M)[1:]:
         rid = block.split('\n', 1)[0].strip()
@@ -150,12 +150,9 @@ for q in reqs.values():
             err(where, f'missing {k}')
     if enabling and (q['up'] or q['alloc']):
         err(where, 'the enabling system derives from nothing and allocates to nothing')
-    try:
-        q['phase'] = int(f.get('Phase', ''))
-        assert 1 <= q['phase'] <= 5
-    except (ValueError, AssertionError):
+    q['phase'] = int(f['Phase']) if re.fullmatch(r'[1-5]', f.get('Phase', '')) else 9
+    if q['phase'] == 9:
         err(where, 'Phase is not 1 to 5')
-        q['phase'] = 9
     if q['phase'] < elements[sid][1]:
         err(where, f'phase {q["phase"]} is before {sid} exists (phase {elements[sid][1]})')
     # links up
@@ -164,7 +161,7 @@ for q in reqs.values():
             err(where, f'Derived-from {p} does not exist')
             continue
         r = reqs[p]
-        if r['soi'] != parent_system(sid) and not (q['level'] == 1 and r['soi'] == 'Nexus-Vehicle'):
+        if r['soi'] != parent_system(sid):
             err(where, f'Derived-from {p} is not in the parent of {sid}')
         if sid not in r['der']:
             err(where, f'{p} does not allocate to {sid} (as-is allocations have no children)')
@@ -226,9 +223,9 @@ for q in reqs.values():
         err(where, 'a conditional statement puts a comma after its condition (EARS)')
     for pat, rule in [(VAGUE, 'R7 vague term'), (ESCAPE, 'R8/R9 escape or open clause'), (r'\bbe (able|capable) (to|of)\b', 'R10 superfluous infinitive'),
                       (r'[()]', 'R21 parentheses'), (r'\b(all|any|both)\b', 'R32 use "each"'), (r'\b(it|its|they|them|their)\b', 'R24 pronoun'),
-                      (r'\b(should|will|must)\b', '"shall" only'), (r'\bnot\b(?<!shall not)', 'R16 "not"')]:
+                      (r'\b(should|will|must)\b', '"shall" only'), (r'(?<!shall )\bnot\b', 'R16 "not", other than "shall not"')]:
         hit = re.search(pat, t, re.I)
-        if hit and not (rule.startswith('R32') and 'both nodes' in t) and not (rule.startswith('R16') and 'shall not' in t):
+        if hit:
             err(where, f'{rule}: "{hit.group(0)}"')
     if re.search(r'(?<!kbit)/(?!s\b)', t):
         err(where, 'R17 oblique "/"')
@@ -290,7 +287,6 @@ md.append('')
 md = '\n'.join(md) + '\n'
 
 # ------------------------------------------------------------------ traceability.html
-import json
 
 
 def first_parent_index(sid):

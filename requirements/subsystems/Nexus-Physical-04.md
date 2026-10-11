@@ -82,7 +82,7 @@ System element, level 1. Written to [../system/method.md](../../system/method.md
 
 ### Nexus-Physical-04-R007
 
-**Statement.** While both nodes publish heartbeats, the bus shall run for 10 minutes with zero error frames.
+**Statement.** While each node publishes heartbeats, the bus shall run for 10 minutes with zero error frames.
 
 - Function: Nexus-Logical-401-F01
 - Derived-from: Nexus-Vehicle-R011, Nexus-Vehicle-R021
@@ -93,7 +93,7 @@ System element, level 1. Written to [../system/method.md](../../system/method.md
 
 ### Nexus-Physical-04-R008
 
-**Statement.** While both nodes publish heartbeats, the bus shall run for 10 minutes with zero bus-off events.
+**Statement.** While each node publishes heartbeats, the bus shall run for 10 minutes with zero bus-off events.
 
 - Function: Nexus-Logical-401-F01
 - Derived-from: Nexus-Vehicle-R011, Nexus-Vehicle-R021

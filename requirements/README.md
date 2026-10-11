@@ -46,7 +46,7 @@ components/Nexus-Physical-02/     the components of the FRDM node
 **Element IDs are hierarchical**: `Nexus-Physical-01-04` is element 04 of `Nexus-Physical-01`. The local view of each node,
 its elements and their connections, is in [`../system/physical-architecture.md`](../system/physical-architecture.md).
 
-**Where the recursion stops.** The hardware elements 04 to 08 state their requirements at part level, so they are leaves.
+**Where the recursion stops.** The subsystems 04 to 08 state their requirements at part level, so they are leaves.
 Each node is decomposed into all its elements: a bought part states what the node relies on from it; the carrier boards
 state what their drawing must satisfy; a software element is handed over, and its team derives the software requirements
 from the ones here.

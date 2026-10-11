@@ -69,7 +69,7 @@ All 42 apply. Where NEXUS sharpens one, the note says how.
 | **Tolerance** | R33 values with a range | Where a value matters to verification |
 | **Quantification** | R34 measurable performance; R35 explicit temporal dependencies | R34: a value defined elsewhere is cited by its controlled source ("the rate set in the CAN matrix", a tagged release). No *TBD* |
 | **Uniformity of language** | R36 consistent terms and units; R37 consistent acronyms; R38 abbreviations defined; R39 a project style guide; R40 consistent decimal format | R39: this file is the style guide |
-| **Modularity** | R41 group related requirements; R42 a defined structure for sets | R42: one file per system-of-interest, element or item, in the format of [README.md](README.md) |
+| **Modularity** | R41 group related requirements; R42 a defined structure for sets | R42: one file per system, subsystem or component, in the folder of its level, in the format of [README.md](README.md) |
 
 ## 2. The vehicle: system requirements
 

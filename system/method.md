@@ -9,7 +9,7 @@ what is taken from it and where the method goes further on its own account, so a
 
 | Reference | Taken from it | NEXUS's own application |
 |---|---|---|
-| **ISO/IEC/IEEE 15288:2023**, *Systems and software engineering: System life cycle processes* | The terms **system-of-interest**, **system element** and **enabling system**, and their recursive use: an element can be treated as a system-of-interest in turn. The technical processes used here: stakeholder needs and requirements definition, system requirements definition, system architecture definition, integration, verification, validation | Where the recursion stops (a bought part, a software item handed over to its repository) |
+| **ISO/IEC/IEEE 15288:2023**, *Systems and software engineering: System life cycle processes* | The terms **system-of-interest**, **system element** and **enabling system**, and their recursive use: an element can be treated as a system-of-interest in turn. The technical processes used here: stakeholder needs and requirements definition, system requirements definition, system architecture definition, integration, verification, validation | Where the recursion stops (a bought part, a hardware element drawn here, a software element handed over to the team that implements it) |
 | **ISO/IEC/IEEE 42010:2022**, *Software, systems and enterprise: Architecture description* | An architecture description is made of **views**, each governed by a **viewpoint**, with **correspondences** between elements of different views. The standard prescribes no method, notation or particular viewpoints | The two viewpoints, **logical** and **physical**, and the use of allocation as the correspondence between them |
 | **SEBoK** (Systems Engineering Body of Knowledge, INCOSE, IEEE Computer Society and SERC), articles *System Requirements Definition*, *Logical Architecture*, *System Architecture Design Definition* | The logical architecture is "as much as possible, independent of implementation decisions". Physical items "provide a design implementation for the corresponding logical element". Allocation "is the process by which the requirements at one level of the physical architecture are assigned" | The drawing conventions and IDs of the two views |
 | **NASA Systems Engineering Handbook**, NASA/SP-2016-6105 Rev 2 | Requirements flow down to lower-level elements, which then hold **allocated requirements** (assigned from the parent) and **derived requirements**: "requirements arising from constraints, ... factors introduced by the selected architecture, and the design" (Figure 4.2-3, glossary) | The label **as-is** for an allocated requirement that the element meets unchanged, with no child text |
@@ -73,7 +73,7 @@ requirements from ours (ASPICE SWE.1 onward) and cites our IDs; facts travel one
 
 **Requirements are allocated to elements, never to repositories.** A repository is configuration management, part of the
 enabling system: it holds the implementation of one or more software elements (the bootloader and the FBL-Updater share
-one). The configuration table in [`../requirements/Nexus-Enabling.md`](../requirements/system/Nexus-Enabling.md) says which
+one). The configuration table in [`../requirements/system/Nexus-Enabling.md`](../requirements/system/Nexus-Enabling.md) says which
 repository and which build target implement each software element.
 
 ## Requirements and their relations
@@ -121,14 +121,14 @@ Each phase is one pass through the V over a growing scope.
 ## Format
 
 Markdown, one file per system of interest or element in [`../requirements/`](../requirements/README.md), a fixed block
-per requirement, checked by `tools/check-requirements.py`, which also generates the trace and the allocation matrix.
+per requirement, checked by `tools/check-requirements.py`, which also generates `TRACE.md` and the interactive traceability page.
 YAML as the source was weighed and rejected ([SYS-03](../decisions/SYS-System-Decisions.md)): Markdown is read and diffed in
 the PR, and the checker gives the same guarantees.
 
 ## Order of work
 
 1. Vehicle requirements (black box) from the phase goals.
-2. Vehicle architecture: the logical view (exists, Draft B) and the physical view (Draft A).
+2. Vehicle architecture: the logical view and the physical view (both Draft B), and the local physical view of each node (Draft A).
 3. Allocation of the logical functions to the physical elements, and the interfaces.
 4. Element requirements, allocated or derived.
 5. Recursion into each element that is neither a bought part, nor a hardware element drawn here, nor a software element.

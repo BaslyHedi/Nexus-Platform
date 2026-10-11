@@ -80,6 +80,9 @@ what is taken from each and what is NEXUS's own. The method is
   components were `Nexus-SubSys-DNN` until this decision and keep their numbers (`Nexus-SubSys-504` is `Nexus-Logical-504`),
   so no ID is reused. "Logic" was rejected as the prefix: it already names the 5 V logic branch and the LOGIC switch (MEC-06),
   and "sub-system" is the usual word for a physical breakdown, which is the confusion this decision removes.
+- **The levels carry the common names** of NASA, SEBoK and ASPICE, since ISO 15288 names none: the vehicle is the
+  **system**, its system elements are **subsystems**, and the elements inside a subsystem are **components**. The requirement
+  folders are `system/`, `subsystems/` and `components/<subsystem>/`.
 - Requirements are Markdown, one file per system of interest or element, validated by `tools/check-requirements.py`.
 
 **Why.**
