@@ -200,9 +200,13 @@ and no non-volatile memory (NvM) region exist yet.** Both are left open, see *Co
 
 **Why.**
 
-- **The FBL must be in sector 0.** At reset the core reads its stack pointer and reset vector from `0x00000000`, which with
-  BOOT0 low is an alias of `0x08000000`. The F407 has no boot-address option byte, so nothing but the first sector can
-  start the FBL. A region of constants in sector 0 was proposed and dropped for this reason.
+- **The FBL must be in sector 0.** At reset the core reads its stack pointer and reset vector from `0x00000000`. RM0090
+  Rev 22 (section 2.4) gives three boot spaces, chosen by the BOOT pins and latched on the fourth rising SYSCLK edge after
+  reset: BOOT0 low is the main flash, aliased at `0x00000000` and so starting at `0x08000000`; BOOT0 high with BOOT1 low is
+  the system memory (ST's ROM bootloader, `0x1FFF0000`); both high is the embedded SRAM1. **The only boot address in the
+  main flash is therefore the first sector.** The F407 has no boot-address option byte, and the dual-bank boot bit (BFB2)
+  belongs to the F42x and F43x. `SYSCFG_MEMRMP` can change what is mapped at `0x00000000` after the boot, which is not a
+  second boot address. A region of constants in sector 0 was proposed and dropped for this reason.
 - **128 KB is room, not a measured need.** The in-house FBL is expected to fit in far less, but it is not written and
   SW-02 means no library footprint exists to compare against. Phase 3 adds signature checking and anti-rollback to the
   FBL. The application's start address is the one value every application build depends on, so it is fixed generously
@@ -222,6 +226,10 @@ and no non-volatile memory (NvM) region exist yet.** Both are left open, see *Co
 
 **Consequences.**
 
+- **The ST ROM bootloader stays available as a second recovery path.** With BOOT0 high and BOOT1 low the device boots
+  from the system memory and offers USART1, USART3, CAN2 and USB DFU (RM0090 section 2.4). It is not used for updates
+  (SW-01) and the vehicle's bus is CAN1, but it can reflash a device whose FBL has been lost without the ST-LINK. Its
+  entry depends on the BOOT0 pin being reachable on the carrier, which is a hardware question.
 - **Flash erase and program stall every flash read on this single-bank part.** Code and data in SRAM keep running, but an
   application that fetches from flash waits for the erase to finish. At 3.3 V with 32-bit programming the datasheet
   (DS8626 Rev 8, Table 40) gives a typical and maximum erase time of 250 ms and 500 ms for a 16 KB sector, 550 ms and
@@ -241,8 +249,8 @@ and no non-volatile memory (NvM) region exist yet.** Both are left open, see *Co
 
 **To confirm.**
 
-- **The sector layout and addresses, against RM0090.** They were recalled from memory when this entry was written, and
-  DS8626 does not give them (it states 1 MB and the sector erase times only). RM0090 is not yet in `vendor/`.
+- ~~The sector layout and addresses.~~ Checked against RM0090 Rev 22, Table 5 (2026-10-11): 4 x 16 KB from `0x08000000`,
+  one 64 KB sector at `0x08010000`, 7 x 128 KB from `0x08020000`, last address `0x080FFFFF`.
 - That the FBL fits the region with room for Phase 3, measured once it is built.
 
 ---
