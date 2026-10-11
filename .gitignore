@@ -28,3 +28,6 @@ mechanical/renders/
 
 # Python bytecode, from importing hardware/scripts/stm32-carrier.py
 __pycache__/
+
+# Editor settings are per machine, not part of the definition.
+.vscode/
