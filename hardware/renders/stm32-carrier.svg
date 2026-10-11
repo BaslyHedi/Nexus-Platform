@@ -3181,7 +3181,7 @@
 <text x="1226.0" y="646.0" font-size="7.9" fill="#475569">motor module SCL / SDA / GND - never its 5 V pin</text>
 <rect x="1130" y="652" width="550" height="19" fill="#ffffff" stroke="#e2e8f0"/>
 <text x="1142.0" y="665.0" font-size="8.4" fill="#1e293b" font-weight="700">B CAN</text>
-<text x="1226.0" y="665.0" font-size="7.9" fill="#475569">twisted H, L + GND to DE-9 stub and FRDM P12 (HW-09, HW-18)</text>
+<text x="1226.0" y="665.0" font-size="7.9" fill="#475569">twisted H, L + GND to DE-9 stub and FRDM J7 (HW-09, HW-18)</text>
 <rect x="1130" y="671" width="550" height="19" fill="#f8fafc" stroke="#e2e8f0"/>
 <text x="1142.0" y="684.0" font-size="8.4" fill="#1e293b" font-weight="700">B TERM</text>
 <text x="1226.0" y="684.0" font-size="7.9" fill="#475569">jumper ON = this end terminated (120 Ω), OFF = open</text>

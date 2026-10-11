@@ -44,7 +44,7 @@
 <circle cx="266.0" cy="176.5" r="1.8" fill="#334155"/>
 <text x="273.0" y="180" font-size="10.5" fill="#374151">FRDM-IMX91S (1.1)</text>
 <circle cx="266.0" cy="192.5" r="1.8" fill="#334155"/>
-<text x="273.0" y="196" font-size="10.5" fill="#374151">On-board CAN transceiver, 2×5 header P12</text>
+<text x="273.0" y="196" font-size="10.5" fill="#374151">On-board CAN transceiver, 2×5 header J7</text>
 <circle cx="266.0" cy="208.5" r="1.8" fill="#334155"/>
 <text x="273.0" y="212" font-size="10.5" fill="#374151">microSD card, boot media (5.3)</text>
 <circle cx="266.0" cy="224.5" r="1.8" fill="#334155"/>
@@ -194,7 +194,7 @@
 <path d="M200,800 L248,800" fill="none" stroke="#d92b2b" stroke-width="2.6" marker-end="url(#me)"/>
 <text x="224" y="792" font-size="8" fill="#b91c1c" text-anchor="middle">charge</text>
 <path d="M420,280 L420,328" fill="none" stroke="#374151" stroke-width="1.4" marker-start="url(#mis)" marker-end="url(#mi)"/>
-<text x="426" y="310" font-size="8" fill="#374151" text-anchor="start">CAN · P12</text>
+<text x="426" y="310" font-size="8" fill="#374151" text-anchor="start">CAN · J7</text>
 <path d="M420,402 L420,448" fill="none" stroke="#374151" stroke-width="1.4" marker-start="url(#mis)" marker-end="url(#mi)"/>
 <text x="426" y="430" font-size="8" fill="#374151" text-anchor="start">CAN1 PD0 / PD1</text>
 <path d="M865,280 L865,328" fill="none" stroke="#374151" stroke-width="1.4" stroke-dasharray="7 4" marker-start="url(#mis)" marker-end="url(#mi)"/>

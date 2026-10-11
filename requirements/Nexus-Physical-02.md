@@ -80,7 +80,7 @@ System element, level 1. Written to [../system/method.md](../system/method.md) a
 - Derived-from: Nexus-Vehicle-R019
 - Allocated-to: Nexus-Physical-02-01, Nexus-Physical-02-02, Nexus-Physical-02-03
 - Phase: 1
-- Verification: Integration Nexus-Physical-02-01-R004, Nexus-Physical-02-02-R001, Nexus-Physical-02-03-R002
+- Verification: Integration Nexus-Physical-02-01-R004, Nexus-Physical-02-01-R006, Nexus-Physical-02-02-R001, Nexus-Physical-02-03-R002
 
 ### Nexus-Physical-02-R008
 

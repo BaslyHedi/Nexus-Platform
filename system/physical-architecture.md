@@ -83,7 +83,7 @@ these elements, never to the repositories that implement the software ones (conf
 | From | To | What passes |
 |---|---|---|
 | power element (Nexus-Physical-05) | 02-01 FRDM board | 5 V at USB-C J1, no power delivery (HW-02) |
-| 02-01 FRDM board | the bus (Nexus-Physical-04) | CAN_H, CAN_L on P12 pins 8 and 10, terminated by JP1 |
+| 02-01 FRDM board | the bus (Nexus-Physical-04) | CAN_H, CAN_L on J7 pins 8 and 10, terminated by JP1 |
 | 02-02 SD card | 02-01 FRDM board | the boot medium, holding 02-03 |
 | 02-03 Linux image | 02-04, 02-05, 02-06 | runs them; SocketCAN to the bus |
 | 02-01 FRDM board | bench PC | the UART console at USB-C J11, by USB at the fascia |

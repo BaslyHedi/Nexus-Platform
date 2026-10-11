@@ -73,7 +73,7 @@ def build():
 
     # --- row 1: compute above the bus, the perception sensors by the environment
     o += element('Nexus-Physical-02', 'FRDM node: Linux compute', 1, 250, 118, 330, 160, [
-        'FRDM-IMX91S (1.1)', 'On-board CAN transceiver, 2×5 header P12', 'microSD card, boot media (5.3)',
+        'FRDM-IMX91S (1.1)', 'On-board CAN transceiver, 2×5 header J7', 'microSD card, boot media (5.3)',
         'Wi-Fi on board', 'UART console, USB-C J11'])
     o += element('Nexus-Physical-03', 'Raspberry Pi 5 node', 4, 700, 118, 330, 160, [
         'Raspberry Pi 5, 8 GB (6.1)', 'CAN hardware (6.2, later)', 'Power, mounting, network: to decide'])
@@ -120,7 +120,7 @@ def build():
     o += FL('M820,700 L820,635 L1118,635', 'e', size=8, labels=[(990, 628, 'pack voltage, SW1, 5 A')])
     o += FL('M200,800 L248,800', 'e', size=8, labels=[(224, 792, 'charge')])
     # bus attachments
-    o += FL('M420,280 L420,328', 'i', start=True, size=8, anchor='start', labels=[(426, 310, 'CAN · P12')])
+    o += FL('M420,280 L420,328', 'i', start=True, size=8, anchor='start', labels=[(426, 310, 'CAN · J7')])
     o += FL('M420,402 L420,448', 'i', start=True, size=8, anchor='start', labels=[(426, 430, 'CAN1 PD0 / PD1')])
     o += FL('M865,280 L865,328', 'i', start=True, dashed=True, size=8, anchor='start', labels=[(871, 310, 'CAN (later)')])
     o += FL('M200,365 L248,365', 'i', start=True, size=8, labels=[(224, 357, 'DE-9')])
