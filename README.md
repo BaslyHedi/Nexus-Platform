@@ -61,7 +61,7 @@ NXP's design files). **No vendor document is redistributed here**; see below.
 
 | Folder | Owns |
 |---|---|
-| [`requirements/`](requirements/README.md) | The requirements, one Markdown file per system of interest, derived and allocated through four levels ([`system/method.md`](system/method.md)); `TRACE.md` is generated |
+| [`requirements/`](requirements/README.md) | The requirements, one Markdown file per system of interest or element, derived and allocated per [`system/method.md`](system/method.md) |
 | [`system/README.md`](system/README.md) | What NEXUS must **do** - the top-down functional decomposition and the `Nexus-SubSys-DNN` IDs, the **phase plan** (`phases.md`); its diagram is in `renders/`, written by the script in `scripts/` |
 | [`decisions/README.md`](decisions/README.md) | Every settled decision and the reasoning behind it, split **HW / MEC / SYS / SW**. Its README owns the numbering rules |
 | [`hardware/README.md`](hardware/README.md) | Build drawings, to scale - chassis layout, wiring schematic, STM32 carrier - the SVGs in `renders/`, the script that writes the carrier's in `scripts/` |

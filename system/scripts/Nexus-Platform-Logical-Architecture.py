@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""The logical architecture drawing (L1 of ../method.md): every Nexus-SubSys-DNN sub-system, its functions, its phase and the flows between them (SYS-02).
+"""The logical architecture drawing, the logical view of the vehicle (../method.md): every Nexus-SubSys-DNN sub-system, its functions, its phase and the flows between them (SYS-02).
 
     python3 Nexus-Platform-Logical-Architecture.py     # -> ../renders/Nexus-Platform-Logical-Architecture.svg
     python3 ../../tools/check-drawings.py       # fails if the SVG is not what this script writes

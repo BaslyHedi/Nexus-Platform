@@ -1,5 +1,11 @@
 # Requirements
 
+> **Parked first pass.** These files were written before the method settled on the conventional structure
+> ([SYS-03](../decisions/SYS-System-Decisions.md), [`../system/method.md`](../system/method.md)). They put requirements on
+> logical components, use physical elements that the [physical view](../system/physical-architecture.md) has since
+> replaced, and treat the FBL-Updater as its own repository, though it is a target of the FBL repository. They are kept
+> as material and are redone after the allocation.
+
 The requirements of NEXUS, written to the method in [`../system/method.md`](../system/method.md): **one file per
 system of interest (SoI)**, named by its code. Phase 1 is written in full, from the vehicle down to the
 repositories: 113 requirements in 21 files.

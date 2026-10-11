@@ -1,135 +1,113 @@
-# Requirements method
+# Systems engineering method
 
-How NEXUS requirements are written, derived and allocated. This file owns the method; the reasoning for
-choosing it is [SYS-03](../decisions/SYS-System-Decisions.md). The requirements are in
-[`../requirements/`](../requirements/README.md).
+How NEXUS is defined, from what it must do down to the repositories that build it. This file owns the method; the
+reasoning for choosing it is [SYS-03](../decisions/SYS-System-Decisions.md).
 
-## The idea in one paragraph
+**The method is not invented here.** It follows the conventional concepts of systems engineering and uses their terms.
+Clause numbers are not cited; the summary below is what each source contributes.
 
-A requirement belongs to exactly one **system of interest** (SoI). **Allocating** it to a child SoI either passes
-it on unchanged (**as-is**) or produces a **derived** requirement on that child, when the allocation adds something. Repeat down four levels. Derivation is the vertical link between
-requirements, and it reads both ways: *derived from* going up, *decomposed to* going down. Allocation is the
-link from a requirement or function to the SoI that must satisfy it. HW, SW and SYS are **not** allocation
-targets: they are an attribute of a leaf ("realised by hardware, software or procedure").
+| Source | What NEXUS takes from it |
+|---|---|
+| **ISO/IEC/IEEE 15288** (system life cycle processes) | The system of interest, system elements, and **recursion**: each system element can become a system of interest of its own. The technical processes, in order: stakeholder needs, system requirements, architecture definition, then integration, verification, validation |
+| **ISO/IEC/IEEE 42010** (architecture description) | An architecture is described in several **views**. The logical view and the physical view are two views of the **same** architecture, related by **correspondences** |
+| **INCOSE SE Handbook**, **NASA SE Handbook** | The logical (functional) architecture is technology-independent and the physical architecture realises it; functions are **allocated** to physical elements. A requirement passed to an element unchanged is **allocated**, one created by the design at that level is **derived** |
+| **OMG SysML** | The names of the relations: *derive*, *allocate*, *satisfy*, *verify* |
+| **Automotive SPICE** (SYS.1 to SYS.5, SWE), **ISO 26262-4** | System requirements are allocated to system elements (hardware, software, mechanics) during system architectural design; each software element then starts its own cycle |
 
-## System of interest
+## Terms
 
-Any element treated as a black box with a boundary at that moment. It is logical or physical, and the kind
-is declared, because it decides what an allocation to it means.
+| Standard term | In NEXUS |
+|---|---|
+| System of interest | The element being defined at the moment: the vehicle first, then each element in turn |
+| Stakeholder needs | The goals and tests of each phase in [phases.md](phases.md) |
+| System requirements | The vehicle's requirements, `Nexus-Vehicle` |
+| Logical view: logical components and functions | The [logical architecture](renders/Nexus-Platform-Logical-Architecture.svg): components `Nexus-SubSys-DNN`, functions `Nexus-SubSys-DNN-Fnn`. They are called sub-systems there for history; in this method they are **logical components**, not part of the hierarchy |
+| Physical view: system elements | The [physical architecture](renders/Nexus-Platform-Physical-Architecture.svg): elements `Nexus-Phys-NN` |
+| Correspondence, allocation | Which physical element realises which logical function ([physical-architecture.md](physical-architecture.md)) |
 
-| Kind | Example | Carries | Its requirements say |
-|---|---|---|---|
-| **Vehicle** | NEXUS | The whole; the only SoI with no parent | What it must do for the operator and the environment |
-| **Logical** | `Nexus-SubSys-504` Software Update | A grouping of functions, no location | What function is performed and the behaviour at its interfaces, **independent of implementation** |
-| **Physical** | STM32 node, CAN bus, power distribution, chassis | A thing you can touch, with a place and a BOM entry | What it does, **plus** physical constraints: power, size, timing, capacity |
-| **Component** | FBL, Yocto image, carrier board | A part inside a physical node, usually a repository | The same, scoped to its own boundary |
+## The system of interest and recursion
 
-The same real thing can appear at two levels: the STM32 is a physical SoI at L2, while "flash bootloader
-capability" is a logical function at L1. They are linked by allocation and are not the same item. That is how
-one set of requirements yields a logical and a physical architecture.
+The hierarchy is the **physical breakdown**: what is built, bought or configured. At every level the same steps are
+applied to the system of interest:
 
-The **CAN bus is its own physical SoI**, not a part of either node. Its requirements (bit rate, termination,
-bus-off behaviour) belong to neither end, and they are what T2.3 verifies. The PC adapter is **external test
-equipment**, outside the vehicle boundary, and is an actor in the context of the bus.
+1. **Requirements** of the system of interest. At the top they are a black box: they name the system and its external
+   actors, never its elements.
+2. **Architecture definition**, in two views of the same level:
+   - **Logical view**: the functions needed to meet the requirements, grouped into logical components, with the flows
+     between them. It names no technology.
+   - **Physical view**: the system elements the system of interest is built from, and the interfaces between them.
+3. **Allocation**: every function of the logical view to the element or elements that realise it. A 1:1 case (the
+   CAN bus realises the physical layer of 401) is simply one allocation; the two keep their own identities.
+4. **Element requirements**: each requirement of the system of interest is **allocated** to an element as it is, or
+   **derived** into new requirements on elements where the architecture adds something (a split, an interface, a number).
 
-## The four levels
+Each element then becomes the system of interest at the next level, with its own requirements (those of step 4), its
+own logical and physical views, its own allocation.
 
-| Level | Name | Content | Where it lives |
-|---|---|---|---|
-| **L0** | Vehicle | Needs and phase goals, written as "the vehicle shall ..." | [`../requirements/`](../requirements/README.md) |
-| **L1** | Logical | Sub-systems and their functions, `Nexus-SubSys-DNN-Fnn` | drawn in [Nexus-Platform-Logical-Architecture](renders/Nexus-Platform-Logical-Architecture.svg) |
-| **L2** | Physical | The nodes, the bus, power distribution, chassis, drive train | [physical-architecture.md](physical-architecture.md) |
-| **L3** | Component | Parts of a node, down to **the repository** | the repository names of [phases.md](phases.md) |
+```text
+Vehicle                     requirements · logical view · physical view · allocation
+  └─ STM32 node             requirements · logical view · physical view · allocation
+       ├─ Discovery board    bought: the recursion stops at a BOM part
+       ├─ carrier boards
+       ├─ FBL software item  hand-over: the repository Nexus-STM32-FBL, targets FBL and FBL-Updater
+       └─ App software item  hand-over: the repository Nexus-STM32-App
+```
 
-**L0 to L1 is derivation**: the same question, refined. **L1 to L2 is allocation**: the question changes from
-*what* to *who does it*, and it is many-to-many (501 Supervision is partly fuses and switches, partly the STM32,
-partly Linux). **L2 to L3 is allocation plus derivation** again.
+**Where the recursion stops.** At a **bought part** (a BOM item), and at a **software item**, which is handed over to
+its repository. That repository writes its own software requirements derived from ours (SWE.1 onward) and cites our
+IDs; facts travel one way, out of this repository, which holds no code. A software item is a repository; a build
+target inside it (the FBL-Updater in the FBL repository) is not an element of its own.
 
-**The stopping point.** This repository holds the definition and no code, so requirements stop at "allocated
-to repository X". Each repository then chooses its solution and writes its own requirements, derived from ours,
-citing our IDs. Facts travel one way, out of here. Hardware stops one level earlier: the BOM lists parts and not
-sub-assemblies, so a hardware requirement is a leaf on its physical node.
+## Requirements and their relations
 
-**SoI codes are the IDs that already exist.** A logical SoI is `Nexus-SubSys-DNN`, a component is its repository
-name, and a requirement is `<code>-Rnnn`. Only the vehicle and the physical elements needed a new code.
+A requirement belongs to **one** system of interest or element and is written in that element's file. Its relations:
 
-## Allocated and derived
+| Relation | Meaning |
+|---|---|
+| **Derived from** | The requirement one level up that it comes from. Reads the other way as *decomposed to* |
+| **Allocated to** | The element below that must meet it. **As-is**: the element meets the requirement unchanged and no new text is written. **Derived**: the element gets new requirements derived from it |
+| **Function** | The function of the logical view that the requirement concerns. Requirements are not written on logical components; they trace to functions and are allocated to physical elements |
+| **Verified by** | The test, inspection, analysis or demonstration that shows it is met, or the **integration** of the requirements derived from it |
+| **Decisions** | The `HW-`, `MEC-`, `SYS-` or `SW-` entries that shaped it. Requirements say what, decisions say why |
 
-The logical and the physical architecture would collide if every L1 requirement became an L2 requirement with a
-new subject, so the two are told apart:
-
-- An **allocated (as-is)** requirement passes to an element **unchanged**. It is a link and has no new text. The element
-  inherits it and answers for it.
-- A **derived** requirement is new text. It exists only because the allocation added something: a number, an
-  interface, a split, or a physical property.
-
-**Write a requirement on an element only if it says something its parent did not.** Two cases show it. Where a
-logical sub-system and a physical element are almost one thing (401 In-Vehicle Communication and the CAN bus), the
-bus inherits the logical requirement as is and adds only what is physical: 500 kbit/s, the terminations, the DE-9
-stub. Where a function is cut up (504 delivering an image), each part is a derived requirement on the element that
-does it, and the cut leaves an interface requirement on the bus between them.
-
-The logical level stays implementation-free, and a physical card reads as what it **inherits** (the as-is
-allocations) and what it **adds** (its own requirements). Both are generated from the requirements, so neither is written twice.
-
-## The definition card
-
-Every SoI, at every level, has the same short card:
-
-- **Purpose and boundary**: what it is for, what is inside and what is not
-- **Interfaces**: its **siblings** at the parent level, and what passes between them
-- **Allocated functions**: what it must do, from the level above
-- **Modes**: for example FBL idle, receiving, running an app
-
-The interfaces are where split functions leave their trace. Where a function is allocated to two SoIs, the split
-creates an interface requirement on whatever connects them.
+HW, SW and SYS are not elements and not targets of allocation: they describe how a requirement on a leaf is realised.
 
 ## Rules
 
-1. **One requirement, one SoI.** A requirement that spans two elements is split into one requirement each plus an
-   interface requirement. Example: 504 "deliver an update" becomes *serve an image* (FRDM), *receive, verify and
-   boot it* (STM32) and *carry it at 500 kbit/s* (the bus).
-2. **Every requirement derives from one above**, except at L0, and every plain allocation has at least one child
-   in the element it names. A requirement allocated only as-is ends there and is a leaf.
-3. **Every requirement has a verification**: test, inspection, analysis or demonstration where nothing is derived
-   below it, and **integration** of its children where something is. The bench tests T1.1 to T2.3 in
-   [phases.md](phases.md) are the system verification of the L0 requirements.
-4. **Phase is an attribute**, not a separate tree. "Phase 1" is a filter over the one set.
-5. **Requirements say what, decisions say why.** A requirement links to the `HW-`, `MEC-`, `SYS-` or `SW-` entry
-   that shaped it; it does not restate the reasoning.
-6. **Logical requirements name no implementation.** "Verify the image before it runs" holds whether a CRC, a
-   signature or a person does it. The mechanism enters at L2 or L3.
-7. **Requirements are written to be checked**: one statement, "shall", a measurable limit where one exists, no
-   "and" joining two verifiable things.
+1. **One requirement, one element.** A requirement that two elements share is split into one for each and an interface
+   requirement on what connects them.
+2. **Write a requirement on an element only if it says something its parent did not.** Otherwise allocate the parent as-is.
+3. **The logical view names no technology.** The mechanism enters in the physical view and the requirements derived for it.
+4. **Black box at the top.** A vehicle requirement names the vehicle and its actors, never the STM32, the FRDM or the bus.
+5. **Every requirement has a verification**, at every level.
+6. **Phase is an attribute** of a requirement, not a separate tree. Phase 1 is a filter.
+7. **Written to be checked**: one statement with "shall", one verifiable thing, a limit where one exists.
 
 ## The V
 
-The method is the left side of a V in the manner of Arcadia and INCOSE. The mapping to ASPICE is from memory.
+Each level of recursion has its verification on the right side of the V:
 
-| Our level | Specify (left) | ASPICE | Arcadia | Verify (right) |
-|---|---|---|---|---|
-| Phase goals | Stakeholder needs | SYS.1 | Operational analysis | Validation |
-| **L0** | System requirements | SYS.2 | System analysis | **System verification**: the bench tests T1.1 to T2.3 |
-| **L1** | Functional architecture | SYS.3 | Logical architecture | Integration of the elements the function is allocated to |
-| **L2** | Physical architecture and interfaces | SYS.3 | Physical architecture | **Integration**: the nodes and the bus together |
-| **L3** | Hand-over to each repository | SWE.1 onward | End-product breakdown | Verification inside each repository |
-
-Each phase is one pass through the V over a growing scope, so phase being an attribute is what the V needs. The
-logical and physical split is a refinement of ASPICE's single architecture step, not a departure from it, and the
-as-is allocation is how Arcadia avoids the same duplication.
-
-## Worked example
-
-| Level | Requirement |
+| Left: define | Right: verify |
 |---|---|
-| L0 | The vehicle shall allow its STM32 application to be replaced over the vehicle CAN bus without a debug probe (verified by T1.1) |
-| L1 | `Nexus-SubSys-504`: deliver an image and verify it before it runs (first form: CRC, then jump) |
-| L2 | FRDM node: serve an image. CAN bus: carry it at the update identifiers. STM32 node: accept, verify and boot it |
-| L3 | FBL: receive by Cyphal file transfer, erase, write, verify, jump. FBL: remain reachable if the image is bad. CAN-Utils: define the update identifiers |
+| Stakeholder needs (phase goals) | Validation: the phase does what it was for |
+| Vehicle requirements | **System verification**: the bench tests T1.1 to T2.3 |
+| Vehicle architecture: elements and interfaces | **Integration**: the elements working together over their interfaces |
+| Element requirements | **Element verification**, and the same again one level down |
+| Software item, handed over | Verification inside the repository |
+
+Each phase is one pass through the V over a growing scope.
 
 ## Format
 
-Markdown, one file per SoI in [`../requirements/`](../requirements/README.md), a fixed block per requirement,
-checked by `tools/check-requirements.py`, which also generates the trace and the allocation matrix. The block
-format and the field rules are in that README. YAML as source was weighed and rejected ([SYS-03](../decisions/SYS-System-Decisions.md)):
-Markdown is read and diffed in the PR, and the checker gives the same guarantees.
+Markdown, one file per system of interest or element in [`../requirements/`](../requirements/README.md), a fixed block
+per requirement, checked by `tools/check-requirements.py`, which also generates the trace and the allocation matrix.
+YAML as the source was weighed and rejected ([SYS-03](../decisions/SYS-System-Decisions.md)): Markdown is read and diffed in
+the PR, and the checker gives the same guarantees.
+
+## Order of work
+
+1. Vehicle requirements (black box) from the phase goals.
+2. Vehicle architecture: the logical view (exists, Draft B) and the physical view (Draft A).
+3. Allocation of the logical functions to the physical elements, and the interfaces.
+4. Element requirements, allocated or derived.
+5. Recursion into each element that is neither a bought part nor a software item.

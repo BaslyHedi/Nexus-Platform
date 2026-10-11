@@ -4,10 +4,8 @@
     python3 Nexus-Platform-Physical-Architecture.py   # -> ../renders/Nexus-Platform-Physical-Architecture.svg
     python3 ../../tools/check-drawings.py             # fails if the SVG is not what this script writes
 
-Two kinds of element (../physical-architecture.md owns the rule):
-  merged         the physical side of one logical sub-system; it keeps the sub-system's Nexus-SubSys-DNN ID and its domain colour
-  physical only  serves several sub-systems (a compute node); it has its own Nexus-Phys-NN ID and is drawn in slate
-The parts listed on a card name their BOM item; the BOM owns the parts, the decisions own the wiring. The pill is the first phase
+This is the physical view of the vehicle's architecture; the logical view is the logical architecture drawing, and the two are related by
+allocation (../physical-architecture.md), never on this drawing. Every element has its own Nexus-Phys-NN ID. The parts listed on a card name their BOM item; the BOM owns the parts, the decisions own the wiring. The pill is the first phase
 the element exists in. The helpers (pill, external, flow) are the logical architecture's, loaded from its script so the two
 drawings look alike. Everything is in pixels; there is no scale. Edit this script, never the SVG.
 """
@@ -19,7 +17,7 @@ _spec = importlib.util.spec_from_file_location('logical', os.path.join(HERE, 'Ne
 L = importlib.util.module_from_spec(_spec)
 _spec.loader.exec_module(L)
 esc, pill, external, flow, write = L.esc, L.pill, L.external, L.flow, L.write
-MONO, PHASES, PILL_W, DOMAINS, MARKERS = L.MONO, L.PHASES, L.PILL_W, L.DOMAINS, L.MARKERS
+MONO, PHASES, PILL_W, MARKERS = L.MONO, L.PHASES, L.PILL_W, L.MARKERS
 
 OUT = os.path.join(HERE, '..', 'renders', 'Nexus-Platform-Physical-Architecture.svg')
 W, H = 1640, 1010
@@ -27,18 +25,14 @@ SLATE = ('#334155', '#e2e8f0')
 
 
 def element(eid, name, phase, x, y, w, h, *columns):
-    """An element card. A Nexus-SubSys ID makes it merged (domain colour), a Nexus-Phys ID physical only (slate)."""
-    merged = eid.startswith('Nexus-SubSys-')
-    stroke, head = DOMAINS[int(eid[-3])] if merged else SLATE
-    tag = 'MERGED' if merged else 'PHYSICAL ONLY'
+    """An element card: ID, name, first phase, and the parts it is built from."""
+    stroke, head = SLATE
     o = [f'<g id="{eid}">',
          f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="4" fill="#ffffff" stroke="{stroke}" stroke-width="1.6"/>',
          f'<path d="M{x},{y + 4} a4,4 0 0 1 4,-4 h{w - 8} a4,4 0 0 1 4,4 v38 h-{w} z" fill="{head}"/>',
          f'<line x1="{x}" y1="{y + 42}" x2="{x + w}" y2="{y + 42}" stroke="{stroke}" stroke-width="0.8"/>',
          f'<text x="{x + 12}" y="{y + 16}" font-size="9.5" font-weight="700" fill="{stroke}" font-family="{MONO}">{eid}</text>',
-         f'<text x="{x + 12}" y="{y + 34}" font-size="13" font-weight="700" fill="#111827">{esc(name)}</text>',
-         f'<text x="{x + w - 16 - PILL_W}" y="{y + 17}" font-size="7.5" font-weight="700" fill="{stroke}" text-anchor="end" '
-         f'letter-spacing="0.4">{tag}</text>']
+         f'<text x="{x + 12}" y="{y + 34}" font-size="13" font-weight="700" fill="#111827">{esc(name)}</text>',]
     o += pill(x + w - 10 - PILL_W, y + 7, phase)
     for ci, col in enumerate(columns):
         bx = float(x + 16 + 300 * ci)
@@ -61,13 +55,11 @@ def build():
                  f'<path d="M8,0 L0,4 L8,8 z" fill="{c}"/></marker>')
     o += ['</defs>', f'<rect width="{W}" height="{H}" fill="#fbfaf8"/>',
           '<text x="30" y="40" font-size="22" font-weight="700" fill="#1a1a1a">Nexus Platform Physical Architecture</text>',
-          '<text x="30" y="62" font-size="11.5" fill="#555">Physical elements of the vehicle and the connections between them · '
-          'says <tspan font-style="italic">what it is built from</tspan>; what each element must do comes from the logical architecture by allocation</text>',
-          f'<text x="30" y="80" font-size="11.5" fill="#555">An element that is the physical side of one sub-system is <tspan font-weight="700">merged</tspan> '
-          f'and keeps its <tspan font-family="{MONO}" font-weight="700">Nexus-SubSys-DNN</tspan> ID; one that serves several is '
-          f'<tspan font-weight="700">physical only</tspan>, <tspan font-family="{MONO}" font-weight="700">Nexus-Phys-NN</tspan>. '
-          f'Numbers in brackets are BOM items.</text>',
-          '<text x="1610" y="40" font-size="11" font-weight="700" fill="#b45309" text-anchor="end">DRAFT A · for review</text>',
+          '<text x="30" y="62" font-size="11.5" fill="#555">Physical view of the vehicle architecture · the system elements and the connections between them · '
+          'says <tspan font-style="italic">what it is built from</tspan>; the logical view says what it does, and allocation relates the two</text>',
+          f'<text x="30" y="80" font-size="11.5" fill="#555">ID scheme <tspan font-family="{MONO}" font-weight="700">Nexus-Phys-NN</tspan>'
+          f' - one number per element, never reused. Numbers in brackets are BOM items.</text>',
+          '<text x="1610" y="40" font-size="11" font-weight="700" fill="#b45309" text-anchor="end">DRAFT B · for review</text>',
           '<text x="1610" y="58" font-size="10" fill="#777" text-anchor="end">2026-10-11</text>',
           '<g transform="translate(0,14)">']
 
@@ -85,16 +77,15 @@ def build():
         'Wi-Fi on board', 'UART console, USB-C J11'])
     o += element('Nexus-Phys-03', 'Raspberry Pi 5 node', 4, 700, 118, 330, 160, [
         'Raspberry Pi 5, 8 GB (6.1)', 'CAN hardware (6.2, later)', 'Power, mounting, network: to decide'])
-    o += element('Nexus-SubSys-301', 'Perception sensors', 4, 1120, 118, 240, 160, [
+    o += element('Nexus-Phys-09', 'Perception sensors', 4, 1120, 118, 240, 160, [
         'Camera first', 'Then a range sensor or LiDAR', 'To be selected (6.3)'])
 
     # --- the bus: a banner, as in the logical drawing
-    stroke, head = DOMAINS[4]
-    o += ['<g id="Nexus-SubSys-401">',
-          f'<rect x="250" y="330" width="1110" height="70" rx="4" fill="{head}" stroke="{stroke}" stroke-width="1.6"/>',
-          f'<text x="262" y="348" font-size="9.5" font-weight="700" fill="{stroke}" font-family="{MONO}">Nexus-SubSys-401</text>',
-          '<text x="262" y="368" font-size="13" font-weight="700" fill="#111827">Vehicle CAN bus</text>',
-          f'<text x="{1308 - 6}" y="{347}" font-size="7.5" font-weight="700" fill="{stroke}" text-anchor="end" letter-spacing="0.4">MERGED</text>']
+    stroke, head = SLATE
+    o += ['<g id="Nexus-Phys-04">',
+          f'<rect x="250" y="330" width="1110" height="70" rx="4" fill="#f8fafc" stroke="{stroke}" stroke-width="1.6"/>',
+          f'<text x="262" y="348" font-size="9.5" font-weight="700" fill="{stroke}" font-family="{MONO}">Nexus-Phys-04</text>',
+          '<text x="262" y="368" font-size="13" font-weight="700" fill="#111827">Vehicle CAN bus</text>',]
     for (cx, cy, t) in [(440, 359.5, 'Classic CAN, 500 kbit/s'), (440, 376.5, '120 Ω at both ends (module, FRDM JP1)'),
                         (730, 359.5, 'Twisted pair H / L and GND, about 30 cm (4.3)'),
                         (730, 376.5, 'DE-9 stub on the fascia, unterminated (4.5)')]:
@@ -107,20 +98,20 @@ def build():
     o += element('Nexus-Phys-01', 'STM32 node: real-time control', 1, 250, 450, 420, 200, [
         'STM32F4DISCOVERY, MB997B (1.2)', 'Carrier boards A and B (5.11)', 'SN65HVD230 CAN transceiver (4.1)',
         'Four user LEDs', 'ST-LINK/V2 on board, SWD', 'I²C PB10 / PB11 · servo PWM PE9'])
-    o += element('Nexus-SubSys-202', 'Steering', 1, 1120, 450, 240, 95, [
+    o += element('Nexus-Phys-08', 'Steering actuator', 1, 1120, 450, 240, 95, [
         'LD-1501MG servo (2.3)', 'Ackermann linkage (2.1)'])
-    o += element('Nexus-SubSys-201', 'Propulsion', 1, 1120, 560, 240, 90, [
+    o += element('Nexus-Phys-07', 'Rear drive', 1, 1120, 560, 240, 90, [
         'Two encoder gear motors, 12 V (2.2)', 'Encoder Motor Module V1.4 (2.4)'])
 
     # --- row 3: energy and structure
-    o += element('Nexus-SubSys-101', 'Energy Storage & Distribution', 1, 250, 700, 600, 140, [
+    o += element('Nexus-Phys-05', 'Power supply and distribution', 1, 250, 700, 600, 140, [
         '3S LiPo, 11.1 V, 6000 mAh (3.1)', 'Fuses: 7.5 A main, 2 × 5 A (3.7)', 'SW1 DRIVE, SW2 LOGIC (3.5a, 3.5c)',
         'WAGO (+) and (−) buses (3.8)'], [
         'Shunt 2 mΩ and INA226 (3.9)', '5 V converter, 50 W (3.4a), board C', '6 V UBEC for the servo (3.18)'])
-    o += element('Nexus-SubSys-102', 'Structure & Enclosure', 1, 900, 700, 460, 140, [
+    o += element('Nexus-Phys-06', 'Chassis and enclosure', 1, 900, 700, 460, 140, [
         'Hiwonder three-deck chassis (2.1)', 'Printed trays and pads (3.28)', 'Harness board, plate 2 (MEC-16)',
         'Rear fascia, two panels (3.29)'])
-    o.append('<text x="1344" y="828" font-size="9" font-style="italic" fill="#92400e" text-anchor="end">carries and locates every element</text>')
+    o.append('<text x="1344" y="828" font-size="9" font-style="italic" fill="#334155" text-anchor="end">carries and locates every element</text>')
 
     FL = flow
     # energy
@@ -155,17 +146,12 @@ def build():
                           (600, 'p', 'physical interaction')]:
         o += flow(f'M{x},920 L{x + 34},920', kind)
         o.append(f'<text x="{x + 42}" y="924" font-size="10" fill="#374151">{text}</text>')
-    o.append('<text x="30" y="950" font-size="10" font-weight="700" fill="#1a1a1a">ELEMENTS</text>')
-    o += [f'<rect x="100" y="939" width="16" height="14" rx="2" fill="#dbeafe" stroke="#1d4ed8" stroke-width="1.2"/>',
-          '<text x="122" y="950" font-size="10" fill="#374151"><tspan font-weight="700">merged</tspan>: domain colour of its sub-system</text>',
-          f'<rect x="370" y="939" width="16" height="14" rx="2" fill="{SLATE[1]}" stroke="{SLATE[0]}" stroke-width="1.2"/>',
-          '<text x="392" y="950" font-size="10" fill="#374151"><tspan font-weight="700">physical only</tspan>: serves several sub-systems</text>',
-          '<text x="650" y="950" font-size="10" font-weight="700" fill="#1a1a1a">FIRST PHASE</text>']
-    x = 728
+    o.append('<text x="30" y="950" font-size="10" font-weight="700" fill="#1a1a1a">FIRST PHASE</text>')
+    x = 108
     for p in PHASES:
         o += pill(x, 939, p)
         x += PILL_W + 6
-    o.append(f'<text x="{x + 2}" y="950" font-size="10" fill="#374151">first phase the element exists in (phases.md)</text>')
+    o.append(f'<text x="{x + 2}" y="950" font-size="10" fill="#374151">first phase the element exists in (phases.md) · which functions each element realises is the allocation, kept out of this view</text>')
     o += ['</g>', '</svg>']
     return '\n'.join(o) + '\n'
 

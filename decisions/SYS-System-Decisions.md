@@ -8,7 +8,7 @@ Numbering is `SYS-nn`, unique across the project and never reused. Format, and h
 |---|---|
 | **SYS-01** | Layered over-discharge protection, not a cutoff module |
 | **SYS-02** | Five phases, paced by learning; Phase 1 is foundation, not driving |
-| **SYS-03** | Requirements are derived and allocated through four levels of systems of interest |
+| **SYS-03** | Conventional systems engineering: one physical hierarchy, logical and physical views at each level |
 
 ---
 
@@ -59,34 +59,31 @@ that settle the matrix and the flash protocol, are listed in the phase plan.
 
 ---
 
-## SYS-03 · Requirements are derived and allocated through four levels of systems of interest
+## SYS-03 · Conventional systems engineering: one physical hierarchy, logical and physical views at each level
 
-**Decision (2026-10-11).** Requirements are written against **systems of interest** at four levels - vehicle,
-logical sub-system, physical node, component - and each requirement belongs to exactly one of them. Allocating
-a requirement to a child produces a derived requirement on it. Method and rules: [`../system/method.md`](../system/method.md).
-The logical layout drawing is renamed `Nexus-Platform-Logical-Architecture` to say which view it is.
+**Decision (2026-10-11).** NEXUS is defined with the conventional concepts of systems engineering, after ISO/IEC/IEEE 15288,
+ISO/IEC/IEEE 42010, the INCOSE and NASA handbooks and SysML, and uses their terms. The method is
+[`../system/method.md`](../system/method.md).
+
+- The hierarchy is the **physical breakdown**. The vehicle is the first system of interest, and each system element becomes
+  one in turn (recursion), until a bought part or a software item, which is handed over to its repository.
+- At each level the architecture has a **logical view** and a **physical view** of the same system, related by
+  **allocation**. The sub-systems of the logical architecture are logical components, not levels of the hierarchy.
+- A requirement is **allocated** to an element as it is, or **derived** into new requirements where the architecture adds
+  something. Requirements trace to functions and are allocated to physical elements. Every requirement has a verification.
+- Physical elements are `Nexus-Phys-NN`; logical components keep `Nexus-SubSys-DNN`.
+- Requirements are Markdown, one file per system of interest or element, validated by `tools/check-requirements.py`.
 
 **Why.**
 
-- Allocating requirements to the domains HW, SW and SYS gives no root and no tree: a function such as "update
-  the MCU over CAN" is not a hardware or a software requirement, it is both. Domain stays as an attribute of a leaf.
-- Allocating straight to physical elements fails without a logical level, because one sub-system (supervision,
-  update) lands on several nodes. Keeping both gives a logical and a physical architecture from one set of requirements.
-- The CAN bus is its own physical element because its requirements belong to neither node, and T2.3 verifies them.
-- Requirements stop at "allocated to repository X": the repository chooses its solution and derives its own,
-  which keeps this one free of code, as [`../README.md`](../README.md) requires.
+- **The standards already answer this**, and a home-made method would have to rediscover the same answers. A first draft did:
+  it stacked the logical architecture above the physical one as two levels, which made a 1:1 pair such as 401 and the CAN
+  bus look like two systems, and needed a "merge" rule to undo it. As two views of one level, they are simply one allocation.
+- Allocating requirements to the domains HW, SW and SYS gives no root and no tree. Domain stays a property of a leaf.
+- The hand-over at the software item matches the automotive split (ASPICE SYS to SWE) and keeps this repository free of code.
+- Markdown rather than YAML as the source: the PR is where this is reviewed, and a Markdown block reads and diffs there
+  while the checker gives the same link guarantees.
 
-**Format (2026-10-11).** Markdown, one file per SoI, validated by `tools/check-requirements.py`. YAML as source was
-rejected: the PR is where this is reviewed, and a Markdown block reads and diffs there while the checker gives the same
-link guarantees.
-
-**Allocated and derived (2026-10-11).** An allocation passes a requirement on **as-is** or **derives** new text from it.
-A physical element writes a requirement only where it adds something, so a logical sub-system and a physical element
-that are almost one thing (401 and the CAN bus) do not duplicate each other. Verification is required at every level
-(`Integration` of the children where something is derived below), which is what the V needs on its right side.
-
-**IDs (2026-10-11).** The SoI code is the ID that already exists: `Nexus-SubSys-DNN` for a logical SoI and the repository
-name for a component. Only the vehicle (`Nexus-Vehicle`) and the physical elements (`Nexus-Phys-<Name>`) needed new ones.
-
-**Consequence.** Phase 1 is written in full, 113 requirements from the vehicle to the repositories, with the physical architecture in
-[`../system/physical-architecture.md`](../system/physical-architecture.md). The checker is brought to this format next.
+**Consequence.** The physical view is drawn ([`../system/physical-architecture.md`](../system/physical-architecture.md)); the
+allocation of functions to elements is next, then the requirements. A first pass of requirements written before the method
+settled is parked in [`../requirements/`](../requirements/README.md) and is redone on it.
