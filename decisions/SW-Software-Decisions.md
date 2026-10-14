@@ -13,6 +13,7 @@ Format, and how to add one: [README](README.md).
 | **SW-05** | The FBL uses the main SRAM only, leaves the CCM empty and does not use the FPU |
 | **SW-06** | The application hands over to the FBL through the backup SRAM |
 | **SW-07** | The FBL executes from the SRAM, not from the flash |
+| **SW-08** | Every image carries a 64-byte version record at a fixed offset |
 
 The rest of what Phase 1 has to settle is listed in [`../system/phases.md`](../system/phases.md) under
 *Decided in Phase 1*: the CAN matrix and its tooling, the Zephyr board port, the
@@ -402,3 +403,83 @@ instruction, constant or vector is fetched from the flash. The constructor table
 - ~~The vector alignment.~~ Checked against PM0214 Rev 10 (2026-10-11): 128 words, 512 bytes, for the 98 entries.
 - On the board, that the FBL keeps receiving over a 128 KB sector erase.
 - The time the start-up copy takes, which has not been measured.
+
+---
+
+## SW-08 · Every image carries a 64-byte version record at a fixed offset
+
+**Decision (2026-10-14).** Every image of the STM32 (the FBL, the application, the FBL-Updater) carries a **64-byte version
+record at offset `0x200` from the start of its flash region**, after the vector table and before the first code. For the
+FBL that is `0x08000200` (SW-04). The record is plain ASCII with fixed field widths, so `strings` on the ELF or the binary
+shows it, and a hex or SREC dump shows it at the same place in every image:
+
+| Offset | Size | Content | FBL now |
+|---|---|---|---|
+| 0 | 3 | software type, `FBL` or `APP` | `FBL` |
+| 3 | 1 | separator `_` | |
+| 4 | 5 | platform name | `Nexus` |
+| 9 | 1 | separator `_` | |
+| 10 | 2 | platform version | `v1` |
+| 12 | 1 | separator `_` | |
+| 13 | 8 | software version `AA-BB-CC`: major, minor, bugfix, two digits each | `00-01-00` |
+| 21 | 1 | NUL | |
+| 22 | 42 | reserved, `0xFF` | |
+
+`strings` reads `FBL_Nexus_v1_00-01-00`. **The values are written once**, in the project settings of the repository that
+builds the image, and the build generates the record and the output file names from them. The build fails when a value does
+not fit its field: a version part above 99, a platform name that is not 5 characters, a platform version that is not 2.
+The FBL is the first image to carry the record. **The application follows the same pattern, on the application side, later.**
+
+**Why.**
+
+- **A tool has to read the version of an image without parsing it.** The flasher, the image tool and a person with a hex
+  dump see the version of an `.srec` or a flash read-back at a known address. A version held only in the ELF's symbols or
+  in a build log does not travel with the file that is flashed.
+- **It cannot be the first bytes of the image.** At reset the core reads the stack pointer and the reset vector from the
+  first two words of the flash (SW-04), so the vector table is first. The record goes directly after it and before the first
+  code section.
+- **A fixed offset, not "after the table".** The table is 392 bytes for the 98 vectors of the F407 (SW-07) and `0x200` is
+  the next 512-byte boundary, the same size as the `VTOR` alignment. The offset does not move if a table changes, and it can
+  be the same in the FBL and in the application, so one parser reads both.
+- **Fixed widths, not a parsed string.** A reader takes the fields by offset and never scans for separators. A field that
+  outgrows its width fails the build, not the parser.
+- **The reserved bytes are `0xFF`, the erased state of the flash.** A later field can be written there without moving
+  anything that exists.
+- **Measured, 2026-10-14:** the FBL image is 772 bytes of flash, the vector table 392 bytes (`0x08000000` to `0x08000187`),
+  the record at `0x08000200` to `0x0800023F`, and `strings` on the binary prints only `FBL_Nexus_v1_00-01-00`. Read back from
+  the SREC by a script on the host, then from the flash of the board (To confirm, below).
+
+**Rejected.**
+
+- **At the very start of the image.** Not possible, see above.
+- **Directly after the vector table, wherever it ends.** The application's table may not be the size of the FBL's, and
+  then the two records would be at different offsets.
+- **Numbers only, in binary.** Smallest, but `strings` shows nothing and a hex dump needs the layout in hand. The text costs
+  21 bytes of a record that has 64.
+- **A git hash or a build date in the record.** Not asked for. A build date makes two builds of the same source differ.
+
+**Consequences.**
+
+- **The linker scripts carry the slot.** `interface/linker/memory_map.ld` has `VERSION_OFFSET = 0x200` and
+  `VERSION_SIZE = 64`; `fbl.ld` places the section `.version` there and fails the link if the record is missing, is not 64
+  bytes, is not at that address, or if the vector table is larger than 512 bytes. The gap between the table and the record
+  is never programmed.
+- **The record is never copied to the SRAM and the FBL does not read it.** The tools do. The FBL takes the numbers it reports in
+  its node info (Nexus-Physical-01-04-R012) from the same settings, at build time.
+- **A reader that needs numbers converts `AA-BB-CC` itself.** The record holds text only.
+- **The output files carry the same name.** The build writes `FBL_Nexus.srec` and `FBL_Nexus_v1_00-01-00.srec`, the same
+  image under a plain and a versioned name.
+- **The application follows later.** Its type is `APP`, its record is at `0x08020200` (SW-04), and its linker script has to
+  leave the slot free. How the Zephyr build places a section there is a question for `Nexus-STM32-App`.
+
+**To confirm.**
+
+- ~~On the board, that the ST-LINK tools flash the SREC and that a read-back shows the record at `0x08000200`.~~ Checked on
+  the STM32F4DISCOVERY (2026-10-14): OpenOCD 0.12.0 through the on-board ST-LINK/V2 flashed `FBL_Nexus.srec` by sector
+  erase and verified it, and a read-back of the 64 bytes at `0x08000200` shows `FBL_Nexus_v1_00-01-00`, the NUL, then `0xFF`
+  to the end of the record. The configuration and the tasks are in `tools/` and `.vscode/` of `Nexus-STM32-FBL`.
+- That the Zephyr application can keep its vector table below `0x200` and place the record at `0x08020200`.
+- Whether the record becomes part of the image header, which is still to be decided (the interface headers of
+  `Nexus-STM32-FBL`), or stays a separate record next to it.
+- Whether the FBL checks the application's record (type `APP`, same platform name and version) before it jumps to it.
+- What raises the platform version from `v1`.
