@@ -447,7 +447,7 @@ The FBL is the first image to carry the record. **The application follows the sa
   anything that exists.
 - **Measured, 2026-10-14:** the FBL image is 772 bytes of flash, the vector table 392 bytes (`0x08000000` to `0x08000187`),
   the record at `0x08000200` to `0x0800023F`, and `strings` on the binary prints only `FBL_Nexus_v1_00-01-00`. Read back from
-  the SREC by a script on the host; not yet flashed.
+  the SREC by a script on the host, then from the flash of the board (To confirm, below).
 
 **Rejected.**
 
@@ -474,7 +474,10 @@ The FBL is the first image to carry the record. **The application follows the sa
 
 **To confirm.**
 
-- On the board, that the ST-LINK tools flash the SREC and that a read-back shows the record at `0x08000200`.
+- ~~On the board, that the ST-LINK tools flash the SREC and that a read-back shows the record at `0x08000200`.~~ Checked on
+  the STM32F4DISCOVERY (2026-10-14): OpenOCD 0.12.0 through the on-board ST-LINK/V2 flashed `FBL_Nexus.srec` by sector
+  erase and verified it, and a read-back of the 64 bytes at `0x08000200` shows `FBL_Nexus_v1_00-01-00`, the NUL, then `0xFF`
+  to the end of the record. The configuration and the tasks are in `tools/` and `.vscode/` of `Nexus-STM32-FBL`.
 - That the Zephyr application can keep its vector table below `0x200` and place the record at `0x08020200`.
 - Whether the record becomes part of the image header, which is still to be decided (the interface headers of
   `Nexus-STM32-FBL`), or stays a separate record next to it.
