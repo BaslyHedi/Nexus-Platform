@@ -38,7 +38,7 @@ One file per language, `ladder-<language>.md` next to this file. Today: [`ladder
 
 The ladders and this file are tracked in Nexus-Platform, while the learning happens in another repository. Every change to them (a ladder status, a new row, an edit of this file) follows the session of that repository, automatically:
 
-1. **Name.** `<repo>` is the name of the repository being reviewed (its folder name, for example `Nexus-STM32-FBL`), `<branch>` its current branch. The Platform branch is `learn/<repo>/<branch>`.
+1. **Name.** `<repo>` is the name of the repository being reviewed (its folder name, for example `Nexus-STM32-FBL`), `<branch>` its current branch, with every `/` replaced by `-` (so `feature/x` and `feature` cannot collide as git refs, and the worktree path stays one folder). The Platform branch is `learn/<repo>/<branch>`.
 2. **Worktree, so Hedi's Platform checkout is never switched.** The changes are made in `~/work/nexus-learn/<repo>-<branch>`, a worktree of Nexus-Platform on that branch. When it does not exist yet: `git -C ~/work/Nexus-Platform fetch`, then `git -C ~/work/Nexus-Platform worktree add -b learn/<repo>/<branch> ~/work/nexus-learn/<repo>-<branch> origin/main`.
 3. **Read from where it is newest.** While the worktree exists, the ladder and this file are read from it, not from the link in `~/.claude/skills/`, which shows `main`.
 4. **Commit and push** in the worktree, one commit per review (`Ladder: <what changed> (<repo> <branch>)`), with the attribution lines of the session.
