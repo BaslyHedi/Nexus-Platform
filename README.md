@@ -134,3 +134,7 @@ regenerates both):
 ```bash
 python3 tools/check-requirements.py
 ```
+
+## Claude Code skills
+
+The skills Claude Code uses across the Nexus repositories, such as the learning review, are in [`tools/claude-skills/`](tools/claude-skills/README.md), with how to install them.
