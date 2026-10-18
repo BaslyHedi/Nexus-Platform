@@ -14,4 +14,4 @@ Every Nexus repository ignores `.claude/` (global gitignore), so a skill is not 
 ln -s ~/work/Nexus-Platform/tools/claude-skills/learn-review ~/.claude/skills/learn-review
 ```
 
-A change to a skill or a ladder is then a change in this repository, on a branch, like any other.
+A change to a skill or a ladder is then a change in this repository. The learning review makes its own changes on a `learn/<repo>/<branch>` branch in a separate worktree, and merges them together with the pull request of the repository where the learning happened ([`learn-review/SKILL.md`](learn-review/SKILL.md), *Where the skill's own changes go*).
