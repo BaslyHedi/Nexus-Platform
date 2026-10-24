@@ -19,7 +19,7 @@ The concepts of the learning review, in the order they are introduced. Shared by
 | Constructors: member initializer list, default member initializers | mastered |
 | `const` (not changed after it is set) versus `constexpr` (known at compile time) | seen |
 | Header-only versus `.hpp` and `.cpp`: what each costs and hides | seen |
-| References versus pointers, `const&` parameters | new |
+| References versus pointers, `const&` parameters | seen |
 | `static constexpr` data members | new |
 | Overloading (same name, different parameters) versus overriding (`virtual`), overload resolution | seen |
 
