@@ -35,6 +35,7 @@ The concepts of the learning review, in the order they are introduced. Shared by
 | `explicit` constructors | new |
 | `= default`, `= delete`, the rule of zero | new |
 | A view type: pointer and size held together, in place of C++20 `std::span` | new |
+| Errors without exceptions: bugs versus run-time failures, `[[nodiscard]]`, a status `enum class` | seen |
 
 ## 3. Generic code
 
