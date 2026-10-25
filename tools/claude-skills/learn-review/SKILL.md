@@ -1,6 +1,6 @@
 ---
 name: learn-review
-description: Review Hedi's changes on the current branch of a Nexus repository as a coach. Builds the branch, explains every compiler error in plain words with the language rule behind it, lists findings with hints instead of fixes, and introduces at most one new concept per review, chosen from the ladder of the language (ladder-cpp.md for C++). Use when Hedi asks to review the branch, review their changes, or understand a compilation failure, in any Nexus repository. Also use when a Nexus pull request is opened or merged, to pair it with its learn/<repo>/<branch> pull request in Nexus-Platform.
+description: Review Hedi's changes on the current branch of a Nexus repository as a coach. Builds the branch, explains every compiler error in plain words with the language rule behind it, lists findings with hints instead of fixes, and introduces at most one new concept per review, chosen from the ladder of the language (ladder-cpp.md for C++, ladder-yocto.md for the Yocto metadata). Use when Hedi asks to review the branch, review their changes, or understand a compilation, BitBake parse or build failure, in any Nexus repository. Also use when a Nexus pull request is opened or merged, to pair it with its learn/<repo>/<branch> pull request in Nexus-Platform.
 ---
 
 # Learning review
@@ -12,24 +12,26 @@ The skill lives in `Nexus-Platform/tools/claude-skills/learn-review/` and is lin
 ## Rules
 
 - **Do not edit Hedi's code** (sources, headers, build files). Point, explain, hint. A short snippet that shows a rule on *other* code is fine. Hedi's own code, corrected, only when they ask for it.
-- **Verify before claiming.** Every claim about an error is backed by the compiler output. A claim about what the compiler warns about is tested on the compiler, not recalled. Every protocol or register fact comes from the documents in `~/work/Nexus-Platform/vendor/` (document, section and revision).
+- **Verify before claiming.** Every claim about an error is backed by the compiler output. A claim about what the compiler warns about is tested on the compiler, not recalled. In Yocto, a claim about a variable's value or where it was set is checked with `bitbake-getvar` or `bitbake -e`, and a claim about a layer or recipe is checked in the pinned layer source, not recalled. Every protocol or register fact comes from the documents in `~/work/Nexus-Platform/vendor/` (document, section and revision).
 - **One new concept per review, at most.** Take it from the first concept of the language's ladder that is still marked `new`, and only if it fits the code that was written. Basics come before everything else.
 - **Kind and direct.** Name what is good, briefly, with the reason. Then the problems.
 - The project's rules apply to the reply too: no em-dashes, no dates in plans.
 
 ## Ladders
 
-One file per language, `ladder-<language>.md` next to this file. Today: [`ladder-cpp.md`](ladder-cpp.md). When a review meets a language without a ladder (Rust, the Yocto metadata, a Zephyr devicetree), propose one to Hedi before using it.
+One file per language, `ladder-<language>.md` next to this file. Today: [`ladder-cpp.md`](ladder-cpp.md) and [`ladder-yocto.md`](ladder-yocto.md). When a review meets a language without a ladder (Rust, a Zephyr devicetree), propose one to Hedi before using it.
+
+The Yocto ladder also drives exercises and design questions between reviews, since much of Yocto is learned by setting up and deciding rather than by writing code. Its header says how.
 
 ## Steps
 
 1. **Gather the changes.** The branch against `main`, committed and not:
    `git diff main...HEAD`, `git diff`, `git status --short`, and read every untracked file in full.
-2. **Build.** With the repository's own build command, from its `README.md` or `cmake/README.md` (for the FBL: `cmake --build --preset fbl 2>&1`). Group the errors by root cause: one mistake often gives five messages, and several build variants repeat it. The same error in two variants counts once.
+2. **Build.** With the repository's own build command, from its `README.md` or `cmake/README.md` (for the FBL: `cmake --build --preset fbl 2>&1`). For a Yocto repository, the build directory is set up by Hedi: parse first (`bitbake -p`), then build the target of the session. A full image build takes hours, so when it is long, build only the recipes the change touches and say so. Group the errors by root cause: one mistake often gives five messages, and several build variants repeat it. The same error in two variants counts once.
 3. **Read the code** against:
    - the exercise or the goal of the session, when one was set;
    - the repository's conventions: its `CLAUDE.md`, its file-header rules when it has them (fields filled in, not left from the template), and the README of the folder (for example `cyphal/` in the FBL depends on nothing else in its repository);
-   - correctness in the language: for C++, types and integral promotion, `const`, object lifetime, what is evaluated at compile time and what is not, undefined behaviour;
+   - correctness in the language: for C++, types and integral promotion, `const`, object lifetime, what is evaluated at compile time and what is not, undefined behaviour; for Yocto, assignment and override order, changes made in our layer and never in a fetched one, pinned versions, licences declared;
    - the embedded side, where it applies: no heap, no exceptions, size, `volatile` and registers.
 4. **Write the review** in the format below.
 5. **Update the ladder.** Set a concept to `seen` when the review explained it, and to `mastered` when Hedi used it right without help in this change. Commit and push it as described in *Where the skill's own changes go*, without asking: that is part of the review.
