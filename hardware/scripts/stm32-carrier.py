@@ -144,8 +144,8 @@ def hole(board, col, row):
 # are one column and the even pins the other: CN10's even pins are its outer row, CN7's odd pins are its.
 SOCKETS = [('A', 'g', 'CN10 even'), ('A', 'h', 'CN10 odd'), ('B', 'i', 'CN7 even'), ('B', 'j', 'CN7 odd')]
 # The NUCLEO pins the carrier uses, by header and pin (UM3121 Table 17), and the net each one is on.
-# FDCAN2 on PB12 / PB13, I2C1 on PB6 / PB7, TIM1_CH1 on PA8: the alternate functions are to check against
-# the STM32H533 datasheet (DS14539) before soldering. E5V takes the 5 V in with JP5 on [5-6].
+# FDCAN2 on PB12 / PB13 (AF9), I2C1 on PB6 / PB7 (AF4), TIM1_CH1 on PA8 (AF1): checked against the STM32H533
+# datasheet, DS14539 Rev 3, March 2026. E5V takes the 5 V in with JP5 on [5-6].
 NUC_PINS = {('CN10', 3): ('PB6', 'SCL'), ('CN10', 5): ('PB7', 'SDA'), ('CN10', 9): ('GND', 'GND'),
             ('CN10', 16): ('PB12', 'CRX'), ('CN10', 20): ('GND', 'GND'), ('CN10', 23): ('PA8', 'PWM_MCU'),
             ('CN10', 30): ('PB13', 'CTX'), ('CN7', 6): ('E5V', '5V'), ('CN7', 8): ('GND', 'GND'),
@@ -973,7 +973,7 @@ if __name__ == "__main__":
         nx += 350
 
     w(f'<line x1="40" y1="{H - 48}" x2="{W - 40}" y2="{H - 48}" stroke="#e2e8f0"/>')
-    text(40, H - 32, 'Geometry: UM3121 Fig. 7 (board 70 × 82.5, outer rows 63.50 apart, 3.25 in from each edge, row 1 31.70 from the CN1 edge) · Pins: UM3121 Table 17 · AFs to check in DS14539 before soldering', 8.4, '#94a3b8')
+    text(40, H - 32, 'Geometry: UM3121 Fig. 7 (board 70 × 82.5, outer rows 63.50 apart, 3.25 in from each edge, row 1 31.70 from the CN1 edge) · Pins: UM3121 Table 17 · AFs: DS14539 Rev 3 (PB12 / PB13 AF9, PB6 / PB7 AF4, PA8 AF1)', 8.4, '#94a3b8')
     text(40, H - 18, 'Decisions: MEC-08 (carrier) · MEC-15 (kit boards) · HW-19 (5 V split board, selectable termination) · HW-06 · HW-09 · HW-11 · HW-18 · SVG is the master - PDFs are generated once the design is frozen.', 8.4, '#94a3b8')
     w('</svg>')
 

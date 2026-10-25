@@ -3249,6 +3249,6 @@
 <text x="740.0" y="1230.5" font-size="8.8" fill="#475569">CN7-5 VDD. 5 V enters on E5V, so the ST-LINK USB alone does not</text>
 <text x="740.0" y="1243.0" font-size="8.8" fill="#475569">power the MCU: LOGIC on first, then the USB. R4 guards PA8.</text>
 <line x1="40" y1="1352" x2="1680" y2="1352" stroke="#e2e8f0"/>
-<text x="40.0" y="1368.0" font-size="8.4" fill="#94a3b8">Geometry: UM3121 Fig. 7 (board 70 × 82.5, outer rows 63.50 apart, 3.25 in from each edge, row 1 31.70 from the CN1 edge) · Pins: UM3121 Table 17 · AFs to check in DS14539 before soldering</text>
+<text x="40.0" y="1368.0" font-size="8.4" fill="#94a3b8">Geometry: UM3121 Fig. 7 (board 70 × 82.5, outer rows 63.50 apart, 3.25 in from each edge, row 1 31.70 from the CN1 edge) · Pins: UM3121 Table 17 · AFs: DS14539 Rev 3 (PB12 / PB13 AF9, PB6 / PB7 AF4, PA8 AF1)</text>
 <text x="40.0" y="1382.0" font-size="8.4" fill="#94a3b8">Decisions: MEC-08 (carrier) · MEC-15 (kit boards) · HW-19 (5 V split board, selectable termination) · HW-06 · HW-09 · HW-11 · HW-18 · SVG is the master - PDFs are generated once the design is frozen.</text>
 </svg>
