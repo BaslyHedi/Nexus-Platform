@@ -168,31 +168,31 @@ TERMS = [
     ('B', [('q', 8, '+6V'), ('q', 10, 'GND')], '+Y', '6V IN', '#d97706'),
     ('B', [('q', 13, '+5V'), ('q', 15, 'GND')], '+Y', '5V IN', '#dc2626'),
 ]
-# male headers: board, [(col,row,label)], name, all with their pins across the board on one row. SERVO is a
-# straight header on top. The two I2C headers are 90 degree headers fitted UNDER A, pointing forward: the plug
-# lies in the 8 mm gap over the tray and its lead leaves by A's front edge, down through the tray window
-# (MEC-17). Each is in the order of the module it takes, so a straight lead is right: the INA226 is VCC SDA
-# SCL GND, the motor module's IIC port SCL SDA GND 5V (its 5 V, an output, lands on a pin with no wire), the
-# LD-1501MG black, red, white (HW-21).
+# male headers: board, [(col,row,label)], name, all on top (the solder side carries wires only), pins across the
+# board on one row. SERVO is a straight header. The two I2C headers are 90 degree headers on A's inner columns,
+# along the gap to B, pointing forward: the plug lies flat on A under the Nucleo (about 3 mm against 9) and its lead
+# leaves by A's front edge, down through the tray window (MEC-17). Each is in the order of the module it takes, so a
+# straight lead is right: the INA226 is VCC SDA SCL GND, the motor module's IIC port SCL SDA GND 5V (its 5 V, an
+# output, lands on a pin with no wire), the LD-1501MG black, red, white (HW-21).
 MALE = [
     ('B', [('o', 23, 'GND'), ('n', 23, '+6V'), ('m', 23, 'SIG')], 'SERVO'),
     ('A', [('j', 20, 'SCL'), ('k', 20, 'SDA'), ('l', 20, 'GND'), ('m', 20, 'NC')], 'I2C-B'),
     ('A', [('r', 20, '3V3'), ('q', 20, 'SDA'), ('p', 20, 'SCL'), ('o', 20, 'GND')], 'I2C-A'),
 ]
-UNDER = {'I2C-B', 'I2C-A'}                   # fitted on the solder side
+ANGLED = {'I2C-B', 'I2C-A'}                  # 90 degree headers, plug lying forward on the board
 
 
 def header_boxes(b, pins, name):
     """A male header as 3D boxes (X0, X1, Y0, Y1, Z0, Z1, material), Z up from the board's top face (its underside
-    is at -1.6). Straight on top: the spacer and the pin. 90 degrees UNDER the board: the leg comes down through the
-    hole, bends and points forward (-X) inside the spacer, and the plug goes on there."""
+    is at -1.6). Straight: the spacer and the pin. 90 degrees: the leg rises from the hole, bends and points forward
+    (-X) through the spacer, which stands just ahead of the hole, and the plug goes on there."""
     out = []
     for c, r, _ in pins:
         X, Y = hole(b, ci(c), r)
-        if name in UNDER:
-            zc = -1.6 - 1.27
-            out += [(X - 3.8, X - 1.27, Y - 1.27, Y + 1.27, -1.6 - 2.54, -1.6, 'black'),
-                    (X - 0.32, X + 0.32, Y - 0.32, Y + 0.32, zc - 0.32, 0.8, 'gold'),
+        if name in ANGLED:
+            zc = 1.27
+            out += [(X - 3.8, X - 1.27, Y - 1.27, Y + 1.27, 0, 2.54, 'black'),
+                    (X - 0.32, X + 0.32, Y - 0.32, Y + 0.32, -3.0, zc + 0.32, 'gold'),
                     (X - 9.8, X + 0.32, Y - 0.32, Y + 0.32, zc - 0.32, zc + 0.32, 'gold')]
         else:
             out += [(X - 1.27, X + 1.27, Y - 1.27, Y + 1.27, 0, 2.5, 'black'),
@@ -414,20 +414,16 @@ def draw_male(v, b, pins, name, top=True):
     X0, X1 = HX(b, max(rs)) - 1.27, HX(b, min(rs)) + 1.27
     Y0 = cy(b, min(cs)) - 1.27
     Y1 = cy(b, max(cs)) + 1.27
-    under = name in UNDER
-    if top and not under:
+    angled = name in ANGLED
+    if top and not angled:
         v.rect(X0, X1, Y0, Y1, rx=0.8, fill='#334155', stroke='#0f172a', stroke_width=0.8)
-    if top and under:                       # seen through the board: where it is, nothing to solder here but its pins
-        v.rect(X0, X1, Y0, Y1, rx=0.8, fill='none', stroke='#7c3aed', stroke_width=1, stroke_dasharray='3 2')
-    if not top and under:                   # its body on the pin row, then the plug lying forward in the 8 mm gap
+    if top and angled:                      # the spacer just ahead of the pins, then the plug lying forward on the board
         v.rect(X1 - PLUG, X0, Y0 + 0.3, Y1 - 0.3, rx=1, fill='#ede9fe', fill_opacity='0.75', stroke='#7c3aed',
                stroke_width=0.9, stroke_dasharray='4 2')
         v.rect(X0 - 2.5, X1, Y0, Y1, rx=0.8, fill='#334155', stroke='#0f172a', stroke_width=0.8)
     for (col, r, lab) in pins:
         x, y = hp(v, b, ci(col), r)
-        if top and not under:
-            w(f'<rect x="{x - 1.6:.1f}" y="{y - 1.6:.1f}" width="3.2" height="3.2" fill="#fbbf24"/>')
-        elif not top and under:
+        if top:
             w(f'<rect x="{x - 1.4:.1f}" y="{y - 1.4:.1f}" width="2.8" height="2.8" fill="#fbbf24"/>')
         else:
             w(f'<circle cx="{x:.1f}" cy="{y:.1f}" r="3.2" fill="#e2e8f0" stroke="#334155" stroke-width="1.1"/>')
@@ -575,7 +571,7 @@ def carrier_labels_top(v, boxes):
         label(v, X0 - 0.6, Y + 0.7, t, colr, 6, anchor='end')      # the LD-1501MG lead, HW-21
     for b, pins, name in MALE[1:]:
         X0, X1, Y0, Y1 = boxes[name]
-        label(v, X0 - 0.6, (Y0 + Y1) / 2 + 0.7, name + ' under', '#7c3aed', 6.5, anchor='end')
+        label(v, X1 - PLUG / 2 - 1.3, (Y0 + Y1) / 2 + 0.7, name, '#7c3aed', 6.5)
     X0, X1, Y0, Y1 = boxes['CAN']
     label(v, (X0 + X1) / 2, Y1 + 2.8, 'CAN  H · L · GND', '#1d4ed8', 7)
     label(v, HX('B', 19), cy('B', 16) + 1.2, 'C2 470µF', '#a16207', 7, anchor='start')
@@ -928,9 +924,9 @@ if __name__ == "__main__":
         (None, 'C D+ / D−', 'white, blue, green and yellow (D−, D+, CC1, CC2) cut short, each insulated on its own - never twisted together'),
         (None, 'B 6V IN', 'UBEC 6 V out, 18 AWG pair (HW-14)'),
         (None, 'B SERVO', f"straight header on top, across B: LD-1501MG black {N('B', *[(c, r) for c, r, l in MALE[0][1] if l == 'GND'][0])}, red, white inboard (HW-21)"),
-        (None, 'A I2C-A', 'under A, pointing forward: INA226 VCC, SDA, SCL, GND - its own order, a straight 4-way lead'),
-        (None, 'A I2C-B', 'under A, pointing forward: motor module SCL, SDA, GND, 5V - its own order; pin 4 has no wire'),
-        (None, 'I2C leads', 'plugged before the boards go on the tray; they leave A\'s front edge in the 8 mm gap and drop through the window'),
+        (None, 'A I2C-A', '90° on A by the gap, pointing forward: INA226 VCC, SDA, SCL, GND - its own order, a straight 4-way lead'),
+        (None, 'A I2C-B', '90° on A by the gap, pointing forward: motor module SCL, SDA, GND, 5V - its own order; pin 4 has no wire'),
+        (None, 'I2C leads', 'plugged before the Nucleo goes on; they leave A\'s front edge under it and drop through the tray window'),
         (None, 'A CAN', 'twisted H, L + GND to DE-9 stub and FRDM J7 (HW-09, HW-18); the module\'s 120 Ω terminates this end'),
         (None, 'CN1', 'ST-LINK USB-C: a 90° USB-C plug to the fascia Mini-B extension (5.10); a straight plug meets the FRDM USB-C port body'),
     ]
@@ -969,8 +965,8 @@ if __name__ == "__main__":
         '5  The kit terminals may be 5.0 mm, not 5.08: the 3p CAN block spans 10.0 vs 10.16 mm of holes. Push it in; do not drill.',
         f"6  Before the Nucleo goes in: 5 V to GND not shorted · 6 V isolated from 5 V and 3V3 · 5 V on {N(*nuc_hole('CN7', 6))} (E5V) only, nothing on {silk(*nuc_hole('CN7', 18))} (5V) or {silk(*nuc_hole('CN7', 5))} (VDD) · JP5 on [5-6].",
         '7  Fixings: nothing is drilled. Fit an 8 mm nylon standoff with a screw in each corner hole of A, B and C; the tray (MEC-17) takes the',
-        '    boards from below. No wire may pass under a standoff, nor in front of an I2C header under A, where its plug lies (violet).',
-        '8  The two I2C headers are 90° headers fitted from UNDER A, soldered on top, pins pointing forward. Plug both leads before A goes on the tray.',
+        '    boards from below. No wire may pass under a standoff. Nothing is fitted on the solder side: it carries wires only.',
+        '8  The two I2C headers are 90° headers on A along the gap, pins pointing forward; nothing may stand where their plugs lie (violet). Plug both before the Nucleo.',
     ]
     yy = NY + 26
     for c in checks:

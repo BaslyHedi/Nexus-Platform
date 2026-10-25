@@ -75,7 +75,7 @@ CAPTIONS = [
     ((11, 19.4), "3  Turn the stack over and solder the sockets - tack the four corners, check, then the rest"),
     ((19.4, 21.6), "   Lift the Nucleo off"),
     ((21.6, 24.6), "4  Screw terminals: CAN (3p) on A, 6V IN and 5V IN on B"),
-    ((24.6, 27.4), "5  SERVO on top of B; I2C-B and I2C-A are 90 degree headers fitted from UNDER A, pointing forward"),
+    ((24.6, 27.4), "5  SERVO on B; I2C-B and I2C-A are 90 degree headers on A along the gap, pointing forward"),
     ((27.4, 30.2), "6  R4 1k in the servo PWM, C2 470 uF across the servo supply, both on B"),
     ((30.2, 32), "7  A 1x4 and a 1x2 socket on A for the SN65HVD230 module"),
     ((32, 37.2), "8  Turn it over: solder every part pin"),
@@ -382,12 +382,12 @@ for b, pins, entry, name, colr in C.TERMS:
     terminal('term-' + name, xy, len({r for _, r, _ in pins}) > 1, entry, car, PARTS_T[name])
 
 # ---- male headers
-for b, pins, name in C.MALE:                               # straight on top, or 90 degrees under the board
+for b, pins, name in C.MALE:                               # straight, or 90 degrees with the plug lying forward
     m = Mesh()
     for bx_ in C.header_boxes(b, pins, name):
         m.box(*bx_)
     PART_PINS.extend(hole(b, C.ci(c), r) for c, r, _ in pins)
-    drop(m.make('header-' + name, car), PARTS_T[name], -40 if name in C.UNDER else 40)
+    drop(m.make('header-' + name, car), PARTS_T[name], 40)
 
 
 # ---- resistors, lying flat

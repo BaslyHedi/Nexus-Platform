@@ -1029,19 +1029,21 @@
 <circle cx="236.8" cy="609.7" r="2.9" fill="#fff" stroke="#dc2626" stroke-width="1.4"/>
 <circle cx="213.5" cy="609.7" r="2.9" fill="#fff" stroke="#dc2626" stroke-width="1.4"/>
 <rect x="114.2" y="557.1" width="11.7" height="35.1" rx="0.8" fill="#334155" stroke="#0f172a" stroke-width="0.8"/>
-<rect x="118.4" y="584.7" width="3.2" height="3.2" fill="#fbbf24"/>
-<rect x="118.4" y="573.0" width="3.2" height="3.2" fill="#fbbf24"/>
-<rect x="118.4" y="561.3" width="3.2" height="3.2" fill="#fbbf24"/>
-<rect x="137.5" y="265.0" width="11.7" height="46.7" rx="0.8" fill="none" stroke="#7c3aed" stroke-width="1" stroke-dasharray="3 2"/>
-<circle cx="143.4" cy="270.8" r="3.2" fill="#e2e8f0" stroke="#334155" stroke-width="1.1"/>
-<circle cx="143.4" cy="282.5" r="3.2" fill="#e2e8f0" stroke="#334155" stroke-width="1.1"/>
-<circle cx="143.4" cy="294.2" r="3.2" fill="#e2e8f0" stroke="#334155" stroke-width="1.1"/>
-<circle cx="143.4" cy="305.9" r="3.2" fill="#e2e8f0" stroke="#334155" stroke-width="1.1"/>
-<rect x="137.5" y="323.4" width="11.7" height="46.7" rx="0.8" fill="none" stroke="#7c3aed" stroke-width="1" stroke-dasharray="3 2"/>
-<circle cx="143.4" cy="364.3" r="3.2" fill="#e2e8f0" stroke="#334155" stroke-width="1.1"/>
-<circle cx="143.4" cy="352.6" r="3.2" fill="#e2e8f0" stroke="#334155" stroke-width="1.1"/>
-<circle cx="143.4" cy="340.9" r="3.2" fill="#e2e8f0" stroke="#334155" stroke-width="1.1"/>
-<circle cx="143.4" cy="329.3" r="3.2" fill="#e2e8f0" stroke="#334155" stroke-width="1.1"/>
+<rect x="118.6" y="584.9" width="2.8" height="2.8" fill="#fbbf24"/>
+<rect x="118.6" y="573.2" width="2.8" height="2.8" fill="#fbbf24"/>
+<rect x="118.6" y="561.5" width="2.8" height="2.8" fill="#fbbf24"/>
+<rect x="73.3" y="266.4" width="64.2" height="44.0" rx="1" fill="#ede9fe" fill-opacity="0.75" stroke="#7c3aed" stroke-width="0.9" stroke-dasharray="4 2"/>
+<rect x="126.0" y="265.0" width="23.2" height="46.7" rx="0.8" fill="#334155" stroke="#0f172a" stroke-width="0.8"/>
+<rect x="142.0" y="269.4" width="2.8" height="2.8" fill="#fbbf24"/>
+<rect x="142.0" y="281.1" width="2.8" height="2.8" fill="#fbbf24"/>
+<rect x="142.0" y="292.8" width="2.8" height="2.8" fill="#fbbf24"/>
+<rect x="142.0" y="304.5" width="2.8" height="2.8" fill="#fbbf24"/>
+<rect x="73.3" y="324.8" width="64.2" height="44.0" rx="1" fill="#ede9fe" fill-opacity="0.75" stroke="#7c3aed" stroke-width="0.9" stroke-dasharray="4 2"/>
+<rect x="126.0" y="323.4" width="23.2" height="46.7" rx="0.8" fill="#334155" stroke="#0f172a" stroke-width="0.8"/>
+<rect x="142.0" y="362.9" width="2.8" height="2.8" fill="#fbbf24"/>
+<rect x="142.0" y="351.2" width="2.8" height="2.8" fill="#fbbf24"/>
+<rect x="142.0" y="339.5" width="2.8" height="2.8" fill="#fbbf24"/>
+<rect x="142.0" y="327.9" width="2.8" height="2.8" fill="#fbbf24"/>
 <line x1="166.7" y1="539.6" x2="120.0" y2="539.6" stroke="#94a3b8" stroke-width="1.4"/>
 <rect x="130.4" y="535.1" width="26" height="9" rx="3" fill="#bfdbfe" stroke="#1e40af" stroke-width="1"/>
 <circle cx="166.7" cy="539.6" r="2.6" fill="#fff" stroke="#1e40af" stroke-width="1.1"/>
@@ -1112,8 +1114,8 @@
 <text x="111.4" y="589.5" font-size="6" fill="#111827" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="end">blk</text>
 <text x="111.4" y="577.8" font-size="6" fill="#dc2626" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="end">red</text>
 <text x="111.4" y="566.2" font-size="6" fill="#64748b" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="end">wht</text>
-<text x="134.8" y="291.6" font-size="6.5" fill="#7c3aed" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="end">I2C-B under</text>
-<text x="134.8" y="350.0" font-size="6.5" fill="#7c3aed" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="end">I2C-A under</text>
+<text x="105.3" y="291.6" font-size="6.5" fill="#7c3aed" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="middle">I2C-B</text>
+<text x="105.3" y="350.0" font-size="6.5" fill="#7c3aed" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="middle">I2C-A</text>
 <text x="131.7" y="207.7" font-size="7" fill="#1d4ed8" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="middle">CAN  H · L · GND</text>
 <text x="166.7" y="603.5" font-size="7" fill="#a16207" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="start">C2 470µF</text>
 <text x="112.6" y="543.7" font-size="7" fill="#1e40af" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="end">R4 1k</text>
@@ -2159,18 +2161,14 @@
 <circle cx="640.0" cy="200.7" r="3.2" fill="#e2e8f0" stroke="#334155" stroke-width="1.1"/>
 <circle cx="640.0" cy="212.4" r="3.2" fill="#e2e8f0" stroke="#334155" stroke-width="1.1"/>
 <circle cx="640.0" cy="224.1" r="3.2" fill="#e2e8f0" stroke="#334155" stroke-width="1.1"/>
-<rect x="593.3" y="476.7" width="64.2" height="44.0" rx="1" fill="#ede9fe" fill-opacity="0.75" stroke="#7c3aed" stroke-width="0.9" stroke-dasharray="4 2"/>
-<rect x="646.0" y="475.3" width="23.2" height="46.7" rx="0.8" fill="#334155" stroke="#0f172a" stroke-width="0.8"/>
-<rect x="662.0" y="514.8" width="2.8" height="2.8" fill="#fbbf24"/>
-<rect x="662.0" y="503.1" width="2.8" height="2.8" fill="#fbbf24"/>
-<rect x="662.0" y="491.4" width="2.8" height="2.8" fill="#fbbf24"/>
-<rect x="662.0" y="479.8" width="2.8" height="2.8" fill="#fbbf24"/>
-<rect x="593.3" y="418.3" width="64.2" height="44.0" rx="1" fill="#ede9fe" fill-opacity="0.75" stroke="#7c3aed" stroke-width="0.9" stroke-dasharray="4 2"/>
-<rect x="646.0" y="416.9" width="23.2" height="46.7" rx="0.8" fill="#334155" stroke="#0f172a" stroke-width="0.8"/>
-<rect x="662.0" y="421.3" width="2.8" height="2.8" fill="#fbbf24"/>
-<rect x="662.0" y="433.0" width="2.8" height="2.8" fill="#fbbf24"/>
-<rect x="662.0" y="444.7" width="2.8" height="2.8" fill="#fbbf24"/>
-<rect x="662.0" y="456.4" width="2.8" height="2.8" fill="#fbbf24"/>
+<circle cx="663.4" cy="516.2" r="3.2" fill="#e2e8f0" stroke="#334155" stroke-width="1.1"/>
+<circle cx="663.4" cy="504.5" r="3.2" fill="#e2e8f0" stroke="#334155" stroke-width="1.1"/>
+<circle cx="663.4" cy="492.8" r="3.2" fill="#e2e8f0" stroke="#334155" stroke-width="1.1"/>
+<circle cx="663.4" cy="481.2" r="3.2" fill="#e2e8f0" stroke="#334155" stroke-width="1.1"/>
+<circle cx="663.4" cy="422.7" r="3.2" fill="#e2e8f0" stroke="#334155" stroke-width="1.1"/>
+<circle cx="663.4" cy="434.4" r="3.2" fill="#e2e8f0" stroke="#334155" stroke-width="1.1"/>
+<circle cx="663.4" cy="446.1" r="3.2" fill="#e2e8f0" stroke="#334155" stroke-width="1.1"/>
+<circle cx="663.4" cy="457.8" r="3.2" fill="#e2e8f0" stroke="#334155" stroke-width="1.1"/>
 <circle cx="686.7" cy="247.5" r="2.6" fill="#e2e8f0" stroke="#1e40af" stroke-width="1.1"/>
 <circle cx="640.0" cy="247.5" r="2.6" fill="#e2e8f0" stroke="#1e40af" stroke-width="1.1"/>
 <circle cx="698.4" cy="212.4" r="2.8" fill="#e2e8f0" stroke="#a16207" stroke-width="1.2"/>
@@ -3106,13 +3104,13 @@
 <text x="1226.0" y="608.0" font-size="7.9" fill="#475569">straight header on top, across B: LD-1501MG black B·B4, red, white inboard (HW-21)</text>
 <rect x="1130" y="614" width="550" height="19" fill="#ffffff" stroke="#e2e8f0"/>
 <text x="1142.0" y="627.0" font-size="8.4" fill="#1e293b" font-weight="700">A I2C-A</text>
-<text x="1226.0" y="627.0" font-size="7.9" fill="#475569">under A, pointing forward: INA226 VCC, SDA, SCL, GND - its own order, a straight 4-way lead</text>
+<text x="1226.0" y="627.0" font-size="7.9" fill="#475569">90° on A by the gap, pointing forward: INA226 VCC, SDA, SCL, GND - its own order, a straight 4-way lead</text>
 <rect x="1130" y="633" width="550" height="19" fill="#f8fafc" stroke="#e2e8f0"/>
 <text x="1142.0" y="646.0" font-size="8.4" fill="#1e293b" font-weight="700">A I2C-B</text>
-<text x="1226.0" y="646.0" font-size="7.9" fill="#475569">under A, pointing forward: motor module SCL, SDA, GND, 5V - its own order; pin 4 has no wire</text>
+<text x="1226.0" y="646.0" font-size="7.9" fill="#475569">90° on A by the gap, pointing forward: motor module SCL, SDA, GND, 5V - its own order; pin 4 has no wire</text>
 <rect x="1130" y="652" width="550" height="19" fill="#ffffff" stroke="#e2e8f0"/>
 <text x="1142.0" y="665.0" font-size="8.4" fill="#1e293b" font-weight="700">I2C leads</text>
-<text x="1226.0" y="665.0" font-size="7.9" fill="#475569">plugged before the boards go on the tray; they leave A's front edge in the 8 mm gap and drop through the window</text>
+<text x="1226.0" y="665.0" font-size="7.9" fill="#475569">plugged before the Nucleo goes on; they leave A's front edge under it and drop through the tray window</text>
 <rect x="1130" y="671" width="550" height="19" fill="#f8fafc" stroke="#e2e8f0"/>
 <text x="1142.0" y="684.0" font-size="8.4" fill="#1e293b" font-weight="700">A CAN</text>
 <text x="1226.0" y="684.0" font-size="7.9" fill="#475569">twisted H, L + GND to DE-9 stub and FRDM J7 (HW-09, HW-18); the module's 120 Ω terminates this end</text>
@@ -3204,8 +3202,8 @@
 <text x="40.0" y="1101.0" font-size="9" fill="#475569">5  The kit terminals may be 5.0 mm, not 5.08: the 3p CAN block spans 10.0 vs 10.16 mm of holes. Push it in; do not drill.</text>
 <text x="40.0" y="1116.0" font-size="9" fill="#475569">6  Before the Nucleo goes in: 5 V to GND not shorted · 6 V isolated from 5 V and 3V3 · 5 V on B·Q10 (E5V) only, nothing on K10 (5V) or Q9 (VDD) · JP5 on [5-6].</text>
 <text x="40.0" y="1131.0" font-size="9" fill="#475569">7  Fixings: nothing is drilled. Fit an 8 mm nylon standoff with a screw in each corner hole of A, B and C; the tray (MEC-17) takes the</text>
-<text x="40.0" y="1146.0" font-size="9" fill="#475569">    boards from below. No wire may pass under a standoff, nor in front of an I2C header under A, where its plug lies (violet).</text>
-<text x="40.0" y="1161.0" font-size="9" fill="#475569">8  The two I2C headers are 90° headers fitted from UNDER A, soldered on top, pins pointing forward. Plug both leads before A goes on the tray.</text>
+<text x="40.0" y="1146.0" font-size="9" fill="#475569">    boards from below. No wire may pass under a standoff. Nothing is fitted on the solder side: it carries wires only.</text>
+<text x="40.0" y="1161.0" font-size="9" fill="#475569">8  The two I2C headers are 90° headers on A along the gap, pins pointing forward; nothing may stand where their plugs lie (violet). Plug both before the Nucleo.</text>
 <text x="40.0" y="1194.0" font-size="9.3" fill="#1e293b" font-weight="700">Why A and B split this way</text>
 <text x="40.0" y="1208.0" font-size="8.8" fill="#475569">New boards on the same tray holes (MEC-17). Every CAN pin is on</text>
 <text x="40.0" y="1220.5" font-size="8.8" fill="#475569">CN10 and every supply pin on CN7, so A takes CAN and I2C and B the</text>

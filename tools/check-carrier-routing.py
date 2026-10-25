@@ -163,24 +163,17 @@ for (i, bi, a1, b1), (j, bj, a2, b2) in itertools.combinations(S, 2):
     t = sorted(((p[0] - a1[0]) * v1[0] + (p[1] - a1[1]) * v1[1]) / L for p in (a2, b2))
     if min(L, t[1]) - max(0, t[0]) > 0.05:
         err.append(f"overlap: wire {i} {wires[i][0]} {a1}-{b1} and wire {j} {wires[j][0]} {a2}-{b2} on {bi}")
-# 4. a 90 degree header under a board (C.UNDER) points forward: its plug lies on the solder side in front of the pins,
-#    from just ahead of the pin row to past the board's front edge, so no wire may run there
+# 4. a 90 degree header (C.ANGLED) points forward on top: its plug lies flat on the board in front of the pins, from
+#    just ahead of the pin row to past the board's front edge, so no part may stand there (every part has a pad)
 for b, ps, name in C.MALE:
-    if name not in C.UNDER:
+    if name not in C.ANGLED:
         continue
     cols = [ci(c) for c, r, l in ps]
     r0 = ps[0][1] + 0.3
     c0, c1 = min(cols) - 0.5, max(cols) + 0.5
-    for i, (net, pts, kind) in enumerate(wires):
-        for bd, a, b_ in segs(pts):
-            if bd != b:
-                continue
-            for t in range(21):
-                x = a[0] + (b_[0] - a[0]) * t / 20
-                y = a[1] + (b_[1] - a[1]) * t / 20
-                if c0 < x < c1 and y > r0:
-                    err.append(f'wire {i} {net}: runs where the {name} plug lies, at ({x:.1f}, {y:.1f}) on {b}')
-                    break
+    for (bd, c, r), net in PAD.items():
+        if bd == b and c0 < c < c1 and r > r0:
+            err.append(f'{C.N(bd, c, r)} ({net}) stands where the {name} plug lies')
 print('\n'.join(err) if err else 'routing OK')
 print(len(wires), 'wires,', sum(1 for w in wires if w[2] == 'pwr'), 'in 18 AWG,',
       sum(1 for w in wires if w[2] == 'lead'), 'bent leads')

@@ -246,7 +246,7 @@ def build_ab(parent, z):
         xy = [hole(b, C.ci(c), r) for c, r, _ in ps]
         terminal('term-' + name, xy, len({r for _, r, _ in ps}) > 1, entry, car, AB)
         pins += xy
-    for b, ps, name in C.MALE:                              # straight on top, or 90 degrees under the board
+    for b, ps, name in C.MALE:                              # straight, or 90 degrees with the plug lying forward
         m = Mesh(AB)
         for bx_ in C.header_boxes(b, ps, name):
             m.box(*bx_)
