@@ -23,7 +23,7 @@ Yocto is learned more by setting up and deciding than by writing code, so a sess
 
 | Concept | Status |
 |---|---|
-| Assignment: `=`, `:=`, `?=`, `??=`, `+=` and `.=`, and when each is evaluated | new |
+| Assignment: `=`, `:=`, `?=`, `??=`, `+=` and `.=`, and when each is evaluated | seen |
 | Overrides: `:append`, `:remove`, machine overrides such as `:mx91` | new |
 | Inline Python `${@...}` and `bb.utils.contains` | new |
 | Variable flags, such as `UBOOT_CONFIG[nand]` | new |
