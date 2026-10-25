@@ -28,9 +28,9 @@ for hdr in ('CN10', 'CN7'):                   # the four 1x19 sockets: every mor
 NUC = {f'{h}-{p}': net for (h, p), (_, net) in C.NUC_PINS.items()}
 for k, v in list(PAD.items()):
     PAD[k] = NUC.get(v, v)
-for col, row, net in [('c', 1, '6V'), ('c', 3, 'GND'), ('c', 8, 'GND'), ('c', 10, '6V'), ('c', 12, 'GND'),
-                      ('c', 13, '6V'), ('c', 14, 'PWM_SRV'), ('c', 16, 'GND'), ('c', 17, 'SCL'), ('c', 18, 'SDA'),
-                      ('c', 20, 'GND'), ('c', 21, '3V3'), ('c', 22, 'SCL'), ('c', 23, 'SDA'),
+for col, row, net in [('c', 22, '6V'), ('c', 24, 'GND'), ('c', 17, 'GND'), ('c', 19, '6V'), ('c', 12, 'GND'),
+                      ('c', 13, '6V'), ('c', 14, 'PWM_SRV'), ('c', 7, 'SCL'), ('c', 8, 'SDA'), ('c', 9, 'GND'), ('c', 10, 'NC'),
+                      ('c', 2, '3V3'), ('c', 3, 'SDA'), ('c', 4, 'SCL'), ('c', 5, 'GND'),
                       ('e', 12, 'PWM_SRV'), ('e', 16, 'PWM_MCU')]:
     put('A', col, row, net)
 for col, row, net in [('m', 1, 'CANH'), ('o', 1, 'CANL'), ('q', 1, 'GND'), ('q', 21, '5V'), ('q', 23, 'GND'),

@@ -81,7 +81,7 @@ CAPTIONS = [
     ((32, 37.2), "8  Turn it over: solder every part pin"),
     ((37.2, 43.2), "9  The servo loop in 18 AWG, outboard on A: 6V IN to C2 to SERVO, on + and on GND"),
     ((43.2, 51.4), "10  22 AWG, pad to pad: the GND chain, 5 V, 3V3, servo PWM, I2C, CAN TX / RX, CAN H / L, TERM"),
-    ((51.4, 56), f"11  Three bridges: CN7-16 3V3 to I2C-A VCC ({C.N('A', 'c', 21)}), PB13 and PB12 to the module; A's GND is CN10-9"),
+    ((51.4, 56), f"11  Three bridges: CN7-16 3V3 to I2C-A VCC ({C.N('A', 'c', 2)}), PB13 and PB12 to the module; A's GND is CN10-9"),
     ((56, 58.8), "   Right way up again"),
     ((58.8, 62), f"12  Module in face down, CANH / CANL into {C.N('B', 'o', C.CAN_ROW)} / {C.silk('B', 'p', C.CAN_ROW)}, TERM jumper on"),
     ((62, 64), "    A nylon standoff and screw in each of the four corner holes of A and B"),
