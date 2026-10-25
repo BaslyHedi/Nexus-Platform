@@ -28,16 +28,18 @@ for hdr in ('CN10', 'CN7'):                   # the four 1x19 sockets: every mor
 NUC = {f'{h}-{p}': net for (h, p), (_, net) in C.NUC_PINS.items()}
 for k, v in list(PAD.items()):
     PAD[k] = NUC.get(v, v)
-for col, row, net in [('c', 22, '6V'), ('c', 24, 'GND'), ('c', 17, 'GND'), ('c', 19, '6V'), ('c', 12, 'GND'),
-                      ('c', 13, '6V'), ('c', 14, 'PWM_SRV'), ('c', 7, 'SCL'), ('c', 8, 'SDA'), ('c', 9, 'GND'), ('c', 10, 'NC'),
-                      ('c', 2, '3V3'), ('c', 3, 'SDA'), ('c', 4, 'SCL'), ('c', 5, 'GND'),
-                      ('e', 12, 'PWM_SRV'), ('e', 16, 'PWM_MCU')]:
-    put('A', col, row, net)
-for col, row, net in [('m', 1, 'CANH'), ('o', 1, 'CANL'), ('q', 1, 'GND'), ('q', 21, '5V'), ('q', 23, 'GND'),
-                      ('m', 22, 'CANL'), ('m', 23, 'TERM'), ('k', 19, 'CANH'), ('k', 23, 'TERM1'), ('k', 24, 'TERM1'), ('o', 24, 'TERM')]:
-    put('B', col, row, net)
+for b, ps, name in C.MALE:                    # the I2C and servo headers
+    for col, row, lab in ps:
+        put(b, col, row, {'SIG': 'PWM_SRV', '+6V': '6V'}.get(lab, lab))
+for b, ps, entry, name, colr in C.TERMS:      # the screw terminals
+    for col, row, lab in ps:
+        put(b, col, row, {'H': 'CANH', 'L': 'CANL', '+6V': '6V', '+5V': '5V'}.get(lab, lab))
+for b, a, c_, lab in C.RES:                   # R4: the MCU end, then the servo end
+    put(b, *a, 'PWM_MCU'); put(b, *c_, 'PWM_SRV')
+for b, mi, pl, lab in C.CAPS:
+    put(b, *mi, 'GND'); put(b, *pl, '6V')
 for col, row, net in C.XCVR_SOCKET[1] + C.CAN_SOCKET[1]:   # the module's two sockets
-    put('B', col, row, net)
+    put(C.XCVR_SOCKET[0], col, row, net)
 for col, row, net in [('a', 24, '5V'), ('c', 24, 'GND'), ('g', 24, '5V'), ('i', 24, 'GND'), ('a', 12, '5V'),
                       ('c', 12, 'GND'), ('a', 7, '5V'), ('c', 7, 'GND')]:
     put('C', col, row, net)
@@ -102,7 +104,8 @@ for k, v in PAD.items():
 for v, ks in disco.items():
     for k in ks[1:]:
         join(ks[0], k)
-join(('C', 7, 24), ('B', 17, 21)); join(('C', 9, 24), ('B', 17, 23))       # TO STM32 -> 5V IN
+_vin = next(ps for b, ps, e, name, c in C.TERMS if name == '5V IN')          # TO STM32 -> 5V IN, by the C-to-B pair
+join(('C', 7, 24), ('B', ci(_vin[0][0]), _vin[0][1])); join(('C', 9, 24), ('B', ci(_vin[1][0]), _vin[1][1]))
 groups = {}
 for k, v in PAD.items():
     groups.setdefault(f(k), set()).add(v)
@@ -160,6 +163,24 @@ for (i, bi, a1, b1), (j, bj, a2, b2) in itertools.combinations(S, 2):
     t = sorted(((p[0] - a1[0]) * v1[0] + (p[1] - a1[1]) * v1[1]) / L for p in (a2, b2))
     if min(L, t[1]) - max(0, t[0]) > 0.05:
         err.append(f"overlap: wire {i} {wires[i][0]} {a1}-{b1} and wire {j} {wires[j][0]} {a2}-{b2} on {bi}")
+# 4. a 90 degree header under a board (C.UNDER) points forward: its plug lies on the solder side in front of the pins,
+#    from just ahead of the pin row to past the board's front edge, so no wire may run there
+for b, ps, name in C.MALE:
+    if name not in C.UNDER:
+        continue
+    cols = [ci(c) for c, r, l in ps]
+    r0 = ps[0][1] + 0.3
+    c0, c1 = min(cols) - 0.5, max(cols) + 0.5
+    for i, (net, pts, kind) in enumerate(wires):
+        for bd, a, b_ in segs(pts):
+            if bd != b:
+                continue
+            for t in range(21):
+                x = a[0] + (b_[0] - a[0]) * t / 20
+                y = a[1] + (b_[1] - a[1]) * t / 20
+                if c0 < x < c1 and y > r0:
+                    err.append(f'wire {i} {net}: runs where the {name} plug lies, at ({x:.1f}, {y:.1f}) on {b}')
+                    break
 print('\n'.join(err) if err else 'routing OK')
 print(len(wires), 'wires,', sum(1 for w in wires if w[2] == 'pwr'), 'in 18 AWG,',
       sum(1 for w in wires if w[2] == 'lead'), 'bent leads')

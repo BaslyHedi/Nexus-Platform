@@ -49,15 +49,15 @@ FLIP1 = (11.0, 13.4)         # over for the socket joints
 TACK, SOCK_J = 13.9, 15.3
 FLIP1B = (17.0, 19.4)        # back
 NUC_OFF = (19.6, 21.2)
-PARTS_T = {'6V IN': 21.6, 'CAN': 22.4, '5V IN': 23.2, 'SERVO': 24.6, 'I2C-B': 25.1, 'I2C-A': 25.6,
-           'TERM': 26.3, 'R4 1k': 27.2, 'R3a 100R': 27.8, 'R3b 20R': 28.2, 'C2': 28.6, 'XCVR': 30.2}
+PARTS_T = {'CAN': 21.6, '6V IN': 22.4, '5V IN': 23.2, 'SERVO': 24.6, 'I2C-B': 25.4, 'I2C-A': 26.0,
+           'R4 1k': 27.4, 'C2': 28.4, 'XCVR': 30.2}
 FLIP2 = (32.0, 34.4)
 PART_J = 34.8
 SPINES = (37.2, 42.6)
 INSUL = (43.2, 50.6)
 BRIDGE = (51.4, 55.0)
 FLIP2B = (56.0, 58.4)
-MODULE, LINKS, JUMPER, STANDOFFS = 58.8, 60.0, 61.0, 62.0
+MODULE, LINKS, STANDOFFS = 58.8, 60.0, 62.0
 NUC_ON = (64.0, 66.6)
 C_PARTS = {'terms': 68.4, 'res': 69.2, 'cap': 69.8, 'screws': 70.5, 'socket': 71.1, 'pigtail': 71.6, 'ties': 72.1}
 C_FLIP = (72.8, 75.0)
@@ -74,16 +74,16 @@ CAPTIONS = [
     ((8.2, 11), "2  The Nucleo plugs in as the jig, A and B on the tray: it sets the 63.50 mm between the two headers"),
     ((11, 19.4), "3  Turn the stack over and solder the sockets - tack the four corners, check, then the rest"),
     ((19.4, 21.6), "   Lift the Nucleo off"),
-    ((21.6, 24.6), "4  Screw terminals: 6V IN on A, CAN (3p) and 5V IN on B"),
-    ((24.6, 27.2), "5  Male headers: SERVO, I2C-B and I2C-A on A, TERM on B"),
-    ((27.2, 30.2), "6  R4 1k in the servo PWM, R3a 100R + R3b 20R (120R) to TERM, C2 470 uF across the servo supply"),
-    ((30.2, 32), "7  A 1x4 and a 1x2 socket for the SN65HVD230 module"),
+    ((21.6, 24.6), "4  Screw terminals: CAN (3p) on A, 6V IN and 5V IN on B"),
+    ((24.6, 27.4), "5  SERVO on top of B; I2C-B and I2C-A are 90 degree headers fitted from UNDER A, pointing forward"),
+    ((27.4, 30.2), "6  R4 1k in the servo PWM, C2 470 uF across the servo supply, both on B"),
+    ((30.2, 32), "7  A 1x4 and a 1x2 socket on A for the SN65HVD230 module"),
     ((32, 37.2), "8  Turn it over: solder every part pin"),
-    ((37.2, 43.2), "9  The servo loop in 18 AWG, outboard on A: 6V IN to C2 to SERVO, on + and on GND"),
-    ((43.2, 51.4), "10  22 AWG, pad to pad: the GND chain, 5 V, 3V3, servo PWM, I2C, CAN TX / RX, CAN H / L, TERM"),
-    ((51.4, 56), f"11  Three bridges: CN7-16 3V3 to I2C-A VCC ({C.N('A', 'c', 2)}), PB13 and PB12 to the module; A's GND is CN10-9"),
+    ((37.2, 43.2), "9  The servo loop in 18 AWG on B: 6V IN to C2 to SERVO, on + and on GND"),
+    ((43.2, 51.4), "10  22 AWG, pad to pad: 5 V, GND, servo PWM from PA0, I2C, CAN TX / RX, CAN H / L"),
+    ((51.4, 56), f"11  One bridge: CN7-16 3V3 to I2C-A VCC ({C.N('A', 'r', 20)}); A's GND comes from CN10-9 and CN10-20"),
     ((56, 58.8), "   Right way up again"),
-    ((58.8, 62), f"12  Module in face down, CANH / CANL into {C.N('B', 'o', C.CAN_ROW)} / {C.silk('B', 'p', C.CAN_ROW)}, TERM jumper on"),
+    ((58.8, 62), f"12  Module in face down on A, CANH / CANL into {C.N('A', 'b', C.CAN_ROW)} / {C.silk('A', 'c', C.CAN_ROW)}; its own 120 R ends the bus"),
     ((62, 64), "    A nylon standoff and screw in each of the four corner holes of A and B"),
     ((64, 67.4), "13  The NUCLEO-H533RE drops onto the carrier, JP5 on [5-6] for E5V"),
     ((67.4, 70.5), "14  Board C, the 5 V split: IN 5V and TO STM32, C1 470 uF"),
@@ -382,14 +382,12 @@ for b, pins, entry, name, colr in C.TERMS:
     terminal('term-' + name, xy, len({r for _, r, _ in pins}) > 1, entry, car, PARTS_T[name])
 
 # ---- male headers
-for b, pins, name in C.MALE:
+for b, pins, name in C.MALE:                               # straight on top, or 90 degrees under the board
     m = Mesh()
-    for c, r, _ in pins:
-        x, y = hole(b, C.ci(c), r)
-        m.box(x - 1.27, x + 1.27, y - 1.27, y + 1.27, 0, 2.5, 'black')
-        m.box(x - 0.32, x + 0.32, y - 0.32, y + 0.32, -3.0, 8.5, 'gold')
-        PART_PINS.append((x, y))
-    drop(m.make('header-' + name, car), PARTS_T[name])
+    for bx_ in C.header_boxes(b, pins, name):
+        m.box(*bx_)
+    PART_PINS.extend(hole(b, C.ci(c), r) for c, r, _ in pins)
+    drop(m.make('header-' + name, car), PARTS_T[name], -40 if name in C.UNDER else 40)
 
 
 # ---- resistors, lying flat
@@ -479,21 +477,17 @@ ZB = 11.0                                 # underside of the module's board (its
 m = Mesh()
 m.box(X0, X1, Y0, Y1, ZB, ZB + 1.6, 'module')
 m.box(X0, X0 + 2.5, Y0 + 0.3, Y1 - 0.3, ZB - 2.5, ZB, 'black')          # header spacer, on the socket
-for x, y in [hole('B', C.ci(c), r) for c, r, _ in C.XCVR_SOCKET[1]]:
+for x, y in [hole(C.XCVR_SOCKET[0], C.ci(c), r) for c, r, _ in C.XCVR_SOCKET[1]]:
     m.box(x - 0.32, x + 0.32, y - 0.32, y + 0.32, 3.0, ZB, 'gold')
 mid = (X0 + X1) / 2
 yc = (Y0 + Y1) / 2
 m.box(mid - 4.5, mid - 0.5, yc - 2.5, yc + 2.5, ZB - 1.5, ZB, 'chip')
 tx0 = X1 - C.MODULE['terminal']
 m.box(tx0, X1, Y0 + 0.4, Y1 - 0.4, ZB - 9.5, ZB, 'mterm')                # hangs to ~1.5 mm off B
-for x, y in [hole('B', C.ci(c), r) for c, r, _ in C.CAN_SOCKET[1]]:      # the 2-pin CANH / CANL header,
+for x, y in [hole(C.CAN_SOCKET[0], C.ci(c), r) for c, r, _ in C.CAN_SOCKET[1]]:      # the 2-pin CANH / CANL header,
     m.box(x - 1.27, x + 1.27, y - 1.27, y + 1.27, ZB - 2.5, ZB, 'black')     # pointing down into its socket
     m.box(x - 0.32, x + 0.32, y - 0.32, y + 0.32, 3.0, ZB, 'gold')
 drop(m.make('module-sn65hvd230', car), MODULE, 25)
-x, y = hole('B', C.ci('m'), 22)              # TERM is m22 / m23, along X
-m = Mesh()
-m.box(C.RX(23) - 1.3, C.RX(22) + 1.3, y - 1.3, y + 1.3, 2.6, 8.8, 'jumper')
-drop(m.make('term-jumper', car), JUMPER, 15)
 
 m_so, m_sc = Mesh(), Mesh()
 CORNER_INSET = 2.5           # the kit boards' own four corner holes, as animate-carrier-tray.py (MEC-17)

@@ -246,13 +246,11 @@ def build_ab(parent, z):
         xy = [hole(b, C.ci(c), r) for c, r, _ in ps]
         terminal('term-' + name, xy, len({r for _, r, _ in ps}) > 1, entry, car, AB)
         pins += xy
-    for b, ps, name in C.MALE:
+    for b, ps, name in C.MALE:                              # straight on top, or 90 degrees under the board
         m = Mesh(AB)
-        for c, r, _ in ps:
-            x, y = hole(b, C.ci(c), r)
-            m.box(x - 1.27, x + 1.27, y - 1.27, y + 1.27, 0, 2.5, 'black')
-            m.box(x - 0.32, x + 0.32, y - 0.32, y + 0.32, -3.0, 8.5, 'gold')
-            pins.append((x, y))
+        for bx_ in C.header_boxes(b, ps, name):
+            m.box(*bx_)
+        pins += [hole(b, C.ci(c), r) for c, r, _ in ps]
         m.make('header-' + name, car)
     for b, a, c_, lab in C.RES:
         resistor('res-' + lab, hole(b, C.ci(a[0]), a[1]), hole(b, C.ci(c_[0]), c_[1]), car, AB)
@@ -272,19 +270,15 @@ def build_ab(parent, z):
     m = Mesh(AB)
     m.box(X0, X1, Y0, Y1, ZB, ZB + 1.6, 'module')
     m.box(X0, X0 + 2.5, Y0 + 0.3, Y1 - 0.3, ZB - 2.5, ZB, 'black')
-    for x, y in [hole('B', C.ci(c), r) for c, r, _ in C.XCVR_SOCKET[1]]:
+    for x, y in [hole(C.XCVR_SOCKET[0], C.ci(c), r) for c, r, _ in C.XCVR_SOCKET[1]]:
         m.box(x - 0.32, x + 0.32, y - 0.32, y + 0.32, 3.0, ZB, 'gold')
     mid, yc = (X0 + X1) / 2, (Y0 + Y1) / 2
     m.box(mid - 4.5, mid - 0.5, yc - 2.5, yc + 2.5, ZB - 1.5, ZB, 'chip')
     m.box(X1 - C.MODULE['terminal'], X1, Y0 + 0.4, Y1 - 0.4, ZB - 9.5, ZB, 'mterm')
-    for x, y in [hole('B', C.ci(c), r) for c, r, _ in C.CAN_SOCKET[1]]:
+    for x, y in [hole(C.CAN_SOCKET[0], C.ci(c), r) for c, r, _ in C.CAN_SOCKET[1]]:
         m.box(x - 1.27, x + 1.27, y - 1.27, y + 1.27, ZB - 2.5, ZB, 'black')
         m.box(x - 0.32, x + 0.32, y - 0.32, y + 0.32, 3.0, ZB, 'gold')
     m.make('module-sn65hvd230', car)
-    x, y = hole('B', C.ci('m'), 22)
-    m = Mesh(AB)
-    m.box(C.RX(23) - 1.3, C.RX(22) + 1.3, y - 1.3, y + 1.3, 2.6, 8.8, 'jumper')
-    m.make('term-jumper', car)
     for net_i, (n, b, ps, kind) in enumerate(C.WIRES):         # the solder side, pad to pad
         xy = [hole(b, c, r) for c, r in ps]
         wire(f'wire-{b}-{n}-{net_i}', xy, n, kind, car, AB)
