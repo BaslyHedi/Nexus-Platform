@@ -6,7 +6,7 @@
 The build uses insulated wire, so the rules are: every wire ends on a pad of its own net;
 wires meet only at pads, two wire ends per pad at most; nothing runs along another wire,
 under a standoff, or over another net's joint. Every net must come out whole and no two
-nets may touch, counting the Discovery's own ties between its duplicate header pins and
+nets may touch, counting the Nucleo's own ties between its duplicate header pins and
 the C-to-B supply pair.
 """
 import sys
@@ -21,22 +21,17 @@ ci = C.ci
 PAD = {}
 def put(b, col, row, net):
     PAD[(b, ci(col) if isinstance(col, str) else col, row)] = net
-for g in range(1, 25):                        # the four sockets, as built: hole g carries
-    for b, col in (('A', 'i'), ('A', 'j'), ('B', 'g'), ('B', 'h')):   # header row g + SHIFT
-        n = g + C.SHIFT[b]
-        if n > 25 or n in C.SOCKET_NC[b]:
-            continue                          # no soldered tail: the hole is empty
-        pin = 2 * n - 1 if col in 'ig' else 2 * n
-        put(b, col, g, f'{"P1" if b == "A" else "P2"}-{pin}')
-DISCO = {'P1-1': 'GND', 'P1-2': 'GND', 'P1-5': 'GND', 'P1-23': 'GND', 'P1-49': 'GND', 'P1-50': 'GND', 'P2-1': 'GND', 'P2-2': 'GND', 'P2-3': '5V', 'P2-4': '5V',
-         'P2-5': '3V3', 'P2-6': '3V3', 'P1-27': 'PWM_MCU', 'P1-34': 'SCL', 'P1-35': 'SDA',
-         'P2-33': 'CTX', 'P2-36': 'CRX'}
+for hdr in ('CN10', 'CN7'):                   # the four 1x19 sockets: every morpho pin has a hole
+    for pin in range(1, 2 * C.NUC_ROWS + 1):
+        b, col, row = C.nuc_hole(hdr, pin)
+        put(b, col, row, f'{hdr}-{pin}')
+NUC = {f'{h}-{p}': net for (h, p), (_, net) in C.NUC_PINS.items()}
 for k, v in list(PAD.items()):
-    PAD[k] = DISCO.get(v, v)
+    PAD[k] = NUC.get(v, v)
 for col, row, net in [('c', 1, '6V'), ('c', 3, 'GND'), ('c', 8, 'GND'), ('c', 10, '6V'), ('c', 12, 'GND'),
                       ('c', 13, '6V'), ('c', 14, 'PWM_SRV'), ('c', 16, 'GND'), ('c', 17, 'SCL'), ('c', 18, 'SDA'),
                       ('c', 20, 'GND'), ('c', 21, '3V3'), ('c', 22, 'SCL'), ('c', 23, 'SDA'),
-                      ('h', 8, 'PWM_SRV'), ('h', 12, 'PWM_MCU')]:
+                      ('e', 12, 'PWM_SRV'), ('e', 16, 'PWM_MCU')]:
     put('A', col, row, net)
 for col, row, net in [('m', 1, 'CANH'), ('o', 1, 'CANL'), ('q', 1, 'GND'), ('q', 21, '5V'), ('q', 23, 'GND'),
                       ('m', 22, 'CANL'), ('m', 23, 'TERM'), ('k', 19, 'CANH'), ('k', 23, 'TERM1'), ('k', 24, 'TERM1'), ('o', 24, 'TERM')]:
@@ -88,7 +83,7 @@ for pad, ws in ends.items():
     if n > 2:
         err.append(f'{C.N(*pad)}: {n} wire ends')
 
-# 2. connectivity, with the Discovery tying its same-named pins and the C-to-B pair
+# 2. connectivity, with the Nucleo tying its same-named pins and the C-to-B pair
 parent = {}
 def f(x):
     parent.setdefault(x, x)
@@ -102,7 +97,7 @@ for net, pts, kind in wires:
     join((a[0], int(a[1]), int(a[2])), (b[0], int(b[1]), int(b[2])))
 disco = {}
 for k, v in PAD.items():
-    if k[0] in 'AB' and ((k[0] == 'A' and k[1] in (9, 10)) or (k[0] == 'B' and k[1] in (7, 8))):
+    if k[0] in 'AB' and ((k[0] == 'A' and k[1] in (7, 8)) or (k[0] == 'B' and k[1] in (9, 10))):
         disco.setdefault(v, []).append(k)
 for v, ks in disco.items():
     for k in ks[1:]:
@@ -112,12 +107,12 @@ groups = {}
 for k, v in PAD.items():
     groups.setdefault(f(k), set()).add(v)
 for g, nets in groups.items():
-    real = {n for n in nets if not n.startswith('P')}
+    real = {n for n in nets if not n.startswith('CN')}
     if len(real) > 1:
         err.append(f'short: {sorted(real)}')
 bynet = {}
 for k, v in PAD.items():
-    if not v.startswith('P'):
+    if not v.startswith('CN'):
         bynet.setdefault(v, set()).add(f(k))
 for v, gs in bynet.items():
     if len(gs) > 1:

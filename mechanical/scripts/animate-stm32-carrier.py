@@ -6,19 +6,19 @@
 
 Nothing is read from disk but ../../hardware/scripts/stm32-carrier.py, which owns every hole, part and
 wire; this script only gives them bodies. It follows the drawing's build order: the sockets
-go in with the Discovery plugged in as the jig, the stack turns over for their joints, the
+go in with the Nucleo plugged in as the jig, the stack turns over for their joints, the
 parts go in, the solder side is wired spine by spine and run by run, the module, jumper and
-standoffs go on, and the Discovery drops onto the finished carrier. Board C follows.
+standoffs go on, and the Nucleo drops onto the finished carrier. Board C follows.
 
 Coordinates are the drawing's: X along the vehicle (row 1 at X 0, rear = +X), Y across
 (A at -Y, B at +Y), Z up from the boards' top face, millimetres throughout. The drawing puts
 +Y DOWN the page, so a right-handed Blender frame with Z up would mirror the board: every
 point is written to Blender with Y negated (mirror() below), and nothing else changes.
 
-The STM32F4DISCOVERY is a MOCK: its outline, the P1 / P2 headers and CN1's edge are UM1472
-Fig. 10 geometry (the same numbers the drawing uses); every chip, LED, button and connector on
-it is placed by eye, for recognition only. Real models (GrabCAD, 3D ContentCentral, DigiKey)
-sit behind a login and are not ours to commit.
+The NUCLEO-H533RE is a MOCK: its outline, the CN7 / CN10 morpho headers and CN1's edge are UM3121
+Fig. 7 geometry (the same numbers the drawing uses); its taller parts (C.NUC_MOCK) are read off the
+same figure, for recognition and clearance only. ST's own model sits behind a login and is not ours
+to commit.
 """
 import bpy, importlib.util, math, os, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -43,13 +43,12 @@ S = lambda sec: int(round(sec * FPS / SPEED)) + 1
 END = S(94)
 
 # ---------------------------------------------------------------- timeline (seconds)
-SOCKETS_IN = 4.0             # four 1x25 sockets, 0.5 s apart
-ROW25 = (6.3, 8.2)           # row 25 marked
-DISCO_JIG = (8.2, 10.8)      # the Discovery plugs in as the jig
+SOCKETS_IN = 4.0             # four 1x19 sockets, 0.5 s apart
+NUC_JIG = (8.2, 10.8)        # the Nucleo plugs in as the jig
 FLIP1 = (11.0, 13.4)         # over for the socket joints
 TACK, SOCK_J = 13.9, 15.3
 FLIP1B = (17.0, 19.4)        # back
-DISCO_OFF = (19.6, 21.2)
+NUC_OFF = (19.6, 21.2)
 PARTS_T = {'6V IN': 21.6, 'CAN': 22.4, '5V IN': 23.2, 'SERVO': 24.6, 'I2C-B': 25.1, 'I2C-A': 25.6,
            'TERM': 26.3, 'R4 1k': 27.2, 'R3a 100R': 27.8, 'R3b 20R': 28.2, 'C2': 28.6, 'XCVR': 30.2}
 FLIP2 = (32.0, 34.4)
@@ -59,7 +58,7 @@ INSUL = (43.2, 50.6)
 BRIDGE = (51.4, 55.0)
 FLIP2B = (56.0, 58.4)
 MODULE, LINKS, JUMPER, STANDOFFS = 58.8, 60.0, 61.0, 62.0
-DISCO_ON = (64.0, 66.6)
+NUC_ON = (64.0, 66.6)
 C_PARTS = {'terms': 68.4, 'res': 69.2, 'cap': 69.8, 'screws': 70.5, 'socket': 71.1, 'pigtail': 71.6, 'ties': 72.1}
 C_FLIP = (72.8, 75.0)
 C_J, C_SPINES, C_WIRES = 75.3, (75.9, 77.5), (77.9, 80.4)
@@ -71,10 +70,10 @@ GROW = S(WIRE_S) - 1
 
 CAPTIONS = [
     ((0, 4), "Boards A and B: two 5x7 kit boards, 18 x 24 holes, 5.9 mm apart - board C, the 5 V split, beside them"),
-    ((4, 8.2), f"1  Four 1x25 sockets: A {C.silk('A', 'i', 1)[1:]} / {C.silk('A', 'j', 1)[1:]} under P1, one hole toward CN1 as built - B {C.silk('B', 'g', 1)[1:]} / {C.silk('B', 'h', 1)[1:]} under P2"),
-    ((8.2, 11), "2  The Discovery plugs in as the jig: it alone sets the 53.34 mm between the two headers"),
+    ((4, 8.2), f"1  Four 1x19 sockets: A {C.silk('A', 'g', 1)[1:]} / {C.silk('A', 'h', 1)[1:]} under CN10, B {C.silk('B', 'i', 1)[1:]} / {C.silk('B', 'j', 1)[1:]} under CN7, rows 5-23 and 6-24"),
+    ((8.2, 11), "2  The Nucleo plugs in as the jig, A and B on the tray: it sets the 63.50 mm between the two headers"),
     ((11, 19.4), "3  Turn the stack over and solder the sockets - tack the four corners, check, then the rest"),
-    ((19.4, 21.6), "   Lift the Discovery off"),
+    ((19.4, 21.6), "   Lift the Nucleo off"),
     ((21.6, 24.6), "4  Screw terminals: 6V IN on A, CAN (3p) and 5V IN on B"),
     ((24.6, 27.2), "5  Male headers: SERVO, I2C-B and I2C-A on A, TERM on B"),
     ((27.2, 30.2), "6  R4 1k in the servo PWM, R3a 100R + R3b 20R (120R) to TERM, C2 470 uF across the servo supply"),
@@ -82,15 +81,15 @@ CAPTIONS = [
     ((32, 37.2), "8  Turn it over: solder every part pin"),
     ((37.2, 43.2), "9  The servo loop in 18 AWG, outboard on A: 6V IN to C2 to SERVO, on + and on GND"),
     ((43.2, 51.4), "10  22 AWG, pad to pad: the GND chain, 5 V, 3V3, servo PWM, I2C, CAN TX / RX, CAN H / L, TERM"),
-    ((51.4, 56), f"11  The one bridge: P2-5 to I2C-A VCC ({C.N('A', 'c', 21)}); A's GND comes from its own P1-5"),
+    ((51.4, 56), f"11  Three bridges: CN7-16 3V3 to I2C-A VCC ({C.N('A', 'c', 21)}), PB13 and PB12 to the module; A's GND is CN10-9"),
     ((56, 58.8), "   Right way up again"),
     ((58.8, 62), f"12  Module in face down, CANH / CANL into {C.N('B', 'o', C.CAN_ROW)} / {C.silk('B', 'p', C.CAN_ROW)}, TERM jumper on"),
     ((62, 64), "    A nylon standoff and screw in each of the four corner holes of A and B"),
-    ((64, 67.4), "13  The Discovery drops onto the carrier"),
+    ((64, 67.4), "13  The NUCLEO-H533RE drops onto the carrier, JP5 on [5-6] for E5V"),
     ((67.4, 70.5), "14  Board C, the 5 V split: IN 5V and TO STM32, C1 470 uF"),
     ((70.5, 72.8), f"    Four corner standoffs and screws, then the USB-C socket: pigtail into {' / '.join(C.silk('C', c, r) for _, _, c, r, _ in C.C_PIGTAIL)}, two zip ties"),
     ((72.8, 84), "15  Solder side: IN 5V to C1 to the socket on each rail in 18 AWG; D-, D+, CC1, CC2 cut short and insulated"),
-    ((84, 95), "The carrier and the 5 V split, ready for plate 2 (MEC-15, HW-19) - the Discovery is a mock"),
+    ((84, 95), "The carrier and the 5 V split, ready for plate 2 (MEC-15, HW-19) - the Nucleo is a mock"),
 ]
 
 # ---------------------------------------------------------------- scene and materials
@@ -115,13 +114,13 @@ def mat(name, colour):
 
 
 FR4, PAD, HOLE, BLACK = '#1f7a3a', '#c9ccd1', '#0b0f0d', '#16181c'
-DISCO_PCB = '#243b63'            # a guess - set to the board on the desk
+NUC_PCB = '#f2f2ee'              # the Nucleo-64 board is white
 for n, c in [('fr4', FR4), ('pad', PAD), ('hole', HOLE), ('black', BLACK), ('solder', '#f1f5f9'),
              ('gold', '#d4a52c'), ('brass', '#c8a24a'), ('term2', '#2563eb'), ('term3', '#16a34a'),
              ('screw', '#9ca3af'), ('res', '#d8c28c'), ('band', '#7c2d12'), ('capsleeve', '#1e293b'),
              ('capstripe', '#94a3b8'), ('captop', '#cbd5e1'), ('module', '#1d4ed8'), ('chip', '#111111'),
              ('mterm', '#15803d'), ('jumper', '#dc2626'), ('mark', '#ef4444'), ('silk', '#f8fafc'),
-             ('disco', DISCO_PCB), ('usb', '#c0c4ca'), ('led_o', '#f97316'), ('led_g', '#22c55e'),
+             ('nucleo', NUC_PCB), ('usb', '#c0c4ca'), ('led_o', '#f97316'), ('led_g', '#22c55e'),
              ('led_r', '#ef4444'), ('led_b', '#3b82f6'), ('btn_b', '#2563eb'), ('mat', '#2b3a33'),
              ('bare', '#e5e7eb'), ('nylon', '#e8e4d8')]:
     mat(n, c)
@@ -334,24 +333,17 @@ for b in ('A', 'B'):
 label('A', C.bx('A')[0] + 3.2, C.BOARD['A']['edge'][0] + 2.0, 0.06, 4, car)
 label('B', C.bx('B')[0] + 3.2, C.BOARD['B']['edge'][1] - 5.0, 0.06, 4, car)
 
-# ---- the four 1x25 sockets, as built: a tail only where SOCKET_NC has none missing
+# ---- the four 1x19 sockets, every tail in a hole
 SOCKET_XY = []
 for i, (b, col, lab) in enumerate(C.SOCKETS):
     y = C.cy(b, C.ci(col))
     m = Mesh()
-    m.box(C.RX(25) - 1.27, C.RX(1) + 1.27, y - 1.25, y + 1.25, 0, 8.5, 'black')
-    for r in range(1, 26):
-        m.box(C.RX(r) - 0.5, C.RX(r) + 0.5, y - 0.5, y + 0.5, 8.5, 8.52, 'hole')
-        if r not in C.SOCKET_NC[b]:
-            m.cyl((C.RX(r), y, 0), (C.RX(r), y, -2.6), 0.3, 'screw', 6)
-            SOCKET_XY.append((C.RX(r), y))
+    m.box(C.NX(C.NUC_ROWS) - 1.27, C.NX(1) + 1.27, y - 1.25, y + 1.25, 0, 8.5, 'black')
+    for k in range(1, C.NUC_ROWS + 1):
+        m.box(C.NX(k) - 0.5, C.NX(k) + 0.5, y - 0.5, y + 0.5, 8.5, 8.52, 'hole')
+        m.cyl((C.NX(k), y, 0), (C.NX(k), y, -2.6), 0.3, 'screw', 6)
+        SOCKET_XY.append((C.NX(k), y))
     drop(m.make('socket-' + col + b, car), SOCKETS_IN + 0.5 * i, 40)
-m = Mesh()
-for b, col, lab in C.SOCKETS:
-    y = C.cy(b, C.ci(col))
-    for r in C.SOCKET_NC[b]:
-        m.cone((C.RX(r), y, 22), (C.RX(r), y, 12), 2.2, 0.2, 'mark', 12)
-show(m.make('row25-marks', car), [(S(ROW25[0]), S(ROW25[1]))])
 
 xs = sorted({round(x, 2) for x, _ in SOCKET_XY})
 corners = [(x, y) for x, y in SOCKET_XY if round(x, 2) in (xs[0], xs[-1])]
@@ -472,7 +464,7 @@ for group, (a, z) in ((heavy, SPINES), (light, INSUL)):
         xy = [hole(b, c, r) for c, r in pts]
         wire(f'wire-{b}-{net}-{i}', xy, net, kind, car, t)
         joints(f'wj-{b}-{net}-{i}', wire_ends(pts, xy), car, t + WIRE_S)
-# the bridge (3V3), one wire from a P2 pin on B to the part it feeds on A
+# the three bridges: 3V3 from CN7 on B to I2C-A on A, the FDCAN pair from CN10 on A to the module on B
 for i, (net, pts, kind) in enumerate(C.XWIRES):
     xy = [hole(b, c, r) for b, c, r in pts]
     t = BRIDGE[0] + 1.8 * i
@@ -519,54 +511,33 @@ for b in ('A', 'B'):
 drop(m_so.make('standoffs', car), STANDOFFS, -30)
 drop(m_sc.make('screws', car), STANDOFFS + 0.5, 25)
 
-# ---------------------------------------------------------------- the STM32F4DISCOVERY (mock)
-dx0, dx1 = C.DISCO['x']
-dy0, dy1 = C.DISCO['y']
+# ---------------------------------------------------------------- the NUCLEO-H533RE (mock)
+nx0, nx1 = C.NUC['x']
+ny0, ny1 = C.NUC['y']
 Z0 = 9.0                     # the PCB's underside, seated on the sockets
 Z1 = Z0 + 1.6
 d = Mesh()
-d.box(dx0, dx1, dy0, dy1, Z0, Z1, 'disco')
-for b, cols in (('A', ('i', 'j')), ('B', ('g', 'h'))):
+d.box(nx0, nx1, ny0, ny1, Z0, Z1, 'nucleo')
+for b, cols in (('A', ('g', 'h')), ('B', ('i', 'j'))):
     ya, yb = C.cy(b, C.ci(cols[0])), C.cy(b, C.ci(cols[1]))
-    d.box(C.RX(25) - 1.27, C.RX(1) + 1.27, min(ya, yb) - 1.27, max(ya, yb) + 1.27, Z1, Z1 + 2.5, 'black')
-    for r in range(1, 26):
+    d.box(C.NX(C.NUC_ROWS) - 1.27, C.NX(1) + 1.27, min(ya, yb) - 1.27, max(ya, yb) + 1.27, Z1, Z1 + 2.5, 'black')
+    for k in range(1, C.NUC_ROWS + 1):
         for y in (ya, yb):
-            d.box(C.RX(r) - 0.32, C.RX(r) + 0.32, y - 0.32, y + 0.32, 3.0, Z1 + 6.0, 'gold')
-cyc = (dy0 + dy1) / 2
-d.box(-37, -23, cyc - 7, cyc + 7, Z1, Z1 + 1.4, 'chip')                # STM32F407VG, LQFP100
-d.box(-38, -22, cyc - 8, cyc + 8, Z1, Z1 + 0.3, 'screw')
-d.box(12, 19, cyc - 3.5, cyc + 3.5, Z1, Z1 + 1.4, 'chip')              # ST-LINK F103
-d.box(11.5, 19.5, cyc - 4, cyc + 4, Z1, Z1 + 0.3, 'screw')
-d.box(dx1 - 7, dx1 + 1, cyc - 3.9, cyc + 3.9, Z1, Z1 + 4, 'usb')       # CN1 mini-B, the rear edge
-d.box(dx0 - 1, dx0 + 5, cyc + 4, cyc + 11.5, Z1, Z1 + 2.6, 'usb')      # CN5 micro-B, the front edge
-d.cyl((dx0 - 1, 8, Z1 + 2.6), (dx0 + 12, 8, Z1 + 2.6), 3.0, 'black', 16)   # CN4 audio jack
-d.box(-56, -51, 17, 22, Z1, Z1 + 1.0, 'chip')                          # CS43L22
-d.box(-46.5, -43.5, cyc - 1.5, cyc + 1.5, Z1, Z1 + 1.0, 'chip')        # accelerometer
-for (ox, oy), mm in (((0, 5.5), 'led_o'), ((-5.5, 0), 'led_g'), ((0, -5.5), 'led_r'), ((5.5, 0), 'led_b')):
-    d.box(-45 + ox - 0.8, -45 + ox + 0.8, cyc + oy - 0.5, cyc + oy + 0.5, Z1, Z1 + 0.6, mm)
-for yb_, cap in ((44.0, 'btn_b'), (10.0, 'black')):                    # B1 user, B2 reset
-    d.box(-54, -48, yb_ - 3, yb_ + 3, Z1, Z1 + 3.4, 'usb')
-    d.cyl((-51, yb_, Z1 + 3.4), (-51, yb_, Z1 + 4.8), 1.8, cap, 16)
-d.box(22, 23.6, 46, 47.0, Z1, Z1 + 0.6, 'led_r')                       # LD2 PWR
-d.box(22, 23.6, 49, 50.0, Z1, Z1 + 0.6, 'led_g')                       # LD1 COM
-d.cyl((-13, cyc - 2.5, Z1), (-13, cyc - 2.5, Z1 + 1.2), 1.6, 'usb', 12)  # X2
-for i in range(6):                                                     # CN3 SWD
-    d.box(26 - 1.27, 26 + 1.27, 6 + i * P - 1.27, 6 + i * P + 1.27, Z1, Z1 + 2.5, 'black')
-for jy in (40.0, 45.0):                                                # CN2 jumpers
-    d.box(3, 8.1, jy - 1.3, jy + 1.3, Z1, Z1 + 5.5, 'black')
-d.box(-9, -6.4, 45, 50.1, Z1, Z1 + 5.5, 'black')                       # JP1 IDD
-disco = d.make('discovery', car)
+            d.box(C.NX(k) - 0.32, C.NX(k) + 0.32, y - 0.32, y + 0.32, 3.0, Z1 + 3.0, 'gold')
+for side, x0, x1, y0, y1, h, mm, _ in C.NUC_MOCK:
+    d.box(x0, x1, y0, y1, Z1, Z1 + h, mm) if side == 'top' else d.box(x0, x1, y0, y1, Z0 - h, Z0, mm)
+nucleo = d.make('nucleo', car)
 bpy.context.view_layer.update()
-labels = [label('STM32F4DISCOVERY', -27, 42.0, Z1 + 0.05, 3.2, disco),
-          label('mock', -27, 46.5, Z1 + 0.05, 2.4, disco, 'capstripe')]
-f0, f1 = S(DISCO_JIG[0]), S(DISCO_JIG[1])
-g0, g1 = S(DISCO_OFF[0]), S(DISCO_OFF[1])
-h0, h1 = S(DISCO_ON[0]), S(DISCO_ON[1])
-for o in [disco] + labels:
+labels = [label('NUCLEO-H533RE', -27, 42.0, Z1 + 0.05, 3.2, nucleo, 'chip'),
+          label('mock', -27, 46.5, Z1 + 0.05, 2.4, nucleo, 'capstripe')]
+f0, f1 = S(NUC_JIG[0]), S(NUC_JIG[1])
+g0, g1 = S(NUC_OFF[0]), S(NUC_OFF[1])
+h0, h1 = S(NUC_ON[0]), S(NUC_ON[1])
+for o in [nucleo] + labels:
     show(o, [(f0, g1), (h0, END + 1)])
 for f, z in ((f0, 60), (f1, 0), (g0, 0), (g1, 60), (h0, 60), (h1, 0)):
-    disco.location = (0, 0, z)
-    disco.keyframe_insert("location", frame=f)
+    nucleo.location = (0, 0, z)
+    nucleo.keyframe_insert("location", frame=f)
 
 # ---------------------------------------------------------------- board C, the 5 V split
 OXc, OYc = -58.42, -60.0

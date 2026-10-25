@@ -8,12 +8,12 @@
 Two steps, as MEC-17 places it. First the carrier is built on the tray at a jig: nuts into the pockets, the
 boards A, B and C on their standoffs, the screws from below, the splices, the Bauer in its rim. Then the tray goes
 onto plate 2: its holes over the plate's, the wires up through the window, six screws from below, and plate 2 lowers
-onto its standoffs. The Bauer is held to the tray by two M3 screws through its own mounting holes. The Discovery plugs on last.
+onto its standoffs. The Bauer is held to the tray by two M3 screws through its own mounting holes. The Nucleo plugs on last.
 
 Read from disk: ../cad/carrier-tray.stl (the tray itself), ../../hardware/renders/chassis-layout.svg (plate 2's
 outline, holes and slots) and, through carrier_model.py, ../../hardware/scripts/stm32-carrier.py (the boards as
 built: every part and wire). Stand-ins: the harness parts under plate 2 (MEC-16 footprints), the Bauer (64 x 57 x
-22 mm; its shape and its two mounting holes are from the seller's drawing and Hedi's photo), the Discovery. The order of work is a PROPOSAL (MEC-17).
+22 mm; its shape and its two mounting holes are from the seller's drawing and Hedi's photo), the NUCLEO-H533RE. The order of work is a PROPOSAL (MEC-17).
 
 Coordinates: plate 2's layout frame (x front to rear, y from the vehicle's right, mm, z up from plate 1's top).
 The layout's y runs the wrong way for a right-handed frame, so a point goes to Blender as (x, -y, z).
@@ -71,7 +71,7 @@ WIRES_T = 29.5
 FIX_T = [32.5 + 0.6 * i for i in range(6)]
 SECTION = (46.0, 50.5)                         # the cutaway through one fixing
 LOWER = (51.5, 55.5)
-DISCO = (57.0, 59.5)
+NUCLEO = (57.0, 59.5)
 ORBIT = 60.0
 PAD_NUTS = [37.2 + 0.25 * i for i in range(6)]  # the rear pad (MEC-19): six nuts, the pad, six screws from below
 PAD_T = 39.0
@@ -91,7 +91,7 @@ CAPTIONS = [
     ((37, 46), "8  The rear pad (MEC-19): six nuts, the pad onto plate 2, six screws from below"),
     ((46, 50.5), "Section through one fixing: plate 2, the tray with its captive nut, the screw, the Bauer above"),
     ((50.5, 57), "9  Plate 2 comes off its blocks and lowers onto the chassis standoffs"),
-    ((57, 60), "10  The Discovery plugs onto the sockets of A and B"),
+    ((57, 60), "10  The NUCLEO-H533RE plugs onto the sockets of A and B"),
     ((60, 67), "The tray lifts out as one unit, six screws; the rear pad, six more"),
 ]
 
@@ -400,10 +400,10 @@ for i, (x0, x1, y0, y1) in enumerate(SPLICES):
     sp = box("splice-s%d" % (6 + i), x0, x1, y0, y1, Z_TRAY, Z_TRAY + 8.5, 'splice', ROOT)
     drop(sp, SPLICE_T[i], dz=25.0)
 
-# the discovery
-disco = empty("discovery-root", ROOT)                     # drop() moves this; the board keeps its own height inside it
-CM.build_discovery(disco, zA).name = "discovery"
-drop(disco, DISCO[0], dz=45.0, dur=DISCO[1] - DISCO[0])
+# the nucleo
+nucleo = empty("nucleo-root", ROOT)                      # drop() moves this; the board keeps its own height inside it
+CM.build_nucleo(nucleo, zA).name = "nucleo"
+drop(nucleo, NUCLEO[0], dz=45.0, dur=NUCLEO[1] - NUCLEO[0])
 
 # lifted across, set down on plate 2, then it rides plate 2 down
 move(ROOT, [(0, (0, BENCH_Y, LIFT)), (CARRY[0], (0, BENCH_Y, LIFT)), (CARRY[0] + 1.6, (0, BENCH_Y, LIFT + 45)),

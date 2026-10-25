@@ -15,7 +15,8 @@ S = 4.6                       # px per mm in the carrier views
 
 # ---------------------------------------------------------------- geometry (mm)
 # Carrier views: X along the vehicle (rear = +X, right), Y across (down = +Y).
-# Header row n (pins 2n-1 / 2n) sits at X = -(n-1)*P, row 1 at the rear (CN1 end).
+# Grid row n sits at X = -(n-1)*P, row 1 at the rear: it is B's hole row n. The frame is the one the
+# Discovery set (its header row n was grid row n) and the boards are still where it put them.
 def RX(n):
     return -(n - 1) * P
 
@@ -24,18 +25,31 @@ BOARD = {
     'A': dict(cols=18, rows=24, y1=-20.32, edge=(-23.73, 26.27)),
     'B': dict(cols=18, rows=24, y1=35.56, edge=(32.15, 82.15)),
 }
-BX = (-64.21, 5.79)                  # a board whose hole 1 sits under header row 1, 70 mm
-# As built (2026-10-03): A's P1 sockets went in one hole toward the rear (CN1), so A's hole g
-# sits under Discovery header row g + 1 and A's whole grid is one pitch forward of B's.
-# P1 row 1 (pins 1/2) hangs past A's last hole; row 25 (pins 49/50) is soldered in hole A.
+BX = (-64.21, 5.79)                  # a board whose hole 1 sits on grid row 1, 70 mm
+# As built (2026-10-03): A's first sockets went in one hole toward the rear, so A's hole g sits on
+# grid row g + 1 and A's whole grid is one pitch forward of B's. The tray (MEC-17) holds both there.
 SHIFT = {'A': 1, 'B': 0}
-SOCKET_NC = {'A': (1,), 'B': (25,)}   # header rows of each socket with no soldered tail
-DISCO = dict(x=(-63.18, 33.82), y=(-6.33, 59.67))
-XMIN, XMAX = -64.21 - P, 33.82
+
+# The NUCLEO-H533RE (MB1814, UM3121 Fig. 7): 70 x 82.5, ST-LINK USB-C (CN1) on the rear edge. Its two
+# 2 x 19 ST morpho headers (CN7, CN10) point down. Their outer rows are 63.50 apart (25 pitches), 3.25 in
+# from each long edge; row 1 is 31.70 from the CN1 edge and row 19 is 5.08 from the front edge. The
+# headers are 4 pitches wider than the Discovery's P1 / P2, so each socket pair moves two columns outboard
+# (A: i/j to g/h, B: g/h to i/j), and the board stays centred where the Discovery was. Header row k sits
+# on grid row k + NUC_ROW0: five rows forward of the Discovery's row 1, for room behind CN1's plug.
+NUC_ROWS = 19
+NUC_ROW0 = 5
+NUC = dict(x=(RX(1 + NUC_ROW0) - 18 * P - 5.08, RX(1 + NUC_ROW0) + 31.70), y=(-8.33, 61.67))
+CN1_Y = 14.3                 # CN1, the ST-LINK USB-C, on the rear edge (UM3121 Fig. 7, +-0.3)
+XMIN, XMAX = -64.21 - P, NUC['x'][1]
+
+
+def NX(k):
+    """X of Nucleo header row k."""
+    return RX(k + NUC_ROW0)
 
 
 def HX(b, g):
-    """X of board b's hole row g, in the Discovery's frame."""
+    """X of board b's hole row g."""
     return RX(g + SHIFT[b])
 
 
@@ -43,9 +57,9 @@ def bx(b):
     return BX[0] - SHIFT[b] * P, BX[1] - SHIFT[b] * P
 
 
-def hdr_hole(b, n):
-    """The board hole row under Discovery header row n."""
-    return n - SHIFT[b]
+def hdr_hole(b, k):
+    """The board hole row under Nucleo header row k."""
+    return k + NUC_ROW0 - SHIFT[b]
 YMIN, YMAX = -23.73, 82.15
 
 def cy(board, col):
@@ -125,9 +139,26 @@ def hole(board, col, row):
     return HX(board, row), BOARD[board]['y1'] + (col - 1) * P
 
 # ---------------------------------------------------------------- component data
-# Boards A (P1 side) and B (P2 side) are both 5x7 kit boards, 18 x 24; col a of A is outboard.
-# The sockets are 1x25: row 25 has no hole and its tail is snipped, so it rests on the margin.
-SOCKETS = [('A', 'i', 'P1 odd'), ('A', 'j', 'P1 even'), ('B', 'g', 'P2 odd'), ('B', 'h', 'P2 even')]
+# Boards A (CN10 side) and B (CN7 side) are both 5x7 kit boards, 18 x 24; col a of A is outboard.
+# Four 1x19 sockets, every tail in a hole: A's on hole rows 5-23, B's on 6-24. On each header the odd pins
+# are one column and the even pins the other: CN10's even pins are its outer row, CN7's odd pins are its.
+SOCKETS = [('A', 'g', 'CN10 even'), ('A', 'h', 'CN10 odd'), ('B', 'i', 'CN7 even'), ('B', 'j', 'CN7 odd')]
+# The NUCLEO pins the carrier uses, by header and pin (UM3121 Table 17), and the net each one is on.
+# FDCAN2 on PB12 / PB13, I2C1 on PB6 / PB7, TIM1_CH1 on PA8: the alternate functions are to check against
+# the STM32H533 datasheet (DS14539) before soldering. E5V takes the 5 V in with JP5 on [5-6].
+NUC_PINS = {('CN10', 3): ('PB6', 'SCL'), ('CN10', 5): ('PB7', 'SDA'), ('CN10', 9): ('GND', 'GND'),
+            ('CN10', 16): ('PB12', 'CRX'), ('CN10', 20): ('GND', 'GND'), ('CN10', 23): ('PA8', 'PWM_MCU'),
+            ('CN10', 30): ('PB13', 'CTX'), ('CN7', 6): ('E5V', '5V'), ('CN7', 8): ('GND', 'GND'),
+            ('CN7', 16): ('3V3', '3V3'), ('CN7', 19): ('GND', 'GND'), ('CN7', 20): ('GND', 'GND'),
+            ('CN7', 22): ('GND', 'GND')}
+
+
+def nuc_hole(hdr, pin):
+    """(board, column, hole row) of a Nucleo morpho pin."""
+    k = (pin + 1) // 2
+    if hdr == 'CN10':
+        return 'A', 'g' if pin % 2 == 0 else 'h', hdr_hole('A', k)
+    return 'B', 'j' if pin % 2 else 'i', hdr_hole('B', k)
 
 # screw terminals: board, [(col,row,label)], entry side ('-Y','+Y','+X'), name, colour
 TERMS = [
@@ -144,7 +175,8 @@ MALE = [
 ]
 # R3, the CAN terminator, is 100 + 20 in series (no 120 in the kit): R3a where R3 was, R3b along
 # the front row, their junction R3a's own lead bent from k23 over to k24
-RES = [('A', ('h', 8), ('h', 12), 'R4 1k'), ('B', ('k', 19), ('k', 23), 'R3a 100R'),
+# R4 moved off column h, which the CN10 socket now takes, to column e, outboard of the Nucleo's edge
+RES = [('A', ('e', 16), ('e', 12), 'R4 1k'), ('B', ('k', 19), ('k', 23), 'R3a 100R'),
        ('B', ('k', 24), ('o', 24), 'R3b 20R')]
 CAPS = [('A', ('c', 8), ('c', 10), 'C2')]          # (minus leg, plus leg)
 # The SN65HVD230 module (BOM 4.1, 26.98 x 10.24) lies FLAT and, as bent (2026-10-03), FACE DOWN:
@@ -192,25 +224,23 @@ WIRES = [
     # ---- board A: the servo loop outboard in 18 AWG, then the GND chain on to the I2C headers
     ('6V', 'A', [(3, 1), (1.5, 1.5), (0.5, 2.5), (0.5, 10), (3, 10)], 'pwr'),                  # 6V IN + to C2 +
     ('6V', 'A', [(3, 10), (3.5, 10), (3.5, 13), (3, 13)], 'pwr'),                # C2 + to SERVO +
-    ('GND', 'A', [(9, 2), (8.5, 2.5), (3.5, 2.5), (3, 3)], 'ins'),               # P1-5 (as built) to 6V IN -
+    ('GND', 'A', [(8, 9), (7.5, 8.5), (4.5, 8.5), (4.5, 3.5), (3.5, 3.5), (3, 3)], 'ins'),   # CN10-9 to 6V IN -
     ('GND', 'A', [(3, 3), (1.5, 3), (1.5, 7.5), (3, 7.5), (3, 8)], 'pwr'),       # 6V IN - to C2 -
     ('GND', 'A', [(3, 8), (2.5, 8), (2.5, 12), (3, 12)], 'pwr'),                 # C2 - to SERVO GND
     ('GND', 'A', [(3, 12), (2.5, 12.5), (1.5, 12.5), (1.5, 15.5), (3, 16)], 'ins'),   # to I2C-B GND
     ('GND', 'A', [(3, 16), (2.5, 16.5), (1.5, 16.5), (1.5, 19.5), (3, 20)], 'ins'),   # to I2C-A GND
-    ('PWM', 'A', [(9, 13), (8.5, 12.5), (8, 12)], 'ins'),                        # PE9 to R4
-    ('PWM', 'A', [(8, 8), (7.5, 7.5), (4.5, 7.5), (4.5, 14), (3, 14)], 'ins'),   # R4 to SERVO SIG
-    ('SCL', 'A', [(10, 16), (9.5, 16.5), (3.5, 16.5), (3, 17)], 'ins'),          # PB10 to I2C-B
+    ('PWM', 'A', [(8, 16), (7.5, 16.5), (5.5, 16.5), (5, 16)], 'ins'),           # PA8 to R4
+    ('PWM', 'A', [(5, 12), (4.5, 12.5), (4.5, 13.5), (3.5, 13.5), (3, 14)], 'ins'),   # R4 to SERVO SIG
+    ('SCL', 'A', [(8, 6), (7.5, 6.5), (6.5, 6.5), (6.5, 17.5), (4, 17.5), (3, 17)], 'ins'),   # PB6 to I2C-B
     ('SCL', 'A', [(3, 17), (3.5, 17.5), (3.5, 21.5), (3, 22)], 'ins'),           # I2C-B to I2C-A
-    ('SDA', 'A', [(9, 17), (8.5, 17.5), (8.5, 18.5), (4, 18.5), (3, 18)], 'ins'),   # PB11 to I2C-B
+    ('SDA', 'A', [(8, 7), (7.5, 7.5), (5.5, 7.5), (5.5, 18.5), (4, 18.5), (3, 18)], 'ins'),   # PB7 to I2C-B
     ('SDA', 'A', [(3, 18), (2.5, 18.5), (2.5, 22.5), (3, 23)], 'ins'),           # I2C-B to I2C-A
     # ---- board B: each header pin feeds one thing, so no pin carries more than two wires
-    ('5V', 'B', [(17, 21), (17, 21.5), (9.5, 21.5), (9.5, 2.5), (8, 2)], 'ins'),                # 5V IN + to P2-4
-    ('GND', 'B', [(17, 23), (17.5, 23.5), (16.5, 24.5), (10.5, 24.5), (10.5, 1.5), (8, 1)], 'ins'),  # 5V IN - to P2-2
-    ('GND', 'B', [(7, 1), (7.5, 0.5), (16.5, 0.5), (17, 1)], 'ins'),             # P2-1 to CAN GND
+    ('5V', 'B', [(17, 21), (17, 21.5), (10.5, 21.5), (10.5, 7.5), (9.5, 7.5), (9, 8)], 'ins'),   # 5V IN + to CN7-6 E5V
+    ('GND', 'B', [(17, 23), (17.5, 23.5), (16.5, 24.5), (11.5, 24.5), (11.5, 15.5), (10, 15)], 'ins'),  # 5V IN - to CN7-19
+    ('GND', 'B', [(9, 9), (8.5, 8.5), (8.5, 0.5), (16.5, 0.5), (17, 1)], 'ins'),  # CN7-8 to CAN GND
     ('GND', 'B', [(17, 23), (16.5, 22.5), (16.5, 19.5), (16, 19)], 'ins'),       # 5V IN - to XCVR GND
-    ('3V3', 'B', [(8, 3), (8.5, 3.5), (11.5, 3.5), (11.5, 9.5), (18.5, 9.5), (18.5, 18.5), (17, 19)], 'ins'),  # P2-6 to XCVR 3V3
-    ('CTX', 'B', [(7, 17), (7.5, 17.5), (13.5, 17.5), (14, 18), (14, 19)], 'ins'),   # PD1 to CTX
-    ('CRX', 'B', [(8, 18), (8.5, 18.5), (14.5, 18.5), (15, 19)], 'ins'),            # PD0 to CRX
+    ('3V3', 'B', [(9, 13), (8.5, 12.5), (8.5, 9.5), (18.5, 9.5), (18.5, 18.5), (17, 19)], 'ins'),  # CN7-16 to XCVR 3V3
     ('CANH', 'B', [(13, 1), (13.5, 1.5), (13.5, 11.5), (14.5, 11.5), (15, 12)], 'ins'),    # CAN H to module H
     ('CANH', 'B', [(15, 12), (14.5, 12.5), (12.5, 12.5), (12.5, 19.5), (11.5, 19.5), (11, 19)], 'ins'),  # module H to R3a
     ('CANL', 'B', [(15, 1), (15.5, 1.5), (17.5, 1.5), (17.5, 11.5), (16.5, 11.5), (16, 12)], 'ins'),  # CAN L to module L
@@ -218,11 +248,17 @@ WIRES = [
     ('TERM1', 'B', [(11, 23), (11, 24)], 'lead'),                                # R3a's lead to R3b
     ('TERM', 'B', [(15, 24), (14.5, 23.5), (13.5, 23.5), (13, 23)], 'ins'),      # R3b to TERM
 ]
-# The one bridge, a wire from a P2 pin on B to the part it feeds on A, across the gap. A's ground
-# no longer crosses: it comes from A's own P1-5 (2026-10-03), the Discovery tying all its GNDs.
+# The three bridges across the gap. 3V3 is on CN7 (B) only and the INA226 header is on A; the FDCAN
+# pins are on CN10 (A) only and the transceiver is on B. A's ground comes from its own CN10-9, the
+# Nucleo tying all its GNDs. A's hole row r and B's row r + 1 are the same X, so a bridge crossing at
+# A row r.5 lands on B row r + 1.5.
 XWIRES = [
-    ('3V3', [('B', 7, 3), ('B', 6.5, 2.5), ('B', 1, 2.5), ('A', 17.5, 2.5), ('A', 17.5, 20.5),
-             ('A', 4, 20.5), ('A', 3, 21)], 'ins'),                              # P2-5 to I2C-A VCC
+    ('3V3', [('B', 9, 13), ('B', 8.5, 13.5), ('B', 8.5, 21.5), ('B', 0.5, 21.5), ('A', 17.5, 20.5),
+             ('A', 4, 20.5), ('A', 3, 21)], 'ins'),                              # CN7-16 to I2C-A VCC
+    ('CTX', [('A', 7, 19), ('A', 7.5, 18.5), ('A', 8.5, 18.5), ('A', 8.5, 16.5), ('A', 17.5, 16.5),
+             ('B', 0.5, 17.5), ('B', 13.5, 17.5), ('B', 14, 18), ('B', 14, 19)], 'ins'),   # PB13 to XCVR CTX
+    ('CRX', [('A', 7, 12), ('A', 7.5, 12.5), ('A', 9.5, 12.5), ('A', 9.5, 17.5), ('A', 17.5, 17.5),
+             ('B', 0.5, 18.5), ('B', 14.5, 18.5), ('B', 15, 19)], 'ins'),       # PB12 to XCVR CRX
 ]
 LINKS = []                   # no links: CAN H / L reach the board through the module's 2-pin header
 
@@ -269,34 +305,50 @@ def board_a1(v, b, leg=6.0):
 
 
 def row_labels(v, yline):
-    # the Discovery's header rows; each board prints its own letters along its edge
-    for r in range(1, 26):
-        x, _ = v.px(RX(r), 0)
-        text(x, yline, str(r), 6.5, '#64748b', anchor='middle')
+    # the Nucleo's header rows; each board prints its own letters along its edge
+    for k in range(1, NUC_ROWS + 1):
+        x, _ = v.px(NX(k), 0)
+        text(x, yline, str(k), 6.5, '#64748b', anchor='middle')
 
-CN1_Y = 26.67                # CN1, the ST-LINK mini-USB, on the rear edge (placed centrally, by eye)
+# CN11 and CN12, the jumper parking headers on the Nucleo's underside, hang about 8.5 mm below it at the
+# CN1 end, in line with the outer morpho rows (UM3121 Fig. 2). Past the boards' rear edges, over the tray.
+CN11_12 = [(NUC['x'][1] - 5.6, -5.4), (NUC['x'][1] - 5.6, 58.6)]
+# The Nucleo's tall parts, for the 3D mock: (side, X0, X1, Y0, Y1, height, material, what). Read off UM3121
+# Fig. 7 at +-0.5 mm; heights are typical, not measured. 'top' stands on the PCB, 'under' hangs below it.
+NUC_MOCK = [
+    ('top', 8.6, 20.0, CN1_Y - 4.4, CN1_Y + 4.4, 3.2, 'usb', 'CN1 ST-LINK USB-C'),
+    ('top', -64.4, -53.2, 34.7, 43.6, 3.2, 'usb', 'CN3 user USB-C'),
+    ('top', -0.2, 10.0, 26.8, 37.2, 1.0, 'chip', 'STLINK-V3EC MCU'),
+    ('top', -45.5, -33.5, 20.6, 32.6, 1.4, 'chip', 'STM32H533RE, LQFP64'),
+    ('top', -7.1, 5.9, 1.3, 6.4, 8.5, 'black', 'JP5, 2 x 5, jumper on [5-6] for E5V'),
+    ('top', 15.4, 17.9, 33.2, 38.3, 8.5, 'black', 'JP1 ST-LINK reset'),
+    ('top', -42.2, -21.4, 49.6, 52.0, 8.5, 'black', 'CN5 ARDUINO'),
+    ('top', -60.0, -44.4, 49.6, 52.0, 8.5, 'black', 'CN9 ARDUINO'),
+    ('top', -38.3, -12.2, 1.3, 3.7, 8.5, 'black', 'CN6 ARDUINO'),
+    ('top', -60.0, -39.5, 1.3, 3.7, 8.5, 'black', 'CN8 ARDUINO'),
+    ('top', -13.1, -7.1, 32.0, 38.0, 3.5, 'btn_b', 'B1 USER'),
+    ('top', -13.1, -7.1, 15.5, 21.5, 3.5, 'black', 'B2 RESET'),
+    ('top', -12.0, -10.4, 8.8, 10.0, 0.6, 'led_g', 'LD2 user, PA5'),
+    ('top', 14.3, 15.9, 4.4, 5.6, 0.6, 'led_g', 'LD1 COM'),
+    ('top', 14.3, 15.9, -0.7, 0.5, 0.6, 'led_r', 'LD7 PWR'),
+] + [('under', X - 2.5, X + 2.5, Y - 1.3, Y + 1.3, 8.5, 'black', 'CN11 / CN12 jumper park') for X, Y in CN11_12]
 
 
-def draw_discovery(v):
-    v.rect(DISCO['x'][0], DISCO['x'][1], DISCO['y'][0], DISCO['y'][1], rx=3, fill='#eef2ff',
+def draw_nucleo(v):
+    v.rect(NUC['x'][0], NUC['x'][1], NUC['y'][0], NUC['y'][1], rx=3, fill='#eef2ff',
            fill_opacity='0.35', stroke='#4338ca', stroke_width=1.2, stroke_dasharray='7 4')
-    v.rect(DISCO['x'][1] - 7, DISCO['x'][1] + 1, CN1_Y - 3.9, CN1_Y + 3.9, rx=1, fill='#cbd5e1',
+    v.rect(NUC['x'][1] - 7.3, NUC['x'][1] + 0.6, CN1_Y - 4.5, CN1_Y + 4.5, rx=1, fill='#cbd5e1',
            stroke='#4338ca', stroke_width=1)
+    for X, Y in CN11_12:
+        v.rect(X - 2.5, X + 2.5, Y - 1.3, Y + 1.3, rx=0.6, fill='none', stroke='#4338ca', stroke_width=0.9,
+               stroke_dasharray='2 2')
 
 def draw_sockets(v):
     for b, col, lab in SOCKETS:
         c = ci(col)
         colr = '#0f766e' if b == 'A' else '#b45309'
-        v.rect(RX(25) - 1.27, RX(1) + 1.27, cy(b, c) - 1.2, cy(b, c) + 1.2, rx=1,
+        v.rect(NX(NUC_ROWS) - 1.27, NX(1) + 1.27, cy(b, c) - 1.2, cy(b, c) + 1.2, rx=1,
                fill=colr, fill_opacity='0.22', stroke=colr, stroke_width=0.9)
-        for n in SOCKET_NC[b]:
-            snipped(v, b, c, colr, n)
-
-def snipped(v, b, c, colr, n=25):
-    # a socket position with no soldered tail: snipped, or past the board's last hole
-    x, y = v.px(RX(n), cy(b, c))
-    w(f'<line x1="{x - 2.2:.1f}" y1="{y - 2.2:.1f}" x2="{x + 2.2:.1f}" y2="{y + 2.2:.1f}" stroke="{colr}" stroke-width="1.1"/>')
-    w(f'<line x1="{x - 2.2:.1f}" y1="{y + 2.2:.1f}" x2="{x + 2.2:.1f}" y2="{y - 2.2:.1f}" stroke="{colr}" stroke-width="1.1"/>')
 
 def hp(v, b, c, r):
     X, Y = hole(b, c, r)
@@ -435,11 +487,8 @@ def carrier_view(v, top):
     if not top:
         for b, col, lab in SOCKETS:
             colr = "#0f766e" if b == "A" else "#b45309"
-            for n in range(1, 26):
-                if n in SOCKET_NC[b]:
-                    snipped(v, b, ci(col), colr, n)
-                    continue
-                x, y = v.px(RX(n), cy(b, ci(col)))
+            for k in range(1, NUC_ROWS + 1):
+                x, y = v.px(NX(k), cy(b, ci(col)))
                 w(f'<circle cx="{x:.1f}" cy="{y:.1f}" r="2.9" fill="#e2e8f0" stroke="{colr}" stroke-width="1"/>')
     boxes = {}
     for b, pins, entry, name, colr in TERMS:
@@ -466,25 +515,26 @@ def carrier_view(v, top):
         for x, y in corner_holes(*bx(b), *BOARD[b]['edge']):
             draw_corner(v, x, y)
     if top:
-        draw_discovery(v)
+        draw_nucleo(v)
     return boxes
 
 def carrier_labels_top(v, boxes):
-    # Discovery
-    label(v, -15, 13.0, 'STM32F4DISCOVERY above', '#4338ca', 10)
-    label(v, -15, 13.0, 'plugs into the four 1x25 sockets', '#4338ca', 8, dy=13, weight=None)
-    label(v, RX(25), -3.4, '× = not connected: P1 row 1, past A·X (as built) · P2 row 25, tail snipped', '#0f766e', 6.5, anchor='start', weight=None)
-    label(v, 16, 26.5, 'CN1 ST-LINK', '#4338ca', 8, weight=None)
-    label(v, 16, 26.5, 'overhangs the boards', '#4338ca', 7, dy=11, weight=None)
-    label(v, 16, 26.5, '28 mm to the rear', '#4338ca', 7, dy=21, weight=None)
+    # the Nucleo
+    label(v, -30, 20.0, 'NUCLEO-H533RE above', '#4338ca', 10)
+    label(v, -30, 20.0, 'plugs into the four 1x19 sockets', '#4338ca', 8, dy=13, weight=None)
+    label(v, 8.5, 26.5, 'CN1 ST-LINK', '#4338ca', 8, weight=None)
+    label(v, 8.5, 26.5, 'USB-C, 13.2 mm', '#4338ca', 7, dy=11, weight=None)
+    label(v, 8.5, 26.5, 'past the boards', '#4338ca', 7, dy=21, weight=None)
+    label(v, NUC['x'][1] - 5.6, 52.5, 'CN12 under', '#4338ca', 6.5, weight=None)
+    label(v, NUC['x'][1] - 5.6, 0.6, 'CN11 under', '#4338ca', 6.5, weight=None)
     # sockets
-    label(v, RX(24) - 2.2, cy('A', 9) + 1.3, 'P1', '#0f766e', 9, anchor='end')
-    label(v, RX(24) - 2.2, cy('B', 8) + 1.3, 'P2', '#b45309', 9, anchor='end')
+    label(v, NX(NUC_ROWS) - 2.2, cy('A', 7) + 1.3, 'CN10', '#0f766e', 9, anchor='end')
+    label(v, NX(NUC_ROWS) - 2.2, cy('B', 10) + 1.3, 'CN7', '#b45309', 9, anchor='end')
     # terminals and headers
     X0, X1, Y0, Y1 = boxes['6V IN']
     label(v, (X0 + X1) / 2, Y0 - 1.2, '6V IN', '#d97706', 8)
-    label(v, RX(1) + 2.2, cy('A', 9) + 0.9, 'pin 1 (n.c.)', '#0f766e', 7, anchor='start')
-    label(v, RX(1) + 2.2, cy('B', 7) + 0.9, 'pin 1', '#b45309', 7, anchor='start')
+    label(v, NX(1) + 2.2, cy('A', 7) + 0.9, 'pin 2', '#0f766e', 7, anchor='start')
+    label(v, NX(1) + 2.2, cy('B', 10) + 0.9, 'pin 1', '#b45309', 7, anchor='start')
     X0, X1, Y0, Y1 = boxes['SERVO']
     label(v, (X0 + X1) / 2, Y0 - 1.6, 'SERVO', '#334155', 7.5)
     for (col, row, _), (t, colr) in zip(MALE[0][1], (('blk', '#111827'), ('red', '#dc2626'), ('wht', '#64748b'))):
@@ -502,27 +552,27 @@ def carrier_labels_top(v, boxes):
     X0, X1, Y0, Y1 = boxes['TERM']
     label(v, X0 - 0.8, Y0 + 5.2, 'TERM', '#1d4ed8', 7.5, anchor='end')
     label(v, HX('A', 8), -17.8, 'C2 470µF', '#a16207', 7)
-    x, y = v.px(HX('A', 10), cy('A', 8))
-    text(x, y - 7, 'R4 1k', 7, '#1e40af', '700', anchor='middle', halo=True)
+    label(v, HX('A', 16) - 2.0, cy('A', 5) + 0.9, 'R4 1k', '#1e40af', 7, anchor='end')
     label(v, HX('B', 23) - 2.2, cy('B', 11) + 0.9, 'R3a 100R', '#1e40af', 7, anchor='end')
     label(v, HX('B', 24) - 2.2, cy('B', 13) + 0.9, 'R3b 20R', '#1e40af', 7, anchor='end')
 
-PIN_LAB = {  # (board, col, row): (text, level, anchor) - B's in the gap, A's over A's inner columns
-    ('B', 'g', 17): ('P2-33 PD1', 1, 'start'), ('B', 'h', 18): ('P2-36 PD0', 0, 'end'),
-    ('A', 'i', hdr_hole('A', 14)): ('P1-27 PE9', 0, 'start'), ('A', 'i', hdr_hole('A', 3)): ('P1-5 GND', 0, 'end'),
-    ('A', 'j', hdr_hole('A', 17)): ('P1-34 PB10', 1, 'start'), ('A', 'i', hdr_hole('A', 18)): ('P1-35 PB11', 0, 'end'),
+PIN_LAB = {  # (board, col, row): (text, level, anchor) - each board's over its own inner columns
+    nuc_hole('CN7', 6): ('CN7-6 E5V', 1, 'start'), nuc_hole('CN7', 8): ('CN7-8 GND', 0, 'start'),
+    nuc_hole('CN7', 16): ('CN7-16 3V3', 1, 'end'), nuc_hole('CN7', 19): ('CN7-19 GND', 0, 'end'),
+    nuc_hole('CN10', 3): ('CN10-3 PB6', 2, 'start'), nuc_hole('CN10', 5): ('CN10-5 PB7', 1, 'end'),
+    nuc_hole('CN10', 9): ('CN10-9 GND', 0, 'start'), nuc_hole('CN10', 16): ('CN10-16 PB12', 2, 'end'),
+    nuc_hole('CN10', 23): ('CN10-23 PA8', 1, 'end'), nuc_hole('CN10', 30): ('CN10-30 PB13', 0, 'end'),
 }
-# the P2 supply pins at the rear end, called out beyond the rear edge
-END_LAB = [('B', [('g', 1, 'P2-1 GND'), ('h', 1, 'P2-2 GND'), ('h', 2, 'P2-4 5V'), ('g', 3, 'P2-5 3V'), ('h', 3, 'P2-6 3V')])]
+END_LAB = []
 
 def carrier_labels_bottom(v):
-    _, yb = v.px(0, BOARD['B']['edge'][0])      # B's inner edge (lower in this view)
-    _, ya = v.px(0, cy('A', 12))                # A's inner columns, clear of every wire
+    _, yb = v.px(0, cy('B', 6))                 # B's inner columns (below its sockets in this view)
+    _, ya = v.px(0, cy('A', 12))                # A's inner columns (above its sockets)
     for (b, col, r), (t, lvl, anc) in PIN_LAB.items():
         x, y = hp(v, b, ci(col), r)
         colr = '#0f766e' if b == 'A' else '#b45309'
-        ty = yb + 12 + 11 * lvl if b == 'B' else ya - 11 * lvl
-        w(f'<line x1="{x:.1f}" y1="{y:.1f}" x2="{x:.1f}" y2="{ty - (3 if b == "B" else -3):.1f}" stroke="{colr}" stroke-width="0.8"/>')
+        ty = yb + 11 * lvl if b == 'B' else ya - 11 * lvl
+        w(f'<line x1="{x:.1f}" y1="{y:.1f}" x2="{x:.1f}" y2="{ty - (6 if b == "B" else -3):.1f}" stroke="{colr}" stroke-width="0.8"/>')
         w(f'<circle cx="{x:.1f}" cy="{y:.1f}" r="4.2" fill="none" stroke="{colr}" stroke-width="1.3"/>')
         text(x + (3 if anc == 'start' else -3), ty + 3, t, 7, colr, '700', anchor=anc, halo=True)
     xe, _ = v.px(BX[1], 0)
@@ -690,32 +740,32 @@ def board_c(v, top):
             draw_wire(v, net, 'C', pts, kind, hfun=hf)
 
 def orientation_inset(y0):
-    """Which board goes under which header: the Discovery from above, A and B beneath it."""
-    text(RX0, y0, 'ORIENTATION - where A and B sit under the Discovery', 12, '#1a1a1a', '700')
+    """Which board goes under which header: the Nucleo from above, A and B beneath it."""
+    text(RX0, y0, 'ORIENTATION - where A and B sit under the Nucleo', 12, '#1a1a1a', '700')
     w(f'<line x1="{RX0}" y1="{y0 + 8}" x2="{W - 40}" y2="{y0 + 8}" stroke="#e2e8f0"/>')
     v = View(RX0 + 42, y0 + 32, XMIN, YMIN, YMAX, flip=False, scale=1.55)
     for b in ('A', 'B'):
         v.rect(*bx(b), BOARD[b]['edge'][0], BOARD[b]['edge'][1], rx=2, fill='#dcfce7',
                stroke='#15803d', stroke_width=1.2)
         board_a1(v, b, leg=9.0)
-        # the label goes on the strip of each board outboard of the Discovery
-        yl = (BOARD[b]['edge'][0] + DISCO['y'][0]) / 2 if b == 'A' else (DISCO['y'][1] + BOARD[b]['edge'][1]) / 2
+        # the label goes on the strip of each board outboard of the Nucleo
+        yl = (BOARD[b]['edge'][0] + NUC['y'][0]) / 2 if b == 'A' else (NUC['y'][1] + BOARD[b]['edge'][1]) / 2
         x, y = v.px(-15, yl)
         text(x, y + 4, f'board {b}', 10, '#15803d', '700', anchor='middle')
-    v.rect(DISCO['x'][0], DISCO['x'][1], DISCO['y'][0], DISCO['y'][1], rx=2, fill='none',
+    v.rect(NUC['x'][0], NUC['x'][1], NUC['y'][0], NUC['y'][1], rx=2, fill='none',
            stroke='#4338ca', stroke_width=1.4, stroke_dasharray='5 3')
     x, y = v.px(-28, 29.2)
-    text(x, y + 3, 'Discovery, above', 7.5, '#4338ca', '700', anchor='middle')
-    for b, cols, lab in (('A', ('i', 'j'), 'P1'), ('B', ('g', 'h'), 'P2')):
+    text(x, y + 3, 'Nucleo, above', 7.5, '#4338ca', '700', anchor='middle')
+    for b, cols, pin1, lab in (('A', ('g', 'h'), 'h', 'CN10'), ('B', ('i', 'j'), 'j', 'CN7')):
         ya, yb = cy(b, ci(cols[0])), cy(b, ci(cols[1]))
-        v.rect(RX(25) - 1.27, RX(1) + 1.27, min(ya, yb) - 1.27, max(ya, yb) + 1.27, fill='#1f2937')
-        x, y = v.px(RX(1), cy(b, ci(cols[0])))         # pin 1 (odd pins' column), at the CN1 end
+        v.rect(NX(NUC_ROWS) - 1.27, NX(1) + 1.27, min(ya, yb) - 1.27, max(ya, yb) + 1.27, fill='#1f2937')
+        x, y = v.px(NX(1), cy(b, ci(pin1)))            # pin 1 (odd pins' column), at the CN1 end
         w(f'<circle cx="{x:.1f}" cy="{y:.1f}" r="2.4" fill="#fbbf24"/>')
-        x, y = v.px(RX(13), max(ya, yb) + (5.5 if b == 'A' else 4.8))
+        x, y = v.px(NX(10), max(ya, yb) + (5.5 if b == 'A' else 4.8))
         text(x, y, lab, 8, '#4338ca', '700', anchor='middle', halo=True)
-    v.rect(DISCO['x'][1] - 7, DISCO['x'][1] + 1, CN1_Y - 3.9, CN1_Y + 3.9, rx=1, fill='#94a3b8', stroke='#334155', stroke_width=0.8)
-    x, y = v.px(DISCO['x'][1] - 3, CN1_Y)
-    text(x - 7, y + 3, 'CN1', 7, '#334155', '700', anchor='end', halo=True)
+    v.rect(NUC['x'][1] - 7.3, NUC['x'][1] + 0.6, CN1_Y - 4.5, CN1_Y + 4.5, rx=1, fill='#94a3b8', stroke='#334155', stroke_width=0.8)
+    x, y = v.px(NUC['x'][1] - 3, CN1_Y)
+    text(x - 9, y + 3, 'CN1', 7, '#334155', '700', anchor='end', halo=True)
     x0, ya_ = v.px(XMIN, YMIN)
     x1, yb_ = v.px(XMAX, YMAX)
     text((x0 + x1) / 2, ya_ - 5, 'vehicle RIGHT', 7, '#64748b', anchor='middle')
@@ -724,11 +774,11 @@ def orientation_inset(y0):
     text(x1 + 4, (ya_ + yb_) / 2, 'REAR', 7, '#64748b', '700', anchor='start')
     tx = x1 + 40
     lines = [
-        ('Discovery from above, components up, as in every view.', True),
-        ('CN1, the ST-LINK mini-USB, points to the REAR (fascia).', False),
-        ('P1 is the header on the vehicle RIGHT: board A goes under it.', False),
-        ('P2 is the header on the vehicle LEFT: board B goes under it.', False),
-        ('Both headers have pin 1 (yellow) at the CN1 end.', False),
+        ('Nucleo from above, components up, as in every view.', True),
+        ('CN1, the ST-LINK USB-C, points to the REAR (fascia).', False),
+        ('CN10 is the header on the vehicle RIGHT: board A goes under it.', False),
+        ('CN7 is the header on the vehicle LEFT: board B goes under it.', False),
+        ('Both have pin 1 (yellow) at the CN1 end, in their vehicle-LEFT column.', False),
         ('', False),
         ('Red triangle = the corner at printed hole A1.', True),
         ('On A and on B: the FRONT corner on the vehicle-LEFT edge.', False),
@@ -746,12 +796,12 @@ if __name__ == "__main__":
     w(f'<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewBox="0 0 {W} {H}" font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif">')
     w(f'<rect width="{W}" height="{H}" fill="#fbfaf8"/>')
     text(40, 30, 'NEXUS - STM32 carrier and 5 V split board: soldering and wiring', 18, '#1a1a1a', '700')
-    text(40, 49, 'Kit perfboards (BOM 5.11), 2.54 grid · Boards A and B, both 5×7 cm (18 × 24 holes), under P1 and P2, 5.9 mm apart · Board C 3×7 cm (10 × 24), the 5 V split · MEC-08 / MEC-15 / HW-19', 10.5, '#666')
+    text(40, 49, 'Kit perfboards (BOM 5.11), 2.54 grid · Boards A and B, both 5×7 cm (18 × 24 holes), under CN10 and CN7 of the NUCLEO-H533RE, 5.9 mm apart · Board C 3×7 cm (10 × 24), the 5 V split · MEC-08 / MEC-15 / HW-19', 10.5, '#666')
     def col_range(b, c):           # the holes a socket column's soldered tails occupy
-        hs = [hdr_hole(b, n) for n in range(1, 26) if n not in SOCKET_NC[b] and 1 <= hdr_hole(b, n) <= 24]
+        hs = [hdr_hole(b, k) for k in range(1, NUC_ROWS + 1)]
         return f"{b}·{silk(b, c, max(hs))}-{silk(b, c, min(hs))}"
     text(40, 66, 'Hole names: board·hole, as PRINTED on the kit board - letters A-X along the 70 mm side, numbers across (1-18 on A and B, 1-10 on C), A1 bottom-left with the print readable, as every view shows it.', 9.5, '#b45309')
-    text(40, 80, f"B: header row n is letter X for row 1 back to A for row 24 · A, AS BUILT: one hole on, row 2 on X, row 1 off the board · P1 odd pins {col_range('A', 'i')}, even {col_range('A', 'j')[2:]} · P2 odd {col_range('B', 'g')}, even {col_range('B', 'h')[2:]} · fixings: four corner holes per board (MEC-17).", 9.5, '#b45309')
+    text(40, 80, f"Nucleo header row k sits on B's hole row k + 5 and A's k + 4 (A one hole on, as built) · CN10 even pins {col_range('A', 'g')}, odd {col_range('A', 'h')[2:]} · CN7 even {col_range('B', 'i')}, odd {col_range('B', 'j')[2:]} · fixings: four corner holes per board (MEC-17).", 9.5, '#b45309')
     text(40, 93, 'Wires on the solder side, ALL INSULATED, PAD TO PAD: they meet only at pads, two wire ends per pad at most. Thick 18 AWG (3.11), thin 22 AWG, grey = a part lead bent over.', 9.5, '#b45309')
 
     # views
@@ -759,13 +809,13 @@ if __name__ == "__main__":
     vt = View(VX1, VY, XMIN, YMIN, YMAX, flip=False)
     vb = View(VX2, VY, XMIN, YMIN, YMAX, flip=True)
     text(VX1 - 40, 108, 'A + B  COMPONENT SIDE  (from above, front LEFT)', 12, '#1a1a1a', '700')
-    text(VX1 - 40, 123, 'P1 on the vehicle right (top), P2 on the vehicle left (bottom) - chassis-layout convention', 8.5, '#64748b')
+    text(VX1 - 40, 123, 'CN10 on the vehicle right (top), CN7 on the vehicle left (bottom) - chassis-layout convention', 8.5, '#64748b')
     text(VX2 - 30, 108, 'A + B  SOLDER SIDE  (turned over about the long axis)', 12, '#1a1a1a', '700')
-    text(VX2 - 30, 123, 'front still LEFT, so P2 is now on TOP and every column reads upside down', 8.5, '#64748b')
+    text(VX2 - 30, 123, 'front still LEFT, so CN7 is now on TOP and every column reads upside down', 8.5, '#64748b')
     row_labels(vt, VY - 15)
     row_labels(vb, VY - 15)
     _, yb0 = vt.px(0, YMIN)
-    text(vt.px(RX(1), 0)[0] + 16, VY - 15, '◀ Discovery header row  (rear ▶)', 6.5, '#64748b')
+    text(vt.px(RX(1), 0)[0] + 16, VY - 15, '◀ Nucleo header row  (rear ▶)', 6.5, '#64748b')
 
     boxes = carrier_view(vt, True)
     carrier_labels_top(vt, boxes)
@@ -781,7 +831,7 @@ if __name__ == "__main__":
     for v in (vt, vb):
         x0, y0 = v.px(XMIN, YMAX if not v.flip else YMIN)
         x1, _ = v.px(XMAX, 0)
-        text((x0 + x1) / 2, y0 + 22, 'front ◀  A sits one pitch ahead of B (as built) · A front to Discovery rear 100.6 mm  ▶ rear (fascia)', 8.5, '#64748b', anchor='middle')
+        text((x0 + x1) / 2, y0 + 22, f'front ◀  A sits one pitch ahead of B (as built) · A front to Nucleo rear {NUC["x"][1] - bx("A")[0]:.1f} mm  ▶ rear (fascia)', 8.5, '#64748b', anchor='middle')
         text((x0 + x1) / 2, y0 + 34, 'overall width 106 mm · four corner holes per board, 8 mm nylon M2.5 standoffs, onto the carrier tray (MEC-17)', 8.5, '#64748b', anchor='middle')
 
     # board C views
@@ -819,19 +869,19 @@ if __name__ == "__main__":
         return y
 
     net_rows = [
-        (NET['5V'], '5 V', 'C TO STM32', f"B 5V IN ({N('B', 'q', 21)}) → P2-4 ({silk('B', 'h', 2)})"),
+        (NET['5V'], '5 V', 'C TO STM32', f"B 5V IN ({N('B', 'q', 21)}) → CN7-6 E5V ({silk(*nuc_hole('CN7', 6))}), JP5 on [5-6]"),
         (NET['5V'], '5 V FRDM', 'C IN 5V', f"{N('C', 'a', 24)} → C1 + ({silk('C', 'a', 12)}) → socket red ({silk('C', 'a', 7)}), 18 AWG"),
         (NET['GND'], 'GND FRDM', 'C IN GND', f"{N('C', 'c', 24)} → C1 − ({silk('C', 'c', 12)}) → socket black ({silk('C', 'c', 7)}), 18 AWG"),
-        (NET['GND'], 'GND STM32', 'C IN GND', f"TO STM32 − → B 5V IN − ({N('B', 'q', 23)}) → P2-2 ({silk('B', 'h', 1)}) · → XCVR GND ({xc('GND')})"),
-        (NET['GND'], 'GND CAN', f"P2-1 {N('B', 'g', 1)}", f"CAN GND ({silk('B', 'q', 1)})"),
-        (NET['GND'], 'GND (A)', f"P1-5 {N('A', 'i', hdr_hole('A', 3))}", f"→ 6V IN − ({N('A', 'c', 3)}) → C2 − → SERVO → I2C-B → I2C-A"),
-        (NET['3V3'], '3.3 V', 'P2-5 / P2-6', f"P2-6 ({N('B', 'h', 3)}) → XCVR 3V3 ({xc('3V3')}) · P2-5 → bridge → I2C-A VCC ({N('A', 'c', 21)})"),
+        (NET['GND'], 'GND STM32', 'C IN GND', f"TO STM32 − → B 5V IN − ({N('B', 'q', 23)}) → CN7-19 ({silk(*nuc_hole('CN7', 19))}) · → XCVR GND ({xc('GND')})"),
+        (NET['GND'], 'GND CAN', f"CN7-8 {N(*nuc_hole('CN7', 8))}", f"CAN GND ({silk('B', 'q', 1)})"),
+        (NET['GND'], 'GND (A)', f"CN10-9 {N(*nuc_hole('CN10', 9))}", f"→ 6V IN − ({N('A', 'c', 3)}) → C2 − → SERVO → I2C-B → I2C-A"),
+        (NET['3V3'], '3.3 V', f"CN7-16 {N(*nuc_hole('CN7', 16))}", f"→ XCVR 3V3 ({xc('3V3')}) · → bridge → I2C-A VCC ({N('A', 'c', 21)})"),
         (NET['6V'], 'Servo 6 V', 'A 6V IN +', f"{N('A', 'c', 1)} → C2 + ({silk('A', 'c', 10)}) → SERVO + ({silk('A', 'c', 13)}), 18 AWG"),
-        (NET['PWM'], 'Servo PWM', 'P1-27 PE9', f"R4 1k ({N('A', 'h', 12)}-{silk('A', 'h', 8)}) → SERVO SIG ({silk('A', 'c', 14)})"),
-        (NET['SCL'], 'I²C2 SCL', 'P1-34 PB10', f"I2C-B ({N('A', 'c', 17)}) → I2C-A ({silk('A', 'c', 22)})"),
-        (NET['SDA'], 'I²C2 SDA', 'P1-35 PB11', f"I2C-B ({N('A', 'c', 18)}) → I2C-A ({silk('A', 'c', 23)})"),
-        (NET['CTX'], 'CAN1_TX', 'P2-33 PD1', f"XCVR CTX (B·{xc('CTX')}) - straight, not crossed"),
-        (NET['CRX'], 'CAN1_RX', 'P2-36 PD0', f"XCVR CRX (B·{xc('CRX')})"),
+        (NET['PWM'], 'TIM1_CH1', 'CN10-23 PA8', f"R4 1k ({N('A', 'e', 16)}-{silk('A', 'e', 12)}) → SERVO SIG ({silk('A', 'c', 14)})"),
+        (NET['SCL'], 'I²C1 SCL', 'CN10-3 PB6', f"I2C-B ({N('A', 'c', 17)}) → I2C-A ({silk('A', 'c', 22)})"),
+        (NET['SDA'], 'I²C1 SDA', 'CN10-5 PB7', f"I2C-B ({N('A', 'c', 18)}) → I2C-A ({silk('A', 'c', 23)})"),
+        (NET['CTX'], 'FDCAN2_TX', 'CN10-30 PB13', f"bridge → XCVR CTX (B·{xc('CTX')}) - straight, not crossed"),
+        (NET['CRX'], 'FDCAN2_RX', 'CN10-16 PB12', f"bridge → XCVR CRX (B·{xc('CRX')})"),
         (NET['CANH'], 'CAN_H', 'module H pin', f"socket {N('B', 'o', CAN_ROW)} ← CAN H ({silk('B', 'm', 1)}) · → R3a ({silk('B', 'k', 19)})"),
         (NET['CANL'], 'CAN_L', 'module L pin', f"socket {N('B', 'p', CAN_ROW)} ← CAN L ({silk('B', 'o', 1)}) · → TERM ({silk('B', 'm', 22)})"),
         (NET['TERM'], 'TERM', 'R3a + R3b', f"100R {N('B', 'k', 19)}-{silk('B', 'k', 23)}, lead to {silk('B', 'k', 24)}, 20R to {silk('B', 'o', 24)} → TERM ({silk('B', 'm', 23)}) = 120 Ω"),
@@ -849,12 +899,13 @@ if __name__ == "__main__":
         (None, 'A I2C-B', 'motor module SCL / SDA / GND - never its 5 V pin'),
         (None, 'B CAN', 'twisted H, L + GND to DE-9 stub and FRDM J7 (HW-09, HW-18)'),
         (None, 'B TERM', 'jumper ON = this end terminated (120 Ω), OFF = open'),
+        (None, 'CN1', 'ST-LINK USB-C: a 90° USB-C plug to the fascia Mini-B extension (5.10); a straight plug meets the FRDM USB-C port body'),
     ]
     y = table(y + 26, 'WHAT PLUGS IN WHERE', ['Connector', 'Cable'], ext_rows, [12, 96])
 
     parts = [
-        (None, 'Board A', '5×7 board · 2 × 1×25 female · 1 × 2p terminal · 1×3 + 1×3 + 1×4 male · C2 470µF · R4 1k'),
-        (None, 'Board B', '5×7 board · 2 × 1×25 + 1 × 1×4 + 1 × 1×2 female · 3p + 2p terminal · 1×2 male + jumper cap · R3a 100Ω + R3b 20Ω (120 Ω)'),
+        (None, 'Board A', '5×7 board · 2 × 1×19 female · 1 × 2p terminal · 1×3 + 1×3 + 1×4 male · C2 470µF · R4 1k'),
+        (None, 'Board B', '5×7 board · 2 × 1×19 + 1 × 1×4 + 1 × 1×2 female · 3p + 2p terminal · 1×2 male + jumper cap · R3a 100Ω + R3b 20Ω (120 Ω)'),
         (None, 'Board C', '3×7 board · 2 × 2p terminal · USB-C socket (5.1), 2 zip ties · C1 470µF'),
         (None, 'From stock', 'caps: 2 of the 5 in 3.14 · resistors: 3.21 · module: 4.1 · headers, terminals: 5.11'),
         (None, 'Wire', '22 AWG insulated copper hook-up wire (not in BOM) · 18 AWG silicone copper (3.11) for the thick runs · not the CCA Dupont leads (5.7)'),
@@ -868,7 +919,7 @@ if __name__ == "__main__":
     ]
     y = table(y + 26, 'FIXINGS  (MEC-17)', ['Board', 'Hole', 'Fixing'], fix_rows, [12, 62, 170])
     text(RX0, y + 16, 'Nothing is drilled. The tray (MEC-17) takes the boards from below; only the tray is screwed to plate 2, by six M2.5 screws (T1-T6).', 8.4, '#475569')
-    text(RX0, y + 29, 'A·X.. at chassis x 181.20 · header row 1 and B·X.. at x 183.74 (B and the Discovery 2.54 mm back, as built) · A y 5.11, B y 110.99.', 8.4, '#475569')
+    text(RX0, y + 29, f'A·X.. at chassis x 181.20, B·X.. at x 183.74 (as built) · Nucleo row 1 at x {183.74 + NX(1):.2f}, its outline x {183.74 + NUC["x"][0]:.1f}-{183.74 + NUC["x"][1]:.1f} · A y 5.11, B y 110.99.', 8.4, '#475569')
     orientation_inset(y + 58)
 
     # ---------------------------------------------------------------- checks and notes (bottom band)
@@ -877,13 +928,13 @@ if __name__ == "__main__":
     w(f'<line x1="40" y1="{NY + 8}" x2="{RX0 - 30}" y2="{NY + 8}" stroke="#e2e8f0"/>')
     checks = [
         '1  Count the holes: A and B need 18 × 24, C 10 × 24. The drawing assumes the usual kit counts; a board one row short moves everything.',
-        '2  Cut four 1×25 strips from the 40-pin female headers and snip the 25th tail of each flush with the body. Dry-fit them on the Discovery,',
-        f"    boards A and B under them: pins on {col_range('A', 'i')} / {col_range('A', 'j')[2:]} and {col_range('B', 'g')} / {col_range('B', 'h')[2:]}, and header row 25 past A, on the margin with no hole under it.",
-        '3  Solder the sockets WITH THE DISCOVERY PLUGGED IN - it is the only thing that sets the 53.34 mm between A and B. Tack two corners, check, finish.',
+        '2  Take out the old 1×25 sockets whole, pin by pin: their columns sit under the Nucleo\'s Arduino tails. Cut four 1×19 strips from the',
+        f"    40-pin female headers and dry-fit them on the Nucleo, A and B on the tray under it: {col_range('A', 'g')} / {col_range('A', 'h')[2:]} and {col_range('B', 'i')} / {col_range('B', 'j')[2:]}.",
+        '3  Solder the sockets WITH THE NUCLEO PLUGGED IN and A and B screwed to the tray: it sets the 63.50 mm between the rows. Tack two corners, check, finish.',
         f"4  SN65HVD230 FACE DOWN, pins bent 90° so its 2-pin CANH/CANL header lands 7 holes behind: sockets {N('B', 'n', XCVR_ROW)}-{silk('B', 'q', XCVR_ROW)} = {', '.join(l for _, _, l in XCVR_SOCKET[1][:2])},",
         f"    {', '.join(l for _, _, l in XCVR_SOCKET[1][2:])} and {N('B', 'o', CAN_ROW)} / {silk('B', 'p', CAN_ROW)} = CANH / CANL. Its screw terminal is unused. Measure CANH-CANL unpowered: ~120 Ω = remove its terminator.",
         '5  The kit terminals may be 5.0 mm, not 5.08: the 3p CAN block spans 10.0 vs 10.16 mm of holes. Push it in; do not drill.',
-        f"6  Before the Discovery goes back in: 5 V to GND not shorted · 6 V rail isolated from 5 V and 3V3 · 5 V on B·{silk('B', 'g', 2)} / {silk('B', 'h', 2)} only · nothing on B·{silk('B', 'g', 4)} (PH0) · {N('A', 'j', 3)} (P1-4 VDD) not on 3V3.",
+        f"6  Before the Nucleo goes in: 5 V to GND not shorted · 6 V isolated from 5 V and 3V3 · 5 V on {N(*nuc_hole('CN7', 6))} (E5V) only, nothing on {silk(*nuc_hole('CN7', 18))} (5V) or {silk(*nuc_hole('CN7', 5))} (VDD) · JP5 on [5-6].",
         '7  Fixings: nothing is drilled. Fit an 8 mm nylon standoff with a screw in each corner hole of A, B and C; the tray (MEC-17) takes the',
         '    boards from below. No wire may pass under a standoff: check each of the twelve before its screw goes in.',
     ]
@@ -894,10 +945,10 @@ if __name__ == "__main__":
 
     notes = [
         ('Why two 5×7 boards', [
-            'The kit\'s 7×9 (24 × 30) takes all 100 pins, but the Discovery',
-            'covers it, so no terminal or cap would have anywhere to go. Two 5×7s',
-            'leave them outboard and meet 5.9 mm apart. One wire crosses, the',
-            '3V3 bridge; A takes its GND from its own P1-5.',
+            'Kept from the Discovery: the boards, their standoffs and the tray',
+            '(MEC-17) do not move. The Nucleo\'s rows are 63.50 apart, 4 pitches',
+            'wider, so the sockets move two columns out on each board. Three',
+            'wires cross: 3V3 to A, the two FDCAN lines to B. A\'s GND is CN10-9.',
         ]),
         ('What moved off the WAGOs', [
             'Both 470 µF caps and every resistor are now on a board. C2 sits at',
@@ -908,9 +959,9 @@ if __name__ == "__main__":
         ('Grounds and supplies', [
             'The carrier\'s one ground lead is B 5V IN GND, back through C to the',
             '(−) WAGO (HW-06). The 6 V servo rail reaches C2 and SERVO only',
-            '(HW-11). 3V3 comes from P2-5/6, never P1 VDD (JP1): 100 mA ceiling,',
-            'the transceiver and INA226 logic only. R4 guards PE9 if the servo',
-            'plug goes on one pin off.',
+            '(HW-11). 3V3 comes from CN7-16, the Nucleo\'s own regulator, never',
+            'CN7-5 VDD. 5 V enters on E5V, so the ST-LINK USB alone does not',
+            'power the MCU: LOGIC on first, then the USB. R4 guards PA8.',
         ]),
     ]
     nx = 40
@@ -922,7 +973,7 @@ if __name__ == "__main__":
         nx += 350
 
     w(f'<line x1="40" y1="{H - 48}" x2="{W - 40}" y2="{H - 48}" stroke="#e2e8f0"/>')
-    text(40, H - 32, 'Geometry: UM1472 Fig. 10 (board 66 × 97, outer rows 53.34 apart, 6.33 in from each edge, first row 33.82 from the CN1 edge) · Pins: UM1472 Table 5 and the P1/P2 schematic · P2-3/4 = 5V, P2-5/6 = 3V, P2-7 = PH0', 8.4, '#94a3b8')
+    text(40, H - 32, 'Geometry: UM3121 Fig. 7 (board 70 × 82.5, outer rows 63.50 apart, 3.25 in from each edge, row 1 31.70 from the CN1 edge) · Pins: UM3121 Table 17 · AFs to check in DS14539 before soldering', 8.4, '#94a3b8')
     text(40, H - 18, 'Decisions: MEC-08 (carrier) · MEC-15 (kit boards) · HW-19 (5 V split board, selectable termination) · HW-06 · HW-09 · HW-11 · HW-18 · SVG is the master - PDFs are generated once the design is frozen.', 8.4, '#94a3b8')
     w('</svg>')
 

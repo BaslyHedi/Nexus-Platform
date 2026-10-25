@@ -222,8 +222,8 @@ def logic_lane():
     w(I + text(PX, 1235, 349, 'dumb 5 V, no PD', font_size=8, fill='#3b5bb5', text_anchor='middle'))
     w('')
     w(I + rect(PX, 1175, 375, 120, 50, fill='#dcfce7', stroke='#15803d', stroke_width=1.6, rx=2))
-    w(I + text(PX, 1235, 393, 'STM32F4DISCOVERY', font_size=10, font_weight=700, fill='#14532d', text_anchor='middle'))
-    w(I + text(PX, 1235, 407, '5 V via carrier B (5V IN)', font_size=8.5, fill='#166534', text_anchor='middle'))
+    w(I + text(PX, 1235, 393, 'NUCLEO-H533RE', font_size=10, font_weight=700, fill='#14532d', text_anchor='middle'))
+    w(I + text(PX, 1235, 407, '5 V via carrier B to E5V', font_size=8.5, fill='#166534', text_anchor='middle'))
     w(I + text(PX, 1235, 419, '⏚ back through board C', font_size=8, fill='#3f7d52', text_anchor='middle'))
     w('')
     return o
@@ -240,7 +240,7 @@ def carrier(x, y, w_, h, title, sub, lines, stroke, fill, ink):
 
 
 def signals():
-    """SIGNALS: INA226 and the motor module on carrier A, the Discovery on carriers A and B, CAN from B to the FRDM, the debug port."""
+    """SIGNALS: INA226 and the motor module on carrier A, the Nucleo on carriers A and B, CAN from B to the FRDM, the debug port."""
     o = []
     w = o.append
     w(I + comment('===================== SIGNALS ====================='))
@@ -253,7 +253,7 @@ def signals():
     w(I + text(PX, 120, 578, 'pack V + I', font_size=9, fill='#155e75', text_anchor='middle'))
     w(I + text(PX, 120, 594, 'ALERT → bus under-volt', font_size=8.5, fill='#155e75', text_anchor='middle'))
     w(I + path('M200,573 L225,573 L225,655 L250,655', fill='none', stroke=NET['i2c'], stroke_width=2.5, marker_end='url(#a)'))
-    w(I + text(PX, 212, 566, 'I²C2', font_size=8.5, font_weight=600, fill='#5b21b6', text_anchor='middle'))
+    w(I + text(PX, 212, 566, 'I²C1', font_size=8.5, font_weight=600, fill='#5b21b6', text_anchor='middle'))
     w(I + rect(PX, 40, 640, 160, 112, fill='#faf5ff', stroke='#9333ea', stroke_width=1.6, rx=3))
     w(I + text(PX, 120, 659, 'Encoder Motor Module', font_size=9.5, font_weight=700, fill='#6b21a8', text_anchor='middle'))
     w(I + text(PX, 120, 673, 'V1.4 · MM32F103', font_size=8.5, fill='#7e22ce', text_anchor='middle'))
@@ -264,24 +264,24 @@ def signals():
     w(I + path('M200,696 L225,696 L225,675 L250,675', fill='none', stroke=NET['i2c'], stroke_width=2.5, marker_end='url(#a)'))
     w(I + text(PX, 212, 714, 'I²C', font_size=8.5, font_weight=600, fill='#5b21b6', text_anchor='middle'))
     w('')
-    w(I + comment('the Discovery plugs onto carrier A (under P1) and carrier B (under P2); both sit on the carrier tray on plate 2'))
+    w(I + comment('the Nucleo plugs onto carrier A (under CN10) and carrier B (under CN7); both sit on the carrier tray on plate 2'))
     w(I + rect(PX, 250, 520, 350, 62, fill='#dcfce7', stroke='#15803d', stroke_width=1.8, rx=3))
-    w(I + text(PX, 425, 540, 'STM32F4DISCOVERY · STM32F407', font_size=11, font_weight=700, fill='#14532d', text_anchor='middle'))
-    w(I + text(PX, 425, 556, 'real-time + BMS · CAN1 AF9: PD0 RX · PD1 TX · I²C2 PB10 SCL / PB11 SDA · PE9 PWM', font_size=8, fill='#166534', text_anchor='middle'))
-    w(I + text(PX, 425, 571, 'PB9 = Audio_SDA - do not use · SWD only, no VCP → USB-TTL', font_size=8, fill='#3f7d52', text_anchor='middle'))
+    w(I + text(PX, 425, 540, 'NUCLEO-H533RE · STM32H533RE', font_size=11, font_weight=700, fill='#14532d', text_anchor='middle'))
+    w(I + text(PX, 425, 556, 'real-time + BMS · FDCAN2: PB12 RX · PB13 TX · I²C1 PB6 SCL / PB7 SDA · PA8 PWM', font_size=8, fill='#166534', text_anchor='middle'))
+    w(I + text(PX, 425, 571, 'ST-LINK V3EC with VCP · 5 V in on E5V, JP5 [5-6] · AFs to check in DS14539', font_size=8, fill='#3f7d52', text_anchor='middle'))
     w(I + line(PX, 335, 582, 335, 612, stroke='#94a3b8', stroke_width=5, marker_end='url(#a)'))
     w(I + line(PX, 515, 582, 515, 612, stroke='#94a3b8', stroke_width=5, marker_end='url(#a)'))
-    w(I + text(PX, 425, 603, 'plugs into the 1×25 sockets', font_size=8, fill='#64748b', text_anchor='middle'))
-    w(I + carrier(250, 612, 170, 140, 'CARRIER A', 'under P1 · plate 2', [
+    w(I + text(PX, 425, 603, 'plugs into the 1×19 sockets', font_size=8, fill='#64748b', text_anchor='middle'))
+    w(I + carrier(250, 612, 170, 140, 'CARRIER A', 'under CN10 · plate 2', [
         '6V IN terminal ← UBEC',
         'C2 470 µF across the servo header',
         'servo header: 6 V, GND, PWM',
-        '   via R4 1 kΩ from PE9',
+        '   via R4 1 kΩ from PA8',
         'I²C headers: INA226, motor module'], '#0f766e', '#f0fdfa', '#134e4a'))
-    w(I + carrier(430, 612, 170, 140, 'CARRIER B', 'under P2 · plate 2', [
+    w(I + carrier(430, 612, 170, 140, 'CARRIER B', 'under CN7 · plate 2', [
         '5V IN terminal ← board C',
         'SN65HVD230 module in a socket',
-        '   (TX / RX = PD1 / PD0, 3.3 V)',
+        '   (TX / RX = PB13 / PB12, 3.3 V)',
         'CAN terminal, 3-pin',
         'R3 120 Ω = TERM jumper'], '#1d4ed8', '#eff6ff', '#1e3a8a'))
     w('')
