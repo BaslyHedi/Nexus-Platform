@@ -986,7 +986,7 @@ if __name__ == "__main__":
         (None, 'A I2C-B', '90° on A by the gap, pointing forward: motor module SCL, SDA, GND, 5V - its own order; pin 4 has no wire'),
         (None, 'I2C leads', 'plugged before the Nucleo goes on; they leave A\'s front edge under it and drop through the tray window'),
         (None, 'A CAN', 'twisted H, L + GND to DE-9 stub and FRDM J7 (HW-09, HW-18); the module\'s 120 Ω terminates this end'),
-        (None, 'CN1', 'ST-LINK USB-C: a 90° USB-C plug to the fascia Mini-B extension (5.10); a straight plug meets the FRDM USB-C port body'),
+        (None, 'CN1', 'ST-LINK USB-C: Lindy 90° adapter (5.12) flat, turned to the vehicle left, then Mini-B to C (5.13), then the fascia extension (5.10)'),
     ]
     y = table(y + 26, 'WHAT PLUGS IN WHERE', ['Connector', 'Cable'], ext_rows, [12, 96])
 
