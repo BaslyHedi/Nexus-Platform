@@ -4,7 +4,7 @@
 <text x="40.0" y="49.0" font-size="10.5" fill="#666">Kit perfboards (BOM 5.11), 2.54 grid · Board A 5×7 cm (18 × 24 holes) under CN10, board B 3×7 cm (10 × 24) under CN7 of the NUCLEO-H533RE, 26 mm apart · Board C 3×7 cm (10 × 24), the 5 V split · MEC-08 / MEC-15 / HW-19</text>
 <text x="40.0" y="66.0" font-size="9.5" fill="#b45309">Hole names: board·hole, as PRINTED on the kit board - on A (5×7) letters A-X along the 70 mm side and numbers 1-18 across, on B and C (3×7) numbers 1-24 along and letters A-J across; A1 bottom-left with the print readable, as every view shows it.</text>
 <text x="40.0" y="80.0" font-size="9.5" fill="#b45309">Nucleo header row k sits on B's hole row k + 5 and A's k + 4 (A one pitch ahead, the tray) · CN10 even pins A·B12-T12, odd B11-T11 · CN7 even B·J1-J19, odd I1-I19 · fixings: the corner holes, three on B (MEC-17).</text>
-<text x="40.0" y="93.0" font-size="9.5" fill="#b45309">Wires on the solder side, ALL INSULATED. On A and B no wire goes on a pin: it lands on the free hole beside it, one wire per hole, and a solder bridge (silver) joins the two. Only B's four ringed CN7 pins take the wire straight. Thick 18 AWG (3.11), thin 22 AWG.</text>
+<text x="40.0" y="93.0" font-size="9.5" fill="#b45309">Wires on the solder side, ALL INSULATED. On A and B no wire goes on a pin: it lands on the free hole beside it, one wire per hole, and a solder bridge (silver) joins the two. Only B's two ringed CN7 pins (E5V, 3V3) take the wire straight. Thick 18 AWG (3.11), thin 22 AWG.</text>
 <text x="30.0" y="108.0" font-size="12" fill="#1a1a1a" font-weight="700">A + B  COMPONENT SIDE  (from above, front LEFT)</text>
 <text x="30.0" y="123.0" font-size="8.5" fill="#64748b">CN10 on the vehicle right (top), CN7 on the vehicle left (bottom) - chassis-layout convention</text>
 <text x="560.0" y="108.0" font-size="12" fill="#1a1a1a" font-weight="700">A + B  SOLDER SIDE  (turned over about the long axis)</text>
@@ -1868,10 +1868,12 @@
 <polyline points="686.7,247.5 686.7,235.8" fill="none" stroke="#e2e8f0" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
 <polyline points="640.0,247.5 640.0,235.8 640.0,224.1" fill="none" stroke="#94a3b8" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
 <polyline points="640.0,247.5 640.0,235.8 640.0,224.1" fill="none" stroke="#e2e8f0" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="733.5,259.2 733.5,247.5" fill="none" stroke="#94a3b8" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="733.5,259.2 733.5,247.5" fill="none" stroke="#e2e8f0" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="745.2,259.2 745.2,247.5" fill="none" stroke="#94a3b8" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="745.2,259.2 745.2,247.5" fill="none" stroke="#e2e8f0" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
 <circle cx="815.3" cy="270.8" r="5.2" fill="none" stroke="#b45309" stroke-width="1.2" stroke-dasharray="2 1.5"/>
 <circle cx="756.8" cy="270.8" r="5.2" fill="none" stroke="#b45309" stroke-width="1.2" stroke-dasharray="2 1.5"/>
-<circle cx="721.8" cy="270.8" r="5.2" fill="none" stroke="#b45309" stroke-width="1.2" stroke-dasharray="2 1.5"/>
-<circle cx="686.7" cy="270.8" r="5.2" fill="none" stroke="#b45309" stroke-width="1.2" stroke-dasharray="2 1.5"/>
 <polyline points="675.1,562.9 680.9,568.8 680.9,615.5 686.7,621.4" fill="none" stroke="#0891b2" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
 <circle cx="675.1" cy="562.9" r="2.3" fill="#0891b2" stroke="#fff" stroke-width="0.6"/>
 <circle cx="686.7" cy="621.4" r="2.3" fill="#0891b2" stroke="#fff" stroke-width="0.6"/>
@@ -1914,9 +1916,9 @@
 <polyline points="756.8,189.1 762.7,194.9 762.7,241.6 821.1,241.6 821.1,265.0 815.3,270.8" fill="none" stroke="#dc2626" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
 <circle cx="756.8" cy="189.1" r="2.3" fill="#dc2626" stroke="#fff" stroke-width="0.6"/>
 <circle cx="815.3" cy="270.8" r="2.3" fill="#dc2626" stroke="#fff" stroke-width="0.6"/>
-<polyline points="733.5,189.1 727.6,194.9 727.6,265.0 721.8,270.8" fill="none" stroke="#111827" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="733.5,189.1 727.6,194.9 727.6,241.6 733.5,247.5" fill="none" stroke="#111827" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
 <circle cx="733.5" cy="189.1" r="2.3" fill="#111827" stroke="#fff" stroke-width="0.6"/>
-<circle cx="721.8" cy="270.8" r="2.3" fill="#111827" stroke="#fff" stroke-width="0.6"/>
+<circle cx="733.5" cy="247.5" r="2.3" fill="#111827" stroke="#fff" stroke-width="0.6"/>
 <polyline points="733.5,165.7 727.6,159.8 645.8,159.8 645.8,183.2 640.0,189.1" fill="none" stroke="#111827" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
 <circle cx="733.5" cy="165.7" r="2.3" fill="#111827" stroke="#fff" stroke-width="0.6"/>
 <circle cx="640.0" cy="189.1" r="2.3" fill="#111827" stroke="#fff" stroke-width="0.6"/>
@@ -1929,8 +1931,8 @@
 <polyline points="698.4,200.7 651.7,200.7" fill="none" stroke="#111827" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
 <circle cx="698.4" cy="200.7" r="2.3" fill="#111827" stroke="#fff" stroke-width="0.6"/>
 <circle cx="651.7" cy="200.7" r="2.3" fill="#111827" stroke="#fff" stroke-width="0.6"/>
-<polyline points="686.7,270.8 680.9,265.0 680.9,241.6 686.7,235.8" fill="none" stroke="#92400e" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-<circle cx="686.7" cy="270.8" r="2.3" fill="#92400e" stroke="#fff" stroke-width="0.6"/>
+<polyline points="745.2,247.5 739.3,253.3 692.6,253.3 692.6,241.6 686.7,235.8" fill="none" stroke="#92400e" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="745.2" cy="247.5" r="2.3" fill="#92400e" stroke="#fff" stroke-width="0.6"/>
 <circle cx="686.7" cy="235.8" r="2.3" fill="#92400e" stroke="#fff" stroke-width="0.6"/>
 <polyline points="756.8,270.8 751.0,276.7 680.9,276.7 680.9,370.2 680.9,416.9 675.1,422.7" fill="none" stroke="#db2777" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
 <circle cx="756.8" cy="270.8" r="2.3" fill="#db2777" stroke="#fff" stroke-width="0.6"/>
@@ -1944,7 +1946,7 @@
 <text x="806.6" y="308.9" font-size="7" fill="#b45309" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="start">CN7-8 GND</text>
 <line x1="756.8" y1="270.8" x2="756.8" y2="310.9" stroke="#b45309" stroke-width="0.8"/>
 <circle cx="756.8" cy="270.8" r="4.2" fill="none" stroke="#b45309" stroke-width="1.3"/>
-<text x="753.8" y="319.9" font-size="7" fill="#b45309" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="end">CN7-16 3V3</text>
+<text x="759.8" y="319.9" font-size="7" fill="#b45309" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="start">CN7-16 3V3</text>
 <line x1="733.5" y1="259.2" x2="733.5" y2="299.9" stroke="#b45309" stroke-width="0.8"/>
 <circle cx="733.5" cy="259.2" r="4.2" fill="none" stroke="#b45309" stroke-width="1.3"/>
 <text x="730.5" y="308.9" font-size="7" fill="#b45309" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="end">CN7-19 GND</text>
@@ -1966,9 +1968,9 @@
 <line x1="675.1" y1="551.3" x2="675.1" y2="495.8" stroke="#0f766e" stroke-width="0.8"/>
 <circle cx="675.1" cy="551.3" r="4.2" fill="none" stroke="#0f766e" stroke-width="1.3"/>
 <text x="672.1" y="495.8" font-size="7" fill="#0f766e" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="end">CN10-30 PB13</text>
-<line x1="686.7" y1="270.8" x2="686.7" y2="321.9" stroke="#b45309" stroke-width="0.8"/>
-<circle cx="686.7" cy="270.8" r="4.2" fill="none" stroke="#b45309" stroke-width="1.3"/>
-<text x="683.7" y="330.9" font-size="7" fill="#b45309" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="end">CN7-28 PA0</text>
+<line x1="745.2" y1="259.2" x2="745.2" y2="321.9" stroke="#b45309" stroke-width="0.8"/>
+<circle cx="745.2" cy="259.2" r="4.2" fill="none" stroke="#b45309" stroke-width="1.3"/>
+<text x="742.2" y="330.9" font-size="7" fill="#b45309" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="end">CN7-17 PA15</text>
 <text x="267.2" y="659.0" font-size="8.5" fill="#64748b" text-anchor="middle">front ◀  A sits one pitch ahead of B (the tray) · A front to Nucleo rear 85.8 mm  ▶ rear (fascia)</text>
 <text x="267.2" y="671.0" font-size="8.5" fill="#64748b" text-anchor="middle">overall width 106 mm · the corner holes, three on B, on 8 mm nylon M2.5 standoffs, onto the carrier tray (MEC-17)</text>
 <text x="787.2" y="659.0" font-size="8.5" fill="#64748b" text-anchor="middle">front ◀  A sits one pitch ahead of B (the tray) · A front to Nucleo rear 85.8 mm  ▶ rear (fascia)</text>
@@ -2673,7 +2675,7 @@
 <rect x="1133" y="197" width="4" height="9" fill="#111827"/>
 <text x="1142.0" y="205.0" font-size="8.4" fill="#1e293b" font-weight="700">GND STM32</text>
 <text x="1226.0" y="205.0" font-size="7.9" fill="#475569">C IN GND</text>
-<text x="1320.0" y="205.0" font-size="7.9" fill="#475569">TO STM32 − → B 5V IN − (B·B10) → CN7-22 (J9) · → SERVO GND (D2)</text>
+<text x="1320.0" y="205.0" font-size="7.9" fill="#475569">TO STM32 − → B 5V IN − (B·B10) → CN7-19 (I10) · → SERVO GND (D2)</text>
 <rect x="1130" y="211" width="550" height="19" fill="#ffffff" stroke="#e2e8f0"/>
 <rect x="1133" y="216" width="4" height="9" fill="#111827"/>
 <text x="1142.0" y="224.0" font-size="8.4" fill="#1e293b" font-weight="700">Servo GND</text>
@@ -2702,7 +2704,7 @@
 <rect x="1130" y="306" width="550" height="19" fill="#f8fafc" stroke="#e2e8f0"/>
 <rect x="1133" y="311" width="4" height="9" fill="#92400e"/>
 <text x="1142.0" y="319.0" font-size="8.4" fill="#1e293b" font-weight="700">TIM2_CH1</text>
-<text x="1226.0" y="319.0" font-size="7.9" fill="#475569">CN7-28 PA0</text>
+<text x="1226.0" y="319.0" font-size="7.9" fill="#475569">CN7-17 PA15</text>
 <text x="1320.0" y="319.0" font-size="7.9" fill="#475569">R4 1k (B·H6-H2) → SERVO SIG (F2)</text>
 <rect x="1130" y="325" width="550" height="19" fill="#ffffff" stroke="#e2e8f0"/>
 <rect x="1133" y="330" width="4" height="9" fill="#7c3aed"/>
@@ -2864,7 +2866,7 @@
 <text x="40.0" y="1209.0" font-size="9.3" fill="#1e293b" font-weight="700">Why A and B split this way</text>
 <text x="40.0" y="1223.0" font-size="8.8" fill="#475569">New boards on the same tray (MEC-17). Every CAN pin is on</text>
 <text x="40.0" y="1235.5" font-size="8.8" fill="#475569">CN10 and every supply pin on CN7, so A takes CAN and I2C and B the</text>
-<text x="40.0" y="1248.0" font-size="8.8" fill="#475569">power and the servo (PA0): one wire crosses, 3V3. Each header is</text>
+<text x="40.0" y="1248.0" font-size="8.8" fill="#475569">power and the servo (PA15): one wire crosses, 3V3. Each header is</text>
 <text x="40.0" y="1260.5" font-size="8.8" fill="#475569">in its module's order: a straight lead is right.</text>
 <text x="390.0" y="1209.0" font-size="9.3" fill="#1e293b" font-weight="700">What moved off the WAGOs</text>
 <text x="390.0" y="1223.0" font-size="8.8" fill="#475569">Both 470 µF caps and every resistor are now on a board. C2 sits at</text>
@@ -2876,8 +2878,8 @@
 <text x="740.0" y="1235.5" font-size="8.8" fill="#475569">(−) WAGO (HW-06). The 6 V servo rail reaches C2 and SERVO only</text>
 <text x="740.0" y="1248.0" font-size="8.8" fill="#475569">(HW-11). 3V3 comes from CN7-16, the Nucleo's own regulator, never</text>
 <text x="740.0" y="1260.5" font-size="8.8" fill="#475569">CN7-5 VDD. 5 V enters on E5V, so the ST-LINK USB alone does not</text>
-<text x="740.0" y="1273.0" font-size="8.8" fill="#475569">power the MCU: LOGIC on first, then the USB. R4 guards PA0.</text>
+<text x="740.0" y="1273.0" font-size="8.8" fill="#475569">power the MCU: LOGIC on first, then the USB. R4 guards PA15.</text>
 <line x1="40" y1="1352" x2="1680" y2="1352" stroke="#e2e8f0"/>
-<text x="40.0" y="1368.0" font-size="8.4" fill="#94a3b8">Geometry: UM3121 Fig. 7 (board 70 × 82.5, outer rows 63.50 apart, 3.25 in from each edge, row 1 31.70 from the CN1 edge) · Pins: UM3121 Table 17 · AFs: DS14539 Rev 3 (PB12 / PB13 AF9, PB6 / PB7 AF4, PA8 AF1)</text>
+<text x="40.0" y="1368.0" font-size="8.4" fill="#94a3b8">Geometry: UM3121 Fig. 7 (board 70 × 82.5, outer rows 63.50 apart, 3.25 in from each edge, row 1 31.70 from the CN1 edge) · Pins: UM3121 Table 17 · AFs: DS14539 Rev 3 (PB12 / PB13 AF9, PB6 / PB7 AF4, PA15 AF1)</text>
 <text x="40.0" y="1382.0" font-size="8.4" fill="#94a3b8">Decisions: MEC-08 (carrier) · MEC-15 (kit boards) · HW-19 (5 V split board, selectable termination) · HW-06 · HW-09 · HW-11 · HW-18 · SVG is the master - PDFs are generated once the design is frozen.</text>
 </svg>

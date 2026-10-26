@@ -1054,11 +1054,18 @@ the pin. Board C is built and stays as it is.
   lies on the row in front and its neighbours are pins.
 - **Short same-net runs are bridges, not wires:** C2 + to SERVO + (n20-n23) and R4 to SERVO SIG
   (k23-m23).
-- **Four exceptions, the CN7 pins in B's column i:** E5V, 3V3, GND (CN7-22) and PA0 take the wire
-  straight on the pin. Column i is B's first column, so they have no free hole beside them.
-  Shifting B one column inboard (h-q) would give them one, but its outboard corners would then fall
-  2.38 mm from the tray's printed holes, so every new hole would run into an old one. Hedi kept i-r.
-- The drawing shows the bridges in silver on the solder side and rings the four exceptions.
+- **Two pins move to CN7's outer row, where column k gives them a free hole:** B's ground to the
+  Nucleo now uses **CN7-19** (was CN7-22), and the servo PWM uses **PA15 on CN7-17** (was PA0 on
+  CN7-28). PA15 has TIM2_CH1 on AF1 (DS14539 Rev 3), the same timer channel PA0 had, so only the pin
+  changes in firmware. After reset PA15 is JTDI with its pull-up on, so the servo line idles high
+  through R4 until software takes it; the bootloader should drive it low early.
+- **Two exceptions stay, in B's column i:** E5V (CN7-6) and 3V3 (CN7-16) take the wire straight on
+  the pin. Neither exists on the outer row: E5V is the only 5 V input (UM3121 Table 8), and the
+  other 3V3 is Arduino CN6-4, on top, where a plug would have to fit in about 7 mm under plate 3.
+  Shifting B one column inboard (h-q) would give them a free hole, but its outboard corners would
+  then fall 2.38 mm from the tray's printed holes, so every new hole would run into an old one.
+  Hedi kept i-r and the printed tray as it is.
+- The drawing shows the bridges in silver on the solder side and rings the two exceptions.
 
 ---
 
