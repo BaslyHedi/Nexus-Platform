@@ -77,7 +77,7 @@ WIRE_NET = {'PWM': ('PWM_MCU', 'PWM_SRV')}
 R = {'ins': 0.3, 'pwr': 0.39, 'lead': 0.12}         # wire radius, in pitches
 STANDOFF = 2.89 / 2.54            # a 5 mm hex nylon standoff: corner radius
 STANDOFF_FLAT = 2.5 / 2.54        # ... and flat radius
-# the standoffs now stand on each board's four corner holes (MEC-17), so a wire may not run under any of them. A corner hole is
+# the standoffs stand on the boards' corner holes (MEC-17; three on B), so a wire may not run under any of them. A corner hole is
 # off the grid; it is given as a fractional (column, header row) so the same distance test applies.
 FIX = {'A': [], 'B': [], 'C': []}
 for b in 'AB':

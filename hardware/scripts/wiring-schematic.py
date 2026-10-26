@@ -276,7 +276,7 @@ def signals():
         'SN65HVD230 module in a socket',
         '   (TX / RX = PB13 / PB12, 3.3 V)',
         'CAN terminal, 3-pin',
-        'I²C headers under A: INA226,',
+        'I²C headers on A: INA226,',
         '   motor module, 90° pointing fwd'], '#0f766e', '#f0fdfa', '#134e4a'))
     w(I + carrier(430, 612, 170, 140, 'CARRIER B', 'under CN7 · plate 2', [
         '5V IN terminal ← board C',

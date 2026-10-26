@@ -465,7 +465,7 @@ for group, (a, z) in ((heavy, SPINES), (light, INSUL)):
         xy = [hole(b, c, r) for c, r in pts]
         wire(f'wire-{b}-{net}-{i}', xy, net, kind, car, t)
         joints(f'wj-{b}-{net}-{i}', wire_ends(pts, xy), car, t + WIRE_S)
-# the three bridges: 3V3 from CN7 on B to I2C-A on A, the FDCAN pair from CN10 on A to the module on B
+# the one bridge between the boards: 3V3 from CN7 on B to I2C-A on A
 for i, (net, pts, kind) in enumerate(C.XWIRES):
     xy = [hole(b, c, r) for b, c, r in pts]
     t = BRIDGE[0] + 1.8 * i

@@ -273,7 +273,7 @@ WIRES = [
     ('GND', 'A', [(3, 18), (3.5, 18.5), (3.5, 22.5), (3, 23)], 'ins'),                      # XCVR GND to CAN GND
     ('CANH', 'A', [(1, 10), (0.5, 10.5), (0.5, 19.5), (2.5, 19.5), (3, 19)], 'ins'),        # module H to CAN H
     ('CANL', 'A', [(4, 10), (4.5, 10.5), (4.5, 20.5), (1.5, 20.5), (1, 21)], 'ins'),        # module L to CAN L
-    # ---- board A, the two I2C headers under its front: PB6, PB7 and CN10-9 each feed both. SCL and GND fork at the socket
+    # ---- board A, the two I2C headers on top, along the gap: PB6, PB7 and CN10-9 each feed both. SCL and GND fork at the socket
     # (a bridge over two holes), SDA at I2C-B (down its column); every header pin has only the hole behind it to land on.
     ('SCL', 'A', [(9, 6), (9.5, 6.5), (9.5, 18.5), (10, 19)], 'ins'),                      # PB6 to I2C-B
     ('SCL', 'A', [(10, 6), (10.5, 5.5), (15.5, 5.5), (15.5, 18.5), (16, 19)], 'ins'),       # PB6 to I2C-A
@@ -991,7 +991,7 @@ if __name__ == "__main__":
     y = table(y + 26, 'WHAT PLUGS IN WHERE', ['Connector', 'Cable'], ext_rows, [12, 96])
 
     parts = [
-        (None, 'Board A', '5×7 board · 2 × 1×19 + 1 × 1×4 + 1 × 1×2 female · 3p terminal · 2 × 1×4 90° male, under · the SN65HVD230 module'),
+        (None, 'Board A', '5×7 board · 2 × 1×19 + 1 × 1×4 + 1 × 1×2 female · 3p terminal · 2 × 1×4 90° male, on top · the SN65HVD230 module'),
         (None, 'Board B', '3×7 board · 2 × 1×19 female · 2 × 2p terminal · 1×3 male · C2 470µF · R4 1k'),
         (None, 'Board C', '3×7 board · 2 × 2p terminal · USB-C socket (5.1), 2 zip ties · C1 470µF'),
         (None, 'From stock', 'caps: 2 of the 5 in 3.14 · resistors: 3.21 · module: 4.1 · headers, terminals: 5.11'),

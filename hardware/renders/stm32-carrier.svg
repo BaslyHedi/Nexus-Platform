@@ -2781,7 +2781,7 @@
 <text x="1212.0" y="764.0" font-size="8.5" fill="#334155" font-weight="700">Fitted</text>
 <rect x="1130" y="770" width="550" height="19" fill="#ffffff" stroke="#e2e8f0"/>
 <text x="1142.0" y="783.0" font-size="8.4" fill="#1e293b" font-weight="700">Board A</text>
-<text x="1212.0" y="783.0" font-size="7.9" fill="#475569">5×7 board · 2 × 1×19 + 1 × 1×4 + 1 × 1×2 female · 3p terminal · 2 × 1×4 90° male, under · the SN65HVD230 module</text>
+<text x="1212.0" y="783.0" font-size="7.9" fill="#475569">5×7 board · 2 × 1×19 + 1 × 1×4 + 1 × 1×2 female · 3p terminal · 2 × 1×4 90° male, on top · the SN65HVD230 module</text>
 <rect x="1130" y="789" width="550" height="19" fill="#f8fafc" stroke="#e2e8f0"/>
 <text x="1142.0" y="802.0" font-size="8.4" fill="#1e293b" font-weight="700">Board B</text>
 <text x="1212.0" y="802.0" font-size="7.9" fill="#475569">3×7 board · 2 × 1×19 female · 2 × 2p terminal · 1×3 male · C2 470µF · R4 1k</text>

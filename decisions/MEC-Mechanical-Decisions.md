@@ -1438,8 +1438,9 @@ which is why the second lane is the mirror of the first. The tray has a wing for
   takes the usual countersunk screw.)*
 - **B's front inboard corner takes no screw.** On top, the CN7 socket ends 2 mm from it; below, the
   copied plate hole at (120.06, 84.53) is 2 mm away. Three screws and the Nucleo in CN7 hold B.
-- **Eleven board screws, not twelve.** The hand-made tray's template and its PDF carry B's three
-  holes. Window W3 now sits beside B, not under it.
+- **Eleven board fixings, not twelve.** On the printed tray that is ten screws from below and B's
+  threaded standoff; the hand-made tray's template and its PDF carry B's three holes as countersunk
+  screws. Window W3 now sits beside B, not under it.
 
 ---
 
