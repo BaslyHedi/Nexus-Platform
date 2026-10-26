@@ -69,7 +69,7 @@ WIRE_S = 0.9                 # how long a wire takes to run, in timeline seconds
 GROW = S(WIRE_S) - 1
 
 CAPTIONS = [
-    ((0, 4), "Boards A and B: two 5x7 kit boards, 18 x 24 holes, 5.9 mm apart - board C, the 5 V split, beside them"),
+    ((0, 4), "Board A: a 5x7 kit board, 18 x 24 holes; board B: a 3x7, 10 x 24 - board C, the 5 V split, beside them"),
     ((4, 8.2), f"1  Four 1x19 sockets: A {C.silk('A', 'g', 1)[1:]} / {C.silk('A', 'h', 1)[1:]} under CN10, B {C.silk('B', 'i', 1)[1:]} / {C.silk('B', 'j', 1)[1:]} under CN7, rows 5-23 and 6-24"),
     ((8.2, 11), "2  The Nucleo plugs in as the jig, A and B on the tray: it sets the 63.50 mm between the two headers"),
     ((11, 19.4), "3  Turn the stack over and solder the sockets - tack the four corners, check, then the rest"),
@@ -329,7 +329,7 @@ def perfboard(name, edges_x, edges_y, holes, parent):
 for b in ('A', 'B'):
     cfg = C.BOARD[b]
     perfboard('board-' + b, C.bx(b), cfg['edge'],
-              [hole(b, c, r) for c in range(1, cfg['cols'] + 1) for r in range(1, cfg['rows'] + 1)], car)
+              [hole(b, c, r) for c in range(cfg['c0'], cfg['cols'] + 1) for r in range(1, cfg['rows'] + 1)], car)
 label('A', C.bx('A')[0] + 3.2, C.BOARD['A']['edge'][0] + 2.0, 0.06, 4, car)
 label('B', C.bx('B')[0] + 3.2, C.BOARD['B']['edge'][1] - 5.0, 0.06, 4, car)
 
@@ -498,7 +498,7 @@ def corners(x0, x1, y0, y1):
 
 
 for b in ('A', 'B'):
-    for x, y in corners(*C.bx(b), *C.BOARD[b]['edge']):
+    for x, y in C.fixings(b):                     # B, a 3x7, leaves its front inboard corner free (MEC-17)
         m_so.cone((x, y, -1.6), (x, y, -9.6), 2.5, 2.5, 'nylon', 6)           # 8 mm, as the tray sets them
         m_sc.cyl((x, y, 0), (x, y, 1.6), 2.2, 'screw', 16)
         m_sc.box(x - 1.5, x + 1.5, y - 0.3, y + 0.3, 1.6, 1.65, 'hole')

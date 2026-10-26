@@ -21,13 +21,16 @@ def RX(n):
     return -(n - 1) * P
 
 BOARD = {
-    # name: (cols, rows, Y of col 1, board Y edges, colour)
-    'A': dict(cols=18, rows=24, y1=-20.32, edge=(-23.73, 26.27)),
-    'B': dict(cols=18, rows=24, y1=35.56, edge=(32.15, 82.15)),
+    # name: cols, rows, Y of col 1, board Y edges, first column the board has, kit board, corner holes screwed (corner_holes order)
+    'A': dict(cols=18, rows=24, y1=-20.32, edge=(-23.73, 26.27), c0=1, kit='5x7', fix=(0, 1, 2, 3)),
+    # B is a 3x7 (10 x 24) since 2026-10-26: one 5x7 was left, and A needs all 18 columns. Every part of B is in columns i-q, so
+    # the 3x7 covers i-r, flush with the old 5x7's outboard edge, and the letters keep the 18-column grid's so no part moves.
+    # Its front inboard corner hole is 2 mm from the end of the CN7 socket and is not screwed (MEC-15, MEC-17).
+    'B': dict(cols=18, rows=24, y1=35.56, edge=(55.88 - 3.57, 78.74 + 3.57), c0=9, kit='3x7', fix=(1, 2, 3)),
 }
 BX = (-64.21, 5.79)                  # a board whose hole 1 sits on grid row 1, 70 mm
 # The tray (MEC-17) holds A one pitch forward of B, as the first A was built (2026-10-03): A's hole g sits on
-# grid row g + 1. The new A and B (2026-10-25, for the Nucleo) go on the same tray holes, so that stays.
+# grid row g + 1. The new A and B (2026-10-25, for the Nucleo) go on the same tray, so that stays.
 SHIFT = {'A': 1, 'B': 0}
 
 # The NUCLEO-H533RE (MB1814, UM3121 Fig. 7): 70 x 82.5, ST-LINK USB-C (CN1) on the rear edge. Its two
@@ -80,11 +83,15 @@ def ci(letter):
 # letters A-J across the 30 mm side, A1 at the bottom left with components up and the USB-C socket on the left.
 # That is how C is drawn here (row 1 on the left, column 1 at the top), so the letter counts up from the bottom
 # row (column 10 = A, column 1 = J) and the number is the row.
+# B, a 3x7 like C, is printed like C and laid like A, A1 at the front outboard corner: numbers 1-24 from the front,
+# letters A-J from column r inward.
 LET = 'ABCDEFGHIJKLMNOPQRSTUVWX'
 
 
 def silk(b, col, row):
     c = ci(col) if isinstance(col, str) else col
+    if b in 'AB' and BOARD[b]['kit'] == '3x7':
+        return f'{LET[18 - c]}{25 - row}'
     if b in 'AB':
         return f'{LET[24 - row]}{19 - c}'
     return f'{LET[10 - c]}{row}'
@@ -139,7 +146,7 @@ def hole(board, col, row):
     return HX(board, row), BOARD[board]['y1'] + (col - 1) * P
 
 # ---------------------------------------------------------------- component data
-# Boards A (CN10 side) and B (CN7 side) are both 5x7 kit boards, 18 x 24; col a of A is outboard.
+# Board A (CN10 side) is a 5x7 kit board, 18 x 24, col a outboard; board B (CN7 side) a 3x7, columns i-r of the same grid.
 # Four 1x19 sockets, every tail in a hole: A's on hole rows 5-23, B's on 6-24. On each header the odd pins
 # are one column and the even pins the other: CN10's even pins are its outer row, CN7's odd pins are its.
 SOCKETS = [('A', 'g', 'CN10 even'), ('A', 'h', 'CN10 odd'), ('B', 'i', 'CN7 even'), ('B', 'j', 'CN7 odd')]
@@ -239,6 +246,18 @@ def corner_holes(x0, x1, y0, y1):
     """The four corner holes of a board whose edges are x0..x1 (along the vehicle) and y0..y1 (across), in the drawing frame."""
     return [(x, y) for x in (x0 + CORNER_INSET, x1 - CORNER_INSET) for y in (y0 + CORNER_INSET, y1 - CORNER_INSET)]
 
+
+def fixings(b):
+    """The corner holes of board A or B that take a standoff and a screw."""
+    hs = corner_holes(*bx(b), *BOARD[b]['edge'])
+    return [hs[k] for k in BOARD[b]['fix']]
+
+
+def free_corners(b):
+    """The corner holes of board A or B left without a screw."""
+    hs = corner_holes(*bx(b), *BOARD[b]['edge'])
+    return [h for k, h in enumerate(hs) if k not in BOARD[b]['fix']]
+
 # Wires, all insulated and all pad to pad: nothing is joined to another wire except at a pad,
 # and no pad takes more than two wire ends. A net with several pins is a chain, part to part.
 # Points are (column, header row) and may sit between holes, in the channels the wire runs
@@ -286,20 +305,21 @@ def draw_board(v, b, grid_labels=True):
     x0, x1 = bx(b)
     v.rect(x0, x1, cfg['edge'][0], cfg['edge'][1], rx=4, fill='#f0fdf4',
            stroke='#15803d', stroke_width=1.6)
-    for c in range(1, cfg['cols'] + 1):
+    for c in range(cfg['c0'], cfg['cols'] + 1):
         for r in range(1, cfg['rows'] + 1):
             x, y = v.px(HX(b, r), cy(b, c))
             w(f'<circle cx="{x:.1f}" cy="{y:.1f}" r="2.1" fill="#fff" stroke="#a3b18a" stroke-width="0.7"/>')
     if grid_labels:
-        # column letters on the front (left) edge
-        for c in range(1, cfg['cols'] + 1):
+        # the printed names: across the board on the front (left) edge, along it on whichever long edge is uppermost
+        # in this view - numbers across and letters along on a 5x7, the other way round on a 3x7
+        five = cfg['kit'] == '5x7'
+        for c in range(cfg['c0'], cfg['cols'] + 1):
             x, y = v.px(x0, cy(b, c))
-            text(x - 4, y + 2.5, str(19 - c), 7, '#15803d', anchor='end')
-        # the printed letters, along whichever long edge is uppermost in this view
+            text(x - 4, y + 2.5, str(19 - c) if five else LET[18 - c], 7, '#15803d', anchor='end')
         ye = cfg['edge'][1] if v.flip else cfg['edge'][0]
         for r in range(1, cfg['rows'] + 1):
             x, y = v.px(HX(b, r), ye)
-            text(x, y - 3, LET[24 - r], 6.5, '#15803d', '700', anchor='middle')
+            text(x, y - 3, LET[24 - r] if five else str(25 - r), 6.5, '#15803d', '700', anchor='middle')
         x, y = v.px(x0, (cfg['edge'][0] + cfg['edge'][1]) / 2)
         w(f'<text transform="translate({x - 16:.1f},{y:.1f}) rotate(-90)" font-size="10" font-weight="700" fill="#15803d" text-anchor="middle">Board {b}</text>')
 
@@ -538,10 +558,15 @@ def carrier_view(v, top):
         x, y = hp(v, b, ci(col), r)
         w(f'<circle cx="{x:.1f}" cy="{y:.1f}" r="{2.2 if top else 3.1}" fill="{"#fff" if top else "#e2e8f0"}" stroke="#047857" stroke-width="1.1"/>')
     for b in ('A', 'B'):
-        for x, y in corner_holes(*bx(b), *BOARD[b]['edge']):
+        for x, y in fixings(b):
             draw_corner(v, x, y)
+        for X, Y in free_corners(b):                  # the hole is there, the screw is not
+            x, y = v.px(X, Y)
+            w(f'<circle cx="{x:.1f}" cy="{y:.1f}" r="{1.6 * v.s:.1f}" fill="none" stroke="#94a3b8" stroke-width="1.1"/>')
     if top:
         draw_nucleo(v)
+        for X, Y in free_corners('B'):
+            label(v, X - 1.5, Y - 7.5, 'B: no screw in this corner, the CN7 socket end is 2 mm away', '#64748b', 6.5, anchor='start', weight=None)
     return boxes
 
 def carrier_labels_top(v, boxes):
@@ -610,7 +635,7 @@ def carrier_labels_bottom(v):
             text(xe + 9, y0 + i * 11, f'{silk(b, col, r)}  {t}', 7, colr, '700', halo=True)
 
 def draw_bridges(v):
-    """The two wires that cross the 5.9 mm gap, drawn whole."""
+    """The wire that crosses the gap between A and B, drawn whole."""
     for net, pts, kind in XWIRES:
         xy = [hp(v, b, c, r) for b, c, r in pts]
         d = ' '.join(f'{x:.1f},{y:.1f}' for x, y in xy)
@@ -818,12 +843,12 @@ if __name__ == "__main__":
     w(f'<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewBox="0 0 {W} {H}" font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif">')
     w(f'<rect width="{W}" height="{H}" fill="#fbfaf8"/>')
     text(40, 30, 'NEXUS - STM32 carrier and 5 V split board: soldering and wiring', 18, '#1a1a1a', '700')
-    text(40, 49, 'Kit perfboards (BOM 5.11), 2.54 grid · Boards A and B, both 5×7 cm (18 × 24 holes), under CN10 and CN7 of the NUCLEO-H533RE, 5.9 mm apart · Board C 3×7 cm (10 × 24), the 5 V split · MEC-08 / MEC-15 / HW-19', 10.5, '#666')
+    text(40, 49, f'Kit perfboards (BOM 5.11), 2.54 grid · Board A 5×7 cm (18 × 24 holes) under CN10, board B 3×7 cm (10 × 24) under CN7 of the NUCLEO-H533RE, {BOARD["B"]["edge"][0] - BOARD["A"]["edge"][1]:.0f} mm apart · Board C 3×7 cm (10 × 24), the 5 V split · MEC-08 / MEC-15 / HW-19', 10.5, '#666')
     def col_range(b, c):           # the holes a socket column's soldered tails occupy
         hs = [hdr_hole(b, k) for k in range(1, NUC_ROWS + 1)]
         return f"{b}·{silk(b, c, max(hs))}-{silk(b, c, min(hs))}"
-    text(40, 66, 'Hole names: board·hole, as PRINTED on the kit board - letters A-X along the 70 mm side, numbers across (1-18 on A and B, 1-10 on C), A1 bottom-left with the print readable, as every view shows it.', 9.5, '#b45309')
-    text(40, 80, f"Nucleo header row k sits on B's hole row k + 5 and A's k + 4 (A one pitch ahead, the tray) · CN10 even pins {col_range('A', 'g')}, odd {col_range('A', 'h')[2:]} · CN7 even {col_range('B', 'i')}, odd {col_range('B', 'j')[2:]} · fixings: four corner holes per board (MEC-17).", 9.5, '#b45309')
+    text(40, 66, 'Hole names: board·hole, as PRINTED on the kit board - on A (5×7) letters A-X along the 70 mm side and numbers 1-18 across, on B and C (3×7) numbers 1-24 along and letters A-J across; A1 bottom-left with the print readable, as every view shows it.', 9.5, '#b45309')
+    text(40, 80, f"Nucleo header row k sits on B's hole row k + 5 and A's k + 4 (A one pitch ahead, the tray) · CN10 even pins {col_range('A', 'g')}, odd {col_range('A', 'h')[2:]} · CN7 even {col_range('B', 'i')}, odd {col_range('B', 'j')[2:]} · fixings: the corner holes, three on B (MEC-17).", 9.5, '#b45309')
     text(40, 93, 'Wires on the solder side, ALL INSULATED, PAD TO PAD: they meet only at pads, two wire ends per pad at most. Thick 18 AWG (3.11), thin 22 AWG, grey = a part lead bent over.', 9.5, '#b45309')
 
     # views
@@ -854,7 +879,7 @@ if __name__ == "__main__":
         x0, y0 = v.px(XMIN, YMAX if not v.flip else YMIN)
         x1, _ = v.px(XMAX, 0)
         text((x0 + x1) / 2, y0 + 22, f'front ◀  A sits one pitch ahead of B (the tray) · A front to Nucleo rear {NUC["x"][1] - bx("A")[0]:.1f} mm  ▶ rear (fascia)', 8.5, '#64748b', anchor='middle')
-        text((x0 + x1) / 2, y0 + 34, 'overall width 106 mm · four corner holes per board, 8 mm nylon M2.5 standoffs, onto the carrier tray (MEC-17)', 8.5, '#64748b', anchor='middle')
+        text((x0 + x1) / 2, y0 + 34, 'overall width 106 mm · the corner holes, three on B, on 8 mm nylon M2.5 standoffs, onto the carrier tray (MEC-17)', 8.5, '#64748b', anchor='middle')
 
     # board C views
     CY = 760
@@ -934,7 +959,7 @@ if __name__ == "__main__":
 
     parts = [
         (None, 'Board A', '5×7 board · 2 × 1×19 + 1 × 1×4 + 1 × 1×2 female · 3p terminal · 2 × 1×4 90° male, under · the SN65HVD230 module'),
-        (None, 'Board B', '5×7 board · 2 × 1×19 female · 2 × 2p terminal · 1×3 male · C2 470µF · R4 1k'),
+        (None, 'Board B', '3×7 board · 2 × 1×19 female · 2 × 2p terminal · 1×3 male · C2 470µF · R4 1k'),
         (None, 'Board C', '3×7 board · 2 × 2p terminal · USB-C socket (5.1), 2 zip ties · C1 470µF'),
         (None, 'From stock', 'caps: 2 of the 5 in 3.14 · resistors: 3.21 · module: 4.1 · headers, terminals: 5.11'),
         (None, 'Wire', '22 AWG insulated copper hook-up wire (not in BOM) · 18 AWG silicone copper (3.11) for the thick runs · not the CCA Dupont leads (5.7)'),
@@ -943,29 +968,31 @@ if __name__ == "__main__":
 
     fix_rows = [
         (None, 'A', 'four corner holes', '2.5 mm in from each edge · M2.5 screw into an 8 mm nylon standoff'),
-        (None, 'B', 'four corner holes', 'same · the holes under the module stay free of wires'),
+        (None, 'B', 'three corner holes', 'same · not the front inboard one, 2 mm from the CN7 socket end'),
         (None, 'C', 'four corner holes', 'same · the USB-C body lies between the two on its side'),
     ]
     y = table(y + 26, 'FIXINGS  (MEC-17)', ['Board', 'Hole', 'Fixing'], fix_rows, [12, 62, 170])
-    text(RX0, y + 16, 'Nothing is drilled. The tray (MEC-17) takes the boards from below; only the tray is screwed to plate 2, by six M2.5 screws (T1-T6).', 8.4, '#475569')
-    text(RX0, y + 29, f'A·X.. at chassis x 181.20, B·X.. at x 183.74 · Nucleo row 1 at x {183.74 + NX(1):.2f}, its outline x {183.74 + NUC["x"][0]:.1f}-{183.74 + NUC["x"][1]:.1f} · A y 5.11, B y 110.99.', 8.4, '#475569')
-    orientation_inset(y + 58)
+    bx_, by_ = max(fixings('B'), key=lambda h: (h[0], -h[1]))     # B's rear inboard corner: the tray was not printed with its hole
+    text(RX0, y + 16, 'Nothing is drilled in the boards. The tray (MEC-17) takes them from below; only the tray is screwed to plate 2 (T1-T6).', 8.4, '#475569')
+    text(RX0, y + 29, f'One hole is drilled in the tray by hand, for B\'s rear inboard corner, at plate 2 ({183.74 + bx_:.2f}, {28.84 + by_:.2f}).', 8.4, '#475569')
+    text(RX0, y + 42, f'A·X.. at chassis x 181.20, B·X.. at x 183.74 · Nucleo row 1 at x {183.74 + NX(1):.2f}, its outline x {183.74 + NUC["x"][0]:.1f}-{183.74 + NUC["x"][1]:.1f} · A y 5.11, B y {28.84 + BOARD["B"]["edge"][1]:.2f}.', 8.4, '#475569')
+    orientation_inset(y + 71)
 
     # ---------------------------------------------------------------- checks and notes (bottom band)
     NY = 985
     text(40, NY, 'CHECK BEFORE THE IRON IS HOT', 12, '#1a1a1a', '700')
     w(f'<line x1="40" y1="{NY + 8}" x2="{RX0 - 30}" y2="{NY + 8}" stroke="#e2e8f0"/>')
     checks = [
-        '1  Count the holes: A and B need 18 × 24, C 10 × 24. The drawing assumes the usual kit counts; a board one row short moves everything.',
-        '2  New A and B, two fresh 5×7 boards. Cut four 1×19 strips from the 40-pin female headers and dry-fit them on the Nucleo, A and B',
+        '1  Count the holes: A needs 18 × 24, B and C 10 × 24. The drawing assumes the usual kit counts; a board one row short moves everything.',
+        '2  New A and B: A on the last 5×7, B on a 3×7. Cut four 1×19 strips from the 40-pin female headers and dry-fit them on the Nucleo, A and B',
         f"    screwed to the tray under it: {col_range('A', 'g')} / {col_range('A', 'h')[2:]} and {col_range('B', 'i')} / {col_range('B', 'j')[2:]}. Nothing else goes in the columns under the Nucleo.",
         '3  Solder the sockets WITH THE NUCLEO PLUGGED IN and A and B screwed to the tray: it sets the 63.50 mm between the rows. Tack two corners, check, finish.',
         f"4  SN65HVD230 FACE DOWN on A, as bent: sockets {N('A', XCVR_SOCKET[1][0][0], XCVR_ROW)}-{silk('A', XCVR_SOCKET[1][-1][0], XCVR_ROW)} = {', '.join(l for _, _, l in XCVR_SOCKET[1])}, and",
         f"    {N('A', CAN_SOCKET[1][0][0], CAN_ROW)} / {silk('A', CAN_SOCKET[1][1][0], CAN_ROW)} = CANH / CANL, 7 holes behind. Its screw terminal is unused. CANH-CANL unpowered must read ~120 Ω: keep its terminator (HW-09).",
         '5  The kit terminals may be 5.0 mm, not 5.08: the 3p CAN block spans 10.0 vs 10.16 mm of holes. Push it in; do not drill.',
         f"6  Before the Nucleo goes in: 5 V to GND not shorted · 6 V isolated from 5 V and 3V3 · 5 V on {N(*nuc_hole('CN7', 6))} (E5V) only, nothing on {silk(*nuc_hole('CN7', 18))} (5V) or {silk(*nuc_hole('CN7', 5))} (VDD) · JP5 on [5-6].",
-        '7  Fixings: nothing is drilled. Fit an 8 mm nylon standoff with a screw in each corner hole of A, B and C; the tray (MEC-17) takes the',
-        '    boards from below. No wire may pass under a standoff. Nothing is fitted on the solder side: it carries wires only.',
+        '7  Fixings: nothing is drilled in the boards. An 8 mm nylon standoff and a screw in each corner hole of A and C and three of B; drill the tray',
+        '    for B\'s rear inboard one (MEC-17). No wire may pass under a standoff. Nothing is fitted on the solder side: it carries wires only.',
         '8  The two I2C headers are 90° headers on A along the gap, pins pointing forward; nothing may stand where their plugs lie (violet). Plug both before the Nucleo.',
     ]
     yy = NY + 26
@@ -975,7 +1002,7 @@ if __name__ == "__main__":
 
     notes = [
         ('Why A and B split this way', [
-            'New boards on the same tray holes (MEC-17). Every CAN pin is on',
+            'New boards on the same tray (MEC-17). Every CAN pin is on',
             'CN10 and every supply pin on CN7, so A takes CAN and I2C and B the',
             'power and the servo (PA0): one wire crosses, 3V3. Each header is',
             'in its module\'s order: a straight lead is right.',

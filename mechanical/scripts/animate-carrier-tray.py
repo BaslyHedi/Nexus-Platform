@@ -50,7 +50,7 @@ CORNER_INSET = 2.5
 ZP_TOP, ZP_BOT = 52.0, 50.0
 LIFT = 60.0                                   # plate 2 is worked on this far above its standoffs
 Z_TRAY = ZP_TOP + T                           # the tray's top face
-BOARDS = {'A': (117.00, 187.00, 5.11, 55.11, 8), 'B': (119.54, 189.54, 60.99, 110.99, 8),
+BOARDS = {'A': (117.00, 187.00, 5.11, 55.11, 8), 'B': (119.54, 189.54, 81.15, 111.15, 8),     # B a 3x7 since 2026-10-26
           'C': (85.50, 115.50, 25.20, 95.20, 8)}          # plate-2 x0 x1 y0 y1, standoff height
 FIXINGS = {'T1': (24.82, 60.24, 3.18), 'T2': (52.82, 60.24, 3.18), 'T3': (99.24, 81.76, 3.18),
            'T4': (120.06, 35.94, 2.71), 'T5': (148.18, 81.76, 3.18), 'T6': (148.18, 96.76, 3.18)}
@@ -64,7 +64,7 @@ NUTS = [4.0 + 0.35 * i for i in range(8)]          # six M2.5 and two M3
 BAUER_T = 8.0
 BAUER_HOLESCREW_T = 9.2
 BOARD_T = {'C': 10.5, 'AB': 12.0}
-SCREWS_T = 14.5                                # twelve board screws, 0.28 s apart
+SCREWS_T = 14.5                                # ten board screws, 0.28 s apart
 SPLICE_T = [19.0, 19.6]
 CARRY = (22.5, 28.5)                           # lift, across, set down
 WIRES_T = 29.5
@@ -83,7 +83,7 @@ CAPTIONS = [
     ((4, 7.4), "1  A nut into each hex pocket: six M2.5 for plate 2, two M3 under the Bauer's holes"),
     ((7.4, 10.3), "2  The Bauer drops into its rim, two M3 screws through its own holes; its leads get a clear lane"),
     ((10.3, 14.4), "3  Boards C, then A and B, lower on their nylon standoffs onto the tray's board holes"),
-    ((14.4, 19), "4  Twelve M2.5 screws from below, one into each standoff; the heads sit in the counterbores"),
+    ((14.4, 19), "4  Ten M2.5 screws from below into the standoffs, heads in the counterbores; B's eleventh is threaded into the tray"),
     ((19, 22.5), "5  The S6 and S7 splices go beside the Bauer, one each side, where their levers can open"),
     ((22.5, 29.5), "Step 2. The unit lifts onto plate 2: every tray hole lands on a plate hole, the window on the wire opening"),
     ((29.5, 32.5), "6  The 12 V wires come up the plate's two slots to the splices"),
@@ -384,9 +384,10 @@ for k, (x0, x1, y0, y1, hs) in BOARDS.items():
     grp = asm['C'] if k == 'C' else asm['AB']
     zb = Z_TRAY + hs
     for (x, y) in [(x0 + CORNER_INSET, y0 + CORNER_INSET), (x1 - CORNER_INSET, y0 + CORNER_INSET),
-                   (x0 + CORNER_INSET, y1 - CORNER_INSET), (x1 - CORNER_INSET, y1 - CORNER_INSET)]:
+                   (x0 + CORNER_INSET, y1 - CORNER_INSET), (x1 - CORNER_INSET, y1 - CORNER_INSET)][k == 'B':]:   # B's front inboard corner is free
         hexa("standoff-" + k, x, y, Z_TRAY, zb, 5.0, 'nylon', grp)
-        screws_at.append((x, y, zb))
+        if (k, x, y) != ('B', x1 - CORNER_INSET, y0 + CORNER_INSET):      # B's rear inboard standoff has its stud in a hole drilled in the tray (MEC-17)
+            screws_at.append((x, y, zb))
 drop(asm['C'], BOARD_T['C'], dz=45.0, dur=1.0)
 drop(asm['AB'], BOARD_T['AB'], dz=45.0, dur=1.0)
 

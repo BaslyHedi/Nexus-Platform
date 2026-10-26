@@ -1023,6 +1023,25 @@ chain. The Discovery ties all its GND pins together, so A's servo, I²C and INA2
 the STM32 through it, as on B. **One wire still crosses between the boards: the 3V3 bridge**
 (B·V12 → A·D16), built as a soldered end and a plug. Routing check passes.
 
+**Revision 2026-10-26 · board B on a 3×7.** A and B are rebuilt on fresh boards for the NUCLEO-H533RE
+(branch `stm32-nucleo-h533`; that layout gets its own revision), and only one 5×7 is left in the kit.
+
+- **A keeps the 5×7.** It uses all 18 columns: the CAN module and its terminal outboard (a-d), the
+  CN10 sockets (g/h) and I2C-A out to column r.
+- **B moves to a 3×7 (10 × 24).** Every part on B is in columns i-q: the CN7 sockets (i/j), R4 (k),
+  SERVO (m-o), C2 (n) and both terminals (q). The 3×7 covers i-r, flush with the old outboard edge
+  (plate 2 y 81.15-111.15, 0.16 mm further out), with the same 24 rows, so no part and no wire moves.
+  The scripts keep the 18-column letters; the printed names follow the 3×7's own print, as on C:
+  numbers 1-24 from the front, letters A-J from column r inward, A1 at the front outboard corner.
+- **The gap between A and B is 26 mm, not 5.9.** Only the 3V3 bridge crosses it, one insulated wire,
+  laid along the tray.
+- **Three corner holes on B, not four** (MEC-17). The front inboard one is 2 mm from the end of the
+  CN7 socket, so a screw head or nut there would sit against it.
+- **Not used:** the 7×9 (90 mm across where the carrier needs 106, and none of its holes meets the
+  tray), the 4×6 and the 2×8 (too short for the 19-row socket and the terminals, or too narrow).
+- **Kit use:** the last 5×7 (A) and a second 3×7 (B; C is the first).
+- **The routing check** now also fails any pad or wire that is off its board's columns.
+
 ---
 
 ## MEC-16 · Plate 2's lower face is the harness board - plate 1 carries only the battery and the driver
@@ -1380,6 +1399,22 @@ which is why the second lane is the mirror of the first. The tray has a wing for
 - **Which side of the vehicle the Bauer's leads edge faces.** The photo fixes the leads and the holes to the same edge; putting it on the left is a routing choice.
 - **The M3 nut's real depth and across-flats** (assumed 2.4 and 5.5 mm), before printing the Bauer's two pockets.
 - **Print or sheet.** The model serves both.
+
+**Update 2026-10-26 · board B is a 3×7 (MEC-15).** The printed tray stays as ordered.
+
+- **B's two outboard corner holes** land on the tray's B outboard pair, 0.16 mm off, inside the 4.0 mm
+  holes' play. The tray's B inboard pair is left empty, in the gap between A and B.
+- **One hole is drilled by hand** for B's rear inboard corner, at plate 2 **(187.04, 83.65)**, clear of
+  every copied plate hole. Mark it through B itself, set on its other three standoffs. It is only 2.5 mm from the tray's rear edge: the tray follows the board's
+  outline there and has no corner pad, so a 6.4 mm counterbore would break out. Instead, **drill 2.1 mm
+  and screw in an 8 mm male-female nylon standoff** from the M2.5 kit (3.31), its 6 mm stud cut to
+  3.5 mm so that it cuts its own thread in the 4 mm PETG and does not reach plate 2. The board screws
+  onto it from above like the others. *(The hand-made tray's straight rear edge is 4.5 mm away and
+  takes the usual countersunk screw.)*
+- **B's front inboard corner takes no screw.** On top, the CN7 socket ends 2 mm from it; below, the
+  copied plate hole at (120.06, 84.53) is 2 mm away. Three screws and the Nucleo in CN7 hold B.
+- **Eleven board screws, not twelve.** The hand-made tray's template and its PDF carry B's three
+  holes. Window W3 now sits beside B, not under it.
 
 ---
 

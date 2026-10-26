@@ -229,7 +229,7 @@ def build_ab(parent, z):
     car = empty('carrier-ab', parent, (0, 0, z))
     for b in ('A', 'B'):
         cfg = C.BOARD[b]
-        perfboard('board-' + b, C.bx(b), cfg['edge'], [hole(b, c, r) for c in range(1, cfg['cols'] + 1) for r in range(1, cfg['rows'] + 1)], car, AB)
+        perfboard('board-' + b, C.bx(b), cfg['edge'], [hole(b, c, r) for c in range(cfg['c0'], cfg['cols'] + 1) for r in range(1, cfg['rows'] + 1)], car, AB)
     label('A', C.bx('A')[0] + 3.2, C.BOARD['A']['edge'][0] + 2.0, 0.06, 4, car, AB)
     label('B', C.bx('B')[0] + 3.2, C.BOARD['B']['edge'][1] - 5.0, 0.06, 4, car, AB)
     pins = []

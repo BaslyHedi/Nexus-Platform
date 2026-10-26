@@ -54,7 +54,7 @@ STANDOFF_FLAT = 2.5 / 2.54        # ... and flat radius
 FIX = {'A': [], 'B': [], 'C': []}
 for b in 'AB':
     cfg = C.BOARD[b]
-    for X, Y in C.corner_holes(*C.bx(b), *cfg['edge']):
+    for X, Y in C.fixings(b):
         FIX[b].append(((Y - cfg['y1']) / C.P + 1, 1 - C.SHIFT[b] - X / C.P))
 for X, Y in C.corner_holes(C.C_EDGE_X[0], C.C_EDGE_X[1], C.C_EDGE_Y[0], C.C_EDGE_Y[1]):
     FIX['C'].append((Y / C.P + 1, X / C.P + 1))
@@ -174,6 +174,15 @@ for b, ps, name in C.MALE:
     for (bd, c, r), net in PAD.items():
         if bd == b and c0 < c < c1 and r > r0:
             err.append(f'{C.N(bd, c, r)} ({net}) stands where the {name} plug lies')
+# 5. every pad is a hole the board has, and every wire stays on its board: B, a 3x7, starts at column C.BOARD['B']['c0'].
+#    A wire may run half a pitch outside the outer columns, in the margin; only the bridge (C.XWIRES) crosses the gap.
+for (bd, c, r), net in PAD.items():
+    if bd in 'AB' and not C.BOARD[bd]['c0'] <= c <= C.BOARD[bd]['cols']:
+        err.append(f'{bd} column {c} ({net}) is not on the board')
+for net, b, pts, kind in C.WIRES:
+    for c, r in pts:
+        if not C.BOARD[b]['c0'] - 0.5 <= c <= C.BOARD[b]['cols'] + 0.5:
+            err.append(f'wire {net} on {b}: point ({c}, {r}) is off the board')
 print('\n'.join(err) if err else 'routing OK')
 print(len(wires), 'wires,', sum(1 for w in wires if w[2] == 'pwr'), 'in 18 AWG,',
       sum(1 for w in wires if w[2] == 'lead'), 'bent leads')
