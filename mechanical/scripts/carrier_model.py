@@ -122,7 +122,7 @@ class Mesh:
 
 def wire(name, pts, net, kind, parent, frame, colour=None, z=None):
     """An insulated run on the solder side, pad to pad."""
-    r = {'ins': 0.55, 'pwr': 0.9, 'lead': 0.3}[kind]
+    r = {'ins': 0.55, 'pwr': 0.9, 'lead': 0.3, 'bridge': 0.6}[kind]
     z = -1.6 - r if z is None else z
     cu = bpy.data.curves.new(name, 'CURVE')
     cu.dimensions, cu.bevel_depth, cu.bevel_resolution, cu.use_fill_caps = '3D', r, 3, True
@@ -285,6 +285,8 @@ def build_ab(parent, z):
     for net_i, (n, ps, kind) in enumerate(C.XWIRES):
         xy = [hole(b, c, r) for b, c, r in ps]
         wire(f'bridge-{n}', xy, n, kind, car, AB)
+    for k, (b, run) in enumerate(C.SOLDER):                    # solder bridges, each pin to the free hole its wire lands on
+        wire(f'solder-{b}-{k}', [hole(b, c, r) for c, r in run], 'GND', 'bridge', car, AB, colour='#cbd5e1', z=-1.9)
     joints('joints-ab', pins, car, AB)
     return car
 

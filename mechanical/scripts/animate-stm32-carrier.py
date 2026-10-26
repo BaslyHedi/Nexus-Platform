@@ -78,13 +78,13 @@ CAPTIONS = [
     ((24.6, 27.4), "5  SERVO on B; I2C-B and I2C-A are 90 degree headers on A along the gap, pointing forward"),
     ((27.4, 30.2), "6  R4 1k in the servo PWM, C2 470 uF across the servo supply, both on B"),
     ((30.2, 32), "7  A 1x4 and a 1x2 socket on A for the SN65HVD230 module"),
-    ((32, 37.2), "8  Turn it over: solder every part pin"),
+    ((32, 37.2), "8  Turn it over: solder every part pin, then bridge each one onto the free hole its wire lands on"),
     ((37.2, 43.2), "9  The servo loop in 18 AWG on B: 6V IN to C2 to SERVO, on + and on GND"),
-    ((43.2, 51.4), "10  22 AWG, pad to pad: 5 V, GND, servo PWM from PA0, I2C, CAN TX / RX, CAN H / L"),
+    ((43.2, 51.4), "10  22 AWG, each end on a bridged free hole (four CN7 pins on B take it direct): 5 V, GND, PWM, I2C, CAN"),
     ((51.4, 56), f"11  One bridge: CN7-16 3V3 to I2C-A VCC ({C.N('A', 'r', 20)}); A's GND comes from CN10-9 and CN10-20"),
     ((56, 58.8), "   Right way up again"),
     ((58.8, 62), f"12  Module in face down on A, CANH / CANL into {C.N('A', 'b', C.CAN_ROW)} / {C.silk('A', 'c', C.CAN_ROW)}; its own 120 R ends the bus"),
-    ((62, 64), "    A nylon standoff and screw in each of the four corner holes of A and B"),
+    ((62, 64), "    A nylon standoff and screw in the corner holes: four on A, three on B"),
     ((64, 67.4), "13  The NUCLEO-H533RE drops onto the carrier, JP5 on [5-6] for E5V"),
     ((67.4, 70.5), "14  Board C, the 5 V split: IN 5V and TO STM32, C1 470 uF"),
     ((70.5, 72.8), f"    Four corner standoffs and screws, then the USB-C socket: pigtail into {' / '.join(C.silk('C', c, r) for _, _, c, r, _ in C.C_PIGTAIL)}, two zip ties"),
@@ -257,7 +257,7 @@ def flip(root, a, b, lift=45.0):
 
 def wire(name, pts, net, kind, parent, sec, dur=None, z=None, colour=None):
     """A run on the solder side (z below the board), grown from its first point."""
-    r = {'ins': 0.55, 'pwr': 0.9, 'lead': 0.3}[kind]
+    r = {'ins': 0.55, 'pwr': 0.9, 'lead': 0.3, 'bridge': 0.6}[kind]
     z = -1.6 - r if z is None else z
     cu = bpy.data.curves.new(name, 'CURVE')
     cu.dimensions = '3D'
@@ -445,6 +445,9 @@ drop(m.make('xcvr-socket', car), PARTS_T['XCVR'])
 joints('joints-parts', PART_PINS, car, PART_J)
 
 # ---------------------------------------------------------------- solder side of A and B
+# the solder bridges first: each joins a pin to the free hole beside it, where its wire lands (no wire goes on a pin)
+for k, (b, run) in enumerate(C.SOLDER):
+    wire(f'solder-{b}-{k}', [hole(b, c, r) for c, r in run], 'GND', 'bridge', car, 34.6 + k * 2.4 / len(C.SOLDER), z=-1.9, colour='#cbd5e1')
 heavy = [(n, b, pts, k) for n, b, pts, k in C.WIRES if k == 'pwr']
 light = [(n, b, pts, k) for n, b, pts, k in C.WIRES if k != 'pwr']
 

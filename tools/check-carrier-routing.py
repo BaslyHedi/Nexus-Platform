@@ -3,9 +3,11 @@
 
     python3 tools/check-carrier-routing.py        # exits 1 and lists the problems, if any
 
-The build uses insulated wire, so the rules are: every wire ends on a pad of its own net;
-wires meet only at pads, two wire ends per pad at most; nothing runs along another wire,
-under a standoff, or over another net's joint. Every net must come out whole and no two
+The build uses insulated wire, so the rules are: on A and B every wire ends on a free hole of its
+own net, one wire per hole, joined to its pin by a solder bridge (C.SOLDER), except the pins in
+C.DIRECT; a bridge's free holes have no other net's pin beside them; on C (as built) every wire ends
+on a pad, two wire ends per pad at most; nothing runs along another wire, under a standoff, or over
+another net's joint. Every net must come out whole and no two
 nets may touch, counting the Nucleo's own ties between its duplicate header pins and
 the C-to-B supply pair.
 """
@@ -43,6 +45,32 @@ for col, row, net in C.XCVR_SOCKET[1] + C.CAN_SOCKET[1]:   # the module's two so
 for col, row, net in [('a', 24, '5V'), ('c', 24, 'GND'), ('g', 24, '5V'), ('i', 24, 'GND'), ('a', 12, '5V'),
                       ('c', 12, 'GND'), ('a', 7, '5V'), ('c', 7, 'GND')]:
     put('C', col, row, net)
+# the solder bridges on A and B: the free holes in them take the net of the pin they join
+err = []
+LAND = {}
+for b, run in C.SOLDER:
+    nets = {PAD[(b, c, r)] for c, r in run if (b, c, r) in PAD}
+    if len(nets) != 1:
+        err.append(f'bridge {[C.N(b, c, r) for c, r in run]} joins {sorted(nets) or "no pin"}')
+        continue
+    net = nets.pop()
+    for (c0, r0), (c1, r1) in zip(run, run[1:]):
+        if abs(c0 - c1) + abs(r0 - r1) != 1:
+            err.append(f'bridge on {b}: {C.N(b, c0, r0)} and {C.N(b, c1, r1)} are not neighbours')
+    for c, r in run:
+        if not (C.BOARD[b]['c0'] <= c <= C.BOARD[b]['cols'] and 1 <= r <= C.BOARD[b]['rows']):
+            err.append(f'bridge on {b}: {C.N(b, c, r)} is not on the board')
+        if (b, c, r) in PAD:
+            continue
+        if (b, c, r) in LAND:
+            err.append(f'{C.N(b, c, r)} is in two bridges')
+        LAND[(b, c, r)] = net
+        for dc, dr in ((1, 0), (-1, 0), (0, 1), (0, -1)):
+            other = PAD.get((b, c + dc, r + dr))
+            if other is not None and other != net and (b, c + dc, r + dr) not in {(b, cc, rr) for cc, rr in run}:
+                err.append(f'{C.N(b, c, r)} ({net}) sits beside {C.N(b, c + dc, r + dr)} ({other})')
+DIRECT = {(b, ci(c), r) for b, c, r in C.DIRECT}
+NETAT = {**PAD, **LAND}
 # conductors that arrive from the component side and count as a wire end at their pad
 ENTRY = {('C', 1, 7): 'pigtail red', ('C', 3, 7): 'pigtail black'}
 WIRE_NET = {'PWM': ('PWM_MCU', 'PWM_SRV')}
@@ -63,7 +91,6 @@ wires = [(n, [(b, c, r) for c, r in pts], k) for n, b, pts, k in C.WIRES]
 wires += [(n, pts, k) for n, pts, k in C.XWIRES]
 wires += [(n, [('C', c, r) for c, r in pts], k) for n, pts, k in C.C_WIRES]
 
-err = []
 def whole(p):
     return float(p[1]).is_integer() and float(p[2]).is_integer()
 
@@ -75,14 +102,16 @@ for i, (net, pts, kind) in enumerate(wires):
             err.append(f'wire {i} {net}: end {p} is not a hole')
             continue
         pad = (p[0], int(p[1]), int(p[2]))
-        pn = PAD.get(pad)
+        pn = NETAT.get(pad)
         ok = WIRE_NET.get(net, (net,))
         if pn not in ok:
             err.append(f'wire {i} {net}: end {C.N(*pad)} is {pn}')
+        if pad[0] in 'AB' and pad not in LAND and pad not in DIRECT:
+            err.append(f'wire {i} {net}: ends on the pin {C.N(*pad)}, not on a free hole bridged to it')
         ends.setdefault(pad, []).append(i)
 for pad, ws in ends.items():
     n = len([w for w in ws if wires[w][2] != 'lead']) + (1 if pad in ENTRY else 0)
-    if n > 2:
+    if n > (2 if pad[0] == 'C' else 1):
         err.append(f'{C.N(*pad)}: {n} wire ends')
 
 # 2. connectivity, with the Nucleo tying its same-named pins and the C-to-B pair
@@ -97,6 +126,9 @@ def join(a, b):
 for net, pts, kind in wires:
     a, b = pts[0], pts[-1]
     join((a[0], int(a[1]), int(a[2])), (b[0], int(b[1]), int(b[2])))
+for b, run in C.SOLDER:
+    for (c0, r0), (c1, r1) in zip(run, run[1:]):
+        join((b, c0, r0), (b, c1, r1))
 disco = {}
 for k, v in PAD.items():
     if k[0] in 'AB' and ((k[0] == 'A' and k[1] in (7, 8)) or (k[0] == 'B' and k[1] in (9, 10))):
@@ -132,7 +164,7 @@ def segs(pts):
     for a, b in zip(pts, pts[1:]):
         if a[0] == b[0]:
             yield a[0], (a[1], a[2]), (b[1], b[2])
-used = set(ends) | set(ENTRY) | set(PAD)
+used = set(ends) | set(ENTRY) | set(NETAT)
 for i, (net, pts, kind) in enumerate(wires):
     for bd, a, b in segs(pts):
         for fx in FIX[bd]:
@@ -148,8 +180,8 @@ for i, (net, pts, kind) in enumerate(wires):
                 continue
             if pad in ((pts[0][0], int(pts[0][1]), int(pts[0][2])), (pts[-1][0], int(pts[-1][1]), int(pts[-1][2]))):
                 continue
-            if seg_pt(a, b, pad[1:]) < 0.3 and PAD.get(pad) is not None and kind != 'lead':
-                err.append(f'wire {i} {net}: lies over {C.N(*pad)} ({PAD.get(pad)})')
+            if seg_pt(a, b, pad[1:]) < 0.3 and NETAT.get(pad) is not None and kind != 'lead':
+                err.append(f'wire {i} {net}: lies over {C.N(*pad)} ({NETAT.get(pad)})')
 S = [(i, bd, a, b) for i, (n, pts, k) in enumerate(wires) for bd, a, b in segs(pts)]
 for (i, bi, a1, b1), (j, bj, a2, b2) in itertools.combinations(S, 2):
     if i == j or bi != bj:
@@ -185,5 +217,5 @@ for net, b, pts, kind in C.WIRES:
             err.append(f'wire {net} on {b}: point ({c}, {r}) is off the board')
 print('\n'.join(err) if err else 'routing OK')
 print(len(wires), 'wires,', sum(1 for w in wires if w[2] == 'pwr'), 'in 18 AWG,',
-      sum(1 for w in wires if w[2] == 'lead'), 'bent leads')
+      sum(1 for w in wires if w[2] == 'lead'), 'bent leads,', len(C.SOLDER), 'solder bridges,', len(DIRECT), 'wires straight on a pin')
 sys.exit(1 if err else 0)

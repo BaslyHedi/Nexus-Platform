@@ -258,44 +258,64 @@ def free_corners(b):
     hs = corner_holes(*bx(b), *BOARD[b]['edge'])
     return [h for k, h in enumerate(hs) if k not in BOARD[b]['fix']]
 
-# Wires, all insulated and all pad to pad: nothing is joined to another wire except at a pad,
-# and no pad takes more than two wire ends. A net with several pins is a chain, part to part.
+# Wires, all insulated, on the solder side. On A and B no wire is soldered to a part's pin (Hedi, 2026-10-26): it lands on a
+# free hole beside the pin, one wire per hole, and a solder bridge joins that hole to the pin (SOLDER). The four CN7 pins in B's
+# column i are the exception (DIRECT): column i is B's first column, so they have no free hole beside them. Board C is as
+# built (2026-10-05), its wires on the pads. A net with several pins is a chain, part to part.
 # Points are (column, header row) and may sit between holes, in the channels the wire runs
 # along. kind: 'pwr' 18 AWG silicone copper (servo and FRDM current), 'ins' 22 AWG hook-up
 # wire, 'lead' a component's own lead bent over to the next pad on the solder side.
 WIRES = [
     # ---- board A, the CAN module and its terminal outboard
-    ('CTX', 'A', [(7, 19), (6.5, 18.5), (1.5, 18.5), (1.5, 17.5), (1, 17)], 'ins'),          # PB13 to XCVR CTX
-    ('CRX', 'A', [(7, 12), (6.5, 12.5), (2.5, 12.5), (2.5, 16.5), (2, 17)], 'ins'),          # PB12 to XCVR CRX
-    ('GND', 'A', [(7, 14), (6.5, 14.5), (3.5, 14.5), (3.5, 16.5), (3, 17)], 'ins'),          # CN10-20 to XCVR GND
-    ('GND', 'A', [(3, 17), (3.5, 17.5), (3.5, 22.5), (2, 23)], 'ins'),                      # XCVR GND to CAN GND
-    ('CANH', 'A', [(2, 10), (1.5, 10.5), (0.5, 10.5), (0.5, 19.5), (1.5, 19.5), (2, 19)], 'ins'),   # module H to CAN H
-    ('CANL', 'A', [(3, 10), (3.5, 10.5), (4.5, 10.5), (4.5, 20.5), (2.5, 20.5), (2, 21)], 'ins'),   # module L to CAN L
-    # ---- board A, the two I2C headers under its front: SCL from PB6 to each, SDA from PB7 along both
-    ('SCL', 'A', [(8, 6), (8.5, 5.5), (9.5, 5.5), (9.5, 19.5), (10, 20)], 'ins'),           # PB6 to I2C-B
-    ('SCL', 'A', [(8, 6), (8.5, 6.5), (15.5, 6.5), (15.5, 18.5), (16, 19), (16, 20)], 'ins'),   # PB6 to I2C-A
-    ('SDA', 'A', [(8, 7), (8.5, 7.5), (10.5, 7.5), (10.5, 19.5), (11, 20)], 'ins'),         # PB7 to I2C-B
-    ('SDA', 'A', [(11, 20), (11.5, 19.5), (16.5, 19.5), (17, 20)], 'ins'),                  # I2C-B to I2C-A
-    ('GND', 'A', [(8, 9), (8.5, 9.5), (12.5, 9.5), (12.5, 18.5), (12, 19), (12, 20)], 'ins'),   # CN10-9 to I2C-B GND
-    ('GND', 'A', [(8, 9), (8.5, 8.5), (14.5, 8.5), (14.5, 18.5), (15, 19), (15, 20)], 'ins'),   # CN10-9 to I2C-A GND
-    ('3V3', 'A', [(18, 20), (18.5, 19.5), (18.5, 17.5), (5.5, 17.5), (4, 17)], 'ins'),      # I2C-A VCC to XCVR 3V3
+    ('CTX', 'A', [(6, 19), (5.5, 18.5), (1.5, 18.5), (1, 18)], 'ins'),                     # PB13 to XCVR CTX
+    ('CRX', 'A', [(6, 12), (5.5, 12.5), (2.5, 12.5), (2.5, 15.5), (2, 16)], 'ins'),          # PB12 to XCVR CRX
+    ('GND', 'A', [(6, 14), (5.5, 14.5), (3.5, 14.5), (3.5, 15.5), (3, 16)], 'ins'),          # CN10-20 to XCVR GND
+    ('GND', 'A', [(3, 18), (3.5, 18.5), (3.5, 22.5), (3, 23)], 'ins'),                      # XCVR GND to CAN GND
+    ('CANH', 'A', [(1, 10), (0.5, 10.5), (0.5, 19.5), (2.5, 19.5), (3, 19)], 'ins'),        # module H to CAN H
+    ('CANL', 'A', [(4, 10), (4.5, 10.5), (4.5, 20.5), (1.5, 20.5), (1, 21)], 'ins'),        # module L to CAN L
+    # ---- board A, the two I2C headers under its front: PB6, PB7 and CN10-9 each feed both. SCL and GND fork at the socket
+    # (a bridge over two holes), SDA at I2C-B (down its column); every header pin has only the hole behind it to land on.
+    ('SCL', 'A', [(9, 6), (9.5, 6.5), (9.5, 18.5), (10, 19)], 'ins'),                      # PB6 to I2C-B
+    ('SCL', 'A', [(10, 6), (10.5, 5.5), (15.5, 5.5), (15.5, 18.5), (16, 19)], 'ins'),       # PB6 to I2C-A
+    ('SDA', 'A', [(9, 7), (9.5, 7.5), (10.5, 7.5), (10.5, 18.5), (11, 19)], 'ins'),         # PB7 to I2C-B
+    ('SDA', 'A', [(11, 18), (11.5, 17.5), (16.5, 17.5), (16.5, 18.5), (17, 19)], 'ins'),    # I2C-B to I2C-A
+    ('GND', 'A', [(9, 9), (9.5, 9.5), (11.5, 9.5), (11.5, 18.5), (12, 19)], 'ins'),         # CN10-9 to I2C-B GND
+    ('GND', 'A', [(10, 9), (10.5, 8.5), (14.5, 8.5), (14.5, 18.5), (15, 19)], 'ins'),       # CN10-9 to I2C-A GND
+    ('3V3', 'A', [(18, 18), (18.5, 17.5), (18.5, 16.5), (5.5, 16.5), (5, 17)], 'ins'),      # I2C-A VCC to XCVR 3V3
     # ---- board B: 5 V in to E5V, and the servo: 6V IN, C2, R4 and its header at the front
-    ('5V', 'B', [(17, 13), (16.5, 12.5), (11.5, 12.5), (11.5, 7.5), (9.5, 7.5), (9, 8)], 'ins'),   # 5V IN + to CN7-6 E5V
-    ('GND', 'B', [(17, 15), (16.5, 15.5), (9.5, 15.5), (9, 16)], 'ins'),                    # 5V IN - to CN7-22
-    ('GND', 'B', [(17, 15), (18.5, 15.5), (18.5, 23.5), (15.5, 23.5), (15, 23)], 'ins'),    # 5V IN - to SERVO GND
-    ('6V', 'B', [(17, 8), (16.5, 8.5), (16.5, 19.5), (14.5, 19.5), (14, 20)], 'pwr'),       # 6V IN + to C2 +
-    ('6V', 'B', [(14, 20), (13.5, 20.5), (13.5, 22.5), (14, 23)], 'pwr'),                   # C2 + to SERVO +
-    ('GND', 'B', [(17, 10), (17.5, 10.5), (17.5, 17.5), (14.5, 17.5), (14, 18)], 'pwr'),    # 6V IN - to C2 -
-    ('GND', 'B', [(14, 18), (14.5, 18.5), (15.5, 18.5), (15.5, 22.5), (15, 23)], 'pwr'),    # C2 - to SERVO GND
-    ('PWM', 'B', [(9, 19), (9.5, 19.5), (10.5, 19.5), (11, 19)], 'ins'),                    # PA0 to R4
-    ('PWM', 'B', [(11, 23), (11.5, 22.5), (12.5, 22.5), (13, 23)], 'ins'),                  # R4 to SERVO SIG
+    ('5V', 'B', [(16, 13), (15.5, 12.5), (11.5, 12.5), (11.5, 7.5), (9.5, 7.5), (9, 8)], 'ins'),   # 5V IN + to CN7-6 E5V
+    ('GND', 'B', [(16, 15), (15.5, 15.5), (9.5, 15.5), (9, 16)], 'ins'),                    # 5V IN - to CN7-22
+    ('GND', 'B', [(18, 15), (18.5, 15.5), (18.5, 22.5), (16.5, 22.5), (16, 23)], 'ins'),    # 5V IN - to SERVO GND
+    ('6V', 'B', [(16, 8), (15.5, 8.5), (12.5, 8.5), (12.5, 19.5), (13, 20)], 'pwr'),        # 6V IN + to C2 +
+    ('GND', 'B', [(16, 10), (15.5, 10.5), (14.5, 10.5), (14.5, 16.5), (14, 17)], 'pwr'),    # 6V IN - to C2 -
+    ('GND', 'B', [(15, 18), (15, 22)], 'pwr'),                                             # C2 - to SERVO GND
+    ('PWM', 'B', [(9, 19), (9.5, 19.5), (11.5, 19.5), (12, 19)], 'ins'),                    # PA0 to R4
 ]
+# Solder bridges on the solder side, A and B: each a run of holes, neighbour to neighbour, holding one part pin (or two of
+# the same net) and the free holes the wires land on. No free hole in a run has another net's pin beside it.
+SOLDER = [
+    ('A', [(7, 19), (6, 19)]), ('A', [(1, 17), (1, 18)]),                    # CTX: CN10-30, XCVR
+    ('A', [(7, 12), (6, 12)]), ('A', [(2, 17), (2, 16)]),                    # CRX: CN10-16, XCVR
+    ('A', [(7, 14), (6, 14)]), ('A', [(3, 16), (3, 17), (3, 18)]), ('A', [(2, 23), (3, 23)]),   # GND: CN10-20, XCVR, CAN
+    ('A', [(2, 10), (1, 10)]), ('A', [(2, 19), (3, 19)]),                    # CANH: module, terminal
+    ('A', [(3, 10), (4, 10)]), ('A', [(2, 21), (1, 21)]),                    # CANL: module, terminal
+    ('A', [(8, 6), (9, 6), (10, 6)]), ('A', [(10, 20), (10, 19)]), ('A', [(16, 20), (16, 19)]),   # SCL: CN10-3, I2C-B, I2C-A
+    ('A', [(8, 7), (9, 7)]), ('A', [(11, 20), (11, 19), (11, 18)]), ('A', [(17, 20), (17, 19)]),  # SDA: CN10-5, I2C-B, I2C-A
+    ('A', [(8, 9), (9, 9), (10, 9)]), ('A', [(12, 20), (12, 19)]), ('A', [(15, 20), (15, 19)]),   # GND: CN10-9, I2C-B, I2C-A
+    ('A', [(4, 17), (5, 17)]), ('A', [(18, 20), (18, 19), (18, 18)]),        # 3V3: XCVR, I2C-A (and the bridge from B)
+    ('B', [(17, 13), (16, 13)]),                                             # 5V IN +
+    ('B', [(16, 15), (17, 15), (18, 15)]), ('B', [(17, 10), (16, 10)]),      # 5V IN -, 6V IN -
+    ('B', [(14, 17), (14, 18), (15, 18)]), ('B', [(15, 22), (15, 23), (16, 23)]),   # C2 -, SERVO GND
+    ('B', [(17, 8), (16, 8)]), ('B', [(13, 20), (14, 20), (14, 21), (14, 22), (14, 23)]),   # 6V IN +; C2 + run to SERVO +
+    ('B', [(11, 19), (12, 19)]), ('B', [(11, 23), (12, 23), (13, 23)]),     # R4: PA0 end; servo end run to SERVO SIG
+]
+DIRECT = [('B', 'i', 8), ('B', 'i', 13), ('B', 'i', 16), ('B', 'i', 19)]   # CN7-6 E5V, -16 3V3, -22 GND, -28 PA0: wire on the pin
 # The one bridge: 3V3 is on CN7 (B) only, and the INA226 and the transceiver are on A. A's ground comes from
 # its own CN10-9 and CN10-20, the Nucleo tying all its GNDs. A's hole row r and B's row r + 1 are the same X,
 # so the bridge crossing at A row 18.5 leaves B on its row 19.5.
 XWIRES = [
-    ('3V3', [('B', 9, 13), ('B', 8.5, 13.5), ('B', 8.5, 19.5), ('B', 0.5, 19.5), ('A', 17.5, 18.5),
-             ('A', 17.5, 19.5), ('A', 18, 20)], 'ins'),                          # CN7-16 to I2C-A VCC
+    ('3V3', [('B', 9, 13), ('B', 8.5, 13.5), ('B', 8.5, 19.5), ('B', 0.5, 19.5), ('A', 18.5, 18.5),
+             ('A', 18, 19)], 'ins'),                                             # CN7-16 to I2C-A VCC
 ]
 LINKS = []                   # no links: CAN H / L reach the board through the module's 2-pin header
 
@@ -493,6 +513,17 @@ def draw_wire(v, net, b, pts, kind, hfun=None):
     for (c, r), (x, y) in ((pts[0], xy[0]), (pts[-1], xy[-1])):
         if float(c).is_integer() and float(r).is_integer():
             w(f'<circle cx="{x:.1f}" cy="{y:.1f}" r="2.3" fill="{colr}" stroke="#fff" stroke-width="0.6"/>')
+
+def draw_solder(v):
+    """The solder bridges, silver, hole to hole on the solder side."""
+    for b, run in SOLDER:
+        xy = [hp(v, b, c, r) for c, r in run]
+        d = ' '.join(f'{x:.1f},{y:.1f}' for x, y in xy)
+        w(f'<polyline points="{d}" fill="none" stroke="#94a3b8" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>')
+        w(f'<polyline points="{d}" fill="none" stroke="#e2e8f0" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>')
+    for b, c, r in DIRECT:                          # a wire straight on the pin: ringed
+        x, y = hp(v, b, ci(c), r)
+        w(f'<circle cx="{x:.1f}" cy="{y:.1f}" r="5.2" fill="none" stroke="#b45309" stroke-width="1.2" stroke-dasharray="2 1.5"/>')
 
 def draw_corner(v, x, y):
     """A corner fixing: the board hole and the 8 mm nylon standoff it carries (MEC-17)."""
@@ -849,7 +880,7 @@ if __name__ == "__main__":
         return f"{b}·{silk(b, c, max(hs))}-{silk(b, c, min(hs))}"
     text(40, 66, 'Hole names: board·hole, as PRINTED on the kit board - on A (5×7) letters A-X along the 70 mm side and numbers 1-18 across, on B and C (3×7) numbers 1-24 along and letters A-J across; A1 bottom-left with the print readable, as every view shows it.', 9.5, '#b45309')
     text(40, 80, f"Nucleo header row k sits on B's hole row k + 5 and A's k + 4 (A one pitch ahead, the tray) · CN10 even pins {col_range('A', 'g')}, odd {col_range('A', 'h')[2:]} · CN7 even {col_range('B', 'i')}, odd {col_range('B', 'j')[2:]} · fixings: the corner holes, three on B (MEC-17).", 9.5, '#b45309')
-    text(40, 93, 'Wires on the solder side, ALL INSULATED, PAD TO PAD: they meet only at pads, two wire ends per pad at most. Thick 18 AWG (3.11), thin 22 AWG, grey = a part lead bent over.', 9.5, '#b45309')
+    text(40, 93, 'Wires on the solder side, ALL INSULATED. On A and B no wire goes on a pin: it lands on the free hole beside it, one wire per hole, and a solder bridge (silver) joins the two. Only B\'s four ringed CN7 pins take the wire straight. Thick 18 AWG (3.11), thin 22 AWG.', 9.5, '#b45309')
 
     # views
     VX1, VX2, VY = 70, 590, 150
@@ -867,6 +898,7 @@ if __name__ == "__main__":
     boxes = carrier_view(vt, True)
     carrier_labels_top(vt, boxes)
     carrier_view(vb, False)
+    draw_solder(vb)
     for net, b, pts, kind in WIRES:
         draw_wire(vb, net, b, pts, kind)
     draw_bridges(vb)
@@ -994,6 +1026,7 @@ if __name__ == "__main__":
         '7  Fixings: nothing is drilled in the boards. An 8 mm nylon standoff and a screw in each corner hole of A and C and three of B; drill the tray',
         '    for B\'s rear inboard one (MEC-17). No wire may pass under a standoff. Nothing is fitted on the solder side: it carries wires only.',
         '8  The two I2C headers are 90° headers on A along the gap, pins pointing forward; nothing may stand where their plugs lie (violet). Plug both before the Nucleo.',
+        '9  Bridges before wires: run each silver bridge from the pin onto its free hole(s), then lay the wire end on that hole. Meter every bridge to its neighbours.',
     ]
     yy = NY + 26
     for c in checks:

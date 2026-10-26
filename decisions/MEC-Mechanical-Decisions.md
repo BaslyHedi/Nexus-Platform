@@ -1042,6 +1042,24 @@ the STM32 through it, as on B. **One wire still crosses between the boards: the 
 - **Kit use:** the last 5×7 (A) and a second 3×7 (B; C is the first).
 - **The routing check** now also fails any pad or wire that is off its board's columns.
 
+**Revision 2026-10-26 · no wire on a pin: it lands on a free hole, bridged to the pin.** Soldering a
+wire onto a pin whose tail already fills the hole is hard (Hedi). On A and B every wire end now lands
+on a free hole orthogonally beside its pin, one wire per hole, and a solder bridge joins that hole to
+the pin. Board C is built and stays as it is.
+
+- **Rules the routing check enforces:** a bridge holds pins of one net only; none of its free holes
+  has another net's pin beside it; a pin with two wires gets two free holes, or a bridge over two
+  holes. That is why I2C-B's SDA bridge runs down its column (k20-k18), and SCL and CN10-9's GND fork
+  at the socket over two holes: every I2C header pin has only the hole behind it, because the plug
+  lies on the row in front and its neighbours are pins.
+- **Short same-net runs are bridges, not wires:** C2 + to SERVO + (n20-n23) and R4 to SERVO SIG
+  (k23-m23).
+- **Four exceptions, the CN7 pins in B's column i:** E5V, 3V3, GND (CN7-22) and PA0 take the wire
+  straight on the pin. Column i is B's first column, so they have no free hole beside them.
+  Shifting B one column inboard (h-q) would give them one, but its outboard corners would then fall
+  2.38 mm from the tray's printed holes, so every new hole would run into an old one. Hedi kept i-r.
+- The drawing shows the bridges in silver on the solder side and rings the four exceptions.
+
 ---
 
 ## MEC-16 · Plate 2's lower face is the harness board - plate 1 carries only the battery and the driver
