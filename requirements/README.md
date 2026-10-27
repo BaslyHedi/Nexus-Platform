@@ -111,7 +111,7 @@ These are the FBL entry rules and the valid-app rule that [phases.md](../system/
 - `Nexus-Physical-02-01-R006`: the FRDM boot switch SW1 is set to 0011;
 - `Nexus-Physical-02-01-R005`: the UART console is on USB-C J11 (from the BOM; the schematic shows a CH342 debug UART, the connector not confirmed);
 - `Nexus-Physical-01-01-R003`: the STM32H533 sector layout lets the bootloader sectors be erased separately (RM0481 not checked);
-- `Nexus-Physical-01-01-R007`: PA15 is not driven by the STLINK-V3EC's JTDI line (MB1814 schematic not checked, HW-22).
+- `Nexus-Physical-01-01-R007`: PA15 is not driven by the STLINK-V3EC's JTDI line, to which SB9 ties it (MB1814 schematic; not measured, HW-22).
 
 **4. Verification.** Only the harness checks have run; each `Test` waits for its bench test, and there is no field yet for a
 result or its evidence (method question 5).

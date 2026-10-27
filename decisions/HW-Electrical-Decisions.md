@@ -811,8 +811,9 @@ carrier uses, each checked against the DS14539 alternate function table and UM31
   none. Two flash banks with read-while-write let the FBL erase and write one bank while running
   from the other. FDCAN runs the classic CAN that Cyphal uses (SW-01) and leaves CAN FD open.
 - **The Nucleo's STLINK-V3EC has a virtual COM port**, so no USB-TTL adapter is needed for a console.
-- **Rejected:** the NXP MR-CANHUBK344 and an STM32G474 board. The G474 is a Cortex-M4 without
-  TrustZone. *Hedi's reasons against the MR-CANHUBK344 are to be recorded.*
+- **Rejected:** the NXP MR-CANHUBK344 and an STM32G474 board. The MR-CANHUBK344 costs more, and
+  STM32 parts are far more widely used in robotics than NXP's MCUs, so examples, drivers and help
+  are easier to find (Hedi). The G474 is a Cortex-M4 without TrustZone.
 
 **Why these pins.**
 
@@ -826,7 +827,8 @@ carrier uses, each checked against the DS14539 alternate function table and UM31
   (TIM1_CH1), then PA0 (CN7-28), then PA15, because CN7-17 is on the outer row where a wire can land
   on a free hole beside the pin (MEC-15, revision 2026-10-26). TIM2 is a general-purpose timer, so
   the TIM1 MOE step in HW-21 does not apply. At reset PA15 is JTDI with its pull-up on, so the
-  servo line idles high through R4 until software takes it: the bootloader drives it low early.
+  servo line idles high through R4 until software takes it: the bootloader drives it low early,
+  once the PA15 check under *To confirm* has passed.
 - **Power.** E5V is the only 5 V input that bypasses the ST-LINK's USB supply; JP5 on [5-6] selects
   it. CN7-16 is the only 3V3 on the morpho headers the carrier reaches.
 
@@ -843,10 +845,13 @@ carrier uses, each checked against the DS14539 alternate function table and UM31
 
 **To confirm.**
 
-- **Does the ST-LINK drive PA15?** UM3121 lists PA15 as `T_JTDI` in its MCU pin table, and its
-  debug-connector table says target JTDI is linked "(SB41 ON)", while a footnote gives SB41 to the
-  SWD pins. Before the servo is connected: check the MB1814 schematic for the solder bridge between
-  PA15 and the STLINK-V3EC, and with the ST-LINK connected over USB, check that a TIM2 PWM on PA15
-  reaches CN7-17 clean on a scope. If the ST-LINK holds the line, open that bridge (SWD does not
-  use JTDI) or move the servo back to PA0 on CN7-28.
+- **PA15 is tied to the ST-LINK.** The MB1814 schematic (rev C02, sheet 3) shows **PA15 → R32
+  (47 Ω) → SB9 → T_JTDI**, the STLINK-V3EC's JTDI output, and SB9 is drawn fitted (the unfitted
+  bridges on that sheet are marked DNF). SB40 / SB41 are the SWD bridges, so UM3121's "(SB41 ON)"
+  for JTDI is a typo. SWD does not use JTDI. Whether the STLINK-V3EC drives that line in SWD mode
+  is not documented: if it does, PA15 fights it through only 47 Ω. **Until it is settled, firmware
+  does not drive PA15 as an output.** The test, harmless: ST-LINK connected over USB, PA15 an input
+  with its pull-down, read it and scope CN7-17. If the line is held, **remove SB9** (a 0 Ω part;
+  only JTAG through the on-board ST-LINK is lost), or move the servo back to PA0 on CN7-28 as a
+  third direct joint (MEC-15).
 - **The 500 mA E5V limit.** The node draws well under it with no shield; measure on first power-up.
