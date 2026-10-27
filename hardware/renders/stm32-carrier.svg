@@ -2773,7 +2773,7 @@
 <text x="1226.0" y="684.0" font-size="7.9" fill="#475569">twisted H, L + GND to DE-9 stub and FRDM J7 (HW-09, HW-18); the module's 120 Ω terminates this end</text>
 <rect x="1130" y="690" width="550" height="19" fill="#ffffff" stroke="#e2e8f0"/>
 <text x="1142.0" y="703.0" font-size="8.4" fill="#1e293b" font-weight="700">CN1</text>
-<text x="1226.0" y="703.0" font-size="7.9" fill="#475569">ST-LINK USB-C: Lindy 90° adapter (5.12) flat, turned to the vehicle left, then Mini-B to C (5.13), then the fascia extension (5.10)</text>
+<text x="1226.0" y="703.0" font-size="7.9" fill="#475569">ST-LINK USB-C: 90° C to Mini-B cable (5.12) flat, turned to the vehicle left, then the fascia extension (5.10)</text>
 <text x="1130.0" y="735.0" font-size="12" fill="#1a1a1a" font-weight="700">PARTS</text>
 <line x1="1130" y1="743" x2="1680" y2="743" stroke="#e2e8f0"/>
 <rect x="1130" y="751" width="550" height="19" fill="#f1f5f9" stroke="#cbd5e1"/>
