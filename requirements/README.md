@@ -110,7 +110,7 @@ These are the FBL entry rules and the valid-app rule that [phases.md](../system/
 - `Nexus-Vehicle-R010`: the Encoder Motor Module does not drive at power-up (HW-17, not measured);
 - `Nexus-Physical-02-01-R006`: the FRDM boot switch SW1 is set to 0011;
 - `Nexus-Physical-02-01-R005`: the UART console is on USB-C J11 (from the BOM; the schematic shows a CH342 debug UART, the connector not confirmed);
-- `Nexus-Physical-01-01-R003`: the STM32H533 sector layout lets the bootloader sectors be erased separately (RM0481 not checked);
+- `Nexus-Physical-01-01-R003`: **confirmed 2026-10-27** that the STM32H533's flash is two banks of 8 KB sectors, each erased on its own (RM0481 Rev 5); the memory map to check it against waits for the SW-04 rework;
 - `Nexus-Physical-01-01-R007`: PC2 is free on the board (UM3121 lists it as plain IO; checked against the MB1814 schematic only for the JTAG pins, HW-22).
 
 **4. Verification.** Only the harness checks have run; each `Test` waits for its bench test, and there is no field yet for a
