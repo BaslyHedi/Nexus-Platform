@@ -71,7 +71,7 @@ Hardware element, level 2, designed in this project: drawn in [stm32-carrier](..
 
 ### Nexus-Physical-01-02-R006
 
-**Statement.** The carrier shall connect PA15 to the servo header through R4, rated 1 kΩ.
+**Statement.** The carrier shall connect PC2 to the servo header through R4, rated 1 kΩ.
 
 - Function: Nexus-Logical-202-F01
 - Derived-from: Nexus-Physical-01-R017

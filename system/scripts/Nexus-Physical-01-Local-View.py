@@ -85,7 +85,7 @@ def build():
     o += neighbour(1440, 650, 170, 70, 'Steering actuator', 'Nexus-Physical-08')
 
     o += element('Nexus-Physical-01-01', 'MCU board', 1, 600, 140, 740, 115, [
-        'NUCLEO-H533RE, board MB1814 (1.2)', 'STM32H533: FDCAN2 on PB12 / PB13', 'I2C1 on PB6 / PB7, TIM2 channel 1 on PA15'], [
+        'NUCLEO-H533RE, board MB1814 (1.2)', 'STM32H533: FDCAN2 on PB12 / PB13', 'I2C1 on PB6 / PB7, TIM4 channel 4 on PC2'], [
         'User LED LD2', 'STLINK-V3EC, SWD over USB-C', 'Runs from 5 V on E5V, CN7-6'])
 
     group(o, 600, 360, 740, 185, 'SOFTWARE ELEMENTS · IN THE FLASH OF THE STM32H533', NODE)
@@ -106,7 +106,7 @@ def build():
     o += element('Nexus-Physical-01-02', 'Carrier boards A and B', 1, 260, 580, 1100, 135, [
         'Kit boards A and B (5.11), drawn in stm32-carrier', '5 V into E5V, CN7 pin 6', 'PB12, PB13 to the transceiver; no termination',
         'PB6, PB7 to the motor driver header'], [
-        'PA15 through R4, 1 kΩ, to the servo header', '6 V from the UBEC to the servo header', 'C2, 470 µF, across the servo header'])
+        'PC2 through R4, 1 kΩ, to the servo header', '6 V from the UBEC to the servo header', 'C2, 470 µF, across the servo header'])
 
     FL = flow
     o += FL('M200,200 L598,200', 'i', start=True, size=8, labels=[(400, 192, 'SWD, ST-LINK USB at the fascia')])

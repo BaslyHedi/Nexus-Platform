@@ -64,7 +64,7 @@ Drawn in [Nexus-Physical-01-Local-View](renders/Nexus-Physical-01-Local-View.svg
 
 | From | To | What passes |
 |---|---|---|
-| 01-02 carrier | 01-01 MCU board | 5 V into E5V (CN7-6); PB12, PB13, PB6, PB7, PA15 through the morpho headers (HW-19, HW-22) |
+| 01-02 carrier | 01-01 MCU board | 5 V into E5V (CN7-6); PB12, PB13, PB6, PB7, PC2 through the morpho headers (HW-19, HW-22) |
 | 01-02 carrier | 01-03 transceiver | PB12 to the receive output, PB13 to the transmit input (HW-09, HW-22) |
 | 01-03 transceiver | the bus (Nexus-Physical-04) | CAN_H, CAN_L, with the module's 120 Ω as this end's termination |
 | 01-02 carrier | servo and motor driver headers | 6 V from the UBEC with C2 across it, PWM through R4, I2C (HW-14, HW-19, HW-21) |

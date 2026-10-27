@@ -92,9 +92,9 @@ Which systems hold requirements on each function, from the `Function` fields.
   - **Nexus-Physical-05-R002**: The element shall supply the motor driver at pack voltage through SW1 and a 5 A fuse.
   - **Nexus-Physical-07-R001**: The element shall drive the rear wheels with two 12 V encoder gear motors through the Enc…
 - **Nexus-Vehicle-R009**: The vehicle shall carry an Ackermann front steering, fitted and supplied with power.
-  - **Nexus-Physical-01-R017**: The node shall bring out the servo PWM on PA15 through a 1 kΩ series resistor.
-    - **Nexus-Physical-01-01-R007**: The MCU board shall leave PA15 free for channel 1 of TIM2.
-    - **Nexus-Physical-01-02-R006**: The carrier shall connect PA15 to the servo header through R4, rated 1 kΩ.
+  - **Nexus-Physical-01-R017**: The node shall bring out the servo PWM on PC2 through a 1 kΩ series resistor.
+    - **Nexus-Physical-01-01-R007**: The MCU board shall leave PC2 free for channel 4 of TIM4.
+    - **Nexus-Physical-01-02-R006**: The carrier shall connect PC2 to the servo header through R4, rated 1 kΩ.
   - **Nexus-Physical-01-R018**: The node shall pass the 6 V servo supply from the UBEC to the servo header.
     - **Nexus-Physical-01-02-R007**: The carrier shall pass the 6 V UBEC supply to the servo header.
     - **Nexus-Physical-01-02-R008**: The carrier shall hold C2, rated 470 µF, across the servo header.

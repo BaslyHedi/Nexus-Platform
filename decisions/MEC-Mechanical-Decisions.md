@@ -810,7 +810,7 @@ cover a 22.4 hole with 1.2 mm to spare a side.
 
 **Revised 2026-10-25: the NUCLEO-H533RE replaces the Discovery (HW-22).** The decision stands with a
 different board: A and B are rebuilt on fresh boards and joined by the Nucleo's morpho headers. See
-"Revision 2026-10-25" and the two 2026-10-26 revisions at the end. Everything about P1, P2 and the
+"Revision 2026-10-25", the two 2026-10-26 revisions and the 2026-10-27 one at the end. Everything about P1, P2 and the
 Discovery below is the earlier build.
 
 **Hole names changed 2026-09-29.** Holes are now named as **printed on the kit boards**: letters
@@ -1096,6 +1096,13 @@ the pin. Board C is built and stays as it is.
   Hedi kept i-r and the printed tray as it is.
 - The drawing shows the bridges in silver on the solder side and rings the two exceptions.
 
+
+**Revision 2026-10-27 · the servo PWM on PC2, R4 turned round.** PA15 is tied to the ST-LINK's JTDI on
+the Nucleo, and the Nucleo is not modified (HW-22), so the servo PWM moves to **PC2 on CN7-35**, B·j23,
+CN7's outer row. Its only free neighbour, k23, is where R4's lead was, so **R4 is turned round**: its
+MCU end now sits in k23, bridged straight to PC2 (two pins, no wire), and its servo end stays in k19.
+One wire runs from l19 (bridged to R4's k19) down the l-m channel to m24, bridged to SERVO SIG at m23.
+CN7-17 is now free, and so is the k14 hole that served it. Routing check passes.
 ---
 
 ## MEC-16 · Plate 2's lower face is the harness board - plate 1 carries only the battery and the driver

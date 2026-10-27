@@ -80,7 +80,7 @@ Hardware element, level 2, bought: its requirements state what the node relies o
 
 ### Nexus-Physical-01-01-R007
 
-**Statement.** The MCU board shall leave PA15 free for channel 1 of TIM2.
+**Statement.** The MCU board shall leave PC2 free for channel 4 of TIM4.
 
 - Function: Nexus-Logical-202-F01
 - Derived-from: Nexus-Physical-01-R017

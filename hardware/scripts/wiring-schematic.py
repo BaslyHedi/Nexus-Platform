@@ -267,7 +267,7 @@ def signals():
     w(I + comment('the Nucleo plugs onto carrier A (under CN10) and carrier B (under CN7); both sit on the carrier tray on plate 2'))
     w(I + rect(PX, 250, 520, 350, 62, fill='#dcfce7', stroke='#15803d', stroke_width=1.8, rx=3))
     w(I + text(PX, 425, 540, 'NUCLEO-H533RE · STM32H533RE', font_size=11, font_weight=700, fill='#14532d', text_anchor='middle'))
-    w(I + text(PX, 425, 556, 'real-time + BMS · FDCAN2: PB12 RX · PB13 TX · I²C1 PB6 SCL / PB7 SDA · PA15 PWM', font_size=8, fill='#166534', text_anchor='middle'))
+    w(I + text(PX, 425, 556, 'real-time + BMS · FDCAN2: PB12 RX · PB13 TX · I²C1 PB6 SCL / PB7 SDA · PC2 PWM', font_size=8, fill='#166534', text_anchor='middle'))
     w(I + text(PX, 425, 571, 'ST-LINK V3EC with VCP · 5 V in on E5V, JP5 [5-6] · AFs per DS14539 Rev 3', font_size=8, fill='#3f7d52', text_anchor='middle'))
     w(I + line(PX, 335, 582, 335, 612, stroke='#94a3b8', stroke_width=5, marker_end='url(#a)'))
     w(I + line(PX, 515, 582, 515, 612, stroke='#94a3b8', stroke_width=5, marker_end='url(#a)'))
@@ -283,7 +283,7 @@ def signals():
         '6V IN terminal ← UBEC',
         'C2 470 µF across the servo header',
         'servo header: 6 V, GND, PWM',
-        '   via R4 1 kΩ from PA15'], '#1d4ed8', '#eff6ff', '#1e3a8a'))
+        '   via R4 1 kΩ from PC2'], '#1d4ed8', '#eff6ff', '#1e3a8a'))
     w('')
     w(I + comment('CAN: carrier A terminal to the FRDM J7, under carrier B; the debug port is a stub off the middle of the bus (HW-18)'))
     w(I + path('M335,752 L335,768 L615,768 L615,690 L1000,690', fill='none', stroke=NET['can'], stroke_width=3))

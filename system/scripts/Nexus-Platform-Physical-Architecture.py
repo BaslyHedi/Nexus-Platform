@@ -97,7 +97,7 @@ def build():
     # --- row 2: the real-time node and the actuators it will command
     o += element('Nexus-Physical-01', 'STM32 node: real-time control', 1, 250, 450, 420, 200, [
         'NUCLEO-H533RE, MB1814 (1.2)', 'Carrier boards A and B (5.11)', 'SN65HVD230 CAN transceiver (4.1)',
-        'User LED LD2', 'STLINK-V3EC on board, SWD', 'I²C PB6 / PB7 · servo PWM PA15'])
+        'User LED LD2', 'STLINK-V3EC on board, SWD', 'I²C PB6 / PB7 · servo PWM PC2'])
     o += element('Nexus-Physical-08', 'Steering actuator', 1, 1120, 450, 240, 95, [
         'LD-1501MG servo (2.3)', 'Ackermann linkage (2.1)'])
     o += element('Nexus-Physical-07', 'Rear drive', 1, 1120, 560, 240, 90, [
@@ -126,7 +126,7 @@ def build():
     o += FL('M200,365 L248,365', 'i', start=True, size=8, labels=[(224, 357, 'DE-9')])
     # signals and commands
     o += FL('M600,700 L600,652', 'i', size=8, anchor='start', labels=[(606, 682, 'I²C: pack V, I')])
-    o += FL('M672,497 L1118,497', 'c', size=8, labels=[(895, 489, 'servo lead: 6 V + PWM PA15 (via R4)')])
+    o += FL('M672,497 L1118,497', 'c', size=8, labels=[(895, 489, 'servo lead: 6 V + PWM PC2 (via R4)')])
     o += FL('M672,605 L1118,605', 'c', start=True, size=8, labels=[(895, 597, 'I²C PB6 / PB7: speed, encoders')])
     o += FL('M1118,200 L1032,200', 'i', size=8, labels=[(1075, 192, 'images, ranges')])
     # debug and remote

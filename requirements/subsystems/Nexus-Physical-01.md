@@ -175,7 +175,7 @@ System element, level 1. Written to [../system/method.md](../../system/method.md
 
 ### Nexus-Physical-01-R017
 
-**Statement.** The node shall bring out the servo PWM on PA15 through a 1 kΩ series resistor.
+**Statement.** The node shall bring out the servo PWM on PC2 through a 1 kΩ series resistor.
 
 - Function: Nexus-Logical-202-F01
 - Derived-from: Nexus-Vehicle-R009

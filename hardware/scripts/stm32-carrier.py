@@ -151,7 +151,8 @@ def hole(board, col, row):
 # are one column and the even pins the other: CN10's even pins are its outer row, CN7's odd pins are its.
 SOCKETS = [('A', 'g', 'CN10 even'), ('A', 'h', 'CN10 odd'), ('B', 'i', 'CN7 even'), ('B', 'j', 'CN7 odd')]
 # The NUCLEO pins the carrier uses, by header and pin (UM3121 Table 17), and the net each one is on.
-# FDCAN2 on PB12 / PB13 (AF9), I2C1 on PB6 / PB7 (AF4), TIM2_CH1 on PA15 (AF1, 2026-10-26; was PA0): checked against the STM32H533
+# FDCAN2 on PB12 / PB13 (AF9), I2C1 on PB6 / PB7 (AF4), TIM4_CH4 on PC2 (AF2, 2026-10-27; was PA15, which the board ties to
+# the ST-LINK's JTDI through SB9, and the Nucleo is not modified, HW-22): checked against the STM32H533
 # datasheet, DS14539 Rev 3, March 2026. E5V takes the 5 V in with JP5 on [5-6]. Every CAN pin the part has is
 # on CN10 and its only supply pins are on CN7, so the CAN and I2C parts sit on A and the power and the servo on B:
 # one wire, 3V3, crosses between the boards.
@@ -159,7 +160,7 @@ NUC_PINS = {('CN10', 3): ('PB6', 'SCL'), ('CN10', 5): ('PB7', 'SDA'), ('CN10', 9
             ('CN10', 16): ('PB12', 'CRX'), ('CN10', 20): ('GND', 'GND'), ('CN10', 30): ('PB13', 'CTX'),
             ('CN7', 6): ('E5V', '5V'), ('CN7', 8): ('GND', 'GND'), ('CN7', 16): ('3V3', '3V3'),
             ('CN7', 19): ('GND', 'GND'), ('CN7', 20): ('GND', 'GND'), ('CN7', 22): ('GND', 'GND'),
-            ('CN7', 17): ('PA15', 'PWM_MCU')}
+            ('CN7', 35): ('PC2', 'PWM_MCU')}
 
 
 def nuc_hole(hdr, pin):
@@ -207,7 +208,7 @@ def header_boxes(b, pins, name):
     return out
 
 
-RES = [('B', ('k', 19), ('k', 23), 'R4 1k')]       # in the servo PWM; flat, under the Nucleo's edge
+RES = [('B', ('k', 23), ('k', 19), 'R4 1k')]       # in the servo PWM, MCU end beside PC2; flat, under the Nucleo's edge
 CAPS = [('B', ('n', 18), ('n', 20), 'C2')]         # (minus leg, plus leg)
 # The SN65HVD230 module (BOM 4.1, 26.98 x 10.24) lies FLAT and, as bent (2026-10-03), FACE DOWN:
 # upright it would hit plate 3. Its pins are bent 90 deg toward its component side into a 1x4
@@ -289,7 +290,7 @@ WIRES = [
     ('6V', 'B', [(16, 8), (15.5, 8.5), (12.5, 8.5), (12.5, 19.5), (13, 20)], 'pwr'),        # 6V IN + to C2 +
     ('GND', 'B', [(16, 10), (15.5, 10.5), (14.5, 10.5), (14.5, 16.5), (14, 17)], 'pwr'),    # 6V IN - to C2 -
     ('GND', 'B', [(15, 18), (15, 22)], 'pwr'),                                             # C2 - to SERVO GND
-    ('PWM', 'B', [(11, 14), (10.5, 14.5), (10.5, 18.5), (11.5, 18.5), (12, 19)], 'ins'),    # PA15 to R4
+    ('PWM', 'B', [(12, 19), (12.5, 19.5), (12.5, 23.5), (13, 24)], 'ins'),                 # R4 servo end to SERVO SIG
 ]
 # Solder bridges on the solder side, A and B: each a run of holes, neighbour to neighbour, holding one part pin (or two of
 # the same net) and the free holes the wires land on. No free hole in a run has another net's pin beside it.
@@ -307,8 +308,9 @@ SOLDER = [
     ('B', [(16, 15), (17, 15), (18, 15)]), ('B', [(17, 10), (16, 10)]),      # 5V IN -, 6V IN -
     ('B', [(14, 17), (14, 18), (15, 18)]), ('B', [(15, 22), (15, 23), (16, 23)]),   # C2 -, SERVO GND
     ('B', [(17, 8), (16, 8)]), ('B', [(13, 20), (14, 20), (14, 21), (14, 22), (14, 23)]),   # 6V IN +; C2 + run to SERVO +
-    ('B', [(11, 19), (12, 19)]), ('B', [(11, 23), (12, 23), (13, 23)]),     # R4: MCU end; servo end run to SERVO SIG
-    ('B', [(10, 15), (11, 15)]), ('B', [(10, 14), (11, 14)]),               # CN7-19 GND, CN7-17 PA15: outer row, free holes in column k
+    ('B', [(10, 23), (11, 23)]), ('B', [(11, 19), (12, 19)]),               # PC2 (CN7-35) to R4's MCU end; R4's servo end
+    ('B', [(13, 23), (13, 24)]),                                             # SERVO SIG
+    ('B', [(10, 15), (11, 15)]),                                             # CN7-19 GND: outer row, free hole in column k
 ]
 DIRECT = [('B', 'i', 8), ('B', 'i', 13)]   # CN7-6 E5V and CN7-16 3V3, on no other pin (UM3121 Tables 8, 17): wire on the pin
 # The one bridge: 3V3 is on CN7 (B) only, and the INA226 and the transceiver are on A. A's ground comes from
@@ -640,7 +642,7 @@ PIN_LAB = {  # (board, col, row): (text, level, anchor) - each board's over its 
     nuc_hole('CN10', 3): ('CN10-3 PB6', 2, 'start'), nuc_hole('CN10', 5): ('CN10-5 PB7', 1, 'end'),
     nuc_hole('CN10', 9): ('CN10-9 GND', 0, 'start'), nuc_hole('CN10', 16): ('CN10-16 PB12', 2, 'end'),
     nuc_hole('CN10', 20): ('CN10-20 GND', 1, 'end'), nuc_hole('CN10', 30): ('CN10-30 PB13', 0, 'end'),
-    nuc_hole('CN7', 17): ('CN7-17 PA15', 2, 'end'),
+    nuc_hole('CN7', 35): ('CN7-35 PC2', 2, 'end'),
 }
 END_LAB = []
 
@@ -965,7 +967,7 @@ if __name__ == "__main__":
         (NET['GND'], 'GND CAN', f"CN10-20 {N(*nuc_hole('CN10', 20))}", f"→ XCVR GND ({xc('GND')}) → CAN GND ({silk('A', *can['GND'])})"),
         (NET['3V3'], '3.3 V', f"CN7-16 {N(*nuc_hole('CN7', 16))}", f"→ bridge → I2C-A VCC ({N('A', pins_of('I2C-A')[0]['3V3'], 20)}) → XCVR 3V3 ({xc('3V3')})"),
         (NET['6V'], 'Servo 6 V', 'B 6V IN +', f"{N('B', 'q', 8)} → C2 + ({silk('B', 'n', 20)}) → SERVO + ({mpin('SERVO', '+6V')}), 18 AWG"),
-        (NET['PWM'], 'TIM2_CH1', 'CN7-17 PA15', f"R4 1k ({N('B', 'k', 19)}-{silk('B', 'k', 23)}) → SERVO SIG ({mpin('SERVO', 'SIG')})"),
+        (NET['PWM'], 'TIM4_CH4', 'CN7-35 PC2', f"R4 1k ({N('B', 'k', 23)}-{silk('B', 'k', 19)}) → SERVO SIG ({mpin('SERVO', 'SIG')})"),
         (NET['SCL'], 'I²C1 SCL', 'CN10-3 PB6', f"→ I2C-B ({N('A', pins_of('I2C-B')[0]['SCL'], 20)}) · → I2C-A ({silk('A', pins_of('I2C-A')[0]['SCL'], 20)})"),
         (NET['SDA'], 'I²C1 SDA', 'CN10-5 PB7', f"→ I2C-B ({N('A', pins_of('I2C-B')[0]['SDA'], 20)}) → I2C-A ({silk('A', pins_of('I2C-A')[0]['SDA'], 20)})"),
         (NET['CTX'], 'FDCAN2_TX', 'CN10-30 PB13', f"XCVR CTX ({N('A', *[(c, r) for c, r, l in XCVR_SOCKET[1] if l == 'CTX'][0])}) - straight, not crossed"),
@@ -1038,7 +1040,7 @@ if __name__ == "__main__":
         ('Why A and B split this way', [
             'New boards on the same tray (MEC-17). Every CAN pin is on',
             'CN10 and every supply pin on CN7, so A takes CAN and I2C and B the',
-            'power and the servo (PA15): one wire crosses, 3V3. Each header is',
+            'power and the servo (PC2): one wire crosses, 3V3. Each header is',
             'in its module\'s order: a straight lead is right.',
         ]),
         ('What moved off the WAGOs', [
@@ -1052,7 +1054,7 @@ if __name__ == "__main__":
             '(−) WAGO (HW-06). The 6 V servo rail reaches C2 and SERVO only',
             '(HW-11). 3V3 comes from CN7-16, the Nucleo\'s own regulator, never',
             'CN7-5 VDD. 5 V enters on E5V, so the ST-LINK USB alone does not',
-            'power the MCU: LOGIC on first, then the USB. R4 guards PA15.',
+            'power the MCU: LOGIC on first, then the USB. R4 guards PC2.',
         ]),
     ]
     nx = 40
@@ -1064,7 +1066,7 @@ if __name__ == "__main__":
         nx += 350
 
     w(f'<line x1="40" y1="{H - 48}" x2="{W - 40}" y2="{H - 48}" stroke="#e2e8f0"/>')
-    text(40, H - 32, 'Geometry: UM3121 Fig. 7 (board 70 × 82.5, outer rows 63.50 apart, 3.25 in from each edge, row 1 31.70 from the CN1 edge) · Pins: UM3121 Table 17 · AFs: DS14539 Rev 3 (PB12 / PB13 AF9, PB6 / PB7 AF4, PA15 AF1)', 8.4, '#94a3b8')
+    text(40, H - 32, 'Geometry: UM3121 Fig. 7 (board 70 × 82.5, outer rows 63.50 apart, 3.25 in from each edge, row 1 31.70 from the CN1 edge) · Pins: UM3121 Table 17 · AFs: DS14539 Rev 3 (PB12 / PB13 AF9, PB6 / PB7 AF4, PC2 AF2)', 8.4, '#94a3b8')
     text(40, H - 18, 'Decisions: MEC-08 (carrier) · MEC-15 (kit boards) · HW-19 (5 V split board, selectable termination) · HW-06 · HW-09 · HW-11 · HW-18 · SVG is the master - PDFs are generated once the design is frozen.', 8.4, '#94a3b8')
     w('</svg>')
 

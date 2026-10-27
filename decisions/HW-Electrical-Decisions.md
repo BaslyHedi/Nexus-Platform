@@ -28,8 +28,8 @@ Drawings: [wiring schematic](../hardware/renders/wiring-schematic.svg) · [STM32
 | **HW-18** | CAN debug port - DE-9 on the fascia, PC as an unterminated third node |
 | **HW-19** | The 5 V split, its bulk capacitor and the USB-C Rp move onto a board; CAN termination is a jumper. *Rp dropped 2026-10-07* |
 | **HW-20** | Three fuses - the logic branch runs on the main fuse |
-| **HW-21** | Servo PWM on PE9 (TIM1_CH1); the servo lead is black / red / white. *Updated by HW-22: PA15, TIM2_CH1* |
-| **HW-22** | The real-time MCU is a NUCLEO-H533RE: FDCAN2 on PB12/PB13, I2C1 on PB6/PB7, servo on PA15, 5 V into E5V |
+| **HW-21** | Servo PWM on PE9 (TIM1_CH1); the servo lead is black / red / white. *Updated by HW-22: PC2, TIM4_CH4* |
+| **HW-22** | The real-time MCU is a NUCLEO-H533RE: FDCAN2 on PB12/PB13, I2C1 on PB6/PB7, servo on PC2, 5 V into E5V |
 
 ---
 
@@ -732,7 +732,7 @@ battery + ─ 7.5 A ─ shunt ─ (+) bus ─┬─ SW1 ─┬─ 5 A ─ Encode
 
 ## HW-21 · Servo PWM on PE9 (TIM1_CH1); the servo lead is black / red / white
 
-**Updated by HW-22:** the servo signal now comes from **PA15 on CN7-17, TIM2_CH1 (AF1)**, on carrier board B. The lead colours, R4 and the miswiring cases below still hold, with PA15 in place of PE9; the TIM1 timing and MOE notes were the F407's.
+**Updated by HW-22:** the servo signal now comes from **PC2 on CN7-35, TIM4_CH4 (AF2)**, on carrier board B. The lead colours, R4 and the miswiring cases below still hold, with PC2 in place of PE9; the TIM1 timing and MOE notes were the F407's.
 
 **Decision (2026-10-03).** The steering servo's signal comes from **PE9, P1-27**, as
 **TIM1_CH1** (alternate function AF1), through R4 (1 kΩ, HW-19) to the SERVO header on carrier
@@ -781,9 +781,9 @@ so the plug can go on reversed or one pin off.
 
 ---
 
-## HW-22 · The real-time MCU is a NUCLEO-H533RE: FDCAN2 on PB12/PB13, I2C1 on PB6/PB7, servo on PA15, 5 V into E5V
+## HW-22 · The real-time MCU is a NUCLEO-H533RE: FDCAN2 on PB12/PB13, I2C1 on PB6/PB7, servo on PC2, 5 V into E5V
 
-**Decision (2026-10-25, pins final 2026-10-26).** The STM32F4DISCOVERY (BOM 1.2a) is replaced by a
+**Decision (2026-10-25; servo pin 2026-10-27).** The STM32F4DISCOVERY (BOM 1.2a) is replaced by a
 **NUCLEO-H533RE**, board MB1814 (BOM 1.2): an **STM32H533RET6**, Cortex-M33 with TrustZone, 250 MHz,
 512 KB of flash in two banks, 272 KB of RAM, two FDCAN controllers (DS14539 Rev 3). It plugs into
 carrier boards A and B by its ST morpho headers, **CN10 on A and CN7 on B** (MEC-15). The pins the
@@ -795,7 +795,7 @@ carrier uses, each checked against the DS14539 alternate function table and UM31
 | CAN TX | **PB13** | CN10-30 | A | FDCAN2_TX, AF9 |
 | I2C SCL | **PB6** | CN10-3 | A | I2C1_SCL, AF4 |
 | I2C SDA | **PB7** | CN10-5 | A | I2C1_SDA, AF4 |
-| Servo PWM | **PA15** | CN7-17 | B | TIM2_CH1, AF1 |
+| Servo PWM | **PC2** | CN7-35 | B | TIM4_CH4, AF2 |
 | 5 V in | **E5V** | CN7-6 | B | JP5 on [5-6]; 4.75-5.25 V, 500 mA max (UM3121 Table 8) |
 | 3.3 V out | **3V3** | CN7-16 | B | feeds the INA226 and the transceiver over the one bridge |
 | GND | CN7-19, CN10-9, CN10-20 | | A, B | the Nucleo ties its grounds |
@@ -823,12 +823,15 @@ carrier uses, each checked against the DS14539 alternate function table and UM31
   PB12/PB13 are free on this board, both on CN10 beside the transceiver on A, and they leave PB6/PB7
   for I2C1.
 - **I2C.** PB6/PB7 are the board's Arduino D15/D14 I2C pins, with nothing else on them.
-- **Servo.** TIM2_CH1 is a hardware timer channel, as TIM1_CH1 on PE9 was. It was first PA8
-  (TIM1_CH1), then PA0 (CN7-28), then PA15, because CN7-17 is on the outer row where a wire can land
-  on a free hole beside the pin (MEC-15, revision 2026-10-26). TIM2 is a general-purpose timer, so
-  the TIM1 MOE step in HW-21 does not apply. At reset PA15 is JTDI with its pull-up on, so the
-  servo line idles high through R4 until software takes it: the bootloader drives it low early,
-  once the PA15 check under *To confirm* has passed.
+- **Servo.** TIM4_CH4 is a hardware timer channel, as TIM1_CH1 on PE9 was. **The Nucleo is not
+  modified (Hedi, 2026-10-27), so no JTAG or SWD pin carries a signal:** PA13, PA14, PA15 (tied to the
+  ST-LINK's JTDI through SB9 and a 47 Ω resistor, MB1814 schematic rev C02, sheet 3), PB3 (SWO) and
+  PB4 (NJTRST) stay free. The pin went PA8 (TIM1_CH1), then PA0, then PA15 (CN7-17) for the wiring
+  rule, then **PC2 on CN7-35**: it is on CN7's outer row, nothing on the board uses it (UM3121: plain
+  IO), and its only free neighbour hole is where R4's lead goes, so PC2 is bridged straight to R4 and
+  R4's other end reaches SERVO SIG by one wire (MEC-15). TIM4 is a general-purpose timer, so the TIM1
+  MOE step in HW-21 does not apply. PC2 has no pull-up at reset, so the servo sees no pulse until
+  software starts the timer.
 - **Power.** E5V is the only 5 V input that bypasses the ST-LINK's USB supply; JP5 on [5-6] selects
   it. CN7-16 is the only 3V3 on the morpho headers the carrier reaches.
 
@@ -845,13 +848,7 @@ carrier uses, each checked against the DS14539 alternate function table and UM31
 
 **To confirm.**
 
-- **PA15 is tied to the ST-LINK.** The MB1814 schematic (rev C02, sheet 3) shows **PA15 → R32
-  (47 Ω) → SB9 → T_JTDI**, the STLINK-V3EC's JTDI output, and SB9 is drawn fitted (the unfitted
-  bridges on that sheet are marked DNF). SB40 / SB41 are the SWD bridges, so UM3121's "(SB41 ON)"
-  for JTDI is a typo. SWD does not use JTDI. Whether the STLINK-V3EC drives that line in SWD mode
-  is not documented: if it does, PA15 fights it through only 47 Ω. **Until it is settled, firmware
-  does not drive PA15 as an output.** The test, harmless: ST-LINK connected over USB, PA15 an input
-  with its pull-down, read it and scope CN7-17. If the line is held, **remove SB9** (a 0 Ω part;
-  only JTAG through the on-board ST-LINK is lost), or move the servo back to PA0 on CN7-28 as a
-  third direct joint (MEC-15).
+- **PA15 is tied to the ST-LINK** (see *Why these pins*), which is why the servo left it. Nothing
+  on the carrier uses PA15, PA13, PA14, PB3 or PB4, so the question of whether the ST-LINK drives
+  JTDI in SWD mode no longer matters.
 - **The 500 mA E5V limit.** The node draws well under it with no shield; measure on first power-up.
