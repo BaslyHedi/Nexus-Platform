@@ -64,8 +64,8 @@ Which systems hold requirements on each function, from the `Function` fields.
 
 - **Nexus-Vehicle-R001**: The vehicle shall operate from the on-board battery without an external supply.
   - **Nexus-Physical-01-R001**: The node shall run from the 5 V supply of the power element.
-    - **Nexus-Physical-01-01-R001**: The Discovery board shall run from 5 V applied to pins 3 and 4 of header P2.
-    - **Nexus-Physical-01-02-R001**: The carrier shall feed the 5 V supply into pins 3 and 4 of header P2 of the Discovery boa…
+    - **Nexus-Physical-01-01-R001**: The MCU board shall run from 5 V applied to E5V, CN7 pin 6, with JP5 on [5-6].
+    - **Nexus-Physical-01-02-R001**: The carrier shall feed the 5 V supply into E5V, CN7 pin 6 of the MCU board.
   - **Nexus-Physical-02-R001**: The node shall run from the 5 V supply of the power element.
     - **Nexus-Physical-02-01-R001**: The FRDM board shall run from 5 V on USB-C port J1 without USB power delivery.
   - **Nexus-Physical-05-R001**: The element shall supply 5 V to the STM32 node and to the FRDM node from one converter, s…
@@ -86,15 +86,15 @@ Which systems hold requirements on each function, from the `Function` fields.
 - **Nexus-Vehicle-R007**: The vehicle shall present the power switches and the service ports on one face, reachable…
   - **Nexus-Physical-06-R002**: The rear fascia shall carry SW1, SW2, the DE-9 port, the ST-LINK USB port and the FRDM co…
 - **Nexus-Vehicle-R008**: The vehicle shall carry a rear-wheel drive, fitted and supplied with power.
-  - **Nexus-Physical-01-R016**: The node shall bring out I2C on PB10 and PB11 to the motor driver.
-    - **Nexus-Physical-01-01-R006**: The Discovery board shall leave PB10 and PB11 free for I2C2.
-    - **Nexus-Physical-01-02-R005**: The carrier shall connect PB10 and PB11 to the motor driver header.
+  - **Nexus-Physical-01-R016**: The node shall bring out I2C on PB6 and PB7 to the motor driver.
+    - **Nexus-Physical-01-01-R006**: The MCU board shall leave PB6 and PB7 free for I2C1.
+    - **Nexus-Physical-01-02-R005**: The carrier shall connect PB6 and PB7 to the motor driver header.
   - **Nexus-Physical-05-R002**: The element shall supply the motor driver at pack voltage through SW1 and a 5 A fuse.
   - **Nexus-Physical-07-R001**: The element shall drive the rear wheels with two 12 V encoder gear motors through the Enc…
 - **Nexus-Vehicle-R009**: The vehicle shall carry an Ackermann front steering, fitted and supplied with power.
-  - **Nexus-Physical-01-R017**: The node shall bring out the servo PWM on PE9 through a 1 kΩ series resistor.
-    - **Nexus-Physical-01-01-R007**: The Discovery board shall leave PE9 free for channel 1 of TIM1.
-    - **Nexus-Physical-01-02-R006**: The carrier shall connect PE9 to the servo header through R4, rated 1 kΩ.
+  - **Nexus-Physical-01-R017**: The node shall bring out the servo PWM on PA15 through a 1 kΩ series resistor.
+    - **Nexus-Physical-01-01-R007**: The MCU board shall leave PA15 free for channel 1 of TIM2.
+    - **Nexus-Physical-01-02-R006**: The carrier shall connect PA15 to the servo header through R4, rated 1 kΩ.
   - **Nexus-Physical-01-R018**: The node shall pass the 6 V servo supply from the UBEC to the servo header.
     - **Nexus-Physical-01-02-R007**: The carrier shall pass the 6 V UBEC supply to the servo header.
     - **Nexus-Physical-01-02-R008**: The carrier shall hold C2, rated 470 µF, across the servo header.
@@ -103,11 +103,11 @@ Which systems hold requirements on each function, from the `Function` fields.
   - **Nexus-Physical-08-R001**: The element shall steer the front wheels with the LD-1501MG servo through the Ackermann l…
 - **Nexus-Vehicle-R010**: While the vehicle has received no drive command, the vehicle shall keep the rear wheels s… *(as-is to Nexus-Physical-07)*
 - **Nexus-Vehicle-R011**: The vehicle shall show continuously on the diagnostic port that the on-board software is…
-  - **Nexus-Physical-01-R002**: The node shall connect to the bus through an SN65HVD230 transceiver on CAN1, with PD0 as…
-    - **Nexus-Physical-01-01-R002**: The Discovery board shall leave PD0 and PD1 free for CAN1.
-    - **Nexus-Physical-01-02-R002**: The carrier shall connect PD0 to the receive output of the transceiver module.
-    - **Nexus-Physical-01-02-R003**: The carrier shall connect PD1 to the transmit input of the transceiver module.
-    - **Nexus-Physical-01-02-R004**: The carrier shall leave the R3 termination jumper open.
+  - **Nexus-Physical-01-R002**: The node shall connect to the bus through an SN65HVD230 transceiver on FDCAN2, with PB12…
+    - **Nexus-Physical-01-01-R002**: The MCU board shall leave PB12 and PB13 free for FDCAN2.
+    - **Nexus-Physical-01-02-R002**: The carrier shall connect PB12 to the receive output of the transceiver module.
+    - **Nexus-Physical-01-02-R003**: The carrier shall connect PB13 to the transmit input of the transceiver module.
+    - **Nexus-Physical-01-02-R004**: The carrier shall carry no CAN termination resistor.
     - **Nexus-Physical-01-03-R001**: The transceiver module shall translate between the CAN bus and the 3.3 V logic of the STM…
     - **Nexus-Physical-01-04-R001**: The bootloader shall operate CAN1 at the bit rate of the CAN matrix.
     - **Nexus-Physical-01-06-R001**: The application shall operate CAN1 at the bit rate of the CAN matrix.
@@ -170,23 +170,23 @@ Which systems hold requirements on each function, from the `Function` fields.
     - **Nexus-Physical-01-04-R007**: If the application region holds no valid image, then the bootloader shall remain reachabl…
 - **Nexus-Vehicle-R016**: When an external tool sends a new update mechanism to the diagnostic port, the vehicle sh…
   - **Nexus-Physical-01-R011**: The flash of the node shall hold the bootloader region apart from the application region.
-    - **Nexus-Physical-01-01-R003**: The flash of the STM32F407 shall allow the bootloader sectors to be erased apart from the…
+    - **Nexus-Physical-01-01-R003**: The flash of the STM32H533 shall allow the bootloader sectors to be erased apart from the…
     - **Nexus-Physical-01-04-R008**: The bootloader shall reside in the bootloader region of the memory map of the node.
     - **Nexus-Physical-01-06-R004**: The application shall be linked for the application region of the memory map of the node.
   - **Nexus-Physical-01-R012**: The node shall let an image run from the application region rewrite the bootloader region.
-    - **Nexus-Physical-01-01-R003**: The flash of the STM32F407 shall allow the bootloader sectors to be erased apart from the…
+    - **Nexus-Physical-01-01-R003**: The flash of the STM32H533 shall allow the bootloader sectors to be erased apart from the…
     - **Nexus-Physical-01-04-R009**: The bootloader shall download and start the FBL-Updater as an application image.
     - **Nexus-Physical-01-05-R001**: The FBL-Updater shall be an image for the application region.
     - **Nexus-Physical-01-05-R002**: The FBL-Updater shall rewrite the bootloader region with a new bootloader.
     - **Nexus-Physical-01-05-R003**: The FBL-Updater shall verify the rewritten bootloader region.
   - **Nexus-Physical-04-R006**: The bus traffic shall use the identifiers and the timing of the CAN matrix released by ta…
 - **Nexus-Vehicle-R017**: The vehicle shall show the state of the software update without tools.
-  - **Nexus-Physical-01-R013**: The four LEDs of the node shall show a distinct pattern for each of these states: bootloa…
-    - **Nexus-Physical-01-01-R004**: The Discovery board shall provide four user LEDs driven by the STM32F407.
-    - **Nexus-Physical-01-04-R010**: While idle, the bootloader shall show the idle pattern on the four LEDs.
-    - **Nexus-Physical-01-04-R011**: While receiving an image, the bootloader shall show the receiving pattern on the four LED…
-    - **Nexus-Physical-01-05-R004**: While running, the FBL-Updater shall show the FBL-Updater pattern on the four LEDs.
-    - **Nexus-Physical-01-06-R005**: While running, the application shall show the application pattern on the four LEDs.
+  - **Nexus-Physical-01-R013**: The user LED of the node shall show a distinct pattern for each of these states: bootload…
+    - **Nexus-Physical-01-01-R004**: The MCU board shall provide a user LED driven by the STM32H533.
+    - **Nexus-Physical-01-04-R010**: While idle, the bootloader shall show the idle pattern on the user LED.
+    - **Nexus-Physical-01-04-R011**: While receiving an image, the bootloader shall show the receiving pattern on the user LED.
+    - **Nexus-Physical-01-05-R004**: While running, the FBL-Updater shall show the FBL-Updater pattern on the user LED.
+    - **Nexus-Physical-01-06-R005**: While running, the application shall show the application pattern on the user LED.
 - **Nexus-Vehicle-R018**: When a user requests the software versions, the vehicle shall report the name and the ver…
   - **Nexus-Physical-01-R014**: When asked over the bus, the node shall report the version of the running program in the…
     - **Nexus-Physical-01-04-R012**: When asked over the bus, the bootloader shall report the bootloader version in the node i…
@@ -213,7 +213,7 @@ Which systems hold requirements on each function, from the `Function` fields.
   - **Nexus-Physical-04-R008**: While each node publishes heartbeats, the bus shall run for 10 minutes with zero bus-off…
 - **Nexus-Vehicle-R022**: The vehicle shall give external access for debugging the on-board software.
   - **Nexus-Physical-01-R015**: The node shall give SWD access through the on-board ST-LINK.
-    - **Nexus-Physical-01-01-R005**: The Discovery board shall provide SWD to the STM32F407 through the on-board ST-LINK V2 ov…
+    - **Nexus-Physical-01-01-R005**: The MCU board shall provide SWD to the STM32H533 through the on-board STLINK-V3EC over US…
   - **Nexus-Physical-02-R012**: The UART console of the node shall be reachable through the USB-C debug port.
     - **Nexus-Physical-02-01-R005**: The FRDM board shall provide the UART console on USB-C port J11.
 - **Nexus-Vehicle-R023**: The vehicle shall record the internal communication on board, with a timestamp for each m…

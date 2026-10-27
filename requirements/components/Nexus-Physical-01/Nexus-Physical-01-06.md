@@ -58,7 +58,7 @@ Software element, level 2, handed over: the repository in the [configuration tab
 
 ### Nexus-Physical-01-06-R005
 
-**Statement.** While running, the application shall show the application pattern on the four LEDs.
+**Statement.** While running, the application shall show the application pattern on the user LED.
 
 - Function: Nexus-Logical-503-F04
 - Derived-from: Nexus-Physical-01-R013

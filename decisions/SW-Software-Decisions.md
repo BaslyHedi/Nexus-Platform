@@ -192,6 +192,8 @@ not decided here; [`phases.md`](../system/phases.md) leaves it until it is writt
 
 ## SW-04 · The STM32 flash holds the FBL in sectors 0 to 4 and the application in sectors 5 to 11
 
+**To rework for the STM32H533 (2026-10-27, HW-22):** this entry was written for the STM32F407, which failed. It stays the record until the FBL is ported and a new entry supersedes it.
+
 **Decision (2026-10-11).** The STM32F407VGT6 has 1 MB of flash in one bank, in 12 sectors. The map is:
 
 | Region | Sectors | Address range | Size |
@@ -261,6 +263,8 @@ and no non-volatile memory (NvM) region exist yet.** Both are left open, see *Co
 
 ## SW-05 · The FBL uses the main SRAM only, leaves the CCM empty and does not use the FPU
 
+**To rework for the STM32H533 (2026-10-27, HW-22):** this entry was written for the STM32F407, which failed. It stays the record until the FBL is ported and a new entry supersedes it.
+
 **Updated by SW-06:** the hand-off block lives in the backup SRAM, so it does not depend on the main SRAM surviving a reset. **Updated by SW-07:** the FBL's code and constants are in the SRAM too, so the 128 KB of SRAM holds the code as well as the data.
 
 **Decision (2026-10-11).** The FBL places its stack, variables and buffers in the main SRAM at `0x20000000`. **The
@@ -303,6 +307,8 @@ and no non-volatile memory (NvM) region exist yet.** Both are left open, see *Co
 ---
 
 ## SW-06 · The application hands over to the FBL through the backup SRAM
+
+**To rework for the STM32H533 (2026-10-27, HW-22):** this entry was written for the STM32F407, which failed. It stays the record until the FBL is ported and a new entry supersedes it.
 
 **Decision (2026-10-11).** When the application accepts `uavcan.node.ExecuteCommand` with
 `COMMAND_BEGIN_SOFTWARE_UPDATE`, it writes a hand-off record into the **4 KB backup SRAM** (`0x40024000` to
@@ -351,6 +357,8 @@ remaining 3.5 KB is not claimed. The record's layout is written in the interface
 ---
 
 ## SW-07 · The FBL executes from the SRAM, not from the flash
+
+**To rework for the STM32H533 (2026-10-27, HW-22):** this entry was written for the STM32F407, which failed. It stays the record until the FBL is ported and a new entry supersedes it.
 
 **Decision (2026-10-11).** The FBL is stored in the flash sectors 0 to 4 (SW-04) and **runs from the SRAM**. A small start-up
 routine and the vector table stay in the flash. At reset the routine copies the vector table, the code, the constants and the

@@ -44,7 +44,7 @@ Software element, level 2, handed over: the repository in the [configuration tab
 
 ### Nexus-Physical-01-05-R004
 
-**Statement.** While running, the FBL-Updater shall show the FBL-Updater pattern on the four LEDs.
+**Statement.** While running, the FBL-Updater shall show the FBL-Updater pattern on the user LED.
 
 - Function: Nexus-Logical-503-F04
 - Derived-from: Nexus-Physical-01-R013

@@ -113,7 +113,7 @@ Software element, level 2, handed over: the repository in the [configuration tab
 
 ### Nexus-Physical-01-04-R010
 
-**Statement.** While idle, the bootloader shall show the idle pattern on the four LEDs.
+**Statement.** While idle, the bootloader shall show the idle pattern on the user LED.
 
 - Function: Nexus-Logical-503-F04
 - Derived-from: Nexus-Physical-01-R013
@@ -124,7 +124,7 @@ Software element, level 2, handed over: the repository in the [configuration tab
 
 ### Nexus-Physical-01-04-R011
 
-**Statement.** While receiving an image, the bootloader shall show the receiving pattern on the four LEDs.
+**Statement.** While receiving an image, the bootloader shall show the receiving pattern on the user LED.
 
 - Function: Nexus-Logical-503-F04
 - Derived-from: Nexus-Physical-01-R013

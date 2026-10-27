@@ -16,8 +16,8 @@ Drawings: [wiring schematic](../hardware/renders/wiring-schematic.svg) · [STM32
 | **HW-06** | Single star ground at the fuse block negative bus |
 | **HW-07** | High-side current sensing, INA226 with a 2 mΩ shunt |
 | **HW-08** | Neither switch carries full pack current |
-| **HW-09** | CAN - transceiver on the STM32 side only |
-| **HW-10** | I²C on PB10/PB11 |
+| **HW-09** | CAN - transceiver on the STM32 side only. *Pins: FDCAN2 on PB12/PB13 since HW-22* |
+| **HW-10** | I²C on PB10/PB11. *Updated by HW-22: I2C1 on PB6/PB7* |
 | **HW-11** | The steering servo never touches a 5 V rail |
 | **HW-12** | Direct switching now; the relay is deferred, not rejected |
 | **HW-13** | The 22 AWG battery lead sets the current ceiling - fuse plan rescaled |
@@ -28,7 +28,8 @@ Drawings: [wiring schematic](../hardware/renders/wiring-schematic.svg) · [STM32
 | **HW-18** | CAN debug port - DE-9 on the fascia, PC as an unterminated third node |
 | **HW-19** | The 5 V split, its bulk capacitor and the USB-C Rp move onto a board; CAN termination is a jumper. *Rp dropped 2026-10-07* |
 | **HW-20** | Three fuses - the logic branch runs on the main fuse |
-| **HW-21** | Servo PWM on PE9 (TIM1_CH1); the servo lead is black / red / white |
+| **HW-21** | Servo PWM on PE9 (TIM1_CH1); the servo lead is black / red / white. *Updated by HW-22: PA15, TIM2_CH1* |
+| **HW-22** | The real-time MCU is a NUCLEO-H533RE: FDCAN2 on PB12/PB13, I2C1 on PB6/PB7, servo on PA15, 5 V into E5V |
 
 ---
 
@@ -222,6 +223,8 @@ the 20 A main fuse, which is precisely its job (HW-03).
 
 ## HW-09 · CAN - transceiver on the STM32 side only
 
+**Updated by HW-22:** the MCU is now an STM32H533 on a NUCLEO-H533RE, and the transceiver is on **FDCAN2, PB12 (RX) / PB13 (TX), AF9**. PD0/PD1 and the F407 reasoning below are history. The termination is unchanged.
+
 **Updated by HW-19:** the STM32 end's 120 Ω is on the carrier behind a jumper, and the module's own resistor comes off.
 
 *Formerly HD-10.*
@@ -239,6 +242,8 @@ off this bus as an **unterminated stub** - it does not change these two ends.
 ---
 
 ## HW-10 · I²C on PB10/PB11
+
+**Updated by HW-22:** on the NUCLEO-H533RE the bus is **I2C1, PB6 (SCL) / PB7 (SDA), AF4**. The microphone caveat below was the Discovery's and no longer applies.
 
 *Formerly HD-11.*
 
@@ -500,6 +505,8 @@ every return ─ (−) bar ─ battery −
 
 ## HW-17 · One 5 V converter, not two
 
+**Updated by HW-22:** the STM32 branch now ends on the NUCLEO-H533RE's **E5V (CN7-6)**, not the Discovery's P2 5 V pin; E5V allows 500 mA.
+
 **Updated by HW-19:** the split is board C, not a WAGO 3-port.
 
 *Formerly HD-20.*
@@ -725,6 +732,8 @@ battery + ─ 7.5 A ─ shunt ─ (+) bus ─┬─ SW1 ─┬─ 5 A ─ Encode
 
 ## HW-21 · Servo PWM on PE9 (TIM1_CH1); the servo lead is black / red / white
 
+**Updated by HW-22:** the servo signal now comes from **PA15 on CN7-17, TIM2_CH1 (AF1)**, on carrier board B. The lead colours, R4 and the miswiring cases below still hold, with PA15 in place of PE9; the TIM1 timing and MOE notes were the F407's.
+
 **Decision (2026-10-03).** The steering servo's signal comes from **PE9, P1-27**, as
 **TIM1_CH1** (alternate function AF1), through R4 (1 kΩ, HW-19) to the SERVO header on carrier
 board A. The LD-1501MG's lead, checked on the part in hand, is **black = GND, red = +6 V,
@@ -770,3 +779,74 @@ so the plug can go on reversed or one pin off.
 - **R4 against the servo's input.** 1 kΩ in series with a servo input of tens of kΩ costs
   nothing at 50 Hz. Check the edge on a scope once, at the header.
 
+---
+
+## HW-22 · The real-time MCU is a NUCLEO-H533RE: FDCAN2 on PB12/PB13, I2C1 on PB6/PB7, servo on PA15, 5 V into E5V
+
+**Decision (2026-10-25, pins final 2026-10-26).** The STM32F4DISCOVERY (BOM 1.2a) is replaced by a
+**NUCLEO-H533RE**, board MB1814 (BOM 1.2): an **STM32H533RET6**, Cortex-M33 with TrustZone, 250 MHz,
+512 KB of flash in two banks, 272 KB of RAM, two FDCAN controllers (DS14539 Rev 3). It plugs into
+carrier boards A and B by its ST morpho headers, **CN10 on A and CN7 on B** (MEC-15). The pins the
+carrier uses, each checked against the DS14539 alternate function table and UM3121 Table 17:
+
+| Signal | Pin | Header | Board | Function |
+|---|---|---|---|---|
+| CAN RX | **PB12** | CN10-16 | A | FDCAN2_RX, AF9 |
+| CAN TX | **PB13** | CN10-30 | A | FDCAN2_TX, AF9 |
+| I2C SCL | **PB6** | CN10-3 | A | I2C1_SCL, AF4 |
+| I2C SDA | **PB7** | CN10-5 | A | I2C1_SDA, AF4 |
+| Servo PWM | **PA15** | CN7-17 | B | TIM2_CH1, AF1 |
+| 5 V in | **E5V** | CN7-6 | B | JP5 on [5-6]; 4.75-5.25 V, 500 mA max (UM3121 Table 8) |
+| 3.3 V out | **3V3** | CN7-16 | B | feeds the INA226 and the transceiver over the one bridge |
+| GND | CN7-19, CN10-9, CN10-20 | | A, B | the Nucleo ties its grounds |
+
+**Why this board.**
+
+- **The Discovery is dead.** On 2026-10-25 its 3 V rail went to about 0 Ω and U1 ran hot after the
+  INA226 was plugged into I2C-A, whose pin order (GND, 3V3, SCL, SDA) did not match the module's
+  (VCC, SDA, SCL, GND). The carrier's I2C headers now follow each module's own order (MEC-15), so a
+  straight lead is right.
+- **It serves the project's goals, not only the motor loops.** TrustZone and the secure boot
+  features (HDP, OTP) are what the secure boot and trusted execution work needs, and the F407 had
+  none. Two flash banks with read-while-write let the FBL erase and write one bank while running
+  from the other. FDCAN runs the classic CAN that Cyphal uses (SW-01) and leaves CAN FD open.
+- **The Nucleo's STLINK-V3EC has a virtual COM port**, so no USB-TTL adapter is needed for a console.
+- **Rejected:** the NXP MR-CANHUBK344 and an STM32G474 board. The G474 is a Cortex-M4 without
+  TrustZone. *Hedi's reasons against the MR-CANHUBK344 are to be recorded.*
+
+**Why these pins.**
+
+- **CAN.** In the 64-pin package (DS14539 alternate function table), FDCAN1 can only use PA11/PA12,
+  the user USB-C's D-/D+, or PB8 with PB7, which is I2C1's SDA (PB9 and PD0/PD1 are not on this
+  package). FDCAN2 has RX on PA0, PB5 or PB12 and TX on PA10, PB3 (the ST-LINK's SWO), PB6 or PB13.
+  PB12/PB13 are free on this board, both on CN10 beside the transceiver on A, and they leave PB6/PB7
+  for I2C1.
+- **I2C.** PB6/PB7 are the board's Arduino D15/D14 I2C pins, with nothing else on them.
+- **Servo.** TIM2_CH1 is a hardware timer channel, as TIM1_CH1 on PE9 was. It was first PA8
+  (TIM1_CH1), then PA0 (CN7-28), then PA15, because CN7-17 is on the outer row where a wire can land
+  on a free hole beside the pin (MEC-15, revision 2026-10-26). TIM2 is a general-purpose timer, so
+  the TIM1 MOE step in HW-21 does not apply. At reset PA15 is JTDI with its pull-up on, so the
+  servo line idles high through R4 until software takes it: the bootloader drives it low early.
+- **Power.** E5V is the only 5 V input that bypasses the ST-LINK's USB supply; JP5 on [5-6] selects
+  it. CN7-16 is the only 3V3 on the morpho headers the carrier reaches.
+
+**Consequences.**
+
+- HW-09, HW-10, HW-17 and HW-21 carry an "Updated by HW-22" line; the carrier layout is MEC-15's
+  2026-10-25 revision. The node's requirements (Nexus-Physical-01 and its components) follow.
+- **One user LED, not four.** LD2 on PA5 (UM3121), so the Phase 1 LED test (T1.3) is a blink pattern
+  per state on one LED. There are no LEDs on the carrier (Hedi, 2026-10-25).
+- **The ST-LINK port is USB-C (CN1)**, so the fascia's Mini-B lead reaches it through one angled
+  cable (BOM 5.12).
+- **SW-04 to SW-07 were written for the F407** (one flash bank in 12 sectors, CCM, backup SRAM, 98
+  vectors). They are reworked when the FBL is ported to the H533.
+
+**To confirm.**
+
+- **Does the ST-LINK drive PA15?** UM3121 lists PA15 as `T_JTDI` in its MCU pin table, and its
+  debug-connector table says target JTDI is linked "(SB41 ON)", while a footnote gives SB41 to the
+  SWD pins. Before the servo is connected: check the MB1814 schematic for the solder bridge between
+  PA15 and the STLINK-V3EC, and with the ST-LINK connected over USB, check that a TIM2 PWM on PA15
+  reaches CN7-17 clean on a scope. If the ST-LINK holds the line, open that bridge (SWD does not
+  use JTDI) or move the servo back to PA0 on CN7-28.
+- **The 500 mA E5V limit.** The node draws well under it with no shield; measure on first power-up.

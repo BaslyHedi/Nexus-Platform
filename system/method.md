@@ -55,7 +55,7 @@ own logical and physical views, its own allocation.
 ```text
 Vehicle (system-of-interest)          requirements · logical view · physical view · allocation
   └─ Nexus-Physical-01 STM32 node     requirements · local physical view · allocation to its elements
-       ├─ 01-01 Discovery board        hardware, bought: recursion stops (COTS)
+       ├─ 01-01 MCU board             hardware, bought: recursion stops (COTS)
        ├─ 01-02 Carrier boards         hardware, designed here (hardware/): recursion stops at the drawing
        ├─ 01-03 Transceiver module     hardware, bought
        ├─ 01-04 Bootloader             software element: handed over

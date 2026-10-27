@@ -22,7 +22,7 @@ Drawings: [chassis layout](../hardware/renders/chassis-layout.svg). Geometry and
 | **MEC-12** | Component allocation across the three plates |
 | **MEC-13** | The debug ports mount from behind, in two horizontal rows |
 | **MEC-14** | The switch drawing closes the lower panel - and its holes open to 22.4 |
-| **MEC-15** | The carrier is two kit boards joined by the Discovery, not one board |
+| **MEC-15** | The carrier is two kit boards joined by the Discovery, not one board. *The NUCLEO-H533RE joins them since 2026-10-25* |
 | **MEC-16** | Plate 2's lower face is the harness board - plate 1 carries only the battery and the driver |
 | **MEC-17** | One tray carries boards A, B and C and bolts to plate 2 |
 | **MEC-18** | One wide tray on plate 3 - a spare nose, the Pi 5, a plug gap, the FRDM, all turned across |
@@ -808,6 +808,11 @@ cover a 22.4 hole with 1.2 mm to spare a side.
 
 ## MEC-15 · The carrier is two kit boards joined by the Discovery, not one board
 
+**Revised 2026-10-25: the NUCLEO-H533RE replaces the Discovery (HW-22).** The decision stands with a
+different board: A and B are rebuilt on fresh boards and joined by the Nucleo's morpho headers. See
+"Revision 2026-10-25" and the two 2026-10-26 revisions at the end. Everything about P1, P2 and the
+Discovery below is the earlier build.
+
 **Hole names changed 2026-09-29.** Holes are now named as **printed on the kit boards**: letters
 A-X along the 70 mm side, numbers across, A1 bottom-left with the print readable, written board·hole
 (A·K12). On A and B, header row n is letter X for row 1 back to A for row 24; P1 sits on A's
@@ -1023,8 +1028,32 @@ chain. The Discovery ties all its GND pins together, so A's servo, I²C and INA2
 the STM32 through it, as on B. **One wire still crosses between the boards: the 3V3 bridge**
 (B·V12 → A·D16), built as a soldered end and a plug. Routing check passes.
 
+**Revision 2026-10-25 · the NUCLEO-H533RE on A and B.** The Discovery failed (HW-22) and the
+NUCLEO-H533RE takes its place. Boards A, B and C, their standoffs and the tray (MEC-17) keep their
+places on plate 2; A and B are rebuilt on fresh boards (Hedi: no desoldering of the old sockets).
+
+- **Sockets.** The Nucleo plugs in by its ST morpho headers, whose rows are **63.50 mm apart** (25
+  pitches, UM3121 Fig. 7). Each board's sockets move two columns outboard of the Discovery's: **A g/h
+  under CN10, B i/j under CN7**, four 1×19 female strips, every tail in a hole (A rows 5-23, B 6-24).
+- **Position.** The board sits 5 rows forward of the Discovery's row 1, **rear edge at plate 2 x 202.7**.
+  Its top is at z 113.8, 4.8 mm under the plate-3 screw heads, none of which is over a tall part.
+- **The parts follow the pins.** Every CAN and I2C1 pin the carrier uses is on CN10, and the only supply
+  pins are on CN7 (HW-22), so **A carries the CAN side**: the SN65HVD230 module, the CAN terminal and
+  the two I2C headers; **B carries power and the servo**: 5V IN to E5V, 6V IN, C2, R4 and the SERVO header.
+- **One wire crosses between the boards: 3V3**, from CN7-16 on B to I2C-A's VCC on A, which feeds the
+  transceiver. A takes its ground from its own CN10-9 and CN10-20; the Nucleo ties its grounds.
+- **I2C headers in each module's own order**, so a straight lead is right: I2C-A is VCC, SDA, SCL, GND
+  (the INA226 module), I2C-B is SCL, SDA, GND (the motor module) with pin 4 not wired. The mismatched
+  order is what took the Discovery. Both are 90° headers **on top of A**, along the gap to B, pointing
+  forward; their leads leave A's front edge over the tray window. **The solder side carries wires only**
+  (Hedi).
+- **Left out:** R3a, R3b and the TERM jumper (HW-09: the module's own 120 Ω terminates this end), and
+  any LED on the carrier (Hedi). The node's only user LED is the Nucleo's LD2.
+- The drawing, the 3D model, the routing check and the layout follow (`stm32-carrier.py`,
+  `carrier_model.py`, `check-carrier-routing.py`).
+
 **Revision 2026-10-26 · board B on a 3×7.** A and B are rebuilt on fresh boards for the NUCLEO-H533RE
-(branch `stm32-nucleo-h533`; that layout gets its own revision), and only one 5×7 is left in the kit.
+(revision 2026-10-25 above), and only one 5×7 is left in the kit.
 
 - **A keeps the 5×7.** It uses all 18 columns: the CAN module and its terminal outboard (a-d), the
   CN10 sockets (g/h) and I2C-A out to column r.
