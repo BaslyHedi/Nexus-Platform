@@ -596,6 +596,8 @@ about 10 ns, four orders of magnitude below anything that matters.
 
 ## HW-19 · The 5 V split, its bulk capacitor and the USB-C Rp move onto a board; CAN termination is a jumper
 
+**Updated by HW-22:** on the NUCLEO-H533RE carrier the 5 V goes into E5V (CN7-6), R4 sits in **PC2**'s line instead of PE9's, and R3 with its TERM jumper is not fitted: the transceiver module's own 120 Ω terminates this end (HW-09). Board C is unchanged.
+
 **Revised 2026-09-29: the USB-C socket itself sits on board C.** The FRDM PWR and FRDM CC
 terminals are gone. The KUOQIY socket (BOM 5.1) is zip-tied flat at C's row-1 end, opening out, and
 its pigtail is soldered straight into the board. See "Revision 2026-09-29" at the end.

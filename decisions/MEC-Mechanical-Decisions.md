@@ -386,6 +386,8 @@ the pad bands.
 
 **Updated by MEC-15:** no kit board is large enough, so the carrier is two boards, A under P1 and B under P2, and the 130 × 85 outline is gone.
 
+**Updated by MEC-15 (revision 2026-10-25) and HW-22:** the Discovery failed and a NUCLEO-H533RE drops onto the carrier by its ST morpho headers, CN10 on A and CN7 on B. The decision stands; the Discovery's pins and headers below are history.
+
 **Resolved 2026-09-20:** the Discovery's P1/P2 pins protrude **downward**, so the carrier sits
 **below** the board and the Discovery drops onto female headers. The open question about pin
 direction is closed, and the arrangement in the carrier schematic is the correct one.
