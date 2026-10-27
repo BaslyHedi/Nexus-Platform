@@ -97,7 +97,7 @@ CAPTIONS = [
     ((56.5, 62), "7  Plate 3, tray and boards lower onto the four chassis standoffs"),
     ((62, 67.5), "8  J1 power: the 20 cm C-to-C from board C, up the slot, along the edge to J1"),
     ((67.5, 72.5), "9  J11 console: the 20 cm USB-C extension from the fascia, round the left edge"),
-    ((72.5, 78), "10  J7 CAN: the 2x5 lead from board B, up the cross-slot, onto J7"),
+    ((72.5, 78), "10  J7 CAN: the 2x5 lead from board A, up the cross-slot, onto J7"),
     ((78, 84), "17 mm beside the USB plugs, a 34 mm plug gap for J1, the nose pad free to drill"),
 ]
 

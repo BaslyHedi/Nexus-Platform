@@ -16,7 +16,7 @@ Drawings: [wiring schematic](../hardware/renders/wiring-schematic.svg) · [STM32
 | **HW-06** | Single star ground at the fuse block negative bus |
 | **HW-07** | High-side current sensing, INA226 with a 2 mΩ shunt |
 | **HW-08** | Neither switch carries full pack current |
-| **HW-09** | CAN - transceiver on the STM32 side only. *Pins: FDCAN2 on PB12/PB13 since HW-22* |
+| **HW-09** | CAN - transceiver on the STM32 side only. *Updated by HW-22: FDCAN2 on PB12/PB13* |
 | **HW-10** | I²C on PB10/PB11. *Updated by HW-22: I2C1 on PB6/PB7* |
 | **HW-11** | The steering servo never touches a 5 V rail |
 | **HW-12** | Direct switching now; the relay is deferred, not rejected |
@@ -849,10 +849,11 @@ carrier uses, each checked against the DS14539 alternate function table and UM31
 
 **Consequences.**
 
-- HW-09, HW-10, HW-17 and HW-21 carry an "Updated by HW-22" line; the carrier layout is MEC-15's
+- HW-09, HW-10, HW-17, HW-19 and HW-21 carry an "Updated by HW-22" line; the carrier layout is MEC-15's
   2026-10-25 revision. The node's requirements (Nexus-Physical-01 and its components) follow.
 - **One user LED, not four.** LD2 on PA5 (UM3121), so the Phase 1 LED test (T1.3) is a blink pattern
-  per state on one LED. There are no LEDs on the carrier (Hedi, 2026-10-25).
+  per state on one LED. There are no LEDs on the carrier (Hedi, 2026-10-25), only the header for the
+  optional LED stick (BOM 1.3).
 - **The ST-LINK port is USB-C (CN1)**, so the fascia's Mini-B lead reaches it through one angled
   cable (BOM 5.12).
 - **SW-04 to SW-07 were written for the F407** (one flash bank in 12 sectors, CCM, backup SRAM, 98
@@ -860,7 +861,4 @@ carrier uses, each checked against the DS14539 alternate function table and UM31
 
 **To confirm.**
 
-- **PA15 is tied to the ST-LINK** (see *Why these pins*), which is why the servo left it. Nothing
-  on the carrier uses PA15, PA13, PA14, PB3 or PB4, so the question of whether the ST-LINK drives
-  JTDI in SWD mode no longer matters.
 - **The 500 mA E5V limit.** The node draws well under it with no shield; measure on first power-up.
