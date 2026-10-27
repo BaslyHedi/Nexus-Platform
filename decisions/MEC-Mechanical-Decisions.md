@@ -1103,6 +1103,15 @@ CN7's outer row. Its only free neighbour, k23, is where R4's lead was, so **R4 i
 MCU end now sits in k23, bridged straight to PC2 (two pins, no wire), and its servo end stays in k19.
 One wire runs from l19 (bridged to R4's k19) down the l-m channel to m24, bridged to SERVO SIG at m23.
 CN7-17 is now free, and so is the k14 hole that served it. Routing check passes.
+
+**Revision 2026-10-27 · a header for the LED stick at B's rear.** The optional WS2812B stick (BOM 1.3,
+HW-22) sits on top of plate 3, just behind the FRDM, facing the rear; how it stands is decided when plate 3
+is assembled. On the carrier it takes a **straight 1×3 male header on top of B, columns m-o of hole row 3**
+(DIN, 5V, GND), behind the CN7 sockets and outboard of the Nucleo's edge, so a plug fits under nothing.
+Data comes from **PC12 on CN7-3** (B·j7, bridged to the free hole k7), 5 V from a second free hole on
+5V IN + (q12), GND from a fourth hole on 5V IN − (r14); each header pin is bridged to a free hole beside
+it, as everywhere on B. No level shifter is fitted (Hedi). The 3-wire lead to plate 3 is made when the
+stick is mounted. Routing check passes.
 ---
 
 ## MEC-16 · Plate 2's lower face is the harness board - plate 1 carries only the battery and the driver

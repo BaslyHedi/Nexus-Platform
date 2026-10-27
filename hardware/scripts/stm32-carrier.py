@@ -105,7 +105,7 @@ NET = {
     '5V': '#dc2626', 'GND': '#111827', '3V3': '#db2777', '6V': '#d97706',
     'PWM': '#92400e', 'SCL': '#7c3aed', 'SDA': '#a855f7', 'CTX': '#0891b2',
     'CRX': '#0e7490', 'TERM': '#64748b', 'CANH': '#1d4ed8', 'CANL': '#60a5fa',
-    'TERM1': '#64748b',
+    'TERM1': '#64748b', 'LED': '#0d9488',
 }
 
 out = []
@@ -160,7 +160,7 @@ NUC_PINS = {('CN10', 3): ('PB6', 'SCL'), ('CN10', 5): ('PB7', 'SDA'), ('CN10', 9
             ('CN10', 16): ('PB12', 'CRX'), ('CN10', 20): ('GND', 'GND'), ('CN10', 30): ('PB13', 'CTX'),
             ('CN7', 6): ('E5V', '5V'), ('CN7', 8): ('GND', 'GND'), ('CN7', 16): ('3V3', '3V3'),
             ('CN7', 19): ('GND', 'GND'), ('CN7', 20): ('GND', 'GND'), ('CN7', 22): ('GND', 'GND'),
-            ('CN7', 35): ('PC2', 'PWM_MCU')}
+            ('CN7', 35): ('PC2', 'PWM_MCU'), ('CN7', 3): ('PC12', 'LED')}
 
 
 def nuc_hole(hdr, pin):
@@ -186,6 +186,7 @@ MALE = [
     ('B', [('o', 23, 'GND'), ('n', 23, '+6V'), ('m', 23, 'SIG')], 'SERVO'),
     ('A', [('j', 20, 'SCL'), ('k', 20, 'SDA'), ('l', 20, 'GND'), ('m', 20, 'NC')], 'I2C-B'),
     ('A', [('r', 20, '3V3'), ('q', 20, 'SDA'), ('p', 20, 'SCL'), ('o', 20, 'GND')], 'I2C-A'),
+    ('B', [('m', 3, 'LED'), ('n', 3, '5V'), ('o', 3, 'GND')], 'LED'),   # the WS2812B stick (BOM 1.3), B's rear, past the Nucleo's edge
 ]
 ANGLED = {'I2C-B', 'I2C-A'}                  # 90 degree headers, plug lying forward on the board
 
@@ -291,6 +292,10 @@ WIRES = [
     ('GND', 'B', [(16, 10), (15.5, 10.5), (14.5, 10.5), (14.5, 16.5), (14, 17)], 'pwr'),    # 6V IN - to C2 -
     ('GND', 'B', [(15, 18), (15, 22)], 'pwr'),                                             # C2 - to SERVO GND
     ('PWM', 'B', [(12, 19), (12.5, 19.5), (12.5, 23.5), (13, 24)], 'ins'),                 # R4 servo end to SERVO SIG
+    # ---- board B: the LED stick's header at the rear, data from PC12 (SPI3_MOSI), 5 V and GND from 5V IN
+    ('LED', 'B', [(11, 7), (11.5, 6.5), (11.5, 4.5), (12.5, 4.5), (13, 4)], 'ins'),        # PC12 to LED DIN
+    ('5V', 'B', [(17, 12), (17.5, 11.5), (17.5, 4.5), (14.5, 4.5), (14, 4)], 'ins'),       # 5V IN + to LED 5V
+    ('GND', 'B', [(18, 14), (18.5, 13.5), (18.5, 2.5), (15.5, 2.5), (15, 2)], 'ins'),      # 5V IN - to LED GND
 ]
 # Solder bridges on the solder side, A and B: each a run of holes, neighbour to neighbour, holding one part pin (or two of
 # the same net) and the free holes the wires land on. No free hole in a run has another net's pin beside it.
@@ -304,12 +309,14 @@ SOLDER = [
     ('A', [(8, 7), (9, 7)]), ('A', [(11, 20), (11, 19), (11, 18)]), ('A', [(17, 20), (17, 19)]),  # SDA: CN10-5, I2C-B, I2C-A
     ('A', [(8, 9), (9, 9), (10, 9)]), ('A', [(12, 20), (12, 19)]), ('A', [(15, 20), (15, 19)]),   # GND: CN10-9, I2C-B, I2C-A
     ('A', [(4, 17), (5, 17)]), ('A', [(18, 20), (18, 19), (18, 18)]),        # 3V3: XCVR, I2C-A (and the bridge from B)
-    ('B', [(17, 13), (16, 13)]),                                             # 5V IN +
-    ('B', [(16, 15), (17, 15), (18, 15)]), ('B', [(17, 10), (16, 10)]),      # 5V IN -, 6V IN -
+    ('B', [(17, 12), (17, 13), (16, 13)]),                                   # 5V IN +, two free holes: E5V and LED
+    ('B', [(16, 15), (17, 15), (18, 15), (18, 14)]), ('B', [(17, 10), (16, 10)]),   # 5V IN - (CN7-19, servo, LED), 6V IN -
     ('B', [(14, 17), (14, 18), (15, 18)]), ('B', [(15, 22), (15, 23), (16, 23)]),   # C2 -, SERVO GND
     ('B', [(17, 8), (16, 8)]), ('B', [(13, 20), (14, 20), (14, 21), (14, 22), (14, 23)]),   # 6V IN +; C2 + run to SERVO +
     ('B', [(10, 23), (11, 23)]), ('B', [(11, 19), (12, 19)]),               # PC2 (CN7-35) to R4's MCU end; R4's servo end
     ('B', [(13, 23), (13, 24)]),                                             # SERVO SIG
+    ('B', [(10, 7), (11, 7)]), ('B', [(13, 3), (13, 4)]),                    # LED data: CN7-3 PC12, header DIN
+    ('B', [(14, 3), (14, 4)]), ('B', [(15, 3), (15, 2)]),                    # LED header 5V, GND
     ('B', [(10, 15), (11, 15)]),                                             # CN7-19 GND: outer row, free hole in column k
 ]
 DIRECT = [('B', 'i', 8), ('B', 'i', 13)]   # CN7-6 E5V and CN7-16 3V3, on no other pin (UM3121 Tables 8, 17): wire on the pin
@@ -630,7 +637,10 @@ def carrier_labels_top(v, boxes):
         label(v, X0 - 0.6, Y + 0.7, t, colr, 6, anchor='end')      # the LD-1501MG lead, HW-21
     for b, pins, name in MALE[1:]:
         X0, X1, Y0, Y1 = boxes[name]
-        label(v, X1 - PLUG / 2 - 1.3, (Y0 + Y1) / 2 + 0.7, name, '#7c3aed', 6.5)
+        if name in ANGLED:
+            label(v, X1 - PLUG / 2 - 1.3, (Y0 + Y1) / 2 + 0.7, name, '#7c3aed', 6.5)
+        else:
+            label(v, X1 + 1.0, (Y0 + Y1) / 2 + 0.9, 'LED  DIN · 5V · GND', '#0d9488', 7, anchor='start')
     X0, X1, Y0, Y1 = boxes['CAN']
     label(v, (X0 + X1) / 2, Y1 + 2.8, 'CAN  H · L · GND', '#1d4ed8', 7)
     label(v, HX('B', 19), cy('B', 16) + 1.2, 'C2 470µF', '#a16207', 7, anchor='start')
@@ -967,6 +977,7 @@ if __name__ == "__main__":
         (NET['GND'], 'GND CAN', f"CN10-20 {N(*nuc_hole('CN10', 20))}", f"→ XCVR GND ({xc('GND')}) → CAN GND ({silk('A', *can['GND'])})"),
         (NET['3V3'], '3.3 V', f"CN7-16 {N(*nuc_hole('CN7', 16))}", f"→ bridge → I2C-A VCC ({N('A', pins_of('I2C-A')[0]['3V3'], 20)}) → XCVR 3V3 ({xc('3V3')})"),
         (NET['6V'], 'Servo 6 V', 'B 6V IN +', f"{N('B', 'q', 8)} → C2 + ({silk('B', 'n', 20)}) → SERVO + ({mpin('SERVO', '+6V')}), 18 AWG"),
+        (NET['LED'], 'SPI3_MOSI', 'CN7-3 PC12', f"LED DIN ({mpin('LED', 'LED')}) · its 5V ({mpin('LED', '5V')}) and GND ({mpin('LED', 'GND')}) from B 5V IN"),
         (NET['PWM'], 'TIM4_CH4', 'CN7-35 PC2', f"R4 1k ({N('B', 'k', 23)}-{silk('B', 'k', 19)}) → SERVO SIG ({mpin('SERVO', 'SIG')})"),
         (NET['SCL'], 'I²C1 SCL', 'CN10-3 PB6', f"→ I2C-B ({N('A', pins_of('I2C-B')[0]['SCL'], 20)}) · → I2C-A ({silk('A', pins_of('I2C-A')[0]['SCL'], 20)})"),
         (NET['SDA'], 'I²C1 SDA', 'CN10-5 PB7', f"→ I2C-B ({N('A', pins_of('I2C-B')[0]['SDA'], 20)}) → I2C-A ({silk('A', pins_of('I2C-A')[0]['SDA'], 20)})"),
@@ -984,6 +995,7 @@ if __name__ == "__main__":
         (None, 'C D+ / D−', 'white, blue, green and yellow (D−, D+, CC1, CC2) cut short, each insulated on its own - never twisted together'),
         (None, 'B 6V IN', 'UBEC 6 V out, 18 AWG pair (HW-14)'),
         (None, 'B SERVO', f"straight header on top, across B: LD-1501MG black {N('B', *[(c, r) for c, r, l in MALE[0][1] if l == 'GND'][0])}, red, white inboard (HW-21)"),
+        (None, 'B LED', 'straight 1×3 on top at B\'s rear: DIN, 5V, GND to the WS2812B stick (1.3) on plate 3, no level shifter (HW-22)'),
         (None, 'A I2C-A', '90° on A by the gap, pointing forward: INA226 VCC, SDA, SCL, GND - its own order, a straight 4-way lead'),
         (None, 'A I2C-B', '90° on A by the gap, pointing forward: motor module SCL, SDA, GND, 5V - its own order; pin 4 has no wire'),
         (None, 'I2C leads', 'plugged before the Nucleo goes on; they leave A\'s front edge under it and drop through the tray window'),
@@ -994,7 +1006,7 @@ if __name__ == "__main__":
 
     parts = [
         (None, 'Board A', '5×7 board · 2 × 1×19 + 1 × 1×4 + 1 × 1×2 female · 3p terminal · 2 × 1×4 90° male, on top · the SN65HVD230 module'),
-        (None, 'Board B', '3×7 board · 2 × 1×19 female · 2 × 2p terminal · 1×3 male · C2 470µF · R4 1k'),
+        (None, 'Board B', '3×7 board · 2 × 1×19 female · 2 × 2p terminal · 2 × 1×3 male · C2 470µF · R4 1k'),
         (None, 'Board C', '3×7 board · 2 × 2p terminal · USB-C socket (5.1), 2 zip ties · C1 470µF'),
         (None, 'From stock', 'caps: 2 of the 5 in 3.14 · resistors: 3.21 · module: 4.1 · headers, terminals: 5.11'),
         (None, 'Wire', '22 AWG insulated copper hook-up wire (not in BOM) · 18 AWG silicone copper (3.11) for the thick runs · not the CCA Dupont leads (5.7)'),

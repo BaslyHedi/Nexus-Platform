@@ -796,6 +796,7 @@ carrier uses, each checked against the DS14539 alternate function table and UM31
 | I2C SCL | **PB6** | CN10-3 | A | I2C1_SCL, AF4 |
 | I2C SDA | **PB7** | CN10-5 | A | I2C1_SDA, AF4 |
 | Servo PWM | **PC2** | CN7-35 | B | TIM4_CH4, AF2 |
+| LED stick data | **PC12** | CN7-3 | B | SPI3_MOSI, AF6 (optional WS2812B stick, BOM 1.3) |
 | 5 V in | **E5V** | CN7-6 | B | JP5 on [5-6]; 4.75-5.25 V, 500 mA max (UM3121 Table 8) |
 | 3.3 V out | **3V3** | CN7-16 | B | feeds the INA226 and the transceiver over the one bridge |
 | GND | CN7-19, CN10-9, CN10-20 | | A, B | the Nucleo ties its grounds |
@@ -832,6 +833,15 @@ carrier uses, each checked against the DS14539 alternate function table and UM31
   R4's other end reaches SERVO SIG by one wire (MEC-15). TIM4 is a general-purpose timer, so the TIM1
   MOE step in HW-21 does not apply. PC2 has no pull-up at reset, so the servo sees no pulse until
   software starts the timer.
+- **LED stick data.** Zephyr drives WS2812B LEDs on STM32 from an SPI MOSI, so the pin has to carry
+  one. PC12 has SPI3_MOSI, is plain IO on the board (MB1814 schematic: only the MCU pin and CN7-3), is
+  not a JTAG pin, and is on CN7's outer row next to a free hole. The stick's LEDs take their 5 V and
+  GND from B's 5V IN, never from the Nucleo: PC12 only sends data.
+- **No level shifter (Hedi, 2026-10-27).** At 5 V the WS2812B reads a 1 above 0.7 x VDD = 3.5 V and
+  PC12 drives about 3.2-3.3 V, so the first LED is 0.2-0.3 V under its spec. The risk is wrong
+  colours or flicker, never damage, and each LED re-drives the next at 5 V. If it shows, **PC12 goes
+  open-drain with a 1 kΩ pull-up from DIN to 5 V**: PC12 is 5 V tolerant (FT_h, DS14539), so the line
+  then swings to 5 V. One resistor on B and one firmware setting; no diode.
 - **Power.** E5V is the only 5 V input that bypasses the ST-LINK's USB supply; JP5 on [5-6] selects
   it. CN7-16 is the only 3V3 on the morpho headers the carrier reaches.
 

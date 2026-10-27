@@ -844,6 +844,10 @@
 <rect x="142.0" y="351.2" width="2.8" height="2.8" fill="#fbbf24"/>
 <rect x="142.0" y="339.5" width="2.8" height="2.8" fill="#fbbf24"/>
 <rect x="142.0" y="327.9" width="2.8" height="2.8" fill="#fbbf24"/>
+<rect x="347.8" y="557.1" width="11.7" height="35.1" rx="0.8" fill="#334155" stroke="#0f172a" stroke-width="0.8"/>
+<rect x="352.3" y="561.5" width="2.8" height="2.8" fill="#fbbf24"/>
+<rect x="352.3" y="573.2" width="2.8" height="2.8" fill="#fbbf24"/>
+<rect x="352.3" y="584.9" width="2.8" height="2.8" fill="#fbbf24"/>
 <line x1="120.0" y1="539.6" x2="166.7" y2="539.6" stroke="#94a3b8" stroke-width="1.4"/>
 <rect x="130.4" y="535.1" width="26" height="9" rx="3" fill="#bfdbfe" stroke="#1e40af" stroke-width="1"/>
 <circle cx="120.0" cy="539.6" r="2.6" fill="#fff" stroke="#1e40af" stroke-width="1.1"/>
@@ -914,6 +918,7 @@
 <text x="111.4" y="566.2" font-size="6" fill="#64748b" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="end">wht</text>
 <text x="105.3" y="291.6" font-size="6.5" fill="#7c3aed" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="middle">I2C-B</text>
 <text x="105.3" y="350.0" font-size="6.5" fill="#7c3aed" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="middle">I2C-A</text>
+<text x="364.1" y="578.8" font-size="7" fill="#0d9488" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="start">LED  DIN · 5V · GND</text>
 <text x="131.7" y="207.7" font-size="7" fill="#1d4ed8" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="middle">CAN  H · L · GND</text>
 <text x="166.7" y="603.5" font-size="7" fill="#a16207" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="start">C2 470µF</text>
 <text x="112.6" y="543.7" font-size="7" fill="#1e40af" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="end">R4 1k</text>
@@ -1767,6 +1772,9 @@
 <circle cx="663.4" cy="434.4" r="3.2" fill="#e2e8f0" stroke="#334155" stroke-width="1.1"/>
 <circle cx="663.4" cy="446.1" r="3.2" fill="#e2e8f0" stroke="#334155" stroke-width="1.1"/>
 <circle cx="663.4" cy="457.8" r="3.2" fill="#e2e8f0" stroke="#334155" stroke-width="1.1"/>
+<circle cx="873.7" cy="224.1" r="3.2" fill="#e2e8f0" stroke="#334155" stroke-width="1.1"/>
+<circle cx="873.7" cy="212.4" r="3.2" fill="#e2e8f0" stroke="#334155" stroke-width="1.1"/>
+<circle cx="873.7" cy="200.7" r="3.2" fill="#e2e8f0" stroke="#334155" stroke-width="1.1"/>
 <circle cx="640.0" cy="247.5" r="2.6" fill="#e2e8f0" stroke="#1e40af" stroke-width="1.1"/>
 <circle cx="686.7" cy="247.5" r="2.6" fill="#e2e8f0" stroke="#1e40af" stroke-width="1.1"/>
 <circle cx="698.4" cy="212.4" r="2.8" fill="#e2e8f0" stroke="#a16207" stroke-width="1.2"/>
@@ -1850,10 +1858,10 @@
 <polyline points="698.4,586.3 698.4,574.6" fill="none" stroke="#e2e8f0" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
 <polyline points="663.4,422.7 675.1,422.7 686.7,422.7" fill="none" stroke="#94a3b8" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
 <polyline points="663.4,422.7 675.1,422.7 686.7,422.7" fill="none" stroke="#e2e8f0" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-<polyline points="756.8,177.4 756.8,189.1" fill="none" stroke="#94a3b8" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
-<polyline points="756.8,177.4 756.8,189.1" fill="none" stroke="#e2e8f0" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-<polyline points="733.5,189.1 733.5,177.4 733.5,165.7" fill="none" stroke="#94a3b8" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
-<polyline points="733.5,189.1 733.5,177.4 733.5,165.7" fill="none" stroke="#e2e8f0" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="768.5,177.4 756.8,177.4 756.8,189.1" fill="none" stroke="#94a3b8" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="768.5,177.4 756.8,177.4 756.8,189.1" fill="none" stroke="#e2e8f0" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="733.5,189.1 733.5,177.4 733.5,165.7 745.2,165.7" fill="none" stroke="#94a3b8" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="733.5,189.1 733.5,177.4 733.5,165.7 745.2,165.7" fill="none" stroke="#e2e8f0" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
 <polyline points="791.9,177.4 791.9,189.1" fill="none" stroke="#94a3b8" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
 <polyline points="791.9,177.4 791.9,189.1" fill="none" stroke="#e2e8f0" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
 <polyline points="710.1,212.4 698.4,212.4 698.4,200.7" fill="none" stroke="#94a3b8" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
@@ -1870,6 +1878,14 @@
 <polyline points="686.7,247.5 686.7,235.8" fill="none" stroke="#e2e8f0" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
 <polyline points="640.0,224.1 628.3,224.1" fill="none" stroke="#94a3b8" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
 <polyline points="640.0,224.1 628.3,224.1" fill="none" stroke="#e2e8f0" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="826.9,259.2 826.9,247.5" fill="none" stroke="#94a3b8" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="826.9,259.2 826.9,247.5" fill="none" stroke="#e2e8f0" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="873.7,224.1 862.0,224.1" fill="none" stroke="#94a3b8" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="873.7,224.1 862.0,224.1" fill="none" stroke="#e2e8f0" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="873.7,212.4 862.0,212.4" fill="none" stroke="#94a3b8" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="873.7,212.4 862.0,212.4" fill="none" stroke="#e2e8f0" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="873.7,200.7 885.4,200.7" fill="none" stroke="#94a3b8" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="873.7,200.7 885.4,200.7" fill="none" stroke="#e2e8f0" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
 <polyline points="733.5,259.2 733.5,247.5" fill="none" stroke="#94a3b8" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
 <polyline points="733.5,259.2 733.5,247.5" fill="none" stroke="#e2e8f0" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
 <circle cx="815.3" cy="270.8" r="5.2" fill="none" stroke="#b45309" stroke-width="1.2" stroke-dasharray="2 1.5"/>
@@ -1934,6 +1950,15 @@
 <polyline points="686.7,235.8 680.9,229.9 634.2,229.9 628.3,224.1" fill="none" stroke="#92400e" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
 <circle cx="686.7" cy="235.8" r="2.3" fill="#92400e" stroke="#fff" stroke-width="0.6"/>
 <circle cx="628.3" cy="224.1" r="2.3" fill="#92400e" stroke="#fff" stroke-width="0.6"/>
+<polyline points="826.9,247.5 832.8,241.6 856.2,241.6 856.2,229.9 862.0,224.1" fill="none" stroke="#0d9488" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="826.9" cy="247.5" r="2.3" fill="#0d9488" stroke="#fff" stroke-width="0.6"/>
+<circle cx="862.0" cy="224.1" r="2.3" fill="#0d9488" stroke="#fff" stroke-width="0.6"/>
+<polyline points="768.5,177.4 774.4,171.5 856.2,171.5 856.2,206.6 862.0,212.4" fill="none" stroke="#dc2626" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="768.5" cy="177.4" r="2.3" fill="#dc2626" stroke="#fff" stroke-width="0.6"/>
+<circle cx="862.0" cy="212.4" r="2.3" fill="#dc2626" stroke="#fff" stroke-width="0.6"/>
+<polyline points="745.2,165.7 751.0,159.8 879.5,159.8 879.5,194.9 885.4,200.7" fill="none" stroke="#111827" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="745.2" cy="165.7" r="2.3" fill="#111827" stroke="#fff" stroke-width="0.6"/>
+<circle cx="885.4" cy="200.7" r="2.3" fill="#111827" stroke="#fff" stroke-width="0.6"/>
 <polyline points="756.8,270.8 751.0,276.7 680.9,276.7 680.9,370.2 680.9,416.9 675.1,422.7" fill="none" stroke="#db2777" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
 <circle cx="756.8" cy="270.8" r="2.3" fill="#db2777" stroke="#fff" stroke-width="0.6"/>
 <circle cx="675.1" cy="422.7" r="2.3" fill="#db2777" stroke="#fff" stroke-width="0.6"/>
@@ -2702,153 +2727,161 @@
 <text x="1226.0" y="300.0" font-size="7.9" fill="#475569">B 6V IN +</text>
 <text x="1320.0" y="300.0" font-size="7.9" fill="#475569">B·B17 → C2 + (E5) → SERVO + (E2), 18 AWG</text>
 <rect x="1130" y="306" width="550" height="19" fill="#f8fafc" stroke="#e2e8f0"/>
-<rect x="1133" y="311" width="4" height="9" fill="#92400e"/>
-<text x="1142.0" y="319.0" font-size="8.4" fill="#1e293b" font-weight="700">TIM4_CH4</text>
-<text x="1226.0" y="319.0" font-size="7.9" fill="#475569">CN7-35 PC2</text>
-<text x="1320.0" y="319.0" font-size="7.9" fill="#475569">R4 1k (B·H2-H6) → SERVO SIG (F2)</text>
+<rect x="1133" y="311" width="4" height="9" fill="#0d9488"/>
+<text x="1142.0" y="319.0" font-size="8.4" fill="#1e293b" font-weight="700">SPI3_MOSI</text>
+<text x="1226.0" y="319.0" font-size="7.9" fill="#475569">CN7-3 PC12</text>
+<text x="1320.0" y="319.0" font-size="7.9" fill="#475569">LED DIN (F22) · its 5V (E22) and GND (D22) from B 5V IN</text>
 <rect x="1130" y="325" width="550" height="19" fill="#ffffff" stroke="#e2e8f0"/>
-<rect x="1133" y="330" width="4" height="9" fill="#7c3aed"/>
-<text x="1142.0" y="338.0" font-size="8.4" fill="#1e293b" font-weight="700">I²C1 SCL</text>
-<text x="1226.0" y="338.0" font-size="7.9" fill="#475569">CN10-3 PB6</text>
-<text x="1320.0" y="338.0" font-size="7.9" fill="#475569">→ I2C-B (A·E9) · → I2C-A (E3)</text>
+<rect x="1133" y="330" width="4" height="9" fill="#92400e"/>
+<text x="1142.0" y="338.0" font-size="8.4" fill="#1e293b" font-weight="700">TIM4_CH4</text>
+<text x="1226.0" y="338.0" font-size="7.9" fill="#475569">CN7-35 PC2</text>
+<text x="1320.0" y="338.0" font-size="7.9" fill="#475569">R4 1k (B·H2-H6) → SERVO SIG (F2)</text>
 <rect x="1130" y="344" width="550" height="19" fill="#f8fafc" stroke="#e2e8f0"/>
-<rect x="1133" y="349" width="4" height="9" fill="#a855f7"/>
-<text x="1142.0" y="357.0" font-size="8.4" fill="#1e293b" font-weight="700">I²C1 SDA</text>
-<text x="1226.0" y="357.0" font-size="7.9" fill="#475569">CN10-5 PB7</text>
-<text x="1320.0" y="357.0" font-size="7.9" fill="#475569">→ I2C-B (A·E8) → I2C-A (E2)</text>
+<rect x="1133" y="349" width="4" height="9" fill="#7c3aed"/>
+<text x="1142.0" y="357.0" font-size="8.4" fill="#1e293b" font-weight="700">I²C1 SCL</text>
+<text x="1226.0" y="357.0" font-size="7.9" fill="#475569">CN10-3 PB6</text>
+<text x="1320.0" y="357.0" font-size="7.9" fill="#475569">→ I2C-B (A·E9) · → I2C-A (E3)</text>
 <rect x="1130" y="363" width="550" height="19" fill="#ffffff" stroke="#e2e8f0"/>
-<rect x="1133" y="368" width="4" height="9" fill="#0891b2"/>
-<text x="1142.0" y="376.0" font-size="8.4" fill="#1e293b" font-weight="700">FDCAN2_TX</text>
-<text x="1226.0" y="376.0" font-size="7.9" fill="#475569">CN10-30 PB13</text>
-<text x="1320.0" y="376.0" font-size="7.9" fill="#475569">XCVR CTX (A·H18) - straight, not crossed</text>
+<rect x="1133" y="368" width="4" height="9" fill="#a855f7"/>
+<text x="1142.0" y="376.0" font-size="8.4" fill="#1e293b" font-weight="700">I²C1 SDA</text>
+<text x="1226.0" y="376.0" font-size="7.9" fill="#475569">CN10-5 PB7</text>
+<text x="1320.0" y="376.0" font-size="7.9" fill="#475569">→ I2C-B (A·E8) → I2C-A (E2)</text>
 <rect x="1130" y="382" width="550" height="19" fill="#f8fafc" stroke="#e2e8f0"/>
-<rect x="1133" y="387" width="4" height="9" fill="#0e7490"/>
-<text x="1142.0" y="395.0" font-size="8.4" fill="#1e293b" font-weight="700">FDCAN2_RX</text>
-<text x="1226.0" y="395.0" font-size="7.9" fill="#475569">CN10-16 PB12</text>
-<text x="1320.0" y="395.0" font-size="7.9" fill="#475569">XCVR CRX (A·H17)</text>
+<rect x="1133" y="387" width="4" height="9" fill="#0891b2"/>
+<text x="1142.0" y="395.0" font-size="8.4" fill="#1e293b" font-weight="700">FDCAN2_TX</text>
+<text x="1226.0" y="395.0" font-size="7.9" fill="#475569">CN10-30 PB13</text>
+<text x="1320.0" y="395.0" font-size="7.9" fill="#475569">XCVR CTX (A·H18) - straight, not crossed</text>
 <rect x="1130" y="401" width="550" height="19" fill="#ffffff" stroke="#e2e8f0"/>
-<rect x="1133" y="406" width="4" height="9" fill="#1d4ed8"/>
-<text x="1142.0" y="414.0" font-size="8.4" fill="#1e293b" font-weight="700">CAN_H</text>
-<text x="1226.0" y="414.0" font-size="7.9" fill="#475569">module H pin</text>
-<text x="1320.0" y="414.0" font-size="7.9" fill="#475569">socket A·O17 → CAN H (F17)</text>
+<rect x="1133" y="406" width="4" height="9" fill="#0e7490"/>
+<text x="1142.0" y="414.0" font-size="8.4" fill="#1e293b" font-weight="700">FDCAN2_RX</text>
+<text x="1226.0" y="414.0" font-size="7.9" fill="#475569">CN10-16 PB12</text>
+<text x="1320.0" y="414.0" font-size="7.9" fill="#475569">XCVR CRX (A·H17)</text>
 <rect x="1130" y="420" width="550" height="19" fill="#f8fafc" stroke="#e2e8f0"/>
-<rect x="1133" y="425" width="4" height="9" fill="#60a5fa"/>
-<text x="1142.0" y="433.0" font-size="8.4" fill="#1e293b" font-weight="700">CAN_L</text>
-<text x="1226.0" y="433.0" font-size="7.9" fill="#475569">module L pin</text>
-<text x="1320.0" y="433.0" font-size="7.9" fill="#475569">socket A·O16 → CAN L (D17) · 120 Ω on the module (HW-09)</text>
-<text x="1130.0" y="465.0" font-size="12" fill="#1a1a1a" font-weight="700">WHAT PLUGS IN WHERE</text>
-<line x1="1130" y1="473" x2="1680" y2="473" stroke="#e2e8f0"/>
-<rect x="1130" y="481" width="550" height="19" fill="#f1f5f9" stroke="#cbd5e1"/>
-<text x="1142.0" y="494.0" font-size="8.5" fill="#334155" font-weight="700">Connector</text>
-<text x="1226.0" y="494.0" font-size="8.5" fill="#334155" font-weight="700">Cable</text>
-<rect x="1130" y="500" width="550" height="19" fill="#ffffff" stroke="#e2e8f0"/>
-<text x="1142.0" y="513.0" font-size="8.4" fill="#1e293b" font-weight="700">C IN 5V</text>
-<text x="1226.0" y="513.0" font-size="7.9" fill="#475569">Bauer 50 W via SW2, 18 AWG pair (HW-17)</text>
-<rect x="1130" y="519" width="550" height="19" fill="#f8fafc" stroke="#e2e8f0"/>
-<text x="1142.0" y="532.0" font-size="8.4" fill="#1e293b" font-weight="700">C TO STM32</text>
-<text x="1226.0" y="532.0" font-size="7.9" fill="#475569">18 AWG pair to B 5V IN</text>
-<rect x="1130" y="538" width="550" height="19" fill="#ffffff" stroke="#e2e8f0"/>
-<text x="1142.0" y="551.0" font-size="8.4" fill="#1e293b" font-weight="700">C USB-C</text>
-<text x="1226.0" y="551.0" font-size="7.9" fill="#475569">socket on C, pigtail soldered: red J7, black H7 · C-to-C data cable to FRDM J1</text>
-<rect x="1130" y="557" width="550" height="19" fill="#f8fafc" stroke="#e2e8f0"/>
-<text x="1142.0" y="570.0" font-size="8.4" fill="#1e293b" font-weight="700">C D+ / D−</text>
-<text x="1226.0" y="570.0" font-size="7.9" fill="#475569">white, blue, green and yellow (D−, D+, CC1, CC2) cut short, each insulated on its own - never twisted together</text>
-<rect x="1130" y="576" width="550" height="19" fill="#ffffff" stroke="#e2e8f0"/>
-<text x="1142.0" y="589.0" font-size="8.4" fill="#1e293b" font-weight="700">B 6V IN</text>
-<text x="1226.0" y="589.0" font-size="7.9" fill="#475569">UBEC 6 V out, 18 AWG pair (HW-14)</text>
-<rect x="1130" y="595" width="550" height="19" fill="#f8fafc" stroke="#e2e8f0"/>
-<text x="1142.0" y="608.0" font-size="8.4" fill="#1e293b" font-weight="700">B SERVO</text>
-<text x="1226.0" y="608.0" font-size="7.9" fill="#475569">straight header on top, across B: LD-1501MG black B·D2, red, white inboard (HW-21)</text>
-<rect x="1130" y="614" width="550" height="19" fill="#ffffff" stroke="#e2e8f0"/>
-<text x="1142.0" y="627.0" font-size="8.4" fill="#1e293b" font-weight="700">A I2C-A</text>
-<text x="1226.0" y="627.0" font-size="7.9" fill="#475569">90° on A by the gap, pointing forward: INA226 VCC, SDA, SCL, GND - its own order, a straight 4-way lead</text>
-<rect x="1130" y="633" width="550" height="19" fill="#f8fafc" stroke="#e2e8f0"/>
-<text x="1142.0" y="646.0" font-size="8.4" fill="#1e293b" font-weight="700">A I2C-B</text>
-<text x="1226.0" y="646.0" font-size="7.9" fill="#475569">90° on A by the gap, pointing forward: motor module SCL, SDA, GND, 5V - its own order; pin 4 has no wire</text>
-<rect x="1130" y="652" width="550" height="19" fill="#ffffff" stroke="#e2e8f0"/>
-<text x="1142.0" y="665.0" font-size="8.4" fill="#1e293b" font-weight="700">I2C leads</text>
-<text x="1226.0" y="665.0" font-size="7.9" fill="#475569">plugged before the Nucleo goes on; they leave A's front edge under it and drop through the tray window</text>
-<rect x="1130" y="671" width="550" height="19" fill="#f8fafc" stroke="#e2e8f0"/>
-<text x="1142.0" y="684.0" font-size="8.4" fill="#1e293b" font-weight="700">A CAN</text>
-<text x="1226.0" y="684.0" font-size="7.9" fill="#475569">twisted H, L + GND to DE-9 stub and FRDM J7 (HW-09, HW-18); the module's 120 Ω terminates this end</text>
-<rect x="1130" y="690" width="550" height="19" fill="#ffffff" stroke="#e2e8f0"/>
-<text x="1142.0" y="703.0" font-size="8.4" fill="#1e293b" font-weight="700">CN1</text>
-<text x="1226.0" y="703.0" font-size="7.9" fill="#475569">ST-LINK USB-C: 90° C to Mini-B cable (5.12) flat, turned to the vehicle left, then the fascia extension (5.10)</text>
-<text x="1130.0" y="735.0" font-size="12" fill="#1a1a1a" font-weight="700">PARTS</text>
-<line x1="1130" y1="743" x2="1680" y2="743" stroke="#e2e8f0"/>
-<rect x="1130" y="751" width="550" height="19" fill="#f1f5f9" stroke="#cbd5e1"/>
-<text x="1142.0" y="764.0" font-size="8.5" fill="#334155" font-weight="700">Board</text>
-<text x="1212.0" y="764.0" font-size="8.5" fill="#334155" font-weight="700">Fitted</text>
-<rect x="1130" y="770" width="550" height="19" fill="#ffffff" stroke="#e2e8f0"/>
-<text x="1142.0" y="783.0" font-size="8.4" fill="#1e293b" font-weight="700">Board A</text>
-<text x="1212.0" y="783.0" font-size="7.9" fill="#475569">5×7 board · 2 × 1×19 + 1 × 1×4 + 1 × 1×2 female · 3p terminal · 2 × 1×4 90° male, on top · the SN65HVD230 module</text>
-<rect x="1130" y="789" width="550" height="19" fill="#f8fafc" stroke="#e2e8f0"/>
-<text x="1142.0" y="802.0" font-size="8.4" fill="#1e293b" font-weight="700">Board B</text>
-<text x="1212.0" y="802.0" font-size="7.9" fill="#475569">3×7 board · 2 × 1×19 female · 2 × 2p terminal · 1×3 male · C2 470µF · R4 1k</text>
+<rect x="1133" y="425" width="4" height="9" fill="#1d4ed8"/>
+<text x="1142.0" y="433.0" font-size="8.4" fill="#1e293b" font-weight="700">CAN_H</text>
+<text x="1226.0" y="433.0" font-size="7.9" fill="#475569">module H pin</text>
+<text x="1320.0" y="433.0" font-size="7.9" fill="#475569">socket A·O17 → CAN H (F17)</text>
+<rect x="1130" y="439" width="550" height="19" fill="#ffffff" stroke="#e2e8f0"/>
+<rect x="1133" y="444" width="4" height="9" fill="#60a5fa"/>
+<text x="1142.0" y="452.0" font-size="8.4" fill="#1e293b" font-weight="700">CAN_L</text>
+<text x="1226.0" y="452.0" font-size="7.9" fill="#475569">module L pin</text>
+<text x="1320.0" y="452.0" font-size="7.9" fill="#475569">socket A·O16 → CAN L (D17) · 120 Ω on the module (HW-09)</text>
+<text x="1130.0" y="484.0" font-size="12" fill="#1a1a1a" font-weight="700">WHAT PLUGS IN WHERE</text>
+<line x1="1130" y1="492" x2="1680" y2="492" stroke="#e2e8f0"/>
+<rect x="1130" y="500" width="550" height="19" fill="#f1f5f9" stroke="#cbd5e1"/>
+<text x="1142.0" y="513.0" font-size="8.5" fill="#334155" font-weight="700">Connector</text>
+<text x="1226.0" y="513.0" font-size="8.5" fill="#334155" font-weight="700">Cable</text>
+<rect x="1130" y="519" width="550" height="19" fill="#ffffff" stroke="#e2e8f0"/>
+<text x="1142.0" y="532.0" font-size="8.4" fill="#1e293b" font-weight="700">C IN 5V</text>
+<text x="1226.0" y="532.0" font-size="7.9" fill="#475569">Bauer 50 W via SW2, 18 AWG pair (HW-17)</text>
+<rect x="1130" y="538" width="550" height="19" fill="#f8fafc" stroke="#e2e8f0"/>
+<text x="1142.0" y="551.0" font-size="8.4" fill="#1e293b" font-weight="700">C TO STM32</text>
+<text x="1226.0" y="551.0" font-size="7.9" fill="#475569">18 AWG pair to B 5V IN</text>
+<rect x="1130" y="557" width="550" height="19" fill="#ffffff" stroke="#e2e8f0"/>
+<text x="1142.0" y="570.0" font-size="8.4" fill="#1e293b" font-weight="700">C USB-C</text>
+<text x="1226.0" y="570.0" font-size="7.9" fill="#475569">socket on C, pigtail soldered: red J7, black H7 · C-to-C data cable to FRDM J1</text>
+<rect x="1130" y="576" width="550" height="19" fill="#f8fafc" stroke="#e2e8f0"/>
+<text x="1142.0" y="589.0" font-size="8.4" fill="#1e293b" font-weight="700">C D+ / D−</text>
+<text x="1226.0" y="589.0" font-size="7.9" fill="#475569">white, blue, green and yellow (D−, D+, CC1, CC2) cut short, each insulated on its own - never twisted together</text>
+<rect x="1130" y="595" width="550" height="19" fill="#ffffff" stroke="#e2e8f0"/>
+<text x="1142.0" y="608.0" font-size="8.4" fill="#1e293b" font-weight="700">B 6V IN</text>
+<text x="1226.0" y="608.0" font-size="7.9" fill="#475569">UBEC 6 V out, 18 AWG pair (HW-14)</text>
+<rect x="1130" y="614" width="550" height="19" fill="#f8fafc" stroke="#e2e8f0"/>
+<text x="1142.0" y="627.0" font-size="8.4" fill="#1e293b" font-weight="700">B SERVO</text>
+<text x="1226.0" y="627.0" font-size="7.9" fill="#475569">straight header on top, across B: LD-1501MG black B·D2, red, white inboard (HW-21)</text>
+<rect x="1130" y="633" width="550" height="19" fill="#ffffff" stroke="#e2e8f0"/>
+<text x="1142.0" y="646.0" font-size="8.4" fill="#1e293b" font-weight="700">B LED</text>
+<text x="1226.0" y="646.0" font-size="7.9" fill="#475569">straight 1×3 on top at B's rear: DIN, 5V, GND to the WS2812B stick (1.3) on plate 3, no level shifter (HW-22)</text>
+<rect x="1130" y="652" width="550" height="19" fill="#f8fafc" stroke="#e2e8f0"/>
+<text x="1142.0" y="665.0" font-size="8.4" fill="#1e293b" font-weight="700">A I2C-A</text>
+<text x="1226.0" y="665.0" font-size="7.9" fill="#475569">90° on A by the gap, pointing forward: INA226 VCC, SDA, SCL, GND - its own order, a straight 4-way lead</text>
+<rect x="1130" y="671" width="550" height="19" fill="#ffffff" stroke="#e2e8f0"/>
+<text x="1142.0" y="684.0" font-size="8.4" fill="#1e293b" font-weight="700">A I2C-B</text>
+<text x="1226.0" y="684.0" font-size="7.9" fill="#475569">90° on A by the gap, pointing forward: motor module SCL, SDA, GND, 5V - its own order; pin 4 has no wire</text>
+<rect x="1130" y="690" width="550" height="19" fill="#f8fafc" stroke="#e2e8f0"/>
+<text x="1142.0" y="703.0" font-size="8.4" fill="#1e293b" font-weight="700">I2C leads</text>
+<text x="1226.0" y="703.0" font-size="7.9" fill="#475569">plugged before the Nucleo goes on; they leave A's front edge under it and drop through the tray window</text>
+<rect x="1130" y="709" width="550" height="19" fill="#ffffff" stroke="#e2e8f0"/>
+<text x="1142.0" y="722.0" font-size="8.4" fill="#1e293b" font-weight="700">A CAN</text>
+<text x="1226.0" y="722.0" font-size="7.9" fill="#475569">twisted H, L + GND to DE-9 stub and FRDM J7 (HW-09, HW-18); the module's 120 Ω terminates this end</text>
+<rect x="1130" y="728" width="550" height="19" fill="#f8fafc" stroke="#e2e8f0"/>
+<text x="1142.0" y="741.0" font-size="8.4" fill="#1e293b" font-weight="700">CN1</text>
+<text x="1226.0" y="741.0" font-size="7.9" fill="#475569">ST-LINK USB-C: 90° C to Mini-B cable (5.12) flat, turned to the vehicle left, then the fascia extension (5.10)</text>
+<text x="1130.0" y="773.0" font-size="12" fill="#1a1a1a" font-weight="700">PARTS</text>
+<line x1="1130" y1="781" x2="1680" y2="781" stroke="#e2e8f0"/>
+<rect x="1130" y="789" width="550" height="19" fill="#f1f5f9" stroke="#cbd5e1"/>
+<text x="1142.0" y="802.0" font-size="8.5" fill="#334155" font-weight="700">Board</text>
+<text x="1212.0" y="802.0" font-size="8.5" fill="#334155" font-weight="700">Fitted</text>
 <rect x="1130" y="808" width="550" height="19" fill="#ffffff" stroke="#e2e8f0"/>
-<text x="1142.0" y="821.0" font-size="8.4" fill="#1e293b" font-weight="700">Board C</text>
-<text x="1212.0" y="821.0" font-size="7.9" fill="#475569">3×7 board · 2 × 2p terminal · USB-C socket (5.1), 2 zip ties · C1 470µF</text>
+<text x="1142.0" y="821.0" font-size="8.4" fill="#1e293b" font-weight="700">Board A</text>
+<text x="1212.0" y="821.0" font-size="7.9" fill="#475569">5×7 board · 2 × 1×19 + 1 × 1×4 + 1 × 1×2 female · 3p terminal · 2 × 1×4 90° male, on top · the SN65HVD230 module</text>
 <rect x="1130" y="827" width="550" height="19" fill="#f8fafc" stroke="#e2e8f0"/>
-<text x="1142.0" y="840.0" font-size="8.4" fill="#1e293b" font-weight="700">From stock</text>
-<text x="1212.0" y="840.0" font-size="7.9" fill="#475569">caps: 2 of the 5 in 3.14 · resistors: 3.21 · module: 4.1 · headers, terminals: 5.11</text>
+<text x="1142.0" y="840.0" font-size="8.4" fill="#1e293b" font-weight="700">Board B</text>
+<text x="1212.0" y="840.0" font-size="7.9" fill="#475569">3×7 board · 2 × 1×19 female · 2 × 2p terminal · 2 × 1×3 male · C2 470µF · R4 1k</text>
 <rect x="1130" y="846" width="550" height="19" fill="#ffffff" stroke="#e2e8f0"/>
-<text x="1142.0" y="859.0" font-size="8.4" fill="#1e293b" font-weight="700">Wire</text>
-<text x="1212.0" y="859.0" font-size="7.9" fill="#475569">22 AWG insulated copper hook-up wire (not in BOM) · 18 AWG silicone copper (3.11) for the thick runs · not the CCA Dupont leads (5.7)</text>
-<text x="1130.0" y="891.0" font-size="12" fill="#1a1a1a" font-weight="700">FIXINGS  (MEC-17)</text>
-<line x1="1130" y1="899" x2="1680" y2="899" stroke="#e2e8f0"/>
-<rect x="1130" y="907" width="550" height="19" fill="#f1f5f9" stroke="#cbd5e1"/>
-<text x="1142.0" y="920.0" font-size="8.5" fill="#334155" font-weight="700">Board</text>
-<text x="1192.0" y="920.0" font-size="8.5" fill="#334155" font-weight="700">Hole</text>
-<text x="1300.0" y="920.0" font-size="8.5" fill="#334155" font-weight="700">Fixing</text>
-<rect x="1130" y="926" width="550" height="19" fill="#ffffff" stroke="#e2e8f0"/>
-<text x="1142.0" y="939.0" font-size="8.4" fill="#1e293b" font-weight="700">A</text>
-<text x="1192.0" y="939.0" font-size="7.9" fill="#475569">four corner holes</text>
-<text x="1300.0" y="939.0" font-size="7.9" fill="#475569">2.5 mm in from each edge · M2.5 screw into an 8 mm nylon standoff</text>
-<rect x="1130" y="945" width="550" height="19" fill="#f8fafc" stroke="#e2e8f0"/>
-<text x="1142.0" y="958.0" font-size="8.4" fill="#1e293b" font-weight="700">B</text>
-<text x="1192.0" y="958.0" font-size="7.9" fill="#475569">three corner holes</text>
-<text x="1300.0" y="958.0" font-size="7.9" fill="#475569">same · not the front inboard one, 2 mm from the CN7 socket end</text>
+<text x="1142.0" y="859.0" font-size="8.4" fill="#1e293b" font-weight="700">Board C</text>
+<text x="1212.0" y="859.0" font-size="7.9" fill="#475569">3×7 board · 2 × 2p terminal · USB-C socket (5.1), 2 zip ties · C1 470µF</text>
+<rect x="1130" y="865" width="550" height="19" fill="#f8fafc" stroke="#e2e8f0"/>
+<text x="1142.0" y="878.0" font-size="8.4" fill="#1e293b" font-weight="700">From stock</text>
+<text x="1212.0" y="878.0" font-size="7.9" fill="#475569">caps: 2 of the 5 in 3.14 · resistors: 3.21 · module: 4.1 · headers, terminals: 5.11</text>
+<rect x="1130" y="884" width="550" height="19" fill="#ffffff" stroke="#e2e8f0"/>
+<text x="1142.0" y="897.0" font-size="8.4" fill="#1e293b" font-weight="700">Wire</text>
+<text x="1212.0" y="897.0" font-size="7.9" fill="#475569">22 AWG insulated copper hook-up wire (not in BOM) · 18 AWG silicone copper (3.11) for the thick runs · not the CCA Dupont leads (5.7)</text>
+<text x="1130.0" y="929.0" font-size="12" fill="#1a1a1a" font-weight="700">FIXINGS  (MEC-17)</text>
+<line x1="1130" y1="937" x2="1680" y2="937" stroke="#e2e8f0"/>
+<rect x="1130" y="945" width="550" height="19" fill="#f1f5f9" stroke="#cbd5e1"/>
+<text x="1142.0" y="958.0" font-size="8.5" fill="#334155" font-weight="700">Board</text>
+<text x="1192.0" y="958.0" font-size="8.5" fill="#334155" font-weight="700">Hole</text>
+<text x="1300.0" y="958.0" font-size="8.5" fill="#334155" font-weight="700">Fixing</text>
 <rect x="1130" y="964" width="550" height="19" fill="#ffffff" stroke="#e2e8f0"/>
-<text x="1142.0" y="977.0" font-size="8.4" fill="#1e293b" font-weight="700">C</text>
+<text x="1142.0" y="977.0" font-size="8.4" fill="#1e293b" font-weight="700">A</text>
 <text x="1192.0" y="977.0" font-size="7.9" fill="#475569">four corner holes</text>
-<text x="1300.0" y="977.0" font-size="7.9" fill="#475569">same · the USB-C body lies between the two on its side</text>
-<text x="1130.0" y="999.0" font-size="8.4" fill="#475569">Nothing is drilled in the boards. The tray (MEC-17) takes them from below; only the tray is screwed to plate 2 (T1-T6).</text>
-<text x="1130.0" y="1012.0" font-size="8.4" fill="#475569">One hole is drilled in the tray by hand, for B's rear inboard corner, at plate 2 (187.03, 83.65).</text>
-<text x="1130.0" y="1025.0" font-size="8.4" fill="#475569">A·X.. at chassis x 181.20, B·X.. at x 183.74 · Nucleo row 1 at x 171.04, its outline x 120.2-202.7 · A y 5.11, B y 111.15.</text>
-<text x="1130.0" y="1054.0" font-size="12" fill="#1a1a1a" font-weight="700">ORIENTATION - where A and B sit under the Nucleo</text>
-<line x1="1130" y1="1062" x2="1680" y2="1062" stroke="#e2e8f0"/>
-<rect x="1172.0" y="1086.0" width="108.5" height="77.5" rx="2" fill="#dcfce7" stroke="#15803d" stroke-width="1.2"/>
-<polygon points="1172.0,1163.5 1186.0,1163.5 1172.0,1149.5" fill="#e11d48" fill-opacity="0.9"/>
-<text x="1176.2" y="1161.8" font-size="5.5" fill="#fff" font-weight="700" text-anchor="middle">A1</text>
-<text x="1252.2" y="1101.9" font-size="10" fill="#15803d" font-weight="700" text-anchor="middle">board A</text>
-<rect x="1175.9" y="1203.9" width="108.5" height="46.5" rx="2" fill="#dcfce7" stroke="#15803d" stroke-width="1.2"/>
-<polygon points="1175.9,1250.4 1189.9,1250.4 1175.9,1236.4" fill="#e11d48" fill-opacity="0.9"/>
-<text x="1180.1" y="1248.7" font-size="5.5" fill="#fff" font-weight="700" text-anchor="middle">A1</text>
-<text x="1252.2" y="1238.4" font-size="10" fill="#15803d" font-weight="700" text-anchor="middle">board B</text>
-<rect x="1177.0" y="1109.9" width="127.9" height="108.5" rx="2" fill="none" stroke="#4338ca" stroke-width="1.4" stroke-dasharray="5 3"/>
-<text x="1232.1" y="1171.0" font-size="7.5" fill="#4338ca" font-weight="700" text-anchor="middle">Nucleo, above</text>
-<rect x="1182.9" y="1112.9" width="74.8" height="7.9" fill="#1f2937"/>
-<circle cx="1255.8" cy="1118.8" r="2.4" fill="#fbbf24"/>
-<text x="1220.3" y="1127.4" font-size="8" fill="#4338ca" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="middle">CN10</text>
-<rect x="1182.9" y="1207.4" width="74.8" height="7.9" fill="#1f2937"/>
-<circle cx="1255.8" cy="1213.3" r="2.4" fill="#fbbf24"/>
-<text x="1220.3" y="1220.8" font-size="8" fill="#4338ca" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="middle">CN7</text>
-<rect x="1293.6" y="1138.0" width="12.2" height="13.9" rx="1" fill="#94a3b8" stroke="#334155" stroke-width="0.8"/>
-<text x="1291.3" y="1147.9" font-size="7" fill="#334155" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="end">CN1</text>
-<text x="1238.5" y="1081.0" font-size="7" fill="#64748b" text-anchor="middle">vehicle RIGHT</text>
-<text x="1238.5" y="1261.1" font-size="7" fill="#64748b" text-anchor="middle">vehicle LEFT</text>
-<text x="1168.0" y="1168.1" font-size="7" fill="#64748b" font-weight="700" text-anchor="end">FRONT</text>
-<text x="1308.9" y="1168.1" font-size="7" fill="#64748b" font-weight="700" text-anchor="start">REAR</text>
-<text x="1344.9" y="1088.0" font-size="8.2" fill="#1e293b" font-weight="700">Nucleo from above, components up, as in every view.</text>
-<text x="1344.9" y="1100.5" font-size="8.2" fill="#475569">CN1, the ST-LINK USB-C, points to the REAR (fascia).</text>
-<text x="1344.9" y="1113.0" font-size="8.2" fill="#475569">CN10 is the header on the vehicle RIGHT: board A goes under it.</text>
-<text x="1344.9" y="1125.5" font-size="8.2" fill="#475569">CN7 is the header on the vehicle LEFT: board B goes under it.</text>
-<text x="1344.9" y="1138.0" font-size="8.2" fill="#475569">Both have pin 1 (yellow) at the CN1 end, in their vehicle-LEFT column.</text>
-<text x="1344.9" y="1150.5" font-size="8.2" fill="#475569"></text>
-<text x="1344.9" y="1163.0" font-size="8.2" fill="#1e293b" font-weight="700">Red triangle = the corner at printed hole A1.</text>
-<text x="1344.9" y="1175.5" font-size="8.2" fill="#475569">On A and on B: the FRONT corner on the vehicle-LEFT edge.</text>
-<text x="1344.9" y="1188.0" font-size="8.2" fill="#475569">Mark that corner on both faces with a pen before soldering:</text>
-<text x="1344.9" y="1200.5" font-size="8.2" fill="#475569">both boards then read the same way up, print legible.</text>
+<text x="1300.0" y="977.0" font-size="7.9" fill="#475569">2.5 mm in from each edge · M2.5 screw into an 8 mm nylon standoff</text>
+<rect x="1130" y="983" width="550" height="19" fill="#f8fafc" stroke="#e2e8f0"/>
+<text x="1142.0" y="996.0" font-size="8.4" fill="#1e293b" font-weight="700">B</text>
+<text x="1192.0" y="996.0" font-size="7.9" fill="#475569">three corner holes</text>
+<text x="1300.0" y="996.0" font-size="7.9" fill="#475569">same · not the front inboard one, 2 mm from the CN7 socket end</text>
+<rect x="1130" y="1002" width="550" height="19" fill="#ffffff" stroke="#e2e8f0"/>
+<text x="1142.0" y="1015.0" font-size="8.4" fill="#1e293b" font-weight="700">C</text>
+<text x="1192.0" y="1015.0" font-size="7.9" fill="#475569">four corner holes</text>
+<text x="1300.0" y="1015.0" font-size="7.9" fill="#475569">same · the USB-C body lies between the two on its side</text>
+<text x="1130.0" y="1037.0" font-size="8.4" fill="#475569">Nothing is drilled in the boards. The tray (MEC-17) takes them from below; only the tray is screwed to plate 2 (T1-T6).</text>
+<text x="1130.0" y="1050.0" font-size="8.4" fill="#475569">One hole is drilled in the tray by hand, for B's rear inboard corner, at plate 2 (187.03, 83.65).</text>
+<text x="1130.0" y="1063.0" font-size="8.4" fill="#475569">A·X.. at chassis x 181.20, B·X.. at x 183.74 · Nucleo row 1 at x 171.04, its outline x 120.2-202.7 · A y 5.11, B y 111.15.</text>
+<text x="1130.0" y="1092.0" font-size="12" fill="#1a1a1a" font-weight="700">ORIENTATION - where A and B sit under the Nucleo</text>
+<line x1="1130" y1="1100" x2="1680" y2="1100" stroke="#e2e8f0"/>
+<rect x="1172.0" y="1124.0" width="108.5" height="77.5" rx="2" fill="#dcfce7" stroke="#15803d" stroke-width="1.2"/>
+<polygon points="1172.0,1201.5 1186.0,1201.5 1172.0,1187.5" fill="#e11d48" fill-opacity="0.9"/>
+<text x="1176.2" y="1199.8" font-size="5.5" fill="#fff" font-weight="700" text-anchor="middle">A1</text>
+<text x="1252.2" y="1139.9" font-size="10" fill="#15803d" font-weight="700" text-anchor="middle">board A</text>
+<rect x="1175.9" y="1241.9" width="108.5" height="46.5" rx="2" fill="#dcfce7" stroke="#15803d" stroke-width="1.2"/>
+<polygon points="1175.9,1288.4 1189.9,1288.4 1175.9,1274.4" fill="#e11d48" fill-opacity="0.9"/>
+<text x="1180.1" y="1286.7" font-size="5.5" fill="#fff" font-weight="700" text-anchor="middle">A1</text>
+<text x="1252.2" y="1276.4" font-size="10" fill="#15803d" font-weight="700" text-anchor="middle">board B</text>
+<rect x="1177.0" y="1147.9" width="127.9" height="108.5" rx="2" fill="none" stroke="#4338ca" stroke-width="1.4" stroke-dasharray="5 3"/>
+<text x="1232.1" y="1209.0" font-size="7.5" fill="#4338ca" font-weight="700" text-anchor="middle">Nucleo, above</text>
+<rect x="1182.9" y="1150.9" width="74.8" height="7.9" fill="#1f2937"/>
+<circle cx="1255.8" cy="1156.8" r="2.4" fill="#fbbf24"/>
+<text x="1220.3" y="1165.4" font-size="8" fill="#4338ca" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="middle">CN10</text>
+<rect x="1182.9" y="1245.4" width="74.8" height="7.9" fill="#1f2937"/>
+<circle cx="1255.8" cy="1251.3" r="2.4" fill="#fbbf24"/>
+<text x="1220.3" y="1258.8" font-size="8" fill="#4338ca" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="middle">CN7</text>
+<rect x="1293.6" y="1176.0" width="12.2" height="13.9" rx="1" fill="#94a3b8" stroke="#334155" stroke-width="0.8"/>
+<text x="1291.3" y="1185.9" font-size="7" fill="#334155" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="end">CN1</text>
+<text x="1238.5" y="1119.0" font-size="7" fill="#64748b" text-anchor="middle">vehicle RIGHT</text>
+<text x="1238.5" y="1299.1" font-size="7" fill="#64748b" text-anchor="middle">vehicle LEFT</text>
+<text x="1168.0" y="1206.1" font-size="7" fill="#64748b" font-weight="700" text-anchor="end">FRONT</text>
+<text x="1308.9" y="1206.1" font-size="7" fill="#64748b" font-weight="700" text-anchor="start">REAR</text>
+<text x="1344.9" y="1126.0" font-size="8.2" fill="#1e293b" font-weight="700">Nucleo from above, components up, as in every view.</text>
+<text x="1344.9" y="1138.5" font-size="8.2" fill="#475569">CN1, the ST-LINK USB-C, points to the REAR (fascia).</text>
+<text x="1344.9" y="1151.0" font-size="8.2" fill="#475569">CN10 is the header on the vehicle RIGHT: board A goes under it.</text>
+<text x="1344.9" y="1163.5" font-size="8.2" fill="#475569">CN7 is the header on the vehicle LEFT: board B goes under it.</text>
+<text x="1344.9" y="1176.0" font-size="8.2" fill="#475569">Both have pin 1 (yellow) at the CN1 end, in their vehicle-LEFT column.</text>
+<text x="1344.9" y="1188.5" font-size="8.2" fill="#475569"></text>
+<text x="1344.9" y="1201.0" font-size="8.2" fill="#1e293b" font-weight="700">Red triangle = the corner at printed hole A1.</text>
+<text x="1344.9" y="1213.5" font-size="8.2" fill="#475569">On A and on B: the FRONT corner on the vehicle-LEFT edge.</text>
+<text x="1344.9" y="1226.0" font-size="8.2" fill="#475569">Mark that corner on both faces with a pen before soldering:</text>
+<text x="1344.9" y="1238.5" font-size="8.2" fill="#475569">both boards then read the same way up, print legible.</text>
 <text x="40.0" y="985.0" font-size="12" fill="#1a1a1a" font-weight="700">CHECK BEFORE THE IRON IS HOT</text>
 <line x1="40" y1="993" x2="1100" y2="993" stroke="#e2e8f0"/>
 <text x="40.0" y="1011.0" font-size="9" fill="#475569">1  Count the holes: A needs 18 × 24, B and C 10 × 24. The drawing assumes the usual kit counts; a board one row short moves everything.</text>
