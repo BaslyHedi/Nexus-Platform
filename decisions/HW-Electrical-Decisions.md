@@ -896,9 +896,22 @@ two ends, and the DE-9 becomes a stub of about 20 cm at the terminated end, whic
 - **Lever connectors as an inline splice.** Bulky and loose, and the jumper wire is copper-coated
   aluminium, which degrades in a clamp (BOM 5.7).
 - **Daisy-chaining through the DE-9's solder cups.** The panel lead comes pre-wired.
+- **A second 3-way screw terminal on board A**, one lead per terminal (Hedi, 2026-10-30). Under the
+  Nucleo there is 9 mm and the kit terminal is about 10 mm tall. Beside it, at A·T/V/X15 (plate x
+  171-181, y 16), plate 3 is solid about 8 mm above the screws, so they are only reached with plate 3
+  off, and the X15 ferrule runs into the rear outboard standoff screw. No other place on A is under
+  plate 3's slot.
+- **A junction board with screw terminals on top of plate 3**, by J7. Too close to the parts already
+  there, with a risk of shorts (Hedi, 2026-10-30).
 
 **Consequences.**
 
+- **The terminal is reached from above through plate 3's slot** (x 109-158, y 10-15, the one the
+  FRDM's USB-C power lead uses): its screws are at plate x 125-136, y 11, so the bus is serviced
+  without taking plate 3 off.
+- **The ferrules leave outboard.** A 0.5 mm² ferrule is about 14 mm long and there are about 7.5 mm
+  of board in front of the terminal, so the ferrules stand past A's right edge before the wires bend
+  toward the rear. Check on the vehicle that no chassis pillar is beside plate x 125-136 there.
 - **Nothing on the bus unplugs at board A.** Taking the carrier, the FRDM or the fascia off means
   opening the clamps; the J7 and DE-9 plugs are the only disconnects.
 - **Both leads are short for the route.** The jumpers and the DE-9 tails are 20 cm, and MEC-18
