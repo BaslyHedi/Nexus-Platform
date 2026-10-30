@@ -30,6 +30,7 @@ Drawings: [wiring schematic](../hardware/renders/wiring-schematic.svg) · [STM32
 | **HW-20** | Three fuses - the logic branch runs on the main fuse |
 | **HW-21** | Servo PWM on PE9 (TIM1_CH1); the servo lead is black / red / white. *Updated by HW-22: PC2, TIM4_CH4* |
 | **HW-22** | The real-time MCU is a NUCLEO-H533RE: FDCAN2 on PB12/PB13, I2C1 on PB6/PB7, servo on PC2, 5 V into E5V |
+| **HW-23** | The three CAN leads meet in board A's screw terminal, two wires per clamp |
 
 ---
 
@@ -862,3 +863,50 @@ carrier uses, each checked against the DS14539 alternate function table and UM31
 **To confirm.**
 
 - **The 500 mA E5V limit.** The node draws well under it with no shield; measure on first power-up.
+
+---
+
+## HW-23 · The three CAN leads meet in board A's screw terminal, two wires per clamp
+
+**Decision (Hedi, 2026-10-30).** The bus has three cables: the FRDM's lead from J7 (Dupont F-F
+jumpers, 5.7), the DE-9 panel lead (BOM 4.5, pre-wired with female Dupont tails, about 20 cm) and
+board A's 3-way screw terminal (H, L, GND, MEC-15). They are joined **in that terminal**: the
+Dupont plug is cut off the board end of the FRDM and DE-9 leads, and each clamp takes **one wire
+from each**, both crimped into **one 0.5 mm² ferrule** (3.12). The J7 end and the DE-9 end keep
+their plugs.
+
+| Clamp on A | FRDM J7 | DE-9 |
+|---|---|---|
+| CAN H | pin 8 | pin 7 |
+| CAN L | pin 10 | pin 2 |
+| GND | pin 6 | pin 3 |
+
+**Why.** It is the simplest of the options and needs no new part or board. The topology stays as
+HW-09 and HW-18 want it: the joint is at the STM32 end, so the module's 120 Ω and JP1 are still the
+two ends, and the DE-9 becomes a stub of about 20 cm at the terminated end, which changes nothing at
+500 kbit/s.
+
+**Rejected.**
+
+- **A male pin header on board A** in parallel with the terminal, so both leads plug in unchanged.
+  Board A already uses all 18 columns.
+- **A small CAN hub at the rear**, by the cross-slot, with pin rows for J7, the DE-9 and a spare
+  node, and one twisted trunk forward to A. Shortest stubs and pluggable, but one more board to
+  place and fix.
+- **Lever connectors as an inline splice.** Bulky and loose, and the jumper wire is copper-coated
+  aluminium, which degrades in a clamp (BOM 5.7).
+- **Daisy-chaining through the DE-9's solder cups.** The panel lead comes pre-wired.
+
+**Consequences.**
+
+- **Nothing on the bus unplugs at board A.** Taking the carrier, the FRDM or the fascia off means
+  opening the clamps; the J7 and DE-9 plugs are the only disconnects.
+- **Both leads are short for the route.** The jumpers and the DE-9 tails are 20 cm, and MEC-18
+  estimated about 22 cm from J7 to A. **Lay both leads along their routes on the vehicle before
+  cutting anything.** If the FRDM lead does not reach, make it from the 2x5 connector (4.4) and a
+  longer twisted lead instead of extending the jumpers.
+- **Twist each lead's H and L**, and tape the J7 plugs down: the jumper crimps loosen with
+  vibration (BOM 5.7). Cover J7's unused pins (4.4).
+- **Check, unpowered, at board A:** CAN H to CAN L reads about 60 Ω with JP1 fitted and the PC
+  adapter's terminator off (HW-18).
+
