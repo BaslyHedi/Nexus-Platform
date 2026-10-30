@@ -6,6 +6,10 @@
 //   openscad -D 'PART="step2"'    -o ../renders/tray-step2-plate2.png  carrier-tray.scad   // 2: the tray placed on plate 2
 //
 // STATUS 2026-10-06: fit-reviewed for one print (MEC-17, "Fit review before ordering"). Print it (PETG, 4 mm); a hand-cut sheet is the fallback.  ORDERED 2026-10-06 (Craftcloud, BOM 3.28), not printed yet.
+// 2026-10-26: board B is now a 3x7 (MEC-15), at tray v 76.04-106.04. This file stays as ordered: B's outboard pair of holes takes the 3x7's
+// outboard corners, B's inboard pair stays empty, and one hole is drilled by hand at tray (178.54, 78.54) = plate 2 (187.04, 83.65) for B's
+// rear inboard corner. It is 2.5 mm from the tray's edge, where there is no corner pad, so no counterbore: a 2.1 mm hole and an 8 mm
+// male-female standoff screwed into it, its stud cut to 3.5 mm. B's front inboard corner takes no screw (MEC-17).
 //
 // TWO STEPS, TWO FRAMES
 //   STEP 1 - the tray frame (u, v). Origin at the tray's front-right corner, u toward the rear, v toward

@@ -32,7 +32,7 @@ The defining principle is the automotive split between **high-level compute** an
                       └───────┬───────┘
                               │ CAN
                       ┌───────┴───────┐
-                      │  STM32F407    │  real-time control · RTOS (Zephyr)
+                      │  STM32H533    │  real-time control · RTOS (Zephyr)
                       │  (MCU)        │  motor + steering loops · sensors · safety
                       └───────┬───────┘
                               ▼
@@ -46,7 +46,7 @@ The defining principle is the automotive split between **high-level compute** an
 | Role | Part | Responsibility |
 |---|---|---|
 | High-level compute | **NXP i.MX 91** | Embedded Linux, Yocto, application software, networking, security, OTA |
-| Real-time control | **STM32F407VGT6 Discovery** | motor and steering control loops, sensor acquisition, safety, CAN |
+| Real-time control | **STM32H533RET6 on a NUCLEO-H533RE** | motor and steering control loops, sensor acquisition, safety, CAN |
 | Future node | **Raspberry Pi 5** | ROS 2, vision/AI, second vehicle computer - *not* a Phase-1 dependency |
 
 ### Chassis and power
@@ -58,7 +58,7 @@ The defining principle is the automotive split between **high-level compute** an
 
 ### Network
 
-CAN is the link between compute and control. The STM32F407 has an **integrated CAN
+CAN is the link between compute and control. The STM32H533 has an **integrated FDCAN
 controller** and reaches the bus through an external **SN65HVD230**; the FRDM-IMX91S carries
 its own transceiver on board and presents CAN_H/CAN_L on its 2×5 connector. A **DE-9 debug
 port** on the rear fascia lets a PC join the bus as a third node.
@@ -70,7 +70,7 @@ port** on the rear fascia lets a PC join the bus as a third node.
 | 1 | **Ackermann**, not differential drive | closer to a real vehicle; better for control and AD learning |
 | 2 | Name is **NEXUS** | chosen over APEX |
 | 3 | **i.MX 91** as main computer, not the Pi 5 | automotive/embedded-oriented; better for Linux, security, production-style work |
-| 4 | **STM32F407** as the real-time MCU | already owned; integrated CAN; good Zephyr target |
+| 4 | **STM32H533 (NUCLEO-H533RE)** as the real-time MCU | replaced the STM32F407 Discovery, which failed on 2026-10-25; integrated FDCAN, TrustZone, dual-bank flash; good Zephyr target (HW-22) |
 | 5 | Pi 5 deferred to a later phase | keeps the initial platform from getting needlessly complex |
 | 6 | **3S 11.1 V** battery | comes with the Hiwonder setup |
 | 7 | Regulated 5 V via **DC-DC**, never direct battery | protects the compute boards |

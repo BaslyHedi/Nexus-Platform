@@ -12,7 +12,7 @@ models from it.
 ## What this is, and where it stands
 
 NEXUS is a learning platform: a 4-wheel Ackermann robot with an **NXP i.MX 91** (Embedded Linux, Yocto) for
-high-level compute and an **STM32F407** (real-time control) on a **CAN** bus between them. It is built to get
+high-level compute and an **STM32H533** (real-time control) on a **CAN** bus between them. It is built to get
 hands-on with the architecture of a modern vehicle, and the repository is written the way such a project would be:
 numbered decisions with their reasons and the options rejected, a bill of materials, a functional decomposition, and
 a phase plan with testable exit criteria.

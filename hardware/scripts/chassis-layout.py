@@ -318,21 +318,21 @@ def carrier_and_bauer():
     """Plate 2 top face: the carrier tray with boards A, B, C, the Bauer 50 W and the two splices (MEC-15, MEC-17)."""
     o = []
     w = o.append
-    w(comment('Carrier tray (MEC-17): boards A and B (P1, P2 sides), the Discovery above, board C = 5 V split, the Bauer and S6 / S7 all sit on it'))
+    w(comment('Carrier tray (MEC-17): boards A and B (CN10, CN7 sides), the NUCLEO-H533RE above, board C = 5 V split, the Bauer and S6 / S7 all sit on it'))
     w(outline(P2, TRAY, fill='#0f766e', fill_opacity=0.09, stroke='#0f766e', stroke_width=1.3, stroke_dasharray='6 3'))
     w(rect(P2, 117, 5.12, 70, 50, rx=3, fill='#ecfdf5', fill_opacity=0.92, stroke='#047857', stroke_width=1.6))
-    w(rect(P2, 119.53, 61, 70, 50, rx=3, fill='#ecfdf5', fill_opacity=0.92, stroke='#047857', stroke_width=1.6))
-    w(rect(P2, 124.06, 27.59, 60.94, 5.06, rx=1.5, fill='#99f6e4', stroke='#0f766e', stroke_width=0.8))
-    w(rect(P2, 124.06, 78.35, 60.94, 5.06, rx=1.5, fill='#fed7aa', stroke='#b45309', stroke_width=0.8))
-    w(rect(P2, 120.53, 22.53, 97, 66, rx=3, fill='#eef2ff', fill_opacity=0.55, stroke='#4338ca', stroke_width=1.3, stroke_dasharray='5 3'))
+    w(rect(P2, 119.53, 81.15, 70, 30, rx=3, fill='#ecfdf5', fill_opacity=0.92, stroke='#047857', stroke_width=1.6))
+    w(rect(P2, 124.05, 22.49, 48.26, 5.08, rx=1.5, fill='#99f6e4', stroke='#0f766e', stroke_width=0.8))
+    w(rect(P2, 124.05, 83.45, 48.26, 5.08, rx=1.5, fill='#fed7aa', stroke='#b45309', stroke_width=0.8))
+    w(rect(P2, 120.24, 20.51, 82.5, 70, rx=3, fill='#eef2ff', fill_opacity=0.55, stroke='#4338ca', stroke_width=1.3, stroke_dasharray='5 3'))
     w(rect(P2, 85.53, 25.18, 30, 70, rx=3, fill='#ecfdf5', fill_opacity=0.92, stroke='#047857', stroke_width=1.6))
-    w(text(P2, 120.53, 12, 'A · 5×7 · P1 side', font_size=7.5, fill='#047857', font_weight=700, text_anchor='start'))
-    w(text(P2, 120.53, 106, 'B · 5×7 · P2 side', font_size=7.5, fill='#047857', font_weight=700, text_anchor='start'))
-    w(text(P2, 166.53, 52, 'STM32F4DISCOVERY 66 × 97', font_size=8.2, fill='#4338ca', text_anchor='middle'))
-    w(text(P2, 166.53, 59.47, 'CN1 at the rear, x 217.5', font_size=7, fill='#4338ca', text_anchor='middle'))
+    w(text(P2, 120.53, 12, 'A · 5×7 · CN10 side', font_size=7.5, fill='#047857', font_weight=700, text_anchor='start'))
+    w(text(P2, 120.53, 106, 'B · 3×7 · CN7 side', font_size=7.5, fill='#047857', font_weight=700, text_anchor='start'))
+    w(text(P2, 161.49, 52, 'NUCLEO-H533RE 70 × 82.5', font_size=8.2, fill='#4338ca', text_anchor='middle'))
+    w(text(P2, 161.49, 59.47, 'CN1 at the rear, x 202.7', font_size=7, fill='#4338ca', text_anchor='middle'))
     w(text(P2, 100.47, 58, 'C', font_size=9, fill='#047857', font_weight=700, text_anchor='middle'))
     w(text(P2, 100.47, 64, '5 V split', font_size=6.5, fill='#047857', text_anchor='middle'))
-    w(text(PX, 342.2, 603.4, 'carrier 100.6 × 106: A·X.. at x 181.20, B and header row 1 at x 183.74 (as built) · 8 mm standoffs on the 4 mm tray, T1-T6 below (MEC-17)', font_size=7.8, fill='#047857', text_anchor='middle'))
+    w(text(PX, 342.2, 603.4, 'carrier 85.8 × 106: A·X.. at x 181.20, B·X.. at x 183.74, Nucleo row 1 at x 171.04 · 8 mm standoffs on the tray (MEC-17)', font_size=7.8, fill='#047857', text_anchor='middle'))
     for name, x, y in FIXINGS:
         w(screw_mark(P2, x, y, name))
     # the Bauer on the tray, with its leads edge on the vehicle's left
@@ -618,17 +618,18 @@ def stack_elevation():
     w(text(PX, xp(216.5), zy(148.2) - 4, 'FRDM on 6 mm standoffs', font_size=7.5, fill='#4338ca', text_anchor='middle'))
     w(text(PX, xp(122), zy(152.72) - 4, 'Pi 5 on 8 mm standoffs (later)', font_size=7.5, fill='#047857', text_anchor='middle'))
     w(text(PX, xp(14), Z3 + 13.5, 'fixing screws and washers, heads under plate 3', font_size=7, fill='#475569'))
-    # plate 2: the carrier tray (4 mm), boards A and B on 8 mm standoffs, C on 10 mm, the Discovery (top z 111), the Bauer, the rear pad
+    # plate 2: the carrier tray (4 mm), boards A and B on 8 mm standoffs, C on 10 mm, the Nucleo (top z 113.8), the Bauer, the rear pad
     w(bx(8.5, 191.6, 81.12, 85.12, fill='#ccfbf1', stroke='#0f766e', stroke_width=1))
     w(bx(11, 75, 85.12, 107.12, fill='#fecdd3', stroke='#be123c', stroke_width=1))
     w(bx(85.5, 115.5, 85.12, 95.12, fill='#fde68a', stroke='#a16207', stroke_width=0.6))
     w(bx(85.5, 115.5, 95.12, 96.72, fill='#bbf7d0', stroke='#047857', stroke_width=1))
     w(bx(117, 189.5, 85.12, 93.12, fill='#fde68a', stroke='#a16207', stroke_width=0.6))
     w(bx(117, 189.5, 93.12, 94.72, fill='#bbf7d0', stroke='#047857', stroke_width=1))
-    w(bx(120.5, 217.5, 97.0, 111.0, fill='#c7d2fe', stroke='#4338ca', stroke_width=1, stroke_dasharray='4 2', fill_opacity=0.7))
+    w(bx(120.24, 202.74, 95.2, 113.8, fill='#c7d2fe', stroke='#4338ca', stroke_width=1, stroke_dasharray='4 2', fill_opacity=0.7))
     w(bx(196, 251, 81.12, 85.12, fill='#ccfbf1', stroke='#0f766e', stroke_width=1))
     w(text(PX, xp(11), zy(107.12) - 4, 'Bauer 22 mm', font_size=7.5, fill='#be123c'))
-    w(text(PX, xp(100), zy(111) - 4, 'Discovery top z 111: 7.6 mm under the screw heads', font_size=7.5, fill='#4338ca'))
+    w(text(PX, xp(161.5), zy(113.8) + 11, 'Nucleo top z 113.8:', font_size=7.5, fill='#4338ca', text_anchor='middle'))
+    w(text(PX, xp(161.5), zy(113.8) + 21, '4.8 mm to the heads', font_size=7.5, fill='#4338ca', text_anchor='middle'))
     w(text(PX, xp(236), zy(85.12) - 4, 'rear pad', font_size=7.5, fill='#0f766e', text_anchor='middle'))
     w(text(PX, xp(8.5), zy(81.12) + 11, 'carrier tray (MEC-17)', font_size=7, fill='#0f766e'))
     return o

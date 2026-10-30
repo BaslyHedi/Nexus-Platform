@@ -2,7 +2,7 @@
 
 System element, level 1. Written to [../system/method.md](../../system/method.md) and [rules.md](../rules.md).
 
-- **Purpose and boundary.** The STM32F4DISCOVERY on its carrier boards with the CAN transceiver, and the software in its flash. Its elements, defined in [the node's local view](../../system/physical-architecture.md): Discovery board [01-01](../components/Nexus-Physical-01/Nexus-Physical-01-01.md), carrier [01-02](../components/Nexus-Physical-01/Nexus-Physical-01-02.md), transceiver module [01-03](../components/Nexus-Physical-01/Nexus-Physical-01-03.md), bootloader [01-04](../components/Nexus-Physical-01/Nexus-Physical-01-04.md), FBL-Updater [01-05](../components/Nexus-Physical-01/Nexus-Physical-01-05.md), application [01-06](../components/Nexus-Physical-01/Nexus-Physical-01-06.md).
+- **Purpose and boundary.** The NUCLEO-H533RE on its carrier boards with the CAN transceiver, and the software in its flash. Its elements, defined in [the node's local view](../../system/physical-architecture.md): MCU board [01-01](../components/Nexus-Physical-01/Nexus-Physical-01-01.md), carrier [01-02](../components/Nexus-Physical-01/Nexus-Physical-01-02.md), transceiver module [01-03](../components/Nexus-Physical-01/Nexus-Physical-01-03.md), bootloader [01-04](../components/Nexus-Physical-01/Nexus-Physical-01-04.md), FBL-Updater [01-05](../components/Nexus-Physical-01/Nexus-Physical-01-05.md), application [01-06](../components/Nexus-Physical-01/Nexus-Physical-01-06.md).
 - **Interfaces.** The bus [Nexus-Physical-04](Nexus-Physical-04.md); 5 V and the 6 V servo supply from [Nexus-Physical-05](Nexus-Physical-05.md); I2C and PWM to [Nexus-Physical-07](Nexus-Physical-07.md) and [Nexus-Physical-08](Nexus-Physical-08.md), prepared and not driven in Phase 1; SWD to the bench PC.
 - **Allocated functions.** See the [allocation](../../system/physical-architecture.md): 401 F1, 503 F4, 504 F1 to F3, and the prepared interfaces of 201 F1 and 202 F1.
 - **Modes.** Bootloader idle; bootloader receiving; FBL-Updater running; application running.
@@ -21,14 +21,14 @@ System element, level 1. Written to [../system/method.md](../../system/method.md
 
 ### Nexus-Physical-01-R002
 
-**Statement.** The node shall connect to the bus through an SN65HVD230 transceiver on CAN1, with PD0 as receive and PD1 as transmit.
+**Statement.** The node shall connect to the bus through an SN65HVD230 transceiver on FDCAN2, with PB12 as receive and PB13 as transmit.
 
 - Function: Nexus-Logical-401-F01
 - Derived-from: Nexus-Vehicle-R011
 - Allocated-to: Nexus-Physical-01-01, Nexus-Physical-01-02, Nexus-Physical-01-03, Nexus-Physical-01-04, Nexus-Physical-01-06
 - Phase: 1
 - Verification: Integration Nexus-Physical-01-01-R002, Nexus-Physical-01-02-R002, Nexus-Physical-01-02-R003, Nexus-Physical-01-02-R004, Nexus-Physical-01-03-R001, Nexus-Physical-01-04-R001, Nexus-Physical-01-06-R001
-- Decisions: HW-09
+- Decisions: HW-09, HW-22
 
 ### Nexus-Physical-01-R003
 
@@ -133,7 +133,7 @@ System element, level 1. Written to [../system/method.md](../../system/method.md
 
 ### Nexus-Physical-01-R013
 
-**Statement.** The four LEDs of the node shall show a distinct pattern for each of these states: bootloader idle, bootloader receiving, FBL-Updater running, application running.
+**Statement.** The user LED of the node shall show a distinct pattern for each of these states: bootloader idle, bootloader receiving, FBL-Updater running, application running.
 
 - Function: Nexus-Logical-503-F04
 - Derived-from: Nexus-Vehicle-R017
@@ -164,25 +164,25 @@ System element, level 1. Written to [../system/method.md](../../system/method.md
 
 ### Nexus-Physical-01-R016
 
-**Statement.** The node shall bring out I2C on PB10 and PB11 to the motor driver.
+**Statement.** The node shall bring out I2C on PB6 and PB7 to the motor driver.
 
 - Function: Nexus-Logical-201-F01
 - Derived-from: Nexus-Vehicle-R008
 - Allocated-to: Nexus-Physical-01-01, Nexus-Physical-01-02
 - Phase: 1
 - Verification: Integration Nexus-Physical-01-01-R006, Nexus-Physical-01-02-R005
-- Decisions: HW-10
+- Decisions: HW-10, HW-22
 
 ### Nexus-Physical-01-R017
 
-**Statement.** The node shall bring out the servo PWM on PE9 through a 1 kΩ series resistor.
+**Statement.** The node shall bring out the servo PWM on PC2 through a 1 kΩ series resistor.
 
 - Function: Nexus-Logical-202-F01
 - Derived-from: Nexus-Vehicle-R009
 - Allocated-to: Nexus-Physical-01-01, Nexus-Physical-01-02
 - Phase: 1
 - Verification: Integration Nexus-Physical-01-01-R007, Nexus-Physical-01-02-R006
-- Decisions: HW-19, HW-21
+- Decisions: HW-19, HW-21, HW-22
 
 ### Nexus-Physical-01-R018
 

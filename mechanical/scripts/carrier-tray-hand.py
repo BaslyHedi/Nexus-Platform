@@ -11,7 +11,7 @@ What the printed tray (carrier-tray.scad) has and this one does not, because the
     wires use, stay open because the tray's edges at y 31 and y 89 do not cover them);
   - the hex nut pockets: the four fixing holes are tapped M2.5 (or take a nut glued on top), the Bauer's two M3;
   - the Bauer's rim, the lettering, the splice outlines and the splice wings (S6 and S7 go back on plate 2's top face, beside the tray);
-  - the corner pads and the 6 mm counterbores: the 12 board holes are countersunk from below for flat-head M2.5 screws instead.
+  - the corner pads and the 6 mm counterbores: the 11 board holes are countersunk from below for flat-head M2.5 screws instead.
 The tray sits flat on plate 2. At 4 mm every height in MEC-17 is unchanged; at 3 mm the boards stand 11 mm above plate 2.
 
 Positions are plate 2's layout frame (x from the front, y from the vehicle's right), the same numbers as the printed tray; the table gives
@@ -26,7 +26,7 @@ OUT = sys.argv[1] if len(sys.argv) > 1 else os.path.join(HERE, "..", "renders", 
 # ---- the design (plate 2 layout frame, mm) --------------------------------------------------------------------------------------
 OUTLINE = [(9, 31), (83.5, 31), (83.5, 23.2), (115, 23.2), (115, 3.6), (191.5, 3.6),       # twelve straight cuts, all right angles
            (191.5, 113), (115, 113), (115, 97.2), (83.5, 97.2), (83.5, 89), (9, 89)]
-BOARDS = {"A": (117.00, 187.00, 5.11, 55.11), "B": (119.54, 189.54, 60.99, 110.99), "C": (85.50, 115.50, 25.20, 95.20)}
+BOARDS = {"A": (117.00, 187.00, 5.11, 55.11), "B": (119.54, 189.54, 81.15, 111.15), "C": (85.50, 115.50, 25.20, 95.20)}   # B a 3x7 since 2026-10-26
 CORNER_INSET = 2.5                                  # estimated, not measured (MEC-17)
 BAUER = (11.0, 75.0, 32.0, 89.0)                    # body 64 x 57; lies on the tray with its leads edge at y 89
 HOLE_BOARD, DRILL_M25, DRILL_M3, WINDOW_D = 3.4, 2.1, 2.5, 8.0
@@ -35,7 +35,8 @@ HOLES = []                                           # name, x, y, drill diamete
 for name, (x0, x1, y0, y1) in BOARDS.items():
     for k, (x, y) in enumerate([(x0 + CORNER_INSET, y0 + CORNER_INSET), (x1 - CORNER_INSET, y0 + CORNER_INSET),
                                 (x0 + CORNER_INSET, y1 - CORNER_INSET), (x1 - CORNER_INSET, y1 - CORNER_INSET)], 1):
-        HOLES.append((f"{name}{k}", x, y, HOLE_BOARD, f"board {name} standoff screw, countersink from below"))
+        if (name, k) != ("B", 1):                    # B's front inboard corner takes no screw: the CN7 socket ends 2 mm from it (MEC-17)
+            HOLES.append((f"{name}{k}", x, y, HOLE_BOARD, f"board {name} standoff screw, countersink from below"))
 HOLES += [("T1", 24.82, 60.24, DRILL_M25, "to plate 2, tap M2.5 (under the Bauer)"),
           ("T3", 99.24, 81.76, DRILL_M25, "to plate 2, tap M2.5 (under board C)"),
           ("T4", 120.06, 35.94, DRILL_M25, "to plate 2, tap M2.5 (under board A)"),
@@ -44,7 +45,7 @@ HOLES += [("T1", 24.82, 60.24, DRILL_M25, "to plate 2, tap M2.5 (under the Bauer
           ("E2", 70.0, 63.0, DRILL_M3, "Bauer, tap M3"),
           ("W1", 114.5, 60.0, WINDOW_D, "cable window beside C (6 V pair)"),
           ("W2", 127.0, 48.0, WINDOW_D, "cable window under board A (6 V pair, I2C lead)"),
-          ("W3", 127.0, 73.0, WINDOW_D, "cable window under board B")]
+          ("W3", 127.0, 73.0, WINDOW_D, "cable window beside board B")]
 
 X0, Y0 = min(p[0] for p in OUTLINE), min(p[1] for p in OUTLINE)          # the tray's top left corner on plate 2
 W = max(p[0] for p in OUTLINE) - X0

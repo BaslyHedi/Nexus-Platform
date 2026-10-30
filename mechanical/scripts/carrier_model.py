@@ -1,5 +1,5 @@
 """The finished STM32 carrier as Blender objects, static: boards A, B and C with every part and wire,
-and the Discovery mock. Shared by animate-carrier-tray.py; animate-stm32-carrier.py builds the same geometry step by step.
+and the NUCLEO-H533RE mock. Shared by animate-carrier-tray.py; animate-stm32-carrier.py builds the same geometry step by step.
 
 Everything is read from ../../hardware/scripts/stm32-carrier.py (`C` below), which owns every hole, part and wire.
 This module only gives them bodies. Nothing is hidden or animated here; the caller moves the returned roots.
@@ -7,7 +7,7 @@ This module only gives them bodies. Nothing is hidden or animated here; the call
 Frames. The carrier's own frame is the drawing's: X along the vehicle (row 1 at X 0), Y across, Z up from the
 board's TOP face, mm. Plate 2's layout frame is x front to rear, y from the vehicle's right. They meet at
 
-    A and B:  plate x = 183.74 + X,  plate y = 28.84 + Y     (row 1 at x 183.74, A's outboard edge at y 5.11)
+    A and B:  plate x = 183.74 + X,  plate y = 28.84 + Y     (grid row 1 at x 183.74, A's outboard edge at y 5.11)
     board C:  its own frame, rotated onto the waist: plate x = 85.5 + (y_l + 3.57), plate y = 25.2 + (x_l + 5.79)
 
 Blender is right-handed with Z up, and the layout's y runs the wrong way, so a point goes in as (x, -y, z).
@@ -44,7 +44,7 @@ for _n, _c in [('fr4', '#1f7a3a'), ('pad', '#c9ccd1'), ('hole', '#0b0f0d'), ('bl
                ('screw', '#9ca3af'), ('res', '#d8c28c'), ('band', '#7c2d12'), ('capsleeve', '#1e293b'),
                ('capstripe', '#94a3b8'), ('captop', '#cbd5e1'), ('module', '#1d4ed8'), ('chip', '#111111'),
                ('mterm', '#15803d'), ('jumper', '#dc2626'), ('mark', '#ef4444'), ('silk', '#f8fafc'),
-               ('disco', '#243b63'), ('usb', '#c0c4ca'), ('led_o', '#f97316'), ('led_g', '#22c55e'),
+               ('nucleo', '#f2f2ee'), ('usb', '#c0c4ca'), ('led_o', '#f97316'), ('led_g', '#22c55e'),
                ('led_r', '#ef4444'), ('led_b', '#3b82f6'), ('btn_b', '#2563eb'), ('bare', '#e5e7eb')]:
     mat(_n, _c)
 for _net, _c in C.NET.items():
@@ -122,7 +122,7 @@ class Mesh:
 
 def wire(name, pts, net, kind, parent, frame, colour=None, z=None):
     """An insulated run on the solder side, pad to pad."""
-    r = {'ins': 0.55, 'pwr': 0.9, 'lead': 0.3}[kind]
+    r = {'ins': 0.55, 'pwr': 0.9, 'lead': 0.3, 'bridge': 0.6}[kind]
     z = -1.6 - r if z is None else z
     cu = bpy.data.curves.new(name, 'CURVE')
     cu.dimensions, cu.bevel_depth, cu.bevel_resolution, cu.use_fill_caps = '3D', r, 3, True
@@ -229,31 +229,28 @@ def build_ab(parent, z):
     car = empty('carrier-ab', parent, (0, 0, z))
     for b in ('A', 'B'):
         cfg = C.BOARD[b]
-        perfboard('board-' + b, C.bx(b), cfg['edge'], [hole(b, c, r) for c in range(1, cfg['cols'] + 1) for r in range(1, cfg['rows'] + 1)], car, AB)
+        perfboard('board-' + b, C.bx(b), cfg['edge'], [hole(b, c, r) for c in range(cfg['c0'], cfg['cols'] + 1) for r in range(1, cfg['rows'] + 1)], car, AB)
     label('A', C.bx('A')[0] + 3.2, C.BOARD['A']['edge'][0] + 2.0, 0.06, 4, car, AB)
     label('B', C.bx('B')[0] + 3.2, C.BOARD['B']['edge'][1] - 5.0, 0.06, 4, car, AB)
     pins = []
-    for i, (b, col, lab) in enumerate(C.SOCKETS):             # the four 1x25 sockets, as built
+    for i, (b, col, lab) in enumerate(C.SOCKETS):             # the four 1x19 sockets under the Nucleo's morpho headers
         y = C.cy(b, C.ci(col))
         m = Mesh(AB)
-        m.box(C.RX(25) - 1.27, C.RX(1) + 1.27, y - 1.25, y + 1.25, 0, 8.5, 'black')
-        for r in range(1, 26):
-            m.box(C.RX(r) - 0.5, C.RX(r) + 0.5, y - 0.5, y + 0.5, 8.5, 8.52, 'hole')
-            if r not in C.SOCKET_NC[b]:
-                m.cyl((C.RX(r), y, 0), (C.RX(r), y, -2.6), 0.3, 'screw', 6)
-                pins.append((C.RX(r), y))
+        m.box(C.NX(C.NUC_ROWS) - 1.27, C.NX(1) + 1.27, y - 1.25, y + 1.25, 0, 8.5, 'black')
+        for k in range(1, C.NUC_ROWS + 1):
+            m.box(C.NX(k) - 0.5, C.NX(k) + 0.5, y - 0.5, y + 0.5, 8.5, 8.52, 'hole')
+            m.cyl((C.NX(k), y, 0), (C.NX(k), y, -2.6), 0.3, 'screw', 6)
+            pins.append((C.NX(k), y))
         m.make('socket-' + col + b, car)
     for b, ps, entry, name, colr in C.TERMS:
         xy = [hole(b, C.ci(c), r) for c, r, _ in ps]
         terminal('term-' + name, xy, len({r for _, r, _ in ps}) > 1, entry, car, AB)
         pins += xy
-    for b, ps, name in C.MALE:
+    for b, ps, name in C.MALE:                              # straight, or 90 degrees with the plug lying forward
         m = Mesh(AB)
-        for c, r, _ in ps:
-            x, y = hole(b, C.ci(c), r)
-            m.box(x - 1.27, x + 1.27, y - 1.27, y + 1.27, 0, 2.5, 'black')
-            m.box(x - 0.32, x + 0.32, y - 0.32, y + 0.32, -3.0, 8.5, 'gold')
-            pins.append((x, y))
+        for bx_ in C.header_boxes(b, ps, name):
+            m.box(*bx_)
+        pins += [hole(b, C.ci(c), r) for c, r, _ in ps]
         m.make('header-' + name, car)
     for b, a, c_, lab in C.RES:
         resistor('res-' + lab, hole(b, C.ci(a[0]), a[1]), hole(b, C.ci(c_[0]), c_[1]), car, AB)
@@ -273,25 +270,23 @@ def build_ab(parent, z):
     m = Mesh(AB)
     m.box(X0, X1, Y0, Y1, ZB, ZB + 1.6, 'module')
     m.box(X0, X0 + 2.5, Y0 + 0.3, Y1 - 0.3, ZB - 2.5, ZB, 'black')
-    for x, y in [hole('B', C.ci(c), r) for c, r, _ in C.XCVR_SOCKET[1]]:
+    for x, y in [hole(C.XCVR_SOCKET[0], C.ci(c), r) for c, r, _ in C.XCVR_SOCKET[1]]:
         m.box(x - 0.32, x + 0.32, y - 0.32, y + 0.32, 3.0, ZB, 'gold')
     mid, yc = (X0 + X1) / 2, (Y0 + Y1) / 2
     m.box(mid - 4.5, mid - 0.5, yc - 2.5, yc + 2.5, ZB - 1.5, ZB, 'chip')
     m.box(X1 - C.MODULE['terminal'], X1, Y0 + 0.4, Y1 - 0.4, ZB - 9.5, ZB, 'mterm')
-    for x, y in [hole('B', C.ci(c), r) for c, r, _ in C.CAN_SOCKET[1]]:
+    for x, y in [hole(C.CAN_SOCKET[0], C.ci(c), r) for c, r, _ in C.CAN_SOCKET[1]]:
         m.box(x - 1.27, x + 1.27, y - 1.27, y + 1.27, ZB - 2.5, ZB, 'black')
         m.box(x - 0.32, x + 0.32, y - 0.32, y + 0.32, 3.0, ZB, 'gold')
     m.make('module-sn65hvd230', car)
-    x, y = hole('B', C.ci('m'), 22)
-    m = Mesh(AB)
-    m.box(C.RX(23) - 1.3, C.RX(22) + 1.3, y - 1.3, y + 1.3, 2.6, 8.8, 'jumper')
-    m.make('term-jumper', car)
     for net_i, (n, b, ps, kind) in enumerate(C.WIRES):         # the solder side, pad to pad
         xy = [hole(b, c, r) for c, r in ps]
         wire(f'wire-{b}-{n}-{net_i}', xy, n, kind, car, AB)
     for net_i, (n, ps, kind) in enumerate(C.XWIRES):
         xy = [hole(b, c, r) for b, c, r in ps]
         wire(f'bridge-{n}', xy, n, kind, car, AB)
+    for k, (b, run) in enumerate(C.SOLDER):                    # solder bridges, each pin to the free hole its wire lands on
+        wire(f'solder-{b}-{k}', [hole(b, c, r) for c, r in run], 'GND', 'bridge', car, AB, colour='#cbd5e1', z=-1.9)
     joints('joints-ab', pins, car, AB)
     return car
 
@@ -349,38 +344,24 @@ def build_c(parent, z):
     return cr
 
 
-def build_discovery(parent, z):
-    """The STM32F4DISCOVERY mock, seated on A's and B's sockets. Outline and headers are UM1472 Fig. 10; the rest is by eye."""
-    dx0, dx1 = C.DISCO['x']
-    dy0, dy1 = C.DISCO['y']
+def build_nucleo(parent, z):
+    """The NUCLEO-H533RE mock, seated on A's and B's sockets. Outline and morpho headers are UM3121 Fig. 7; the parts in C.NUC_MOCK
+    are read off the same figure, for recognition and clearance only."""
+    nx0, nx1 = C.NUC['x']
+    ny0, ny1 = C.NUC['y']
     Z0 = 9.0
     Z1 = Z0 + 1.6
     d = Mesh(AB)
-    d.box(dx0, dx1, dy0, dy1, Z0, Z1, 'disco')
-    for b, cols in (('A', ('i', 'j')), ('B', ('g', 'h'))):
+    d.box(nx0, nx1, ny0, ny1, Z0, Z1, 'nucleo')
+    for b, cols in (('A', ('g', 'h')), ('B', ('i', 'j'))):
         ya, yb = C.cy(b, C.ci(cols[0])), C.cy(b, C.ci(cols[1]))
-        d.box(C.RX(25) - 1.27, C.RX(1) + 1.27, min(ya, yb) - 1.27, max(ya, yb) + 1.27, Z1, Z1 + 2.5, 'black')
-        for r in range(1, 26):
+        d.box(C.NX(C.NUC_ROWS) - 1.27, C.NX(1) + 1.27, min(ya, yb) - 1.27, max(ya, yb) + 1.27, Z1, Z1 + 2.5, 'black')
+        for k in range(1, C.NUC_ROWS + 1):
             for y in (ya, yb):
-                d.box(C.RX(r) - 0.32, C.RX(r) + 0.32, y - 0.32, y + 0.32, 3.0, Z1 + 6.0, 'gold')
-    cyc = (dy0 + dy1) / 2
-    d.box(-37, -23, cyc - 7, cyc + 7, Z1, Z1 + 1.4, 'chip')
-    d.box(-38, -22, cyc - 8, cyc + 8, Z1, Z1 + 0.3, 'screw')
-    d.box(12, 19, cyc - 3.5, cyc + 3.5, Z1, Z1 + 1.4, 'chip')
-    d.box(dx1 - 7, dx1 + 1, cyc - 3.9, cyc + 3.9, Z1, Z1 + 4, 'usb')
-    d.box(dx0 - 1, dx0 + 5, cyc + 4, cyc + 11.5, Z1, Z1 + 2.6, 'usb')
-    d.cyl((dx0 - 1, 8, Z1 + 2.6), (dx0 + 12, 8, Z1 + 2.6), 3.0, 'black', 16)
-    d.box(-56, -51, 17, 22, Z1, Z1 + 1.0, 'chip')
-    for (ox, oy), mm in (((0, 5.5), 'led_o'), ((-5.5, 0), 'led_g'), ((0, -5.5), 'led_r'), ((5.5, 0), 'led_b')):
-        d.box(-45 + ox - 0.8, -45 + ox + 0.8, cyc + oy - 0.5, cyc + oy + 0.5, Z1, Z1 + 0.6, mm)
-    for yb_, cap in ((44.0, 'btn_b'), (10.0, 'black')):
-        d.box(-54, -48, yb_ - 3, yb_ + 3, Z1, Z1 + 3.4, 'usb')
-        d.cyl((-51, yb_, Z1 + 3.4), (-51, yb_, Z1 + 4.8), 1.8, cap, 16)
-    for i in range(6):
-        d.box(26 - 1.27, 26 + 1.27, 6 + i * P - 1.27, 6 + i * P + 1.27, Z1, Z1 + 2.5, 'black')
-    for jy in (40.0, 45.0):
-        d.box(3, 8.1, jy - 1.3, jy + 1.3, Z1, Z1 + 5.5, 'black')
-    o = d.make('discovery', parent)
+                d.box(C.NX(k) - 0.32, C.NX(k) + 0.32, y - 0.32, y + 0.32, 3.0, Z1 + 3.0, 'gold')
+    for side, x0, x1, y0, y1, h, m, _ in C.NUC_MOCK:
+        d.box(x0, x1, y0, y1, Z1, Z1 + h, m) if side == 'top' else d.box(x0, x1, y0, y1, Z0 - h, Z0, m)
+    o = d.make('nucleo', parent)
     o.location = (0, 0, z)
-    label('STM32F4DISCOVERY', -27, 42.0, Z1 + 0.05, 3.2, o, AB)
+    label('NUCLEO-H533RE', -27, 42.0, Z1 + 0.05, 3.2, o, AB, m='chip')
     return o

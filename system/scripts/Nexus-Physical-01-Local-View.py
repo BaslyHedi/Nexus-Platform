@@ -84,11 +84,11 @@ def build():
     o += neighbour(1440, 560, 170, 70, 'Rear drive', 'Nexus-Physical-07')
     o += neighbour(1440, 650, 170, 70, 'Steering actuator', 'Nexus-Physical-08')
 
-    o += element('Nexus-Physical-01-01', 'Discovery board', 1, 600, 140, 740, 115, [
-        'STM32F4DISCOVERY, board MB997B (1.2)', 'STM32F407: CAN1 on PD0 / PD1', 'I2C2 on PB10 / PB11, TIM1 channel 1 on PE9'], [
-        'Four user LEDs', 'ST-LINK V2, SWD over USB', 'Runs from 5 V on header P2'])
+    o += element('Nexus-Physical-01-01', 'MCU board', 1, 600, 140, 740, 115, [
+        'NUCLEO-H533RE, board MB1814 (1.2)', 'STM32H533: FDCAN2 on PB12 / PB13', 'I2C1 on PB6 / PB7, TIM4 channel 4 on PC2'], [
+        'User LED LD2', 'STLINK-V3EC, SWD over USB-C', 'Runs from 5 V on E5V, CN7-6'])
 
-    group(o, 600, 360, 740, 185, 'SOFTWARE ELEMENTS · IN THE FLASH OF THE STM32F407', NODE)
+    group(o, 600, 360, 740, 185, 'SOFTWARE ELEMENTS · IN THE FLASH OF THE STM32H533', NODE)
     ink, fill = system_colour(NODE)
     o += [f'<rect x="610" y="370" width="220" height="16" rx="2" fill="{fill}"/>',
           f'<text x="720" y="381.5" font-size="8.5" font-weight="700" fill="{ink}" text-anchor="middle">BOOTLOADER REGION</text>',
@@ -104,9 +104,9 @@ def build():
     o += element('Nexus-Physical-01-03', 'CAN transceiver module', 1, 260, 420, 280, 125, [
         'SN65HVD230 (4.1)', '3.3 V logic side', "Own 120 Ω: this end's termination"])
     o += element('Nexus-Physical-01-02', 'Carrier boards A and B', 1, 260, 580, 1100, 135, [
-        'Kit boards A and B (5.11), drawn in stm32-carrier', '5 V into header P2, pins 3 and 4', 'PD0, PD1 to the transceiver; R3 jumper open',
-        'PB10, PB11 to the motor driver header'], [
-        'PE9 through R4, 1 kΩ, to the servo header', '6 V from the UBEC to the servo header', 'C2, 470 µF, across the servo header'])
+        'Kit boards A and B (5.11), drawn in stm32-carrier', '5 V into E5V, CN7 pin 6', 'PB12, PB13 to the transceiver; no termination',
+        'PB6, PB7 to the motor driver header'], [
+        'PC2 through R4, 1 kΩ, to the servo header', '6 V from the UBEC to the servo header', 'C2, 470 µF, across the servo header'])
 
     FL = flow
     o += FL('M200,200 L598,200', 'i', start=True, size=8, labels=[(400, 192, 'SWD, ST-LINK USB at the fascia')])

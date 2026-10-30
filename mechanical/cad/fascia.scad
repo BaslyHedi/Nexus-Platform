@@ -132,7 +132,7 @@ UC_S    = 15.0;   // screw centres - drawing, and the face-on photo agrees
 UC_SD   =  2.9;   // M2.5 clearance. 1.25 mm of skin is left between each hole and the slot
 UC_HD   =  4.0;   // screw head diameter - tape-measured; sets the 11 mm grip limit
 
-// Mini-B panel-mount extension, JSER type, 50 cm -> Discovery CN1 (ST-LINK).
+// Mini-B panel-mount extension, JSER type, 50 cm -> the 90-degree USB-C cable (BOM 5.12) -> the Nucleo's CN1 (ST-LINK).
 // Horizontal, like the others. Its screws are ~28.5 apart, so the heads sit
 // ~11.7 from centre, far outside any plug grip - it keeps its own screws, driven
 // from outside through a 1.5 mm skin into the threaded ears (~3.5 mm of thread).

@@ -12,9 +12,11 @@
 //   - the carrier tray: its rear corner pads end at x 191.6, 4.4 mm ahead;
 //   - the chassis standoffs at (256.82, 22.17 and 98.36), 6 mm hexagons: 2.3 mm to the nearest corner;
 //   - the cross-slot (x 260.3-265.7) and the fascia pads and clamp holes (x 262.9), which the J7 CAN lead and the fascia harness use;
-//   - the Discovery, which overhangs the carrier tray to x 217.5 at z 95 and above: the pad is 4 mm tall, so nothing meets it.
-// THE J7 CAN LEAD crosses the pad. It comes down plate 3's cross-slot at about y 74 and runs forward to board B (y 92 at x 190), a diagonal
-// over the pad's top: it lies on it like any other wire. Keep its lane (about y 70-96) free of drilled parts, or tie the lead down.
+//   - the NUCLEO-H533RE (rear edge at x 202.7) and its CN1 cable at about z 106, far above the pad: the pad is 4 mm tall, so nothing meets it.
+//     (Written for the Discovery, which overhung to x 217.5 at z 95; the swap only moved the board away, HW-22.)
+// THE J7 CAN LEAD crosses the pad. It comes down plate 3's cross-slot at about y 74 and runs to plate 2's right edge behind the Nucleo, then
+// forward to board A's CAN terminal (x 125-135; MEC-18, updated 2026-10-27, it went to board B before). A diagonal over the pad's top: it
+// lies on it like any other wire. Keep its lane (from about y 74 at the slot to the right edge) free of drilled parts, or tie the lead down.
 // The harness to the fascia's ports (MEC-12) lies over the pad the same way. The pad's top is flat, with no windows, so the plate's three long
 // slots here (x 203.5, 219.5, 235.5, y 26-94) are covered: nothing in the BOM passes through them.
 // SIX FIXINGS, from below into a nut held in a pocket on top, each on an opening plate 2 already has: two places along the long slot at

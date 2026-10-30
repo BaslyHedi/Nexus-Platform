@@ -112,7 +112,7 @@ All 42 apply. Where NEXUS sharpens one, the note says how.
 
 ## 5. Components
 
-1. **The subject is the element** (R3): "The Discovery board", "The carrier", "The bootloader", "The Linux image".
+1. **The subject is the element** (R3): "The MCU board", "The carrier", "The bootloader", "The Linux image".
 2. **Elements, never repositories** (C2): a statement names the element, not the repository or the build target that
    implements it. Which repository implements which software element is the configuration table of the enabling system.
 3. **A bought hardware element** states what the node relies on from the part: a pin left free, a supply it accepts, a

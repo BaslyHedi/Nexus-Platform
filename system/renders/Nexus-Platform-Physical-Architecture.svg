@@ -106,17 +106,17 @@
 <rect x="618" y="457" width="42" height="14" rx="7" fill="#dcfce7" stroke="#15803d" stroke-width="0.8"/>
 <text x="639.0" y="467.5" font-size="8.5" font-weight="700" text-anchor="middle" fill="#15803d">PHASE 1</text>
 <circle cx="266.0" cy="508.5" r="1.8" fill="#4338ca"/>
-<text x="273.0" y="512" font-size="10.5" fill="#374151">STM32F4DISCOVERY, MB997B (1.2)</text>
+<text x="273.0" y="512" font-size="10.5" fill="#374151">NUCLEO-H533RE, MB1814 (1.2)</text>
 <circle cx="266.0" cy="524.5" r="1.8" fill="#4338ca"/>
 <text x="273.0" y="528" font-size="10.5" fill="#374151">Carrier boards A and B (5.11)</text>
 <circle cx="266.0" cy="540.5" r="1.8" fill="#4338ca"/>
 <text x="273.0" y="544" font-size="10.5" fill="#374151">SN65HVD230 CAN transceiver (4.1)</text>
 <circle cx="266.0" cy="556.5" r="1.8" fill="#4338ca"/>
-<text x="273.0" y="560" font-size="10.5" fill="#374151">Four user LEDs</text>
+<text x="273.0" y="560" font-size="10.5" fill="#374151">User LED LD2</text>
 <circle cx="266.0" cy="572.5" r="1.8" fill="#4338ca"/>
-<text x="273.0" y="576" font-size="10.5" fill="#374151">ST-LINK/V2 on board, SWD</text>
+<text x="273.0" y="576" font-size="10.5" fill="#374151">STLINK-V3EC on board, SWD</text>
 <circle cx="266.0" cy="588.5" r="1.8" fill="#4338ca"/>
-<text x="273.0" y="592" font-size="10.5" fill="#374151">I²C PB10 / PB11 · servo PWM PE9</text>
+<text x="273.0" y="592" font-size="10.5" fill="#374151">I²C PB6 / PB7 · servo PWM PC2</text>
 </g>
 <g id="Nexus-Physical-08">
 <rect x="1120" y="450" width="240" height="95" rx="4" fill="#ffffff" stroke="#9f1239" stroke-width="1.6"/>
@@ -196,7 +196,7 @@
 <path d="M420,280 L420,328" fill="none" stroke="#374151" stroke-width="1.4" marker-start="url(#mis)" marker-end="url(#mi)"/>
 <text x="426" y="310" font-size="8" fill="#374151" text-anchor="start">CAN · J7</text>
 <path d="M420,402 L420,448" fill="none" stroke="#374151" stroke-width="1.4" marker-start="url(#mis)" marker-end="url(#mi)"/>
-<text x="426" y="430" font-size="8" fill="#374151" text-anchor="start">CAN1 PD0 / PD1</text>
+<text x="426" y="430" font-size="8" fill="#374151" text-anchor="start">FDCAN2 PB12 / PB13</text>
 <path d="M865,280 L865,328" fill="none" stroke="#374151" stroke-width="1.4" stroke-dasharray="7 4" marker-start="url(#mis)" marker-end="url(#mi)"/>
 <text x="871" y="310" font-size="8" fill="#374151" text-anchor="start">CAN (later)</text>
 <path d="M200,365 L248,365" fill="none" stroke="#374151" stroke-width="1.4" marker-start="url(#mis)" marker-end="url(#mi)"/>
@@ -204,9 +204,9 @@
 <path d="M600,700 L600,652" fill="none" stroke="#374151" stroke-width="1.4" marker-end="url(#mi)"/>
 <text x="606" y="682" font-size="8" fill="#374151" text-anchor="start">I²C: pack V, I</text>
 <path d="M672,497 L1118,497" fill="none" stroke="#1d4ed8" stroke-width="1.8" marker-end="url(#mc)"/>
-<text x="895" y="489" font-size="8" fill="#1d4ed8" text-anchor="middle">servo lead: 6 V + PWM PE9 (via R4)</text>
+<text x="895" y="489" font-size="8" fill="#1d4ed8" text-anchor="middle">servo lead: 6 V + PWM PC2 (via R4)</text>
 <path d="M672,605 L1118,605" fill="none" stroke="#1d4ed8" stroke-width="1.8" marker-start="url(#mcs)" marker-end="url(#mc)"/>
-<text x="895" y="597" font-size="8" fill="#1d4ed8" text-anchor="middle">I²C PB10 / PB11: speed, encoders</text>
+<text x="895" y="597" font-size="8" fill="#1d4ed8" text-anchor="middle">I²C PB6 / PB7: speed, encoders</text>
 <path d="M1118,200 L1032,200" fill="none" stroke="#374151" stroke-width="1.4" marker-end="url(#mi)"/>
 <text x="1075" y="192" font-size="8" fill="#374151" text-anchor="middle">images, ranges</text>
 <path d="M200,320 L225,320 L225,250 L248,250" fill="none" stroke="#374151" stroke-width="1.4" marker-start="url(#mis)" marker-end="url(#mi)"/>

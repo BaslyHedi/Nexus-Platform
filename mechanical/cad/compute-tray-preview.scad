@@ -86,7 +86,7 @@ module routes() {
     dot([232, 122], "blue");                                 // goes down outside the plate edge, then forward to the fascia USB-C's body end
     j7 = frdm_at(67, 4.5);
     cable([j7, [262.5, j7[1]]], 2.4, "green");
-    dot([262.5, j7[1]], "green");                            // goes down plate 3's rear cross-slot, then forward to board B's transceiver
+    dot([262.5, j7[1]], "green");                            // goes down plate 3's rear cross-slot, then to board A's CAN terminal (MEC-18)
 }
 real() {
     plate3(); chassis_bits(); tray(); frdm(); pi();
@@ -98,6 +98,6 @@ real() {
         lab([4, 60], "NOSE", 3, "black");
         lab([167, 60], "plug gap", 3.2, "black"); lab([167, 55], "(cables)", 2.6, "black");
         routes();
-        lab([132, 6], "J1 power: down to board C (plate 2)", 3, "red"); lab([210, 128], "J11 console: down, to the fascia USB-C", 3, "blue"); lab([245, 62], "J7 CAN: down the cross-slot, to board B", 2.6, "darkgreen");
+        lab([132, 6], "J1 power: down to board C (plate 2)", 3, "red"); lab([210, 128], "J11 console: down, to the fascia USB-C", 3, "blue"); lab([245, 62], "J7 CAN: down the cross-slot, to board A", 2.6, "darkgreen");
     }
 }

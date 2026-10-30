@@ -40,7 +40,7 @@ components/Nexus-Physical-02/     the components of the FRDM node
 | System | [Nexus-Vehicle](system/Nexus-Vehicle.md) | The system requirements, black box: they name the vehicle and its actors, never an element |
 | System | [Nexus-Enabling](system/Nexus-Enabling.md) | The **enabling system** (ISO/IEC/IEEE 15288): repositories, CI, release tags, the `kas` build, the bench PC. Not part of the vehicle, so not derived from it |
 | Subsystem | [Nexus-Physical-01](subsystems/Nexus-Physical-01.md) STM32 node, [02](subsystems/Nexus-Physical-02.md) FRDM node, [04](subsystems/Nexus-Physical-04.md) CAN bus, [05](subsystems/Nexus-Physical-05.md) power, [06](subsystems/Nexus-Physical-06.md) chassis, [07](subsystems/Nexus-Physical-07.md) rear drive, [08](subsystems/Nexus-Physical-08.md) steering | The system elements of the [physical view](../system/physical-architecture.md) that exist in Phase 1. 03 (Pi 5) and 09 (sensors) start in Phase 4 |
-| Component | [01-01](components/Nexus-Physical-01/Nexus-Physical-01-01.md) Discovery board, [01-02](components/Nexus-Physical-01/Nexus-Physical-01-02.md) carrier boards, [01-03](components/Nexus-Physical-01/Nexus-Physical-01-03.md) transceiver module, [01-04](components/Nexus-Physical-01/Nexus-Physical-01-04.md) bootloader, [01-05](components/Nexus-Physical-01/Nexus-Physical-01-05.md) FBL-Updater, [01-06](components/Nexus-Physical-01/Nexus-Physical-01-06.md) application | The elements of the STM32 node, hardware and software |
+| Component | [01-01](components/Nexus-Physical-01/Nexus-Physical-01-01.md) MCU board, [01-02](components/Nexus-Physical-01/Nexus-Physical-01-02.md) carrier boards, [01-03](components/Nexus-Physical-01/Nexus-Physical-01-03.md) transceiver module, [01-04](components/Nexus-Physical-01/Nexus-Physical-01-04.md) bootloader, [01-05](components/Nexus-Physical-01/Nexus-Physical-01-05.md) FBL-Updater, [01-06](components/Nexus-Physical-01/Nexus-Physical-01-06.md) application | The elements of the STM32 node, hardware and software |
 | Component | [02-01](components/Nexus-Physical-02/Nexus-Physical-02-01.md) FRDM board, [02-02](components/Nexus-Physical-02/Nexus-Physical-02-02.md) SD card, [02-03](components/Nexus-Physical-02/Nexus-Physical-02-03.md) Linux image, [02-04](components/Nexus-Physical-02/Nexus-Physical-02-04.md) heartbeat program, [02-05](components/Nexus-Physical-02/Nexus-Physical-02-05.md) flashing client, [02-06](components/Nexus-Physical-02/Nexus-Physical-02-06.md) test applications | The elements of the FRDM node, hardware and software |
 
 **Element IDs are hierarchical**: `Nexus-Physical-01-04` is element 04 of `Nexus-Physical-01`. The local view of each node,
@@ -102,7 +102,7 @@ These are the FBL entry rules and the valid-app rule that [phases.md](../system/
 
 **2. Values cited but not yet fixed**, each waiting for its decision:
 - heartbeat rate, Cyphal node IDs, subjects and services: the CAN matrix (deliverable 1.2), checked against the Cyphal specification (SW-01 "to confirm");
-- the memory map and the four LED patterns: the bootloader and application repositories;
+- the memory map and the LED patterns: the bootloader and application repositories;
 - flashing-client language, CI service, repository template, how a consumer pins a tag: `SW-nn` entries;
 - the repository names of the heartbeat program and the test applications.
 
@@ -110,7 +110,8 @@ These are the FBL entry rules and the valid-app rule that [phases.md](../system/
 - `Nexus-Vehicle-R010`: the Encoder Motor Module does not drive at power-up (HW-17, not measured);
 - `Nexus-Physical-02-01-R006`: the FRDM boot switch SW1 is set to 0011;
 - `Nexus-Physical-02-01-R005`: the UART console is on USB-C J11 (from the BOM; the schematic shows a CH342 debug UART, the connector not confirmed);
-- `Nexus-Physical-01-01-R003`: the F407 sector layout lets the bootloader sectors be erased separately (reference manual not checked).
+- `Nexus-Physical-01-01-R003`: **confirmed 2026-10-27** that the STM32H533's flash is two banks of 8 KB sectors, each erased on its own (RM0481 Rev 5); the memory map to check it against waits for the SW-04 rework;
+- `Nexus-Physical-01-01-R007`: **confirmed 2026-10-27** that PC2 is free on the board: on the MB1814 schematic it reaches only the MCU pin and CN7-35 (HW-22).
 
 **4. Verification.** Only the harness checks have run; each `Test` waits for its bench test, and there is no field yet for a
 result or its evidence (method question 5).

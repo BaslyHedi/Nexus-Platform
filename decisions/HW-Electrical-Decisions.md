@@ -16,8 +16,8 @@ Drawings: [wiring schematic](../hardware/renders/wiring-schematic.svg) · [STM32
 | **HW-06** | Single star ground at the fuse block negative bus |
 | **HW-07** | High-side current sensing, INA226 with a 2 mΩ shunt |
 | **HW-08** | Neither switch carries full pack current |
-| **HW-09** | CAN - transceiver on the STM32 side only |
-| **HW-10** | I²C on PB10/PB11 |
+| **HW-09** | CAN - transceiver on the STM32 side only. *Updated by HW-22: FDCAN2 on PB12/PB13* |
+| **HW-10** | I²C on PB10/PB11. *Updated by HW-22: I2C1 on PB6/PB7* |
 | **HW-11** | The steering servo never touches a 5 V rail |
 | **HW-12** | Direct switching now; the relay is deferred, not rejected |
 | **HW-13** | The 22 AWG battery lead sets the current ceiling - fuse plan rescaled |
@@ -28,7 +28,9 @@ Drawings: [wiring schematic](../hardware/renders/wiring-schematic.svg) · [STM32
 | **HW-18** | CAN debug port - DE-9 on the fascia, PC as an unterminated third node |
 | **HW-19** | The 5 V split, its bulk capacitor and the USB-C Rp move onto a board; CAN termination is a jumper. *Rp dropped 2026-10-07* |
 | **HW-20** | Three fuses - the logic branch runs on the main fuse |
-| **HW-21** | Servo PWM on PE9 (TIM1_CH1); the servo lead is black / red / white |
+| **HW-21** | Servo PWM on PE9 (TIM1_CH1); the servo lead is black / red / white. *Updated by HW-22: PC2, TIM4_CH4* |
+| **HW-22** | The real-time MCU is a NUCLEO-H533RE: FDCAN2 on PB12/PB13, I2C1 on PB6/PB7, servo on PC2, 5 V into E5V |
+| **HW-23** | The three CAN leads meet in board A's screw terminal, two wires per clamp |
 
 ---
 
@@ -222,6 +224,8 @@ the 20 A main fuse, which is precisely its job (HW-03).
 
 ## HW-09 · CAN - transceiver on the STM32 side only
 
+**Updated by HW-22:** the MCU is now an STM32H533 on a NUCLEO-H533RE, and the transceiver is on **FDCAN2, PB12 (RX) / PB13 (TX), AF9**. PD0/PD1 and the F407 reasoning below are history. The termination is unchanged.
+
 **Updated by HW-19:** the STM32 end's 120 Ω is on the carrier behind a jumper, and the module's own resistor comes off.
 
 *Formerly HD-10.*
@@ -239,6 +243,8 @@ off this bus as an **unterminated stub** - it does not change these two ends.
 ---
 
 ## HW-10 · I²C on PB10/PB11
+
+**Updated by HW-22:** on the NUCLEO-H533RE the bus is **I2C1, PB6 (SCL) / PB7 (SDA), AF4**. The microphone caveat below was the Discovery's and no longer applies.
 
 *Formerly HD-11.*
 
@@ -500,6 +506,8 @@ every return ─ (−) bar ─ battery −
 
 ## HW-17 · One 5 V converter, not two
 
+**Updated by HW-22:** the STM32 branch now ends on the NUCLEO-H533RE's **E5V (CN7-6)**, not the Discovery's P2 5 V pin; E5V allows 500 mA.
+
 **Updated by HW-19:** the split is board C, not a WAGO 3-port.
 
 *Formerly HD-20.*
@@ -588,6 +596,8 @@ about 10 ns, four orders of magnitude below anything that matters.
 ---
 
 ## HW-19 · The 5 V split, its bulk capacitor and the USB-C Rp move onto a board; CAN termination is a jumper
+
+**Updated by HW-22:** on the NUCLEO-H533RE carrier the 5 V goes into E5V (CN7-6), R4 sits in **PC2**'s line instead of PE9's, and R3 with its TERM jumper is not fitted: the transceiver module's own 120 Ω terminates this end (HW-09). Board C is unchanged.
 
 **Revised 2026-09-29: the USB-C socket itself sits on board C.** The FRDM PWR and FRDM CC
 terminals are gone. The KUOQIY socket (BOM 5.1) is zip-tied flat at C's row-1 end, opening out, and
@@ -725,6 +735,8 @@ battery + ─ 7.5 A ─ shunt ─ (+) bus ─┬─ SW1 ─┬─ 5 A ─ Encode
 
 ## HW-21 · Servo PWM on PE9 (TIM1_CH1); the servo lead is black / red / white
 
+**Updated by HW-22:** the servo signal now comes from **PC2 on CN7-35, TIM4_CH4 (AF2)**, on carrier board B. The lead colours, R4 and the miswiring cases below still hold, with PC2 in place of PE9; the TIM1 timing and MOE notes were the F407's.
+
 **Decision (2026-10-03).** The steering servo's signal comes from **PE9, P1-27**, as
 **TIM1_CH1** (alternate function AF1), through R4 (1 kΩ, HW-19) to the SERVO header on carrier
 board A. The LD-1501MG's lead, checked on the part in hand, is **black = GND, red = +6 V,
@@ -769,4 +781,145 @@ so the plug can go on reversed or one pin off.
   ignores the pulse, the fix is a single-transistor or 74AHCT buffer to 5 V, not a different pin.
 - **R4 against the servo's input.** 1 kΩ in series with a servo input of tens of kΩ costs
   nothing at 50 Hz. Check the edge on a scope once, at the header.
+
+---
+
+## HW-22 · The real-time MCU is a NUCLEO-H533RE: FDCAN2 on PB12/PB13, I2C1 on PB6/PB7, servo on PC2, 5 V into E5V
+
+**Decision (2026-10-25; servo pin 2026-10-27).** The STM32F4DISCOVERY (BOM 1.2a) is replaced by a
+**NUCLEO-H533RE**, board MB1814 (BOM 1.2): an **STM32H533RET6**, Cortex-M33 with TrustZone, 250 MHz,
+512 KB of flash in two banks, 272 KB of RAM, two FDCAN controllers (DS14539 Rev 3). It plugs into
+carrier boards A and B by its ST morpho headers, **CN10 on A and CN7 on B** (MEC-15). The pins the
+carrier uses, each checked against the DS14539 alternate function table and UM3121 Table 17:
+
+| Signal | Pin | Header | Board | Function |
+|---|---|---|---|---|
+| CAN RX | **PB12** | CN10-16 | A | FDCAN2_RX, AF9 |
+| CAN TX | **PB13** | CN10-30 | A | FDCAN2_TX, AF9 |
+| I2C SCL | **PB6** | CN10-3 | A | I2C1_SCL, AF4 |
+| I2C SDA | **PB7** | CN10-5 | A | I2C1_SDA, AF4 |
+| Servo PWM | **PC2** | CN7-35 | B | TIM4_CH4, AF2 |
+| LED stick data | **PC12** | CN7-3 | B | SPI3_MOSI, AF6 (optional WS2812B stick, BOM 1.3) |
+| 5 V in | **E5V** | CN7-6 | B | JP5 on [5-6]; 4.75-5.25 V, 500 mA max (UM3121 Table 8) |
+| 3.3 V out | **3V3** | CN7-16 | B | feeds the INA226 and the transceiver over the one bridge |
+| GND | CN7-19, CN10-9, CN10-20 | | A, B | the Nucleo ties its grounds |
+
+**Why this board.**
+
+- **The Discovery is dead.** On 2026-10-25 its 3 V rail went to about 0 Ω and U1 ran hot after the
+  INA226 was plugged into I2C-A, whose pin order (GND, 3V3, SCL, SDA) did not match the module's
+  (VCC, SDA, SCL, GND). The carrier's I2C headers now follow each module's own order (MEC-15), so a
+  straight lead is right.
+- **It serves the project's goals, not only the motor loops.** TrustZone and the secure boot
+  features (HDP, OTP) are what the secure boot and trusted execution work needs, and the F407 had
+  none. Two flash banks with read-while-write let the FBL erase and write one bank while running
+  from the other. FDCAN runs the classic CAN that Cyphal uses (SW-01) and leaves CAN FD open.
+- **The Nucleo's STLINK-V3EC has a virtual COM port**, so no USB-TTL adapter is needed for a console.
+- **Rejected:** the NXP MR-CANHUBK344 and an STM32G474 board. The MR-CANHUBK344 costs more, and
+  STM32 parts are far more widely used in robotics than NXP's MCUs, so examples, drivers and help
+  are easier to find (Hedi). The G474 is a Cortex-M4 without TrustZone.
+
+**Why these pins.**
+
+- **CAN.** In the 64-pin package (DS14539 alternate function table), FDCAN1 can only use PA11/PA12,
+  the user USB-C's D-/D+, or PB8 with PB7, which is I2C1's SDA (PB9 and PD0/PD1 are not on this
+  package). FDCAN2 has RX on PA0, PB5 or PB12 and TX on PA10, PB3 (the ST-LINK's SWO), PB6 or PB13.
+  PB12/PB13 are free on this board, both on CN10 beside the transceiver on A, and they leave PB6/PB7
+  for I2C1.
+- **I2C.** PB6/PB7 are the board's Arduino D15/D14 I2C pins, with nothing else on them.
+- **Servo.** TIM4_CH4 is a hardware timer channel, as TIM1_CH1 on PE9 was. **The Nucleo is not
+  modified (Hedi, 2026-10-27), so no JTAG or SWD pin carries a signal:** PA13, PA14, PA15 (tied to the
+  ST-LINK's JTDI through SB9 and a 47 Ω resistor, MB1814 schematic rev C02, sheet 3), PB3 (SWO) and
+  PB4 (NJTRST) stay free. The pin went PA8 (TIM1_CH1), then PA0, then PA15 (CN7-17) for the wiring
+  rule, then **PC2 on CN7-35**: it is on CN7's outer row, nothing on the board uses it (UM3121: plain
+  IO), and its only free neighbour hole is where R4's lead goes, so PC2 is bridged straight to R4 and
+  R4's other end reaches SERVO SIG by one wire (MEC-15). TIM4 is a general-purpose timer, so the TIM1
+  MOE step in HW-21 does not apply. PC2 has no pull-up at reset, so the servo sees no pulse until
+  software starts the timer.
+- **LED stick data.** Zephyr drives WS2812B LEDs on STM32 from an SPI MOSI, so the pin has to carry
+  one. PC12 has SPI3_MOSI, is plain IO on the board (MB1814 schematic: only the MCU pin and CN7-3), is
+  not a JTAG pin, and is on CN7's outer row next to a free hole. The stick's LEDs take their 5 V and
+  GND from B's 5V IN, never from the Nucleo: PC12 only sends data.
+- **No level shifter (Hedi, 2026-10-27).** At 5 V the WS2812B reads a 1 above 0.7 x VDD = 3.5 V and
+  PC12 drives about 3.2-3.3 V, so the first LED is 0.2-0.3 V under its spec. The risk is wrong
+  colours or flicker, never damage, and each LED re-drives the next at 5 V. If it shows, **PC12 goes
+  open-drain with a 1 kΩ pull-up from DIN to 5 V**: PC12 is 5 V tolerant (FT_h, DS14539), so the line
+  then swings to 5 V. One resistor on B and one firmware setting; no diode.
+- **Power.** E5V is the only 5 V input that bypasses the ST-LINK's USB supply; JP5 on [5-6] selects
+  it. CN7-16 is the only 3V3 on the morpho headers the carrier reaches.
+
+**Consequences.**
+
+- HW-09, HW-10, HW-17, HW-19 and HW-21 carry an "Updated by HW-22" line; the carrier layout is MEC-15's
+  2026-10-25 revision. The node's requirements (Nexus-Physical-01 and its components) follow.
+- **One user LED, not four.** LD2 on PA5 (UM3121), so the Phase 1 LED test (T1.3) is a blink pattern
+  per state on one LED. There are no LEDs on the carrier (Hedi, 2026-10-25), only the header for the
+  optional LED stick (BOM 1.3).
+- **The ST-LINK port is USB-C (CN1)**, so the fascia's Mini-B lead reaches it through one angled
+  cable (BOM 5.12).
+- **SW-04 to SW-07 were written for the F407** (one flash bank in 12 sectors, CCM, backup SRAM, 98
+  vectors). They are reworked when the FBL is ported to the H533.
+
+**To confirm.**
+
+- **The 500 mA E5V limit.** The node draws well under it with no shield; measure on first power-up.
+
+---
+
+## HW-23 · The three CAN leads meet in board A's screw terminal, two wires per clamp
+
+**Decision (Hedi, 2026-10-30).** The bus has three cables: the FRDM's lead from J7 (Dupont F-F
+jumpers, 5.7), the DE-9 panel lead (BOM 4.5, pre-wired with female Dupont tails, about 20 cm) and
+board A's 3-way screw terminal (H, L, GND, MEC-15). They are joined **in that terminal**: the
+Dupont plug is cut off the board end of the FRDM and DE-9 leads, and each clamp takes **one wire
+from each**, both crimped into **one 0.5 mm² ferrule** (3.12). The J7 end and the DE-9 end keep
+their plugs.
+
+| Clamp on A | FRDM J7 | DE-9 |
+|---|---|---|
+| CAN H | pin 8 | pin 7 |
+| CAN L | pin 10 | pin 2 |
+| GND | pin 6 | pin 3 |
+
+**Why.** It is the simplest of the options and needs no new part or board. The topology stays as
+HW-09 and HW-18 want it: the joint is at the STM32 end, so the module's 120 Ω and JP1 are still the
+two ends, and the DE-9 becomes a stub of about 20 cm at the terminated end, which changes nothing at
+500 kbit/s.
+
+**Rejected.**
+
+- **A male pin header on board A** in parallel with the terminal, so both leads plug in unchanged.
+  Board A already uses all 18 columns.
+- **A small CAN hub at the rear**, by the cross-slot, with pin rows for J7, the DE-9 and a spare
+  node, and one twisted trunk forward to A. Shortest stubs and pluggable, but one more board to
+  place and fix.
+- **Lever connectors as an inline splice.** Bulky and loose, and the jumper wire is copper-coated
+  aluminium, which degrades in a clamp (BOM 5.7).
+- **Daisy-chaining through the DE-9's solder cups.** The panel lead comes pre-wired.
+- **A second 3-way screw terminal on board A**, one lead per terminal (Hedi, 2026-10-30). Under the
+  Nucleo there is 9 mm and the kit terminal is about 10 mm tall. Beside it, at A·T/V/X15 (plate x
+  171-181, y 16), plate 3 is solid about 8 mm above the screws, so they are only reached with plate 3
+  off, and the X15 ferrule runs into the rear outboard standoff screw. No other place on A is under
+  plate 3's slot.
+- **A junction board with screw terminals on top of plate 3**, by J7. Too close to the parts already
+  there, with a risk of shorts (Hedi, 2026-10-30).
+
+**Consequences.**
+
+- **The terminal is reached from above through plate 3's slot** (x 109-158, y 10-15, the one the
+  FRDM's USB-C power lead uses): its screws are at plate x 125-136, y 11, so the bus is serviced
+  without taking plate 3 off.
+- **The ferrules leave outboard.** A 0.5 mm² ferrule is about 14 mm long and there are about 7.5 mm
+  of board in front of the terminal, so the ferrules stand past A's right edge before the wires bend
+  toward the rear. Check on the vehicle that no chassis pillar is beside plate x 125-136 there.
+- **Nothing on the bus unplugs at board A.** Taking the carrier, the FRDM or the fascia off means
+  opening the clamps; the J7 and DE-9 plugs are the only disconnects.
+- **Both leads are short for the route.** The jumpers and the DE-9 tails are 20 cm, and MEC-18
+  estimated about 22 cm from J7 to A. **Lay both leads along their routes on the vehicle before
+  cutting anything.** If the FRDM lead does not reach, make it from the 2x5 connector (4.4) and a
+  longer twisted lead instead of extending the jumpers.
+- **Twist each lead's H and L**, and tape the J7 plugs down: the jumper crimps loosen with
+  vibration (BOM 5.7). Cover J7's unused pins (4.4).
+- **Check, unpowered, at board A:** CAN H to CAN L reads about 60 Ω with JP1 fitted and the PC
+  adapter's terminator off (HW-18).
 

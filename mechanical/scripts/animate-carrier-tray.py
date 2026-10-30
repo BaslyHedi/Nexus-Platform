@@ -8,12 +8,12 @@
 Two steps, as MEC-17 places it. First the carrier is built on the tray at a jig: nuts into the pockets, the
 boards A, B and C on their standoffs, the screws from below, the splices, the Bauer in its rim. Then the tray goes
 onto plate 2: its holes over the plate's, the wires up through the window, six screws from below, and plate 2 lowers
-onto its standoffs. The Bauer is held to the tray by two M3 screws through its own mounting holes. The Discovery plugs on last.
+onto its standoffs. The Bauer is held to the tray by two M3 screws through its own mounting holes. The Nucleo plugs on last.
 
 Read from disk: ../cad/carrier-tray.stl (the tray itself), ../../hardware/renders/chassis-layout.svg (plate 2's
 outline, holes and slots) and, through carrier_model.py, ../../hardware/scripts/stm32-carrier.py (the boards as
 built: every part and wire). Stand-ins: the harness parts under plate 2 (MEC-16 footprints), the Bauer (64 x 57 x
-22 mm; its shape and its two mounting holes are from the seller's drawing and Hedi's photo), the Discovery. The order of work is a PROPOSAL (MEC-17).
+22 mm; its shape and its two mounting holes are from the seller's drawing and Hedi's photo), the NUCLEO-H533RE. The order of work is a PROPOSAL (MEC-17).
 
 Coordinates: plate 2's layout frame (x front to rear, y from the vehicle's right, mm, z up from plate 1's top).
 The layout's y runs the wrong way for a right-handed frame, so a point goes to Blender as (x, -y, z).
@@ -50,7 +50,7 @@ CORNER_INSET = 2.5
 ZP_TOP, ZP_BOT = 52.0, 50.0
 LIFT = 60.0                                   # plate 2 is worked on this far above its standoffs
 Z_TRAY = ZP_TOP + T                           # the tray's top face
-BOARDS = {'A': (117.00, 187.00, 5.11, 55.11, 8), 'B': (119.54, 189.54, 60.99, 110.99, 8),
+BOARDS = {'A': (117.00, 187.00, 5.11, 55.11, 8), 'B': (119.54, 189.54, 81.15, 111.15, 8),     # B a 3x7 since 2026-10-26
           'C': (85.50, 115.50, 25.20, 95.20, 8)}          # plate-2 x0 x1 y0 y1, standoff height
 FIXINGS = {'T1': (24.82, 60.24, 3.18), 'T2': (52.82, 60.24, 3.18), 'T3': (99.24, 81.76, 3.18),
            'T4': (120.06, 35.94, 2.71), 'T5': (148.18, 81.76, 3.18), 'T6': (148.18, 96.76, 3.18)}
@@ -64,14 +64,14 @@ NUTS = [4.0 + 0.35 * i for i in range(8)]          # six M2.5 and two M3
 BAUER_T = 8.0
 BAUER_HOLESCREW_T = 9.2
 BOARD_T = {'C': 10.5, 'AB': 12.0}
-SCREWS_T = 14.5                                # twelve board screws, 0.28 s apart
+SCREWS_T = 14.5                                # ten board screws, 0.28 s apart
 SPLICE_T = [19.0, 19.6]
 CARRY = (22.5, 28.5)                           # lift, across, set down
 WIRES_T = 29.5
 FIX_T = [32.5 + 0.6 * i for i in range(6)]
 SECTION = (46.0, 50.5)                         # the cutaway through one fixing
 LOWER = (51.5, 55.5)
-DISCO = (57.0, 59.5)
+NUCLEO = (57.0, 59.5)
 ORBIT = 60.0
 PAD_NUTS = [37.2 + 0.25 * i for i in range(6)]  # the rear pad (MEC-19): six nuts, the pad, six screws from below
 PAD_T = 39.0
@@ -83,7 +83,7 @@ CAPTIONS = [
     ((4, 7.4), "1  A nut into each hex pocket: six M2.5 for plate 2, two M3 under the Bauer's holes"),
     ((7.4, 10.3), "2  The Bauer drops into its rim, two M3 screws through its own holes; its leads get a clear lane"),
     ((10.3, 14.4), "3  Boards C, then A and B, lower on their nylon standoffs onto the tray's board holes"),
-    ((14.4, 19), "4  Twelve M2.5 screws from below, one into each standoff; the heads sit in the counterbores"),
+    ((14.4, 19), "4  Ten M2.5 screws from below into the standoffs, heads in the counterbores; B's eleventh is threaded into the tray"),
     ((19, 22.5), "5  The S6 and S7 splices go beside the Bauer, one each side, where their levers can open"),
     ((22.5, 29.5), "Step 2. The unit lifts onto plate 2: every tray hole lands on a plate hole, the window on the wire opening"),
     ((29.5, 32.5), "6  The 12 V wires come up the plate's two slots to the splices"),
@@ -91,7 +91,7 @@ CAPTIONS = [
     ((37, 46), "8  The rear pad (MEC-19): six nuts, the pad onto plate 2, six screws from below"),
     ((46, 50.5), "Section through one fixing: plate 2, the tray with its captive nut, the screw, the Bauer above"),
     ((50.5, 57), "9  Plate 2 comes off its blocks and lowers onto the chassis standoffs"),
-    ((57, 60), "10  The Discovery plugs onto the sockets of A and B"),
+    ((57, 60), "10  The NUCLEO-H533RE plugs onto the sockets of A and B"),
     ((60, 67), "The tray lifts out as one unit, six screws; the rear pad, six more"),
 ]
 
@@ -384,9 +384,10 @@ for k, (x0, x1, y0, y1, hs) in BOARDS.items():
     grp = asm['C'] if k == 'C' else asm['AB']
     zb = Z_TRAY + hs
     for (x, y) in [(x0 + CORNER_INSET, y0 + CORNER_INSET), (x1 - CORNER_INSET, y0 + CORNER_INSET),
-                   (x0 + CORNER_INSET, y1 - CORNER_INSET), (x1 - CORNER_INSET, y1 - CORNER_INSET)]:
+                   (x0 + CORNER_INSET, y1 - CORNER_INSET), (x1 - CORNER_INSET, y1 - CORNER_INSET)][k == 'B':]:   # B's front inboard corner is free
         hexa("standoff-" + k, x, y, Z_TRAY, zb, 5.0, 'nylon', grp)
-        screws_at.append((x, y, zb))
+        if (k, x, y) != ('B', x1 - CORNER_INSET, y0 + CORNER_INSET):      # B's rear inboard standoff has its stud in a hole drilled in the tray (MEC-17)
+            screws_at.append((x, y, zb))
 drop(asm['C'], BOARD_T['C'], dz=45.0, dur=1.0)
 drop(asm['AB'], BOARD_T['AB'], dz=45.0, dur=1.0)
 
@@ -400,10 +401,10 @@ for i, (x0, x1, y0, y1) in enumerate(SPLICES):
     sp = box("splice-s%d" % (6 + i), x0, x1, y0, y1, Z_TRAY, Z_TRAY + 8.5, 'splice', ROOT)
     drop(sp, SPLICE_T[i], dz=25.0)
 
-# the discovery
-disco = empty("discovery-root", ROOT)                     # drop() moves this; the board keeps its own height inside it
-CM.build_discovery(disco, zA).name = "discovery"
-drop(disco, DISCO[0], dz=45.0, dur=DISCO[1] - DISCO[0])
+# the nucleo
+nucleo = empty("nucleo-root", ROOT)                      # drop() moves this; the board keeps its own height inside it
+CM.build_nucleo(nucleo, zA).name = "nucleo"
+drop(nucleo, NUCLEO[0], dz=45.0, dur=NUCLEO[1] - NUCLEO[0])
 
 # lifted across, set down on plate 2, then it rides plate 2 down
 move(ROOT, [(0, (0, BENCH_Y, LIFT)), (CARRY[0], (0, BENCH_Y, LIFT)), (CARRY[0] + 1.6, (0, BENCH_Y, LIFT + 45)),

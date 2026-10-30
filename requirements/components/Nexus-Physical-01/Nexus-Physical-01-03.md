@@ -11,7 +11,7 @@ Hardware element, level 2, bought: its requirements state what the node relies o
 
 ### Nexus-Physical-01-03-R001
 
-**Statement.** The transceiver module shall translate between the CAN bus and the 3.3 V logic of the STM32F407.
+**Statement.** The transceiver module shall translate between the CAN bus and the 3.3 V logic of the STM32H533.
 
 - Function: Nexus-Logical-401-F01
 - Derived-from: Nexus-Physical-01-R002

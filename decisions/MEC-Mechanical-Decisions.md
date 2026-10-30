@@ -22,7 +22,7 @@ Drawings: [chassis layout](../hardware/renders/chassis-layout.svg). Geometry and
 | **MEC-12** | Component allocation across the three plates |
 | **MEC-13** | The debug ports mount from behind, in two horizontal rows |
 | **MEC-14** | The switch drawing closes the lower panel - and its holes open to 22.4 |
-| **MEC-15** | The carrier is two kit boards joined by the Discovery, not one board |
+| **MEC-15** | The carrier is two kit boards joined by the Discovery, not one board. *The NUCLEO-H533RE joins them since 2026-10-25* |
 | **MEC-16** | Plate 2's lower face is the harness board - plate 1 carries only the battery and the driver |
 | **MEC-17** | One tray carries boards A, B and C and bolts to plate 2 |
 | **MEC-18** | One wide tray on plate 3 - a spare nose, the Pi 5, a plug gap, the FRDM, all turned across |
@@ -385,6 +385,8 @@ the pad bands.
 ## MEC-08 · The STM32 rides on a perfboard carrier, not on the chassis directly
 
 **Updated by MEC-15:** no kit board is large enough, so the carrier is two boards, A under P1 and B under P2, and the 130 × 85 outline is gone.
+
+**Updated by MEC-15 (revision 2026-10-25) and HW-22:** the Discovery failed and a NUCLEO-H533RE drops onto the carrier by its ST morpho headers, CN10 on A and CN7 on B. The decision stands; the Discovery's pins and headers below are history.
 
 **Resolved 2026-09-20:** the Discovery's P1/P2 pins protrude **downward**, so the carrier sits
 **below** the board and the Discovery drops onto female headers. The open question about pin
@@ -808,6 +810,11 @@ cover a 22.4 hole with 1.2 mm to spare a side.
 
 ## MEC-15 · The carrier is two kit boards joined by the Discovery, not one board
 
+**Revised 2026-10-25: the NUCLEO-H533RE replaces the Discovery (HW-22).** The decision stands with a
+different board: A and B are rebuilt on fresh boards and joined by the Nucleo's morpho headers. See
+"Revision 2026-10-25", the two 2026-10-26 revisions and the 2026-10-27 one at the end. Everything about P1, P2 and the
+Discovery below is the earlier build.
+
 **Hole names changed 2026-09-29.** Holes are now named as **printed on the kit boards**: letters
 A-X along the 70 mm side, numbers across, A1 bottom-left with the print readable, written board·hole
 (A·K12). On A and B, header row n is letter X for row 1 back to A for row 24; P1 sits on A's
@@ -1022,6 +1029,90 @@ replaced by one wire on A, **A·W10 (P1-5, as built) → A·V16 (6V IN −)**, t
 chain. The Discovery ties all its GND pins together, so A's servo, I²C and INA226 grounds reach
 the STM32 through it, as on B. **One wire still crosses between the boards: the 3V3 bridge**
 (B·V12 → A·D16), built as a soldered end and a plug. Routing check passes.
+
+**Revision 2026-10-25 · the NUCLEO-H533RE on A and B.** The Discovery failed (HW-22) and the
+NUCLEO-H533RE takes its place. Boards A, B and C, their standoffs and the tray (MEC-17) keep their
+places on plate 2; A and B are rebuilt on fresh boards (Hedi: no desoldering of the old sockets).
+
+- **Sockets.** The Nucleo plugs in by its ST morpho headers, whose rows are **63.50 mm apart** (25
+  pitches, UM3121 Fig. 7). Each board's sockets move two columns outboard of the Discovery's: **A g/h
+  under CN10, B i/j under CN7**, four 1×19 female strips, every tail in a hole (A rows 5-23, B 6-24).
+- **Position.** The board sits 5 rows forward of the Discovery's row 1, **rear edge at plate 2 x 202.7**.
+  Its top is at z 113.8, 4.8 mm under the plate-3 screw heads, none of which is over a tall part.
+- **The parts follow the pins.** Every CAN and I2C1 pin the carrier uses is on CN10, and the only supply
+  pins are on CN7 (HW-22), so **A carries the CAN side**: the SN65HVD230 module, the CAN terminal and
+  the two I2C headers; **B carries power and the servo**: 5V IN to E5V, 6V IN, C2, R4 and the SERVO header.
+- **One wire crosses between the boards: 3V3**, from CN7-16 on B to I2C-A's VCC on A, which feeds the
+  transceiver. A takes its ground from its own CN10-9 and CN10-20; the Nucleo ties its grounds.
+- **I2C headers in each module's own order**, so a straight lead is right: I2C-A is VCC, SDA, SCL, GND
+  (the INA226 module), I2C-B is SCL, SDA, GND (the motor module) with pin 4 not wired. The mismatched
+  order is what took the Discovery. Both are 90° headers **on top of A**, along the gap to B, pointing
+  forward; their leads leave A's front edge over the tray window. **The solder side carries wires only**
+  (Hedi).
+- **Left out:** R3a, R3b and the TERM jumper (HW-09: the module's own 120 Ω terminates this end), and
+  any LED on the carrier (Hedi). The node's only user LED is the Nucleo's LD2.
+- The drawing, the 3D model, the routing check and the layout follow (`stm32-carrier.py`,
+  `carrier_model.py`, `check-carrier-routing.py`).
+
+**Revision 2026-10-26 · board B on a 3×7.** A and B are rebuilt on fresh boards for the NUCLEO-H533RE
+(revision 2026-10-25 above), and only one 5×7 is left in the kit.
+
+- **A keeps the 5×7.** It uses all 18 columns: the CAN module and its terminal outboard (a-d), the
+  CN10 sockets (g/h) and I2C-A out to column r.
+- **B moves to a 3×7 (10 × 24).** Every part on B is in columns i-q: the CN7 sockets (i/j), R4 (k),
+  SERVO (m-o), C2 (n) and both terminals (q). The 3×7 covers i-r, flush with the old outboard edge
+  (plate 2 y 81.15-111.15, 0.16 mm further out), with the same 24 rows, so no part and no wire moves.
+  The scripts keep the 18-column letters; the printed names follow the 3×7's own print, as on C:
+  numbers 1-24 from the front, letters A-J from column r inward, A1 at the front outboard corner.
+- **The gap between A and B is 26 mm, not 5.9.** Only the 3V3 bridge crosses it, one insulated wire,
+  laid along the tray.
+- **Three corner holes on B, not four** (MEC-17). The front inboard one is 2 mm from the end of the
+  CN7 socket, so a screw head or nut there would sit against it.
+- **Not used:** the 7×9 (90 mm across where the carrier needs 106, and none of its holes meets the
+  tray), the 4×6 and the 2×8 (too short for the 19-row socket and the terminals, or too narrow).
+- **Kit use:** the last 5×7 (A) and a second 3×7 (B; C is the first).
+- **The routing check** now also fails any pad or wire that is off its board's columns.
+
+**Revision 2026-10-26 · no wire on a pin: it lands on a free hole, bridged to the pin.** Soldering a
+wire onto a pin whose tail already fills the hole is hard (Hedi). On A and B every wire end now lands
+on a free hole orthogonally beside its pin, one wire per hole, and a solder bridge joins that hole to
+the pin. Board C is built and stays as it is.
+
+- **Rules the routing check enforces:** a bridge holds pins of one net only; none of its free holes
+  has another net's pin beside it; a pin with two wires gets two free holes, or a bridge over two
+  holes. That is why I2C-B's SDA bridge runs down its column (k20-k18), and SCL and CN10-9's GND fork
+  at the socket over two holes: every I2C header pin has only the hole behind it, because the plug
+  lies on the row in front and its neighbours are pins.
+- **Short same-net runs are bridges, not wires:** C2 + to SERVO + (n20-n23) and R4 to SERVO SIG
+  (k23-m23).
+- **Two pins move to CN7's outer row, where column k gives them a free hole:** B's ground to the
+  Nucleo now uses **CN7-19** (was CN7-22), and the servo PWM uses **PA15 on CN7-17** (was PA0 on
+  CN7-28). PA15 has TIM2_CH1 on AF1 (DS14539 Rev 3), the same timer channel PA0 had, so only the pin
+  changes in firmware. After reset PA15 is JTDI with its pull-up on, so the servo line idles high
+  through R4 until software takes it; the bootloader should drive it low early.
+- **Two exceptions stay, in B's column i:** E5V (CN7-6) and 3V3 (CN7-16) take the wire straight on
+  the pin. Neither exists on the outer row: E5V is the only 5 V input (UM3121 Table 8), and the
+  other 3V3 is Arduino CN6-4, on top, where a plug would have to fit in about 7 mm under plate 3.
+  Shifting B one column inboard (h-q) would give them a free hole, but its outboard corners would
+  then fall 2.38 mm from the tray's printed holes, so every new hole would run into an old one.
+  Hedi kept i-r and the printed tray as it is.
+- The drawing shows the bridges in silver on the solder side and rings the two exceptions.
+
+**Revision 2026-10-27 · the servo PWM on PC2, R4 turned round.** PA15 is tied to the ST-LINK's JTDI on
+the Nucleo, and the Nucleo is not modified (HW-22), so the servo PWM moves to **PC2 on CN7-35**, B·I2,
+on CN7's outer row. Its only free neighbour, B·H2, is where R4's lead was, so **R4 is turned round**: its
+MCU end now sits in B·H2, bridged straight to PC2 (two pins, no wire), and its servo end stays in B·H6.
+One wire runs from B·G6 (bridged to R4's B·H6) to B·F1, bridged to SERVO SIG at B·F2. CN7-17 is now
+free, and so is B·H11, the hole that served it. Routing check passes.
+
+**Revision 2026-10-27 · a header for the LED stick at B's rear.** The optional WS2812B stick (BOM 1.3,
+HW-22) sits on top of plate 3, just behind the FRDM, facing the rear; how it stands is decided when plate 3
+is assembled. On the carrier it takes a **straight 1×3 male header on top of B at B·F22, E22, D22**
+(DIN, 5V, GND), behind the CN7 sockets and outboard of the Nucleo's edge, so nothing is above the plug.
+Data comes from **PC12 on CN7-3** (B·I18, bridged to the free hole B·H18), 5 V from a second free hole on
+5V IN + (B·B13), GND from a fourth hole on 5V IN − (B·A11); each header pin is bridged to a free hole
+beside it, as everywhere on B. No level shifter is fitted (Hedi). The 3-wire lead to plate 3 is made when
+the stick is mounted. Routing check passes.
 
 ---
 
@@ -1381,6 +1472,23 @@ which is why the second lane is the mirror of the first. The tray has a wing for
 - **The M3 nut's real depth and across-flats** (assumed 2.4 and 5.5 mm), before printing the Bauer's two pockets.
 - **Print or sheet.** The model serves both.
 
+**Update 2026-10-26 · board B is a 3×7 (MEC-15).** The printed tray stays as ordered.
+
+- **B's two outboard corner holes** land on the tray's B outboard pair, 0.16 mm off, inside the 4.0 mm
+  holes' play. The tray's B inboard pair is left empty, in the gap between A and B.
+- **One hole is drilled by hand** for B's rear inboard corner, at plate 2 **(187.04, 83.65)**, clear of
+  every copied plate hole. Mark it through B itself, set on its other three standoffs. It is only 2.5 mm from the tray's rear edge: the tray follows the board's
+  outline there and has no corner pad, so a 6.4 mm counterbore would break out. Instead, **drill 2.1 mm
+  and screw in an 8 mm male-female nylon standoff** from the M2.5 kit (3.31), its 6 mm stud cut to
+  3.5 mm so that it cuts its own thread in the 4 mm PETG and does not reach plate 2. The board screws
+  onto it from above like the others. *(The hand-made tray's straight rear edge is 4.5 mm away and
+  takes the usual countersunk screw.)*
+- **B's front inboard corner takes no screw.** On top, the CN7 socket ends 2 mm from it; below, the
+  copied plate hole at (120.06, 84.53) is 2 mm away. Three screws and the Nucleo in CN7 hold B.
+- **Eleven board fixings, not twelve.** On the printed tray that is ten screws from below and B's
+  threaded standoff; the hand-made tray's template and its PDF carry B's three holes as countersunk
+  screws. Window W3 now sits beside B, not under it.
+
 ---
 
 ## MEC-18 · One wide tray on plate 3 - a spare nose, the Pi 5, a plug gap, the FRDM, all turned across
@@ -1423,7 +1531,7 @@ FRDM screw holes are loose (4.2 mm, counterbore 7.2 mm) so the +-1 mm in the pho
 |---|---|---|---|
 | **J1 power**, C-to-C 20 cm (5.1), from board C's USB-C socket (plate 2, HW-19) | socket plug -> up through plate 3's right-hand slot (x 109-158, y 10-15) -> along the right edge, over the right rib -> J1 on the nose edge | about 13 cm | **fits**, about 3 cm to spare. The big slot in the plug gap is the second way up |
 | **J11 console**, USB-C extension 0.2 m (5.9), from the fascia's USB-C port | the port's body ends at x 225, y 41.3 (z 101) -> along the upper gap to the left edge (78 mm) -> up outside the plate edge (35 mm) -> J11's plug, 25 mm past the edge | about 14 cm | **fits**, the cable is 20 cm beyond the port's own 40 mm body. The slot at x 219.5 above the body's end is under the FRDM pad, which is why the route goes round the edge instead |
-| **J7 CAN**, 2x5 mating lead (4.4, not yet bought) to board B's transceiver (4.1), twisted pair, BOM 4.3 says about 30 cm | the plug on J7 -> 10 mm over the rear edge -> down plate 3's cross-slot (x 260-265, clear: the fascia's wall is at x 267-270) -> forward on plate 2 | about 15 cm | **fits** with a 30 cm lead |
+| **J7 CAN**, 2x5 mating lead (4.4, not yet bought) to the CAN terminal (4.1's end of the bus), twisted pair, BOM 4.3 says about 30 cm. *Updated 2026-10-27: since the NUCLEO-H533RE (MEC-15) the transceiver and its terminal are on **board A**, at A·F17 / D17 / B17, plate 2 x 125-135, opening to the vehicle's right edge; they were on board B* | the plug on J7 -> 10 mm over the rear edge -> down plate 3's cross-slot (x 260-265, clear: the fascia's wall is at x 267-270) -> on plate 2, diagonally over the rear pad to the right edge **behind** the Nucleo (x 203 and more: the Nucleo covers x 120-203, y 20-90) -> forward along the right edge to the terminal | about 22 cm (15 cm to board B before) | **fits** with a 30 cm lead; the run along plate 2's right edge is to confirm on the vehicle. *2026-10-30 (HW-23): the lead is the 20 cm Dupont jumpers, cut at A's terminal, and the DE-9 tails (20 cm) end in the same clamps. Both are short for this estimate: lay them on the vehicle before cutting* |
 
 No other BOM item touches the FRDM (Ethernet, USB-A, audio and the 40-pin header are unused). Nothing here needs a change to the tray. **To confirm on the vehicle:** the J11 cable's bend behind the fascia, and the J1 plug's clearance
 over the right rib.
@@ -1451,7 +1559,7 @@ swapping the file. A separate pad changes nothing else. It was first drawn small
 - the cross-slot (x 260.3-265.7) and the fascia's pads and clamp holes (x 262.9);
 - the Discovery, which overhangs the carrier tray to x 217.5 at z 95 and above. The pad is 4 mm tall, so nothing meets it.
 
-**The J7 lane and the harness cross it.** The CAN lead (MEC-18) comes down the cross-slot at about y 74 and runs forward to board B (y 92 at x 190): a diagonal over the pad's top, where it lies like any wire. Keep that lane (about y 70-96) free of drilled parts, or tie the lead down.
+**The J7 lane and the harness cross it.** The CAN lead (MEC-18) comes down the cross-slot at about y 74 and runs to plate 2's right edge behind the Nucleo, then forward to board A's CAN terminal: a diagonal over the pad's top, where it lies like any wire. Keep that lane (from about y 74 at the slot to the right edge) free of drilled parts, or tie the lead down. *Updated 2026-10-27: it ran to board B (y 92 at x 190, lane y 70-96) until the Nucleo moved the transceiver to A (MEC-15).*
 The harness to the fascia's ports (MEC-12) lies over the pad the same way. The pad has no windows, so plate 2's three long slots under it (x 203.5, 219.5, 235.5, y 26-94) are covered; nothing in the BOM passes through them.
 
 **Six fixings, from below** into nuts held in pockets on top, each on an opening plate 2 already has: two places along the long slot at x 203.47-207.77 ((205.62, 40) and (205.62, 80); the slot is 4.29 mm wide, so the screw may slide along it, a washer under the head, and the pad can be moved along y by hand before it is tightened),

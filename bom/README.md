@@ -11,13 +11,15 @@ has to be fetched by hand.
 
 Where a vendor publishes nothing - which is true of every Amazon power component - the
 folder carries a `SPECS.md` recording what the listing claimed, with the date it was
-captured and what still has to be measured on arrival. Six of the eleven parts are in that
+captured and what still has to be measured on arrival. Most of the bought modules are in that
 position, which is why `SPECS.md` is often the only thing there.
 
 | Folder | Vendor documents it draws on - **not held here** | Written here | Notes |
 |---|---|---|---|
 | `1.1-FRDM-IMX91S` | **NXP** · *FRDM-IMX91S Quick Start Guide* · *UM12262, FRDM-IMX91 Board User Manual*, Rev 3.0, 22 Apr 2025 · *FRDM-IMX91 Design Files*, Rev A1 | `NOTES.md` | UM12262 covers the **non-S** variant - see `NOTES.md` |
-| `1.2-STM32F407-Discovery` | **STMicroelectronics** · *DS8626, STM32F405/407 datasheet* · *UM1472, Discovery kit for STM32F407/417* · *STM32F4DISCOVERY data brief* | - | RM0090 reference manual still missing |
+| `1.2-NUCLEO-H533RE` | **STMicroelectronics** · *DS14539, STM32H533xx datasheet*, Rev 3, March 2026 · *UM3121, STM32H5 Nucleo-64 board (MB1814)*, Rev 1 · *MB1814 schematic*, rev C02 · *RM0481, STM32H523/533xx, STM32H543/553xx, STM32H562xx and STM32H563/573xx reference manual*, Rev 5, July 2026 | - | All in hand 2026-10-27. The schematic shows PA15 tied to the ST-LINK's JTDI through SB9 (HW-22); RM0481 gives the flash as two banks of 8 KB sectors |
+| `1.2-STM32F407-Discovery` | **STMicroelectronics** · *DS8626, STM32F405/407 datasheet* · *UM1472, Discovery kit for STM32F407/417* · *STM32F4DISCOVERY data brief* | - | Now BOM 1.2a, failed 2026-10-25; kept as the record of the Discovery-era decisions. RM0090 is in `vendor/` |
+| `1.3-WS2812B-LED-Stick` | none published by the seller (**Joycabin** listing) · **Worldsemi** · *WS2812B Intelligent control LED integrated light source* datasheet | `SPECS.md` | Decided, not ordered; holes not dimensioned |
 | `2.1-Hiwonder-Ackermann-Chassis` | **Hiwonder** · *Ackermann chassis introduction and installation* · *docs index* (both printed from docs.hiwonder.com) · *Ackermann Chassis (Single Layer)* `.3dm` CAD | `SPECS.md` | Rear geometry measured in Hiwonder's CAD |
 | `2.3-Servo-LD-1501MG` | **ThinkRobotics** · *Ackerman metal chassis listing, motor and servo specs* · **Power HD** · *HD-1501MG datasheet* | `SPECS.md` | Servo is **6–8.4 V**, not 5 V |
 | `2.4-Encoder-Motor-Module` | none published | `SPECS.md` + 1:1 hole template | Vendor publishes no drawing - geometry **measured off a photo on 5 mm graph paper**, 2026-09-21 |
@@ -54,8 +56,6 @@ their names swapped, and one claimed to be the STM32F407 datasheet but was actua
 - **FRDM-IMX91S board user manual** - does not appear to be published separately. This is
   the document that would settle the board's power input for *our* variant; UM12262 answers
   it only for the non-S board. Highest-value missing item.
-- **RM0090** (STM32F4 reference manual) - `st.com` is unreachable from this machine
-  (connection refused, not a 404); Mouser and DigiKey serve bot-check pages. Fetch by hand.
 - **i.MX 91 SoC datasheet and reference manual** - NXP doc paths did not resolve; the RM is
   usually behind an NXP account. From nxp.com/imx91.
 - **CAN transceiver** - no folder; part not chosen (BOM 4.1).

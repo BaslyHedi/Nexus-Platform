@@ -55,8 +55,8 @@ Drawn in [Nexus-Physical-01-Local-View](renders/Nexus-Physical-01-Local-View.svg
 
 | ID | Element | Kind |
 |---|---|---|
-| [01-01](../requirements/components/Nexus-Physical-01/Nexus-Physical-01-01.md) | Discovery board: STM32F4DISCOVERY MB997B, with the ST-LINK V2 and four user LEDs (BOM 1.2) | hardware, bought |
-| [01-02](../requirements/components/Nexus-Physical-01/Nexus-Physical-01-02.md) | Carrier boards A and B, with R3, R4, C2 and the headers ([stm32-carrier](../hardware/renders/stm32-carrier.svg)) | hardware, designed here |
+| [01-01](../requirements/components/Nexus-Physical-01/Nexus-Physical-01-01.md) | MCU board: NUCLEO-H533RE MB1814, with the STLINK-V3EC and the user LED LD2 (BOM 1.2, HW-22) | hardware, bought |
+| [01-02](../requirements/components/Nexus-Physical-01/Nexus-Physical-01-02.md) | Carrier boards A and B, with R4, C2 and the headers ([stm32-carrier](../hardware/renders/stm32-carrier.svg)) | hardware, designed here |
 | [01-03](../requirements/components/Nexus-Physical-01/Nexus-Physical-01-03.md) | CAN transceiver module SN65HVD230 (BOM 4.1) | hardware, bought |
 | [01-04](../requirements/components/Nexus-Physical-01/Nexus-Physical-01-04.md) | Bootloader | software |
 | [01-05](../requirements/components/Nexus-Physical-01/Nexus-Physical-01-05.md) | FBL-Updater | software |
@@ -64,12 +64,12 @@ Drawn in [Nexus-Physical-01-Local-View](renders/Nexus-Physical-01-Local-View.svg
 
 | From | To | What passes |
 |---|---|---|
-| 01-02 carrier | 01-01 Discovery board | 5 V into P2 pins 3 and 4; PD0, PD1, PB10, PB11, PE9 through the headers (HW-19) |
-| 01-02 carrier | 01-03 transceiver | PD0 to the receive output, PD1 to the transmit input (HW-09) |
+| 01-02 carrier | 01-01 MCU board | 5 V into E5V (CN7-6); PB12, PB13, PB6, PB7, PC2 through the morpho headers (HW-19, HW-22) |
+| 01-02 carrier | 01-03 transceiver | PB12 to the receive output, PB13 to the transmit input (HW-09, HW-22) |
 | 01-03 transceiver | the bus (Nexus-Physical-04) | CAN_H, CAN_L, with the module's 120 Ω as this end's termination |
 | 01-02 carrier | servo and motor driver headers | 6 V from the UBEC with C2 across it, PWM through R4, I2C (HW-14, HW-19, HW-21) |
 | 01-04, 01-05, 01-06 | 01-01 flash | the bootloader region and the application region of the memory map |
-| 01-01 Discovery board | bench PC | SWD through the ST-LINK, by USB at the fascia |
+| 01-01 MCU board | bench PC | SWD through the STLINK-V3EC, by USB at the fascia |
 
 ### Nexus-Physical-02, FRDM node
 
