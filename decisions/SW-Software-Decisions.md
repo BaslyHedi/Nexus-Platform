@@ -14,7 +14,7 @@ Format, and how to add one: [README](README.md).
 | **SW-06** | The application hands over to the FBL through the backup SRAM |
 | **SW-07** | The FBL executes from the SRAM, not from the flash |
 | **SW-08** | Every image carries a 64-byte version record at a fixed offset. *Offset moved to 0x400 by SW-11* |
-| **SW-09** | STM32H533 flash map: FBL 128 KB, application 328 KB, CFG 8 KB, NvM 48 KB, one image and no bank swap |
+| **SW-09** | STM32H533 flash map: FBL, CFG and NvM in bank 1, the application alone in bank 2 (256 KB), one image and no bank swap |
 | **SW-10** | The FBL uses SRAM1 only and no FPU; the hand-off record is in the 2 KB backup SRAM |
 | **SW-11** | The FBL still runs from the SRAM; the H533 vector table is 596 bytes, so the version record moves to 0x400 |
 
@@ -499,7 +499,7 @@ The FBL is the first image to carry the record. **The application follows the sa
 
 ---
 
-## SW-09 · STM32H533 flash map: FBL 128 KB, application 328 KB, CFG 8 KB, NvM 48 KB, one image and no bank swap
+## SW-09 · STM32H533 flash map: FBL, CFG and NvM in bank 1, the application alone in bank 2 (256 KB), one image and no bank swap
 
 **Decision (2026-11-01).** The STM32H533RE has 512 KB of flash in two banks of 32 sectors of 8 KB, contiguous from
 `0x08000000` (RM0481 Rev 5, Table 53). One image is flashed in place and the bank swap (`SWAP_BANK`) is **not used**:
@@ -507,32 +507,34 @@ The FBL is the first image to carry the record. **The application follows the sa
 | Region | Sectors | Address range | Size | Bank |
 |---|---|---|---|---|
 | FBL | 0 to 15 | `0x08000000` to `0x0801FFFF` | 128 KB | 1 |
-| Application | 16 to 56 | `0x08020000` to `0x08071FFF` | 328 KB | 1 and 2 (bank 2 starts at `0x08040000`) |
-| CFG | 57 | `0x08072000` to `0x08073FFF` | 8 KB | 2 |
-| NvM | 58 to 63 | `0x08074000` to `0x0807FFFF` | 48 KB | 2 |
+| CFG | 16 | `0x08020000` to `0x08021FFF` | 8 KB | 1 |
+| NvM | 17 to 22 | `0x08022000` to `0x0802DFFF` | 48 KB | 1 |
+| Reserve | 23 to 31 | `0x0802E000` to `0x0803FFFF` | 72 KB | 1 |
+| Application | 32 to 63 | `0x08040000` to `0x0807FFFF` | 256 KB | 2 |
 
-The FBL's vector table is at `0x08000000`, the default boot address. The application is linked for `0x08020000`, the
-address SW-04 gave it on the F407. **CFG** holds configuration that does not change at run time; **NvM** holds the data
-that does. Both are shared between the FBL and the application. Their content and interface are not defined yet. The
-numbers are in `interface/linker/memory_map.ld` of `Nexus-STM32-FBL`.
+The FBL's vector table is at `0x08000000`, the default boot address. The application is linked for `0x08040000`, the
+start of bank 2. **CFG** holds configuration that does not change at run time; **NvM** holds the data that does. Both
+are shared between the FBL and the application. Their content and interface are not defined yet. The reserve is not
+claimed: room for a larger FBL (Phase 3) or for more NvM. The numbers are in `interface/linker/memory_map.ld` of
+`Nexus-STM32-FBL`. **Bank 2 holds the application and nothing else.**
 
 **Why.**
 
 - **The update comes from the FRDM.** An image lands on the i.MX 91 (FRDM) and goes to the STM32 over CAN, where the FBL
   flashes it in place (SW-01). The FRDM is the staging store and keeps the previous image for a rollback. A bank swap
   would put an A/B copy on the STM32 as well, and cost half of the flash for it.
-- **The application gets the room.** A Zephyr application with CAN, I2C, PWM, logging and Cyphal is estimated at 100 to
-  180 KB (not measured, the Zephyr environment is not built yet). A swap would cap it at one bank less CFG and NvM,
-  about 150 KB. Without it, 328 KB.
+- **The application gets a bank to itself.** A Zephyr application with CAN, I2C, PWM, logging and Cyphal is estimated at
+  100 to 180 KB (not measured, the Zephyr environment is not built yet). 256 KB is above that, and above the 150 KB a bank
+  swap would have capped it at.
 - **The boot address is configurable here** (`NSBOOTADD`, RM0481 Tables 25 and 26), unlike the F407, so the FBL is not
   forced into sector 0. It stays at `0x08000000` because that is the default: a blank or recovered chip boots without an
   option-byte change.
-- **CFG and NvM are in bank 2, apart from the FBL.** A read of a bank stalls while that same bank is written or erased
-  (RM0481 section 7.3.7). The FBL and the first 192 KB of the application are in bank 1, so an NvM or CFG operation never
-  stalls them. **The rest of the application, from `0x08040000` to `0x08071FFF` (200 KB), is in bank 2 and does stall**:
-  an NvM erase blocks a fetch from there for up to 10 ms. SW-04 had the same problem on the F407, with 2 s. Code that
-  must not stall, such as the control loop and the CAN interrupt, is kept in the first 192 KB by the application's
-  linker script, or NvM operations wait for a safe state. This is a constraint on `Nexus-STM32-App`.
+- **The data is in bank 1 and the application in bank 2, which is what the two banks are for.** A read of a bank stalls
+  while that same bank is written or erased (RM0481 section 7.3.7). Once the application runs, nothing is fetched from
+  bank 1, so a CFG or NvM erase, up to 10 ms per sector, never stalls application code, and the application needs no
+  linker trick to keep its control loop out of the way. The application reads CFG and NvM from bank 1 and writes NvM
+  there while its own code runs from bank 2. Only one write or erase runs at a time on the whole flash (one `BSY` flag).
+- **The FBL erases and writes bank 2 while running from the SRAM** (SW-11), so the update stalls nothing it needs.
 - **128 KB for the FBL is room, not a measured need.** Phase 3 adds signature checking and anti-rollback. The FBL runs
   from the SRAM (SW-11), so the flash reservation is not the SRAM budget. An oversized region costs unused flash. A start
   address moved later costs every application build, which is why the generous direction was taken.
@@ -550,13 +552,15 @@ numbers are in `interface/linker/memory_map.ld` of `Nexus-STM32-FBL`.
 - **NvM in the high-cycle data area** (100 kcycles, 6 KB sectors, `0x09000000`, RM0481 section 7.3.10). It needs the
   `EDATA` option bytes set once, takes the last sectors of a bank, and cannot hold code. The NvM is plain flash with the
   endurance of program memory (10 kcycles, DS14539 Table 51) until the wear is known.
-- **CFG in bank 1 between the FBL and the application.** No stall from NvM writes, but it moves the application start to
-  `0x08022000`. CFG is read once at start-up, so the stall does not matter.
+- **The application across both banks, after CFG and NvM (328 KB, `0x08020000` to `0x08071FFF`).** The first draft. It
+  gives 72 KB more, but 200 KB of the application share bank 2 with NvM, so an NvM erase of up to 10 ms stalls any
+  application code fetched there, and the application's linker script would have had to keep its control loop and CAN
+  interrupt in the first 192 KB. Dropped for the layout above, at the cost of those 72 KB.
 
 **Consequences.**
 
 - **Write-protection works in groups of four sectors (32 KB)**, seen in OpenOCD's `flash info`. The FBL (16 sectors) can be
-  protected alone. CFG (one sector) cannot be protected apart from its neighbours.
+  protected alone. CFG (one sector) cannot be protected apart from the NvM sectors that share its group.
 - **One `BSY` flag covers the whole flash** (RM0481 section 7.3.3). A CFG write and an NvM write, in the same bank or not,
   must not overlap, and a write to either stalls a read of its own bank.
 - **The first FBL goes on with the ST-LINK, by sector erase.** A full-chip erase would also wipe CFG and NvM. Verified
@@ -570,8 +574,6 @@ numbers are in `interface/linker/memory_map.ld` of `Nexus-STM32-FBL`.
 **To confirm.**
 
 - That the FBL fits 128 KB with room for Phase 3, measured once it is built (today 1.9 KB, release variant).
-- Whether the application can keep its time-critical code in the first 192 KB (bank 1), or has to hold NvM operations
-  for a safe state.
 - The application's real size, once `Nexus-STM32-App` builds.
 - The NvM wear: 10 kcycles of an 8 KB sector, and how the application spreads its writes.
 - The interface of CFG and NvM between the FBL and the application.
@@ -639,11 +641,12 @@ for the STM32H533:
 
 **Why SW-07 stands.**
 
-- **The stall is smaller, not gone.** Reads of bank 1 stall while the FBL erases application sectors that are in bank 1.
-  With 8 KB sectors that is 2 ms typical and 10 ms at most (DS14539 Table 50), where the F407 stalled for up to 2 s. A
-  CAN node publishes a heartbeat at least every second (Cyphal Specification v1.0), so 10 ms is well within it, but the
-  receive FIFO of the FDCAN is not yet measured against a stall of that length. Running from the SRAM removes the question
-  at the cost of the start-up copy.
+- **The stall mostly went away, but not all of it.** The application is in bank 2 (SW-09), so erasing it no longer
+  stalls an FBL that fetches from bank 1. What still stalls is the FBL writing CFG or NvM, and the FBL-Updater rewriting
+  the FBL's own sectors: both are bank 1, where the FBL's code is. Each erase is 2 ms typical and 10 ms at most (DS14539
+  Table 50), where the F407 stalled for up to 2 s. A CAN node publishes a heartbeat at least every second (Cyphal
+  Specification v1.0), so 10 ms is well within it, but the receive FIFO of the FDCAN is not yet measured against a stall
+  of that length. Running from the SRAM removes the question at the cost of the start-up copy.
 - **The decision was already taken, and the copy is small.** The FBL is 1.9 KB today. Copying it is under a millisecond.
 - **The debugger works with it on the M33.** A hardware breakpoint set at `main` in the SRAM before the start-up copy hits
   (checked 2026-11-01 with ST's OpenOCD fork), so the M4 limit that the launch configuration worked around is gone.
