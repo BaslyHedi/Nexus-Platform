@@ -1127,7 +1127,8 @@ no GPIO change (HW-24):
   bridged straight to PC2 (CN7-35, A·C12), its servo end A·G13. E5V, 3V3, PC12, PC2 and GND (CN7-19)
   each land on a free hole beside the pin; A has no wire straight on a pin.
 - **B carries CAN and I2C:** the face-down module in columns l-o, its 1×4 at B·G13-D13 (CTX, CRX, GND,
-  3V3) and its CANH / CANL at B·F20 / E20, pointing to the rear, 0.5 mm outboard of the Nucleo's edge;
+  3V3) and its CANH / CANL at B·F19 / E19 (six holes behind, where the 2-pin header landed; it was drawn at
+  F20 / E20, seven behind), pointing to the rear, 0.5 mm outboard of the Nucleo's edge;
   the CAN terminal in the outer column at B·A13 (H), A11 (L), A9 (GND), entry outboard, under plate
   3's left slot; I2C-B (B·G7-E7: GND, SDA, SCL) and I2C-A (B·D7-A7: 3V3, SDA, SCL, GND), 90°,
   across the front, pointing forward. The headers sit on hole row 18, so the plugs stop 1 mm short of

@@ -813,8 +813,8 @@
 <rect x="356.8" y="547.1" width="17.2" height="43.4" rx="1" fill="none" stroke="#bfdbfe" stroke-width="1" stroke-dasharray="2 2"/>
 <text x="284.4" y="567.8" font-size="7" fill="#ffffff" font-weight="700" text-anchor="middle">SN65HVD230</text>
 <text x="284.4" y="576.8" font-size="6" fill="#ffffff" text-anchor="middle">FACE DOWN</text>
-<text x="339.5" y="565.4" font-size="7" fill="#ffffff" font-weight="700" text-anchor="start">H</text>
-<text x="339.5" y="577.1" font-size="7" fill="#ffffff" font-weight="700" text-anchor="start">L</text>
+<text x="327.8" y="565.4" font-size="7" fill="#ffffff" font-weight="700" text-anchor="start">H</text>
+<text x="327.8" y="577.1" font-size="7" fill="#ffffff" font-weight="700" text-anchor="start">L</text>
 <rect x="237.0" y="159.9" width="46.4" height="35.0" rx="1.5" fill="#dbeafe" stroke="#dc2626" stroke-width="1.4"/>
 <line x1="237.0" y1="159.9" x2="283.4" y2="159.9" stroke="#dc2626" stroke-width="3.2"/>
 <circle cx="271.9" cy="177.4" r="2.9" fill="#fff" stroke="#dc2626" stroke-width="1.4"/>
@@ -857,13 +857,13 @@
 <circle cx="155.1" cy="189.1" r="2.8" fill="#fff" stroke="#a16207" stroke-width="1.2"/>
 <circle cx="131.7" cy="189.1" r="2.8" fill="#fff" stroke="#a16207" stroke-width="1.2"/>
 <rect x="242.7" y="545.4" width="11.7" height="46.7" rx="0.8" fill="#111827" fill-opacity="0.85" stroke="#047857" stroke-width="1"/>
-<rect x="324.5" y="557.1" width="11.7" height="23.4" rx="0.8" fill="#111827" fill-opacity="0.85" stroke="#1d4ed8" stroke-width="1"/>
+<rect x="312.8" y="557.1" width="11.7" height="23.4" rx="0.8" fill="#111827" fill-opacity="0.85" stroke="#1d4ed8" stroke-width="1"/>
 <circle cx="248.5" cy="551.3" r="2.2" fill="#fff" stroke="#047857" stroke-width="1.1"/>
 <circle cx="248.5" cy="562.9" r="2.2" fill="#fff" stroke="#047857" stroke-width="1.1"/>
 <circle cx="248.5" cy="574.6" r="2.2" fill="#fff" stroke="#047857" stroke-width="1.1"/>
 <circle cx="248.5" cy="586.3" r="2.2" fill="#fff" stroke="#047857" stroke-width="1.1"/>
-<circle cx="330.3" cy="562.9" r="2.2" fill="#fff" stroke="#047857" stroke-width="1.1"/>
-<circle cx="330.3" cy="574.6" r="2.2" fill="#fff" stroke="#047857" stroke-width="1.1"/>
+<circle cx="318.6" cy="562.9" r="2.2" fill="#fff" stroke="#047857" stroke-width="1.1"/>
+<circle cx="318.6" cy="574.6" r="2.2" fill="#fff" stroke="#047857" stroke-width="1.1"/>
 <circle cx="81.5" cy="161.5" r="13.3" fill="#f1f5f9" fill-opacity="0.7" stroke="#64748b" stroke-width="1" stroke-dasharray="3 2"/>
 <line x1="77.5" y1="161.5" x2="85.5" y2="161.5" stroke="#64748b" stroke-width="0.9"/>
 <line x1="81.5" y1="157.5" x2="81.5" y2="165.5" stroke="#64748b" stroke-width="0.9"/>
@@ -1781,8 +1781,8 @@
 <circle cx="768.5" cy="224.1" r="3.1" fill="#e2e8f0" stroke="#047857" stroke-width="1.1"/>
 <circle cx="768.5" cy="212.4" r="3.1" fill="#e2e8f0" stroke="#047857" stroke-width="1.1"/>
 <circle cx="768.5" cy="200.7" r="3.1" fill="#e2e8f0" stroke="#047857" stroke-width="1.1"/>
-<circle cx="850.3" cy="224.1" r="3.1" fill="#e2e8f0" stroke="#047857" stroke-width="1.1"/>
-<circle cx="850.3" cy="212.4" r="3.1" fill="#e2e8f0" stroke="#047857" stroke-width="1.1"/>
+<circle cx="838.6" cy="224.1" r="3.1" fill="#e2e8f0" stroke="#047857" stroke-width="1.1"/>
+<circle cx="838.6" cy="212.4" r="3.1" fill="#e2e8f0" stroke="#047857" stroke-width="1.1"/>
 <circle cx="601.5" cy="625.5" r="13.3" fill="#f1f5f9" fill-opacity="0.7" stroke="#64748b" stroke-width="1" stroke-dasharray="3 2"/>
 <line x1="597.5" y1="625.5" x2="605.5" y2="625.5" stroke="#64748b" stroke-width="0.9"/>
 <line x1="601.5" y1="621.5" x2="601.5" y2="629.5" stroke="#64748b" stroke-width="0.9"/>
@@ -1860,12 +1860,12 @@
 <polyline points="768.5,212.4 780.2,212.4 791.9,212.4" fill="none" stroke="#e2e8f0" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
 <polyline points="721.8,177.4 721.8,165.7 710.1,165.7 698.4,165.7" fill="none" stroke="#94a3b8" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
 <polyline points="721.8,177.4 721.8,165.7 710.1,165.7 698.4,165.7" fill="none" stroke="#e2e8f0" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-<polyline points="850.3,224.1 850.3,235.8" fill="none" stroke="#94a3b8" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
-<polyline points="850.3,224.1 850.3,235.8" fill="none" stroke="#e2e8f0" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="838.6,224.1 838.6,235.8" fill="none" stroke="#94a3b8" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="838.6,224.1 838.6,235.8" fill="none" stroke="#e2e8f0" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
 <polyline points="768.5,165.7 780.2,165.7" fill="none" stroke="#94a3b8" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
 <polyline points="768.5,165.7 780.2,165.7" fill="none" stroke="#e2e8f0" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-<polyline points="850.3,212.4 850.3,200.7" fill="none" stroke="#94a3b8" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
-<polyline points="850.3,212.4 850.3,200.7" fill="none" stroke="#e2e8f0" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="838.6,212.4 838.6,200.7" fill="none" stroke="#94a3b8" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="838.6,212.4 838.6,200.7" fill="none" stroke="#e2e8f0" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
 <polyline points="745.2,165.7 745.2,177.4" fill="none" stroke="#94a3b8" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
 <polyline points="745.2,165.7 745.2,177.4" fill="none" stroke="#e2e8f0" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
 <polyline points="768.5,200.7 756.8,200.7 745.2,200.7" fill="none" stroke="#94a3b8" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
@@ -1926,11 +1926,11 @@
 <polyline points="791.9,212.4 797.7,206.6 797.7,194.9 727.6,194.9 727.6,183.2 721.8,177.4" fill="none" stroke="#111827" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
 <circle cx="791.9" cy="212.4" r="2.3" fill="#111827" stroke="#fff" stroke-width="0.6"/>
 <circle cx="721.8" cy="177.4" r="2.3" fill="#111827" stroke="#fff" stroke-width="0.6"/>
-<polyline points="850.3,235.8 856.2,229.9 856.2,171.5 786.1,171.5 780.2,165.7" fill="none" stroke="#1d4ed8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-<circle cx="850.3" cy="235.8" r="2.3" fill="#1d4ed8" stroke="#fff" stroke-width="0.6"/>
+<polyline points="838.6,235.8 844.5,229.9 844.5,171.5 786.1,171.5 780.2,165.7" fill="none" stroke="#1d4ed8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="838.6" cy="235.8" r="2.3" fill="#1d4ed8" stroke="#fff" stroke-width="0.6"/>
 <circle cx="780.2" cy="165.7" r="2.3" fill="#1d4ed8" stroke="#fff" stroke-width="0.6"/>
-<polyline points="850.3,200.7 844.5,194.9 844.5,183.2 751.0,183.2 745.2,177.4" fill="none" stroke="#60a5fa" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-<circle cx="850.3" cy="200.7" r="2.3" fill="#60a5fa" stroke="#fff" stroke-width="0.6"/>
+<polyline points="838.6,200.7 832.8,194.9 832.8,183.2 751.0,183.2 745.2,177.4" fill="none" stroke="#60a5fa" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="838.6" cy="200.7" r="2.3" fill="#60a5fa" stroke="#fff" stroke-width="0.6"/>
 <circle cx="745.2" cy="177.4" r="2.3" fill="#60a5fa" stroke="#fff" stroke-width="0.6"/>
 <polyline points="826.9,270.8 832.8,265.0 832.8,253.3 715.9,253.3 715.9,218.3 710.1,212.4" fill="none" stroke="#7c3aed" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
 <circle cx="826.9" cy="270.8" r="2.3" fill="#7c3aed" stroke="#fff" stroke-width="0.6"/>
@@ -2743,12 +2743,12 @@
 <rect x="1133" y="406" width="4" height="9" fill="#1d4ed8"/>
 <text x="1142.0" y="414.0" font-size="8.4" fill="#1e293b" font-weight="700">CAN_H</text>
 <text x="1226.0" y="414.0" font-size="7.9" fill="#475569">module H pin</text>
-<text x="1320.0" y="414.0" font-size="7.9" fill="#475569">socket B·F20 → CAN H (A13)</text>
+<text x="1320.0" y="414.0" font-size="7.9" fill="#475569">socket B·F19 → CAN H (A13)</text>
 <rect x="1130" y="420" width="550" height="19" fill="#f8fafc" stroke="#e2e8f0"/>
 <rect x="1133" y="425" width="4" height="9" fill="#60a5fa"/>
 <text x="1142.0" y="433.0" font-size="8.4" fill="#1e293b" font-weight="700">CAN_L</text>
 <text x="1226.0" y="433.0" font-size="7.9" fill="#475569">module L pin</text>
-<text x="1320.0" y="433.0" font-size="7.9" fill="#475569">socket B·E20 → CAN L (A11) · 120 Ω on the module (HW-09)</text>
+<text x="1320.0" y="433.0" font-size="7.9" fill="#475569">socket B·E19 → CAN L (A11) · 120 Ω on the module (HW-09)</text>
 <text x="1130.0" y="465.0" font-size="12" fill="#1a1a1a" font-weight="700">WHAT PLUGS IN WHERE</text>
 <line x1="1130" y1="473" x2="1680" y2="473" stroke="#e2e8f0"/>
 <rect x="1130" y="481" width="550" height="19" fill="#f1f5f9" stroke="#cbd5e1"/>
@@ -2872,7 +2872,7 @@
 <text x="40.0" y="1041.0" font-size="9" fill="#475569">    screwed to the tray under it: A·B12-T12 / B11-T11 and B·J1-J19 / I1-I19. Nothing else goes in the columns under the Nucleo.</text>
 <text x="40.0" y="1056.0" font-size="9" fill="#475569">3  Solder the sockets WITH THE NUCLEO PLUGGED IN and A and B screwed to the tray: it sets the 63.50 mm between the rows. Tack two corners, check, finish.</text>
 <text x="40.0" y="1071.0" font-size="9" fill="#475569">4  SN65HVD230 FACE DOWN on B, as bent: sockets B·G13-D13 = CTX, CRX, GND, 3V3, and</text>
-<text x="40.0" y="1086.0" font-size="9" fill="#475569">    B·F20 / E20 = CANH / CANL, 7 holes behind. Its screw terminal is unused. CANH-CANL unpowered must read ~120 Ω: keep its terminator (HW-09).</text>
+<text x="40.0" y="1086.0" font-size="9" fill="#475569">    B·F19 / E19 = CANH / CANL, 6 holes behind. Its screw terminal is unused. CANH-CANL unpowered must read ~120 Ω: keep its terminator (HW-09).</text>
 <text x="40.0" y="1101.0" font-size="9" fill="#475569">5  The kit terminals may be 5.0 mm, not 5.08: the 3p CAN block spans 10.0 vs 10.16 mm of holes. Push it in; do not drill. It overhangs B's edge by about 0.2 mm.</text>
 <text x="40.0" y="1116.0" font-size="9" fill="#475569">6  Before the Nucleo goes in: 5 V to GND not shorted · 6 V isolated from 5 V and 3V3 · 5 V on A·R11 (E5V) only, nothing on L11 (5V) or R12 (VDD) · JP5 on [5-6].</text>
 <text x="40.0" y="1131.0" font-size="9" fill="#475569">7  Fixings: nothing is drilled in the boards. An 8 mm nylon standoff and a screw in each corner hole of A and C and three of B; drill the tray</text>

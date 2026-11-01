@@ -230,12 +230,12 @@ CAPS = [('A', ('c', 19), ('c', 21), 'C2')]         # (minus leg, plus leg)
 # socket on row XCVR_ROW, it points to the rear, and its screw terminal hangs under its far end.
 # Face down, the header reads CTX, CRX, GND, 3V3 across the socket toward the vehicle's left.
 # CAN H / L leave by the module's own 2-pin header, which points down when face down, into a
-# 1x2 socket seven holes behind the 4-pin row; the screw terminal is not used. The module terminates this
+# 1x2 socket six holes behind the 4-pin row, where it landed on B (Hedi, 2026-11-01); the screw terminal is not used. The module terminates this
 # end of the bus with its own 120 ohm (HW-09), so the carrier has no terminator of its own.
 # On B it lies in columns l-o, 0.5 mm outboard of the Nucleo's edge, beside the CAN terminal.
 XCVR_ROW = 12
 XCVR_SOCKET = ('B', [('l', XCVR_ROW, 'CTX'), ('m', XCVR_ROW, 'CRX'), ('n', XCVR_ROW, 'GND'), ('o', XCVR_ROW, '3V3')])
-CAN_ROW = XCVR_ROW - 7                     # 17.55 mm on the module, 17.78 on the grid
+CAN_ROW = XCVR_ROW - 6                     # 17.55 mm on the module, 15.24 on the grid: the bend takes the difference
 CAN_SOCKET = ('B', [('m', CAN_ROW, 'CANH'), ('n', CAN_ROW, 'CANL')])
 MODULE = dict(length=26.98, width=10.24, terminal=3.74, pin_in=-0.3, canhl=17.25)
 # pin_in: header face to the bent pins (negative: the bent legs stand just outside the face);
@@ -300,8 +300,8 @@ WIRES = [
     ('CRX', 'B', [(11, 13), (13, 13)], 'ins'),                                             # PB12 to XCVR CRX
     ('GND', 'B', [(11, 15), (11.5, 14.5), (13.5, 14.5), (13.5, 11.5), (14, 11)], 'ins'),    # CN10-20 to XCVR GND
     ('GND', 'B', [(14, 10), (14.5, 9.5), (15.5, 9.5), (15.5, 15.5), (16.5, 15.5), (17, 16)], 'ins'),   # XCVR GND to CAN GND
-    ('CANH', 'B', [(12, 5), (12.5, 4.5), (17.5, 4.5), (17.5, 10.5), (18, 11)], 'ins'),      # module H to CAN H
-    ('CANL', 'B', [(15, 5), (15.5, 5.5), (16.5, 5.5), (16.5, 13.5), (17, 14)], 'ins'),      # module L to CAN L
+    ('CANH', 'B', [(12, 6), (12.5, 5.5), (17.5, 5.5), (17.5, 10.5), (18, 11)], 'ins'),      # module H to CAN H
+    ('CANL', 'B', [(15, 6), (15.5, 6.5), (16.5, 6.5), (16.5, 13.5), (17, 14)], 'ins'),      # module L to CAN L
     # ---- board B, the two I2C headers on top, across the front: PB6 and PB7 reach I2C-B, which passes them on to I2C-A
     # in front; CN10-20 grounds I2C-B and the CAN terminal grounds I2C-A. Every header pin lands on the hole behind it or in front.
     ('SCL', 'B', [(9, 7), (9.5, 6.5), (10.5, 6.5), (10.5, 16.5), (13.5, 16.5), (14, 17)], 'ins'),   # PB6 to I2C-B
@@ -328,8 +328,8 @@ SOLDER = [
     ('B', [(10, 13), (11, 13)]), ('B', [(13, 12), (13, 13)]),                 # CRX: CN10-16, XCVR
     ('B', [(10, 15), (11, 15), (12, 15)]), ('B', [(14, 12), (14, 11), (14, 10)]),   # GND: CN10-20 (XCVR, I2C-B), XCVR
     ('B', [(17, 16), (18, 16), (18, 17), (18, 18)]),                          # GND: CAN terminal and I2C-A
-    ('B', [(13, 5), (12, 5)]), ('B', [(18, 12), (18, 11)]),                   # CANH: module, terminal
-    ('B', [(14, 5), (15, 5)]), ('B', [(18, 14), (17, 14)]),                   # CANL: module, terminal
+    ('B', [(13, 6), (12, 6)]), ('B', [(18, 12), (18, 11)]),                   # CANH: module, terminal
+    ('B', [(14, 6), (15, 6)]), ('B', [(18, 14), (17, 14)]),                   # CANL: module, terminal
     ('B', [(15, 12), (15, 13), (15, 14)]), ('B', [(15, 18), (15, 17)]),       # 3V3: XCVR (the bridge from A, I2C-A), I2C-A
     ('B', [(14, 17), (14, 18), (14, 19)]), ('B', [(17, 18), (17, 19)]),       # SCL: I2C-B, I2C-A
     ('B', [(13, 17), (13, 18), (13, 19)]), ('B', [(16, 18), (16, 19)]),       # SDA: I2C-B, I2C-A
@@ -1061,7 +1061,7 @@ if __name__ == "__main__":
         f"    screwed to the tray under it: {col_range('A', 'g')} / {col_range('A', 'h')[2:]} and {col_range('B', 'i')} / {col_range('B', 'j')[2:]}. Nothing else goes in the columns under the Nucleo.",
         '3  Solder the sockets WITH THE NUCLEO PLUGGED IN and A and B screwed to the tray: it sets the 63.50 mm between the rows. Tack two corners, check, finish.',
         f"4  SN65HVD230 FACE DOWN on B, as bent: sockets {N('B', XCVR_SOCKET[1][0][0], XCVR_ROW)}-{silk('B', XCVR_SOCKET[1][-1][0], XCVR_ROW)} = {', '.join(l for _, _, l in XCVR_SOCKET[1])}, and",
-        f"    {N('B', CAN_SOCKET[1][0][0], CAN_ROW)} / {silk('B', CAN_SOCKET[1][1][0], CAN_ROW)} = CANH / CANL, 7 holes behind. Its screw terminal is unused. CANH-CANL unpowered must read ~120 Ω: keep its terminator (HW-09).",
+        f"    {N('B', CAN_SOCKET[1][0][0], CAN_ROW)} / {silk('B', CAN_SOCKET[1][1][0], CAN_ROW)} = CANH / CANL, 6 holes behind. Its screw terminal is unused. CANH-CANL unpowered must read ~120 Ω: keep its terminator (HW-09).",
         '5  The kit terminals may be 5.0 mm, not 5.08: the 3p CAN block spans 10.0 vs 10.16 mm of holes. Push it in; do not drill. It overhangs B\'s edge by about 0.2 mm.',
         f"6  Before the Nucleo goes in: 5 V to GND not shorted · 6 V isolated from 5 V and 3V3 · 5 V on {N(*nuc_hole('CN7', 6))} (E5V) only, nothing on {silk(*nuc_hole('CN7', 18))} (5V) or {silk(*nuc_hole('CN7', 5))} (VDD) · JP5 on [5-6].",
         '7  Fixings: nothing is drilled in the boards. An 8 mm nylon standoff and a screw in each corner hole of A and C and three of B; drill the tray',
