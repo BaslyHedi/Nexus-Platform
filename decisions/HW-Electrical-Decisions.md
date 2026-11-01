@@ -858,7 +858,8 @@ carrier uses, each checked against the DS14539 alternate function table and UM31
 - **The ST-LINK port is USB-C (CN1)**, so the fascia's Mini-B lead reaches it through one angled
   cable (BOM 5.12).
 - **SW-04 to SW-07 were written for the F407** (one flash bank in 12 sectors, CCM, backup SRAM, 98
-  vectors). They are reworked when the FBL is ported to the H533.
+  vectors). They are superseded by SW-09 (flash map), SW-10 (SRAM and hand-off) and SW-11 (vector table
+  and version record) on the H533.
 
 **To confirm.**
 

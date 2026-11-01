@@ -98,7 +98,7 @@ Software element, level 2, handed over: the repository in the [configuration tab
 - Phase: 1
 - Verification: Inspection The memory map
 - Realised-by: SW
-- Decisions: SW-04
+- Decisions: SW-09
 
 ### Nexus-Physical-01-04-R009
 
