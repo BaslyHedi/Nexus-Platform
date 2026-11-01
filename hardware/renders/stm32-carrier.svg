@@ -832,9 +832,8 @@
 <rect x="106.9" y="176.0" width="2.8" height="2.8" fill="#fbbf24"/>
 <rect x="106.9" y="187.7" width="2.8" height="2.8" fill="#fbbf24"/>
 <rect x="106.9" y="199.3" width="2.8" height="2.8" fill="#fbbf24"/>
-<rect x="108.4" y="535.1" width="64.2" height="44.0" rx="1" fill="#ede9fe" fill-opacity="0.75" stroke="#7c3aed" stroke-width="0.9" stroke-dasharray="4 2"/>
-<rect x="161.1" y="533.7" width="23.2" height="46.7" rx="0.8" fill="#334155" stroke="#0f172a" stroke-width="0.8"/>
-<rect x="177.0" y="538.2" width="2.8" height="2.8" fill="#fbbf24"/>
+<rect x="108.4" y="546.8" width="64.2" height="32.3" rx="1" fill="#ede9fe" fill-opacity="0.75" stroke="#7c3aed" stroke-width="0.9" stroke-dasharray="4 2"/>
+<rect x="161.1" y="545.4" width="23.2" height="35.1" rx="0.8" fill="#334155" stroke="#0f172a" stroke-width="0.8"/>
 <rect x="177.0" y="549.9" width="2.8" height="2.8" fill="#fbbf24"/>
 <rect x="177.0" y="561.5" width="2.8" height="2.8" fill="#fbbf24"/>
 <rect x="177.0" y="573.2" width="2.8" height="2.8" fill="#fbbf24"/>
@@ -916,7 +915,7 @@
 <text x="99.7" y="180.6" font-size="6" fill="#111827" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="end">blk</text>
 <text x="99.7" y="192.3" font-size="6" fill="#dc2626" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="end">red</text>
 <text x="99.7" y="204.0" font-size="6" fill="#64748b" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="end">wht</text>
-<text x="140.3" y="560.3" font-size="6.5" fill="#7c3aed" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="middle">I2C-B</text>
+<text x="140.3" y="566.2" font-size="6.5" fill="#7c3aed" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="middle">I2C-B</text>
 <text x="140.3" y="607.1" font-size="6.5" fill="#7c3aed" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="middle">I2C-A</text>
 <text x="352.4" y="193.2" font-size="7" fill="#0d9488" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="start">LED  DIN · 5V · GND</text>
 <text x="264.6" y="625.5" font-size="7" fill="#1d4ed8" font-weight="700" stroke="#fbfaf8" stroke-width="3" paint-order="stroke" text-anchor="start">CAN  H · L · GND</text>
@@ -1764,7 +1763,6 @@
 <circle cx="628.3" cy="609.7" r="3.2" fill="#e2e8f0" stroke="#334155" stroke-width="1.1"/>
 <circle cx="628.3" cy="598.0" r="3.2" fill="#e2e8f0" stroke="#334155" stroke-width="1.1"/>
 <circle cx="628.3" cy="586.3" r="3.2" fill="#e2e8f0" stroke="#334155" stroke-width="1.1"/>
-<circle cx="698.4" cy="247.5" r="3.2" fill="#e2e8f0" stroke="#334155" stroke-width="1.1"/>
 <circle cx="698.4" cy="235.8" r="3.2" fill="#e2e8f0" stroke="#334155" stroke-width="1.1"/>
 <circle cx="698.4" cy="224.1" r="3.2" fill="#e2e8f0" stroke="#334155" stroke-width="1.1"/>
 <circle cx="698.4" cy="212.4" r="3.2" fill="#e2e8f0" stroke="#334155" stroke-width="1.1"/>
@@ -2782,7 +2780,7 @@
 <text x="1226.0" y="646.0" font-size="7.9" fill="#475569">90° across B's front, pointing forward: INA226 VCC, SDA, SCL, GND - its own order, a straight 4-way lead</text>
 <rect x="1130" y="652" width="550" height="19" fill="#ffffff" stroke="#e2e8f0"/>
 <text x="1142.0" y="665.0" font-size="8.4" fill="#1e293b" font-weight="700">B I2C-B</text>
-<text x="1226.0" y="665.0" font-size="7.9" fill="#475569">90° across B's front, pointing forward: motor module 5V, GND, SDA, SCL - its own order; the 5V pin has no wire</text>
+<text x="1226.0" y="665.0" font-size="7.9" fill="#475569">90° across B's front, pointing forward: motor module GND, SDA, SCL - its own order, a 1×3: the module's 5V output has no pin</text>
 <rect x="1130" y="671" width="550" height="19" fill="#f8fafc" stroke="#e2e8f0"/>
 <text x="1142.0" y="684.0" font-size="8.4" fill="#1e293b" font-weight="700">I2C leads</text>
 <text x="1226.0" y="684.0" font-size="7.9" fill="#475569">plugged before the Nucleo goes on; they leave B's front edge and drop through the tray window beside B (W3)</text>
@@ -2802,7 +2800,7 @@
 <text x="1212.0" y="802.0" font-size="7.9" fill="#475569">5×7 board · 2 × 1×19 female · 2 × 2p terminal · 2 × 1×3 male · C2 470µF · R4 1k</text>
 <rect x="1130" y="808" width="550" height="19" fill="#f8fafc" stroke="#e2e8f0"/>
 <text x="1142.0" y="821.0" font-size="8.4" fill="#1e293b" font-weight="700">Board B</text>
-<text x="1212.0" y="821.0" font-size="7.9" fill="#475569">3×7 board · 2 × 1×19 + 1 × 1×4 + 1 × 1×2 female · 3p terminal · 2 × 1×4 90° male, on top · the SN65HVD230 module</text>
+<text x="1212.0" y="821.0" font-size="7.9" fill="#475569">3×7 board · 2 × 1×19 + 1 × 1×4 + 1 × 1×2 female · 3p terminal · 1×3 + 1×4 90° male, on top · the SN65HVD230 module</text>
 <rect x="1130" y="827" width="550" height="19" fill="#ffffff" stroke="#e2e8f0"/>
 <text x="1142.0" y="840.0" font-size="8.4" fill="#1e293b" font-weight="700">Board C</text>
 <text x="1212.0" y="840.0" font-size="7.9" fill="#475569">3×7 board · 2 × 2p terminal · USB-C socket (5.1), 2 zip ties · C1 470µF</text>

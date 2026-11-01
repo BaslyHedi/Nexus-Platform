@@ -193,11 +193,12 @@ TERMS = [
 # across B, pointing forward: the plug lies flat on B (about 3 mm) and its lead leaves by B's front edge, down through
 # the tray window beside B (W3, MEC-17). Their row keeps the plugs 1 mm short of B's front outboard screw head. Each is
 # in the order of the module it takes, so a straight lead is right: the INA226 is VCC SDA SCL GND, the motor module's IIC
-# port SCL SDA GND 5V (its 5 V, an output, lands on a pin with no wire, in B's column k beside the socket), the
+# port SCL SDA GND 5V (its 5 V, an output, has no pin: a fourth pin in B's column k would not clear the CN10 socket,
+# Hedi 2026-11-01, so I2C-B is a 1x3), the
 # LD-1501MG black, red, white (HW-21).
 MALE = [
     ('A', [('b', 23, 'GND'), ('c', 23, '+6V'), ('d', 23, 'SIG')], 'SERVO'),
-    ('B', [('k', 18, 'NC'), ('l', 18, 'GND'), ('m', 18, 'SDA'), ('n', 18, 'SCL')], 'I2C-B'),
+    ('B', [('l', 18, 'GND'), ('m', 18, 'SDA'), ('n', 18, 'SCL')], 'I2C-B'),
     ('B', [('o', 18, '3V3'), ('p', 18, 'SDA'), ('q', 18, 'SCL'), ('r', 18, 'GND')], 'I2C-A'),
     ('A', [('d', 3, 'LED'), ('c', 3, '5V'), ('b', 3, 'GND')], 'LED'),   # the WS2812B stick (BOM 1.3), A's rear, past the Nucleo's edge
 ]
@@ -1022,7 +1023,7 @@ if __name__ == "__main__":
         (None, 'A SERVO', f"straight header on top, across A's front: LD-1501MG black {N('A', *[(c, r) for c, r, l in MALE[0][1] if l == 'GND'][0])} outboard, red, white (HW-21)"),
         (None, 'A LED', 'straight 1×3 on top at A\'s rear: DIN, 5V, GND to the WS2812B stick (1.3) on plate 3, no level shifter (HW-22)'),
         (None, 'B I2C-A', '90° across B\'s front, pointing forward: INA226 VCC, SDA, SCL, GND - its own order, a straight 4-way lead'),
-        (None, 'B I2C-B', '90° across B\'s front, pointing forward: motor module 5V, GND, SDA, SCL - its own order; the 5V pin has no wire'),
+        (None, 'B I2C-B', '90° across B\'s front, pointing forward: motor module GND, SDA, SCL - its own order, a 1×3: the module\'s 5V output has no pin'),
         (None, 'I2C leads', 'plugged before the Nucleo goes on; they leave B\'s front edge and drop through the tray window beside B (W3)'),
         (None, 'B CAN', 'twisted H, L + GND to DE-9 stub and FRDM J7 (HW-09, HW-18), from the vehicle left; screws reached through plate 3\'s left slot'),
         (None, 'CN1', 'ST-LINK USB-C: 90° C to Mini-B cable (5.12) flat, turned to the vehicle left, then the fascia extension (5.10)'),
@@ -1031,7 +1032,7 @@ if __name__ == "__main__":
 
     parts = [
         (None, 'Board A', '5×7 board · 2 × 1×19 female · 2 × 2p terminal · 2 × 1×3 male · C2 470µF · R4 1k'),
-        (None, 'Board B', '3×7 board · 2 × 1×19 + 1 × 1×4 + 1 × 1×2 female · 3p terminal · 2 × 1×4 90° male, on top · the SN65HVD230 module'),
+        (None, 'Board B', '3×7 board · 2 × 1×19 + 1 × 1×4 + 1 × 1×2 female · 3p terminal · 1×3 + 1×4 90° male, on top · the SN65HVD230 module'),
         (None, 'Board C', '3×7 board · 2 × 2p terminal · USB-C socket (5.1), 2 zip ties · C1 470µF'),
         (None, 'From stock', 'caps: 2 of the 5 in 3.14 · resistors: 3.21 · module: 4.1 · headers, terminals: 5.11'),
         (None, 'Wire', '22 AWG insulated copper hook-up wire (not in BOM) · 18 AWG silicone copper (3.11) for the thick runs · not the CCA Dupont leads (5.7)'),

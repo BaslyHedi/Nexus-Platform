@@ -1129,10 +1129,10 @@ no GPIO change (HW-24):
 - **B carries CAN and I2C:** the face-down module in columns l-o, its 1×4 at B·G13-D13 (CTX, CRX, GND,
   3V3) and its CANH / CANL at B·F20 / E20, pointing to the rear, 0.5 mm outboard of the Nucleo's edge;
   the CAN terminal in the outer column at B·A13 (H), A11 (L), A9 (GND), entry outboard, under plate
-  3's left slot; I2C-B (B·H7-E7: NC, GND, SDA, SCL) and I2C-A (B·D7-A7: 3V3, SDA, SCL, GND), 90°,
+  3's left slot; I2C-B (B·G7-E7: GND, SDA, SCL) and I2C-A (B·D7-A7: 3V3, SDA, SCL, GND), 90°,
   across the front, pointing forward. The headers sit on hole row 18, so the plugs stop 1 mm short of
-  B's front outboard screw head. I2C-B's unwired pin is in column k, beside the socket, where no land
-  is allowed. PB6 and PB7 are the board's only wires straight on a pin (B's first column).
+  B's front outboard screw head. I2C-B is a 1×3: a fourth pin for the motor module's unwired 5V, in
+  column k, does not clear the CN10 socket (Hedi, 2026-11-01). PB6 and PB7 are the board's only wires straight on a pin (B's first column).
 - **One wire crosses: 3V3**, A·M10 to B·D12, behind the sockets (A row 2.5 = B row 3.5).
 - **Routing check passes:** 29 wires (9 in 18 AWG), 35 solder bridges, 2 wires on a pin. The check
   now takes the board of the 5V IN terminal from the data instead of assuming B.
