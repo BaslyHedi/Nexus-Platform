@@ -136,8 +136,8 @@ for k, v in PAD.items():
 for v, ks in disco.items():
     for k in ks[1:]:
         join(ks[0], k)
-_vin = next(ps for b, ps, e, name, c in C.TERMS if name == '5V IN')          # TO STM32 -> 5V IN, by the C-to-B pair
-join(('C', 7, 24), ('B', ci(_vin[0][0]), _vin[0][1])); join(('C', 9, 24), ('B', ci(_vin[1][0]), _vin[1][1]))
+_vb, _vin = next((b, ps) for b, ps, e, name, c in C.TERMS if name == '5V IN')   # TO STM32 -> 5V IN, by the C-to-carrier pair
+join(('C', 7, 24), (_vb, ci(_vin[0][0]), _vin[0][1])); join(('C', 9, 24), (_vb, ci(_vin[1][0]), _vin[1][1]))
 groups = {}
 for k, v in PAD.items():
     groups.setdefault(f(k), set()).add(v)

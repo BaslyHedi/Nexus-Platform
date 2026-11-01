@@ -28,9 +28,10 @@ Drawings: [wiring schematic](../hardware/renders/wiring-schematic.svg) · [STM32
 | **HW-18** | CAN debug port - DE-9 on the fascia, PC as an unterminated third node |
 | **HW-19** | The 5 V split, its bulk capacitor and the USB-C Rp move onto a board; CAN termination is a jumper. *Rp dropped 2026-10-07* |
 | **HW-20** | Three fuses - the logic branch runs on the main fuse |
-| **HW-21** | Servo PWM on PE9 (TIM1_CH1); the servo lead is black / red / white. *Updated by HW-22: PC2, TIM4_CH4* |
-| **HW-22** | The real-time MCU is a NUCLEO-H533RE: FDCAN2 on PB12/PB13, I2C1 on PB6/PB7, servo on PC2, 5 V into E5V |
-| **HW-23** | The three CAN leads meet in board A's screw terminal, two wires per clamp |
+| **HW-21** | Servo PWM on PE9 (TIM1_CH1); the servo lead is black / red / white. *Updated by HW-22: PC2, TIM4_CH4; by HW-24: header on A* |
+| **HW-22** | The real-time MCU is a NUCLEO-H533RE: FDCAN2 on PB12/PB13, I2C1 on PB6/PB7, servo on PC2, 5 V into E5V. *Updated by HW-24: CN7 on A, CN10 on B* |
+| **HW-23** | The three CAN leads meet in board A's screw terminal, two wires per clamp. *Updated by HW-24: the terminal is on B* |
+| **HW-24** | Board A sits under CN7 and board B under CN10: the CAN and I2C parts move to B, power, servo and LED to A |
 
 ---
 
@@ -737,6 +738,8 @@ battery + ─ 7.5 A ─ shunt ─ (+) bus ─┬─ SW1 ─┬─ 5 A ─ Encode
 
 **Updated by HW-22:** the servo signal now comes from **PC2 on CN7-35, TIM4_CH4 (AF2)**, on carrier board B. The lead colours, R4 and the miswiring cases below still hold, with PC2 in place of PE9; the TIM1 timing and MOE notes were the F407's.
 
+**Updated by HW-24:** CN7 is over board A, so the SERVO header, R4 and C2 are on A: white (signal) on **A·B15**, red on A·B16, black on A·B17, black outboard.
+
 **Decision (2026-10-03).** The steering servo's signal comes from **PE9, P1-27**, as
 **TIM1_CH1** (alternate function AF1), through R4 (1 kΩ, HW-19) to the SERVO header on carrier
 board A. The LD-1501MG's lead, checked on the part in hand, is **black = GND, red = +6 V,
@@ -785,6 +788,9 @@ so the plug can go on reversed or one pin off.
 ---
 
 ## HW-22 · The real-time MCU is a NUCLEO-H533RE: FDCAN2 on PB12/PB13, I2C1 on PB6/PB7, servo on PC2, 5 V into E5V
+
+**Updated by HW-24:** the pins below stand, but CN7 is over board A and CN10 over board B, so the Board
+column swaps: CAN and I2C are on B, E5V, 3V3, PC2 and PC12 on A.
 
 **Decision (2026-10-25; servo pin 2026-10-27).** The STM32F4DISCOVERY (BOM 1.2a) is replaced by a
 **NUCLEO-H533RE**, board MB1814 (BOM 1.2): an **STM32H533RET6**, Cortex-M33 with TrustZone, 250 MHz,
@@ -869,6 +875,10 @@ carrier uses, each checked against the DS14539 alternate function table and UM31
 
 ## HW-23 · The three CAN leads meet in board A's screw terminal, two wires per clamp
 
+**Updated by HW-24:** the CAN terminal is on **board B, at B·A9-A13**, on the vehicle left, under plate
+3's left slot (x 109.3-157.6, y 105.3-110.6). The joint below is unchanged; read B for A, and the left
+slot for the right one.
+
 **Decision (Hedi, 2026-10-30).** The bus has three cables: the FRDM's lead from J7 (Dupont F-F
 jumpers, 5.7), the DE-9 panel lead (BOM 4.5, pre-wired with female Dupont tails, about 20 cm) and
 board A's 3-way screw terminal (H, L, GND, MEC-15). They are joined **in that terminal**: the
@@ -924,3 +934,58 @@ two ends, and the DE-9 becomes a stub of about 20 cm at the terminated end, whic
 - **Check, unpowered, at board A:** CAN H to CAN L reads about 60 Ω with JP1 fitted and the PC
   adapter's terminator off (HW-18).
 
+---
+
+## HW-24 · Board A sits under CN7 and board B under CN10: the CAN and I2C parts move to B, power, servo and LED to A
+
+**Decision (Hedi, 2026-11-01).** Seen from above with CN1 at the rear, the NUCLEO-H533RE has **CN7 on
+the vehicle right, over board A, and CN10 on the vehicle left, over board B** (Hedi's photo of the
+Nucleo plugged into the boards as soldered). The carrier drawing had the Nucleo mirrored across the
+vehicle, CN10 over A, and the boards were soldered from it. The sockets are where the drawing put them
+(A·B11-T12, B·I1-J19) and stay there; only the header above each board changes, and the parts follow
+the pins:
+
+| Board | Under | Carries |
+|---|---|---|
+| A, 5×7 | CN7 | 5V IN to E5V (CN7-6) and GND (CN7-19); 6V IN, C2, R4 and the SERVO header from PC2 (CN7-35); the LED stick header from PC12 (CN7-3) |
+| B, 3×7 | CN10 | the SN65HVD230 module and the CAN terminal on PB12 / PB13 (CN10-16 / 30); I2C-A and I2C-B on PB6 / PB7 (CN10-3 / 5); GND from CN10-20 |
+
+**Why.**
+
+- **No GPIO moves: HW-22's pin map stands.** Every CAN and I2C pin the H533 offers without a change to
+  the Nucleo is on CN10 (DS14539 Rev 3, UM3121 Table 17). CN7 has FDCAN2_RX on PA0 but no FDCAN TX;
+  its only I2C pins, PF0 / PF1 (I2C2), carry the 24 MHz HSE crystal (UM3121 §10.2); and CN7-36 / 38
+  give PB7 / PB6 only after moving solder bridges (PC1 / PC0 by default, UM3121 Table 18). Every
+  supply pin is on CN7. So the split is forced: CAN and I2C on B, power on A.
+- **One wire crosses, as before: 3V3**, from CN7-16 on A (A·M11, bridged to A·M10) to the
+  transceiver's 3V3 on B (B·D12), which passes it on to I2C-A's VCC. It crosses behind the sockets, A
+  row 2.5 to B row 3.5, where B has no socket yet. CN10-7 would put 3V3 on B without the wire, but it
+  is AVDD, the MCU's analog supply (R33 to VDD), and is not a supply to draw from.
+- **Rejected: rebuilding A and B to the old allocation.** Only one 5×7 is left and the sockets are
+  soldered. The swap moves no socket, no corner hole and nothing on the tray (MEC-17).
+- **Rejected: keeping each part where it was and running the signals across.** CTX, CRX, SCL and SDA
+  one way, and E5V, PC2 and PC12 the other, would each be a wire over the 26 mm gap.
+
+**Consequences.**
+
+- The carrier drawing, its routing check and the 3D model follow (MEC-15, revision 2026-11-01). Their
+  Nucleo is mirrored too: CN1 sits nearer CN10, on B's side, as on the real board.
+- **The CAN terminal is on B, at B·A9-A13, on the vehicle left** (HW-23). Its screws are under plate
+  3's left slot (x 109.3-157.6, y 105.3-110.6), the mirror of the right one A's terminal used, so the
+  bus is still serviced from above. The J7 lead comes down plate 3's cross-slot and goes to the vehicle
+  left, the lane MEC-19 kept until 2026-10-27.
+- **The power leads arrive on the vehicle right:** C's TO STM32 pair to A·P17 / N17 and the UBEC's
+  6 V pair to A·K17 / I17, through window W2 under A. The servo lead plugs in at A's front (A·B15-B17),
+  the LED stick's lead at A's rear (A·V15-V17).
+- **The I2C leads leave B's front edge** and drop through the tray window beside B (W3, MEC-17).
+- **PB6 and PB7 take their wires straight on the pin:** they are in B's first column, with no free
+  hole beside them. E5V and 3V3, which needed that exception on the old B, have free holes on A.
+
+**To confirm.**
+
+- **Lay every lead on the vehicle before cutting it:** the J7 and DE-9 leads, the 5 V and 6 V pairs,
+  the servo lead and the I2C leads all changed sides.
+- **With the Nucleo plugged in:** the CAN terminal overhangs B's outer edge by about 0.2 mm, and the
+  face-down module sits 0.5 mm outboard of the Nucleo's edge.
+- **Plate 3's left slot is open over the CAN terminal:** the compute tray's ribs run at y 93-101.75,
+  clear of it, but check on the vehicle.

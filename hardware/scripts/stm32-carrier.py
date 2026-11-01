@@ -23,9 +23,9 @@ def RX(n):
 BOARD = {
     # name: cols, rows, Y of col 1, board Y edges, first column the board has, kit board, corner holes screwed (corner_holes order)
     'A': dict(cols=18, rows=24, y1=-20.32, edge=(-23.73, 26.27), c0=1, kit='5x7', fix=(0, 1, 2, 3)),
-    # B is a 3x7 (10 x 24) since 2026-10-26: one 5x7 was left, and A needs all 18 columns. Every part of B is in columns i-q, so
-    # the 3x7 covers i-r, flush with the old 5x7's outboard edge, and the letters keep the 18-column grid's so no part moves.
-    # Its front inboard corner hole is 2 mm from the end of the CN7 socket and is not screwed (MEC-15, MEC-17).
+    # B is a 3x7 (10 x 24) since 2026-10-26: one 5x7 was left. The 3x7 covers columns i-r, flush with the old 5x7's outboard
+    # edge, and the letters keep the 18-column grid's. Its front inboard corner hole is 2 mm from the end of the CN10 socket and
+    # is not screwed (MEC-15, MEC-17).
     'B': dict(cols=18, rows=24, y1=35.56, edge=(55.88 - 3.57, 78.74 + 3.57), c0=9, kit='3x7', fix=(1, 2, 3)),
 }
 BX = (-64.21, 5.79)                  # a board whose hole 1 sits on grid row 1, 70 mm
@@ -39,10 +39,20 @@ SHIFT = {'A': 1, 'B': 0}
 # headers are 4 pitches wider than the Discovery's P1 / P2, so each socket pair moves two columns outboard
 # (A: i/j to g/h, B: g/h to i/j), and the board stays centred where the Discovery was. Header row k sits
 # on grid row k + NUC_ROW0: five rows forward of the Discovery's row 1, for room behind CN1's plug.
+# Seen from above with CN1 at the rear, CN7 is on the vehicle right (over A) and CN10 on the left (over B): Hedi's photo of
+# the boards as built, 2026-11-01. The first reading of UM3121 Fig. 7 had them the other way round, so every Y read off it
+# below goes through ny(), the mirror about the board's centre line.
 NUC_ROWS = 19
 NUC_ROW0 = 5
 NUC = dict(x=(RX(1 + NUC_ROW0) - 18 * P - 5.08, RX(1 + NUC_ROW0) + 31.70), y=(-8.33, 61.67))
-CN1_Y = 14.3                 # CN1, the ST-LINK USB-C, on the rear edge (UM3121 Fig. 7, +-0.3)
+
+
+def ny(y):
+    """A Y read off UM3121 Fig. 7, mirrored onto the board as it sits (CN7 over A)."""
+    return NUC['y'][0] + NUC['y'][1] - y
+
+
+CN1_Y = ny(14.3)             # CN1, the ST-LINK USB-C, on the rear edge, nearer CN10 (UM3121 Fig. 7, +-0.3)
 XMIN, XMAX = -64.21 - P, NUC['x'][1]
 
 
@@ -146,16 +156,17 @@ def hole(board, col, row):
     return HX(board, row), BOARD[board]['y1'] + (col - 1) * P
 
 # ---------------------------------------------------------------- component data
-# Board A (CN10 side) is a 5x7 kit board, 18 x 24, col a outboard; board B (CN7 side) a 3x7, columns i-r of the same grid.
+# Board A (CN7 side) is a 5x7 kit board, 18 x 24, col a outboard; board B (CN10 side) a 3x7, columns i-r of the same grid.
 # Four 1x19 sockets, every tail in a hole: A's on hole rows 5-23, B's on 6-24. On each header the odd pins
-# are one column and the even pins the other: CN10's even pins are its outer row, CN7's odd pins are its.
-SOCKETS = [('A', 'g', 'CN10 even'), ('A', 'h', 'CN10 odd'), ('B', 'i', 'CN7 even'), ('B', 'j', 'CN7 odd')]
+# are one column and the even pins the other: CN7's odd pins are its outer row, CN10's even pins are its.
+SOCKETS = [('A', 'g', 'CN7 odd'), ('A', 'h', 'CN7 even'), ('B', 'i', 'CN10 odd'), ('B', 'j', 'CN10 even')]
 # The NUCLEO pins the carrier uses, by header and pin (UM3121 Table 17), and the net each one is on.
 # FDCAN2 on PB12 / PB13 (AF9), I2C1 on PB6 / PB7 (AF4), TIM4_CH4 on PC2 (AF2, 2026-10-27; was PA15, which the board ties to
 # the ST-LINK's JTDI through SB9, and the Nucleo is not modified, HW-22): checked against the STM32H533
-# datasheet, DS14539 Rev 3, March 2026. E5V takes the 5 V in with JP5 on [5-6]. Every CAN pin the part has is
-# on CN10 and its only supply pins are on CN7, so the CAN and I2C parts sit on A and the power and the servo on B:
-# one wire, 3V3, crosses between the boards.
+# datasheet, DS14539 Rev 3, March 2026. E5V takes the 5 V in with JP5 on [5-6]. Every CAN and I2C pin the part offers
+# without a change to the Nucleo is on CN10 (CN7 has no FDCAN TX, and its only I2C pins, PF0 / PF1, carry the HSE crystal),
+# and its only supply pins are on CN7. So the CAN and I2C parts sit on B and the power, the servo and the LED on A:
+# one wire, 3V3, crosses between the boards (2026-11-01, as the boards were built).
 NUC_PINS = {('CN10', 3): ('PB6', 'SCL'), ('CN10', 5): ('PB7', 'SDA'), ('CN10', 9): ('GND', 'GND'),
             ('CN10', 16): ('PB12', 'CRX'), ('CN10', 20): ('GND', 'GND'), ('CN10', 30): ('PB13', 'CTX'),
             ('CN7', 6): ('E5V', '5V'), ('CN7', 8): ('GND', 'GND'), ('CN7', 16): ('3V3', '3V3'),
@@ -166,27 +177,29 @@ NUC_PINS = {('CN10', 3): ('PB6', 'SCL'), ('CN10', 5): ('PB7', 'SDA'), ('CN10', 9
 def nuc_hole(hdr, pin):
     """(board, column, hole row) of a Nucleo morpho pin."""
     k = (pin + 1) // 2
-    if hdr == 'CN10':
-        return 'A', 'g' if pin % 2 == 0 else 'h', hdr_hole('A', k)
-    return 'B', 'j' if pin % 2 else 'i', hdr_hole('B', k)
+    if hdr == 'CN7':
+        return 'A', 'g' if pin % 2 else 'h', hdr_hole('A', k)
+    return 'B', 'j' if pin % 2 == 0 else 'i', hdr_hole('B', k)
 
-# screw terminals: board, [(col,row,label)], entry side ('-Y','+Y','+X'), name, colour
+# screw terminals: board, [(col,row,label)], entry side ('-Y','+Y','+X'), name, colour. The CAN terminal is in B's
+# outer column, under plate 3's left slot (x 109.3-157.6, y 105.3-110.6), so the bus is serviced from above (HW-23).
 TERMS = [
-    ('A', [('b', 19, 'H'), ('b', 21, 'L'), ('b', 23, 'GND')], '-Y', 'CAN', '#1d4ed8'),
-    ('B', [('q', 8, '+6V'), ('q', 10, 'GND')], '+Y', '6V IN', '#d97706'),
-    ('B', [('q', 13, '+5V'), ('q', 15, 'GND')], '+Y', '5V IN', '#dc2626'),
+    ('A', [('b', 9, '+5V'), ('b', 11, 'GND')], '-Y', '5V IN', '#dc2626'),
+    ('A', [('b', 14, '+6V'), ('b', 16, 'GND')], '-Y', '6V IN', '#d97706'),
+    ('B', [('r', 12, 'H'), ('r', 14, 'L'), ('r', 16, 'GND')], '+Y', 'CAN', '#1d4ed8'),
 ]
 # male headers: board, [(col,row,label)], name, all on top (the solder side carries wires only), pins across the
-# board on one row. SERVO is a straight header. The two I2C headers are 90 degree headers on A's inner columns,
-# along the gap to B, pointing forward: the plug lies flat on A under the Nucleo (about 3 mm against 9) and its lead
-# leaves by A's front edge, down through the tray window (MEC-17). Each is in the order of the module it takes, so a
-# straight lead is right: the INA226 is VCC SDA SCL GND, the motor module's IIC port SCL SDA GND 5V (its 5 V, an
-# output, lands on a pin with no wire), the LD-1501MG black, red, white (HW-21).
+# board on one row. SERVO and LED are straight headers on A's outboard strip. The two I2C headers are 90 degree headers
+# across B, pointing forward: the plug lies flat on B (about 3 mm) and its lead leaves by B's front edge, down through
+# the tray window beside B (W3, MEC-17). Their row keeps the plugs 1 mm short of B's front outboard screw head. Each is
+# in the order of the module it takes, so a straight lead is right: the INA226 is VCC SDA SCL GND, the motor module's IIC
+# port SCL SDA GND 5V (its 5 V, an output, lands on a pin with no wire, in B's column k beside the socket), the
+# LD-1501MG black, red, white (HW-21).
 MALE = [
-    ('B', [('o', 23, 'GND'), ('n', 23, '+6V'), ('m', 23, 'SIG')], 'SERVO'),
-    ('A', [('j', 20, 'SCL'), ('k', 20, 'SDA'), ('l', 20, 'GND'), ('m', 20, 'NC')], 'I2C-B'),
-    ('A', [('r', 20, '3V3'), ('q', 20, 'SDA'), ('p', 20, 'SCL'), ('o', 20, 'GND')], 'I2C-A'),
-    ('B', [('m', 3, 'LED'), ('n', 3, '5V'), ('o', 3, 'GND')], 'LED'),   # the WS2812B stick (BOM 1.3), B's rear, past the Nucleo's edge
+    ('A', [('b', 23, 'GND'), ('c', 23, '+6V'), ('d', 23, 'SIG')], 'SERVO'),
+    ('B', [('k', 18, 'NC'), ('l', 18, 'GND'), ('m', 18, 'SDA'), ('n', 18, 'SCL')], 'I2C-B'),
+    ('B', [('o', 18, '3V3'), ('p', 18, 'SDA'), ('q', 18, 'SCL'), ('r', 18, 'GND')], 'I2C-A'),
+    ('A', [('d', 3, 'LED'), ('c', 3, '5V'), ('b', 3, 'GND')], 'LED'),   # the WS2812B stick (BOM 1.3), A's rear, past the Nucleo's edge
 ]
 ANGLED = {'I2C-B', 'I2C-A'}                  # 90 degree headers, plug lying forward on the board
 
@@ -209,8 +222,8 @@ def header_boxes(b, pins, name):
     return out
 
 
-RES = [('B', ('k', 23), ('k', 19), 'R4 1k')]       # in the servo PWM, MCU end beside PC2; flat, under the Nucleo's edge
-CAPS = [('B', ('n', 18), ('n', 20), 'C2')]         # (minus leg, plus leg)
+RES = [('A', ('f', 22), ('f', 18), 'R4 1k')]       # in the servo PWM, MCU end beside PC2; flat, under the Nucleo's edge
+CAPS = [('A', ('c', 19), ('c', 21), 'C2')]         # (minus leg, plus leg)
 # The SN65HVD230 module (BOM 4.1, 26.98 x 10.24) lies FLAT and, as bent (2026-10-03), FACE DOWN:
 # upright it would hit plate 3. Its pins are bent 90 deg toward its component side into a 1x4
 # socket on row XCVR_ROW, it points to the rear, and its screw terminal hangs under its far end.
@@ -218,10 +231,11 @@ CAPS = [('B', ('n', 18), ('n', 20), 'C2')]         # (minus leg, plus leg)
 # CAN H / L leave by the module's own 2-pin header, which points down when face down, into a
 # 1x2 socket seven holes behind the 4-pin row; the screw terminal is not used. The module terminates this
 # end of the bus with its own 120 ohm (HW-09), so the carrier has no terminator of its own.
-XCVR_ROW = 17
-XCVR_SOCKET = ('A', [('a', XCVR_ROW, 'CTX'), ('b', XCVR_ROW, 'CRX'), ('c', XCVR_ROW, 'GND'), ('d', XCVR_ROW, '3V3')])
+# On B it lies in columns l-o, 0.5 mm outboard of the Nucleo's edge, beside the CAN terminal.
+XCVR_ROW = 12
+XCVR_SOCKET = ('B', [('l', XCVR_ROW, 'CTX'), ('m', XCVR_ROW, 'CRX'), ('n', XCVR_ROW, 'GND'), ('o', XCVR_ROW, '3V3')])
 CAN_ROW = XCVR_ROW - 7                     # 17.55 mm on the module, 17.78 on the grid
-CAN_SOCKET = ('A', [('b', CAN_ROW, 'CANH'), ('c', CAN_ROW, 'CANL')])
+CAN_SOCKET = ('B', [('m', CAN_ROW, 'CANH'), ('n', CAN_ROW, 'CANL')])
 MODULE = dict(length=26.98, width=10.24, terminal=3.74, pin_in=-0.3, canhl=17.25)
 # pin_in: header face to the bent pins (negative: the bent legs stand just outside the face);
 # canhl: header face to the 2-pin CANH / CANL header (BOM 4.1)
@@ -261,71 +275,72 @@ def free_corners(b):
     return [h for k, h in enumerate(hs) if k not in BOARD[b]['fix']]
 
 # Wires, all insulated, on the solder side. On A and B no wire is soldered to a part's pin (Hedi, 2026-10-26): it lands on a
-# free hole beside the pin, one wire per hole, and a solder bridge joins that hole to the pin (SOLDER). The four CN7 pins in B's
+# free hole beside the pin, one wire per hole, and a solder bridge joins that hole to the pin (SOLDER). PB6 and PB7 in B's
 # column i are the exception (DIRECT): column i is B's first column, so they have no free hole beside them. Board C is as
 # built (2026-10-05), its wires on the pads. A net with several pins is a chain, part to part.
 # Points are (column, header row) and may sit between holes, in the channels the wire runs
 # along. kind: 'pwr' 18 AWG silicone copper (servo and FRDM current), 'ins' 22 AWG hook-up
 # wire, 'lead' a component's own lead bent over to the next pad on the solder side.
 WIRES = [
-    # ---- board A, the CAN module and its terminal outboard
-    ('CTX', 'A', [(6, 19), (5.5, 18.5), (1.5, 18.5), (1, 18)], 'ins'),                     # PB13 to XCVR CTX
-    ('CRX', 'A', [(6, 12), (5.5, 12.5), (2.5, 12.5), (2.5, 15.5), (2, 16)], 'ins'),          # PB12 to XCVR CRX
-    ('GND', 'A', [(6, 14), (5.5, 14.5), (3.5, 14.5), (3.5, 15.5), (3, 16)], 'ins'),          # CN10-20 to XCVR GND
-    ('GND', 'A', [(3, 18), (3.5, 18.5), (3.5, 22.5), (3, 23)], 'ins'),                      # XCVR GND to CAN GND
-    ('CANH', 'A', [(1, 10), (0.5, 10.5), (0.5, 19.5), (2.5, 19.5), (3, 19)], 'ins'),        # module H to CAN H
-    ('CANL', 'A', [(4, 10), (4.5, 10.5), (4.5, 20.5), (1.5, 20.5), (1, 21)], 'ins'),        # module L to CAN L
-    # ---- board A, the two I2C headers on top, along the gap: PB6, PB7 and CN10-9 each feed both. SCL and GND fork at the socket
-    # (a bridge over two holes), SDA at I2C-B (down its column); every header pin has only the hole behind it to land on.
-    ('SCL', 'A', [(9, 6), (9.5, 6.5), (9.5, 18.5), (10, 19)], 'ins'),                      # PB6 to I2C-B
-    ('SCL', 'A', [(10, 6), (10.5, 5.5), (15.5, 5.5), (15.5, 18.5), (16, 19)], 'ins'),       # PB6 to I2C-A
-    ('SDA', 'A', [(9, 7), (9.5, 7.5), (10.5, 7.5), (10.5, 18.5), (11, 19)], 'ins'),         # PB7 to I2C-B
-    ('SDA', 'A', [(11, 18), (11.5, 17.5), (16.5, 17.5), (16.5, 18.5), (17, 19)], 'ins'),    # I2C-B to I2C-A
-    ('GND', 'A', [(9, 9), (9.5, 9.5), (11.5, 9.5), (11.5, 18.5), (12, 19)], 'ins'),         # CN10-9 to I2C-B GND
-    ('GND', 'A', [(10, 9), (10.5, 8.5), (14.5, 8.5), (14.5, 18.5), (15, 19)], 'ins'),       # CN10-9 to I2C-A GND
-    ('3V3', 'A', [(18, 18), (18.5, 17.5), (18.5, 16.5), (5.5, 16.5), (5, 17)], 'ins'),      # I2C-A VCC to XCVR 3V3
-    # ---- board B: 5 V in to E5V, and the servo: 6V IN, C2, R4 and its header at the front
-    ('5V', 'B', [(16, 13), (15.5, 12.5), (11.5, 12.5), (11.5, 7.5), (9.5, 7.5), (9, 8)], 'ins'),   # 5V IN + to CN7-6 E5V
-    ('GND', 'B', [(16, 15), (15.5, 15.5), (11.5, 15.5), (11, 15)], 'ins'),                  # 5V IN - to CN7-19
-    ('GND', 'B', [(18, 15), (18.5, 15.5), (18.5, 22.5), (16.5, 22.5), (16, 23)], 'ins'),    # 5V IN - to SERVO GND
-    ('6V', 'B', [(16, 8), (15.5, 8.5), (12.5, 8.5), (12.5, 19.5), (13, 20)], 'pwr'),        # 6V IN + to C2 +
-    ('GND', 'B', [(16, 10), (15.5, 10.5), (14.5, 10.5), (14.5, 16.5), (14, 17)], 'pwr'),    # 6V IN - to C2 -
-    ('GND', 'B', [(15, 18), (15, 22)], 'pwr'),                                             # C2 - to SERVO GND
-    ('PWM', 'B', [(12, 19), (12.5, 19.5), (12.5, 23.5), (13, 24)], 'ins'),                 # R4 servo end to SERVO SIG
-    # ---- board B: the LED stick's header at the rear, data from PC12 (SPI3_MOSI), 5 V and GND from 5V IN
-    ('LED', 'B', [(11, 7), (11.5, 6.5), (11.5, 4.5), (12.5, 4.5), (13, 4)], 'ins'),        # PC12 to LED DIN
-    ('5V', 'B', [(17, 12), (17.5, 11.5), (17.5, 4.5), (14.5, 4.5), (14, 4)], 'ins'),       # 5V IN + to LED 5V
-    ('GND', 'B', [(18, 14), (18.5, 13.5), (18.5, 2.5), (15.5, 2.5), (15, 2)], 'ins'),      # 5V IN - to LED GND
+    # ---- board A: 5 V in to E5V, and the servo: 6V IN, C2, R4 and its header at the front, all on the outboard strip
+    ('5V', 'A', [(3, 9), (3.5, 8.5), (5.5, 8.5), (6.5, 7.5), (8.5, 7.5), (9, 7)], 'ins'),   # 5V IN + to CN7-6 E5V
+    ('GND', 'A', [(3, 11), (3.5, 11.5), (5.5, 11.5), (5.5, 13.5), (6, 14)], 'ins'),         # 5V IN - to CN7-19
+    ('GND', 'A', [(1, 11), (0.5, 11.5), (0.5, 22.5), (1, 23)], 'ins'),                      # 5V IN - to SERVO GND
+    ('6V', 'A', [(3, 14), (3.5, 14.5), (3.5, 20.5), (4, 21)], 'pwr'),                       # 6V IN + to C2 +
+    ('GND', 'A', [(3, 16), (3, 18)], 'pwr'),                                               # 6V IN - to C2 -
+    ('GND', 'A', [(2, 19), (2.5, 19.5), (2.5, 23.5), (2, 24)], 'pwr'),                     # C2 - to SERVO GND
+    ('PWM', 'A', [(5, 18), (5, 23)], 'ins'),                                               # R4 servo end to SERVO SIG
+    # ---- board A: the LED stick's header at the rear, data from PC12 (SPI3_MOSI), 5 V and GND from 5V IN
+    ('LED', 'A', [(6, 6), (5.5, 5.5), (5.5, 3.5), (5, 3)], 'ins'),                          # PC12 to LED DIN
+    ('5V', 'A', [(3, 8), (3, 4)], 'ins'),                                                  # 5V IN + to LED 5V
+    ('GND', 'A', [(1, 10), (0.5, 9.5), (0.5, 3.5), (1, 3)], 'ins'),                         # 5V IN - to LED GND
+    # ---- board B, the CAN module and its terminal outboard
+    ('CTX', 'B', [(11, 20), (11.5, 19.5), (11.5, 11.5), (12, 11)], 'ins'),                  # PB13 to XCVR CTX
+    ('CRX', 'B', [(11, 13), (13, 13)], 'ins'),                                             # PB12 to XCVR CRX
+    ('GND', 'B', [(11, 15), (11.5, 14.5), (13.5, 14.5), (13.5, 11.5), (14, 11)], 'ins'),    # CN10-20 to XCVR GND
+    ('GND', 'B', [(14, 10), (14.5, 9.5), (15.5, 9.5), (15.5, 15.5), (16.5, 15.5), (17, 16)], 'ins'),   # XCVR GND to CAN GND
+    ('CANH', 'B', [(12, 5), (12.5, 4.5), (17.5, 4.5), (17.5, 10.5), (18, 11)], 'ins'),      # module H to CAN H
+    ('CANL', 'B', [(15, 5), (15.5, 5.5), (16.5, 5.5), (16.5, 13.5), (17, 14)], 'ins'),      # module L to CAN L
+    # ---- board B, the two I2C headers on top, across the front: PB6 and PB7 reach I2C-B, which passes them on to I2C-A
+    # in front; CN10-20 grounds I2C-B and the CAN terminal grounds I2C-A. Every header pin lands on the hole behind it or in front.
+    ('SCL', 'B', [(9, 7), (9.5, 6.5), (10.5, 6.5), (10.5, 16.5), (13.5, 16.5), (14, 17)], 'ins'),   # PB6 to I2C-B
+    ('SCL', 'B', [(14, 19), (14.5, 19.5), (16.5, 19.5), (17, 19)], 'ins'),                  # I2C-B to I2C-A
+    ('SDA', 'B', [(9, 8), (9.5, 8.5), (12.5, 8.5), (12.5, 16.5), (13, 17)], 'ins'),          # PB7 to I2C-B
+    ('SDA', 'B', [(13, 19), (13, 20), (13.5, 20.5), (15.5, 20.5), (16, 20), (16, 19)], 'ins'),   # I2C-B to I2C-A
+    ('GND', 'B', [(12, 15), (12, 17)], 'ins'),                                             # CN10-20 to I2C-B GND
+    ('3V3', 'B', [(15, 14), (15, 17)], 'ins'),                                             # XCVR 3V3 to I2C-A VCC
 ]
 # Solder bridges on the solder side, A and B: each a run of holes, neighbour to neighbour, holding one part pin (or two of
 # the same net) and the free holes the wires land on. No free hole in a run has another net's pin beside it.
 SOLDER = [
-    ('A', [(7, 19), (6, 19)]), ('A', [(1, 17), (1, 18)]),                    # CTX: CN10-30, XCVR
-    ('A', [(7, 12), (6, 12)]), ('A', [(2, 17), (2, 16)]),                    # CRX: CN10-16, XCVR
-    ('A', [(7, 14), (6, 14)]), ('A', [(3, 16), (3, 17), (3, 18)]), ('A', [(2, 23), (3, 23)]),   # GND: CN10-20, XCVR, CAN
-    ('A', [(2, 10), (1, 10)]), ('A', [(2, 19), (3, 19)]),                    # CANH: module, terminal
-    ('A', [(3, 10), (4, 10)]), ('A', [(2, 21), (1, 21)]),                    # CANL: module, terminal
-    ('A', [(8, 6), (9, 6), (10, 6)]), ('A', [(10, 20), (10, 19)]), ('A', [(16, 20), (16, 19)]),   # SCL: CN10-3, I2C-B, I2C-A
-    ('A', [(8, 7), (9, 7)]), ('A', [(11, 20), (11, 19), (11, 18)]), ('A', [(17, 20), (17, 19)]),  # SDA: CN10-5, I2C-B, I2C-A
-    ('A', [(8, 9), (9, 9), (10, 9)]), ('A', [(12, 20), (12, 19)]), ('A', [(15, 20), (15, 19)]),   # GND: CN10-9, I2C-B, I2C-A
-    ('A', [(4, 17), (5, 17)]), ('A', [(18, 20), (18, 19), (18, 18)]),        # 3V3: XCVR, I2C-A (and the bridge from B)
-    ('B', [(17, 12), (17, 13), (16, 13)]),                                   # 5V IN +, two free holes: E5V and LED
-    ('B', [(16, 15), (17, 15), (18, 15), (18, 14)]), ('B', [(17, 10), (16, 10)]),   # 5V IN - (CN7-19, servo, LED), 6V IN -
-    ('B', [(14, 17), (14, 18), (15, 18)]), ('B', [(15, 22), (15, 23), (16, 23)]),   # C2 -, SERVO GND
-    ('B', [(17, 8), (16, 8)]), ('B', [(13, 20), (14, 20), (14, 21), (14, 22), (14, 23)]),   # 6V IN +; C2 + run to SERVO +
-    ('B', [(10, 23), (11, 23)]), ('B', [(11, 19), (12, 19)]),               # PC2 (CN7-35) to R4's MCU end; R4's servo end
-    ('B', [(13, 23), (13, 24)]),                                             # SERVO SIG
-    ('B', [(10, 7), (11, 7)]), ('B', [(13, 3), (13, 4)]),                    # LED data: CN7-3 PC12, header DIN
-    ('B', [(14, 3), (14, 4)]), ('B', [(15, 3), (15, 2)]),                    # LED header 5V, GND
-    ('B', [(10, 15), (11, 15)]),                                             # CN7-19 GND: outer row, free hole in column k
+    ('A', [(2, 9), (3, 9), (3, 8)]), ('A', [(8, 7), (9, 7)]),                # 5V IN +, two free holes: E5V and LED; CN7-6 E5V
+    ('A', [(1, 10), (1, 11), (2, 11), (3, 11)]), ('A', [(7, 14), (6, 14)]),   # 5V IN - (LED, servo, CN7-19); CN7-19 GND
+    ('A', [(2, 14), (3, 14)]), ('A', [(4, 21), (3, 21), (3, 22), (3, 23)]),   # 6V IN +; C2 + run to SERVO +
+    ('A', [(2, 16), (3, 16)]), ('A', [(3, 18), (3, 19), (2, 19)]),            # 6V IN -, C2 -
+    ('A', [(1, 23), (2, 23), (2, 24)]),                                       # SERVO GND: 5V IN - and C2 -
+    ('A', [(7, 22), (6, 22)]), ('A', [(6, 18), (5, 18)]),                     # PC2 (CN7-35) to R4's MCU end; R4's servo end
+    ('A', [(4, 23), (5, 23)]),                                                # SERVO SIG
+    ('A', [(7, 6), (6, 6)]), ('A', [(4, 3), (5, 3)]),                         # LED data: CN7-3 PC12, header DIN
+    ('A', [(3, 3), (3, 4)]), ('A', [(2, 3), (1, 3)]),                         # LED header 5V, GND
+    ('A', [(8, 12), (9, 12)]),                                                # CN7-16 3V3, to the bridge
+    ('B', [(10, 20), (11, 20)]), ('B', [(12, 12), (12, 11)]),                 # CTX: CN10-30, XCVR
+    ('B', [(10, 13), (11, 13)]), ('B', [(13, 12), (13, 13)]),                 # CRX: CN10-16, XCVR
+    ('B', [(10, 15), (11, 15), (12, 15)]), ('B', [(14, 12), (14, 11), (14, 10)]),   # GND: CN10-20 (XCVR, I2C-B), XCVR
+    ('B', [(17, 16), (18, 16), (18, 17), (18, 18)]),                          # GND: CAN terminal and I2C-A
+    ('B', [(13, 5), (12, 5)]), ('B', [(18, 12), (18, 11)]),                   # CANH: module, terminal
+    ('B', [(14, 5), (15, 5)]), ('B', [(18, 14), (17, 14)]),                   # CANL: module, terminal
+    ('B', [(15, 12), (15, 13), (15, 14)]), ('B', [(15, 18), (15, 17)]),       # 3V3: XCVR (the bridge from A, I2C-A), I2C-A
+    ('B', [(14, 17), (14, 18), (14, 19)]), ('B', [(17, 18), (17, 19)]),       # SCL: I2C-B, I2C-A
+    ('B', [(13, 17), (13, 18), (13, 19)]), ('B', [(16, 18), (16, 19)]),       # SDA: I2C-B, I2C-A
+    ('B', [(12, 18), (12, 17)]),                                              # GND: I2C-B
 ]
-DIRECT = [('B', 'i', 8), ('B', 'i', 13)]   # CN7-6 E5V and CN7-16 3V3, on no other pin (UM3121 Tables 8, 17): wire on the pin
-# The one bridge: 3V3 is on CN7 (B) only, and the INA226 and the transceiver are on A. A's ground comes from
-# its own CN10-9 and CN10-20, the Nucleo tying all its GNDs. A's hole row r and B's row r + 1 are the same X,
-# so the bridge crossing at A row 18.5 leaves B on its row 19.5.
+DIRECT = [('B', 'i', 7), ('B', 'i', 8)]   # CN10-3 PB6 and CN10-5 PB7, on no other pin (UM3121 Table 17): wire on the pin
+# The one bridge: 3V3 is on CN7 (A) only, and the INA226 and the transceiver are on B. B's ground comes from
+# its own CN10-20, the Nucleo tying all its GNDs. A's hole row r and B's row r + 1 are the same X, so the bridge
+# crossing behind the sockets at A row 2.5 reaches B on its row 3.5, where B has no socket yet.
 XWIRES = [
-    ('3V3', [('B', 9, 13), ('B', 8.5, 13.5), ('B', 8.5, 19.5), ('B', 0.5, 19.5), ('A', 18.5, 18.5),
-             ('A', 18, 19)], 'ins'),                                             # CN7-16 to I2C-A VCC
+    ('3V3', [('A', 9, 12), ('A', 9.5, 11.5), ('A', 9.5, 3.5), ('A', 10.5, 2.5), ('A', 18.5, 2.5), ('B', 8.5, 3.5),
+             ('B', 14.5, 3.5), ('B', 14.5, 12.5), ('B', 15, 13)], 'ins'),           # CN7-16 to XCVR 3V3
 ]
 LINKS = []                   # no links: CAN H / L reach the board through the module's 2-pin header
 
@@ -380,11 +395,11 @@ def row_labels(v, yline):
 
 # CN11 and CN12, the jumper parking headers on the Nucleo's underside, hang about 8.5 mm below it at the
 # CN1 end, in line with the outer morpho rows (UM3121 Fig. 2). Past the boards' rear edges, over the tray.
-CN11_12 = [(NUC['x'][1] - 5.6, -5.4), (NUC['x'][1] - 5.6, 58.6)]
+CN11_12 = [(NUC['x'][1] - 5.6, ny(-5.4)), (NUC['x'][1] - 5.6, ny(58.6))]     # CN11 on B's side, CN12 on A's
 # The Nucleo's tall parts, for the 3D mock: (side, X0, X1, Y0, Y1, height, material, what). Read off UM3121
-# Fig. 7 at +-0.5 mm; heights are typical, not measured. 'top' stands on the PCB, 'under' hangs below it.
-NUC_MOCK = [
-    ('top', 8.6, 20.0, CN1_Y - 4.4, CN1_Y + 4.4, 3.2, 'usb', 'CN1 ST-LINK USB-C'),
+# Fig. 7 at +-0.5 mm, Y mirrored by ny(); heights are typical, not measured. 'top' stands on the PCB, 'under' hangs below it.
+NUC_MOCK = [(s, x0, x1, min(ny(y0), ny(y1)), max(ny(y0), ny(y1)), h, m, t) for s, x0, x1, y0, y1, h, m, t in [
+    ('top', 8.6, 20.0, 14.3 - 4.4, 14.3 + 4.4, 3.2, 'usb', 'CN1 ST-LINK USB-C'),
     ('top', -64.4, -53.2, 34.7, 43.6, 3.2, 'usb', 'CN3 user USB-C'),
     ('top', -0.2, 10.0, 26.8, 37.2, 1.0, 'chip', 'STLINK-V3EC MCU'),
     ('top', -45.5, -33.5, 20.6, 32.6, 1.4, 'chip', 'STM32H533RE, LQFP64'),
@@ -399,7 +414,7 @@ NUC_MOCK = [
     ('top', -12.0, -10.4, 8.8, 10.0, 0.6, 'led_g', 'LD2 user, PA5'),
     ('top', 14.3, 15.9, 4.4, 5.6, 0.6, 'led_g', 'LD1 COM'),
     ('top', 14.3, 15.9, -0.7, 0.5, 0.6, 'led_r', 'LD7 PWR'),
-] + [('under', X - 2.5, X + 2.5, Y - 1.3, Y + 1.3, 8.5, 'black', 'CN11 / CN12 jumper park') for X, Y in CN11_12]
+]] + [('under', X - 2.5, X + 2.5, Y - 1.3, Y + 1.3, 8.5, 'black', 'CN11 / CN12 jumper park') for X, Y in CN11_12]
 
 
 def draw_nucleo(v):
@@ -607,28 +622,27 @@ def carrier_view(v, top):
     if top:
         draw_nucleo(v)
         for X, Y in free_corners('B'):
-            label(v, X - 1.5, Y - 7.5, 'B: no screw in this corner, the CN7 socket end is 2 mm away', '#64748b', 6.5, anchor='start', weight=None)
+            label(v, X - 1.5, Y - 7.5, 'B: no screw in this corner, the CN10 socket end is 2 mm away', '#64748b', 6.5, anchor='start', weight=None)
     return boxes
 
 def carrier_labels_top(v, boxes):
     # the Nucleo
     label(v, -30, 20.0, 'NUCLEO-H533RE above', '#4338ca', 10)
     label(v, -30, 20.0, 'plugs into the four 1x19 sockets', '#4338ca', 8, dy=13, weight=None)
-    label(v, 8.5, 26.5, 'CN1 ST-LINK', '#4338ca', 8, weight=None)
-    label(v, 8.5, 26.5, 'USB-C, 13.2 mm', '#4338ca', 7, dy=11, weight=None)
-    label(v, 8.5, 26.5, 'past the boards', '#4338ca', 7, dy=21, weight=None)
-    label(v, NUC['x'][1] - 5.6, 52.5, 'CN12 under', '#4338ca', 6.5, weight=None)
-    label(v, NUC['x'][1] - 5.6, 0.6, 'CN11 under', '#4338ca', 6.5, weight=None)
+    label(v, 8.5, CN1_Y - 12.5, 'CN1 ST-LINK', '#4338ca', 8, weight=None)
+    label(v, 8.5, CN1_Y - 12.5, 'USB-C, 13.2 mm', '#4338ca', 7, dy=11, weight=None)
+    label(v, 8.5, CN1_Y - 12.5, 'past the boards', '#4338ca', 7, dy=21, weight=None)
+    label(v, NUC['x'][1] - 5.6, CN11_12[1][1] + 6.0, 'CN12 under', '#4338ca', 6.5, weight=None)
+    label(v, NUC['x'][1] - 5.6, CN11_12[0][1] - 3.0, 'CN11 under', '#4338ca', 6.5, weight=None)
     # sockets
-    label(v, NX(NUC_ROWS) - 2.2, cy('A', 7) + 1.3, 'CN10', '#0f766e', 9, anchor='end')
-    label(v, NX(NUC_ROWS) - 2.2, cy('B', 10) + 1.3, 'CN7', '#b45309', 9, anchor='end')
-    # terminals and headers
-    X0, X1, Y0, Y1 = boxes['6V IN']
-    label(v, (X0 + X1) / 2, Y1 + 3.6, '6V IN', '#d97706', 8)
-    X0, X1, Y0, Y1 = boxes['5V IN']
-    label(v, (X0 + X1) / 2, Y1 + 3.6, '5V IN', '#dc2626', 8)
-    label(v, NX(1) + 2.2, cy('A', 7) + 0.9, 'pin 2', '#0f766e', 7, anchor='start')
-    label(v, NX(1) + 2.2, cy('B', 10) + 0.9, 'pin 1', '#b45309', 7, anchor='start')
+    label(v, NX(NUC_ROWS) - 2.2, cy('A', 7) + 1.3, 'CN7', '#0f766e', 9, anchor='end')
+    label(v, NX(1) + 2.2, cy('B', 9) + 1.3, 'CN10', '#b45309', 9, anchor='start')     # at the rear: B's letters fill its front edge
+    # terminals and headers: A's on its outboard strip, labelled on the board's edge
+    for name, colr in (('5V IN', '#dc2626'), ('6V IN', '#d97706')):
+        X0, X1, Y0, Y1 = boxes[name]
+        label(v, (X0 + X1) / 2, Y1 + 3.6, name, colr, 8)
+    label(v, NX(1) + 2.2, cy('A', 7) + 0.9, 'pin 1', '#0f766e', 7, anchor='start')
+    label(v, NX(1) + 2.2, cy('B', 10) + 0.9, 'pin 2', '#b45309', 7, anchor='start')
     b, pins, name = MALE[0]
     X0, X1, Y0, Y1 = boxes[name]
     label(v, (X0 + X1) / 2, Y1 + 3.4, name, '#334155', 7.5)
@@ -642,17 +656,19 @@ def carrier_labels_top(v, boxes):
         else:
             label(v, X1 + 1.0, (Y0 + Y1) / 2 + 0.9, 'LED  DIN · 5V · GND', '#0d9488', 7, anchor='start')
     X0, X1, Y0, Y1 = boxes['CAN']
-    label(v, (X0 + X1) / 2, Y1 + 2.8, 'CAN  H · L · GND', '#1d4ed8', 7)
-    label(v, HX('B', 19), cy('B', 16) + 1.2, 'C2 470µF', '#a16207', 7, anchor='start')
-    label(v, HX('B', 23) - 1.6, cy('B', 11) + 0.9, 'R4 1k', '#1e40af', 7, anchor='end')
+    label(v, X1 + 1.0, (Y0 + Y1) / 2 + 0.9, 'CAN  H · L · GND', '#1d4ed8', 7, anchor='start')
+    (Xm, Ym), (Xp, Yp) = [hole(CAPS[0][0], ci(c), r) for c, r in CAPS[0][1:3]]
+    label(v, (Xm + Xp) / 2, Ym + 6.6, 'C2 470µF', '#a16207', 7)
+    X, Y = hole(RES[0][0], ci(RES[0][2][0]), RES[0][2][1])
+    label(v, X + 1.6, Y + 0.9, 'R4 1k', '#1e40af', 7, anchor='start')
 
 PIN_LAB = {  # (board, col, row): (text, level, anchor) - each board's over its own inner columns
-    nuc_hole('CN7', 6): ('CN7-6 E5V', 1, 'start'), nuc_hole('CN7', 8): ('CN7-8 GND', 0, 'start'),
-    nuc_hole('CN7', 16): ('CN7-16 3V3', 1, 'start'), nuc_hole('CN7', 19): ('CN7-19 GND', 0, 'end'),
-    nuc_hole('CN10', 3): ('CN10-3 PB6', 2, 'start'), nuc_hole('CN10', 5): ('CN10-5 PB7', 1, 'end'),
-    nuc_hole('CN10', 9): ('CN10-9 GND', 0, 'start'), nuc_hole('CN10', 16): ('CN10-16 PB12', 2, 'end'),
-    nuc_hole('CN10', 20): ('CN10-20 GND', 1, 'end'), nuc_hole('CN10', 30): ('CN10-30 PB13', 0, 'end'),
-    nuc_hole('CN7', 35): ('CN7-35 PC2', 2, 'end'),
+    nuc_hole('CN7', 3): ('CN7-3 PC12', 3, 'end'), nuc_hole('CN7', 6): ('CN7-6 E5V', 2, 'end'),
+    nuc_hole('CN7', 16): ('CN7-16 3V3', 0, 'start'), nuc_hole('CN7', 19): ('CN7-19 GND', 1, 'end'),
+    nuc_hole('CN7', 35): ('CN7-35 PC2', 0, 'end'),
+    nuc_hole('CN10', 3): ('CN10-3 PB6', 2, 'start'), nuc_hole('CN10', 5): ('CN10-5 PB7', 1, 'start'),
+    nuc_hole('CN10', 16): ('CN10-16 PB12', 0, 'start'), nuc_hole('CN10', 20): ('CN10-20 GND', 1, 'start'),
+    nuc_hole('CN10', 30): ('CN10-30 PB13', 0, 'end'),
 }
 END_LAB = []
 
@@ -710,7 +726,7 @@ def c_hole(col, row):
 
 C_TERMS = [   # pins, entry (+X, the row-24 end), name, note
     ([('a', 24, '+5V'), ('c', 24, 'GND')], '+X', 'IN 5V', 'Bauer via SW2'),
-    ([('g', 24, '+5V'), ('i', 24, 'GND')], '+X', 'TO STM32', 'to B 5V IN'),
+    ([('g', 24, '+5V'), ('i', 24, 'GND')], '+X', 'TO STM32', 'to A 5V IN'),
 ]
 C_RES = []   # none: the FRDM boots from VBUS and GND alone, so no source Rp is fitted (HW-02, HW-19)
 
@@ -847,12 +863,12 @@ def orientation_inset(y0):
            stroke='#4338ca', stroke_width=1.4, stroke_dasharray='5 3')
     x, y = v.px(-28, 29.2)
     text(x, y + 3, 'Nucleo, above', 7.5, '#4338ca', '700', anchor='middle')
-    for b, cols, pin1, lab in (('A', ('g', 'h'), 'h', 'CN10'), ('B', ('i', 'j'), 'j', 'CN7')):
+    for b, cols, pin1, lab in (('A', ('g', 'h'), 'g', 'CN7'), ('B', ('i', 'j'), 'i', 'CN10')):
         ya, yb = cy(b, ci(cols[0])), cy(b, ci(cols[1]))
         v.rect(NX(NUC_ROWS) - 1.27, NX(1) + 1.27, min(ya, yb) - 1.27, max(ya, yb) + 1.27, fill='#1f2937')
         x, y = v.px(NX(1), cy(b, ci(pin1)))            # pin 1 (odd pins' column), at the CN1 end
         w(f'<circle cx="{x:.1f}" cy="{y:.1f}" r="2.4" fill="#fbbf24"/>')
-        x, y = v.px(NX(10), max(ya, yb) + (5.5 if b == 'A' else 4.8))
+        x, y = v.px(NX(10), max(ya, yb) + (5.5 if b == 'A' else 7.5))
         text(x, y, lab, 8, '#4338ca', '700', anchor='middle', halo=True)
     v.rect(NUC['x'][1] - 7.3, NUC['x'][1] + 0.6, CN1_Y - 4.5, CN1_Y + 4.5, rx=1, fill='#94a3b8', stroke='#334155', stroke_width=0.8)
     x, y = v.px(NUC['x'][1] - 3, CN1_Y)
@@ -867,9 +883,9 @@ def orientation_inset(y0):
     lines = [
         ('Nucleo from above, components up, as in every view.', True),
         ('CN1, the ST-LINK USB-C, points to the REAR (fascia).', False),
-        ('CN10 is the header on the vehicle RIGHT: board A goes under it.', False),
-        ('CN7 is the header on the vehicle LEFT: board B goes under it.', False),
-        ('Both have pin 1 (yellow) at the CN1 end, in their vehicle-LEFT column.', False),
+        ('CN7 is the header on the vehicle RIGHT: board A goes under it.', False),
+        ('CN10 is the header on the vehicle LEFT: board B goes under it.', False),
+        ('Both have pin 1 (yellow) at the CN1 end, in their vehicle-RIGHT column.', False),
         ('', False),
         ('Red triangle = the corner at printed hole A1.', True),
         ('On A and on B: the FRONT corner on the vehicle-LEFT edge.', False),
@@ -887,22 +903,22 @@ if __name__ == "__main__":
     w(f'<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewBox="0 0 {W} {H}" font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif">')
     w(f'<rect width="{W}" height="{H}" fill="#fbfaf8"/>')
     text(40, 30, 'NEXUS - STM32 carrier and 5 V split board: soldering and wiring', 18, '#1a1a1a', '700')
-    text(40, 49, f'Kit perfboards (BOM 5.11), 2.54 grid · Board A 5×7 cm (18 × 24 holes) under CN10, board B 3×7 cm (10 × 24) under CN7 of the NUCLEO-H533RE, {BOARD["B"]["edge"][0] - BOARD["A"]["edge"][1]:.0f} mm apart · Board C 3×7 cm (10 × 24), the 5 V split · MEC-08 / MEC-15 / HW-19', 10.5, '#666')
+    text(40, 49, f'Kit perfboards (BOM 5.11), 2.54 grid · Board A 5×7 cm (18 × 24 holes) under CN7, board B 3×7 cm (10 × 24) under CN10 of the NUCLEO-H533RE, {BOARD["B"]["edge"][0] - BOARD["A"]["edge"][1]:.0f} mm apart · Board C 3×7 cm (10 × 24), the 5 V split · MEC-08 / MEC-15 / HW-19', 10.5, '#666')
     def col_range(b, c):           # the holes a socket column's soldered tails occupy
         hs = [hdr_hole(b, k) for k in range(1, NUC_ROWS + 1)]
         return f"{b}·{silk(b, c, max(hs))}-{silk(b, c, min(hs))}"
     text(40, 66, 'Hole names: board·hole, as PRINTED on the kit board - on A (5×7) letters A-X along the 70 mm side and numbers 1-18 across, on B and C (3×7) numbers 1-24 along and letters A-J across; A1 bottom-left with the print readable, as every view shows it.', 9.5, '#b45309')
-    text(40, 80, f"Nucleo header row k sits on B's hole row k + 5 and A's k + 4 (A one pitch ahead, the tray) · CN10 even pins {col_range('A', 'g')}, odd {col_range('A', 'h')[2:]} · CN7 even {col_range('B', 'i')}, odd {col_range('B', 'j')[2:]} · fixings: the corner holes, three on B (MEC-17).", 9.5, '#b45309')
-    text(40, 93, 'Wires on the solder side, ALL INSULATED. On A and B no wire goes on a pin: it lands on the free hole beside it, one wire per hole, and a solder bridge (silver) joins the two. Only B\'s two ringed CN7 pins (E5V, 3V3) take the wire straight. Thick 18 AWG (3.11), thin 22 AWG.', 9.5, '#b45309')
+    text(40, 80, f"Nucleo header row k sits on B's hole row k + 5 and A's k + 4 (A one pitch ahead, the tray) · CN7 odd pins {col_range('A', 'g')}, even {col_range('A', 'h')[2:]} · CN10 odd {col_range('B', 'i')}, even {col_range('B', 'j')[2:]} · fixings: the corner holes, three on B (MEC-17).", 9.5, '#b45309')
+    text(40, 93, 'Wires on the solder side, ALL INSULATED. On A and B no wire goes on a pin: it lands on the free hole beside it, one wire per hole, and a solder bridge (silver) joins the two. Only B\'s two ringed CN10 pins (PB6, PB7) take the wire straight. Thick 18 AWG (3.11), thin 22 AWG.', 9.5, '#b45309')
 
     # views
     VX1, VX2, VY = 70, 590, 150
     vt = View(VX1, VY, XMIN, YMIN, YMAX, flip=False)
     vb = View(VX2, VY, XMIN, YMIN, YMAX, flip=True)
     text(VX1 - 40, 108, 'A + B  COMPONENT SIDE  (from above, front LEFT)', 12, '#1a1a1a', '700')
-    text(VX1 - 40, 123, 'CN10 on the vehicle right (top), CN7 on the vehicle left (bottom) - chassis-layout convention', 8.5, '#64748b')
+    text(VX1 - 40, 123, 'CN7 on the vehicle right (top), CN10 on the vehicle left (bottom) - chassis-layout convention', 8.5, '#64748b')
     text(VX2 - 30, 108, 'A + B  SOLDER SIDE  (turned over about the long axis)', 12, '#1a1a1a', '700')
-    text(VX2 - 30, 123, 'front still LEFT, so CN7 is now on TOP and every column reads upside down', 8.5, '#64748b')
+    text(VX2 - 30, 123, 'front still LEFT, so CN10 is now on TOP and every column reads upside down', 8.5, '#64748b')
     row_labels(vt, VY - 15)
     row_labels(vb, VY - 15)
     _, yb0 = vt.px(0, YMIN)
@@ -966,47 +982,56 @@ if __name__ == "__main__":
     def mpin(name, lab):
         cols, (b, row) = pins_of(name)
         return silk(b, cols[lab], row)
-    can = {l: (c, r) for c, r, l in next(ps for b, ps, e, n, c_ in TERMS if n == 'CAN')}
+    term = {n: {l: (c, r) for c, r, l in ps} for b, ps, e, n, c_ in TERMS}
+
+    def tpin(name, lab, board=True):
+        b = next(b for b, ps, e, n, c_ in TERMS if n == name)
+        return (N if board else silk)(b, *term[name][lab])
+
+    def mpin_(name, lab):
+        cols, (b, row) = pins_of(name)
+        return N(b, cols[lab], row)
+    rb, ra, rc = RES[0][0], RES[0][1], RES[0][2]
+    cb, cm, cp = CAPS[0][0], CAPS[0][1], CAPS[0][2]
     net_rows = [
-        (NET['5V'], '5 V', 'C TO STM32', f"B 5V IN ({N('B', 'q', 13)}) → CN7-6 E5V ({silk(*nuc_hole('CN7', 6))}), JP5 on [5-6]"),
+        (NET['5V'], '5 V', 'C TO STM32', f"A 5V IN ({tpin('5V IN', '+5V')}) → CN7-6 E5V ({silk(*nuc_hole('CN7', 6))}), JP5 on [5-6]"),
         (NET['5V'], '5 V FRDM', 'C IN 5V', f"{N('C', 'a', 24)} → C1 + ({silk('C', 'a', 12)}) → socket red ({silk('C', 'a', 7)}), 18 AWG"),
         (NET['GND'], 'GND FRDM', 'C IN GND', f"{N('C', 'c', 24)} → C1 − ({silk('C', 'c', 12)}) → socket black ({silk('C', 'c', 7)}), 18 AWG"),
-        (NET['GND'], 'GND STM32', 'C IN GND', f"TO STM32 − → B 5V IN − ({N('B', 'q', 15)}) → CN7-19 ({silk(*nuc_hole('CN7', 19))}) · → SERVO GND ({mpin('SERVO', 'GND')})"),
-        (NET['GND'], 'Servo GND', 'B 6V IN −', f"{N('B', 'q', 10)} → C2 − ({silk('B', 'n', 18)}) → SERVO GND ({mpin('SERVO', 'GND')}), 18 AWG"),
-        (NET['GND'], 'GND (A)', f"CN10-9 {N(*nuc_hole('CN10', 9))}", f"→ I2C-B GND ({N('A', *pins_of('I2C-B')[0]['GND'], 20)}) · → I2C-A GND ({silk('A', pins_of('I2C-A')[0]['GND'], 20)})"),
-        (NET['GND'], 'GND CAN', f"CN10-20 {N(*nuc_hole('CN10', 20))}", f"→ XCVR GND ({xc('GND')}) → CAN GND ({silk('A', *can['GND'])})"),
-        (NET['3V3'], '3.3 V', f"CN7-16 {N(*nuc_hole('CN7', 16))}", f"→ bridge → I2C-A VCC ({N('A', pins_of('I2C-A')[0]['3V3'], 20)}) → XCVR 3V3 ({xc('3V3')})"),
-        (NET['6V'], 'Servo 6 V', 'B 6V IN +', f"{N('B', 'q', 8)} → C2 + ({silk('B', 'n', 20)}) → SERVO + ({mpin('SERVO', '+6V')}), 18 AWG"),
-        (NET['LED'], 'SPI3_MOSI', 'CN7-3 PC12', f"LED DIN ({mpin('LED', 'LED')}) · its 5V ({mpin('LED', '5V')}) and GND ({mpin('LED', 'GND')}) from B 5V IN"),
-        (NET['PWM'], 'TIM4_CH4', 'CN7-35 PC2', f"R4 1k ({N('B', 'k', 23)}-{silk('B', 'k', 19)}) → SERVO SIG ({mpin('SERVO', 'SIG')})"),
-        (NET['SCL'], 'I²C1 SCL', 'CN10-3 PB6', f"→ I2C-B ({N('A', pins_of('I2C-B')[0]['SCL'], 20)}) · → I2C-A ({silk('A', pins_of('I2C-A')[0]['SCL'], 20)})"),
-        (NET['SDA'], 'I²C1 SDA', 'CN10-5 PB7', f"→ I2C-B ({N('A', pins_of('I2C-B')[0]['SDA'], 20)}) → I2C-A ({silk('A', pins_of('I2C-A')[0]['SDA'], 20)})"),
-        (NET['CTX'], 'FDCAN2_TX', 'CN10-30 PB13', f"XCVR CTX ({N('A', *[(c, r) for c, r, l in XCVR_SOCKET[1] if l == 'CTX'][0])}) - straight, not crossed"),
-        (NET['CRX'], 'FDCAN2_RX', 'CN10-16 PB12', f"XCVR CRX ({N('A', *[(c, r) for c, r, l in XCVR_SOCKET[1] if l == 'CRX'][0])})"),
-        (NET['CANH'], 'CAN_H', 'module H pin', f"socket {N('A', *CAN_SOCKET[1][0][:2])} → CAN H ({silk('A', *can['H'])})"),
-        (NET['CANL'], 'CAN_L', 'module L pin', f"socket {N('A', *CAN_SOCKET[1][1][:2])} → CAN L ({silk('A', *can['L'])}) · 120 Ω on the module (HW-09)"),
+        (NET['GND'], 'GND STM32', 'C IN GND', f"TO STM32 − → A 5V IN − ({tpin('5V IN', 'GND')}) → CN7-19 ({silk(*nuc_hole('CN7', 19))}) · → SERVO GND ({mpin('SERVO', 'GND')})"),
+        (NET['GND'], 'Servo GND', 'A 6V IN −', f"{tpin('6V IN', 'GND')} → C2 − ({silk(cb, *cm)}) → SERVO GND ({mpin('SERVO', 'GND')}), 18 AWG"),
+        (NET['GND'], 'GND (B)', f"CN10-20 {N(*nuc_hole('CN10', 20))}", f"→ XCVR GND ({xc('GND')}) → CAN GND ({tpin('CAN', 'GND', False)}) → I2C-A GND · → I2C-B GND ({mpin('I2C-B', 'GND')})"),
+        (NET['3V3'], '3.3 V', f"CN7-16 {N(*nuc_hole('CN7', 16))}", f"→ bridge → XCVR 3V3 ({XCVR_SOCKET[0]}·{xc('3V3')}) → I2C-A VCC ({mpin('I2C-A', '3V3')})"),
+        (NET['6V'], 'Servo 6 V', 'A 6V IN +', f"{tpin('6V IN', '+6V')} → C2 + ({silk(cb, *cp)}) → SERVO + ({mpin('SERVO', '+6V')}), 18 AWG"),
+        (NET['LED'], 'SPI3_MOSI', 'CN7-3 PC12', f"LED DIN ({mpin_('LED', 'LED')}) · its 5V ({mpin('LED', '5V')}) and GND ({mpin('LED', 'GND')}) from A 5V IN"),
+        (NET['PWM'], 'TIM4_CH4', 'CN7-35 PC2', f"R4 1k ({N(rb, *ra)}-{silk(rb, *rc)}) → SERVO SIG ({mpin('SERVO', 'SIG')})"),
+        (NET['SCL'], 'I²C1 SCL', 'CN10-3 PB6', f"→ I2C-B ({mpin_('I2C-B', 'SCL')}) → I2C-A ({mpin('I2C-A', 'SCL')})"),
+        (NET['SDA'], 'I²C1 SDA', 'CN10-5 PB7', f"→ I2C-B ({mpin_('I2C-B', 'SDA')}) → I2C-A ({mpin('I2C-A', 'SDA')})"),
+        (NET['CTX'], 'FDCAN2_TX', 'CN10-30 PB13', f"XCVR CTX ({N(XCVR_SOCKET[0], *[(c, r) for c, r, l in XCVR_SOCKET[1] if l == 'CTX'][0])}) - straight, not crossed"),
+        (NET['CRX'], 'FDCAN2_RX', 'CN10-16 PB12', f"XCVR CRX ({N(XCVR_SOCKET[0], *[(c, r) for c, r, l in XCVR_SOCKET[1] if l == 'CRX'][0])})"),
+        (NET['CANH'], 'CAN_H', 'module H pin', f"socket {N(CAN_SOCKET[0], *CAN_SOCKET[1][0][:2])} → CAN H ({tpin('CAN', 'H', False)})"),
+        (NET['CANL'], 'CAN_L', 'module L pin', f"socket {N(CAN_SOCKET[0], *CAN_SOCKET[1][1][:2])} → CAN L ({tpin('CAN', 'L', False)}) · 120 Ω on the module (HW-09)"),
     ]
     y = table(100, 'NETLIST', ['Net', 'From', 'To'], net_rows, [12, 96, 190])
 
     ext_rows = [
         (None, 'C IN 5V', 'Bauer 50 W via SW2, 18 AWG pair (HW-17)'),
-        (None, 'C TO STM32', '18 AWG pair to B 5V IN'),
+        (None, 'C TO STM32', '18 AWG pair to A 5V IN'),
         (None, 'C USB-C', f"socket on C, pigtail soldered: red {silk('C', 'a', 7)}, black {silk('C', 'c', 7)} · C-to-C data cable to FRDM J1"),
         (None, 'C D+ / D−', 'white, blue, green and yellow (D−, D+, CC1, CC2) cut short, each insulated on its own - never twisted together'),
-        (None, 'B 6V IN', 'UBEC 6 V out, 18 AWG pair (HW-14)'),
-        (None, 'B SERVO', f"straight header on top, across B: LD-1501MG black {N('B', *[(c, r) for c, r, l in MALE[0][1] if l == 'GND'][0])}, red, white inboard (HW-21)"),
-        (None, 'B LED', 'straight 1×3 on top at B\'s rear: DIN, 5V, GND to the WS2812B stick (1.3) on plate 3, no level shifter (HW-22)'),
-        (None, 'A I2C-A', '90° on A by the gap, pointing forward: INA226 VCC, SDA, SCL, GND - its own order, a straight 4-way lead'),
-        (None, 'A I2C-B', '90° on A by the gap, pointing forward: motor module SCL, SDA, GND, 5V - its own order; pin 4 has no wire'),
-        (None, 'I2C leads', 'plugged before the Nucleo goes on; they leave A\'s front edge under it and drop through the tray window'),
-        (None, 'A CAN', 'twisted H, L + GND to DE-9 stub and FRDM J7 (HW-09, HW-18); the module\'s 120 Ω terminates this end'),
+        (None, 'A 6V IN', 'UBEC 6 V out, 18 AWG pair (HW-14)'),
+        (None, 'A SERVO', f"straight header on top, across A's front: LD-1501MG black {N('A', *[(c, r) for c, r, l in MALE[0][1] if l == 'GND'][0])} outboard, red, white (HW-21)"),
+        (None, 'A LED', 'straight 1×3 on top at A\'s rear: DIN, 5V, GND to the WS2812B stick (1.3) on plate 3, no level shifter (HW-22)'),
+        (None, 'B I2C-A', '90° across B\'s front, pointing forward: INA226 VCC, SDA, SCL, GND - its own order, a straight 4-way lead'),
+        (None, 'B I2C-B', '90° across B\'s front, pointing forward: motor module 5V, GND, SDA, SCL - its own order; the 5V pin has no wire'),
+        (None, 'I2C leads', 'plugged before the Nucleo goes on; they leave B\'s front edge and drop through the tray window beside B (W3)'),
+        (None, 'B CAN', 'twisted H, L + GND to DE-9 stub and FRDM J7 (HW-09, HW-18), from the vehicle left; screws reached through plate 3\'s left slot'),
         (None, 'CN1', 'ST-LINK USB-C: 90° C to Mini-B cable (5.12) flat, turned to the vehicle left, then the fascia extension (5.10)'),
     ]
     y = table(y + 26, 'WHAT PLUGS IN WHERE', ['Connector', 'Cable'], ext_rows, [12, 96])
 
     parts = [
-        (None, 'Board A', '5×7 board · 2 × 1×19 + 1 × 1×4 + 1 × 1×2 female · 3p terminal · 2 × 1×4 90° male, on top · the SN65HVD230 module'),
-        (None, 'Board B', '3×7 board · 2 × 1×19 female · 2 × 2p terminal · 2 × 1×3 male · C2 470µF · R4 1k'),
+        (None, 'Board A', '5×7 board · 2 × 1×19 female · 2 × 2p terminal · 2 × 1×3 male · C2 470µF · R4 1k'),
+        (None, 'Board B', '3×7 board · 2 × 1×19 + 1 × 1×4 + 1 × 1×2 female · 3p terminal · 2 × 1×4 90° male, on top · the SN65HVD230 module'),
         (None, 'Board C', '3×7 board · 2 × 2p terminal · USB-C socket (5.1), 2 zip ties · C1 470µF'),
         (None, 'From stock', 'caps: 2 of the 5 in 3.14 · resistors: 3.21 · module: 4.1 · headers, terminals: 5.11'),
         (None, 'Wire', '22 AWG insulated copper hook-up wire (not in BOM) · 18 AWG silicone copper (3.11) for the thick runs · not the CCA Dupont leads (5.7)'),
@@ -1015,7 +1040,7 @@ if __name__ == "__main__":
 
     fix_rows = [
         (None, 'A', 'four corner holes', '2.5 mm in from each edge · M2.5 screw into an 8 mm nylon standoff'),
-        (None, 'B', 'three corner holes', 'same · not the front inboard one, 2 mm from the CN7 socket end'),
+        (None, 'B', 'three corner holes', 'same · not the front inboard one, 2 mm from the CN10 socket end'),
         (None, 'C', 'four corner holes', 'same · the USB-C body lies between the two on its side'),
     ]
     y = table(y + 26, 'FIXINGS  (MEC-17)', ['Board', 'Hole', 'Fixing'], fix_rows, [12, 62, 170])
@@ -1034,13 +1059,13 @@ if __name__ == "__main__":
         '2  New A and B: A on the last 5×7, B on a 3×7. Cut four 1×19 strips from the 40-pin female headers and dry-fit them on the Nucleo, A and B',
         f"    screwed to the tray under it: {col_range('A', 'g')} / {col_range('A', 'h')[2:]} and {col_range('B', 'i')} / {col_range('B', 'j')[2:]}. Nothing else goes in the columns under the Nucleo.",
         '3  Solder the sockets WITH THE NUCLEO PLUGGED IN and A and B screwed to the tray: it sets the 63.50 mm between the rows. Tack two corners, check, finish.',
-        f"4  SN65HVD230 FACE DOWN on A, as bent: sockets {N('A', XCVR_SOCKET[1][0][0], XCVR_ROW)}-{silk('A', XCVR_SOCKET[1][-1][0], XCVR_ROW)} = {', '.join(l for _, _, l in XCVR_SOCKET[1])}, and",
-        f"    {N('A', CAN_SOCKET[1][0][0], CAN_ROW)} / {silk('A', CAN_SOCKET[1][1][0], CAN_ROW)} = CANH / CANL, 7 holes behind. Its screw terminal is unused. CANH-CANL unpowered must read ~120 Ω: keep its terminator (HW-09).",
-        '5  The kit terminals may be 5.0 mm, not 5.08: the 3p CAN block spans 10.0 vs 10.16 mm of holes. Push it in; do not drill.',
+        f"4  SN65HVD230 FACE DOWN on B, as bent: sockets {N('B', XCVR_SOCKET[1][0][0], XCVR_ROW)}-{silk('B', XCVR_SOCKET[1][-1][0], XCVR_ROW)} = {', '.join(l for _, _, l in XCVR_SOCKET[1])}, and",
+        f"    {N('B', CAN_SOCKET[1][0][0], CAN_ROW)} / {silk('B', CAN_SOCKET[1][1][0], CAN_ROW)} = CANH / CANL, 7 holes behind. Its screw terminal is unused. CANH-CANL unpowered must read ~120 Ω: keep its terminator (HW-09).",
+        '5  The kit terminals may be 5.0 mm, not 5.08: the 3p CAN block spans 10.0 vs 10.16 mm of holes. Push it in; do not drill. It overhangs B\'s edge by about 0.2 mm.',
         f"6  Before the Nucleo goes in: 5 V to GND not shorted · 6 V isolated from 5 V and 3V3 · 5 V on {N(*nuc_hole('CN7', 6))} (E5V) only, nothing on {silk(*nuc_hole('CN7', 18))} (5V) or {silk(*nuc_hole('CN7', 5))} (VDD) · JP5 on [5-6].",
         '7  Fixings: nothing is drilled in the boards. An 8 mm nylon standoff and a screw in each corner hole of A and C and three of B; drill the tray',
         '    for B\'s rear inboard one (MEC-17). No wire may pass under a standoff. Nothing is fitted on the solder side: it carries wires only.',
-        '8  The two I2C headers are 90° headers on A along the gap, pins pointing forward; nothing may stand where their plugs lie (violet). Plug both before the Nucleo.',
+        '8  The two I2C headers are 90° headers across B\'s front, pins pointing forward; nothing may stand where their plugs lie (violet). Plug both before the Nucleo.',
         '9  Bridges before wires: run each silver bridge from the pin onto its free hole(s), then lay the wire end on that hole. Meter every bridge to its neighbours.',
     ]
     yy = NY + 26
@@ -1050,10 +1075,10 @@ if __name__ == "__main__":
 
     notes = [
         ('Why A and B split this way', [
-            'New boards on the same tray (MEC-17). Every CAN pin is on',
-            'CN10 and every supply pin on CN7, so A takes CAN and I2C and B the',
-            'power and the servo (PC2): one wire crosses, 3V3. Each header is',
-            'in its module\'s order: a straight lead is right.',
+            'A sits under CN7, B under CN10 (as built, 2026-11-01). Every CAN',
+            'and I2C pin is on CN10 and every supply pin on CN7, so B takes CAN',
+            'and I2C and A the power, the servo (PC2) and the LED (PC12): one',
+            'wire crosses, 3V3. Each header is in its module\'s order.',
         ]),
         ('What moved off the WAGOs', [
             'Both 470 µF caps and every resistor are now on a board. C2 sits at',
@@ -1062,7 +1087,7 @@ if __name__ == "__main__":
             'carrier. No Rp is fitted: the FRDM boots on plain 5 V (HW-02).',
         ]),
         ('Grounds and supplies', [
-            'The carrier\'s one ground lead is B 5V IN GND, back through C to the',
+            'The carrier\'s one ground lead is A 5V IN GND, back through C to the',
             '(−) WAGO (HW-06). The 6 V servo rail reaches C2 and SERVO only',
             '(HW-11). 3V3 comes from CN7-16, the Nucleo\'s own regulator, never',
             'CN7-5 VDD. 5 V enters on E5V, so the ST-LINK USB alone does not',
@@ -1078,7 +1103,7 @@ if __name__ == "__main__":
         nx += 350
 
     w(f'<line x1="40" y1="{H - 48}" x2="{W - 40}" y2="{H - 48}" stroke="#e2e8f0"/>')
-    text(40, H - 32, 'Geometry: UM3121 Fig. 7 (board 70 × 82.5, outer rows 63.50 apart, 3.25 in from each edge, row 1 31.70 from the CN1 edge) · Pins: UM3121 Table 17 · AFs: DS14539 Rev 3 (PB12 / PB13 AF9, PB6 / PB7 AF4, PC2 AF2)', 8.4, '#94a3b8')
+    text(40, H - 32, 'Geometry: UM3121 Fig. 7 (board 70 × 82.5, outer rows 63.50 apart, 3.25 in from each edge, row 1 31.70 from the CN1 edge), CN7 / CN10 sides from the board as built · Pins: UM3121 Table 17 · AFs: DS14539 Rev 3 (PB12 / PB13 AF9, PB6 / PB7 AF4, PC2 AF2)', 8.4, '#94a3b8')
     text(40, H - 18, 'Decisions: MEC-08 (carrier) · MEC-15 (kit boards) · HW-19 (5 V split board, selectable termination) · HW-06 · HW-09 · HW-11 · HW-18 · SVG is the master - PDFs are generated once the design is frozen.', 8.4, '#94a3b8')
     w('</svg>')
 

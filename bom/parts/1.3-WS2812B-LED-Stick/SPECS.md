@@ -22,9 +22,9 @@ yet** (BOM 1.3); nothing below is measured.
 
 - **Where:** on top of plate 3, just behind the FRDM, LEDs facing the rear (Hedi, 2026-10-27). How it
   stands, bracket or the 3M tape (BOM 3.25), is decided when plate 3 is assembled.
-- **Wiring:** a 3-wire lead to the 1×3 header at the rear of carrier board B: DIN from **PC12**
-  (SPI3_MOSI, CN7-3), 5 V and GND from B's 5V IN, never from the Nucleo (MEC-15, HW-22). The lead is
-  made when the stick is mounted.
+- **Wiring:** a 3-wire lead to the 1×3 header at the rear of carrier board A (A·V15-V17, DIN, 5V,
+  GND): DIN from **PC12** (SPI3_MOSI, CN7-3), 5 V and GND from A's 5V IN, never from the Nucleo
+  (MEC-15, HW-22, HW-24). The lead is made when the stick is mounted.
 - **No level shifter** (Hedi). At 5 V the first LED wants ≥ 3.5 V on DI and PC12 gives 3.3 V. If it
   misreads, PC12 goes open-drain with a 1 kΩ pull-up from DIN to 5 V (PC12 is 5 V tolerant, HW-22).
 
