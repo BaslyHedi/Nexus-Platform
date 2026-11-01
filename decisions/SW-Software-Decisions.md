@@ -524,8 +524,8 @@ claimed: room for a larger FBL (Phase 3) or for more NvM. The numbers are in `in
   flashes it in place (SW-01). The FRDM is the staging store and keeps the previous image for a rollback. A bank swap
   would put an A/B copy on the STM32 as well, and cost half of the flash for it.
 - **The application gets a bank to itself.** A Zephyr application with CAN, I2C, PWM, logging and Cyphal is estimated at
-  100 to 180 KB (not measured, the Zephyr environment is not built yet). 256 KB is above that, and above the 150 KB a bank
-  swap would have capped it at.
+  100 to 180 KB (not measured, the Zephyr environment is not built yet). 256 KB is above that. A bank swap would have capped it at about 150 KB with a 64 KB FBL, and at
+  about 90 KB with the 128 KB one.
 - **The boot address is configurable here** (`NSBOOTADD`, RM0481 Tables 25 and 26), unlike the F407, so the FBL is not
   forced into sector 0. It stays at `0x08000000` because that is the default: a blank or recovered chip boots without an
   option-byte change.
@@ -544,10 +544,10 @@ claimed: room for a larger FBL (Phase 3) or for more NvM. The numbers are in `in
 **Rejected.**
 
 - **Dual-bank A/B with `SWAP_BANK` (layout I and layout S).** It gives updates with no downtime and a safe FBL update, but
-  the application is capped at about 150 KB, the swap needs the option-byte reload and a copy of CFG and NvM before every
+  the application is capped at about 150 KB (64 KB FBL; about 90 KB with 128 KB), the swap needs the option-byte reload and a copy of CFG and NvM before every
   swap, and the ST-LINK tools have to know the swap state. Layout I put NvM in the inactive bank for read-while-write.
-  The vehicle has a safe state for an update, so the downtime is acceptable. **If the image grew past 150 KB the swap
-  would be impossible anyway.**
+  The vehicle has a safe state for an update, so the downtime is acceptable. **The estimated application is already at the cap
+  or over it.**
 - **FBL of 64 KB or 32 KB.** More room for the application, less for Phase 3 and a start address that may have to move.
 - **NvM in the high-cycle data area** (100 kcycles, 6 KB sectors, `0x09000000`, RM0481 section 7.3.10). It needs the
   `EDATA` option bytes set once, takes the last sectors of a bank, and cannot hold code. The NvM is plain flash with the
@@ -573,7 +573,7 @@ claimed: room for a larger FBL (Phase 3) or for more NvM. The numbers are in `in
 
 **To confirm.**
 
-- That the FBL fits 128 KB with room for Phase 3, measured once it is built (today 1.9 KB, release variant).
+- That the FBL fits 128 KB with room for Phase 3, measured once it is built (today about 2 KB, release variant).
 - The application's real size, once `Nexus-STM32-App` builds.
 - The NvM wear: 10 kcycles of an 8 KB sector, and how the application spreads its writes.
 - The interface of CFG and NvM between the FBL and the application.
@@ -647,7 +647,8 @@ for the STM32H533:
   Table 50), where the F407 stalled for up to 2 s. A CAN node publishes a heartbeat at least every second (Cyphal
   Specification v1.0), so 10 ms is well within it, but the receive FIFO of the FDCAN is not yet measured against a stall
   of that length. Running from the SRAM removes the question at the cost of the start-up copy.
-- **The decision was already taken, and the copy is small.** The FBL is 1.9 KB today. Copying it is under a millisecond.
+- **Kept by choice (Hedi, 2026-11-01), and the copy is small.** The FBL is about 2 KB today. Copying it takes well under a
+  millisecond.
 - **The debugger works with it on the M33.** A hardware breakpoint set at `main` in the SRAM before the start-up copy hits
   (checked 2026-11-01 with ST's OpenOCD fork), so the M4 limit that the launch configuration worked around is gone.
 
