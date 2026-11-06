@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="297mm" height="210mm" viewBox="0 0 297 210" font-family="system-ui, Segoe UI, Roboto, sans-serif">
+<rect width="297" height="210" fill="#ffffff"/>
+<text x="10" y="11" font-size="5" font-weight="700">NEXUS carrier tray - hand-made - 1:1 template (MEC-17)</text>
+<text x="10" y="17" font-size="2.7" fill="#444">3 or 4 mm sheet, at least 189 x 116 mm. Top view, front of the vehicle to the LEFT, vehicle right at the TOP. Print at 100 %, no fit-to-page: the bar below must measure 100 mm.</text>
+<text x="10" y="21.5" font-size="2.7" fill="#444">Centre-punch every cross, drill, then saw along the heavy line (12 straight cuts), file the edges, tap or countersink as the table says.</text>
+<rect x="165.25" y="25.51" width="70.00" height="50.00" fill="none" stroke="#047857" stroke-width="0.25" stroke-dasharray="1.6 1"/>
+<text x="172.25" y="50.51" font-size="3.2" fill="#047857" font-weight="700">board A</text>
+<rect x="167.79" y="101.55" width="70.00" height="30.00" fill="none" stroke="#047857" stroke-width="0.25" stroke-dasharray="1.6 1"/>
+<text x="174.79" y="116.55" font-size="3.2" fill="#047857" font-weight="700">board B</text>
+<rect x="133.75" y="45.60" width="30.00" height="70.00" fill="none" stroke="#047857" stroke-width="0.25" stroke-dasharray="1.6 1"/>
+<text x="140.75" y="80.60" font-size="3.2" fill="#047857" font-weight="700">board C</text>
+<rect x="59.25" y="52.40" width="64.00" height="57.00" fill="none" stroke="#be123c" stroke-width="0.25" stroke-dasharray="1.6 1"/>
+<text x="91.25" y="70.90" font-size="3.2" fill="#be123c" text-anchor="middle" font-weight="700">Bauer 50 W (64 x 57)</text>
+<text x="91.25" y="107.40" font-size="2.2" fill="#be123c" text-anchor="middle">leads edge</text>
+<path d="M57.25 51.40 L131.75 51.40 L131.75 43.60 L163.25 43.60 L163.25 24.00 L239.75 24.00 L239.75 133.40 L163.25 133.40 L163.25 117.60 L131.75 117.60 L131.75 109.40 L57.25 109.40 Z" fill="#f4f4f4" fill-opacity="0.0" stroke="#000" stroke-width="0.6"/>
+<circle cx="167.75" cy="28.01" r="1.70" fill="none" stroke="#1d4ed8" stroke-width="0.2"/>
+<path d="M164.75 28.01 h6 M167.75 25.01 v6" stroke="#1d4ed8" stroke-width="0.2"/>
+<text x="170.15" y="25.81" font-size="2.6" fill="#1d4ed8" font-weight="700">A1</text>
+<circle cx="232.75" cy="28.01" r="1.70" fill="none" stroke="#1d4ed8" stroke-width="0.2"/>
+<path d="M229.75 28.01 h6 M232.75 25.01 v6" stroke="#1d4ed8" stroke-width="0.2"/>
+<text x="235.15" y="25.81" font-size="2.6" fill="#1d4ed8" font-weight="700">A2</text>
+<circle cx="167.75" cy="73.01" r="1.70" fill="none" stroke="#1d4ed8" stroke-width="0.2"/>
+<path d="M164.75 73.01 h6 M167.75 70.01 v6" stroke="#1d4ed8" stroke-width="0.2"/>
+<text x="170.15" y="70.81" font-size="2.6" fill="#1d4ed8" font-weight="700">A3</text>
+<circle cx="232.75" cy="73.01" r="1.70" fill="none" stroke="#1d4ed8" stroke-width="0.2"/>
+<path d="M229.75 73.01 h6 M232.75 70.01 v6" stroke="#1d4ed8" stroke-width="0.2"/>
+<text x="235.15" y="70.81" font-size="2.6" fill="#1d4ed8" font-weight="700">A4</text>
+<circle cx="235.29" cy="104.05" r="1.70" fill="none" stroke="#1d4ed8" stroke-width="0.2"/>
+<path d="M232.29 104.05 h6 M235.29 101.05 v6" stroke="#1d4ed8" stroke-width="0.2"/>
+<text x="237.69" y="101.85" font-size="2.6" fill="#1d4ed8" font-weight="700">B2</text>
+<circle cx="170.29" cy="129.05" r="1.70" fill="none" stroke="#1d4ed8" stroke-width="0.2"/>
+<path d="M167.29 129.05 h6 M170.29 126.05 v6" stroke="#1d4ed8" stroke-width="0.2"/>
+<text x="172.69" y="126.85" font-size="2.6" fill="#1d4ed8" font-weight="700">B3</text>
+<circle cx="235.29" cy="129.05" r="1.70" fill="none" stroke="#1d4ed8" stroke-width="0.2"/>
+<path d="M232.29 129.05 h6 M235.29 126.05 v6" stroke="#1d4ed8" stroke-width="0.2"/>
+<text x="237.69" y="126.85" font-size="2.6" fill="#1d4ed8" font-weight="700">B4</text>
+<circle cx="136.25" cy="48.10" r="1.70" fill="none" stroke="#1d4ed8" stroke-width="0.2"/>
+<path d="M133.25 48.10 h6 M136.25 45.10 v6" stroke="#1d4ed8" stroke-width="0.2"/>
+<text x="138.65" y="45.90" font-size="2.6" fill="#1d4ed8" font-weight="700">C1</text>
+<circle cx="161.25" cy="48.10" r="1.70" fill="none" stroke="#1d4ed8" stroke-width="0.2"/>
+<path d="M158.25 48.10 h6 M161.25 45.10 v6" stroke="#1d4ed8" stroke-width="0.2"/>
+<text x="163.65" y="45.90" font-size="2.6" fill="#1d4ed8" font-weight="700">C2</text>
+<circle cx="136.25" cy="113.10" r="1.70" fill="none" stroke="#1d4ed8" stroke-width="0.2"/>
+<path d="M133.25 113.10 h6 M136.25 110.10 v6" stroke="#1d4ed8" stroke-width="0.2"/>
+<text x="138.65" y="110.90" font-size="2.6" fill="#1d4ed8" font-weight="700">C3</text>
+<circle cx="161.25" cy="113.10" r="1.70" fill="none" stroke="#1d4ed8" stroke-width="0.2"/>
+<path d="M158.25 113.10 h6 M161.25 110.10 v6" stroke="#1d4ed8" stroke-width="0.2"/>
+<text x="163.65" y="110.90" font-size="2.6" fill="#1d4ed8" font-weight="700">C4</text>
+<circle cx="73.07" cy="80.64" r="1.05" fill="none" stroke="#1d4ed8" stroke-width="0.2"/>
+<path d="M70.07 80.64 h6 M73.07 77.64 v6" stroke="#1d4ed8" stroke-width="0.2"/>
+<text x="75.47" y="78.44" font-size="2.6" fill="#1d4ed8" font-weight="700">T1</text>
+<circle cx="147.49" cy="102.16" r="1.05" fill="none" stroke="#1d4ed8" stroke-width="0.2"/>
+<path d="M144.49 102.16 h6 M147.49 99.16 v6" stroke="#1d4ed8" stroke-width="0.2"/>
+<text x="149.89" y="99.96" font-size="2.6" fill="#1d4ed8" font-weight="700">T3</text>
+<circle cx="168.31" cy="56.34" r="1.05" fill="none" stroke="#1d4ed8" stroke-width="0.2"/>
+<path d="M165.31 56.34 h6 M168.31 53.34 v6" stroke="#1d4ed8" stroke-width="0.2"/>
+<text x="170.71" y="54.14" font-size="2.6" fill="#1d4ed8" font-weight="700">T4</text>
+<circle cx="196.43" cy="102.16" r="1.05" fill="none" stroke="#1d4ed8" stroke-width="0.2"/>
+<path d="M193.43 102.16 h6 M196.43 99.16 v6" stroke="#1d4ed8" stroke-width="0.2"/>
+<text x="198.83" y="99.96" font-size="2.6" fill="#1d4ed8" font-weight="700">T5</text>
+<circle cx="64.25" cy="83.40" r="1.25" fill="none" stroke="#1d4ed8" stroke-width="0.2"/>
+<path d="M61.25 83.40 h6 M64.25 80.40 v6" stroke="#1d4ed8" stroke-width="0.2"/>
+<text x="66.65" y="81.20" font-size="2.6" fill="#1d4ed8" font-weight="700">E1</text>
+<circle cx="118.25" cy="83.40" r="1.25" fill="none" stroke="#1d4ed8" stroke-width="0.2"/>
+<path d="M115.25 83.40 h6 M118.25 80.40 v6" stroke="#1d4ed8" stroke-width="0.2"/>
+<text x="120.65" y="81.20" font-size="2.6" fill="#1d4ed8" font-weight="700">E2</text>
+<circle cx="162.75" cy="80.40" r="4.00" fill="none" stroke="#1d4ed8" stroke-width="0.2"/>
+<path d="M159.75 80.40 h6 M162.75 77.40 v6" stroke="#1d4ed8" stroke-width="0.2"/>
+<text x="165.15" y="78.20" font-size="2.6" fill="#1d4ed8" font-weight="700">W1</text>
+<circle cx="175.25" cy="68.40" r="4.00" fill="none" stroke="#1d4ed8" stroke-width="0.2"/>
+<path d="M172.25 68.40 h6 M175.25 65.40 v6" stroke="#1d4ed8" stroke-width="0.2"/>
+<text x="177.65" y="66.20" font-size="2.6" fill="#1d4ed8" font-weight="700">W2</text>
+<circle cx="175.25" cy="93.40" r="4.00" fill="none" stroke="#1d4ed8" stroke-width="0.2"/>
+<path d="M172.25 93.40 h6 M175.25 90.40 v6" stroke="#1d4ed8" stroke-width="0.2"/>
+<text x="177.65" y="91.20" font-size="2.6" fill="#1d4ed8" font-weight="700">W3</text>
+<path d="M10 202 h100 M10 200 v4 M60 201 v2 M110 200 v4" stroke="#000" stroke-width="0.4"/>
+<text x="112" y="203.5" font-size="3">100 mm</text>
+<text x="287" y="203.5" font-size="2.4" fill="#666" text-anchor="end">dimensions in the tables are from the tray's top left corner, x to the rear, y toward the vehicle's left</text>
+<text x="10" y="141.4" font-size="3.2" font-weight="700">Holes (centre from the top left corner of the tray)</text>
+<text x="10" y="146.4" font-size="2.5" font-family="ui-monospace, Menlo, Consolas, monospace" xml:space="preserve">A1  x 110.50  y   4.01   drill 3.4   board A standoff screw, countersink from below</text>
+<text x="10" y="149.7" font-size="2.5" font-family="ui-monospace, Menlo, Consolas, monospace" xml:space="preserve">A2  x 175.50  y   4.01   drill 3.4   board A standoff screw, countersink from below</text>
+<text x="10" y="153.0" font-size="2.5" font-family="ui-monospace, Menlo, Consolas, monospace" xml:space="preserve">A3  x 110.50  y  49.01   drill 3.4   board A standoff screw, countersink from below</text>
+<text x="10" y="156.3" font-size="2.5" font-family="ui-monospace, Menlo, Consolas, monospace" xml:space="preserve">A4  x 175.50  y  49.01   drill 3.4   board A standoff screw, countersink from below</text>
+<text x="10" y="159.6" font-size="2.5" font-family="ui-monospace, Menlo, Consolas, monospace" xml:space="preserve">B2  x 178.04  y  80.05   drill 3.4   board B standoff screw, countersink from below</text>
+<text x="10" y="162.9" font-size="2.5" font-family="ui-monospace, Menlo, Consolas, monospace" xml:space="preserve">B3  x 113.04  y 105.05   drill 3.4   board B standoff screw, countersink from below</text>
+<text x="10" y="166.2" font-size="2.5" font-family="ui-monospace, Menlo, Consolas, monospace" xml:space="preserve">B4  x 178.04  y 105.05   drill 3.4   board B standoff screw, countersink from below</text>
+<text x="10" y="169.5" font-size="2.5" font-family="ui-monospace, Menlo, Consolas, monospace" xml:space="preserve">C1  x  79.00  y  24.10   drill 3.4   board C standoff screw, countersink from below</text>
+<text x="10" y="172.8" font-size="2.5" font-family="ui-monospace, Menlo, Consolas, monospace" xml:space="preserve">C2  x 104.00  y  24.10   drill 3.4   board C standoff screw, countersink from below</text>
+<text x="10" y="176.1" font-size="2.5" font-family="ui-monospace, Menlo, Consolas, monospace" xml:space="preserve">C3  x  79.00  y  89.10   drill 3.4   board C standoff screw, countersink from below</text>
+<text x="155" y="146.4" font-size="2.5" font-family="ui-monospace, Menlo, Consolas, monospace" xml:space="preserve">C4  x 104.00  y  89.10   drill 3.4   board C standoff screw, countersink from below</text>
+<text x="155" y="149.7" font-size="2.5" font-family="ui-monospace, Menlo, Consolas, monospace" xml:space="preserve">T1  x  15.82  y  56.64   drill 2.1   to plate 2, tap M2.5 (under the Bauer)</text>
+<text x="155" y="153.0" font-size="2.5" font-family="ui-monospace, Menlo, Consolas, monospace" xml:space="preserve">T3  x  90.24  y  78.16   drill 2.1   to plate 2, tap M2.5 (under board C)</text>
+<text x="155" y="156.3" font-size="2.5" font-family="ui-monospace, Menlo, Consolas, monospace" xml:space="preserve">T4  x 111.06  y  32.34   drill 2.1   to plate 2, tap M2.5 (under board A)</text>
+<text x="155" y="159.6" font-size="2.5" font-family="ui-monospace, Menlo, Consolas, monospace" xml:space="preserve">T5  x 139.18  y  78.16   drill 2.1   to plate 2, tap M2.5 (under board B)</text>
+<text x="155" y="162.9" font-size="2.5" font-family="ui-monospace, Menlo, Consolas, monospace" xml:space="preserve">E1  x   7.00  y  59.40   drill 2.5   Bauer, tap M3</text>
+<text x="155" y="166.2" font-size="2.5" font-family="ui-monospace, Menlo, Consolas, monospace" xml:space="preserve">E2  x  61.00  y  59.40   drill 2.5   Bauer, tap M3</text>
+<text x="155" y="169.5" font-size="2.5" font-family="ui-monospace, Menlo, Consolas, monospace" xml:space="preserve">W1  x 105.50  y  56.40   drill 8.0   cable window beside C (6 V pair)</text>
+<text x="155" y="172.8" font-size="2.5" font-family="ui-monospace, Menlo, Consolas, monospace" xml:space="preserve">W2  x 118.00  y  44.40   drill 8.0   cable window under board A (5 V and 6 V pairs)</text>
+<text x="155" y="176.1" font-size="2.5" font-family="ui-monospace, Menlo, Consolas, monospace" xml:space="preserve">W3  x 118.00  y  69.40   drill 8.0   cable window beside board B (I2C leads)</text>
+<text x="10" y="181.4" font-size="3.2" font-weight="700">Outline corners, in the same measure (saw straight between them)</text>
+<text x="10" y="185.9" font-size="2.5" font-family="ui-monospace, Menlo, Consolas, monospace" xml:space="preserve">(0.0, 27.4)   (74.5, 27.4)   (74.5, 19.6)   (106.0, 19.6)   (106.0, 0.0)   (182.5, 0.0)   (182.5, 109.4)   (106.0, 109.4)   (106.0, 93.6)   (74.5, 93.6)   (74.5, 85.4)   (0.0, 85.4)</text>
+<text x="10" y="193.9" font-size="2.5" fill="#b45309">Better for the board holes: set the real boards, with their standoffs fitted, on the sheet in their dashed outlines and mark through the standoffs - the 2.5 mm corner inset here is an estimate.</text>
+<text x="10" y="189.9" font-size="2.5" fill="#444">Tray 182.5 x 109.4 mm. Tap M2.5 / M3 into the sheet (or open to 2.8 / 3.2 and glue a nut on top). Board holes: 3.4 mm, countersunk 90 degrees from below for flat-head M2.5 x 8.</text>
+</svg>

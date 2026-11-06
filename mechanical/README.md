@@ -8,7 +8,7 @@ plate-1 stand-ins and the whole-vehicle model. The **why** lives in the design d
 |---|---|
 | [`cad/`](cad/) | Models and the files made from them: OpenSCAD sources, the print STLs, the drilling template, and (untracked) the whole-vehicle model and its parts |
 | [`scripts/`](scripts/) | The Python and Blender scripts that build the model and animate it |
-| `renders/` | Videos and stills. **Generated and untracked** - re-run the scripts |
+| `renders/` | Videos and stills, **generated and untracked** - re-run the scripts. The SVGs are committed: the hand-made tray's template is the source of [`cad/carrier-tray-hand-template.pdf`](cad/carrier-tray-hand-template.pdf) |
 
 The scripts find everything relative to themselves, so they run from any directory.
 

@@ -23,8 +23,10 @@ mechanical/cad/chassis-3deck-fascia.obj
 mechanical/cad/plate1/
 mechanical/cad/chassis-3deck-fascia.mtl
 
-# Videos and stills, written by mechanical/scripts/animate-*.py - pure output.
-mechanical/renders/
+# Videos and stills, written by mechanical/scripts/animate-*.py - pure output. The SVGs are kept: the
+# hand-made tray's template is the source of its stored PDF.
+mechanical/renders/*
+!mechanical/renders/*.svg
 
 # Python bytecode, from importing hardware/scripts/stm32-carrier.py
 __pycache__/

@@ -17,9 +17,19 @@ hands-on with the architecture of a modern vehicle, and the repository is writte
 numbered decisions with their reasons and the options rejected, a bill of materials, a functional decomposition, and
 a phase plan with testable exit criteria.
 
-The pace is set by learning, not by the calendar, so nothing here has a date. **Phase 1 (Foundation) is under way**:
-the vehicle hardware is largely defined and built, and the software repositories below were created on
-2026-10-11 and are still empty. What each phase delivers is in [`system/phases.md`](system/phases.md).
+The pace is set by learning, not by the calendar, so nothing here has a date. **Phase 1 (Foundation) is under way**,
+and none of its six bench tests has passed yet:
+
+- **Hardware:** the vehicle is defined and largely built. The STM32F4 Discovery failed and was replaced by a
+  **NUCLEO-H533RE** ([HW-22](decisions/HW-Electrical-Decisions.md)). Its carrier boards are soldered as the drawing now
+  shows ([HW-24](decisions/HW-Electrical-Decisions.md), MEC-15) and are going through their unpowered checks; nothing
+  has been powered from the battery yet.
+- **Software:** the flash bootloader has started in
+  [Nexus-STM32-FBL](https://github.com/BaslyHedi/Nexus-STM32-FBL): LED patterns, the first layer of the in-house Cyphal
+  stack and the port to the H533, with its design recorded as SW-01 to SW-11. The other code repositories exist but
+  are still empty.
+
+What each phase delivers, and the tests that close Phase 1, are in [`system/phases.md`](system/phases.md).
 
 Worth reading first: [`decisions/`](decisions/README.md) (why it is this way), [`system/phases.md`](system/phases.md)
 (what is built when), and [`system/renders/Nexus-Platform-Logical-Architecture.svg`](system/renders/Nexus-Platform-Logical-Architecture.svg)
@@ -65,7 +75,7 @@ NXP's design files). **No vendor document is redistributed here**; see below.
 | [`system/README.md`](system/README.md) | What NEXUS must **do** - the logical and physical views of the architecture with their `Nexus-Logical-DNN` and `Nexus-Physical-NN` IDs, the method, the **phase plan** (`phases.md`); its diagram is in `renders/`, written by the script in `scripts/` |
 | [`decisions/README.md`](decisions/README.md) | Every settled decision and the reasoning behind it, split **HW / MEC / SYS / SW**. Its README owns the numbering rules |
 | [`hardware/README.md`](hardware/README.md) | Build drawings, to scale - chassis layout, wiring schematic, STM32 carrier - the SVGs in `renders/`, the script that writes the carrier's in `scripts/` |
-| [`mechanical/README.md`](mechanical/README.md) | The parts we make, in `cad/` (`fascia.scad` is the source of truth, plus the print files and the proposed carrier tray), the scripts that build and animate the model in `scripts/`, and their output in `renders/` |
+| [`mechanical/README.md`](mechanical/README.md) | The parts we make, in `cad/` (`fascia.scad` is the source of truth, plus the print files and the trays), the scripts that build and animate the model in `scripts/`, and their output in `renders/` (only the SVGs are committed; videos and stills are rebuilt) |
 | [`bom/README.md`](bom/README.md) | What it is made of - [`bom/BOM.md`](bom/BOM.md) for status, price and sourcing; `parts/<item>/SPECS.md` for measured numbers |
 
 Every folder that draws or renders something follows one pattern: **`scripts/`** holds what makes
