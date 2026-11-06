@@ -26,8 +26,8 @@ and none of its six bench tests has passed yet:
   has been powered from the battery yet.
 - **Software:** the flash bootloader has started in
   [Nexus-STM32-FBL](https://github.com/BaslyHedi/Nexus-STM32-FBL): LED patterns, the first layer of the in-house Cyphal
-  stack and the port to the H533, with its design recorded as SW-01 to SW-11. The other code repositories exist but
-  are still empty.
+  stack and the port to the H533, with its design recorded as SW-01 to SW-11. The Yocto repository is created and
+  started; the STM32 application and the CAN tools are not started yet.
 
 What each phase delivers, and the tests that close Phase 1, are in [`system/phases.md`](system/phases.md).
 
@@ -37,13 +37,15 @@ Worth reading first: [`decisions/`](decisions/README.md) (why it is this way), [
 
 ## Repositories
 
+Started repositories are public; the ones not started yet are still private, so they are named without a link.
+
 | Repository | What it holds |
 |---|---|
-| **Nexus-Platform** (this one) | Definition: system, decisions, hardware, mechanical, BOM, phase plan |
-| [Nexus-STM32-FBL](https://github.com/BaslyHedi/Nexus-STM32-FBL) | Bare-metal flash bootloader for the STM32, updated over CAN with Cyphal |
-| [Nexus-STM32-App](https://github.com/BaslyHedi/Nexus-STM32-App) | The Zephyr application the bootloader loads |
-| [Nexus-CAN-Utils](https://github.com/BaslyHedi/Nexus-CAN-Utils) | The CAN matrix, its generators and the flashing client |
-| [Nexus-IMX91-Yocto](https://github.com/BaslyHedi/Nexus-IMX91-Yocto) | The Yocto build (`kas`) of the Linux image for the FRDM-IMX91S |
+| ![active](https://img.shields.io/badge/status-active-brightgreen) **Nexus-Platform** (this one) | Definition: system, decisions, hardware, mechanical, BOM, phase plan |
+| ![started](https://img.shields.io/badge/status-started-blue) [Nexus-STM32-FBL](https://github.com/BaslyHedi/Nexus-STM32-FBL) | Bare-metal flash bootloader for the STM32, updated over CAN with Cyphal |
+| ![not started](https://img.shields.io/badge/status-not%20started-lightgrey) **Nexus-STM32-App** | The Zephyr application the bootloader loads |
+| ![not started](https://img.shields.io/badge/status-not%20started-lightgrey) **Nexus-CAN-Utils** | The CAN matrix, its generators and the flashing client |
+| ![started](https://img.shields.io/badge/status-started-blue) [Nexus-IMX91S-Yocto](https://github.com/BaslyHedi/Nexus-IMX91S-Yocto) | The Yocto build (`kas`) of the Linux image for the FRDM-IMX91S |
 
 Each Linux application will get its own repository, with its own CI and releases.
 
