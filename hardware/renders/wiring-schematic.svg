@@ -137,7 +137,7 @@
   <text x="1025" y="323" font-size="10" font-weight="700" fill="#7c2d12" text-anchor="middle">Bauer 50 W</text>
   <text x="1025" y="337" font-size="9" fill="#92400e" text-anchor="middle">12 V → 5 V · 10 A</text>
   <text x="1025" y="349" font-size="7.5" fill="#a16207" text-anchor="middle">470–1000 µF · both boards</text>
-  <!-- board C: IN 5V, C1 470 uF, the USB-C socket; TO STM32 goes to carrier B -->
+  <!-- board C: IN 5V, C1 470 uF, the USB-C socket; TO STM32 goes to carrier A -->
   <line x1="1100" y1="330" x2="1175" y2="330" stroke="#15803d" stroke-width="3"/>
   <rect x="1112" y="314" width="48" height="34" fill="#f0fdf4" stroke="#15803d" stroke-width="1.4" rx="3"/><text x="1136.0" y="328" font-size="8.5" font-weight="700" fill="#14532d" text-anchor="middle">BOARD C</text><text x="1136.0" y="340" font-size="6.5" fill="#14532d" text-anchor="middle">5 V split</text>
   <circle cx="1167" cy="330" r="3.2" fill="#15803d"/>
@@ -151,14 +151,14 @@
 
   <rect x="1175" y="375" width="120" height="50" fill="#dcfce7" stroke="#15803d" stroke-width="1.6" rx="2"/>
   <text x="1235" y="393" font-size="10" font-weight="700" fill="#14532d" text-anchor="middle">NUCLEO-H533RE</text>
-  <text x="1235" y="407" font-size="8.5" fill="#166534" text-anchor="middle">5 V via carrier B to E5V</text>
+  <text x="1235" y="407" font-size="8.5" fill="#166534" text-anchor="middle">5 V via carrier A to E5V</text>
   <text x="1235" y="419" font-size="8" fill="#3f7d52" text-anchor="middle">⏚ back through board C</text>
 
   <!-- ===================== SIGNALS ===================== -->
   <text x="40" y="500" font-size="13" font-weight="700" fill="#1a1a1a">SIGNALS · CARRIER BOARDS</text>
   <line x1="40" y1="508" x2="1280" y2="508" stroke="#e2e8f0"/>
 
-  <!-- INA226 and the motor module reach the STM32 through carrier A -->
+  <!-- INA226 and the motor module reach the STM32 through carrier B -->
   <rect x="40" y="540" width="160" height="66" fill="#cffafe" stroke="#0e7490" stroke-width="1.6" rx="3"/>
   <text x="120" y="562" font-size="11" font-weight="700" fill="#164e63" text-anchor="middle">INA226</text>
   <text x="120" y="578" font-size="9" fill="#155e75" text-anchor="middle">pack V + I</text>
@@ -175,7 +175,7 @@
   <path d="M200,696 L225,696 L225,675 L250,675" fill="none" stroke="#7c3aed" stroke-width="2.5" marker-end="url(#a)"/>
   <text x="212" y="714" font-size="8.5" font-weight="600" fill="#5b21b6" text-anchor="middle">I²C</text>
 
-  <!-- the Nucleo plugs onto carrier A (under CN10) and carrier B (under CN7); both sit on the carrier tray on plate 2 -->
+  <!-- the Nucleo plugs onto carrier A (under CN7) and carrier B (under CN10); both sit on the carrier tray on plate 2 (HW-24) -->
   <rect x="250" y="520" width="350" height="62" fill="#dcfce7" stroke="#15803d" stroke-width="1.8" rx="3"/>
   <text x="425" y="540" font-size="11" font-weight="700" fill="#14532d" text-anchor="middle">NUCLEO-H533RE · STM32H533RE</text>
   <text x="425" y="556" font-size="8" fill="#166534" text-anchor="middle">real-time + BMS · FDCAN2: PB12 RX · PB13 TX · I²C1 PB6 SCL / PB7 SDA · PC2 PWM</text>
@@ -183,10 +183,10 @@
   <line x1="335" y1="582" x2="335" y2="612" stroke="#94a3b8" stroke-width="5" marker-end="url(#a)"/>
   <line x1="515" y1="582" x2="515" y2="612" stroke="#94a3b8" stroke-width="5" marker-end="url(#a)"/>
   <text x="425" y="603" font-size="8" fill="#64748b" text-anchor="middle">plugs into the 1×19 sockets</text>
-  <rect x="250" y="612" width="170" height="140" fill="#f0fdfa" stroke="#0f766e" stroke-width="1.8" rx="3"/><text x="335.0" y="629" font-size="10.5" font-weight="700" fill="#134e4a" text-anchor="middle">CARRIER A</text><text x="335.0" y="642" font-size="8" fill="#0f766e" text-anchor="middle">under CN10 · plate 2</text><text x="258" y="660" font-size="8.2" fill="#134e4a">SN65HVD230 module in a socket</text><text x="258" y="674" font-size="8.2" fill="#134e4a">   (TX / RX = PB13 / PB12, 3.3 V)</text><text x="258" y="688" font-size="8.2" fill="#134e4a">CAN terminal, 3-pin</text><text x="258" y="702" font-size="8.2" fill="#134e4a">I²C headers on A: INA226,</text><text x="258" y="716" font-size="8.2" fill="#134e4a">   motor module, 90° pointing fwd</text>
-  <rect x="430" y="612" width="170" height="140" fill="#eff6ff" stroke="#1d4ed8" stroke-width="1.8" rx="3"/><text x="515.0" y="629" font-size="10.5" font-weight="700" fill="#1e3a8a" text-anchor="middle">CARRIER B</text><text x="515.0" y="642" font-size="8" fill="#1d4ed8" text-anchor="middle">under CN7 · plate 2</text><text x="438" y="660" font-size="8.2" fill="#1e3a8a">5V IN terminal ← board C</text><text x="438" y="674" font-size="8.2" fill="#1e3a8a">6V IN terminal ← UBEC</text><text x="438" y="688" font-size="8.2" fill="#1e3a8a">C2 470 µF across the servo header</text><text x="438" y="702" font-size="8.2" fill="#1e3a8a">servo header: 6 V, GND, PWM</text><text x="438" y="716" font-size="8.2" fill="#1e3a8a">   via R4 1 kΩ from PC2</text>
+  <rect x="250" y="612" width="170" height="140" fill="#eff6ff" stroke="#1d4ed8" stroke-width="1.8" rx="3"/><text x="335.0" y="629" font-size="10.5" font-weight="700" fill="#1e3a8a" text-anchor="middle">CARRIER B</text><text x="335.0" y="642" font-size="8" fill="#1d4ed8" text-anchor="middle">under CN10 · plate 2</text><text x="258" y="660" font-size="8.2" fill="#1e3a8a">SN65HVD230 module in a socket</text><text x="258" y="674" font-size="8.2" fill="#1e3a8a">   (TX / RX = PB13 / PB12, 3.3 V)</text><text x="258" y="688" font-size="8.2" fill="#1e3a8a">CAN terminal, 3-pin</text><text x="258" y="702" font-size="8.2" fill="#1e3a8a">I²C headers on B: INA226,</text><text x="258" y="716" font-size="8.2" fill="#1e3a8a">   motor module, 90° pointing fwd</text>
+  <rect x="430" y="612" width="170" height="140" fill="#f0fdfa" stroke="#0f766e" stroke-width="1.8" rx="3"/><text x="515.0" y="629" font-size="10.5" font-weight="700" fill="#134e4a" text-anchor="middle">CARRIER A</text><text x="515.0" y="642" font-size="8" fill="#0f766e" text-anchor="middle">under CN7 · plate 2</text><text x="438" y="660" font-size="8.2" fill="#134e4a">5V IN terminal ← board C</text><text x="438" y="674" font-size="8.2" fill="#134e4a">6V IN terminal ← UBEC</text><text x="438" y="688" font-size="8.2" fill="#134e4a">C2 470 µF across the servo header</text><text x="438" y="702" font-size="8.2" fill="#134e4a">servo header: 6 V, GND, PWM</text><text x="438" y="716" font-size="8.2" fill="#134e4a">   via R4 1 kΩ from PC2</text>
 
-  <!-- CAN: carrier A terminal to the FRDM J7, under carrier B; the debug port is a stub off the middle of the bus (HW-18) -->
+  <!-- CAN: carrier B terminal to the FRDM J7, under carrier A; the debug port is a stub off the middle of the bus (HW-18) -->
   <path d="M335,752 L335,768 L615,768 L615,690 L1000,690" fill="none" stroke="#1d4ed8" stroke-width="3"/>
   <text x="800" y="682" font-size="9" font-weight="700" fill="#1e3a8a" text-anchor="middle">CAN BUS - H · L · GND</text>
   <text x="800" y="666" font-size="8.5" fill="#3b5bb5" text-anchor="middle">twisted pair · 120 Ω at each end, nowhere else</text>

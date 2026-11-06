@@ -70,20 +70,20 @@ GROW = S(WIRE_S) - 1
 
 CAPTIONS = [
     ((0, 4), "Board A: a 5x7 kit board, 18 x 24 holes; board B: a 3x7, 10 x 24 - board C, the 5 V split, beside them"),
-    ((4, 8.2), f"1  Four 1x19 sockets: A {C.silk('A', 'g', 1)[1:]} / {C.silk('A', 'h', 1)[1:]} under CN10, B {C.silk('B', 'i', 1)[1:]} / {C.silk('B', 'j', 1)[1:]} under CN7, rows 5-23 and 6-24"),
+    ((4, 8.2), f"1  Four 1x19 sockets: A {C.silk('A', 'g', 1)[1:]} / {C.silk('A', 'h', 1)[1:]} under CN7, B {C.silk('B', 'i', 1)[1:]} / {C.silk('B', 'j', 1)[1:]} under CN10, rows 5-23 and 6-24"),
     ((8.2, 11), "2  The Nucleo plugs in as the jig, A and B on the tray: it sets the 63.50 mm between the two headers"),
     ((11, 19.4), "3  Turn the stack over and solder the sockets - tack the four corners, check, then the rest"),
     ((19.4, 21.6), "   Lift the Nucleo off"),
-    ((21.6, 24.6), "4  Screw terminals: CAN (3p) on A, 6V IN and 5V IN on B"),
-    ((24.6, 27.4), "5  SERVO on B; I2C-B and I2C-A are 90 degree headers on A along the gap, pointing forward"),
-    ((27.4, 30.2), "6  R4 1k in the servo PWM, C2 470 uF across the servo supply, both on B"),
-    ((30.2, 32), "7  A 1x4 and a 1x2 socket on A for the SN65HVD230 module"),
+    ((21.6, 24.6), "4  Screw terminals: 6V IN and 5V IN on A, CAN (3p) on B"),
+    ((24.6, 27.4), "5  SERVO and LED on A; I2C-B and I2C-A are 90 degree headers across B, pointing forward"),
+    ((27.4, 30.2), "6  R4 1k in the servo PWM, C2 470 uF across the servo supply, both on A"),
+    ((30.2, 32), "7  A 1x4 and a 1x2 socket on B for the SN65HVD230 module"),
     ((32, 37.2), "8  Turn it over: solder every part pin, then bridge each one onto the free hole its wire lands on"),
-    ((37.2, 43.2), "9  The servo loop in 18 AWG on B: 6V IN to C2 to SERVO, on + and on GND"),
-    ((43.2, 51.4), "10  22 AWG, each end on a bridged free hole (E5V and 3V3 on B take it direct): 5 V, GND, PWM, I2C, CAN"),
-    ((51.4, 56), f"11  One bridge: CN7-16 3V3 to I2C-A VCC ({C.N('A', 'r', 20)}); A's GND comes from CN10-9 and CN10-20"),
+    ((37.2, 43.2), "9  The servo loop in 18 AWG on A: 6V IN to C2 to SERVO, on + and on GND"),
+    ((43.2, 51.4), "10  22 AWG, each end on a bridged free hole (PB6 and PB7 on B take it direct): 5 V, GND, PWM, LED, I2C, CAN"),
+    ((51.4, 56), f"11  One bridge: CN7-16 3V3 on A to the transceiver's 3V3 ({C.N(*C.XWIRES[0][1][-1])}); B's GND comes from CN10-20"),
     ((56, 58.8), "   Right way up again"),
-    ((58.8, 62), f"12  Module in face down on A, CANH / CANL into {C.N('A', 'b', C.CAN_ROW)} / {C.silk('A', 'c', C.CAN_ROW)}; its own 120 R ends the bus"),
+    ((58.8, 62), f"12  Module in face down on B, CANH / CANL into {C.N(C.CAN_SOCKET[0], *C.CAN_SOCKET[1][0][:2])} / {C.silk(C.CAN_SOCKET[0], *C.CAN_SOCKET[1][1][:2])}; its own 120 R ends the bus"),
     ((62, 64), "    A nylon standoff and screw in the corner holes: four on A, three on B"),
     ((64, 67.4), "13  The NUCLEO-H533RE drops onto the carrier, JP5 on [5-6] for E5V"),
     ((67.4, 70.5), "14  Board C, the 5 V split: IN 5V and TO STM32, C1 470 uF"),
@@ -465,7 +465,7 @@ for group, (a, z) in ((heavy, SPINES), (light, INSUL)):
         xy = [hole(b, c, r) for c, r in pts]
         wire(f'wire-{b}-{net}-{i}', xy, net, kind, car, t)
         joints(f'wj-{b}-{net}-{i}', wire_ends(pts, xy), car, t + WIRE_S)
-# the one bridge between the boards: 3V3 from CN7 on B to I2C-A on A
+# the one bridge between the boards: 3V3 from CN7 on A to the transceiver on B
 for i, (net, pts, kind) in enumerate(C.XWIRES):
     xy = [hole(b, c, r) for b, c, r in pts]
     t = BRIDGE[0] + 1.8 * i

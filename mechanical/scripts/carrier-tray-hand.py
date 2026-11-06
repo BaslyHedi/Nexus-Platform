@@ -44,8 +44,8 @@ HOLES += [("T1", 24.82, 60.24, DRILL_M25, "to plate 2, tap M2.5 (under the Bauer
           ("E1", 16.0, 63.0, DRILL_M3, "Bauer, tap M3"),
           ("E2", 70.0, 63.0, DRILL_M3, "Bauer, tap M3"),
           ("W1", 114.5, 60.0, WINDOW_D, "cable window beside C (6 V pair)"),
-          ("W2", 127.0, 48.0, WINDOW_D, "cable window under board A (6 V pair, I2C lead)"),
-          ("W3", 127.0, 73.0, WINDOW_D, "cable window beside board B")]
+          ("W2", 127.0, 48.0, WINDOW_D, "cable window under board A (5 V and 6 V pairs)"),
+          ("W3", 127.0, 73.0, WINDOW_D, "cable window beside board B (I2C leads)")]
 
 X0, Y0 = min(p[0] for p in OUTLINE), min(p[1] for p in OUTLINE)          # the tray's top left corner on plate 2
 W = max(p[0] for p in OUTLINE) - X0
