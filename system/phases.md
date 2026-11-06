@@ -71,7 +71,7 @@ criteria are met and the evidence named in it exists, and not before.
 | Test | What it proves | Pass criteria | Evidence |
 |---|---|---|---|
 | **T2.1** Apps and their CI | One repository per Linux app works as a unit | At least two throwaway apps, each in **its own repository**, that print their own name and version. Each repository's CI builds from a clean clone on every push (cross-built for the i.MX 91) and publishes a **release artifact on a tag** | The CI runs and the two releases |
-| **T2.2** Yocto image | The image is reproducible and carries the released apps | A separate Yocto repository, built with `kas` from a clean clone, **fetches the apps at their release tags** and builds a minimal image that **boots from the SD card on the FRDM-IMX91**. Logging in, both apps are present and print their names and versions | The boot log; the `kas` config and build log |
+| **T2.2** Yocto image | The image is reproducible and carries the released apps | A separate Yocto repository, built with `kas` from a clean clone, **fetches the apps at their release tags** and builds a minimal image that **boots from the SD card on the FRDM-IMX91S**. Logging in, both apps are present and print their names and versions | The boot log; the `kas` config and build log |
 | **T2.3** CAN exchange | The two nodes talk | On the vehicle's bus at 500 kbit/s, **the FRDM sends a Cyphal heartbeat and the STM32 shows that it receives it**, and **the STM32 sends one that the FRDM sees**, at the heartbeat rate, for **10 minutes with no error frames, bus-off or missed heartbeat**. The PC adapter, as the third node on the DE-9 port, sees both streams. The Linux side needs a small program for this, which is a third app repository | `candump` from the FRDM and from the PC adapter |
 
 ### Exit criteria
@@ -88,7 +88,7 @@ split: the **bus, both computers and the update path** in Phase 1, the **actuato
 ### Learning focus
 
 **New:** **OpenCyphal** (the protocol the bootloader speaks, [SW-01](../decisions/SW-Software-Decisions.md), with the FBL's own stack written in-house, SW-02); **C++17 on bare metal** (the FBL's language, SW-03); the **Yocto** workflow end to end (layers, recipes, `kas`, the NXP BSP, machine and image
-configuration, device tree and kernel configuration for the FRDM-IMX91); **embedded Linux user space**
+configuration, device tree and kernel configuration for the FRDM-IMX91S); **embedded Linux user space**
 (SocketCAN, writing and cross-building a C++ program, the Cyphal file server and flashing client running on Linux); **Zephyr** (west,
 devicetree, Kconfig, a board definition for the carrier, how it differs from an AUTOSAR-style stack); and **CI
 and repository structure** across firmware, Linux and tooling.

@@ -43,7 +43,7 @@ Worth reading first: [`decisions/`](decisions/README.md) (why it is this way), [
 | [Nexus-STM32-FBL](https://github.com/BaslyHedi/Nexus-STM32-FBL) | Bare-metal flash bootloader for the STM32, updated over CAN with Cyphal |
 | [Nexus-STM32-App](https://github.com/BaslyHedi/Nexus-STM32-App) | The Zephyr application the bootloader loads |
 | [Nexus-CAN-Utils](https://github.com/BaslyHedi/Nexus-CAN-Utils) | The CAN matrix, its generators and the flashing client |
-| [Nexus-IMX91-Yocto](https://github.com/BaslyHedi/Nexus-IMX91-Yocto) | The Yocto build (`kas`) of the Linux image for the FRDM-IMX91 |
+| [Nexus-IMX91-Yocto](https://github.com/BaslyHedi/Nexus-IMX91-Yocto) | The Yocto build (`kas`) of the Linux image for the FRDM-IMX91S |
 
 Each Linux application will get its own repository, with its own CI and releases.
 
