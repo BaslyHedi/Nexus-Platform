@@ -116,7 +116,7 @@
   <rect x="1175" y="143" width="120" height="50" fill="#ede9fe" stroke="#6d28d9" stroke-width="1.4" rx="2"/>
   <text x="1235" y="161" font-size="10" font-weight="700" fill="#4c1d95" text-anchor="middle">2 × REAR MOTOR</text>
   <text x="1235" y="175" font-size="8.5" fill="#5b21b6" text-anchor="middle">12 V · 8.3 W · 2.3 A stall</text>
-  <text x="1235" y="187" font-size="8" fill="#5b21b6" text-anchor="middle">encoder AB → module</text>
+  <text x="1235" y="187" font-size="8" fill="#5b21b6" text-anchor="middle">PH2.0: M+ VCC A B GND M−</text>
 
   <line x1="880" y1="238" x2="894" y2="238" stroke="#e8821a" stroke-width="3"/>
   <rect x="894" y="231" width="28" height="14" fill="#fee2e2" stroke="#b91c1c" stroke-width="1.2" rx="2"/>
@@ -132,7 +132,7 @@
   <rect x="1175" y="213" width="120" height="50" fill="#ede9fe" stroke="#6d28d9" stroke-width="1.4" rx="2"/>
   <text x="1235" y="231" font-size="10" font-weight="700" fill="#4c1d95" text-anchor="middle">STEERING SERVO</text>
   <text x="1235" y="245" font-size="9" fill="#5b21b6" text-anchor="middle">LD-1501MG · 6–8.4 V</text>
-  <text x="1235" y="257" font-size="7.5" fill="#5b21b6" text-anchor="middle">PWM via carrier A · ⏚</text>
+  <text x="1235" y="257" font-size="7.5" fill="#5b21b6" text-anchor="middle">GND +V SIG · blk red wht</text>
 
   <!-- ===== LOGIC LANE ===== -->
   <rect x="760" y="308" width="100" height="44" fill="#dcfce7" stroke="#15803d" stroke-width="1.8" rx="6"/>
@@ -163,13 +163,13 @@
   <text x="1135" y="412" font-size="7" fill="#15803d" text-anchor="middle">TO STM32</text>
   <rect x="1175" y="305" width="120" height="50" fill="#dbeafe" stroke="#1d4ed8" stroke-width="1.6" rx="2"/>
   <text x="1235" y="323" font-size="10" font-weight="700" fill="#1e3a8a" text-anchor="middle">FRDM-IMX91S</text>
-  <text x="1235" y="337" font-size="8.5" fill="#1e40af" text-anchor="middle">J1 USB-C · no CC used</text>
-  <text x="1235" y="349" font-size="8" fill="#3b5bb5" text-anchor="middle">dumb 5 V, no PD</text>
+  <text x="1235" y="337" font-size="8.5" fill="#1e40af" text-anchor="middle">J1 USB-C: VBUS, GND</text>
+  <text x="1235" y="349" font-size="8" fill="#3b5bb5" text-anchor="middle">no CC, no PD</text>
 
   <rect x="1175" y="375" width="120" height="50" fill="#dcfce7" stroke="#15803d" stroke-width="1.6" rx="2"/>
   <text x="1235" y="393" font-size="10" font-weight="700" fill="#14532d" text-anchor="middle">NUCLEO-H533RE</text>
-  <text x="1235" y="407" font-size="8.5" fill="#166534" text-anchor="middle">5 V via carrier A to E5V</text>
-  <text x="1235" y="419" font-size="8" fill="#3f7d52" text-anchor="middle">⏚ back through board C</text>
+  <text x="1235" y="407" font-size="8.5" fill="#166534" text-anchor="middle">E5V CN7-6 via carrier A</text>
+  <text x="1235" y="419" font-size="8" fill="#3f7d52" text-anchor="middle">⏚ CN7-19, back via board C</text>
 
   <!-- ===================== SIGNALS ===================== -->
   <text x="40" y="500" font-size="13" font-weight="700" fill="#1a1a1a">SIGNALS · CARRIER BOARDS</text>
@@ -182,7 +182,7 @@
   <text x="120" y="586" font-size="8.5" font-weight="700" fill="#164e63" text-anchor="middle">GND · SCL · SDA · VCC</text>
   <text x="120" y="599" font-size="7.5" fill="#155e75" text-anchor="middle">VCC from carrier 3V3, never 5 V</text>
   <path d="M200,573 L225,573 L225,655 L250,655" fill="none" stroke="#7c3aed" stroke-width="2.5" marker-end="url(#a)"/>
-  <text x="212" y="566" font-size="8.5" font-weight="600" fill="#5b21b6" text-anchor="middle">I²C1</text>
+  <text x="228" y="566" font-size="8.5" font-weight="600" fill="#5b21b6" text-anchor="middle">I2C-A</text>
   <rect x="40" y="640" width="160" height="112" fill="#faf5ff" stroke="#9333ea" stroke-width="1.6" rx="3"/>
   <text x="120" y="659" font-size="9.5" font-weight="700" fill="#6b21a8" text-anchor="middle">Encoder Motor Module</text>
   <text x="120" y="673" font-size="8.5" fill="#7e22ce" text-anchor="middle">V1.4 · MM32F103</text>
@@ -192,7 +192,7 @@
   <text x="120" y="728" font-size="8" font-weight="700" fill="#b91c1c" text-anchor="middle">its 5 V is an OUTPUT:</text>
   <text x="120" y="740" font-size="8" font-weight="700" fill="#b91c1c" text-anchor="middle">wire SCL / SDA / GND only</text>
   <path d="M200,696 L225,696 L225,675 L250,675" fill="none" stroke="#7c3aed" stroke-width="2.5" marker-end="url(#a)"/>
-  <text x="212" y="714" font-size="8.5" font-weight="600" fill="#5b21b6" text-anchor="middle">I²C</text>
+  <text x="228" y="714" font-size="8.5" font-weight="600" fill="#5b21b6" text-anchor="middle">I2C-B</text>
 
   <!-- the Nucleo plugs onto carrier A (under CN7) and carrier B (under CN10); both sit on the carrier tray on plate 2 (HW-24) -->
   <rect x="250" y="520" width="350" height="62" fill="#dcfce7" stroke="#15803d" stroke-width="1.8" rx="3"/>
@@ -202,8 +202,8 @@
   <line x1="335" y1="582" x2="335" y2="612" stroke="#94a3b8" stroke-width="5" marker-end="url(#a)"/>
   <line x1="515" y1="582" x2="515" y2="612" stroke="#94a3b8" stroke-width="5" marker-end="url(#a)"/>
   <text x="425" y="603" font-size="8" fill="#64748b" text-anchor="middle">plugs into the 1×19 sockets</text>
-  <rect x="250" y="612" width="170" height="140" fill="#eff6ff" stroke="#1d4ed8" stroke-width="1.8" rx="3"/><text x="335.0" y="629" font-size="10.5" font-weight="700" fill="#1e3a8a" text-anchor="middle">CARRIER B</text><text x="335.0" y="642" font-size="8" fill="#1d4ed8" text-anchor="middle">under CN10 · plate 2</text><text x="258" y="660" font-size="8.2" fill="#1e3a8a">SN65HVD230 module in a socket</text><text x="258" y="674" font-size="8.2" fill="#1e3a8a">   (TX / RX = PB13 / PB12, 3.3 V)</text><text x="258" y="688" font-size="8.2" fill="#1e3a8a">CAN terminal, 3-pin</text><text x="258" y="702" font-size="8.2" fill="#1e3a8a">I²C headers on B: INA226,</text><text x="258" y="716" font-size="8.2" fill="#1e3a8a">   motor module, 90° pointing fwd</text><text x="258" y="730" font-size="8.2" fill="#1e3a8a">I2C-A: 3V3 · SDA · SCL · GND</text><text x="258" y="744" font-size="8.2" fill="#1e3a8a">I2C-B: GND · SDA · SCL</text>
-  <rect x="430" y="612" width="170" height="140" fill="#f0fdfa" stroke="#0f766e" stroke-width="1.8" rx="3"/><text x="515.0" y="629" font-size="10.5" font-weight="700" fill="#134e4a" text-anchor="middle">CARRIER A</text><text x="515.0" y="642" font-size="8" fill="#0f766e" text-anchor="middle">under CN7 · plate 2</text><text x="438" y="660" font-size="8.2" fill="#134e4a">5V IN terminal ← board C</text><text x="438" y="674" font-size="8.2" fill="#134e4a">6V IN terminal ← UBEC</text><text x="438" y="688" font-size="8.2" fill="#134e4a">C2 470 µF across the servo header</text><text x="438" y="702" font-size="8.2" fill="#134e4a">servo header: 6 V, GND, PWM</text><text x="438" y="716" font-size="8.2" fill="#134e4a">   via R4 1 kΩ from PC2</text>
+  <rect x="250" y="612" width="170" height="140" fill="#eff6ff" stroke="#1d4ed8" stroke-width="1.8" rx="3"/><text x="335.0" y="629" font-size="10.5" font-weight="700" fill="#1e3a8a" text-anchor="middle">CARRIER B</text><text x="335.0" y="642" font-size="8" fill="#1d4ed8" text-anchor="middle">under CN10 · plate 2</text><text x="258" y="660" font-size="8.2" fill="#1e3a8a">SN65HVD230 module in a socket</text><text x="258" y="674" font-size="8.2" fill="#1e3a8a">   CTX PB13 · CRX PB12 · GND · 3V3</text><text x="258" y="688" font-size="8.2" fill="#1e3a8a">CAN terminal: H · L · GND</text><text x="258" y="702" font-size="8.2" fill="#1e3a8a">I2C-A (INA226): 3V3 SDA SCL GND</text><text x="258" y="716" font-size="8.2" fill="#1e3a8a">I2C-B (motor): GND SDA SCL</text><text x="258" y="730" font-size="8.2" fill="#1e3a8a">   90° headers, pointing forward</text>
+  <rect x="430" y="612" width="170" height="140" fill="#f0fdfa" stroke="#0f766e" stroke-width="1.8" rx="3"/><text x="515.0" y="629" font-size="10.5" font-weight="700" fill="#134e4a" text-anchor="middle">CARRIER A</text><text x="515.0" y="642" font-size="8" fill="#0f766e" text-anchor="middle">under CN7 · plate 2</text><text x="438" y="660" font-size="8.2" fill="#134e4a">5V IN: +5V · GND ← board C</text><text x="438" y="674" font-size="8.2" fill="#134e4a">6V IN: +6V · GND ← UBEC</text><text x="438" y="688" font-size="8.2" fill="#134e4a">C2 470 µF across the servo header</text><text x="438" y="702" font-size="8.2" fill="#134e4a">SERVO: GND · +6V · SIG</text><text x="438" y="716" font-size="8.2" fill="#134e4a">   SIG via R4 1 kΩ from PC2</text>
 
   <!-- CAN: carrier B terminal to the FRDM J7, under carrier A; the debug port is a stub off the middle of the bus (HW-18) -->
   <path d="M335,752 L335,768 L615,768 L615,690 L1000,690" fill="none" stroke="#1d4ed8" stroke-width="3"/>
@@ -224,6 +224,17 @@
   <text x="800" y="766" font-size="8" font-weight="700" fill="#b91c1c" text-anchor="middle">adapter 120 Ω must be OFF</text>
   <text x="1000" y="760" font-size="8.5" fill="#6b7280">electronic differential across the two rear wheels is firmware;</text>
   <text x="1000" y="773" font-size="8.5" fill="#6b7280">the axle is not a diff. The motor-module I²C shares the INA226 bus.</text>
+
+  <!-- ===================== CONNECTORS ===================== -->
+  <rect x="744.1" y="162.5" width="13.9" height="11" fill="#fef3c7" stroke="#b45309" stroke-width="0.8" rx="2"/><text x="751.1" y="170.5" font-size="6.5" font-family="ui-monospace, monospace" fill="#78350f" text-anchor="middle">C1</text>
+  <rect x="862" y="162.5" width="13.9" height="11" fill="#fef3c7" stroke="#b45309" stroke-width="0.8" rx="2"/><text x="869.0" y="170.5" font-size="6.5" font-family="ui-monospace, monospace" fill="#78350f" text-anchor="middle">C2</text>
+  <rect x="744.1" y="324.5" width="13.9" height="11" fill="#fef3c7" stroke="#b45309" stroke-width="0.8" rx="2"/><text x="751.1" y="332.5" font-size="6.5" font-family="ui-monospace, monospace" fill="#78350f" text-anchor="middle">C1</text>
+  <rect x="862" y="324.5" width="13.9" height="11" fill="#fef3c7" stroke="#b45309" stroke-width="0.8" rx="2"/><text x="869.0" y="332.5" font-size="6.5" font-family="ui-monospace, monospace" fill="#78350f" text-anchor="middle">C2</text>
+  <rect x="930.1" y="162.5" width="17.9" height="11" fill="#fef3c7" stroke="#b45309" stroke-width="0.8" rx="2"/><text x="939.1" y="170.5" font-size="6.5" font-family="ui-monospace, monospace" fill="#78350f" text-anchor="middle">+ −</text>
+  <rect x="1122" y="162.5" width="33.7" height="11" fill="#fef3c7" stroke="#b45309" stroke-width="0.8" rx="2"/><text x="1138.8" y="170.5" font-size="6.5" font-family="ui-monospace, monospace" fill="#78350f" text-anchor="middle">M1 · M3</text>
+  <rect x="930.1" y="232.5" width="17.9" height="11" fill="#fef3c7" stroke="#b45309" stroke-width="0.8" rx="2"/><text x="939.1" y="240.5" font-size="6.5" font-family="ui-monospace, monospace" fill="#78350f" text-anchor="middle">+ −</text>
+  <rect x="930.1" y="324.5" width="17.9" height="11" fill="#fef3c7" stroke="#b45309" stroke-width="0.8" rx="2"/><text x="939.1" y="332.5" font-size="6.5" font-family="ui-monospace, monospace" fill="#78350f" text-anchor="middle">+ −</text>
+  <rect x="406.9" y="762.5" width="136.3" height="11" fill="#fef3c7" stroke="#b45309" stroke-width="0.8" rx="2"/><text x="475.0" y="770.5" font-size="6.5" font-family="ui-monospace, monospace" fill="#78350f" text-anchor="middle">CAN: H B·A13 · L B·A11 · GND B·A9</text>
 
   <!-- ===================== LEGEND ===================== -->
   <line x1="40" y1="786" x2="1280" y2="786" stroke="#e2e8f0"/>

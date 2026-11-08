@@ -176,7 +176,7 @@ def power_train_lane():
     w(I + rect(PX, 1175, 143, 120, 50, fill='#ede9fe', stroke='#6d28d9', stroke_width=1.4, rx=2))
     w(I + text(PX, 1235, 161, '2 × REAR MOTOR', font_size=10, font_weight=700, fill='#4c1d95', text_anchor='middle'))
     w(I + text(PX, 1235, 175, '12 V · 8.3 W · 2.3 A stall', font_size=8.5, fill='#5b21b6', text_anchor='middle'))
-    w(I + text(PX, 1235, 187, 'encoder AB → module', font_size=8, fill='#5b21b6', text_anchor='middle'))
+    w(I + text(PX, 1235, 187, 'PH2.0: M+ VCC A B GND M−', font_size=8, fill='#5b21b6', text_anchor='middle'))
     w('')
     w(I + line(PX, 880, 238, 894, 238, stroke=NET['switched'], stroke_width=3))
     w(I + rect(PX, 894, 231, 28, 14, fill='#fee2e2', stroke='#b91c1c', stroke_width=1.2, rx=2))
@@ -192,7 +192,7 @@ def power_train_lane():
     w(I + rect(PX, 1175, 213, 120, 50, fill='#ede9fe', stroke='#6d28d9', stroke_width=1.4, rx=2))
     w(I + text(PX, 1235, 231, 'STEERING SERVO', font_size=10, font_weight=700, fill='#4c1d95', text_anchor='middle'))
     w(I + text(PX, 1235, 245, 'LD-1501MG · 6–8.4 V', font_size=9, fill='#5b21b6', text_anchor='middle'))
-    w(I + text(PX, 1235, 257, 'PWM via carrier A · ⏚', font_size=7.5, fill='#5b21b6', text_anchor='middle'))
+    w(I + text(PX, 1235, 257, 'GND +V SIG · blk red wht', font_size=7.5, fill='#5b21b6', text_anchor='middle'))
     w('')
     return o
 
@@ -230,13 +230,13 @@ def logic_lane():
     w(I + text(PX, 1135, 412, 'TO STM32', font_size=7, fill='#15803d', text_anchor='middle'))
     w(I + rect(PX, 1175, 305, 120, 50, fill='#dbeafe', stroke='#1d4ed8', stroke_width=1.6, rx=2))
     w(I + text(PX, 1235, 323, 'FRDM-IMX91S', font_size=10, font_weight=700, fill='#1e3a8a', text_anchor='middle'))
-    w(I + text(PX, 1235, 337, 'J1 USB-C · no CC used', font_size=8.5, fill='#1e40af', text_anchor='middle'))
-    w(I + text(PX, 1235, 349, 'dumb 5 V, no PD', font_size=8, fill='#3b5bb5', text_anchor='middle'))
+    w(I + text(PX, 1235, 337, 'J1 USB-C: VBUS, GND', font_size=8.5, fill='#1e40af', text_anchor='middle'))
+    w(I + text(PX, 1235, 349, 'no CC, no PD', font_size=8, fill='#3b5bb5', text_anchor='middle'))
     w('')
     w(I + rect(PX, 1175, 375, 120, 50, fill='#dcfce7', stroke='#15803d', stroke_width=1.6, rx=2))
     w(I + text(PX, 1235, 393, 'NUCLEO-H533RE', font_size=10, font_weight=700, fill='#14532d', text_anchor='middle'))
-    w(I + text(PX, 1235, 407, '5 V via carrier A to E5V', font_size=8.5, fill='#166534', text_anchor='middle'))
-    w(I + text(PX, 1235, 419, '⏚ back through board C', font_size=8, fill='#3f7d52', text_anchor='middle'))
+    w(I + text(PX, 1235, 407, 'E5V CN7-6 via carrier A', font_size=8.5, fill='#166534', text_anchor='middle'))
+    w(I + text(PX, 1235, 419, '⏚ CN7-19, back via board C', font_size=8, fill='#3f7d52', text_anchor='middle'))
     w('')
     return o
 
@@ -266,7 +266,7 @@ def signals():
     w(I + text(PX, 120, 586, 'GND · SCL · SDA · VCC', font_size=8.5, font_weight=700, fill='#164e63', text_anchor='middle'))
     w(I + text(PX, 120, 599, 'VCC from carrier 3V3, never 5 V', font_size=7.5, fill='#155e75', text_anchor='middle'))
     w(I + path('M200,573 L225,573 L225,655 L250,655', fill='none', stroke=NET['i2c'], stroke_width=2.5, marker_end='url(#a)'))
-    w(I + text(PX, 212, 566, 'I²C1', font_size=8.5, font_weight=600, fill='#5b21b6', text_anchor='middle'))
+    w(I + text(PX, 228, 566, 'I2C-A', font_size=8.5, font_weight=600, fill='#5b21b6', text_anchor='middle'))
     w(I + rect(PX, 40, 640, 160, 112, fill='#faf5ff', stroke='#9333ea', stroke_width=1.6, rx=3))
     w(I + text(PX, 120, 659, 'Encoder Motor Module', font_size=9.5, font_weight=700, fill='#6b21a8', text_anchor='middle'))
     w(I + text(PX, 120, 673, 'V1.4 · MM32F103', font_size=8.5, fill='#7e22ce', text_anchor='middle'))
@@ -276,7 +276,7 @@ def signals():
     w(I + text(PX, 120, 728, 'its 5 V is an OUTPUT:', font_size=8, font_weight=700, fill='#b91c1c', text_anchor='middle'))
     w(I + text(PX, 120, 740, 'wire SCL / SDA / GND only', font_size=8, font_weight=700, fill='#b91c1c', text_anchor='middle'))
     w(I + path('M200,696 L225,696 L225,675 L250,675', fill='none', stroke=NET['i2c'], stroke_width=2.5, marker_end='url(#a)'))
-    w(I + text(PX, 212, 714, 'I²C', font_size=8.5, font_weight=600, fill='#5b21b6', text_anchor='middle'))
+    w(I + text(PX, 228, 714, 'I2C-B', font_size=8.5, font_weight=600, fill='#5b21b6', text_anchor='middle'))
     w('')
     w(I + comment('the Nucleo plugs onto carrier A (under CN7) and carrier B (under CN10); both sit on the carrier tray on plate 2 (HW-24)'))
     w(I + rect(PX, 250, 520, 350, 62, fill='#dcfce7', stroke='#15803d', stroke_width=1.8, rx=3))
@@ -288,18 +288,17 @@ def signals():
     w(I + text(PX, 425, 603, 'plugs into the 1×19 sockets', font_size=8, fill='#64748b', text_anchor='middle'))
     w(I + carrier(250, 612, 170, 140, 'CARRIER B', 'under CN10 · plate 2', [
         'SN65HVD230 module in a socket',
-        '   (TX / RX = PB13 / PB12, 3.3 V)',
-        'CAN terminal, 3-pin',
-        'I²C headers on B: INA226,',
-        '   motor module, 90° pointing fwd',
-        'I2C-A: 3V3 · SDA · SCL · GND',
-        'I2C-B: GND · SDA · SCL'], '#1d4ed8', '#eff6ff', '#1e3a8a'))
+        '   CTX PB13 · CRX PB12 · GND · 3V3',
+        'CAN terminal: H · L · GND',
+        'I2C-A (INA226): 3V3 SDA SCL GND',
+        'I2C-B (motor): GND SDA SCL',
+        '   90° headers, pointing forward'], '#1d4ed8', '#eff6ff', '#1e3a8a'))
     w(I + carrier(430, 612, 170, 140, 'CARRIER A', 'under CN7 · plate 2', [
-        '5V IN terminal ← board C',
-        '6V IN terminal ← UBEC',
+        '5V IN: +5V · GND ← board C',
+        '6V IN: +6V · GND ← UBEC',
         'C2 470 µF across the servo header',
-        'servo header: 6 V, GND, PWM',
-        '   via R4 1 kΩ from PC2'], '#0f766e', '#f0fdfa', '#134e4a'))
+        'SERVO: GND · +6V · SIG',
+        '   SIG via R4 1 kΩ from PC2'], '#0f766e', '#f0fdfa', '#134e4a'))
     w('')
     w(I + comment('CAN: carrier B terminal to the FRDM J7, under carrier A; the debug port is a stub off the middle of the bus (HW-18)'))
     w(I + path('M335,752 L335,768 L615,768 L615,690 L1000,690', fill='none', stroke=NET['can'], stroke_width=3))
@@ -324,6 +323,38 @@ def signals():
     return o
 
 
+# connector chips on the wires: (x, y, text, where). x, y is a block edge or a point on the wire; the chip sits on the wire just
+# 'before' (left of) or 'after' (right of) that point, or 'on' it. Longer pin lists are in the block text instead
+CHIPS = [
+    (760, 168, 'C1', 'before'), (860, 168, 'C2', 'after'),       # SW1 contact, no polarity
+    (760, 330, 'C1', 'before'), (860, 330, 'C2', 'after'),       # SW2
+    (950, 168, '+ −', 'before'), (1120, 168, 'M1 · M3', 'after'),  # motor module VM in, motor ports out
+    (950, 238, '+ −', 'before'),                                   # UBEC in
+    (950, 330, '+ −', 'before'),                                   # Bauer in
+    (475, 768, 'CAN: H B·A13 · L B·A11 · GND B·A9', 'on'),         # carrier B terminal
+]
+
+
+def chip(x, y, label, where):
+    """One connector chip: a small amber tag on a wire, naming the connector or its pins."""
+    w_ = round(len(label) * 3.95 + 6, 1)
+    h = 11
+    x0 = {'before': x - 2 - w_, 'after': x + 2, 'on': x - w_ / 2}[where]
+    y0 = y - h / 2
+    return (rect(PX, round(x0, 1), round(y0, 1), w_, h, fill='#fef3c7', stroke='#b45309', stroke_width=0.8, rx=2)
+            + text(PX, round(x0 + w_ / 2, 1), round(y0 + 8, 1), label, font_size=6.5, font_family='ui-monospace, monospace',
+                   fill='#78350f', text_anchor='middle'))
+
+
+def interfaces():
+    """The connector chips, drawn last so they sit on top of the blocks and the wire ends."""
+    o = [I + comment('===================== CONNECTORS =====================')]
+    for x, y, label, anchor in CHIPS:
+        o.append(I + chip(x, y, label, anchor))
+    o.append('')
+    return o
+
+
 def legend():
     """Wire key and the build-order notes."""
     o = []
@@ -345,6 +376,7 @@ def build():
     o += power_train_lane()
     o += logic_lane()
     o += signals()
+    o += interfaces()
     o += legend()
     o.append('</svg>')
     return o
