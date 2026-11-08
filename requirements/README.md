@@ -2,7 +2,7 @@
 
 The requirements of NEXUS, written to the method in [`../system/method.md`](../system/method.md) and the rules in
 [rules.md](rules.md), with the terms of [glossary.md](glossary.md): **one file per system-of-interest or system element**, named
-by its ID. Phase 1 is written in full: 154 requirements in 21 files: 39 system, 54 subsystem, 61 component. Each
+by its ID. Phase 1 is written in full: 156 requirements in 21 files: 39 system, 56 subsystem, 61 component. Each
 statement is in an EARS pattern.
 
 **Checked and traced by one tool**, [`../tools/check-requirements.py`](../tools/check-requirements.py). It checks the format,

@@ -14,7 +14,7 @@ Drawings: [wiring schematic](../hardware/renders/wiring-schematic.svg) · [STM32
 | **HW-04** | Fuse discrimination - 2× ratio between main and largest branch |
 | **HW-05** | Two wire gauges only, pure copper, silicone insulated |
 | **HW-06** | Single star ground at the fuse block negative bus |
-| **HW-07** | High-side current sensing, INA226 with a 2 mΩ shunt |
+| **HW-07** | High-side current sensing, INA226 with a 2 mΩ shunt. *Updated by HW-25: where each terminal goes* |
 | **HW-08** | Neither switch carries full pack current |
 | **HW-09** | CAN - transceiver on the STM32 side only. *Updated by HW-22: FDCAN2 on PB12/PB13* |
 | **HW-10** | I²C on PB10/PB11. *Updated by HW-22: I2C1 on PB6/PB7* |
@@ -32,6 +32,7 @@ Drawings: [wiring schematic](../hardware/renders/wiring-schematic.svg) · [STM32
 | **HW-22** | The real-time MCU is a NUCLEO-H533RE: FDCAN2 on PB12/PB13, I2C1 on PB6/PB7, servo on PC2, 5 V into E5V. *Updated by HW-24: CN7 on A, CN10 on B* |
 | **HW-23** | The three CAN leads meet in board A's screw terminal, two wires per clamp. *Updated by HW-24: the terminal is on B* |
 | **HW-24** | Board A sits under CN7 and board B under CN10: the CAN and I2C parts move to B, power, servo and LED to A |
+| **HW-25** | INA226 terminals: I+ from the main fuse, I- and V+ to the (+) bus, V- (the module GND) to the (-) bus |
 
 ---
 
@@ -169,6 +170,8 @@ taller - worse on the deck gap, the tighter constraint).
 ## HW-07 · High-side current sensing, INA226 with a 2 mΩ shunt
 
 *Formerly HD-07.*
+
+**Updated by HW-25:** the module's four terminals, in its own order V+, I+, I−, V−: I+ from the main fuse, I− and V+ to the (+) bus, **V−, which is the module's GND, to the (−) bus**.
 
 **Decision.** INA226 module with the `R002` shunt, sensing the positive main, read by the
 STM32 over I²C.
@@ -474,7 +477,7 @@ every return ─ (−) bar ─ battery −
 
 *Formerly HD-19.*
 
-**Updated by MEC-16:** the (−) bus is **one** 221-415, five ports; since 2026-10-06 the two switch LED returns join the UBEC return in a 5-port clip (S5), so it uses four ports and one is spare. The (+) bus uses two (the INA226 and S8, the switch feed). The 221-500 carriers were already dropped; both buses are taped to plate 2's lower face with 3M foam tape.
+**Updated by MEC-16:** the (−) bus is **one** 221-415, five ports; since 2026-10-06 the two switch LED returns join the UBEC return in a 5-port clip (S5), so it uses four ports and one is spare. The (+) bus uses two (the INA226 and S8, the switch feed). *Updated by HW-25:* the INA226's two sense wires take (+) bus port 3 (V+) and (−) bus port 5 (V−), so the (+) bus uses three of five and the (−) bus all five. The 221-500 carriers were already dropped; both buses are taped to plate 2's lower face with 3M foam tape.
 
 **Decision (2026-09-16).** Replace the LAOYE bus bars with **WAGO 221-415** lever connectors on
 **221-500** mounting carriers.
@@ -699,6 +702,8 @@ TO STM32, C1 and the socket on its red and black wires, and nothing else.
 ---
 
 ## HW-20 · Three fuses - the logic branch runs on the main fuse
+
+**Updated by MEC-16 and HW-25:** one (+) bus port feeds both switches through S8, so the (+) bus carries the INA226's I− (port 1), S8 (port 2) and the INA226's V+ sense wire (port 3); two ports are spare.
 
 **Decision (2026-09-28).** The 5 A logic fuse is removed. The (+) bus feeds SW2 directly on 18 AWG,
 and SW2 feeds the Bauer 50 W. The vehicle has **three** fuses: main 7.5 A, motors 5 A, UBEC 5 A.
@@ -989,3 +994,46 @@ the pins:
   face-down module sits 0.5 mm outboard of the Nucleo's edge.
 - **Plate 3's left slot is open over the CAN terminal:** the compute tray's ribs run at y 93-101.75,
   clear of it, but check on the vehicle.
+
+---
+
+## HW-25 · INA226 terminals: I+ from the main fuse, I- and V+ to the (+) bus, V- (the module GND) to the (-) bus
+
+**Decision (Hedi, 2026-11-08).** The INA226 module's four screw terminals, in its own order with the terminal block at the
+top (GERUI R002, BOM 3.9), are wired:
+
+| Terminal | What it is | Goes to | Wire |
+|---|---|---|---|
+| **V+** | bus voltage sense, the chip's VBUS | (+) bus port 3 | 22 AWG or thicker, short |
+| **I+** | shunt, pack side | the main fuse's output | 18 AWG |
+| **I−** | shunt, load side | (+) bus port 1 | 18 AWG |
+| **V−** | the voltage reference: **the module's GND**, joined to the GND pin on its PCB | (−) bus port 5 | 22 AWG or thicker, short |
+
+The I²C header goes to carrier header I2C-A by pin name: GND to GND, SCL to SCL (PB6), SDA to SDA (PB7), VCC to 3V3 (HW-22,
+HW-24). The wiring schematic draws it.
+
+**Why.**
+
+- **V− is ground, not the far end of the shunt.** On this module the voltage is read between V+ and V−, and V− is wired to GND
+  on the PCB. On 2026-11-08 V− had been landed on the + line: the module's GND, and through I2C-A the whole carrier ground,
+  sat at battery +, and the meter read about 13 V between the Bauer's ground and every I²C pin, GND and 3V3 included. The
+  module itself was not shown to be damaged: its GND beeps to V− by design.
+- **The shunt is the only way into the (+) bus.** I− is the bus's only feed, so every load's current passes R002 (HW-03,
+  HW-07). V+ joins the bus too, but on the module it only reaches the chip's VBUS pin, which draws microamps.
+- **V+ on the (+) bus** reads the pack after the shunt, which is the voltage the loads see.
+
+**Consequences.**
+
+- **The (−) bus has no spare port** (5 of 5: battery, S4, S5, S7, INA226 V−). A sixth return means bridging a spare 221-415
+  back in (MEC-16). The (+) bus has two spare.
+- **V+ is fed from the (+) bus with only the 7.5 A main fuse behind it**, so its wire is 22 AWG or thicker, short, and
+  routed clear of edges.
+- **The INA226's GND reaches ground two ways**, V− to the (−) bus and the I²C GND through the carrier and board C. Only
+  signal current flows in the loop, which HW-19 already accepts.
+
+**To confirm.**
+
+- **On the bare module, before refitting it:** GND to V+, I+ and I− reads open, and V+ to I+ and to I− reads open. If V+ is
+  joined to I+ or I− on the PCB, V+ stays unconnected, or it would put the sense wire in parallel with the shunt.
+- **The module after the earlier wrong-order plug-in** (BOM 1.2a): it reads the pack voltage and about 0 A on the bench
+  before it goes back into the vehicle. Manufacturer ID 0x5449 at register 0xFE, die ID 0x2260 at 0xFF.

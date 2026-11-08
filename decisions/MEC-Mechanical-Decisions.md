@@ -1160,8 +1160,8 @@ Positions, x from the front of plate 1 and y from its right edge, as modelled in
 |---|---|---|
 | **Battery** | x 85-162, y 30-93, lengthwise right behind the tie rod | plate 1, felt pad, felt straps and zip ties - fixed 2026-09-28 |
 | **Motor driver** | x 168-210, y 22.6-80.6 | plate 1, as mounted 21 Sep |
-| **(+) bus**, 221-415, 2 of 5 ports (INA226, S8) | x 88-107, y 40-70, entry face towards the opening | plate 2, levers down |
-| **(−) bus**, 221-415, 4 of 5 ports (battery, S4, S5, S7) | x 134-153, y 40-70, entry face towards the opening | plate 2, levers down |
+| **(+) bus**, 221-415, 3 of 5 ports (INA226 I−, S8, INA226 V+ since HW-25) | x 88-107, y 40-70, entry face towards the opening | plate 2, levers down |
+| **(−) bus**, 221-415, 5 of 5 ports (battery, S4, S5, S7, INA226 V− since HW-25) | x 134-153, y 40-70, entry face towards the opening | plate 2, levers down |
 | **Main fuse** 7.5 A | x 96-146, y 2-29: base 34 x 12 (x 104-138), cap 26 x 15 (x 108-134) toward the right | plate 2 |
 | **Motor fuse** 5 A | x 152-202, y 2-29, base x 160-194, cap x 164-190 toward the right | plate 2 |
 | **UBEC fuse** 5 A | x 157-207 (moved 5 mm rear, clear of S5), y 91-118, cap toward the left | plate 2 |
@@ -1261,10 +1261,10 @@ return - goes up through it, between the buses. The rearward runs lie flat on pl
   *Decided 2026-10-07: no calipers, so the estimates stand (fuse holders, the kit boards' corner holes at 2.5 mm in, the switch harness). They are checked by dry-fit instead: tape the holders to plate 2 before wiring, lay boards A and B on a 1:1 printout, measure the harness length with a ruler and read its gauge off the ferrule that fits.*
 - The pack's height with its felt (modelled 21 + 3) and the driver's top height.
 - **The switch wiring (decided 2026-10-06).** Each switch has four wires: **two green** (the contact, no polarity), **red** (LED +) and **black** (LED −); the LED has its own resistor and runs on 12 V (tested). To light the LED only when the switch is on, **LED + is joined to the switched output, never to the (+) bus**. Every join ends in a clip, so no wire meets another without one:
-  - **S8** (3-port, toward the rear) takes **(+) bus port 2** and both switches' first green wires. One bus port feeds both switches, so the switch harness reaches (run 05, 06a, 06b). (+) bus port 3 is spare.
+  - **S8** (3-port, toward the rear) takes **(+) bus port 2** and both switches' first green wires. One bus port feeds both switches, so the switch harness reaches (run 05, 06a, 06b). (+) bus port 3 is spare. *Updated by HW-25: port 3 takes the INA226's V+ sense wire.*
   - **SW1's output** (second green) and **its red LED +** meet in **S9** (3-port), and one wire goes from S9 to the SW1 split (runs 07a-07c).
   - **SW2's output** and **its red LED +** meet in **S6**, which becomes a **3-port** clip with the Bauer's red lead (runs 15a, 15c, 15b). Two wires pass up the left slot instead of one: 2.4 + 1.6 mm in an opening about 5 x 10 mm, so check it on the real tray.
-  - **Both black LED − wires** go into **S5**, which becomes a **5-port** clip: UBEC (−), the run to the (−) bus (port 4), and the two LED returns (runs 13a, 13b). The (−) bus is then **4 of 5** ports, one spare.
+  - **Both black LED − wires** go into **S5**, which becomes a **5-port** clip: UBEC (−), the run to the (−) bus (port 4), and the two LED returns (runs 13a, 13b). The (−) bus is then **4 of 5** ports, one spare. *Updated by HW-25: the spare takes the INA226's V− wire, so the bus is full.*
   - S9's pigtail enters the split's second port. Nothing is crimped on the switch tabs: the supplied socket harness is used, so BOM 3.17 (flag receptacles) is not needed.
   [`../tools/check-harness-clearance.py`](../tools/check-harness-clearance.py) fails if a part overlaps another, a wire runs through a part, two wires share space, or wires meet with no clip.
   Clips used: **3-port x 4** (split, S8, S9, S6), **5-port x 1** (S5), **2-port x 5** (S1, S2, S3, S4, S7). The positions of S8, S9 and S5 are stand-ins in the model; what must hold is the height over the motors (9 mm: no clip there, 8.5 mm + 1 mm of tape).

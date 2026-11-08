@@ -128,3 +128,27 @@ System element, level 1. Realised in hardware; the recursion stops here. Written
 - Verification: Inspection The fuses fitted
 - Realised-by: HW
 - Decisions: HW-20
+
+### Nexus-Physical-05-R011
+
+**Statement.** The V− terminal of the INA226 module shall connect to the negative bus.
+
+- Function: Nexus-Logical-101-F05
+- Derived-from: Nexus-Vehicle-R001
+- Allocated-to: -
+- Phase: 1
+- Verification: Inspection Continuity from the INA226 GND pin to battery −, and none to battery +
+- Realised-by: HW
+- Decisions: HW-07, HW-25
+
+### Nexus-Physical-05-R012
+
+**Statement.** The shunt of the INA226 module shall be the only conductor between the main fuse and the positive bus.
+
+- Function: Nexus-Logical-101-F05
+- Derived-from: Nexus-Vehicle-R001
+- Allocated-to: -
+- Phase: 1
+- Verification: Inspection With the I− wire out of the (+) bus, no continuity from the main fuse output to the (+) bus
+- Realised-by: HW
+- Decisions: HW-03, HW-07, HW-25

@@ -120,4 +120,5 @@ Questions that block a decision, or that a decision rests on and nobody has meas
 | Question | Blocks |
 |---|---|
 | SM-2P battery connector temperature under load | HW-13 - XT30 if it runs warm |
+| Is the INA226 sound after the wrong-order plug-in (BOM 1.2a)? Bare-module checks and a bench read of the IDs, pack voltage and 0 A | HW-25 - refit it, or buy another |
 | Does the Encoder Motor Module time out when I²C commands stop? (tested when the STM32 app work starts, Phase 2 bring-up) | HW-17 - decides whether the HW-12 relay is needed before autonomy |
