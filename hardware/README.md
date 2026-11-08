@@ -2,7 +2,7 @@
 
 Build drawings for NEXUS. Each is an `.svg` in [`renders/`](renders/) **written by the script of the same name** in
 [`scripts/`](scripts/): `chassis-layout.py` writes `chassis-layout.svg`, `wiring-schematic.py` writes `wiring-schematic.svg`,
-`stm32-carrier.py` writes `stm32-carrier.svg`, `ina226-wiring.py` writes `ina226-wiring.svg`. Edit the script, never the SVG, then run it:
+`stm32-carrier.py` writes `stm32-carrier.svg`. Edit the script, never the SVG, then run it:
 
 ```bash
 python3 hardware/scripts/chassis-layout.py        # -> hardware/renders/chassis-layout.svg
@@ -24,7 +24,6 @@ SVG in a browser; to render, point headless Chrome at it.
 | [chassis-layout.svg](renders/chassis-layout.svg) | Where components sit on the **three** decks, to scale at 1.7 px/mm, plus the side elevation of the deck stack |
 | [wiring-schematic.svg](renders/wiring-schematic.svg) | What connects to what - fuses, switches, wire gauges, 5 V rails, CAN, I²C, motor control |
 | [stm32-carrier.svg](renders/stm32-carrier.svg) | Soldering and wiring for the three kit boards: A and B, which the NUCLEO-H533RE drops onto, and C, the 5 V split. Component side and solder side, hole by hole, with netlist and pre-solder checks (MEC-08, MEC-15, HW-19). **Generated** by `python3 stm32-carrier.py`, which also feeds the 3D animation in [`../mechanical/scripts/animate-stm32-carrier.py`](../mechanical/scripts/animate-stm32-carrier.py) |
-| [ina226-wiring.svg](renders/ina226-wiring.svg) | How the INA226 module is wired: I+ from the main fuse, I− and V+ to the (+) bus, **V− (the module's GND) to the (−) bus**, I²C lead to carrier header I2C-A by pin name, and the continuity checks before power-up (HW-03, HW-07, HW-20). Drawn after the 2026-11-08 fault, when V− sat on the + line and lifted the carrier ground to battery + |
 | [`../decisions/README.md`](../decisions/README.md) | **Why** the drawings look the way they do - HW, MEC, SYS and SW entries, each with its reasoning and consequences. Not in this folder any more |
 
 Part numbers, prices and status live in [`../bom/BOM.md`](../bom/BOM.md);
