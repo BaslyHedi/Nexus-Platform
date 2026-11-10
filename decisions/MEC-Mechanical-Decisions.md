@@ -1173,7 +1173,7 @@ Positions, x from the front of plate 1 and y from its right edge, as modelled in
 | **S1** (SM-2P + to main fuse) | x 83-96, y 21-40 | plate 2 |
 | **S2 / S4** (driver VM + and −) | x 157-176, y 35-48, stacked | plate 2 |
 | **S3 / S5** (UBEC + and −) | x 139-157; **S5 is a 5-port clip** (y 87-117, taped to the plate) with the 2-port S3 (y 104-117) hanging under it | plate 2 |
-| **S6 / S7** (Bauer + and −) | beside the Bauer; **S6 is a 3-port clip** (y 96-114) | plate 2, top face |
+| **S6 / S7** (Bauer + and −) | **at plate 2's rear corners since 2026-11-10** (MEC-17): S6 x 233-251.6, y 100-118.4; S7 x 234.5-253.1, y 4-17; **S6 is a 3-port clip** | plate 2, lower face |
 
 The two buses face each other across **plate 2's 22.7 × 35.4 opening** (x 110-133). Every wire that
 has to reach plate 2's top face - the UBEC's 6 V pair to carrier board A, the Bauer's feed and
@@ -1515,6 +1515,27 @@ which is why the second lane is the mirror of the first. The tray has a wing for
 - **Eleven board fixings, not twelve.** On the printed tray that is ten screws from below and B's
   threaded standoff; the hand-made tray's template and its PDF carry B's three holes as countersunk
   screws. Window W3 now sits beside B, not under it.
+
+**Revision 2026-11-10 · plate 2 frozen as built; S6 and S7 under its rear corners (Hedi).** Plate 2 is
+built and wired: both faces, the carrier tray, the rear pad and the harness board are **frozen as built**
+(marked on `chassis-layout.svg`). A change to plate 2 from now on is a new decision, not an edit.
+S6 and S7 are not on the tray beside the Bauer, as "Where the splices go" placed them, but taped under
+plate 2 at its rear corners, ports to the front:
+
+| Splice | Where, plate 2 frame | Nearest neighbours |
+|---|---|---|
+| **S6** (Bauer +, 3-port: the Bauer's red lead, SW2 out, SW2 LED +) | x 233-251.6, y 100-118.4 | R4's head 5 mm in front; the chassis standoff at (256.82, 98.36) 5.5 mm from its corner |
+| **S7** (Bauer −, 2-port: the Bauer's black lead, the run to the (−) bus) | x 234.5-253.1, y 4-17 | R3's head 6.6 mm in front; the plate edge 2.4 mm outside; the standoff at (256.82, 22.17) 5.6 mm from its corner |
+
+- **Over the motor cans:** both clips overhang the cans' rear flank (x 203-240). The cans are round, so at
+  x 233 their top is 3.6 mm below the clips; the elevation draws the cans as boxes and shows them touching.
+- **Wiring** (`plate1.py`, the cut table): SW2's two wires now reach S6 directly (15 and 16 cm, were 31).
+  The Bauer's leads come down the open x 75-80 end of the tie slots, as before, and run back along the
+  trunk: red to S6 about 28 cm, black to S7 about 43 cm, then S7 to the (−) bus about 25 cm. **These are
+  modelled lengths, not measured:** the Bauer's own leads were sized for splices beside it, so record how
+  they were lengthened and the real lengths when known.
+- **Orientation marks** on the drawing: every board's connector edges are drawn as thick bars with what
+  sits on them (FRDM, Pi 5, Nucleo, board C), and each plan carries its own compass.
 
 ---
 

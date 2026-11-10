@@ -87,9 +87,9 @@ RUNS = [   # plate 1 wiring, on plate 2's harness board (MEC-16, HW-20): #, run,
     ('11', 'UBEC − → S5 → (−) bus', '18 black', '3 · 9', "UBEC's own lead · 5-port S5 · WAGO"),
     ('12', 'VM− pigtail → S4 → (−) bus', '18 black', '8 ↓ · 8', 'driver VM plug · S4 · WAGO'),
     ('13', 'SW1, SW2 LED − → S5', 'switch black × 2', '18 · 21', '5-port S5, with the UBEC return · one (−) bus port stays free'),
-    ('14', 'SW2 out + LED + → S6', 'green · red', '31 · 31', 'trunk · up the left slot · 3-port S6 on the tray'),
-    ('15', 'Bauer + lead → S6', '18 orange', '5', 'the Bauer\'s own lead · third wire in S6'),
-    ('16', 'Bauer − → S7 → (−) bus', '18 black', '18 · 19', 'S7 on the tray, right of the Bauer · up the right slot · WAGO'),
+    ('14', 'SW2 out + LED + → S6', 'green · red', '15 · 16', '3-port S6 under plate 2, rear left'),
+    ('15', 'Bauer + lead → S6', '18 orange', '28', 'down the left slot · back along the trunk · S6'),
+    ('16', 'Bauer − → S7 → (−) bus', '18 black', '43 · 25', 'down the right slot · S7, rear right · trunk · WAGO'),
 ]
 
 
@@ -140,7 +140,7 @@ def plate2_heading():
     o = []
     w = o.append
     w(text(PX, 60, 368, 'MIDDLE DECK - plate 2, TOP FACE', font_size=13, font_weight=700, fill='#1a1a1a'))
-    w(text(PX, 60, 382, 'top face z 81.12 · ORDERED 2026-10-06 · carrier tray (MEC-17): boards A, B, C, the Bauer; rear pad (MEC-19)', font_size=9.5, fill='#64748b'))
+    w(text(PX, 60, 382, 'top face z 81.12 · <tspan fill="#166534" font-weight="700">AS BUILT, FROZEN 2026-11-10</tspan> · carrier tray (MEC-17): boards A, B, C, the Bauer; rear pad (MEC-19)', font_size=9.5, fill='#64748b'))
     return o
 
 
@@ -151,6 +151,23 @@ def plate1_heading():
     w(text(PX, 60, 949.0, 'LOWER DECK - plate 1', font_size=13, font_weight=700, fill='#1a1a1a'))
     w(text(PX, 60, 963.0, 'top face z 29.12 · floor only - <tspan fill="#be185d" font-weight="700">the harness is taped under plate 2</tspan> (MEC-16)', font_size=9.5, fill='#64748b'))
     return o
+
+
+def edge(view, x0, y0, x1, y1, colour):
+    """A board edge that carries connectors: a thick bar along it, so the board's orientation reads at a glance."""
+    return line(view, x0, y0, x1, y1, stroke=colour, stroke_width=3.2, stroke_linecap='round')
+
+
+def tag(view, x, y, label, colour, anchor='middle', size=6.2):
+    """What sits on a marked edge, in the board's colour."""
+    return text(view, x, y, label, font_size=size, font_weight=700, fill=colour, text_anchor=anchor)
+
+
+def compass(top, flip=False):
+    """The plan's directions, right of the plate: front to the left, the vehicle's right up (down on the flipped lower face)."""
+    up, down = ('LEFT', 'RIGHT') if flip else ('RIGHT', 'LEFT')
+    g = gopen(font_size=7.4, font_weight=700, fill='#64748b', text_anchor='middle')
+    return (g + text(PX, 556, top + 66, f'▲ {up}') + text(PX, 556, top + 104, '◀ FRONT') + text(PX, 556, top + 142, f'▼ {down}') + GCLOSE)
 
 
 def frdm():
@@ -167,6 +184,12 @@ def frdm():
         for v in (3.5, 61.5):
             w(circle(P3, 184 + 65 - v, 6.75 + u, 3.6, fill='none', stroke='#4338ca', stroke_width=1.4))
     w(text(P3, 216.5, 52.0, 'FRDM-IMX91S  ~95 × 65', font_size=9.5, font_weight=700, fill='#4338ca', text_anchor='middle'))
+    # its connector edges (MEC-18, from the board's Gerbers): 40-pin to the right, J11 / USB to the left, J1 to the nose, J7 CAN to the rear
+    FR = '#4338ca'
+    w(edge(P3, 192, 7.6, 241, 7.6, FR) + tag(P3, 216.5, 14.5, '▲ 40-pin header', FR))
+    w(edge(P3, 192, 100.9, 241, 100.9, FR) + tag(P3, 216.5, 96.5, '▼ J11 DBG · USB-C · USB-A', FR))
+    w(edge(P3, 184.9, 16, 184.9, 92, FR) + tag(P3, 187.5, 69.0, '◀ J1 5 V', FR, 'start') + tag(P3, 187.5, 74.5, 'RJ45 · audio', FR, 'start', 5.4))
+    w(edge(P3, 248.1, 16, 248.1, 92, FR) + tag(P3, 245.5, 69.0, 'J7 CAN ▶', FR, 'end') + tag(P3, 245.5, 74.5, 'FPC · µSD', FR, 'end', 5.4))
     w(text(P3, 216.5, 61.0, '6 mm standoffs', font_size=7.2, fill='#4338ca', text_anchor='middle'))
     # Raspberry Pi 5 (later phase): across the vehicle at x 94-150, ports to the left
     w(rect(P3, 94.0, 17.75, 56, 85, rx=3, fill='#ecfdf5', fill_opacity=0.92, stroke='#047857', stroke_width=1.6, stroke_dasharray='6 3'))
@@ -174,6 +197,8 @@ def frdm():
         for b in (3.5, 52.5):
             w(circle(P3, 94 + 56 - b, 17.75 + a, 3.2, fill='none', stroke='#047857', stroke_width=1.4))
     w(text(P3, 122.0, 56.0, 'Pi 5 (later)', font_size=9.5, font_weight=700, fill='#047857', text_anchor='middle'))
+    w(edge(P3, 100, 101.9, 144, 101.9, '#047857') + tag(P3, 122.0, 97.5, '▼ USB · RJ45', '#047857'))
+    w(edge(P3, 149.1, 26, 149.1, 94, '#047857') + tag(P3, 146.5, 40.0, 'GPIO ▶', '#047857', 'end'))
     w(text(P3, 122.0, 65.0, '8 or 10 mm standoffs', font_size=7.2, fill='#047857', text_anchor='middle'))
     # the 14 fixings: M3 screws into 3.18 holes (rings), M2.5 into 2.71 holes (crosses)
     for name, x, y, d in COMPUTE_FIX:
@@ -293,8 +318,8 @@ def m3_mark(view, x, y, label, colour='#047857'):
 # the tray's six fixings to plate 2 (MEC-17): screw from below into a nut held in the tray; the heads are under plate 2
 FIXINGS = [('T1', 24.82, 60.24), ('T2', 52.82, 60.24), ('T3', 99.24, 81.76), ('T4', 120.06, 35.94), ('T5', 148.18, 81.76), ('T6', 148.18, 96.76)]
 
-# the S6 / S7 splices (Bauer 12 V + and -) in a lane either side of the Bauer, 18.6 x 13 mm
-SPLICES = [('S6', 42.0, 96.0, 18.4), ('S7', 42.0, 11.5, 13)]       # name, x, y, height: S6 is a 3-port clip since 2026-10-06 (MEC-16)
+# the S6 / S7 splices (Bauer 12 V + and -), 18.6 mm along x: taped under plate 2 at its rear corners, ports to the front (as built, 2026-11-10)
+SPLICES = [('S6', 233.0, 100.0, 18.4), ('S7', 234.5, 4.0, 13)]       # name, x, y, height: S6 is a 3-port clip since 2026-10-06 (MEC-16)
 
 # the Bauer 50 W (BOM 3.4a, seller's drawing): body 64 x 57, corners cut 8 x 6.5; its two mounting holes are 5 mm in from each end and
 # 26 mm from the edge the four leads leave by (here y 89, the vehicle's left), 54 mm apart
@@ -318,7 +343,7 @@ def carrier_and_bauer():
     """Plate 2 top face: the carrier tray with boards A, B, C, the Bauer 50 W and the two splices (MEC-15, MEC-17)."""
     o = []
     w = o.append
-    w(comment('Carrier tray (MEC-17): boards A and B (CN7, CN10 sides), the NUCLEO-H533RE above, board C = 5 V split, the Bauer and S6 / S7 all sit on it'))
+    w(comment('Carrier tray (MEC-17): boards A and B (CN7, CN10 sides), the NUCLEO-H533RE above, board C = 5 V split, and the Bauer sit on it; S6 / S7 are under the rear of plate 2 since 2026-11-10'))
     w(outline(P2, TRAY, fill='#0f766e', fill_opacity=0.09, stroke='#0f766e', stroke_width=1.3, stroke_dasharray='6 3'))
     w(rect(P2, 117, 5.12, 70, 50, rx=3, fill='#ecfdf5', fill_opacity=0.92, stroke='#047857', stroke_width=1.6))
     w(rect(P2, 119.53, 81.15, 70, 30, rx=3, fill='#ecfdf5', fill_opacity=0.92, stroke='#047857', stroke_width=1.6))
@@ -330,6 +355,10 @@ def carrier_and_bauer():
     w(text(P2, 120.53, 106, 'B · 3×7 · CN10 side', font_size=7.5, fill='#047857', font_weight=700, text_anchor='start'))
     w(text(P2, 161.49, 52, 'NUCLEO-H533RE 70 × 82.5', font_size=8.2, fill='#4338ca', text_anchor='middle'))
     w(text(P2, 161.49, 59.47, 'CN1 at the rear, x 202.7', font_size=7, fill='#4338ca', text_anchor='middle'))
+    w(edge(P2, 201.9, 44, 201.9, 67, '#4338ca') + tag(P2, 199.0, 69.5, 'CN1 ST-LINK ▶', '#4338ca', 'end'))
+    w(tag(P2, 161.49, 26.5, '▲ CN7 · over A', '#4338ca') + tag(P2, 174.0, 87.0, '▼ CN10 · over B', '#4338ca'))
+    w(edge(P2, 88, 26.0, 113, 26.0, '#047857') + tag(P2, 100.5, 32.0, '▲ USB-C', '#047857', size=5.6))
+    w(tag(P2, 100.5, 90.0, '▼ terminals', '#047857', size=5.6))
     w(text(P2, 100.47, 58, 'C', font_size=9, fill='#047857', font_weight=700, text_anchor='middle'))
     w(text(P2, 100.47, 64, '5 V split', font_size=6.5, fill='#047857', text_anchor='middle'))
     w(text(PX, 342.2, 603.4, 'carrier 85.8 × 106: A·X.. at x 181.20, B·X.. at x 183.74, Nucleo row 1 at x 171.04 · 8 mm standoffs on the tray (MEC-17)', font_size=7.8, fill='#047857', text_anchor='middle'))
@@ -346,8 +375,6 @@ def carrier_and_bauer():
         w(line(P2, x, 93, x, 97, stroke=colour, stroke_width=2))
     w(text(P2, 43, 89, 'leads wall ▼', font_size=6, fill='#be123c', text_anchor='middle'))
     w(text(P2, 104, 12, 'carrier tray', font_size=7, font_weight=700, fill='#0f766e', text_anchor='middle'))
-    for name, x, y, h in SPLICES:
-        w(rect(P2, x, y, 18.6, h, rx=1.5, fill='#fed7aa', stroke='#c2410c', stroke_width=1.2) + text(P2, x + 9.3, y + h / 2 + 2.5, name, font_size=7, font_weight=700, fill='#c2410c', text_anchor='middle'))
     # the rear pad (MEC-19): plain 4 mm plate to drill over plate 2's rear, six fixings; the J7 CAN lead lies across it, the cross-slot behind it stays clear
     w(outline(P2, REAR_PAD, fill='#0f766e', fill_opacity=0.09, stroke='#0f766e', stroke_width=1.3, stroke_dasharray='6 3'))
     for name, x, y, d in REAR_FIX:
@@ -368,9 +395,10 @@ def tray_heads():
     for name, x, y in FIXINGS:
         o.append(circle(PB, x, y, 3.9, fill='#ffffff', stroke='#4338ca', stroke_width=1.6) + circle(PB, x, y, 1.4, fill='#4338ca')
                  + text(PB, x + 3.4, y + 2.4, name, font_size=6, font_weight=700, fill='#4338ca', text_anchor='start'))
-    for name, x, y, d in REAR_FIX:                       # the rear pad's six (MEC-19): clear of the taped parts, which stop at x 202
+    for name, x, y, d in REAR_FIX:                       # the rear pad's six (MEC-19): R4 sits 5 mm in front of S6, so its name goes left
+        left = name == 'R4'
         o.append(circle(PB, x, y, 3.9, fill='#ffffff', stroke='#0f766e', stroke_width=1.6) + circle(PB, x, y, 1.4, fill='#0f766e')
-                 + text(PB, x + 3.4, y + 2.4, name, font_size=6, font_weight=700, fill='#0f766e', text_anchor='start'))
+                 + text(PB, x - 3.4 if left else x + 3.4, y + 2.4, name, font_size=6, font_weight=700, fill='#0f766e', text_anchor='end' if left else 'start'))
     return o
 
 
@@ -479,6 +507,7 @@ def lower_face_heading():
     w = o.append
     w(comment('MIDDLE DECK, LOWER FACE - the harness board (MEC-16). Seen from BELOW, as it lies upside down on the bench: mirrored, vehicle right at the bottom. Positions from mechanical/plate1.py'))
     w(text(PX, 60, 626.3, 'MIDDLE DECK - plate 2, LOWER FACE: the harness board', font_size=13, font_weight=700, fill='#1a1a1a'))
+    w(text(PX, 585, 626.3, 'AS BUILT, FROZEN 2026-11-10', font_size=9.5, font_weight=700, fill='#166534', text_anchor='end'))
     w(text(PX, 60, 640.3, 'seen from <tspan font-weight="700">below</tspan>, upside down on the bench - <tspan font-weight="700" fill="#be185d">mirrored: vehicle RIGHT at the BOTTOM</tspan> · 3M foam tape', font_size=9.5, fill='#64748b'))
     return o
 
@@ -514,6 +543,8 @@ def harness_board():
     w(rect(PB, 137.2, 116.97, 18.59, 30, rx=1.5, fill='#fed7aa', stroke='#c2410c', stroke_width=1))                  # S5, the 5-port clip, S3 hangs under it
     w(rect(PB, 157, 69.38, 18.59, 18.41, rx=2, fill='#fed7aa', stroke='#c2410c', stroke_width=1.2))                     # S8, the switch feed
     w(rect(PB, 178, 50.8, 18.59, 18.41, rx=2, fill='#fed7aa', stroke='#c2410c', stroke_width=1.2))                      # S9, SW1's output and LED +
+    for name, x, y, h in SPLICES:                                                                                        # S6 / S7, the Bauer's 12 V in
+        w(rect(PB, x, y + h, 18.6, h, rx=1.5, fill='#fed7aa', stroke='#c2410c', stroke_width=1.2))
     w(GCLOSE)
     # its labels
     w(gopen())
@@ -534,6 +565,8 @@ def harness_board():
     w(text(PB, 148, 105.5, 'S5 / S3', font_size=5.4, font_weight=700, fill='#c2410c', text_anchor='middle'))
     w(text(PB, 166.3, 60.2, 'S8', font_size=5.4, font_weight=700, fill='#c2410c', text_anchor='middle'))
     w(text(PB, 187.3, 41.5, 'S9', font_size=5.4, font_weight=700, fill='#c2410c', text_anchor='middle'))
+    for name, x, y, h in SPLICES:
+        w(text(PB, x + 9.3, y + h / 2 - 2.0, name, font_size=5.4, font_weight=700, fill='#c2410c', text_anchor='middle'))
     w(text(PB, 121.47, 61.97, 'opening', font_size=5.4, font_weight=400, fill='#be185d', text_anchor='middle'))
     w(text(PB, 121.47, 56.97, 'wires up', font_size=5.4, font_weight=400, fill='#be185d', text_anchor='middle'))
     w(text(PB, 225, 65.97, 'trunk to SW1 / SW2', font_size=5.4, font_weight=400, fill='#475569', text_anchor='middle'))
@@ -594,7 +627,8 @@ def stack_elevation():
     w(bx(203.2, 240.1, 33.0, 69.9, fill='#e0e7ff', stroke='#4338ca', stroke_width=1))                                # the two rear motors, ⌀37
     w(bx(248.3, 270.3, P1T + 25 - 10, P1T + 25 + 10, fill='#f1f5f9', stroke='#475569', stroke_width=1))               # SW1 / SW2 bodies
     for x0, x1, h, fillc, strokec in [(88, 106.6, 8.5, '#fecaca', '#dc2626'), (134, 152.6, 8.5, '#e2e8f0', '#334155'), (96, 146, 15, '#fed7aa', '#c2410c'),
-                                       (152, 202, 15, '#fde68a', '#a16207'), (108, 134, 11.6, '#a5f3fc', '#0e7490'), (100, 135, 5, '#fef08a', '#a16207'), (178, 196.6, 8.5, '#fed7aa', '#c2410c')]:
+                                       (152, 202, 15, '#fde68a', '#a16207'), (108, 134, 11.6, '#a5f3fc', '#0e7490'), (100, 135, 5, '#fef08a', '#a16207'), (178, 196.6, 8.5, '#fed7aa', '#c2410c'),
+                                       (233, 253.1, 8.5, '#fed7aa', '#c2410c')]:                                     # S6 / S7 at the rear corners, over the motor cans' flanks
         w(bx(x0, x1, 78.12 - h, 78.12, fill=fillc, stroke=strokec, stroke_width=0.8, fill_opacity=0.55))             # the harness board's parts, taped under plate 2
     w(text(PX, xp(24), zy(P1T + 40) - 4, 'servo (est.)', font_size=7, fill='#c2410c'))
     w(text(PX, xp(123.5), zy(P1T + 12) + 3, '3S pack 21 mm', font_size=7, fill='#2563eb', text_anchor='middle'))
@@ -701,6 +735,7 @@ def build():
     o += plate1_heading() + plate(P1, **SOLID)
     o += frdm()
     o += carrier_and_bauer()
+    o += [compass(132.0), compass(390.0), compass(971.0), compass(871.15 - 120.5 * 1.7, flip=True)]
     o += plate1_parts()
     o += plate1_notes()
     o += lower_face_heading() + plate(PB, **SOLID)
