@@ -60,7 +60,8 @@ Vehicle (system-of-interest)          requirements · logical view · physical v
        ├─ 01-03 Transceiver module     hardware, bought
        ├─ 01-04 Bootloader             software element: handed over
        ├─ 01-05 FBL-Updater            software element: handed over
-       └─ 01-06 Application            software element: handed over
+       ├─ 01-06 Application            software element: handed over
+       └─ 01-07 LED stick              hardware, bought
 ```
 
 **Element IDs are hierarchical**: an element inside `Nexus-Physical-01` is `Nexus-Physical-01-NN`, so its parent shows in its ID.

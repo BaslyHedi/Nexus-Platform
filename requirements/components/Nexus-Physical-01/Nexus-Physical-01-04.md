@@ -3,7 +3,7 @@
 Software element, level 2, handed over: the repository in the [configuration table](../../system/Nexus-Enabling.md) derives its own software requirements from these and cites their IDs. Written to [../system/method.md](../../../system/method.md) and [rules.md](../../rules.md).
 
 - **Purpose and boundary.** The resident flash bootloader: bare-metal and small by design ([phases.md](../../../system/phases.md)), unsigned and unencrypted in Phase 1.
-- **Interfaces.** The bus through CAN1; the application [01-06](Nexus-Physical-01-06.md) and the FBL-Updater [01-05](Nexus-Physical-01-05.md) through the memory map; the CAN matrix by a pinned tag.
+- **Interfaces.** The bus through CAN1; the application [01-06](Nexus-Physical-01-06.md) and the FBL-Updater [01-05](Nexus-Physical-01-05.md) through the memory map; the CAN matrix by a pinned tag; the user LED of the MCU board [01-01](Nexus-Physical-01-01.md) and the LED stick [01-07](Nexus-Physical-01-07.md) through PC12.
 - **Allocated functions.** 503 F4, 504 F1 to F3.
 - **Modes.** Idle; receiving.
 
@@ -113,7 +113,7 @@ Software element, level 2, handed over: the repository in the [configuration tab
 
 ### Nexus-Physical-01-04-R010
 
-**Statement.** While idle, the bootloader shall show the idle pattern on the user LED.
+**Statement.** While idle, the bootloader shall show the idle pattern on the user LED and the LED stick.
 
 - Function: Nexus-Logical-503-F04
 - Derived-from: Nexus-Physical-01-R013
@@ -124,7 +124,7 @@ Software element, level 2, handed over: the repository in the [configuration tab
 
 ### Nexus-Physical-01-04-R011
 
-**Statement.** While receiving an image, the bootloader shall show the receiving pattern on the user LED.
+**Statement.** While receiving an image, the bootloader shall show the receiving pattern on the user LED and the LED stick.
 
 - Function: Nexus-Logical-503-F04
 - Derived-from: Nexus-Physical-01-R013

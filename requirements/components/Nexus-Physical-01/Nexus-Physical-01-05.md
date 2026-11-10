@@ -3,7 +3,7 @@
 Software element, level 2, handed over: the repository in the [configuration table](../../system/Nexus-Enabling.md) derives its own software requirements from these and cites their IDs. Written to [../system/method.md](../../../system/method.md) and [rules.md](../../rules.md).
 
 - **Purpose and boundary.** An image whose only job is to rewrite the bootloader region, since a bootloader cannot overwrite itself while it runs.
-- **Interfaces.** Started by the bootloader [01-04](Nexus-Physical-01-04.md) like an application.
+- **Interfaces.** Started by the bootloader [01-04](Nexus-Physical-01-04.md) like an application; the user LED of the MCU board [01-01](Nexus-Physical-01-01.md) and the LED stick [01-07](Nexus-Physical-01-07.md) through PC12.
 - **Allocated functions.** 503 F4, 504 F1 and F2.
 - **Modes.** Running.
 
@@ -44,7 +44,7 @@ Software element, level 2, handed over: the repository in the [configuration tab
 
 ### Nexus-Physical-01-05-R004
 
-**Statement.** While running, the FBL-Updater shall show the FBL-Updater pattern on the user LED.
+**Statement.** While running, the FBL-Updater shall show the FBL-Updater pattern on the user LED and the LED stick.
 
 - Function: Nexus-Logical-503-F04
 - Derived-from: Nexus-Physical-01-R013

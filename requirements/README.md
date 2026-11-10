@@ -2,7 +2,7 @@
 
 The requirements of NEXUS, written to the method in [`../system/method.md`](../system/method.md) and the rules in
 [rules.md](rules.md), with the terms of [glossary.md](glossary.md): **one file per system-of-interest or system element**, named
-by its ID. Phase 1 is written in full: 156 requirements in 21 files: 39 system, 56 subsystem, 61 component. Each
+by its ID. Phase 1 is written in full: 159 requirements in 22 files: 39 system, 56 subsystem, 64 component. Each
 statement is in an EARS pattern.
 
 **Checked and traced by one tool**, [`../tools/check-requirements.py`](../tools/check-requirements.py). It checks the format,
@@ -40,7 +40,7 @@ components/Nexus-Physical-02/     the components of the FRDM node
 | System | [Nexus-Vehicle](system/Nexus-Vehicle.md) | The system requirements, black box: they name the vehicle and its actors, never an element |
 | System | [Nexus-Enabling](system/Nexus-Enabling.md) | The **enabling system** (ISO/IEC/IEEE 15288): repositories, CI, release tags, the `kas` build, the bench PC. Not part of the vehicle, so not derived from it |
 | Subsystem | [Nexus-Physical-01](subsystems/Nexus-Physical-01.md) STM32 node, [02](subsystems/Nexus-Physical-02.md) FRDM node, [04](subsystems/Nexus-Physical-04.md) CAN bus, [05](subsystems/Nexus-Physical-05.md) power, [06](subsystems/Nexus-Physical-06.md) chassis, [07](subsystems/Nexus-Physical-07.md) rear drive, [08](subsystems/Nexus-Physical-08.md) steering | The system elements of the [physical view](../system/physical-architecture.md) that exist in Phase 1. 03 (Pi 5) and 09 (sensors) start in Phase 4 |
-| Component | [01-01](components/Nexus-Physical-01/Nexus-Physical-01-01.md) MCU board, [01-02](components/Nexus-Physical-01/Nexus-Physical-01-02.md) carrier boards, [01-03](components/Nexus-Physical-01/Nexus-Physical-01-03.md) transceiver module, [01-04](components/Nexus-Physical-01/Nexus-Physical-01-04.md) bootloader, [01-05](components/Nexus-Physical-01/Nexus-Physical-01-05.md) FBL-Updater, [01-06](components/Nexus-Physical-01/Nexus-Physical-01-06.md) application | The elements of the STM32 node, hardware and software |
+| Component | [01-01](components/Nexus-Physical-01/Nexus-Physical-01-01.md) MCU board, [01-02](components/Nexus-Physical-01/Nexus-Physical-01-02.md) carrier boards, [01-03](components/Nexus-Physical-01/Nexus-Physical-01-03.md) transceiver module, [01-04](components/Nexus-Physical-01/Nexus-Physical-01-04.md) bootloader, [01-05](components/Nexus-Physical-01/Nexus-Physical-01-05.md) FBL-Updater, [01-06](components/Nexus-Physical-01/Nexus-Physical-01-06.md) application, [01-07](components/Nexus-Physical-01/Nexus-Physical-01-07.md) LED stick | The elements of the STM32 node, hardware and software |
 | Component | [02-01](components/Nexus-Physical-02/Nexus-Physical-02-01.md) FRDM board, [02-02](components/Nexus-Physical-02/Nexus-Physical-02-02.md) SD card, [02-03](components/Nexus-Physical-02/Nexus-Physical-02-03.md) Linux image, [02-04](components/Nexus-Physical-02/Nexus-Physical-02-04.md) heartbeat program, [02-05](components/Nexus-Physical-02/Nexus-Physical-02-05.md) flashing client, [02-06](components/Nexus-Physical-02/Nexus-Physical-02-06.md) test applications | The elements of the FRDM node, hardware and software |
 
 **Element IDs are hierarchical**: `Nexus-Physical-01-04` is element 04 of `Nexus-Physical-01`. The local view of each node,

@@ -101,6 +101,8 @@ def build():
     o += element('Nexus-Physical-01-06', 'Application', 1, 1090, 395, 240, 140, [
         'Zephyr', 'Heartbeat out, heartbeat in', 'Version in node info', 'Own LED pattern'])
 
+    o += element('Nexus-Physical-01-07', 'LED stick', 1, 260, 235, 280, 120, [
+        'WS2812B, 8 RGB LEDs (1.3), on plate 3', 'Data from PC12, SPI3 MOSI', '5 V from the carrier, never the Nucleo'])
     o += element('Nexus-Physical-01-03', 'CAN transceiver module', 1, 260, 420, 280, 125, [
         'SN65HVD230 (4.1)', '3.3 V logic side', "Own 120 Ω: this end's termination"])
     o += element('Nexus-Physical-01-02', 'Carrier boards A and B', 1, 260, 580, 1100, 135, [
@@ -112,7 +114,8 @@ def build():
     o += FL('M200,200 L598,200', 'i', start=True, size=8, labels=[(400, 192, 'SWD, ST-LINK USB at the fascia')])
     o += FL('M200,480 L258,480', 'i', start=True, size=8, anchor='start', labels=[(204, 470, 'CAN_H, CAN_L')])
     o += FL('M400,547 L400,578', 'i', start=True, size=8, anchor='start', labels=[(406, 566, 'RXD, TXD')])
-    o += FL('M570,578 L570,240 L598,240', 'i', start=True, size=8, anchor='end', labels=[(564, 330, 'headers P1, P2')])
+    o += FL('M570,578 L570,240 L598,240', 'i', start=True, size=8, anchor='start', labels=[(576, 330, 'headers P1, P2')])
+    o += FL('M555,578 L555,295 L542,295', 'i', size=8, anchor='end', labels=[(549, 395, 'DIN, 5 V')])
     o += FL('M970,257 L970,358', 'p', start=True, size=8, anchor='start', labels=[(976, 312, 'stored in, run from the flash')])
     o += FL('M160,768 L160,700 L258,700', 'e', size=8, anchor='start', labels=[(166, 740, '5 V (board C), 6 V (UBEC)')])
     o += FL('M1362,605 L1438,605', 'c', start=True, size=8, labels=[(1400, 597, 'I2C')])

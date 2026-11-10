@@ -111,6 +111,21 @@
 <circle cx="1106.0" cy="501.5" r="1.8" fill="#4338ca"/>
 <text x="1113.0" y="505" font-size="10.5" fill="#374151">Own LED pattern</text>
 </g>
+<g id="Nexus-Physical-01-07">
+<rect x="260" y="235" width="280" height="120" rx="4" fill="#ffffff" stroke="#4338ca" stroke-width="1.6"/>
+<path d="M260,239 a4,4 0 0 1 4,-4 h272 a4,4 0 0 1 4,4 v38 h-280 z" fill="#e0e7ff"/>
+<line x1="260" y1="277" x2="540" y2="277" stroke="#4338ca" stroke-width="0.8"/>
+<text x="272" y="251" font-size="9.5" font-weight="700" fill="#4338ca" font-family="ui-monospace, Menlo, Consolas, monospace">Nexus-Physical-01-07</text>
+<text x="272" y="269" font-size="13" font-weight="700" fill="#111827">LED stick</text>
+<rect x="488" y="242" width="42" height="14" rx="7" fill="#dcfce7" stroke="#15803d" stroke-width="0.8"/>
+<text x="509.0" y="252.5" font-size="8.5" font-weight="700" text-anchor="middle" fill="#15803d">PHASE 1</text>
+<circle cx="276.0" cy="293.5" r="1.8" fill="#4338ca"/>
+<text x="283.0" y="297" font-size="10.5" fill="#374151">WS2812B, 8 RGB LEDs (1.3), on plate 3</text>
+<circle cx="276.0" cy="309.5" r="1.8" fill="#4338ca"/>
+<text x="283.0" y="313" font-size="10.5" fill="#374151">Data from PC12, SPI3 MOSI</text>
+<circle cx="276.0" cy="325.5" r="1.8" fill="#4338ca"/>
+<text x="283.0" y="329" font-size="10.5" fill="#374151">5 V from the carrier, never the Nucleo</text>
+</g>
 <g id="Nexus-Physical-01-03">
 <rect x="260" y="420" width="280" height="125" rx="4" fill="#ffffff" stroke="#4338ca" stroke-width="1.6"/>
 <path d="M260,424 a4,4 0 0 1 4,-4 h272 a4,4 0 0 1 4,4 v38 h-280 z" fill="#e0e7ff"/>
@@ -156,7 +171,9 @@
 <path d="M400,547 L400,578" fill="none" stroke="#374151" stroke-width="1.4" marker-start="url(#mis)" marker-end="url(#mi)"/>
 <text x="406" y="566" font-size="8" fill="#374151" text-anchor="start">RXD, TXD</text>
 <path d="M570,578 L570,240 L598,240" fill="none" stroke="#374151" stroke-width="1.4" marker-start="url(#mis)" marker-end="url(#mi)"/>
-<text x="564" y="330" font-size="8" fill="#374151" text-anchor="end">headers P1, P2</text>
+<text x="576" y="330" font-size="8" fill="#374151" text-anchor="start">headers P1, P2</text>
+<path d="M555,578 L555,295 L542,295" fill="none" stroke="#374151" stroke-width="1.4" marker-end="url(#mi)"/>
+<text x="549" y="395" font-size="8" fill="#374151" text-anchor="end">DIN, 5 V</text>
 <path d="M970,257 L970,358" fill="none" stroke="#c2410c" stroke-width="1.6" stroke-dasharray="6 3" marker-start="url(#mps)" marker-end="url(#mp)"/>
 <text x="976" y="312" font-size="8" fill="#c2410c" text-anchor="start">stored in, run from the flash</text>
 <path d="M160,768 L160,700 L258,700" fill="none" stroke="#d92b2b" stroke-width="2.6" marker-end="url(#me)"/>

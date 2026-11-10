@@ -3,7 +3,7 @@
 Software element, level 2, handed over: the repository in the [configuration table](../../system/Nexus-Enabling.md) derives its own software requirements from these and cites their IDs. Written to [../system/method.md](../../../system/method.md) and [rules.md](../../rules.md).
 
 - **Purpose and boundary.** The minimal Zephyr application the bootloader loads: LED pattern, Cyphal heartbeat, shows what it hears.
-- **Interfaces.** Started by the bootloader [01-04](Nexus-Physical-01-04.md); the bus through CAN1; the CAN matrix by a pinned tag.
+- **Interfaces.** Started by the bootloader [01-04](Nexus-Physical-01-04.md); the bus through CAN1; the CAN matrix by a pinned tag; the user LED of the MCU board [01-01](Nexus-Physical-01-01.md) and the LED stick [01-07](Nexus-Physical-01-07.md) through PC12.
 - **Allocated functions.** 401 F1, 503 F4, 504 F1.
 - **Modes.** Running.
 
@@ -58,7 +58,7 @@ Software element, level 2, handed over: the repository in the [configuration tab
 
 ### Nexus-Physical-01-06-R005
 
-**Statement.** While running, the application shall show the application pattern on the user LED.
+**Statement.** While running, the application shall show the application pattern on the user LED and the LED stick.
 
 - Function: Nexus-Logical-503-F04
 - Derived-from: Nexus-Physical-01-R013
