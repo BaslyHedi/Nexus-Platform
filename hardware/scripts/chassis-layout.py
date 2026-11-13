@@ -19,7 +19,7 @@ from drawing import *
 
 OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'renders', 'chassis-layout.svg')
 
-# the outline's look: plates 3 and 2 are drawn pale and dashed (the decks above the one being read), plate 1 and the harness board solid
+# the outline's look: dashed and pale is not built yet (plate 3); solid is built: plate 2 (frozen as built 2026-11-10), plate 1 and the harness board
 PALE = dict(fill='#f8fafc', stroke='#94a3b8', stroke_width=1.8, stroke_dasharray='7 4')
 SOLID = dict(fill='#ffffff', stroke='#334155', stroke_width=1.8)
 
@@ -344,12 +344,12 @@ def carrier_and_bauer():
     o = []
     w = o.append
     w(comment('Carrier tray (MEC-17): boards A and B (CN7, CN10 sides), the NUCLEO-H533RE above, board C = 5 V split, and the Bauer sit on it; S6 / S7 are under the rear of plate 2 since 2026-11-10'))
-    w(outline(P2, TRAY, fill='#0f766e', fill_opacity=0.09, stroke='#0f766e', stroke_width=1.3, stroke_dasharray='6 3'))
+    w(outline(P2, TRAY, fill='#0f766e', fill_opacity=0.09, stroke='#0f766e', stroke_width=1.3))
     w(rect(P2, 117, 5.12, 70, 50, rx=3, fill='#ecfdf5', fill_opacity=0.92, stroke='#047857', stroke_width=1.6))
     w(rect(P2, 119.53, 81.15, 70, 30, rx=3, fill='#ecfdf5', fill_opacity=0.92, stroke='#047857', stroke_width=1.6))
     w(rect(P2, 124.05, 22.49, 48.26, 5.08, rx=1.5, fill='#99f6e4', stroke='#0f766e', stroke_width=0.8))
     w(rect(P2, 124.05, 83.45, 48.26, 5.08, rx=1.5, fill='#fed7aa', stroke='#b45309', stroke_width=0.8))
-    w(rect(P2, 120.24, 20.51, 82.5, 70, rx=3, fill='#eef2ff', fill_opacity=0.55, stroke='#4338ca', stroke_width=1.3, stroke_dasharray='5 3'))
+    w(rect(P2, 120.24, 20.51, 82.5, 70, rx=3, fill='#eef2ff', fill_opacity=0.55, stroke='#4338ca', stroke_width=1.3))
     w(rect(P2, 85.53, 25.18, 30, 70, rx=3, fill='#ecfdf5', fill_opacity=0.92, stroke='#047857', stroke_width=1.6))
     w(text(P2, 120.53, 12, 'A · 5×7 · CN7 side', font_size=7.5, fill='#047857', font_weight=700, text_anchor='start'))
     w(text(P2, 120.53, 106, 'B · 3×7 · CN10 side', font_size=7.5, fill='#047857', font_weight=700, text_anchor='start'))
@@ -375,12 +375,11 @@ def carrier_and_bauer():
         w(line(P2, x, 93, x, 97, stroke=colour, stroke_width=2))
     w(text(P2, 43, 89, 'leads wall ▼', font_size=6, fill='#be123c', text_anchor='middle'))
     w(text(P2, 104, 12, 'carrier tray', font_size=7, font_weight=700, fill='#0f766e', text_anchor='middle'))
-    # the rear pad (MEC-19): plain 4 mm plate to drill over plate 2's rear, six fixings; the J7 CAN lead lies across it, the cross-slot behind it stays clear
-    w(outline(P2, REAR_PAD, fill='#0f766e', fill_opacity=0.09, stroke='#0f766e', stroke_width=1.3, stroke_dasharray='6 3'))
+    # the rear pad (MEC-19): plain 4 mm plate drilled over plate 2's rear, six fixings; the J7 CAN lead lies across it, the cross-slot behind it stays clear
+    w(outline(P2, REAR_PAD, fill='#0f766e', fill_opacity=0.09, stroke='#0f766e', stroke_width=1.3))
     for name, x, y, d in REAR_FIX:
         w(screw_mark(P2, x, y, name) if d < 3 else m3_mark(P2, x, y, name))
     w(text(P2, 223.5, 60.0, 'rear pad', font_size=8.5, font_weight=700, fill='#0f766e', text_anchor='middle'))
-    w(text(P2, 223.5, 67.0, '(drill)', font_size=7, fill='#0f766e', text_anchor='middle'))
     # the note column right of the pad: the fascia clamps and what the two gaps carry
     w(text(P2, 252.5, 56, 'M3×12 here', font_size=6.2, fill='#7c3aed', text_anchor='start'))
     w(text(P2, 252.5, 61.5, 'clamps BOTH', font_size=6.2, fill='#7c3aed', text_anchor='start'))
@@ -659,7 +658,7 @@ def stack_elevation():
     w(bx(85.5, 115.5, 95.12, 96.72, fill='#bbf7d0', stroke='#047857', stroke_width=1))
     w(bx(117, 189.5, 85.12, 93.12, fill='#fde68a', stroke='#a16207', stroke_width=0.6))
     w(bx(117, 189.5, 93.12, 94.72, fill='#bbf7d0', stroke='#047857', stroke_width=1))
-    w(bx(120.24, 202.74, 95.2, 113.8, fill='#c7d2fe', stroke='#4338ca', stroke_width=1, stroke_dasharray='4 2', fill_opacity=0.7))
+    w(bx(120.24, 202.74, 95.2, 113.8, fill='#c7d2fe', stroke='#4338ca', stroke_width=1, fill_opacity=0.7))
     w(bx(196, 251, 81.12, 85.12, fill='#ccfbf1', stroke='#0f766e', stroke_width=1))
     w(text(PX, xp(11), zy(107.12) - 4, 'Bauer 22 mm', font_size=7.5, fill='#be123c'))
     w(text(PX, xp(161.5), zy(113.8) + 11, 'Nucleo top z 113.8:', font_size=7.5, fill='#4338ca', text_anchor='middle'))
@@ -731,7 +730,7 @@ def build():
     o = []
     o += header()
     o += plate3_heading() + plate(P3, **PALE)
-    o += plate2_heading() + plate(P2, **PALE)
+    o += plate2_heading() + plate(P2, **SOLID)
     o += plate1_heading() + plate(P1, **SOLID)
     o += frdm()
     o += carrier_and_bauer()
