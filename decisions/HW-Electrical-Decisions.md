@@ -886,6 +886,10 @@ carrier uses, each checked against the DS14539 alternate function table and UM31
 3's left slot (x 109.3-157.6, y 105.3-110.6). The joint below is unchanged; read B for A, and the left
 slot for the right one.
 
+**Wired 2026-11-13 (Hedi).** The FRDM's J7 lead and the DE-9 lead are in B's terminal, as in the
+table below (front to rear: GND at B·A9, L at A11, H at A13). Still to record: the unpowered H to L
+reading (about 60 Ω expected), the real lead lengths and the DE-9 tail colours.
+
 **Decision (Hedi, 2026-10-30).** The bus has three cables: the FRDM's lead from J7 (Dupont F-F
 jumpers, 5.7), the DE-9 panel lead (BOM 4.5, pre-wired with female Dupont tails, about 20 cm) and
 board A's 3-way screw terminal (H, L, GND, MEC-15). They are joined **in that terminal**: the
