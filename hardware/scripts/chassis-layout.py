@@ -19,8 +19,7 @@ from drawing import *
 
 OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'renders', 'chassis-layout.svg')
 
-# the outline's look: dashed and pale is not built yet (plate 3); solid is built: plate 2 (frozen as built 2026-11-10), plate 1 and the harness board
-PALE = dict(fill='#f8fafc', stroke='#94a3b8', stroke_width=1.8, stroke_dasharray='7 4')
+# the outline's look: every plate is built and drawn solid (plate 3 since 2026-11-15, plate 2 frozen as built 2026-11-10); dashed is a part not fitted (the Pi 5)
 SOLID = dict(fill='#ffffff', stroke='#334155', stroke_width=1.8)
 
 # plans: pixel row of the plate's right edge (y = 0). The harness board is seen from below, so its y is flipped.
@@ -131,7 +130,7 @@ def plate3_heading():
     o = []
     w = o.append
     w(text(PX, 60, 110, 'UPPER DECK - plate 3', font_size=13, font_weight=700, fill='#1a1a1a'))
-    w(text(PX, 60, 124, 'top face z 123.12 · ORDERED 2026-10-06 · compute tray (MEC-18): FRDM-IMX91S, LED stick; Pi 5 not in Phase 1', font_size=9.5, fill='#64748b'))
+    w(text(PX, 60, 124, 'top face z 123.12 · <tspan fill="#166534" font-weight="700">BUILT 2026-11-15</tspan> · compute tray (MEC-18): FRDM-IMX91S, LED stick; Pi 5 not in Phase 1', font_size=9.5, fill='#64748b'))
     return o
 
 
@@ -175,7 +174,7 @@ def frdm():
     o = []
     w = o.append
     # the tray itself: one 4 mm plate, the plug gap a hole in it; the two windows over plate 3's slots
-    w(outline_loops(P3, [COMPUTE_TRAY, COMPUTE_TRAY_GAP], fill='#0f766e', fill_opacity=0.09, stroke='#0f766e', stroke_width=1.3, stroke_dasharray='6 3'))
+    w(outline_loops(P3, [COMPUTE_TRAY, COMPUTE_TRAY_GAP], fill='#0f766e', fill_opacity=0.09, stroke='#0f766e', stroke_width=1.3))
     for a, b, r in COMPUTE_WINDOWS:
         w(rect(P3, a[0] - r, a[1] - r, b[0] - a[0] + 2 * r, 2 * r, rx=f'{r * SCALE:.1f}', fill='#fbfaf8', stroke='#0f766e', stroke_width=0.9))
     # FRDM-IMX91S: about 95 x 65, turned across the vehicle at x 184-249, y 6.75-101.75 (40-pin header to the right, USB to the left, CAN / microSD to the rear)
@@ -212,7 +211,7 @@ def frdm():
     w(text(P3, 56.0, 66.0, '(drill)', font_size=7.5, fill='#64748b', text_anchor='middle'))
     w(text(P3, 167.0, 62.0, 'plug gap', font_size=7.5, fill='#0f766e', text_anchor='middle'))
     # the notes under the plate: the tray at the left, the fascia clamps at the right, on one row
-    w(text(PX, 60, 346, 'compute tray (MEC-18, ordered) · U1-U14 screw up from below', font_size=7.8, fill='#0f766e', text_anchor='start'))
+    w(text(PX, 60, 346, 'compute tray (MEC-18, built) · U1-U14 screw up from below · LED lead: right window, down to A', font_size=7.8, fill='#0f766e', text_anchor='start'))
     w(text(PX, 585, 346, 'purple: fascia panel clamps (MEC-07)', font_size=7.8, fill='#7c3aed', text_anchor='end'))
     return o
 
@@ -734,7 +733,7 @@ def legend():
 def build():
     o = []
     o += header()
-    o += plate3_heading() + plate(P3, **PALE)
+    o += plate3_heading() + plate(P3, **SOLID)
     o += plate2_heading() + plate(P2, **SOLID)
     o += plate1_heading() + plate(P1, **SOLID)
     o += frdm()
