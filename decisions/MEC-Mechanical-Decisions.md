@@ -1115,8 +1115,7 @@ beside it, as everywhere on B. No level shifter is fitted (Hedi). The 3-wire lea
 the stick is mounted. Routing check passes.
 *As built 2026-11-15 (Hedi): the stick is at the front of plate 3, over the compute tray's U1 and U2, held by
 the 3M tape (BOM 3.25), and wired; the header is on A's rear since HW-24 (A·V15-V17). LEDs face up. The lead leaves from
-the vehicle's right, down through the compute tray's right window (x 61-75, y 32) to A's rear; its length
-is still to record. Plate 3 and the compute tray are built since 2026-11-15; the Pi 5 is not fitted in
+the vehicle's right, down through the compute tray's right window (x 61-75, y 32) to A's rear. Plate 3 and the compute tray are built since 2026-11-15; the Pi 5 is not fitted in
 Phase 1.*
 
 **Revision 2026-11-01 · A under CN7, B under CN10: the parts change boards (HW-24).** The drawing showed
@@ -1537,8 +1536,7 @@ plate 2 at its rear corners, ports to the front:
 - **Wiring** (`plate1.py`, the cut table): SW2's two wires now reach S6 directly (15 and 16 cm, were 31).
   The Bauer's leads come down the open x 75-80 end of the tie slots, as before, and run back along the
   trunk: red to S6 about 28 cm, black to S7 about 43 cm, then S7 to the (−) bus about 25 cm. **These are
-  modelled lengths, not measured:** the Bauer's own leads were sized for splices beside it, so record how
-  they were lengthened and the real lengths when known.
+  modelled lengths, not measured:** the real wiring is as built and not recorded in detail (Hedi, 2026-11-15).
 - **Orientation marks** on the drawing: every board's connector edges are drawn as thick bars with what
   sits on them (FRDM, Pi 5, Nucleo, board C), and each plan carries its own compass.
 
@@ -1584,7 +1582,7 @@ FRDM screw holes are loose (4.2 mm, counterbore 7.2 mm) so the +-1 mm in the pho
 |---|---|---|---|
 | **J1 power**, C-to-C 20 cm (5.1), from board C's USB-C socket (plate 2, HW-19) | socket plug -> up through plate 3's right-hand slot (x 109-158, y 10-15) -> along the right edge, over the right rib -> J1 on the nose edge | about 13 cm | **fits**, about 3 cm to spare. The big slot in the plug gap is the second way up |
 | **J11 console**, USB-C extension 0.2 m (5.9), from the fascia's USB-C port | the port's body ends at x 225, y 41.3 (z 101) -> along the upper gap to the left edge (78 mm) -> up outside the plate edge (35 mm) -> J11's plug, 25 mm past the edge | about 14 cm | **fits**, the cable is 20 cm beyond the port's own 40 mm body. The slot at x 219.5 above the body's end is under the FRDM pad, which is why the route goes round the edge instead |
-| **J7 CAN**, 2x5 mating lead (4.4, not yet bought) to the CAN terminal (4.1's end of the bus), twisted pair, BOM 4.3 says about 30 cm. *Updated 2026-10-27: since the NUCLEO-H533RE (MEC-15) the transceiver and its terminal are on **board A**, at A·F17 / D17 / B17, plate 2 x 125-135, opening to the vehicle's right edge; they were on board B* | the plug on J7 -> 10 mm over the rear edge -> down plate 3's cross-slot (x 260-265, clear: the fascia's wall is at x 267-270) -> on plate 2, diagonally over the rear pad to the right edge **behind** the Nucleo (x 203 and more: the Nucleo covers x 120-203, y 20-90) -> forward along the right edge to the terminal | about 22 cm (15 cm to board B before) | **fits** with a 30 cm lead; the run along plate 2's right edge is to confirm on the vehicle. *2026-10-30 (HW-23): the lead is the 20 cm Dupont jumpers, cut at A's terminal, and the DE-9 tails (20 cm) end in the same clamps. Both are short for this estimate: lay them on the vehicle before cutting.* *2026-11-01 (HW-24): the terminal is on **board B** again, at B·A13 / A11 / A9, plate 2 x 146-156, y 107.6, opening to the vehicle's left edge. The route goes to the left edge behind the Nucleo instead; the left edge is nearer the slot's y 74, so the estimate drops by about 4 cm, to about 18 cm. Still to lay on the vehicle* *2026-11-13: wired on the vehicle (Hedi, HW-23); real length still to record* |
+| **J7 CAN**, 2x5 mating lead (4.4, not yet bought) to the CAN terminal (4.1's end of the bus), twisted pair, BOM 4.3 says about 30 cm. *Updated 2026-10-27: since the NUCLEO-H533RE (MEC-15) the transceiver and its terminal are on **board A**, at A·F17 / D17 / B17, plate 2 x 125-135, opening to the vehicle's right edge; they were on board B* | the plug on J7 -> 10 mm over the rear edge -> down plate 3's cross-slot (x 260-265, clear: the fascia's wall is at x 267-270) -> on plate 2, diagonally over the rear pad to the right edge **behind** the Nucleo (x 203 and more: the Nucleo covers x 120-203, y 20-90) -> forward along the right edge to the terminal | about 22 cm (15 cm to board B before) | **fits** with a 30 cm lead; the run along plate 2's right edge is to confirm on the vehicle. *2026-10-30 (HW-23): the lead is the 20 cm Dupont jumpers, cut at A's terminal, and the DE-9 tails (20 cm) end in the same clamps. Both are short for this estimate: lay them on the vehicle before cutting.* *2026-11-01 (HW-24): the terminal is on **board B** again, at B·A13 / A11 / A9, plate 2 x 146-156, y 107.6, opening to the vehicle's left edge. The route goes to the left edge behind the Nucleo instead; the left edge is nearer the slot's y 74, so the estimate drops by about 4 cm, to about 18 cm. Still to lay on the vehicle* *2026-11-13: wired on the vehicle (Hedi, HW-23)* |
 
 No other BOM item touches the FRDM (Ethernet, USB-A, audio and the 40-pin header are unused). Nothing here needs a change to the tray. **To confirm on the vehicle:** the J11 cable's bend behind the fascia, and the J1 plug's clearance
 over the right rib.
