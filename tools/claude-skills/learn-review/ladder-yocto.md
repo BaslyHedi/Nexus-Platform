@@ -16,7 +16,7 @@ Yocto is learned more by setting up and deciding than by writing code, so a sess
 | Layer dependencies: `LAYERDEPENDS`, `LAYERSERIES_COMPAT`, the order in `BBLAYERS` | seen |
 | `.bbappend`, the `%` wildcard, dangling appends | seen |
 | Shared `DL_DIR` and sstate, hash equivalence | seen |
-| The task chain: `do_fetch` to `do_rootfs`, `WORKDIR`, task logs in `tmp/work` | new |
+| The task chain: `do_fetch` to `do_rootfs`, `WORKDIR`, task logs in `tmp/work` | seen |
 | Asking BitBake instead of guessing: `bitbake-getvar`, `bitbake -e`, `bitbake-layers show-appends` and `show-overlayed` | new |
 
 ## 2. The metadata language
@@ -36,7 +36,7 @@ Yocto is learned more by setting up and deciding than by writing code, so a sess
 | Recipe anatomy: `SRC_URI`, `S`, `B`, `D`, `LICENSE`, `LIC_FILES_CHKSUM` | new |
 | Fetching a git repository at a release tag: `tag=` and `SRCREV` | new |
 | Build classes: `cmake`, `meson`, `cargo` (for the Rust apps) | new |
-| `DEPENDS` versus `RDEPENDS`, `PACKAGES` and `FILES` | new |
+| `DEPENDS` versus `RDEPENDS`, `PACKAGES` and `FILES` | seen |
 | `devtool`: `add`, `modify`, `finish` | new |
 | Patches and kernel config fragments in a `.bbappend`, `FILESEXTRAPATHS` | new |
 
