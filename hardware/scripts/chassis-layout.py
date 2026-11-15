@@ -131,7 +131,7 @@ def plate3_heading():
     o = []
     w = o.append
     w(text(PX, 60, 110, 'UPPER DECK - plate 3', font_size=13, font_weight=700, fill='#1a1a1a'))
-    w(text(PX, 60, 124, 'top face z 123.12 · ORDERED 2026-10-06 · compute tray (MEC-18): FRDM-IMX91S, Pi 5 later, spare pad', font_size=9.5, fill='#64748b'))
+    w(text(PX, 60, 124, 'top face z 123.12 · ORDERED 2026-10-06 · compute tray (MEC-18): FRDM-IMX91S, LED stick; Pi 5 not in Phase 1', font_size=9.5, fill='#64748b'))
     return o
 
 
@@ -199,10 +199,15 @@ def frdm():
     w(text(P3, 122.0, 56.0, 'Pi 5 (later)', font_size=9.5, font_weight=700, fill='#047857', text_anchor='middle'))
     w(edge(P3, 100, 101.9, 144, 101.9, '#047857') + tag(P3, 122.0, 97.5, '▼ USB · RJ45', '#047857'))
     w(edge(P3, 149.1, 26, 149.1, 94, '#047857') + tag(P3, 146.5, 40.0, 'GPIO ▶', '#047857', 'end'))
-    w(text(P3, 122.0, 65.0, '8 or 10 mm standoffs', font_size=7.2, fill='#047857', text_anchor='middle'))
+    w(text(P3, 122.0, 65.0, 'not in Phase 1', font_size=7.2, fill='#047857', text_anchor='middle'))
     # the 14 fixings: M3 screws into 3.18 holes (rings), M2.5 into 2.71 holes (crosses)
     for name, x, y, d in COMPUTE_FIX:
         w(m3_mark(P3, x, y, name) if d > 3 else screw_mark(P3, x, y, name))
+    # the WS2812B LED stick (BOM 1.3): 62 x 12, across the nose of plate 3 over U1 / U2, on 3M tape (as built 2026-11-15, Hedi)
+    w(rect(P3, 11.82, 29.24, 12, 62, rx=1.5, fill='#fef3c7', fill_opacity=0.85, stroke='#b45309', stroke_width=1.6))
+    for k in range(8):
+        w(rect(P3, 15.32, 31.0 + k * 7.6, 5, 5, fill='#fbbf24', stroke='#b45309', stroke_width=0.6))
+    w(tag(P3, 26.0, 72.0, '◀ LED stick, over U1 · U2', '#b45309', 'start', 5.8))
     w(text(P3, 56.0, 58.0, 'spare pad', font_size=9.5, font_weight=700, fill='#64748b', text_anchor='middle'))
     w(text(P3, 56.0, 66.0, '(drill)', font_size=7.5, fill='#64748b', text_anchor='middle'))
     w(text(P3, 167.0, 62.0, 'plug gap', font_size=7.5, fill='#0f766e', text_anchor='middle'))

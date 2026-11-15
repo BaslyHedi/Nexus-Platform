@@ -1113,6 +1113,9 @@ Data comes from **PC12 on CN7-3** (B·I18, bridged to the free hole B·H18), 5 V
 5V IN + (B·B13), GND from a fourth hole on 5V IN − (B·A11); each header pin is bridged to a free hole
 beside it, as everywhere on B. No level shifter is fitted (Hedi). The 3-wire lead to plate 3 is made when
 the stick is mounted. Routing check passes.
+*As built 2026-11-15 (Hedi): the stick is at the front of plate 3, over the compute tray's U1 and U2, held by
+the 3M tape (BOM 3.25), and wired; the header is on A's rear since HW-24 (A·V15-V17). The lead runs from
+the nose of plate 3 to the rear of A, its route and length still to record.*
 
 **Revision 2026-11-01 · A under CN7, B under CN10: the parts change boards (HW-24).** The drawing showed
 the Nucleo mirrored across the vehicle. Seen from above with CN1 at the rear, CN7 is over A and CN10

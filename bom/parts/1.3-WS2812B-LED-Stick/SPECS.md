@@ -20,8 +20,9 @@ yet** (BOM 1.3); nothing below is measured.
 
 ## On NEXUS
 
-- **Where:** on top of plate 3, just behind the FRDM, LEDs facing the rear (Hedi, 2026-10-27). How it
-  stands, bracket or the 3M tape (BOM 3.25), is decided when plate 3 is assembled.
+- **Where:** mounted 2026-11-15 at the **front of plate 3**, on top of the compute tray over its fixings U1 and
+  U2, held by the 3M tape (BOM 3.25), and wired (Hedi). U1 and U2 screw up from below, so the tape does not
+  block them. *Planned 2026-10-27 behind the FRDM, facing the rear.*
 - **Wiring:** a 3-wire lead to the 1×3 header at the rear of carrier board A (A·V15-V17, DIN, 5V,
   GND): DIN from **PC12** (SPI3_MOSI, CN7-3), 5 V and GND from A's 5V IN, never from the Nucleo
   (MEC-15, HW-22, HW-24). The lead is made when the stick is mounted.
