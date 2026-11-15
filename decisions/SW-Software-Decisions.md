@@ -17,6 +17,7 @@ Format, and how to add one: [README](README.md).
 | **SW-09** | STM32H533 flash map: FBL, CFG and NvM in bank 1, the application alone in bank 2 (256 KB), one image and no bank swap |
 | **SW-10** | The FBL uses SRAM1 only and no FPU; the hand-off record is in the 2 KB backup SRAM |
 | **SW-11** | The FBL still runs from the SRAM; the H533 vector table is 596 bytes, so the version record moves to 0x400 |
+| **SW-12** | The STM32 memory map is written once, in a C header of the FBL's `interface/`; the linker scripts are preprocessed from it |
 
 The rest of what Phase 1 has to settle is listed in [`../system/phases.md`](../system/phases.md) under
 *Decided in Phase 1*: the CAN matrix and its tooling, the Zephyr board port, the
@@ -501,6 +502,8 @@ The FBL is the first image to carry the record. **The application follows the sa
 
 ## SW-09 · STM32H533 flash map: FBL, CFG and NvM in bank 1, the application alone in bank 2 (256 KB), one image and no bank swap
 
+**Updated by SW-12:** the numbers are written in a C header of `interface/` in `Nexus-STM32-FBL`, and `memory_map.ld` is produced from it. The map itself is unchanged.
+
 **Decision (2026-11-01).** The STM32H533RE has 512 KB of flash in two banks of 32 sectors of 8 KB, contiguous from
 `0x08000000` (RM0481 Rev 5, Table 53). One image is flashed in place and the bank swap (`SWAP_BANK`) is **not used**:
 
@@ -663,3 +666,49 @@ for the STM32H533:
 - That the FBL keeps receiving on the FDCAN over a sector erase of 10 ms, or whether SW-07 can be dropped later.
 - The time the start-up copy takes, still not measured.
 - The `VTOR` alignment in Arm's own reference manual, which is not in `vendor/`. It is checked in CMSIS and Zephyr.
+
+---
+
+## SW-12 · The STM32 memory map is written once, in a C header of the FBL's `interface/`; the linker scripts are preprocessed from it
+
+**Decision (2026-11-15).** The addresses and sizes of the STM32 memory map (SW-09, SW-10, SW-11) are written **once**, as
+plain macros in a C header of `interface/include/nexus_fbl/` in `Nexus-STM32-FBL`. The C++ code includes the header. The
+linker script `memory_map.ld` is no longer written by hand: the build runs it through the C preprocessor
+(`arm-none-eabi-gcc -E -P -x c`), which takes the values from the same header. The application includes the same header
+and preprocesses its own linker script the same way. The values are plain hexadecimal, with no C suffix (`u`, which `ld`
+rejects) and no `ld` suffix (`K`, which C rejects).
+
+**Why.**
+
+- **The FBL needs the size of the application region at compile time.** The progress shown on the LED stick is
+  `received * 32 / size`, and a `static_assert` proves it cannot overflow 32 bits, which holds only while the region is
+  under 128 MB. A linker symbol is not a compile-time constant in C++: its value is only known at the link.
+- **One copy cannot drift; two copies need a check.** Three ways were weighed:
+  - *The value in CMake*, passed to the compiler with `-D` and to the linker with `--defsym`. One copy, but the contract
+    leaves `interface/`: `memory_map.ld` no longer shows the layout, and every consumer, the application among them, has
+    to take its values from this repository's build scripts. Rejected.
+  - *A C++ constant, checked against the linker script by an `ASSERT`.* An `ASSERT` only sees symbols, not a `constexpr`.
+    Bridging the two needs the constant as a symbol, which takes a macro stringified into top-level `asm` with GCC 14.2
+    (top-level `asm` with operands arrived in GCC 15), or a run-time check that only fails on the target. Two copies and a
+    trick. Rejected.
+  - *A C header, the linker script preprocessed from it.* One copy, it stays in `interface/`, the application reads it
+    unchanged, and Zephyr builds its own linker scripts the same way. **Chosen** (Hedi).
+- **The header was planned anyway.** `interface/README.md` already planned the memory map as a plain C header for the
+  application.
+
+**Consequences.**
+
+- The FBL build gains a step that produces `memory_map.ld` before the link; the generated file is in the build tree, not
+  committed. The `-L` order of `memory_map.ld` still applies to the generated copy.
+- The linker scripts keep their `ASSERT`s, to check the layout itself: no overlap, the application inside bank 2, the
+  vector table and the version record in place.
+- The preprocessor reads the whole linker script: `/* */` comments are fine, a line starting with `#` or an unbalanced
+  quote in a comment is not.
+- `VERSION_SIZE` moves into the header too. `cmake/version.cmake` still has its own `NEXUS_RECORD_SIZE`, which is checked
+  against the record at the link (`fbl.ld`); bringing it under the header is left for later.
+
+**To confirm.**
+
+- That the application's Zephyr build can take the header and its own preprocessed linker script without fighting
+  Zephyr's linker generator. Checked when the application is linked for `0x08040000`.
+
