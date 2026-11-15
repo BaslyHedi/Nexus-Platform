@@ -61,6 +61,7 @@ Drawn in [Nexus-Physical-01-Local-View](renders/Nexus-Physical-01-Local-View.svg
 | [01-04](../requirements/components/Nexus-Physical-01/Nexus-Physical-01-04.md) | Bootloader | software |
 | [01-05](../requirements/components/Nexus-Physical-01/Nexus-Physical-01-05.md) | FBL-Updater | software |
 | [01-06](../requirements/components/Nexus-Physical-01/Nexus-Physical-01-06.md) | Application | software |
+| [01-07](../requirements/components/Nexus-Physical-01/Nexus-Physical-01-07.md) | LED stick: WS2812B, 8 LEDs, on plate 3 (BOM 1.3, HW-22) | hardware, bought |
 
 | From | To | What passes |
 |---|---|---|
@@ -69,6 +70,7 @@ Drawn in [Nexus-Physical-01-Local-View](renders/Nexus-Physical-01-Local-View.svg
 | 01-03 transceiver | the bus (Nexus-Physical-04) | CAN_H, CAN_L, with the module's 120 Ω as this end's termination |
 | 01-02 carrier | servo and motor driver headers | 6 V from the UBEC with C2 across it, PWM through R4, I2C (HW-14, HW-19, HW-21) |
 | 01-04, 01-05, 01-06 | 01-01 flash | the bootloader region and the application region of the memory map |
+| 01-02 carrier | 01-07 LED stick | data from PC12, 5 V and GND from the 5 V input, through the LED header at the rear of board A (HW-22, HW-24) |
 | 01-01 MCU board | bench PC | SWD through the STLINK-V3EC, by USB at the fascia |
 
 ### Nexus-Physical-02, FRDM node

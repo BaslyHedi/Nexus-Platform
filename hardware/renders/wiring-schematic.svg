@@ -23,11 +23,28 @@
   <rect x="250" y="160" width="110" height="40" fill="#fee2e2" stroke="#b91c1c" stroke-width="1.6" rx="2"/>
   <text x="305" y="177" font-size="10" font-weight="700" fill="#7f1d1d" text-anchor="middle">MAIN FUSE 7.5 A</text>
   <text x="305" y="191" font-size="8.5" fill="#991b1b" text-anchor="middle">inline · ≤15 cm from (+)</text>
-  <line x1="360" y1="180" x2="390" y2="180" stroke="#d92b2b" stroke-width="3"/>
-  <rect x="390" y="160" width="100" height="40" fill="#cffafe" stroke="#0e7490" stroke-width="1.6" rx="2"/>
-  <text x="440" y="177" font-size="10" font-weight="700" fill="#164e63" text-anchor="middle">INA226 SHUNT</text>
-  <text x="440" y="191" font-size="8.5" fill="#155e75" text-anchor="middle">R002 2 mΩ · high-side</text>
-  <line x1="490" y1="180" x2="600" y2="180" stroke="#d92b2b" stroke-width="3"/>
+  <rect x="390" y="155" width="100" height="55" fill="#cffafe" stroke="#0e7490" stroke-width="1.6" rx="2"/>
+  <!-- INA226 terminals on the top edge, in the module order: V+, I+, I-, V- (V- is the module GND) -->
+  <rect x="398" y="151" width="8" height="8" fill="#d4a017" stroke="#78350f" stroke-width="1"/>
+  <text x="402" y="169" font-size="7.5" font-weight="700" fill="#164e63" text-anchor="middle">V+</text>
+  <rect x="423" y="151" width="8" height="8" fill="#d4a017" stroke="#78350f" stroke-width="1"/>
+  <text x="427" y="169" font-size="7.5" font-weight="700" fill="#164e63" text-anchor="middle">I+</text>
+  <rect x="449" y="151" width="8" height="8" fill="#d4a017" stroke="#78350f" stroke-width="1"/>
+  <text x="453" y="169" font-size="7.5" font-weight="700" fill="#164e63" text-anchor="middle">I−</text>
+  <rect x="474" y="151" width="8" height="8" fill="#d4a017" stroke="#78350f" stroke-width="1"/>
+  <text x="478" y="169" font-size="7.5" font-weight="700" fill="#164e63" text-anchor="middle">V−</text>
+  <text x="440" y="182" font-size="10" font-weight="700" fill="#164e63" text-anchor="middle">INA226 SHUNT</text>
+  <text x="440" y="194" font-size="8.5" fill="#155e75" text-anchor="middle">R002 2 mΩ · high-side</text>
+  <text x="440" y="205" font-size="7.5" font-weight="700" fill="#164e63" text-anchor="middle">V− is the module GND</text>
+  <!-- I+ from the main fuse, hopping over the V+ sense wire; I- to the (+) bus -->
+  <path d="M360,180 L372,180 L372,145 L396,145 A6 6 0 0 1 408,145 L427,145 L427,151" fill="none" stroke="#d92b2b" stroke-width="3"/>
+  <path d="M453,151 L453,138 L560,138 L560,180 L600,180" fill="none" stroke="#d92b2b" stroke-width="3"/>
+  <!-- sense wires, 22 AWG or thicker: V+ to a (+) bus port, V- (the module GND) to the (-) bus -->
+  <path d="M402,151 L402,128 L590,128 L590,150 L600,150" fill="none" stroke="#d92b2b" stroke-width="1.5"/>
+  <text x="470" y="124" font-size="7.5" fill="#991b1b">V+ sense → (+) bus</text>
+  <path d="M478,151 L478,147 L500,147 L500,420 L566,420 L566,430" fill="none" stroke="#111827" stroke-width="1.5"/>
+  <text x="506" y="236" font-size="7.5" font-weight="700" fill="#111827">V− → (−) bus,</text>
+  <text x="506" y="246" font-size="7.5" font-weight="700" fill="#111827">never the + line</text>
 
   <!-- (+) bus bar -->
   <text x="613" y="122" font-size="9" font-weight="700" fill="#b91c1c" text-anchor="middle">(+) WAGO BUS</text>
@@ -51,7 +68,7 @@
   <rect x="540" y="430" width="80" height="18" fill="#374151" stroke="#111827" stroke-width="1.6" rx="3"/>
   <circle cx="552" cy="439" r="2.5" fill="#e5e7eb"/><circle cx="566" cy="439" r="2.5" fill="#e5e7eb"/><circle cx="580" cy="439" r="2.5" fill="#e5e7eb"/><circle cx="594" cy="439" r="2.5" fill="#e5e7eb"/><circle cx="608" cy="439" r="2.5" fill="#e5e7eb"/>
   <text x="630" y="466" font-size="9" font-weight="700" fill="#111827" text-anchor="middle">(−) WAGO BUS - 1 × 221-415 · star ground</text>
-  <text x="630" y="479" font-size="7.5" fill="#475569" text-anchor="middle">4 of 5: battery, motor module, UBEC (with both switch LEDs), Bauer · one spare (MEC-16)</text>
+  <text x="630" y="479" font-size="7.5" fill="#475569" text-anchor="middle">5 of 5: battery, motor module, UBEC (with both switch LEDs), Bauer, INA226 V− (MEC-16)</text>
   <path d="M210,240 L228,240 L228,439 L540,439" fill="none" stroke="#111827" stroke-width="3"/>
   <text x="380" y="455" font-size="9" fill="#374151" text-anchor="middle">battery return</text>
   <!-- the two switch LED returns, joined, into the (−) bus -->
@@ -99,7 +116,7 @@
   <rect x="1175" y="143" width="120" height="50" fill="#ede9fe" stroke="#6d28d9" stroke-width="1.4" rx="2"/>
   <text x="1235" y="161" font-size="10" font-weight="700" fill="#4c1d95" text-anchor="middle">2 × REAR MOTOR</text>
   <text x="1235" y="175" font-size="8.5" fill="#5b21b6" text-anchor="middle">12 V · 8.3 W · 2.3 A stall</text>
-  <text x="1235" y="187" font-size="8" fill="#5b21b6" text-anchor="middle">encoder AB → module</text>
+  <text x="1235" y="187" font-size="8" fill="#5b21b6" text-anchor="middle">PH2.0: M+ VCC A B GND M−</text>
 
   <line x1="880" y1="238" x2="894" y2="238" stroke="#e8821a" stroke-width="3"/>
   <rect x="894" y="231" width="28" height="14" fill="#fee2e2" stroke="#b91c1c" stroke-width="1.2" rx="2"/>
@@ -115,7 +132,7 @@
   <rect x="1175" y="213" width="120" height="50" fill="#ede9fe" stroke="#6d28d9" stroke-width="1.4" rx="2"/>
   <text x="1235" y="231" font-size="10" font-weight="700" fill="#4c1d95" text-anchor="middle">STEERING SERVO</text>
   <text x="1235" y="245" font-size="9" fill="#5b21b6" text-anchor="middle">LD-1501MG · 6–8.4 V</text>
-  <text x="1235" y="257" font-size="7.5" fill="#5b21b6" text-anchor="middle">PWM via carrier A · ⏚</text>
+  <text x="1235" y="257" font-size="7.5" fill="#5b21b6" text-anchor="middle">GND +V SIG · blk red wht</text>
 
   <!-- ===== LOGIC LANE ===== -->
   <rect x="760" y="308" width="100" height="44" fill="#dcfce7" stroke="#15803d" stroke-width="1.8" rx="6"/>
@@ -146,13 +163,13 @@
   <text x="1135" y="412" font-size="7" fill="#15803d" text-anchor="middle">TO STM32</text>
   <rect x="1175" y="305" width="120" height="50" fill="#dbeafe" stroke="#1d4ed8" stroke-width="1.6" rx="2"/>
   <text x="1235" y="323" font-size="10" font-weight="700" fill="#1e3a8a" text-anchor="middle">FRDM-IMX91S</text>
-  <text x="1235" y="337" font-size="8.5" fill="#1e40af" text-anchor="middle">J1 USB-C · no CC used</text>
-  <text x="1235" y="349" font-size="8" fill="#3b5bb5" text-anchor="middle">dumb 5 V, no PD</text>
+  <text x="1235" y="337" font-size="8.5" fill="#1e40af" text-anchor="middle">J1 USB-C: VBUS, GND</text>
+  <text x="1235" y="349" font-size="8" fill="#3b5bb5" text-anchor="middle">no CC, no PD</text>
 
   <rect x="1175" y="375" width="120" height="50" fill="#dcfce7" stroke="#15803d" stroke-width="1.6" rx="2"/>
   <text x="1235" y="393" font-size="10" font-weight="700" fill="#14532d" text-anchor="middle">NUCLEO-H533RE</text>
-  <text x="1235" y="407" font-size="8.5" fill="#166534" text-anchor="middle">5 V via carrier A to E5V</text>
-  <text x="1235" y="419" font-size="8" fill="#3f7d52" text-anchor="middle">⏚ back through board C</text>
+  <text x="1235" y="407" font-size="8.5" fill="#166534" text-anchor="middle">E5V CN7-6 via carrier A</text>
+  <text x="1235" y="419" font-size="8" fill="#3f7d52" text-anchor="middle">⏚ CN7-19, back via board C</text>
 
   <!-- ===================== SIGNALS ===================== -->
   <text x="40" y="500" font-size="13" font-weight="700" fill="#1a1a1a">SIGNALS · CARRIER BOARDS</text>
@@ -160,20 +177,22 @@
 
   <!-- INA226 and the motor module reach the STM32 through carrier B -->
   <rect x="40" y="540" width="160" height="66" fill="#cffafe" stroke="#0e7490" stroke-width="1.6" rx="3"/>
-  <text x="120" y="562" font-size="11" font-weight="700" fill="#164e63" text-anchor="middle">INA226</text>
-  <text x="120" y="578" font-size="9" fill="#155e75" text-anchor="middle">pack V + I</text>
-  <text x="120" y="594" font-size="8.5" fill="#155e75" text-anchor="middle">ALERT → bus under-volt</text>
+  <text x="120" y="557" font-size="11" font-weight="700" fill="#164e63" text-anchor="middle">INA226</text>
+  <text x="120" y="571" font-size="8" fill="#155e75" text-anchor="middle">pack V + I · ALERT → under-volt</text>
+  <text x="120" y="586" font-size="8.5" font-weight="700" fill="#164e63" text-anchor="middle">GND · SCL · SDA · VCC</text>
+  <text x="120" y="599" font-size="7.5" fill="#155e75" text-anchor="middle">VCC from carrier 3V3, never 5 V</text>
   <path d="M200,573 L225,573 L225,655 L250,655" fill="none" stroke="#7c3aed" stroke-width="2.5" marker-end="url(#a)"/>
-  <text x="212" y="566" font-size="8.5" font-weight="600" fill="#5b21b6" text-anchor="middle">I²C1</text>
+  <text x="228" y="566" font-size="8.5" font-weight="600" fill="#5b21b6" text-anchor="middle">I2C-A</text>
   <rect x="40" y="640" width="160" height="112" fill="#faf5ff" stroke="#9333ea" stroke-width="1.6" rx="3"/>
   <text x="120" y="659" font-size="9.5" font-weight="700" fill="#6b21a8" text-anchor="middle">Encoder Motor Module</text>
   <text x="120" y="673" font-size="8.5" fill="#7e22ce" text-anchor="middle">V1.4 · MM32F103</text>
   <text x="120" y="687" font-size="8" fill="#7e22ce" text-anchor="middle">owns PWM + encoder counting</text>
   <text x="120" y="700" font-size="8" fill="#7e22ce" text-anchor="middle">M1 + M3, both on the rear edge</text>
-  <text x="120" y="719" font-size="8" font-weight="700" fill="#b91c1c" text-anchor="middle">IIC 5 V is an OUTPUT:</text>
-  <text x="120" y="731" font-size="8" font-weight="700" fill="#b91c1c" text-anchor="middle">wire SCL / SDA / GND only</text>
+  <text x="120" y="715" font-size="8.5" font-weight="700" fill="#6b21a8" text-anchor="middle">IIC: SCL · SDA · GND · 5V</text>
+  <text x="120" y="728" font-size="8" font-weight="700" fill="#b91c1c" text-anchor="middle">its 5 V is an OUTPUT:</text>
+  <text x="120" y="740" font-size="8" font-weight="700" fill="#b91c1c" text-anchor="middle">wire SCL / SDA / GND only</text>
   <path d="M200,696 L225,696 L225,675 L250,675" fill="none" stroke="#7c3aed" stroke-width="2.5" marker-end="url(#a)"/>
-  <text x="212" y="714" font-size="8.5" font-weight="600" fill="#5b21b6" text-anchor="middle">I²C</text>
+  <text x="228" y="714" font-size="8.5" font-weight="600" fill="#5b21b6" text-anchor="middle">I2C-B</text>
 
   <!-- the Nucleo plugs onto carrier A (under CN7) and carrier B (under CN10); both sit on the carrier tray on plate 2 (HW-24) -->
   <rect x="250" y="520" width="350" height="62" fill="#dcfce7" stroke="#15803d" stroke-width="1.8" rx="3"/>
@@ -183,8 +202,8 @@
   <line x1="335" y1="582" x2="335" y2="612" stroke="#94a3b8" stroke-width="5" marker-end="url(#a)"/>
   <line x1="515" y1="582" x2="515" y2="612" stroke="#94a3b8" stroke-width="5" marker-end="url(#a)"/>
   <text x="425" y="603" font-size="8" fill="#64748b" text-anchor="middle">plugs into the 1×19 sockets</text>
-  <rect x="250" y="612" width="170" height="140" fill="#eff6ff" stroke="#1d4ed8" stroke-width="1.8" rx="3"/><text x="335.0" y="629" font-size="10.5" font-weight="700" fill="#1e3a8a" text-anchor="middle">CARRIER B</text><text x="335.0" y="642" font-size="8" fill="#1d4ed8" text-anchor="middle">under CN10 · plate 2</text><text x="258" y="660" font-size="8.2" fill="#1e3a8a">SN65HVD230 module in a socket</text><text x="258" y="674" font-size="8.2" fill="#1e3a8a">   (TX / RX = PB13 / PB12, 3.3 V)</text><text x="258" y="688" font-size="8.2" fill="#1e3a8a">CAN terminal, 3-pin</text><text x="258" y="702" font-size="8.2" fill="#1e3a8a">I²C headers on B: INA226,</text><text x="258" y="716" font-size="8.2" fill="#1e3a8a">   motor module, 90° pointing fwd</text>
-  <rect x="430" y="612" width="170" height="140" fill="#f0fdfa" stroke="#0f766e" stroke-width="1.8" rx="3"/><text x="515.0" y="629" font-size="10.5" font-weight="700" fill="#134e4a" text-anchor="middle">CARRIER A</text><text x="515.0" y="642" font-size="8" fill="#0f766e" text-anchor="middle">under CN7 · plate 2</text><text x="438" y="660" font-size="8.2" fill="#134e4a">5V IN terminal ← board C</text><text x="438" y="674" font-size="8.2" fill="#134e4a">6V IN terminal ← UBEC</text><text x="438" y="688" font-size="8.2" fill="#134e4a">C2 470 µF across the servo header</text><text x="438" y="702" font-size="8.2" fill="#134e4a">servo header: 6 V, GND, PWM</text><text x="438" y="716" font-size="8.2" fill="#134e4a">   via R4 1 kΩ from PC2</text>
+  <rect x="250" y="612" width="170" height="140" fill="#eff6ff" stroke="#1d4ed8" stroke-width="1.8" rx="3"/><text x="335.0" y="629" font-size="10.5" font-weight="700" fill="#1e3a8a" text-anchor="middle">CARRIER B</text><text x="335.0" y="642" font-size="8" fill="#1d4ed8" text-anchor="middle">under CN10 · plate 2</text><text x="258" y="660" font-size="8.2" fill="#1e3a8a">SN65HVD230 module in a socket</text><text x="258" y="674" font-size="8.2" fill="#1e3a8a">   CTX PB13 · CRX PB12 · GND · 3V3</text><text x="258" y="688" font-size="8.2" fill="#1e3a8a">CAN terminal: H · L · GND</text><text x="258" y="702" font-size="8.2" fill="#1e3a8a">I2C-A (INA226): 3V3 SDA SCL GND</text><text x="258" y="716" font-size="8.2" fill="#1e3a8a">I2C-B (motor): GND SDA SCL</text><text x="258" y="730" font-size="8.2" fill="#1e3a8a">   90° headers, pointing forward</text>
+  <rect x="430" y="612" width="170" height="140" fill="#f0fdfa" stroke="#0f766e" stroke-width="1.8" rx="3"/><text x="515.0" y="629" font-size="10.5" font-weight="700" fill="#134e4a" text-anchor="middle">CARRIER A</text><text x="515.0" y="642" font-size="8" fill="#0f766e" text-anchor="middle">under CN7 · plate 2</text><text x="438" y="660" font-size="8.2" fill="#134e4a">5V IN: +5V · GND ← board C</text><text x="438" y="674" font-size="8.2" fill="#134e4a">6V IN: +6V · GND ← UBEC</text><text x="438" y="688" font-size="8.2" fill="#134e4a">C2 470 µF across the servo header</text><text x="438" y="702" font-size="8.2" fill="#134e4a">SERVO: GND · +6V · SIG</text><text x="438" y="716" font-size="8.2" fill="#134e4a">   SIG via R4 1 kΩ from PC2</text>
 
   <!-- CAN: carrier B terminal to the FRDM J7, under carrier A; the debug port is a stub off the middle of the bus (HW-18) -->
   <path d="M335,752 L335,768 L615,768 L615,690 L1000,690" fill="none" stroke="#1d4ed8" stroke-width="3"/>
@@ -205,6 +224,17 @@
   <text x="800" y="766" font-size="8" font-weight="700" fill="#b91c1c" text-anchor="middle">adapter 120 Ω must be OFF</text>
   <text x="1000" y="760" font-size="8.5" fill="#6b7280">electronic differential across the two rear wheels is firmware;</text>
   <text x="1000" y="773" font-size="8.5" fill="#6b7280">the axle is not a diff. The motor-module I²C shares the INA226 bus.</text>
+
+  <!-- ===================== CONNECTORS ===================== -->
+  <rect x="744.1" y="162.5" width="13.9" height="11" fill="#fef3c7" stroke="#b45309" stroke-width="0.8" rx="2"/><text x="751.1" y="170.5" font-size="6.5" font-family="ui-monospace, monospace" fill="#78350f" text-anchor="middle">C1</text>
+  <rect x="862" y="162.5" width="13.9" height="11" fill="#fef3c7" stroke="#b45309" stroke-width="0.8" rx="2"/><text x="869.0" y="170.5" font-size="6.5" font-family="ui-monospace, monospace" fill="#78350f" text-anchor="middle">C2</text>
+  <rect x="744.1" y="324.5" width="13.9" height="11" fill="#fef3c7" stroke="#b45309" stroke-width="0.8" rx="2"/><text x="751.1" y="332.5" font-size="6.5" font-family="ui-monospace, monospace" fill="#78350f" text-anchor="middle">C1</text>
+  <rect x="862" y="324.5" width="13.9" height="11" fill="#fef3c7" stroke="#b45309" stroke-width="0.8" rx="2"/><text x="869.0" y="332.5" font-size="6.5" font-family="ui-monospace, monospace" fill="#78350f" text-anchor="middle">C2</text>
+  <rect x="930.1" y="162.5" width="17.9" height="11" fill="#fef3c7" stroke="#b45309" stroke-width="0.8" rx="2"/><text x="939.1" y="170.5" font-size="6.5" font-family="ui-monospace, monospace" fill="#78350f" text-anchor="middle">+ −</text>
+  <rect x="1122" y="162.5" width="33.7" height="11" fill="#fef3c7" stroke="#b45309" stroke-width="0.8" rx="2"/><text x="1138.8" y="170.5" font-size="6.5" font-family="ui-monospace, monospace" fill="#78350f" text-anchor="middle">M1 · M3</text>
+  <rect x="930.1" y="232.5" width="17.9" height="11" fill="#fef3c7" stroke="#b45309" stroke-width="0.8" rx="2"/><text x="939.1" y="240.5" font-size="6.5" font-family="ui-monospace, monospace" fill="#78350f" text-anchor="middle">+ −</text>
+  <rect x="930.1" y="324.5" width="17.9" height="11" fill="#fef3c7" stroke="#b45309" stroke-width="0.8" rx="2"/><text x="939.1" y="332.5" font-size="6.5" font-family="ui-monospace, monospace" fill="#78350f" text-anchor="middle">+ −</text>
+  <rect x="406.9" y="762.5" width="136.3" height="11" fill="#fef3c7" stroke="#b45309" stroke-width="0.8" rx="2"/><text x="475.0" y="770.5" font-size="6.5" font-family="ui-monospace, monospace" fill="#78350f" text-anchor="middle">CAN: H B·A13 · L B·A11 · GND B·A9</text>
 
   <!-- ===================== LEGEND ===================== -->
   <line x1="40" y1="786" x2="1280" y2="786" stroke="#e2e8f0"/>

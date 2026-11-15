@@ -2,7 +2,7 @@
 
 System element, level 1. Written to [../system/method.md](../../system/method.md) and [rules.md](../rules.md).
 
-- **Purpose and boundary.** The NUCLEO-H533RE on its carrier boards with the CAN transceiver, and the software in its flash. Its elements, defined in [the node's local view](../../system/physical-architecture.md): MCU board [01-01](../components/Nexus-Physical-01/Nexus-Physical-01-01.md), carrier [01-02](../components/Nexus-Physical-01/Nexus-Physical-01-02.md), transceiver module [01-03](../components/Nexus-Physical-01/Nexus-Physical-01-03.md), bootloader [01-04](../components/Nexus-Physical-01/Nexus-Physical-01-04.md), FBL-Updater [01-05](../components/Nexus-Physical-01/Nexus-Physical-01-05.md), application [01-06](../components/Nexus-Physical-01/Nexus-Physical-01-06.md).
+- **Purpose and boundary.** The NUCLEO-H533RE on its carrier boards with the CAN transceiver, and the software in its flash. Its elements, defined in [the node's local view](../../system/physical-architecture.md): MCU board [01-01](../components/Nexus-Physical-01/Nexus-Physical-01-01.md), carrier [01-02](../components/Nexus-Physical-01/Nexus-Physical-01-02.md), transceiver module [01-03](../components/Nexus-Physical-01/Nexus-Physical-01-03.md), bootloader [01-04](../components/Nexus-Physical-01/Nexus-Physical-01-04.md), FBL-Updater [01-05](../components/Nexus-Physical-01/Nexus-Physical-01-05.md), application [01-06](../components/Nexus-Physical-01/Nexus-Physical-01-06.md), LED stick [01-07](../components/Nexus-Physical-01/Nexus-Physical-01-07.md).
 - **Interfaces.** The bus [Nexus-Physical-04](Nexus-Physical-04.md); 5 V and the 6 V servo supply from [Nexus-Physical-05](Nexus-Physical-05.md); I2C and PWM to [Nexus-Physical-07](Nexus-Physical-07.md) and [Nexus-Physical-08](Nexus-Physical-08.md), prepared and not driven in Phase 1; SWD to the bench PC.
 - **Allocated functions.** See the [allocation](../../system/physical-architecture.md): 401 F1, 503 F4, 504 F1 to F3, and the prepared interfaces of 201 F1 and 202 F1.
 - **Modes.** Bootloader idle; bootloader receiving; FBL-Updater running; application running.
@@ -133,13 +133,13 @@ System element, level 1. Written to [../system/method.md](../../system/method.md
 
 ### Nexus-Physical-01-R013
 
-**Statement.** The user LED of the node shall show a distinct pattern for each of these states: bootloader idle, bootloader receiving, FBL-Updater running, application running.
+**Statement.** The user LED and the LED stick of the node shall show a distinct pattern for each of these states: bootloader idle, bootloader receiving, FBL-Updater running, application running.
 
 - Function: Nexus-Logical-503-F04
 - Derived-from: Nexus-Vehicle-R017
-- Allocated-to: Nexus-Physical-01-01, Nexus-Physical-01-04, Nexus-Physical-01-05, Nexus-Physical-01-06
+- Allocated-to: Nexus-Physical-01-01, Nexus-Physical-01-02, Nexus-Physical-01-04, Nexus-Physical-01-05, Nexus-Physical-01-06, Nexus-Physical-01-07
 - Phase: 1
-- Verification: Integration Nexus-Physical-01-01-R004, Nexus-Physical-01-04-R010, Nexus-Physical-01-04-R011, Nexus-Physical-01-05-R004, Nexus-Physical-01-06-R005
+- Verification: Integration Nexus-Physical-01-01-R004, Nexus-Physical-01-02-R009, Nexus-Physical-01-04-R010, Nexus-Physical-01-04-R011, Nexus-Physical-01-05-R004, Nexus-Physical-01-06-R005, Nexus-Physical-01-07-R001, Nexus-Physical-01-07-R002
 
 ### Nexus-Physical-01-R014
 

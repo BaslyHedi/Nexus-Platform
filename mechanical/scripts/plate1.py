@@ -268,10 +268,11 @@ def build():
     # and front (S8) face; the run to the switches leaves the front of S8 and U-turns into the lane over the driver
     taped_clip("splice-s8-switch-feed", 157, 175.6, 51, 69.4, (54, 60.2, 66.4), 157)
     taped_clip("splice-s9-sw1-out", 178, 196.6, 32.4, 50.8, (35.5, 41.7, 47.9), 196.6)
-    # S6 / S7 sit on the carrier tray (MEC-17), 4 mm above plate 2, either side of the Bauer, each beside one of the plate's two
-    # tie slots: they would not fit under board C on 8 mm standoffs, and out here their levers have room to open
-    clip("splice-s6-bauer-plus", 42, 60.6, 96, 114.4, PLATE2_TOP + 4, PLATE2_TOP + 12.5, (99, 105.2, 111.4), 60.6, (64.5, 66))      # 3-port: SW2 out, SW2 LED (+), the Bauer's red lead
-    clip("splice-s7-bauer-minus", 42, 60.6, 11.5, 24.5, PLATE2_TOP + 4, PLATE2_TOP + 12.5, (15, 21), 60.6, (64.5, 66))
+    # S6 / S7 are taped under plate 2 at its rear corners, outboard of the rear pad's R3 / R4 heads and inboard of the chassis
+    # standoffs (as built, Hedi 2026-11-10; MEC-17), ports to the front. The Bauer's leads come down the open x 75-80 end of the
+    # plate's tie slots and run back along the trunk; over the motor cans the clips keep 3.6 mm at x 233
+    taped_clip("splice-s6-bauer-plus", 233, 251.6, 100, 118.4, (103, 109.2, 115.4), 233)    # 3-port: the Bauer's red lead, SW2 out, SW2 LED (+)
+    taped_clip("splice-s7-bauer-minus", 234.5, 253.1, 4, 17, (7.5, 13.5), 234.5)
 
     # SM-2P, the battery disconnect: the female half stays on the pack lead (plate 1),
     # the male half is on a drop from plate 2 and is plugged in last (DROPS)
@@ -371,17 +372,21 @@ def build():
     W("run13b-sw2-led-minus-to-s5", "wire_black", AWG22,
       [(248.3, 40.8, 27.5), (242.5, 40.8, 27.5), (236, 40.8, 27.5), (233, 59, F), (204, 59, F), (201, 79.2, F), (160, 81, F), (136, 84, F), (136, 96, pz), (137.2, 96, pz)])
     W("run15a-sw2-green-to-s6", "wire_green", AWG18,
-      [(248.3, 40.8, 22.5), (242.5, 40.8, 22.5), (236, 40.8, 22.5), (233, 61.5, F - 2.4), (203, 61.5, F - 2.4), (200, 73, F), (126, 73, F), (100, 81, F), (78, 88, F),
-       (76.5, 92.5, 58), (66, 97, 60.5), (60.6, 99, 60.5)])
+      [(248.3, 40.8, 22.5), (242.5, 40.8, 22.5), (236, 40.8, 22.5), (233, 61.5, F - 2.4), (226, 80, F),
+       (222, 104, F), (228, 109.2, pz), (233, 109.2, pz)])
     W("run15c-sw2-led-plus-to-s6", "wire_red", AWG22,
-      [(248.3, 35.8, 27.5), (242.5, 35.8, 27.5), (236, 35.8, 27.5), (233, 54, F), (204, 54, F), (201, 71.4, F), (128, 71.4, F), (102, 79.4, F), (81, 86.4, F),
-       (80.5, 89.5, 58), (66, 99, 60.5), (60.6, 105.2, 60.5)])
-    # the Bauer's red lead into S6, its black lead round the Bauer's rear (the 10.5 mm lane before board C) into S7
-    W("run15b-bauer-plus-lead", "wire_orange", AWG18, [(50, 91.6, 65.5), (50, 94.0, 64), (56, 102, 60.5), (60.6, 111.4, 60.5)])
+      [(248.3, 35.8, 27.5), (242.5, 35.8, 27.5), (236, 35.8, 27.5), (233, 54, F), (222, 82, F),
+       (219, 108, F), (228, 115.4, pz), (233, 115.4, pz)])
+    # the Bauer's red lead down the left slot's open end and back along the trunk into S6; its black lead round the Bauer's rear
+    # (the 10.5 mm lane before board C), down the right slot's open end and back into S7 (both under plate 2's rear since 2026-11-10)
+    W("run15b-bauer-plus-lead", "wire_orange", AWG18,
+      [(50, 91.6, 65.5), (50, 94.5, 62), (74, 95, 57.5), (77, 91.5, 56), (77, 91.5, F), (100, 82, F), (126, 74.5, F), (200, 74.5, F),
+       (216, 92, F), (226, 103, pz), (233, 103, pz)])
     W("run16a-bauer-minus-lead", "wire_black", AWG18,
-      [(46, 91.6, 65.5), (46, 93.5, 62), (78, 94, 57), (81, 92, 57), (81, 20, 57), (64, 15, 60.5), (60.6, 15, 60.5)])
+      [(46, 91.6, 65.5), (46, 93.5, 62), (60, 97, 58), (80, 97.5, 57), (83, 93, 57), (83, 33, 57), (78, 31, 56), (78, 31, F),
+       (82, 72, F), (126, 76.5, F), (198, 76.5, F), (214, 38, F), (222, 10, F), (228, 7.5, pz), (234.5, 7.5, pz)])
     W("run16b-s7-to-minus-bus", "wire_black", AWG18,
-      [(60.6, 21, 60.5), (64, 27.5, 60), (66, 31, 58), (66, 31, F), (70, 33, F), (70, 75, F), (123, 75, F), (123, 66, 46),
+      [(234.5, 13.5, pz), (229, 15, F), (217, 36, F), (202, 78.5, F), (160, 78.5, F), (123, 75, F), (123, 66, 46),
        (128, 44, 45), (128, 43, pz), M(43)])
     finalize_runs()
 

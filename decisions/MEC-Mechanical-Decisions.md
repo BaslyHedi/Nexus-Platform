@@ -1113,6 +1113,10 @@ Data comes from **PC12 on CN7-3** (B·I18, bridged to the free hole B·H18), 5 V
 5V IN + (B·B13), GND from a fourth hole on 5V IN − (B·A11); each header pin is bridged to a free hole
 beside it, as everywhere on B. No level shifter is fitted (Hedi). The 3-wire lead to plate 3 is made when
 the stick is mounted. Routing check passes.
+*As built 2026-11-15 (Hedi): the stick is at the front of plate 3, over the compute tray's U1 and U2, held by
+the 3M tape (BOM 3.25), and wired; the header is on A's rear since HW-24 (A·V15-V17). LEDs face up. The lead leaves from
+the vehicle's right, down through the compute tray's right window (x 61-75, y 32) to A's rear. Plate 3 and the compute tray are built since 2026-11-15; the Pi 5 is not fitted in
+Phase 1.*
 
 **Revision 2026-11-01 · A under CN7, B under CN10: the parts change boards (HW-24).** The drawing showed
 the Nucleo mirrored across the vehicle. Seen from above with CN1 at the rear, CN7 is over A and CN10
@@ -1160,8 +1164,8 @@ Positions, x from the front of plate 1 and y from its right edge, as modelled in
 |---|---|---|
 | **Battery** | x 85-162, y 30-93, lengthwise right behind the tie rod | plate 1, felt pad, felt straps and zip ties - fixed 2026-09-28 |
 | **Motor driver** | x 168-210, y 22.6-80.6 | plate 1, as mounted 21 Sep |
-| **(+) bus**, 221-415, 2 of 5 ports (INA226, S8) | x 88-107, y 40-70, entry face towards the opening | plate 2, levers down |
-| **(−) bus**, 221-415, 4 of 5 ports (battery, S4, S5, S7) | x 134-153, y 40-70, entry face towards the opening | plate 2, levers down |
+| **(+) bus**, 221-415, 3 of 5 ports (INA226 I−, S8, INA226 V+ since HW-25) | x 88-107, y 40-70, entry face towards the opening | plate 2, levers down |
+| **(−) bus**, 221-415, 5 of 5 ports (battery, S4, S5, S7, INA226 V− since HW-25) | x 134-153, y 40-70, entry face towards the opening | plate 2, levers down |
 | **Main fuse** 7.5 A | x 96-146, y 2-29: base 34 x 12 (x 104-138), cap 26 x 15 (x 108-134) toward the right | plate 2 |
 | **Motor fuse** 5 A | x 152-202, y 2-29, base x 160-194, cap x 164-190 toward the right | plate 2 |
 | **UBEC fuse** 5 A | x 157-207 (moved 5 mm rear, clear of S5), y 91-118, cap toward the left | plate 2 |
@@ -1173,7 +1177,7 @@ Positions, x from the front of plate 1 and y from its right edge, as modelled in
 | **S1** (SM-2P + to main fuse) | x 83-96, y 21-40 | plate 2 |
 | **S2 / S4** (driver VM + and −) | x 157-176, y 35-48, stacked | plate 2 |
 | **S3 / S5** (UBEC + and −) | x 139-157; **S5 is a 5-port clip** (y 87-117, taped to the plate) with the 2-port S3 (y 104-117) hanging under it | plate 2 |
-| **S6 / S7** (Bauer + and −) | beside the Bauer; **S6 is a 3-port clip** (y 96-114) | plate 2, top face |
+| **S6 / S7** (Bauer + and −) | **at plate 2's rear corners since 2026-11-10** (MEC-17): S6 x 233-251.6, y 100-118.4; S7 x 234.5-253.1, y 4-17; **S6 is a 3-port clip** | plate 2, lower face |
 
 The two buses face each other across **plate 2's 22.7 × 35.4 opening** (x 110-133). Every wire that
 has to reach plate 2's top face - the UBEC's 6 V pair to carrier board A, the Bauer's feed and
@@ -1261,10 +1265,10 @@ return - goes up through it, between the buses. The rearward runs lie flat on pl
   *Decided 2026-10-07: no calipers, so the estimates stand (fuse holders, the kit boards' corner holes at 2.5 mm in, the switch harness). They are checked by dry-fit instead: tape the holders to plate 2 before wiring, lay boards A and B on a 1:1 printout, measure the harness length with a ruler and read its gauge off the ferrule that fits.*
 - The pack's height with its felt (modelled 21 + 3) and the driver's top height.
 - **The switch wiring (decided 2026-10-06).** Each switch has four wires: **two green** (the contact, no polarity), **red** (LED +) and **black** (LED −); the LED has its own resistor and runs on 12 V (tested). To light the LED only when the switch is on, **LED + is joined to the switched output, never to the (+) bus**. Every join ends in a clip, so no wire meets another without one:
-  - **S8** (3-port, toward the rear) takes **(+) bus port 2** and both switches' first green wires. One bus port feeds both switches, so the switch harness reaches (run 05, 06a, 06b). (+) bus port 3 is spare.
+  - **S8** (3-port, toward the rear) takes **(+) bus port 2** and both switches' first green wires. One bus port feeds both switches, so the switch harness reaches (run 05, 06a, 06b). (+) bus port 3 is spare. *Updated by HW-25: port 3 takes the INA226's V+ sense wire.*
   - **SW1's output** (second green) and **its red LED +** meet in **S9** (3-port), and one wire goes from S9 to the SW1 split (runs 07a-07c).
   - **SW2's output** and **its red LED +** meet in **S6**, which becomes a **3-port** clip with the Bauer's red lead (runs 15a, 15c, 15b). Two wires pass up the left slot instead of one: 2.4 + 1.6 mm in an opening about 5 x 10 mm, so check it on the real tray.
-  - **Both black LED − wires** go into **S5**, which becomes a **5-port** clip: UBEC (−), the run to the (−) bus (port 4), and the two LED returns (runs 13a, 13b). The (−) bus is then **4 of 5** ports, one spare.
+  - **Both black LED − wires** go into **S5**, which becomes a **5-port** clip: UBEC (−), the run to the (−) bus (port 4), and the two LED returns (runs 13a, 13b). The (−) bus is then **4 of 5** ports, one spare. *Updated by HW-25: the spare takes the INA226's V− wire, so the bus is full.*
   - S9's pigtail enters the split's second port. Nothing is crimped on the switch tabs: the supplied socket harness is used, so BOM 3.17 (flag receptacles) is not needed.
   [`../tools/check-harness-clearance.py`](../tools/check-harness-clearance.py) fails if a part overlaps another, a wire runs through a part, two wires share space, or wires meet with no clip.
   Clips used: **3-port x 4** (split, S8, S9, S6), **5-port x 1** (S5), **2-port x 5** (S1, S2, S3, S4, S7). The positions of S8, S9 and S5 are stand-ins in the model; what must hold is the height over the motors (9 mm: no clip there, 8.5 mm + 1 mm of tape).
@@ -1516,6 +1520,26 @@ which is why the second lane is the mirror of the first. The tray has a wing for
   threaded standoff; the hand-made tray's template and its PDF carry B's three holes as countersunk
   screws. Window W3 now sits beside B, not under it.
 
+**Revision 2026-11-10 · plate 2 frozen as built; S6 and S7 under its rear corners (Hedi).** Plate 2 is
+built and wired: both faces, the carrier tray, the rear pad and the harness board are **frozen as built**
+(marked on `chassis-layout.svg`). A change to plate 2 from now on is a new decision, not an edit.
+S6 and S7 are not on the tray beside the Bauer, as "Where the splices go" placed them, but taped under
+plate 2 at its rear corners, ports to the front:
+
+| Splice | Where, plate 2 frame | Nearest neighbours |
+|---|---|---|
+| **S6** (Bauer +, 3-port: the Bauer's red lead, SW2 out, SW2 LED +) | x 233-251.6, y 100-118.4 | R4's head 5 mm in front; the chassis standoff at (256.82, 98.36) 5.5 mm from its corner |
+| **S7** (Bauer −, 2-port: the Bauer's black lead, the run to the (−) bus) | x 234.5-253.1, y 4-17 | R3's head 6.6 mm in front; the plate edge 2.4 mm outside; the standoff at (256.82, 22.17) 5.6 mm from its corner |
+
+- **Over the motor cans:** both clips overhang the cans' rear flank (x 203-240). The cans are round, so at
+  x 233 their top is 3.6 mm below the clips; the elevation draws the cans as boxes and shows them touching.
+- **Wiring** (`plate1.py`, the cut table): SW2's two wires now reach S6 directly (15 and 16 cm, were 31).
+  The Bauer's leads come down the open x 75-80 end of the tie slots, as before, and run back along the
+  trunk: red to S6 about 28 cm, black to S7 about 43 cm, then S7 to the (−) bus about 25 cm. **These are
+  modelled lengths, not measured:** the real wiring is as built and not recorded in detail (Hedi, 2026-11-15).
+- **Orientation marks** on the drawing: every board's connector edges are drawn as thick bars with what
+  sits on them (FRDM, Pi 5, Nucleo, board C), and each plan carries its own compass.
+
 ---
 
 ## MEC-18 · One wide tray on plate 3 - a spare nose, the Pi 5, a plug gap, the FRDM, all turned across
@@ -1558,7 +1582,7 @@ FRDM screw holes are loose (4.2 mm, counterbore 7.2 mm) so the +-1 mm in the pho
 |---|---|---|---|
 | **J1 power**, C-to-C 20 cm (5.1), from board C's USB-C socket (plate 2, HW-19) | socket plug -> up through plate 3's right-hand slot (x 109-158, y 10-15) -> along the right edge, over the right rib -> J1 on the nose edge | about 13 cm | **fits**, about 3 cm to spare. The big slot in the plug gap is the second way up |
 | **J11 console**, USB-C extension 0.2 m (5.9), from the fascia's USB-C port | the port's body ends at x 225, y 41.3 (z 101) -> along the upper gap to the left edge (78 mm) -> up outside the plate edge (35 mm) -> J11's plug, 25 mm past the edge | about 14 cm | **fits**, the cable is 20 cm beyond the port's own 40 mm body. The slot at x 219.5 above the body's end is under the FRDM pad, which is why the route goes round the edge instead |
-| **J7 CAN**, 2x5 mating lead (4.4, not yet bought) to the CAN terminal (4.1's end of the bus), twisted pair, BOM 4.3 says about 30 cm. *Updated 2026-10-27: since the NUCLEO-H533RE (MEC-15) the transceiver and its terminal are on **board A**, at A·F17 / D17 / B17, plate 2 x 125-135, opening to the vehicle's right edge; they were on board B* | the plug on J7 -> 10 mm over the rear edge -> down plate 3's cross-slot (x 260-265, clear: the fascia's wall is at x 267-270) -> on plate 2, diagonally over the rear pad to the right edge **behind** the Nucleo (x 203 and more: the Nucleo covers x 120-203, y 20-90) -> forward along the right edge to the terminal | about 22 cm (15 cm to board B before) | **fits** with a 30 cm lead; the run along plate 2's right edge is to confirm on the vehicle. *2026-10-30 (HW-23): the lead is the 20 cm Dupont jumpers, cut at A's terminal, and the DE-9 tails (20 cm) end in the same clamps. Both are short for this estimate: lay them on the vehicle before cutting.* *2026-11-01 (HW-24): the terminal is on **board B** again, at B·A13 / A11 / A9, plate 2 x 146-156, y 107.6, opening to the vehicle's left edge. The route goes to the left edge behind the Nucleo instead; the left edge is nearer the slot's y 74, so the estimate drops by about 4 cm, to about 18 cm. Still to lay on the vehicle* |
+| **J7 CAN**, 2x5 mating lead (4.4, not yet bought) to the CAN terminal (4.1's end of the bus), twisted pair, BOM 4.3 says about 30 cm. *Updated 2026-10-27: since the NUCLEO-H533RE (MEC-15) the transceiver and its terminal are on **board A**, at A·F17 / D17 / B17, plate 2 x 125-135, opening to the vehicle's right edge; they were on board B* | the plug on J7 -> 10 mm over the rear edge -> down plate 3's cross-slot (x 260-265, clear: the fascia's wall is at x 267-270) -> on plate 2, diagonally over the rear pad to the right edge **behind** the Nucleo (x 203 and more: the Nucleo covers x 120-203, y 20-90) -> forward along the right edge to the terminal | about 22 cm (15 cm to board B before) | **fits** with a 30 cm lead; the run along plate 2's right edge is to confirm on the vehicle. *2026-10-30 (HW-23): the lead is the 20 cm Dupont jumpers, cut at A's terminal, and the DE-9 tails (20 cm) end in the same clamps. Both are short for this estimate: lay them on the vehicle before cutting.* *2026-11-01 (HW-24): the terminal is on **board B** again, at B·A13 / A11 / A9, plate 2 x 146-156, y 107.6, opening to the vehicle's left edge. The route goes to the left edge behind the Nucleo instead; the left edge is nearer the slot's y 74, so the estimate drops by about 4 cm, to about 18 cm. Still to lay on the vehicle* *2026-11-13: wired on the vehicle (Hedi, HW-23)* |
 
 No other BOM item touches the FRDM (Ethernet, USB-A, audio and the 40-pin header are unused). Nothing here needs a change to the tray. **To confirm on the vehicle:** the J11 cable's bend behind the fascia, and the J1 plug's clearance
 over the right rib.
